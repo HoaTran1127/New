@@ -1,0 +1,33 @@
+```mermaid
+flowchart TD
+    Start(["Mở Game trên Trình Duyệt"]) --> ModalCheck["Hiện Modal Chào Mừng & Chọn Chủ Đề Toán"]
+    ModalCheck --> ClickStart["Người chơi bấm: BẬT CAMERA & CHIẾN NGAY"]
+    ClickStart --> AudioUnlock["Tone.js mở khóa AudioContext (await Tone.start)"]
+    AudioUnlock --> CamInit["Khởi động MediaPipe Hands qua Webcam"]
+    
+    CamInit --> GameLoop["BẮT ĐẦU VÒNG LẶP GAME (60 FPS)"]
+    
+    subgraph VongLapGame ["VÒNG LẶP CHÍNH (Game Loop)"]
+        SpawnCard["Thẻ bài toán học rơi từ trên xuống (v_y)"]
+        HandTracking["MediaPipe đọc tọa độ tay -> Lọc mượt EMA -> Vẽ Vệt Kiếm"]
+        CheckCollision{"Tay có chạm / vung đấm vào Thẻ?"}
+        
+        SpawnCard --> CheckCollision
+        HandTracking --> CheckCollision
+        
+        CheckCollision -- "ĐẤM TRÚNG THẺ ĐÚNG" --> EventCorrect["+10đ x Combo<br>Nổ hạt rực rỡ<br>Âm thanh nhặt xu<br>Tăng chuỗi Combo x2, x3"]
+        CheckCollision -- "ĐẤM NHẦM THẺ SAI" --> EventWrong["Trừ 1 Máu ❤️<br>Kính nứt toảng mạng nhện<br>Màn hình chớp đỏ & rung<br>Hiện banner giải thích vì sao sai<br>Reset Combo về 0"]
+        CheckCollision -- "Không chạm (Thẻ trôi qua)" --> CheckBottom{"Thẻ rơi chạm đáy?"}
+        
+        CheckBottom -- "Thẻ ĐÚNG bị bỏ lỡ" --> MissStreak["Reset Combo"]
+        CheckBottom -- "Thẻ SAI trôi qua" --> Safe["An toàn (Đúng luật né bẫy)"]
+    end
+    
+    EventCorrect --> CheckHealth{"Còn Máu không?"}
+    EventWrong --> CheckHealth
+    
+    CheckHealth -- "Máu > 0" --> GameLoop
+    CheckHealth -- "Máu = 0" --> GameOver["MÀN HÌNH GAME OVER<br>Bảng thống kê điểm số & Kỷ lục High Score<br>Nút: CHƠI LẠI hoặc ĐỔI CHỦ ĐỀ"]
+    
+    GameOver --> ClickRestart["Bấm Chơi Lại"] --> GameLoop
+```

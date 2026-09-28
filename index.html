@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AR Math Kids - Hệ Thống Game Toán Lớp 4 & 5 Thực Tế Ảo</title>
+  <title>Gemini Canvas Game Prompt Studio - Bộ Tổng Hợp Prompt Game Toán AR</title>
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -20,7 +20,8 @@
         extend: {
           fontFamily: {
             title: ['"Outfit"', '"Fredoka"', 'sans-serif'],
-            body: ['"Fredoka"', 'sans-serif']
+            body: ['"Fredoka"', 'sans-serif'],
+            code: ['Consolas', 'monospace']
           },
           colors: {
             brandYellow: '#FFE600',
@@ -38,267 +39,524 @@
   <header class="border-b border-slate-800/80 bg-slate-900/60 backdrop-blur-xl sticky top-0 z-40">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-tr from-amber-400 via-orange-500 to-pink-500 flex items-center justify-center text-xl shadow-[0_0_20px_rgba(251,146,60,0.4)]">
-          🥊
+        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-tr from-cyan-400 via-blue-500 to-indigo-600 flex items-center justify-center text-xl shadow-[0_0_20px_rgba(6,182,212,0.4)]">
+          ✨
         </div>
         <div>
-          <span class="font-title font-black text-xl sm:text-2xl text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-orange-400 to-pink-400">
-            AR MATH KIDS
+          <span class="font-title font-black text-xl sm:text-2xl text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-400 to-indigo-300">
+            GEMINI CANVAS GAME FORGE
           </span>
-          <span class="hidden sm:inline-block ml-2 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-cyan-500/20 text-cyan-300 border border-cyan-400/30">
-            LỚP 4 & 5
+          <span class="hidden sm:inline-block ml-2 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-500/20 text-amber-300 border border-amber-400/30">
+            PROMPT STUDIO
           </span>
         </div>
       </div>
 
-      <div class="flex items-center gap-3">
-        <a href="#games" class="text-xs sm:text-sm font-bold text-slate-300 hover:text-white px-3 py-2 transition">
-          🎮 Danh Sách Game
-        </a>
-        <a href="#topics" class="text-xs sm:text-sm font-bold text-slate-300 hover:text-white px-3 py-2 transition">
-          📚 Chủ Đề Toán
-        </a>
-        <a href="./docs/README.html" class="hidden sm:flex items-center gap-1.5 text-xs sm:text-sm font-bold bg-slate-800 hover:bg-slate-700 text-cyan-300 px-4 py-2 rounded-xl border border-cyan-500/30 transition shadow-sm">
-          <i class="fa-solid fa-book-open"></i> Series Hướng Dẫn
-        </a>
+      <!-- Tabs Navigation -->
+      <div class="flex items-center gap-1.5 sm:gap-2 bg-slate-900/80 p-1 rounded-2xl border border-slate-800">
+        <button onclick="switchTab('builder')" class="nav-tab-btn active px-3 sm:px-4 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition bg-cyan-500 text-slate-950 shadow-sm" data-tab="builder">
+          ⚡ Tạo Prompt
+        </button>
+        <button onclick="switchTab('library')" class="nav-tab-btn px-3 sm:px-4 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition text-slate-300 hover:text-white" data-tab="library">
+          📚 Kho Prompt
+        </button>
+        <button onclick="switchTab('characters')" class="nav-tab-btn px-3 sm:px-4 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition text-slate-300 hover:text-white" data-tab="characters">
+          🎭 Nhân Vật
+        </button>
+        <button onclick="switchTab('demos')" class="nav-tab-btn px-3 sm:px-4 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition text-slate-300 hover:text-white" data-tab="demos">
+          🎮 Demo Mẫu
+        </button>
       </div>
     </div>
   </header>
 
-  <!-- HERO SECTION -->
-  <section class="relative overflow-hidden py-12 sm:py-20 px-4">
-    <!-- Glow BG -->
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-gradient-to-r from-cyan-500/15 via-orange-500/15 to-pink-500/15 rounded-full blur-3xl pointer-events-none"></div>
+  <!-- NỘI DUNG CHÍNH (THEO TABS) -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 py-8 flex-1 w-full">
 
-    <div class="max-w-4xl mx-auto text-center relative z-10">
-      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900/80 border border-slate-700 text-xs sm:text-sm text-amber-300 font-extrabold mb-6 shadow-xl">
-        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-        Công Nghệ Nhận Diện Cử Chỉ Tay MediaPipe 100% Client-side
-      </div>
-
-      <h1 class="font-title font-black text-4xl sm:text-6xl text-white tracking-tight leading-tight">
-        Học Toán Lớp 4 & 5 Bằng
-        <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-orange-400 to-pink-500">
-          Đấm Bốc Thực Tế Ảo
-        </span>
-      </h1>
-
-      <p class="text-slate-300 text-sm sm:text-lg mt-5 max-w-2xl mx-auto leading-relaxed">
-        Biến việc luyện tập tính nhẩm phân số, số thập phân, bảng nhân chia thành trò chơi vận động hào hứng. Đứng trước webcam, vung tay chém vỡ thẻ phép tính đúng và né bẫy thẻ sai!
-      </p>
-
-      <div class="flex flex-wrap items-center justify-center gap-4 mt-8">
-        <a href="./games/math-blitz/index.html" class="px-7 py-4 rounded-2xl bg-gradient-to-r from-amber-400 via-orange-500 to-pink-500 text-slate-950 font-title font-black text-lg shadow-[0_0_30px_rgba(251,146,60,0.5)] transform hover:scale-105 active:scale-95 transition flex items-center gap-3">
-          <i class="fa-solid fa-play"></i>
-          <span>CHIẾN NGAY (MATH BLITZ)</span>
-        </a>
-        <a href="./games/math-catcher/index.html" class="px-6 py-4 rounded-2xl bg-slate-900 hover:bg-slate-800 text-slate-200 font-title font-bold text-base border border-slate-700 hover:border-slate-500 transition flex items-center gap-2">
-          <span>🧺 THỬ GAME HỨNG TÁO</span>
-        </a>
-      </div>
-
-      <!-- Feature Badges -->
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mt-12 max-w-3xl mx-auto text-left">
-        <div class="bg-slate-900/60 border border-slate-800 p-4 rounded-2xl">
-          <div class="text-2xl mb-1">📷</div>
-          <div class="font-bold text-sm text-white">Không Cài App</div>
-          <div class="text-xs text-slate-400">Chạy thẳng trên Chrome/Edge qua Webcam</div>
+    <!-- ================= TAB 1: PROMPT BUILDER ================= -->
+    <section id="tab-builder" class="tab-content block">
+      <div class="text-center max-w-3xl mx-auto mb-8">
+        <div class="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-cyan-500/10 border border-cyan-400/30 text-cyan-300 text-xs font-black uppercase tracking-wider mb-3">
+          <i class="fa-solid fa-wand-magic-sparkles"></i> Trình Tạo Prompt Tự Động Cho Gemini Canvas
         </div>
-        <div class="bg-slate-900/60 border border-slate-800 p-4 rounded-2xl">
-          <div class="text-2xl mb-1">🔒</div>
-          <div class="font-bold text-sm text-white">Bảo Mật 100%</div>
-          <div class="text-xs text-slate-400">Video xử lý tại máy, không gửi lên server</div>
-        </div>
-        <div class="bg-slate-900/60 border border-slate-800 p-4 rounded-2xl">
-          <div class="text-2xl mb-1">⚡</div>
-          <div class="font-bold text-sm text-white">Khung Cắm / Rút</div>
-          <div class="text-xs text-slate-400">Dễ dàng thêm bớt chủ đề & mini-game mới</div>
-        </div>
-        <div class="bg-slate-900/60 border border-slate-800 p-4 rounded-2xl">
-          <div class="text-2xl mb-1">🚀</div>
-          <div class="font-bold text-sm text-white">GitHub Pages</div>
-          <div class="text-xs text-slate-400">Deploy miễn phí 1-click cho trường học</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- DANH SÁCH GAMES -->
-  <section id="games" class="py-12 px-4 max-w-6xl mx-auto w-full">
-    <div class="flex items-center justify-between mb-8">
-      <div>
-        <h2 class="font-title font-black text-2xl sm:text-4xl text-white">
-          Kho Game Thực Tế Ảo (AR Games)
-        </h2>
-        <p class="text-slate-400 text-xs sm:text-sm mt-1">Chọn kiểu chơi phù hợp với sở thích của học sinh</p>
-      </div>
-      <span class="px-3 py-1 rounded-full bg-slate-900 border border-slate-700 text-xs text-amber-300 font-extrabold">
-        2 Mini-Games Sẵn Sàng
-      </span>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <!-- Card Game 1: Math Blitz -->
-      <div class="group relative bg-gradient-to-b from-slate-900 to-slate-950 border-2 border-slate-800 hover:border-cyan-400/60 rounded-3xl p-6 sm:p-8 transition-all duration-300 shadow-xl flex flex-col justify-between">
-        <div>
-          <div class="flex items-center justify-between mb-4">
-            <span class="px-3 py-1 rounded-xl text-xs font-black uppercase bg-amber-400 text-slate-950">
-              GAME CHÍNH ⭐
-            </span>
-            <span class="text-xs font-bold text-slate-400">Đấm bốc / Chém kiếm</span>
-          </div>
-
-          <h3 class="font-title font-black text-2xl sm:text-3xl text-white group-hover:text-cyan-300 transition">
-            Subway Math Blitz AR
-          </h3>
-          <p class="text-slate-300 text-xs sm:text-sm mt-2 leading-relaxed">
-            Các thẻ phép tính rơi nhanh từ trên xuống. Học sinh vung 1 bàn tay như đấm bốc để phá tan thẻ <b>ĐÚNG</b>, né thẻ <b>SAI</b>. Nếu đấm nhầm thẻ sai, kính màn hình sẽ bị nứt toảng và trừ mạng!
-          </p>
-
-          <div class="flex flex-wrap gap-2 my-5">
-            <span class="px-2.5 py-1 rounded-lg bg-slate-800 text-[11px] font-bold text-slate-300">Nhận diện 1 tay</span>
-            <span class="px-2.5 py-1 rounded-lg bg-slate-800 text-[11px] font-bold text-slate-300">Vết chém neon</span>
-            <span class="px-2.5 py-1 rounded-lg bg-slate-800 text-[11px] font-bold text-slate-300">Kính nứt mạng nhện</span>
-            <span class="px-2.5 py-1 rounded-lg bg-slate-800 text-[11px] font-bold text-slate-300">Combo âm thanh</span>
-          </div>
-        </div>
-
-        <a href="./games/math-blitz/index.html" class="w-full py-3.5 rounded-2xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-title font-black text-center text-base transition shadow-[0_0_20px_rgba(6,182,212,0.4)]">
-          Vào Chơi Subway Math Blitz →
-        </a>
-      </div>
-
-      <!-- Card Game 2: Math Catcher -->
-      <div class="group relative bg-gradient-to-b from-slate-900 to-slate-950 border-2 border-slate-800 hover:border-emerald-400/60 rounded-3xl p-6 sm:p-8 transition-all duration-300 shadow-xl flex flex-col justify-between">
-        <div>
-          <div class="flex items-center justify-between mb-4">
-            <span class="px-3 py-1 rounded-xl text-xs font-black uppercase bg-emerald-400 text-slate-950">
-              MINI-GAME MỚI 🍏
-            </span>
-            <span class="text-xs font-bold text-slate-400">Hứng quả / Đỡ bóng</span>
-          </div>
-
-          <h3 class="font-title font-black text-2xl sm:text-3xl text-white group-hover:text-emerald-300 transition">
-            AR Math Catcher
-          </h3>
-          <p class="text-slate-300 text-xs sm:text-sm mt-2 leading-relaxed">
-            Học sinh di chuyển bàn tay làm chiếc giỏ để hứng các quả táo mang phép tính <b>ĐÚNG</b> rơi xuống và né các quả táo <b>SAI</b>. Giúp rèn luyện tính kiên nhẫn và phản xạ nhẹ nhàng.
-          </p>
-
-          <div class="flex flex-wrap gap-2 my-5">
-            <span class="px-2.5 py-1 rounded-lg bg-slate-800 text-[11px] font-bold text-slate-300">Giỏ hứng di động</span>
-            <span class="px-2.5 py-1 rounded-lg bg-slate-800 text-[11px] font-bold text-slate-300">Âm thanh Pop</span>
-            <span class="px-2.5 py-1 rounded-lg bg-slate-800 text-[11px] font-bold text-slate-300">Tái dùng Core Engine</span>
-          </div>
-        </div>
-
-        <a href="./games/math-catcher/index.html" class="w-full py-3.5 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-title font-black text-center text-base transition shadow-[0_0_20px_rgba(16,185,129,0.4)]">
-          Vào Chơi AR Math Catcher →
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- CHỦ ĐỀ TOÁN HỌC -->
-  <section id="topics" class="py-12 px-4 max-w-6xl mx-auto w-full">
-    <div class="text-center max-w-2xl mx-auto mb-10">
-      <h2 class="font-title font-black text-3xl sm:text-4xl text-white">
-        Chương Trình Toán Lớp 4 & 5
-      </h2>
-      <p class="text-slate-400 text-xs sm:text-sm mt-2">
-        Thiết kế theo chuẩn GDPT, tập trung vào các dạng toán nhẩm hay nhầm lẫn nhất
-      </p>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <!-- Khối Cửu Chương -->
-      <div class="bg-slate-900/60 border border-slate-800 p-6 rounded-3xl">
-        <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-2xl mb-4">
-          ✖️
-        </div>
-        <h3 class="font-title font-black text-xl text-white">Bảng Cửu Chương</h3>
-        <p class="text-xs text-slate-400 mt-1">Dành cho ôn tập nền tảng</p>
-        <ul class="mt-4 space-y-2 text-xs sm:text-sm text-slate-300">
-          <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400 text-xs"></i> Bảng nhân nhẩm 2 đến 9</li>
-          <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400 text-xs"></i> Bảng chia nhẩm 2 đến 9</li>
-          <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400 text-xs"></i> Bẫy số kề & nhầm hàng đơn vị</li>
-        </ul>
-      </div>
-
-      <!-- Khối Lớp 4 -->
-      <div class="bg-slate-900/60 border border-cyan-500/30 p-6 rounded-3xl relative">
-        <span class="absolute top-4 right-4 px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-cyan-400 text-slate-950">
-          TRỌNG TÂM LỚP 4
-        </span>
-        <div class="w-12 h-12 rounded-2xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-2xl mb-4">
-          📐
-        </div>
-        <h3 class="font-title font-black text-xl text-white">Toán Lớp 4</h3>
-        <p class="text-xs text-slate-400 mt-1">Phân số & Đại lượng đo</p>
-        <ul class="mt-4 space-y-2 text-xs sm:text-sm text-slate-300">
-          <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400 text-xs"></i> Nhân nhẩm 11 & số tròn chục</li>
-          <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400 text-xs"></i> Rút gọn & cộng trừ phân số cùng mẫu</li>
-          <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400 text-xs"></i> Đổi đơn vị tấn, tạ, yến, m², dm²</li>
-          <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400 text-xs"></i> Dấu hiệu chia hết cho 2, 3, 5, 9</li>
-        </ul>
-      </div>
-
-      <!-- Khối Lớp 5 -->
-      <div class="bg-slate-900/60 border border-pink-500/30 p-6 rounded-3xl relative">
-        <span class="absolute top-4 right-4 px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-pink-500 text-white">
-          NÂNG CAO LỚP 5
-        </span>
-        <div class="w-12 h-12 rounded-2xl bg-pink-500/20 text-pink-400 flex items-center justify-center text-2xl mb-4">
-          🚀
-        </div>
-        <h3 class="font-title font-black text-xl text-white">Toán Lớp 5</h3>
-        <p class="text-xs text-slate-400 mt-1">Số thập phân, % & Chuyển động</p>
-        <ul class="mt-4 space-y-2 text-xs sm:text-sm text-slate-300">
-          <li class="flex items-center gap-2"><i class="fa-solid fa-check text-pink-400 text-xs"></i> Tính nhẩm số thập phân (0.25 × 4...)</li>
-          <li class="flex items-center gap-2"><i class="fa-solid fa-check text-pink-400 text-xs"></i> Tỉ số phần trăm (10%, 20%, 50%)</li>
-          <li class="flex items-center gap-2"><i class="fa-solid fa-check text-pink-400 text-xs"></i> Toán chuyển động đều s = v × t</li>
-          <li class="flex items-center gap-2"><i class="fa-solid fa-check text-pink-400 text-xs"></i> Diện tích tam giác & chu vi hình tròn</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- SERIES HƯỚNG DẪN CODING -->
-  <section class="py-12 px-4 max-w-6xl mx-auto w-full">
-    <div class="bg-gradient-to-r from-blue-900/40 via-purple-900/30 to-pink-900/30 border border-cyan-500/30 rounded-3xl p-6 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-6">
-      <div class="max-w-2xl text-left">
-        <span class="px-3 py-1 rounded-full text-xs font-black uppercase bg-cyan-400 text-slate-950 mb-3 inline-block">
-          DÀNH CHO GIÁO VIÊN & HỌC SINH TỰ HỌC CODE
-        </span>
-        <h2 class="font-title font-black text-2xl sm:text-4xl text-white leading-tight">
-          Series Hướng Dẫn Tự Làm Game AR Này Từ Con Số 0
-        </h2>
+        <h1 class="font-title font-black text-3xl sm:text-5xl text-white tracking-tight">
+          Tạo Prompt Game Giáo Dục <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400">Trong 30 Giây</span>
+        </h1>
         <p class="text-slate-300 text-xs sm:text-sm mt-3 leading-relaxed">
-          Bộ giáo trình gồm 7 bài chi tiết: Giải thích từng dòng code từ nhận diện bàn tay MediaPipe, vẽ hiệu ứng Canvas, cấu hình bẫy toán học đến cách triển khai lên GitHub Pages miễn phí.
+          Tùy chọn thể loại, nội dung toán học và nhân vật bên dưới. Hệ thống sẽ tự động ghép thành câu lệnh Master Prompt chuẩn nhất để dán thẳng vào <b>Gemini (Chế độ Canvas)</b>!
         </p>
       </div>
 
-      <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
-        <a href="./docs/README.md" class="px-6 py-3.5 rounded-2xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-title font-black text-center text-sm transition">
-          <i class="fa-solid fa-book mr-1.5"></i> Đọc Toàn Bộ Giáo Trình
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <!-- Cột Tùy Chọn -->
+        <div class="lg:col-span-5 bg-slate-900/60 border border-slate-800 p-6 rounded-3xl space-y-5">
+          <!-- 1. Cơ chế Game -->
+          <div>
+            <label class="text-xs font-black text-cyan-400 uppercase tracking-wider block mb-2">
+              1. Thể Loại / Cơ Chế Chơi:
+            </label>
+            <select id="optMechanic" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-xs sm:text-sm font-bold text-white focus:border-cyan-400 focus:outline-none">
+              <option value="blitz">🥊 Đấm bốc / Chém thẻ bài rơi (Subway Math Blitz)</option>
+              <option value="catcher">🧺 Giỏ hứng táo / vật phẩm rơi (AR Math Catcher)</option>
+              <option value="bubble">🫧 Chém bong bóng số bay lên (Fruit Ninja style)</option>
+              <option value="quiz">🎯 Bắn cung / Ngắm điểm đáp án đúng</option>
+            </select>
+          </div>
+
+          <!-- 2. Môn học & Khối lớp -->
+          <div>
+            <label class="text-xs font-black text-cyan-400 uppercase tracking-wider block mb-2">
+              2. Nội Dung Toán Học:
+            </label>
+            <select id="optTopic" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-xs sm:text-sm font-bold text-white focus:border-cyan-400 focus:outline-none">
+              <option value="lop4_phanso">📐 Toán Lớp 4: Rút gọn & Cộng trừ phân số cùng mẫu</option>
+              <option value="lop4_nhan11">⚡ Toán Lớp 4: Nhân nhẩm 11 & Số tròn chục</option>
+              <option value="lop4_donvi">⚖️ Toán Lớp 4: Đổi đơn vị tấn tạ yến, m², dm²</option>
+              <option value="lop4_chiahet">🔢 Toán Lớp 4: Dấu hiệu chia hết cho 2, 3, 5, 9</option>
+              <option value="lop5_thapphan">🔟 Toán Lớp 5: Tính nhẩm số thập phân (0.25 × 4)</option>
+              <option value="lop5_phantram">📊 Toán Lớp 5: Tỉ số phần trăm (10%, 20%, 50%)</option>
+              <option value="lop5_chuyendong">🚗 Toán Lớp 5: Toán chuyển động đều (s = v × t)</option>
+              <option value="lop5_hinhhoc">🔺 Toán Lớp 5: Diện tích tam giác & Chu vi hình tròn</option>
+              <option value="cuuchuong">✖️ Ôn tập: Bảng cửu chương nhân chia 2 đến 9</option>
+            </select>
+          </div>
+
+          <!-- 3. Nhân vật chủ đề -->
+          <div>
+            <label class="text-xs font-black text-cyan-400 uppercase tracking-wider block mb-2">
+              3. Nhân Vật & Vũ Khí:
+            </label>
+            <select id="optCharacter" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-xs sm:text-sm font-bold text-white focus:border-cyan-400 focus:outline-none">
+              <option value="ninja">🥷 Ninja Toán Học (Kiếm Katana Laser Neon #00F0FF)</option>
+              <option value="banana">🍌 Chiến Thần Chuối (Găng Đấm Subway Surfers #FFE600)</option>
+              <option value="astro">🚀 Phi Hành Gia Nhí (Tâm Ngắm Tên Lửa #EC4899)</option>
+              <option value="wizard">🧙‍♂️ Phù Thủy Số Học (Đũa Thần Ngôi Sao #A855F7)</option>
+              <option value="catcher">🍏 Thợ Săn Táo (Giỏ Hứng Thần Kỳ #10B981)</option>
+              <option value="robot">🤖 Robot Cyber (Khiên Năng Lượng Plasma #F97316)</option>
+            </select>
+          </div>
+
+          <!-- 4. Hiệu ứng phạt -->
+          <div>
+            <label class="text-xs font-black text-cyan-400 uppercase tracking-wider block mb-2">
+              4. Hiệu Ứng Cảnh Báo Khi Chọn Sai:
+            </label>
+            <select id="optPenalty" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-xs sm:text-sm font-bold text-white focus:border-cyan-400 focus:outline-none">
+              <option value="cracked">💥 Màn hình nứt vỡ toảng mạng nhện + Rung màn hình</option>
+              <option value="lightning">⚡ Sấm sét chớp đỏ toàn màn hình</option>
+              <option value="smoke">💨 Khói nổ đen xì và âm thanh cảnh báo lỗi</option>
+            </select>
+          </div>
+
+          <!-- Nút Tạo Prompt -->
+          <button onclick="generatePrompt()" class="w-full py-3.5 bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 text-slate-950 font-title font-black text-base rounded-2xl shadow-lg transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-arrows-rotate"></i> Tạo Câu Lệnh Prompt
+          </button>
+        </div>
+
+        <!-- Cột Kết Quả Prompt Sinh Ra -->
+        <div class="lg:col-span-7 bg-slate-900/60 border border-cyan-500/30 p-6 rounded-3xl flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs font-black text-amber-300 uppercase tracking-wider">
+                <i class="fa-solid fa-terminal mr-1"></i> Câu Lệnh Master Prompt Đã Sẵn Sàng:
+              </span>
+              <button onclick="copyGeneratedPrompt()" id="btnCopyPrompt" class="px-3.5 py-1.5 bg-cyan-500 hover:bg-cyan-400 text-slate-950 text-xs font-extrabold rounded-xl transition flex items-center gap-1.5 shadow-sm">
+                <i class="fa-regular fa-copy"></i>
+                <span id="copyBtnText">Copy Prompt Cho Gemini</span>
+              </button>
+            </div>
+
+            <textarea id="promptOutput" class="w-full h-[400px] bg-slate-950 border border-slate-800 rounded-2xl p-4 font-code text-xs text-cyan-200 leading-relaxed resize-none focus:outline-none focus:border-cyan-400" readonly></textarea>
+          </div>
+
+          <div class="mt-4 p-3 rounded-2xl bg-cyan-950/40 border border-cyan-800/40 text-[11px] text-cyan-300 flex items-center gap-2.5">
+            <span class="text-lg">💡</span>
+            <span><b>Hướng dẫn:</b> Bấm nút "Copy Prompt Cho Gemini", sau đó vào <a href="https://gemini.google.com" target="_blank" class="underline font-bold text-white">gemini.google.com</a>, dán vào khung chat và bật chế độ <b>Canvas</b> là game sẽ tự sinh ra!</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TAB 2: PROMPT LIBRARY ================= -->
+    <section id="tab-library" class="tab-content hidden">
+      <div class="flex items-center justify-between mb-8">
+        <div>
+          <h2 class="font-title font-black text-2xl sm:text-4xl text-white">Thư Viện Prompt Có Sẵn</h2>
+          <p class="text-slate-400 text-xs sm:text-sm mt-1">Các mẫu prompt đã được kiểm chứng hoạt động hoàn hảo trên Gemini Canvas</p>
+        </div>
+        <a href="./prompts/template-tao-game-moi.md" target="_blank" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-cyan-500/30 rounded-xl text-xs font-bold transition">
+          <i class="fa-solid fa-file-pen mr-1"></i> Xem Biểu Mẫu Template
         </a>
       </div>
-    </div>
-  </section>
 
-  <!-- FOOTER -->
-  <footer class="border-t border-slate-800/80 py-8 px-4 text-center text-xs text-slate-500 mt-auto">
-    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-      <div>
-        <b>AR Math Kids Platform</b> • Mã nguồn mở dành cho Giáo dục Tiểu học
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Item 1: Master System Prompt -->
+        <div class="bg-slate-900/60 border border-slate-800 p-6 rounded-3xl flex flex-col justify-between">
+          <div>
+            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-purple-500 text-white">HỆ THỐNG GỐC 👑</span>
+            <h3 class="font-title font-black text-xl text-white mt-2">Master Canvas System Prompt</h3>
+            <p class="text-slate-300 text-xs mt-2 leading-relaxed">
+              Khung quy tắc kỹ thuật nghiêm ngặt: MediaPipe Hands, Tone.js không lỗi, chống rung tay EMA, lật gương camera và chế độ chuột fallback.
+            </p>
+          </div>
+          <div class="mt-6 flex items-center gap-3">
+            <a href="./prompts/00-master-canvas-prompt.md" target="_blank" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-xl border border-slate-700 transition">
+              Xem Chi Tiết
+            </a>
+            <button onclick="copyRawFile('./prompts/00-master-canvas-prompt.md')" class="px-4 py-2 bg-purple-500 hover:bg-purple-400 text-white text-xs font-extrabold rounded-xl transition">
+              <i class="fa-regular fa-copy mr-1"></i> Copy Prompt
+            </button>
+          </div>
+        </div>
+
+        <!-- Item 2: Subway Math Blitz -->
+        <div class="bg-slate-900/60 border border-amber-400/30 p-6 rounded-3xl flex flex-col justify-between">
+          <div>
+            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-amber-400 text-slate-950">BẢN CHUẨN ⭐</span>
+            <h3 class="font-title font-black text-xl text-white mt-2">Subway Math Blitz AR</h3>
+            <p class="text-slate-300 text-xs mt-2 leading-relaxed">
+              Tái tạo chính xác cơ chế của game trong link chia sẻ: Thẻ rơi 3 làn phong cách Subway Surfers, vung tay đấm thẻ đúng, phạt nứt màn hình khi đấm bẫy sai.
+            </p>
+          </div>
+          <div class="mt-6 flex items-center gap-3">
+            <a href="./prompts/01-prompt-subway-math-blitz.md" target="_blank" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-xl border border-slate-700 transition">
+              Xem Chi Tiết
+            </a>
+            <button onclick="copyRawFile('./prompts/01-prompt-subway-math-blitz.md')" class="px-4 py-2 bg-amber-400 hover:bg-amber-300 text-slate-950 text-xs font-extrabold rounded-xl transition">
+              <i class="fa-regular fa-copy mr-1"></i> Copy Prompt
+            </button>
+          </div>
+        </div>
+
+        <!-- Item 3: AR Math Catcher -->
+        <div class="bg-slate-900/60 border border-emerald-400/30 p-6 rounded-3xl flex flex-col justify-between">
+          <div>
+            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-emerald-400 text-slate-950">MINI-GAME 🍏</span>
+            <h3 class="font-title font-black text-xl text-white mt-2">AR Math Catcher (Hứng Táo)</h3>
+            <p class="text-slate-300 text-xs mt-2 leading-relaxed">
+              Điều khiển bàn tay làm chiếc Giỏ Hứng ở đáy màn hình để bắt các quả táo mang phép tính đúng và né các quả bom sai.
+            </p>
+          </div>
+          <div class="mt-6 flex items-center gap-3">
+            <a href="./prompts/02-prompt-math-catcher-ar.md" target="_blank" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-xl border border-slate-700 transition">
+              Xem Chi Tiết
+            </a>
+            <button onclick="copyRawFile('./prompts/02-prompt-math-catcher-ar.md')" class="px-4 py-2 bg-emerald-400 hover:bg-emerald-300 text-slate-950 text-xs font-extrabold rounded-xl transition">
+              <i class="fa-regular fa-copy mr-1"></i> Copy Prompt
+            </button>
+          </div>
+        </div>
+
+        <!-- Item 4: Ninja Bubble Pop -->
+        <div class="bg-slate-900/60 border border-pink-400/30 p-6 rounded-3xl flex flex-col justify-between">
+          <div>
+            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-pink-500 text-white">FRUIT NINJA 🫧</span>
+            <h3 class="font-title font-black text-xl text-white mt-2">Math Ninja Bubble Pop</h3>
+            <p class="text-slate-300 text-xs mt-2 leading-relaxed">
+              Các bong bóng số thập phân và phân số bay từ dưới lên theo đường cong parabol, vung ngón tay chém vỡ bóng theo điều kiện.
+            </p>
+          </div>
+          <div class="mt-6 flex items-center gap-3">
+            <a href="./prompts/03-prompt-ninja-bubble-pop.md" target="_blank" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-xl border border-slate-700 transition">
+              Xem Chi Tiết
+            </a>
+            <button onclick="copyRawFile('./prompts/03-prompt-ninja-bubble-pop.md')" class="px-4 py-2 bg-pink-500 hover:bg-pink-400 text-white text-xs font-extrabold rounded-xl transition">
+              <i class="fa-regular fa-copy mr-1"></i> Copy Prompt
+            </button>
+          </div>
+        </div>
       </div>
-      <div class="flex items-center gap-4">
-        <span>Xử lý bởi Google MediaPipe Hands & Tone.js</span>
-        <span>•</span>
-        <span>Deploy trên GitHub Pages</span>
+    </section>
+
+    <!-- ================= TAB 3: CHARACTERS & STORYBOARDS ================= -->
+    <section id="tab-characters" class="tab-content hidden">
+      <div class="mb-8">
+        <h2 class="font-title font-black text-2xl sm:text-4xl text-white">Katalog Nhân Vật & Sơ Đồ Hoạt Cảnh</h2>
+        <p class="text-slate-400 text-xs sm:text-sm mt-1">Các nhân vật mẫu và kịch bản tương tác bạn có thể dùng trong game</p>
       </div>
-    </div>
-  </footer>
+
+      <!-- Grid 6 Nhân vật -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        <!-- Char 1 -->
+        <div class="bg-slate-900/60 border border-cyan-400/40 p-5 rounded-3xl">
+          <div class="text-4xl mb-3">🥷</div>
+          <h3 class="font-title font-black text-lg text-cyan-300">Ninja Toán Học</h3>
+          <div class="text-[11px] text-slate-400 mb-2 font-bold">Vũ khí: Kiếm Katana Laser Neon</div>
+          <p class="text-xs text-slate-300 leading-relaxed mb-4">
+            Lưỡi kiếm neon xanh ngọc phát sáng theo chuyển động tay, chém đứt đôi các bài toán rơi.
+          </p>
+          <span class="inline-block px-2 py-1 rounded-lg text-[10px] font-black uppercase bg-cyan-400 text-slate-950">Màu: #00F0FF</span>
+        </div>
+
+        <!-- Char 2 -->
+        <div class="bg-slate-900/60 border border-amber-400/40 p-5 rounded-3xl">
+          <div class="text-4xl mb-3">🍌</div>
+          <h3 class="font-title font-black text-lg text-amber-300">Chiến Thần Chuối</h3>
+          <div class="text-[11px] text-slate-400 mb-2 font-bold">Vũ khí: Găng Tay Đấm Bốc</div>
+          <p class="text-xs text-slate-300 leading-relaxed mb-4">
+            Phong cách Subway Surfers đeo kính râm cool ngầu, tung cú đấm văng chuối vàng và sóng chấn động.
+          </p>
+          <span class="inline-block px-2 py-1 rounded-lg text-[10px] font-black uppercase bg-amber-400 text-slate-950">Màu: #FFE600</span>
+        </div>
+
+        <!-- Char 3 -->
+        <div class="bg-slate-900/60 border border-pink-400/40 p-5 rounded-3xl">
+          <div class="text-4xl mb-3">🚀</div>
+          <h3 class="font-title font-black text-lg text-pink-300">Phi Hành Gia Nhí</h3>
+          <div class="text-[11px] text-slate-400 mb-2 font-bold">Vũ khí: Tia Laser Không Gian</div>
+          <p class="text-xs text-slate-300 leading-relaxed mb-4">
+            Bắn phá các thiên thạch bài toán trôi nổi giữa dải ngân hà huyền bí.
+          </p>
+          <span class="inline-block px-2 py-1 rounded-lg text-[10px] font-black uppercase bg-pink-400 text-slate-950">Màu: #EC4899</span>
+        </div>
+
+        <!-- Char 4 -->
+        <div class="bg-slate-900/60 border border-purple-400/40 p-5 rounded-3xl">
+          <div class="text-4xl mb-3">🧙‍♂️</div>
+          <h3 class="font-title font-black text-lg text-purple-300">Phù Thủy Số Học</h3>
+          <div class="text-[11px] text-slate-400 mb-2 font-bold">Vũ khí: Đũa Thần Ngôi Sao</div>
+          <p class="text-xs text-slate-300 leading-relaxed mb-4">
+            Vung tay bắn ra các luồng bụi phép thuật lấp lánh để giải mã các câu hỏi ẩn.
+          </p>
+          <span class="inline-block px-2 py-1 rounded-lg text-[10px] font-black uppercase bg-purple-400 text-white">Màu: #A855F7</span>
+        </div>
+
+        <!-- Char 5 -->
+        <div class="bg-slate-900/60 border border-emerald-400/40 p-5 rounded-3xl">
+          <div class="text-4xl mb-3">🍏</div>
+          <h3 class="font-title font-black text-lg text-emerald-300">Thợ Săn Táo Rừng</h3>
+          <div class="text-[11px] text-slate-400 mb-2 font-bold">Vũ khí: Giỏ Hứng Thần Kỳ</div>
+          <p class="text-xs text-slate-300 leading-relaxed mb-4">
+            Khu rừng nhiệt đới yên bình, dùng giỏ hứng các quả ngọt mang phép tính đúng.
+          </p>
+          <span class="inline-block px-2 py-1 rounded-lg text-[10px] font-black uppercase bg-emerald-400 text-slate-950">Màu: #10B981</span>
+        </div>
+
+        <!-- Char 6 -->
+        <div class="bg-slate-900/60 border border-orange-400/40 p-5 rounded-3xl">
+          <div class="text-4xl mb-3">🤖</div>
+          <h3 class="font-title font-black text-lg text-orange-300">Robot Cyber</h3>
+          <div class="text-[11px] text-slate-400 mb-2 font-bold">Vũ khí: Khiên Năng Lượng Plasma</div>
+          <p class="text-xs text-slate-300 leading-relaxed mb-4">
+            Chiến binh viễn tưởng tạo ra sóng từ trường phản chấn mỗi khi đỡ phép tính đúng.
+          </p>
+          <span class="inline-block px-2 py-1 rounded-lg text-[10px] font-black uppercase bg-orange-400 text-slate-950">Màu: #F97316</span>
+        </div>
+      </div>
+
+      <!-- Tài liệu sơ đồ hoạt cảnh -->
+      <div class="bg-slate-900/60 border border-slate-800 p-6 rounded-3xl flex items-center justify-between">
+        <div>
+          <h3 class="font-title font-black text-lg text-white">Xem Bản Đồ Hoạt Cảnh & Kịch Bản VFX Chi Tiết</h3>
+          <p class="text-xs text-slate-400 mt-1">Hướng dẫn chi tiết cách mô tả hiệu ứng kính vỡ, hạt nổ, sóng chấn động cho Gemini Canvas</p>
+        </div>
+        <a href="./catalogs/storyboards/visual-effects-guide.md" target="_blank" class="px-5 py-2.5 bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs rounded-xl transition">
+          Xem Tài Liệu VFX →
+        </a>
+      </div>
+    </section>
+
+    <!-- ================= TAB 4: DEMO MẪU ================= -->
+    <section id="demos" class="tab-content hidden">
+      <div class="mb-8">
+        <h2 class="font-title font-black text-2xl sm:text-4xl text-white">Các Bản Game Demo Mẫu</h2>
+        <p class="text-slate-400 text-xs sm:text-sm mt-1">Trải nghiệm trực tiếp 3 phong cách game được xây dựng từ các prompt trên</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Demo 1 -->
+        <div class="bg-slate-900/60 border-2 border-amber-400/40 p-6 rounded-3xl flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-2xl bg-amber-500/20 text-amber-300 flex items-center justify-center text-2xl mb-4">
+              🥊
+            </div>
+            <h3 class="font-title font-black text-xl text-white">Subway Math Blitz AR</h3>
+            <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+              Bản game như trong link chia sẻ: Thẻ rơi 3 làn, đấm thẻ đúng, né thẻ sai, kính vỡ khi đấm nhầm bẫy.
+            </p>
+          </div>
+          <a href="./games/math-blitz/index.html" class="mt-6 w-full py-3 bg-amber-400 hover:bg-amber-300 text-slate-950 font-title font-black text-center text-sm rounded-xl transition block shadow-lg">
+            Chơi Thử Demo 1 →
+          </a>
+        </div>
+
+        <!-- Demo 2 -->
+        <div class="bg-slate-900/60 border-2 border-emerald-400/40 p-6 rounded-3xl flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center text-2xl mb-4">
+              🧺
+            </div>
+            <h3 class="font-title font-black text-xl text-white">AR Math Catcher</h3>
+            <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+              Dùng bàn tay làm giỏ hứng táo toán học di chuyển ngang đáy màn hình.
+            </p>
+          </div>
+          <a href="./games/math-catcher/index.html" class="mt-6 w-full py-3 bg-emerald-400 hover:bg-emerald-300 text-slate-950 font-title font-black text-center text-sm rounded-xl transition block shadow-lg">
+            Chơi Thử Demo 2 →
+          </a>
+        </div>
+
+        <!-- Demo 3 -->
+        <div class="bg-slate-900/60 border-2 border-pink-400/40 p-6 rounded-3xl flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-2xl bg-pink-500/20 text-pink-300 flex items-center justify-center text-2xl mb-4">
+              🫧
+            </div>
+            <h3 class="font-title font-black text-xl text-white">Math Ninja Bubble Pop</h3>
+            <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+              Bong bóng bay lên từ đáy màn hình, vung ngón tay chém vỡ theo phong cách Fruit Ninja.
+            </p>
+          </div>
+          <a href="./games/math-bubble/index.html" class="mt-6 w-full py-3 bg-pink-500 hover:bg-pink-400 text-white font-title font-black text-center text-sm rounded-xl transition block shadow-lg">
+            Chơi Thử Demo 3 →
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- TOAST THÔNG BÁO COPY -->
+  <div id="copyToast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-emerald-500 text-slate-950 px-5 py-3 rounded-2xl font-bold text-sm shadow-2xl flex items-center gap-2">
+    <i class="fa-solid fa-circle-check text-lg"></i>
+    <span>Đã sao chép Prompt! Hãy dán vào Gemini Canvas.</span>
+  </div>
+
+  <!-- JAVASCRIPT ĐIỀU KHIỂN STUDIO -->
+  <script>
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('block'));
+
+      document.querySelectorAll('.nav-tab-btn').forEach(btn => {
+        btn.classList.remove('active', 'bg-cyan-500', 'text-slate-950', 'shadow-sm');
+        btn.classList.add('text-slate-300');
+      });
+
+      const target = document.getElementById('tab-' + tabId);
+      if (target) {
+        target.classList.remove('hidden');
+        target.classList.add('block');
+      }
+
+      const activeBtn = document.querySelector(`.nav-tab-btn[data-tab="${tabId}"]`);
+      if (activeBtn) {
+        activeBtn.classList.add('active', 'bg-cyan-500', 'text-slate-950', 'shadow-sm');
+        activeBtn.classList.remove('text-slate-300');
+      }
+    }
+
+    // Bộ Từ Điển Dữ Liệu Tạo Prompt Tự Động
+    const MECHANICS_DESC = {
+      blitz: "Đấm bốc / Chém thẻ bài rơi (Subway Surfers Style): Các thẻ phép tính rơi đều từ trên xuống theo 3 làn chạy. Người chơi vung 1 bàn tay như đấm bốc để phá tan thẻ ĐÚNG và né/bỏ qua thẻ SAI.",
+      catcher: "Giỏ hứng vật phẩm rơi (Catcher Mechanics): Bàn tay của người chơi điều khiển một chiếc Giỏ Hứng di chuyển ngang phía đáy màn hình để bắt các vật phẩm ĐÚNG và né vật phẩm SAI.",
+      bubble: "Chém bong bóng bay lên (Fruit Ninja Style): Các quả bong bóng mang phép tính được bắn từ dưới lên theo đường cong parabol, vung ngón tay chém vỡ bong bóng thỏa mãn điều kiện.",
+      quiz: "Bắn cung / Ngắm điểm đáp án đúng: Đầu ngón tay làm tâm ngắm phát sáng, khi người chơi khép ngón tay lại (pinch) sẽ bắn tia laser vào đáp án đúng."
+    };
+
+    const TOPICS_DESC = {
+      lop4_phanso: "Toán Lớp 4 - Phân số: Rút gọn phân số (ví dụ: 6/8 = 3/4) và cộng trừ phân số cùng mẫu số (ví dụ: 2/5 + 1/5 = 3/5). Cài cắm bẫy cộng cả tử lẫn mẫu (ví dụ sai: 1/3 + 1/3 = 2/6).",
+      lop4_nhan11: "Toán Lớp 4 - Nhân nhẩm nhanh: Nhân số có 2 chữ số với 11 (ví dụ: 25 × 11 = 275) và nhân chia số tròn chục, tròn trăm với 10, 100, 1000.",
+      lop4_donvi: "Toán Lớp 4 - Đổi đơn vị đo: Khối lượng (1 tấn = 1000kg, 1 tạ = 100kg, 1 yến = 10kg) và diện tích (1 m² = 100 dm², 1 dm² = 100 cm²). Bẫy nhầm đơn vị gấp 10 lần.",
+      lop4_chiahet: "Toán Lớp 4 - Dấu hiệu chia hết: Nhận biết nhanh số chia hết cho 2, 5, 9, 3.",
+      lop5_thapphan: "Toán Lớp 5 - Số thập phân: Phép tính nhẩm số thập phân đẹp (0.5 × 6 = 3, 0.25 × 4 = 1, 1.5 + 2.5 = 4) và nhân chia với 10, 0.1. Cài cắm bẫy đặt sai dấu phẩy (ví dụ sai: 0.25 × 4 = 10).",
+      lop5_phantram: "Toán Lớp 5 - Tỉ số phần trăm: Tính nhẩm 10%, 20%, 25%, 50% của một số tự nhiên (ví dụ: 50% của 200 = 100, 25% của 400 = 100).",
+      lop5_chuyendong: "Toán Lớp 5 - Toán chuyển động đều: Công thức tính Quãng đường (s = v × t), Vận tốc (v = s : t) và Thời gian (t = s : v).",
+      lop5_hinhhoc: "Toán Lớp 5 - Hình học: Diện tích tam giác S = (đáy × cao) : 2 và Chu vi hình tròn C = d × 3.14. Cài bẫy quên chia cho 2.",
+      cuuchuong: "Ôn tập Bảng Cửu Chương: Phép nhân và phép chia trong phạm vi từ 2 đến 9 kèm bẫy số liền kề."
+    };
+
+    const CHARACTERS_DESC = {
+      ninja: "Nhân vật là 'Ninja Toán Học' 🥷. Con trỏ bàn tay được biểu diễn như một chiếc phi tiêu shuriken phát sáng viền xanh neon #00F0FF, bám theo vệt kiếm ánh sáng rực rỡ khi chém thẻ.",
+      banana: "Nhân vật mang phong cách 'Subway Banana' 🍌 đeo kính râm cool ngầu. Con trỏ tay là găng tay đấm bốc màu vàng cam rực rỡ #FFE600, khi tung đấm văng ra các quả chuối vàng và sóng chấn động shockwave.",
+      astro: "Bối cảnh dải ngân hà vũ trụ sâu thẳm. Nhân vật là Phi Hành Gia Nhí 🚀. Con trỏ tay là tâm ngắm tên lửa hồng neon #EC4899, khi chạm vào đáp án đúng sẽ phóng tia laser làm nổ hạt sao lấp lánh.",
+      wizard: "Nhân vật là Phù Thủy Số Học 🧙‍♂️. Con trỏ tay là một cây Đũa Thần phát sáng ngôi sao màu tím ma thuật #A855F7, vung tay bắn ra các luồng bụi phép thuật lấp lánh.",
+      catcher: "Bối cảnh khu vườn sinh thái rừng xanh 🍏. Bàn tay của người chơi điều khiển 'Chiếc Giỏ Thần Kỳ 🧺' màu xanh ngọc bích #10B981, hứng các quả táo xanh đúng và né các quả táo đỏ sâu bọ.",
+      robot: "Nhân vật là Robot Biến Hình Cyber 🤖. Con trỏ tay là chiếc Khiên Năng Lượng Plasma màu cam lửa #F97316, tạo ra sóng từ trường phản chấn mỗi khi chặn đứng một phép tính chính xác."
+    };
+
+    const PENALTY_DESC = {
+      cracked: "Màn hình chớp đỏ nhạt, rung lắc nhẹ (screen shake) và xuất hiện hiệu ứng rạn nứt kính mạng nhện tỏa ra từ điểm va chạm, kèm âm thanh kính vỡ toảng râm ran.",
+      lightning: "Toàn bộ màn hình chớp sáng sấm sét dữ dội kèm tiếng sấm gầm giáng xuống và trừ 1 mạng.",
+      smoke: "Phun ra luồng khói đen xì che mờ màn hình trong 1 giây kèm tiếng còi cảnh báo lỗi buzzer."
+    };
+
+    function generatePrompt() {
+      const mech = document.getElementById('optMechanic').value;
+      const topic = document.getElementById('optTopic').value;
+      const char = document.getElementById('optCharacter').value;
+      const pen = document.getElementById('optPenalty').value;
+
+      const promptText = `Bạn là một Chuyên gia Lập trình Game Giáo dục Web AR (HTML5, Canvas 2D, MediaPipe, Web Audio).
+Hãy tạo cho tôi một ứng dụng Game Tương Tác Học Tập hoàn chỉnh đóng gói trong DUY NHẤT 1 FILE HTML (Single File HTML) để chạy trực tiếp trên trình duyệt web máy tính / laptop.
+
+### 1. CƠ CHẾ GAMEPLAY:
+- Thể loại: ${MECHANICS_DESC[mech]}
+- Nhân vật & Vũ khí chủ đề: ${CHARACTERS_DESC[char]}
+
+### 2. CÔNG NGHỆ BẮT BUỘC:
+- Nhúng Google MediaPipe Hands qua CDN:
+  * https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js
+  * https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js
+- Video webcam nền đặt lật gương ngang (transform: -scale-x-100) để người chơi có cảm giác soi gương tự nhiên.
+- Áp dụng bộ lọc mượt chuyển động tay Exponential Moving Average (EMA với alpha ~ 0.45) để chống giật rung từ webcam.
+- BẮT BUỘC có chế độ Fallback: Nếu người chơi không có camera hoặc từ chối cấp quyền, vẫn có thể click chuột hoặc chạm màn hình để chơi bình thường.
+- Âm thanh Arcade (Tone.js): Nhúng https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js. Không tải file mp3 ngoài, tự tổng hợp âm thanh bằng Synthesizer (tiếng vung tay, tiếng nhặt xu hợp âm theo combo, tiếng kính vỡ khi sai).
+
+### 3. NỘI DUNG TOÁN HỌC:
+- Chủ đề: ${TOPICS_DESC[topic]}
+- Tỉ lệ xuất hiện: 60% phép tính ĐÚNG (để người chơi tương tác ăn điểm), 40% phép tính SAI (làm bẫy sư phạm để người chơi né tránh).
+- Khi chọn ĐÚNG: +10 điểm x Combo, nổ hạt sao rực rỡ, âm thanh tươi vui.
+- Khi chọn SAI: Bị trừ 1 Máu (trong tổng số 5 Máu), ${PENALTY_DESC[pen]}, đồng thời hiện Banner giải thích rõ ràng vì sao phép tính bị sai để học sinh ghi nhớ.
+- Khi hết máu: Hiện bảng Game Over tổng kết điểm số, kỷ lục High Score và nút Chơi Lại.
+
+### 4. ĐỒ HỌA & GIAO DIỆN:
+- Dùng Tailwind CSS CDN + Google Fonts (Fredoka và Outfit).
+- Đồ họa Canvas 2D mượt mà 60 FPS, màu sắc rực rỡ phong cách EdTech vui nhộn.
+
+Hãy viết trọn vẹn toàn bộ mã nguồn HTML, CSS và JavaScript hoàn chỉnh, sẵn sàng chạy ngay khi mở file!`;
+
+      document.getElementById('promptOutput').value = promptText;
+    }
+
+    function copyGeneratedPrompt() {
+      const textarea = document.getElementById('promptOutput');
+      textarea.select();
+      navigator.clipboard.writeText(textarea.value).then(() => {
+        showToast();
+      });
+    }
+
+    function copyRawFile(filePath) {
+      fetch(filePath)
+        .then(res => res.text())
+        .then(text => {
+          navigator.clipboard.writeText(text).then(() => {
+            showToast();
+          });
+        })
+        .catch(err => {
+          console.error("Lỗi copy:", err);
+          alert("Không thể đọc file: " + filePath);
+        });
+    }
+
+    function showToast() {
+      const toast = document.getElementById('copyToast');
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 2500);
+    }
+
+    // Tự sinh prompt mặc định khi tải trang
+    window.addEventListener('DOMContentLoaded', () => {
+      generatePrompt();
+    });
+  </script>
 
 </body>
 </html>

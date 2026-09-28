@@ -1,111 +1,72 @@
-# 🥊 AR Math Kids — Nền Tảng Game Toán Thực Tế Ảo Cho Học Sinh Lớp 4 & 5
+# 🎨 GEMINI CANVAS GAME PROMPT STUDIO & FORGE
+### Bộ Tổng Hợp Master Prompt, Thư Viện Nhân Vật & Mẫu Game Thực Tế Ảo (Web AR) Cho Học Sinh Lớp 4 & 5
 
-> **Trò chơi vận động tương tác thực tế ảo (Web AR) rèn luyện phản xạ tính nhẩm môn Toán cho học sinh Tiểu học, chạy trực tiếp trên trình duyệt Web qua Webcam, bảo mật 100% và hoàn toàn miễn phí.**
-
----
-
-## 🌟 Tính Năng Nổi Bật
-
-- **📷 Không cần cài đặt (100% Client-side):** Sử dụng **Google MediaPipe Hands** nhận diện cử chỉ tay theo thời gian thực (30-60 FPS) trực tiếp trên trình duyệt Chrome/Edge/Cốc Cốc.
-- **🔒 Bảo mật tuyệt đối:** Hình ảnh webcam chỉ được xử lý cục bộ trên máy tính của người dùng, không truyền bất kỳ dữ liệu video nào lên máy chủ.
-- **📚 Bám sát chương trình Toán Lớp 4 & 5:**
-  - **Lớp 4:** Nhân nhẩm 11, nhân chia số tròn chục, rút gọn & cộng trừ phân số cùng mẫu, đổi đơn vị đo đại lượng (tấn, tạ, yến, m², dm²), dấu hiệu chia hết cho 2, 3, 5, 9.
-  - **Lớp 5:** Tính nhẩm số thập phân ($0.25 \times 4$), phân số nâng cao, tỉ số phần trăm ($10\%, 20\%, 50\%$), bài toán chuyển động đều ($s = v \times t$), diện tích tam giác & chu vi hình tròn.
-  - **Ôn tập:** Bảng cửu chương nhân chia 2 đến 9.
-- **⚡ Hệ thống phản hồi thị giác & âm thanh:**
-  - Vết kiếm neon và hiệu ứng nổ hạt rực rỡ khi đấm trúng thẻ **ĐÚNG**.
-  - Kính vỡ toảng rạn nứt mạng nhện kèm giải thích chi tiết khi đấm nhầm thẻ **SAI**.
-  - Âm thanh arcade chân thực được tạo bằng **Tone.js** (không cần tải file mp3 ngoài).
-  - Có chế độ chuột & cảm ứng màn hình phòng khi học sinh không có webcam.
-- **🧩 Khung sườn cắm/rút (Pluggable Architecture):** Dễ dàng thêm/bớt chủ đề toán học hoặc tự viết thêm mini-game mới chỉ với vài dòng code!
+> **Kho tài nguyên chuyên dụng để đưa vào Google Gemini (Chế độ Canvas) để tự động sinh ra các tựa Game Giáo Dục Toán Học Thực Tế Ảo (Webcam AR / 2D Canvas) chỉ trong 30 giây.**
 
 ---
 
-## 🎮 Danh Sách Các Trò Chơi Trong Repo
+## 🌟 Dự Án Này Giải Quyết Vấn Đề Gì?
 
-| Trò Chơi | Đường Dẫn | Cơ Chế Chơi |
-| :--- | :--- | :--- |
-| **Subway Math Blitz AR** ⭐ | [`games/math-blitz/index.html`](games/math-blitz/index.html) | Đứng cách camera 1.5m - 2m, vung 1 bàn tay như đấm bốc chém vỡ thẻ phép tính **ĐÚNG**, né thẻ **SAI**. |
-| **AR Math Catcher** 🍏 | [`games/math-catcher/index.html`](games/math-catcher/index.html) | Di chuyển bàn tay làm chiếc giỏ để hứng các quả táo mang phép tính **ĐÚNG** rơi xuống. |
+Khi dùng **Google Gemini (Canvas)** để tạo game, nếu viết prompt chung chung, AI thường sinh ra code thiếu thư viện, camera bị giật rung hoặc không có âm thanh.
+Kho lưu trữ này cung cấp:
+1. **Master Prompt Chuẩn:** Đã được tinh chỉnh hoàn hảo để Gemini Canvas lập trình game 1 file HTML mượt mà 60 FPS, nhận diện cử chỉ bàn tay (MediaPipe) và âm thanh sống động (Tone.js).
+2. **Trình Tạo Prompt Tự Động (Web Studio):** Mở [`index.html`](index.html), chọn thể loại, khối lớp và nhân vật $\rightarrow$ Nhận ngay câu lệnh Prompt hoàn chỉnh kèm nút **Copy Prompt cho Gemini**.
+3. **Katalog Nhân Vật & Hoạt Cảnh:** Bộ sưu tập 6 nhân vật mẫu (Ninja, Chuối Subway, Phi hành gia...) và sơ đồ phân cảnh (Vung tay $\rightarrow$ Nổ hạt $\rightarrow$ Kính vỡ mạng nhện).
+4. **3 Bản Demo Mẫu Nhỏ:** Chơi thử ngay trên máy để xem trước cách prompt hoạt động thực tế.
+5. **Khung Mở Rộng:** Form mẫu `template-tao-game-moi.md` để bạn tự thêm prompt mới mỗi khi có ý tưởng game mới.
 
 ---
 
-## 📁 Cấu Trúc Dự Án (Repository Structure)
+## 📁 Cấu Trúc Kho Lưu Trữ
 
 ```text
-├── index.html                   # Cổng Portal chọn game & xem thông tin
+Github/
+├── index.html                   # Web Studio: Trình tạo prompt + Kho prompt + Demo mẫu
 ├── README.md                    # Tài liệu hướng dẫn chính
-├── src/
-│   ├── core/                    # Engine tái sử dụng chung cho mọi game
-│   │   ├── HandTracker.js       # Nhận diện tay bằng MediaPipe, khử rung EMA
-│   │   ├── AudioManager.js      # Tạo hiệu ứng âm thanh bằng Tone.js
-│   │   └── ParticleSystem.js    # Hạt nổ, vết kiếm neon, sóng chấn động, kính vỡ
-│   └── data/                    # Ngân hàng câu hỏi Toán học (DỄ DÀNG THÊM BỚT)
-│       ├── index.js             # TopicRegistry quản lý tập trung
-│       ├── topics-cuuchuong.js  # Bảng nhân chia 2 -> 9
-│       ├── topics-lop4.js       # Kho bài tập Toán Lớp 4
-│       └── topics-lop5.js       # Kho bài tập Toán Lớp 5
-├── games/
-│   ├── math-blitz/              # Game 1: Subway Math Blitz
-│   └── math-catcher/            # Game 2: AR Math Catcher
-└── docs/                        # SERIES HƯỚNG DẪN TỪ A-Z (7 BÀI HỌC)
-    ├── README.md                # Lộ trình học
-    ├── bai-01-tong-quan-va-khoi-tao.md
-    ├── bai-02-camera-va-mediapipe-hand-tracking.md
-    ├── bai-03-game-loop-va-hieu-ung-canvas.md
-    ├── bai-04-thiet-ke-kho-toan-lop-4-5-va-sinh-de.md
-    ├── bai-05-am-thanh-arcade-voi-tonejs.md
-    ├── bai-06-trien-khai-github-pages-va-chia-se.md
-    └── bai-07-huong-dan-tu-tao-mini-game-moi.md
+│
+├── prompts/                     # TỔNG HỢP PROMPT DÀNH CHO GEMINI CANVAS
+│   ├── README.md                # Hướng dẫn chi tiết cách dán vào Gemini
+│   ├── 00-master-canvas-prompt.md # Master System Prompt (Khung xương kỹ thuật)
+│   ├── 01-prompt-subway-math-blitz.md # Prompt tái tạo game như link chia sẻ
+│   ├── 02-prompt-math-catcher-ar.md   # Prompt tạo game giỏ hứng quả
+│   ├── 03-prompt-ninja-bubble-pop.md  # Prompt tạo game chém bong bóng số
+│   └── template-tao-game-moi.md       # FORM MẪU ĐIỀN NHANH ĐỂ TẠO PROMPT MỚI
+│
+├── catalogs/                    # THƯ VIỆN NHÂN VẬT & HOẠT CẢNH MẪU
+│   ├── characters/
+│   │   ├── characters.json      # Dữ liệu 6 nhân vật mẫu, màu sắc, vũ khí
+│   │   └── characters-guide.md  # Cách ghép nhân vật vào câu lệnh prompt
+│   └── storyboards/
+│       ├── game-flowchart.mermaid # Sơ đồ luồng game (Game Loop, State Machine)
+│       └── visual-effects-guide.md# Kịch bản hoạt cảnh chi tiết (VFX, kính vỡ)
+│
+└── games/                       # 3 BẢN DEMO MẪU CHẠY TRỰC TIẾP
+    ├── math-blitz/              # Demo 1: Subway Math Blitz AR
+    ├── math-catcher/            # Demo 2: AR Math Catcher (Hứng táo)
+    └── math-bubble/             # Demo 3: Math Ninja Bubble Pop
 ```
 
 ---
 
-## 🛠️ Cách Thêm Dạng Toán Mới Của Bạn
+## 🚀 Cách Dùng Nhanh (Quick Start)
 
-Để thêm một dạng toán mới (ví dụ: *Toán Lớp 3* hoặc *Tiếng Anh*), bạn chỉ cần mở file `src/data/topics-lop4.js` (hoặc tạo file mới) và viết theo mẫu:
-
-```javascript
-TopicRegistry.registerTopic({
-  id: 'chu_de_moi',
-  grade: 4,
-  title: 'Tên Dạng Toán Của Bạn',
-  badge: 'MỚI',
-  badgeColor: '#10B981',
-  description: 'Mô tả ngắn gọn về dạng toán',
-  generate() {
-    return {
-      isCorrect: true,             // Thẻ này ĐÚNG hay SAI
-      leftPart: '45 + 55',         // Vế trái
-      rightPart: '= 100',          // Vế phải
-      text: '45 + 55 = 100',       // Hiển thị đầy đủ
-      explanation: '45 + 55 = 100' // Giải thích khi đấm nhầm
-    };
-  }
-});
-```
-Menu chọn bài trong game sẽ **tự động cập nhật** mà không cần sửa giao diện!
+### Cách 1: Dùng Trình Tạo Prompt Trên Giao Diện Web
+1. Truy cập trực tiếp link GitHub Pages: **[https://hoatran1127.github.io/New/](https://hoatran1127.github.io/New/)**
+2. Chọn: Thể loại game $\rightarrow$ Dạng toán Lớp 4 / Lớp 5 $\rightarrow$ Nhân vật yêu thích.
+3. Bấm nút **"Copy Prompt Cho Gemini"**.
+4. Mở [Google Gemini](https://gemini.google.com), dán vào khung chat và bật chế độ **Canvas** $\rightarrow$ Thưởng thức game do AI sinh ra!
 
 ---
 
-## 🚀 Triển Khai Lên GitHub Pages Trong 2 Phút
-
-1. Đẩy mã nguồn dự án lên kho lưu trữ GitHub của bạn:
-   ```bash
-   git add .
-   git commit -m "feat: Ra mắt game toán AR lớp 4 và 5"
-   git push origin main
-   ```
-2. Trên GitHub, vào **Settings** $\rightarrow$ **Pages**.
-3. Tại **Build and deployment**, chọn Branch: `main` và thư mục `/ (root)`, sau đó bấm **Save**.
-4. Đường link game của bạn sẽ sẵn sàng tại: `https://<ten-user>.github.io/<ten-repo>/`.
+### Cách 2: Tự Viết Thêm Prompt Mới Khi Có Ý Tưởng Game Mới
+1. Mở file [`prompts/template-tao-game-moi.md`](prompts/template-tao-game-moi.md).
+2. Điền ý tưởng của bạn vào các mục: Thể loại, Nhân vật, Dạng bài tập.
+3. Lưu file mới vào thư mục `prompts/` (ví dụ: `04-prompt-dua-xe-toan-hoc.md`) để bổ sung vào bộ sưu tập cá nhân!
 
 ---
 
-## 📖 Series Giáo Trình Hướng Dẫn Coding
+## 🎮 Danh Sách 3 Game Demo Mẫu
 
-Nếu bạn muốn tìm hiểu chi tiết cách từng dòng code hoạt động để tự chế tạo game của riêng mình hoặc hướng dẫn học sinh trong CLB STEM, hãy đọc trọn bộ **7 bài học** trong thư mục [`docs/`](docs/README.md).
-
----
-
-❤️ *Dự án được xây dựng với mục tiêu mang lại niềm vui học tập và vận động cho học sinh tiểu học.*
+- **Demo 1: Subway Math Blitz AR** ([`games/math-blitz/index.html`](games/math-blitz/index.html)): Thẻ bài rơi 3 làn phong cách Subway Surfers, đấm thẻ đúng, né thẻ sai, kính vỡ toảng mạng nhện khi chọn nhầm bẫy.
+- **Demo 2: AR Math Catcher** ([`games/math-catcher/index.html`](games/math-catcher/index.html)): Dùng bàn tay làm giỏ di động hứng các quả táo phép tính đúng rơi xuống.
+- **Demo 3: Math Ninja Bubble Pop** ([`games/math-bubble/index.html`](games/math-bubble/index.html)): Bong bóng bay lên từ đáy màn hình, vung ngón tay chém bóng theo phong cách Fruit Ninja.

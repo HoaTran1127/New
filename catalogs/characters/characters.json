@@ -1,0 +1,92 @@
+[
+  {
+    "id": "ninja_toan_hoc",
+    "name": "Ninja Toán Học (Math Ninja)",
+    "category": "Chiến đấu / Phản xạ",
+    "emoji": "🥷",
+    "badgeColor": "#00F0FF",
+    "themeColors": {
+      "primary": "#00F0FF",
+      "secondary": "#0284C7",
+      "trail": "rgba(0, 240, 255, 0.7)"
+    },
+    "weapon": "Kiếm Katana Ánh Sáng Laser",
+    "description": "Nhân vật hiệp sĩ ninja bịt mặt, di chuyển nhanh như chớp. Khi người chơi vung tay, lưỡi kiếm neon xanh ngọc chém đứt đôi các thẻ bài hoặc bong bóng phép tính.",
+    "promptSnippet": "Nhân vật chính là 'Ninja Toán Học' 🥷. Con trỏ bàn tay được biểu diễn như một chiếc phi tiêu shuriken xoay tròn phát sáng viền xanh neon #00F0FF, bám theo vệt kiếm ánh sáng rực rỡ khi chém thẻ."
+  },
+  {
+    "id": "chien_than_chuoi",
+    "name": "Chiến Thần Chuối (Banana Surfer)",
+    "category": "Đường phố / Vận động",
+    "emoji": "🍌",
+    "badgeColor": "#FFE600",
+    "themeColors": {
+      "primary": "#FFE600",
+      "secondary": "#FB8500",
+      "trail": "rgba(255, 230, 0, 0.7)"
+    },
+    "weapon": "Găng Tay Đấm Bốc Năng Lượng",
+    "description": "Lấy cảm hứng từ Subway Surfers: chú chuối sành điệu đeo kính râm, cưỡi ván trượt hoverboard. Cú đấm bốc uy lực làm nổ tung các thẻ bài đúng.",
+    "promptSnippet": "Nhân vật mang phong cách 'Subway Banana' 🍌 đeo kính râm cool ngầu. Con trỏ tay là găng tay đấm bốc màu vàng cam rực rỡ #FFE600, khi tung đấm văng ra các quả chuối vàng và sóng chấn động shockwave."
+  },
+  {
+    "id": "phi_hanh_gia_nhi",
+    "name": "Phi Hành Gia Vũ Trụ (Astro Kid)",
+    "category": "Khoa học / Khám phá",
+    "emoji": "🚀",
+    "badgeColor": "#EC4899",
+    "themeColors": {
+      "primary": "#EC4899",
+      "secondary": "#8B5CF6",
+      "trail": "rgba(236, 72, 153, 0.7)"
+    },
+    "weapon": "Súng Bắn Tia Laser Không Gian",
+    "description": "Phi hành gia nhí đeo ba lô phản lực Jetpack bay giữa dải ngân hà. Các câu hỏi toán học xuất hiện dưới dạng các thiên thạch trôi nổi.",
+    "promptSnippet": "Bối cảnh dải ngân hà vũ trụ sâu thẳm. Nhân vật là Phi Hành Gia Nhí 🚀. Con trỏ tay là tâm ngắm tên lửa hồng neon #EC4899, khi chạm vào thiên thạch mang phép tính đúng sẽ phóng tia laser làm nổ thiên thạch thành các vì sao lấp lánh."
+  },
+  {
+    "id": "phu_thuy_so_hoc",
+    "name": "Phù Thủy Số Học (Math Wizard)",
+    "category": "Ma thuật / Huyền bí",
+    "emoji": "🧙‍♂️",
+    "badgeColor": "#A855F7",
+    "themeColors": {
+      "primary": "#A855F7",
+      "secondary": "#6366F1",
+      "trail": "rgba(168, 85, 247, 0.7)"
+    },
+    "weapon": "Đũa Thần Ngôi Sao Pha Lê",
+    "description": "Phù thủy nhí đội nón chóp tím, tay cầm đũa phép. Các bài toán ẩn chứa trong các quả cầu pha lê ma thuật hoặc cuốn sách cổ bay lơ lửng.",
+    "promptSnippet": "Nhân vật là Phù Thủy Số Học 🧙‍♂️. Con trỏ tay là một cây Đũa Thần phát sáng ngôi sao màu tím ma thuật #A855F7. Vung tay bắn ra các luồng bụi phép thuật lấp lánh để kích hoạt phép thuật biến giải bài toán."
+  },
+  {
+    "id": "chu_ech_thong_thai",
+    "name": "Thợ Săn Táo Rừng Xanh (Forest Catcher)",
+    "category": "Dễ thương / Thư giãn",
+    "emoji": "🍏",
+    "badgeColor": "#10B981",
+    "themeColors": {
+      "primary": "#10B981",
+      "secondary": "#059669",
+      "trail": "rgba(16, 185, 129, 0.6)"
+    },
+    "weapon": "Chiếc Giỏ Hứng Thần Kỳ",
+    "description": "Khu rừng nhiệt đới với cây táo đại thụ. Nhân vật cầm chiếc giỏ tre di chuyển thoăn thoắt để hứng những quả ngọt mang phép tính chính xác.",
+    "promptSnippet": "Bối cảnh khu vườn sinh thái rừng xanh 🍏. Bàn tay của người chơi điều khiển 'Chiếc Giỏ Thần Kỳ 🧺' màu xanh ngọc bích #10B981, hứng các quả táo xanh đúng và né các quả táo đỏ sâu bọ."
+  },
+  {
+    "id": "robo_bien_hinh",
+    "name": "Robot Biến Hình (Mecha Cyber)",
+    "category": "Khoa học viễn tưởng",
+    "emoji": "🤖",
+    "badgeColor": "#F97316",
+    "themeColors": {
+      "primary": "#F97316",
+      "secondary": "#EA580C",
+      "trail": "rgba(249, 115, 22, 0.8)"
+    },
+    "weapon": "Khiên Chắn Năng Lượng Plasma",
+    "description": "Robot chiến binh phong cách Transformers. Các phép tính bay tới như các quả tên lửa năng lượng, robot dùng khiên tay để đỡ và phản đòn.",
+    "promptSnippet": "Nhân vật là Robot Biến Hình Cyber 🤖. Con trỏ tay là chiếc Khiên Năng Lượng Plasma màu cam lửa #F97316, tạo ra sóng từ trường phản chấn mỗi khi chặn đứng một phép tính chính xác."
+  }
+]
