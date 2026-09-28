@@ -13,11 +13,15 @@ class HandTracker {
     this.minDetectionConfidence = options.minDetectionConfidence || 0.65;
     this.minTrackingConfidence = options.minTrackingConfidence || 0.65;
     this.smoothingFactor = options.smoothingFactor || 0.45; // EMA alpha
+    this.strikeSpeedThreshold = options.strikeSpeedThreshold || 1.15;
+    this.strikeReleaseThreshold = options.strikeReleaseThreshold || 0.55;
+    this.strikeCooldownMs = options.strikeCooldownMs || 220;
 
     this.hands = null;
     this.camera = null;
     this.isRunning = false;
     this.lastHandsData = [];
+    this.lastStrikeAt = [];
     this.onResultsCallback = null;
     this.onReadyCallback = null;
     this.onErrorCallback = null;
@@ -121,6 +125,7 @@ class HandTracker {
         let smoothX = mirroredPalmX;
         let smoothY = rawPalmY;
         let speed = 0;
+        const now = performance.now();
 
         if (prevHand) {
           smoothX = prevHand.x + this.smoothingFactor * (mirroredPalmX - prevHand.x);
@@ -128,7 +133,9 @@ class HandTracker {
           
           const dx = smoothX - prevHand.x;
           const dy = smoothY - prevHand.y;
-          speed = Math.sqrt(dx * dx + dy * dy);
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          const dt = Math.max(16, now - (prevHand.timestamp || now - 16));
+          speed = distance / (dt / 1000);
         }
 
         // Kiểm tra nắm tay (Fist) hay xòe tay (Open Palm)
@@ -139,7 +146,13 @@ class HandTracker {
         const isFist = distIndex < distKnuckle * 1.15;
 
         // Cú vung đấm chém (Strike): Khi tốc độ tay vượt ngưỡng hoặc đang lao tới
-        const isStriking = speed > 0.035;
+        const wasStriking = Boolean(prevHand && prevHand.isStriking);
+        const isStriking = wasStriking
+          ? speed > this.strikeReleaseThreshold
+          : speed > this.strikeSpeedThreshold;
+        const canPulse = now - (this.lastStrikeAt[i] || 0) >= this.strikeCooldownMs;
+        const strikePulse = isStriking && !wasStriking && canPulse;
+        if (strikePulse) this.lastStrikeAt[i] = now;
 
         processedHands.push({
           index: i,
@@ -150,6 +163,8 @@ class HandTracker {
           speed,
           isFist,
           isStriking,
+          strikePulse,
+          timestamp: now,
           landmarks: rawLandmarks
         });
       }
@@ -164,6 +179,8 @@ class HandTracker {
 
   stop() {
     this.isRunning = false;
+    this.lastHandsData = [];
+    this.lastStrikeAt = [];
     if (this.camera && typeof this.camera.stop === 'function') {
       this.camera.stop();
     }
