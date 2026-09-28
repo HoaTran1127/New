@@ -2,7 +2,7 @@
   {
     "id": "ninja_toan_hoc",
     "name": "Ninja Toán Học (Math Ninja)",
-    "category": "Chiến đấu / Phản xạ",
+    "category": "Môn Toán / Phản xạ",
     "emoji": "🥷",
     "badgeColor": "#00F0FF",
     "themeColors": {
@@ -13,6 +13,21 @@
     "weapon": "Kiếm Katana Ánh Sáng Laser",
     "description": "Nhân vật hiệp sĩ ninja bịt mặt, di chuyển nhanh như chớp. Khi người chơi vung tay, lưỡi kiếm neon xanh ngọc chém đứt đôi các thẻ bài hoặc bong bóng phép tính.",
     "promptSnippet": "Nhân vật chính là 'Ninja Toán Học' 🥷. Con trỏ bàn tay được biểu diễn như một chiếc phi tiêu shuriken xoay tròn phát sáng viền xanh neon #00F0FF, bám theo vệt kiếm ánh sáng rực rỡ khi chém thẻ."
+  },
+  {
+    "id": "tham_tu_tu_vung",
+    "name": "Thám Tử Từ Vựng (Word Detective)",
+    "category": "Môn Tiếng Anh / Trinh thám",
+    "emoji": "🕵️‍♂️",
+    "badgeColor": "#38BDF8",
+    "themeColors": {
+      "primary": "#38BDF8",
+      "secondary": "#0284C7",
+      "trail": "rgba(56, 189, 248, 0.7)"
+    },
+    "weapon": "Kính Lúp Phóng Đại Laser",
+    "description": "Nhân vật thám tử đội mũ phớt, cầm kính lúp thần kỳ đi soi tìm các từ vựng tiếng Anh đúng chủ đề trong khu phố bí ẩn.",
+    "promptSnippet": "Nhân vật là 'Thám Tử Từ Vựng' 🕵️‍♂️. Con trỏ tay là chiếc Kính Lúp Phóng Đại phát sáng màu xanh da trời #38BDF8, khi quét trúng từ vựng đúng sẽ phóng to chữ và phát âm thanh giải mã bí ẩn."
   },
   {
     "id": "chien_than_chuoi",
@@ -60,33 +75,18 @@
     "promptSnippet": "Nhân vật là Phù Thủy Số Học 🧙‍♂️. Con trỏ tay là một cây Đũa Thần phát sáng ngôi sao màu tím ma thuật #A855F7. Vung tay bắn ra các luồng bụi phép thuật lấp lánh để kích hoạt phép thuật biến giải bài toán."
   },
   {
-    "id": "chu_ech_thong_thai",
-    "name": "Thợ Săn Táo Rừng Xanh (Forest Catcher)",
-    "category": "Dễ thương / Thư giãn",
-    "emoji": "🍏",
+    "id": "khung_long_biet_noi",
+    "name": "Khủng Long Biết Nói (Dino Speller)",
+    "category": "Môn Tiếng Anh / Đáng yêu",
+    "emoji": "🦖",
     "badgeColor": "#10B981",
     "themeColors": {
       "primary": "#10B981",
-      "secondary": "#059669",
-      "trail": "rgba(16, 185, 129, 0.6)"
+      "secondary": "#047857",
+      "trail": "rgba(16, 185, 129, 0.7)"
     },
-    "weapon": "Chiếc Giỏ Hứng Thần Kỳ",
-    "description": "Khu rừng nhiệt đới với cây táo đại thụ. Nhân vật cầm chiếc giỏ tre di chuyển thoăn thoắt để hứng những quả ngọt mang phép tính chính xác.",
-    "promptSnippet": "Bối cảnh khu vườn sinh thái rừng xanh 🍏. Bàn tay của người chơi điều khiển 'Chiếc Giỏ Thần Kỳ 🧺' màu xanh ngọc bích #10B981, hứng các quả táo xanh đúng và né các quả táo đỏ sâu bọ."
-  },
-  {
-    "id": "robo_bien_hinh",
-    "name": "Robot Biến Hình (Mecha Cyber)",
-    "category": "Khoa học viễn tưởng",
-    "emoji": "🤖",
-    "badgeColor": "#F97316",
-    "themeColors": {
-      "primary": "#F97316",
-      "secondary": "#EA580C",
-      "trail": "rgba(249, 115, 22, 0.8)"
-    },
-    "weapon": "Khiên Chắn Năng Lượng Plasma",
-    "description": "Robot chiến binh phong cách Transformers. Các phép tính bay tới như các quả tên lửa năng lượng, robot dùng khiên tay để đỡ và phản đòn.",
-    "promptSnippet": "Nhân vật là Robot Biến Hình Cyber 🤖. Con trỏ tay là chiếc Khiên Năng Lượng Plasma màu cam lửa #F97316, tạo ra sóng từ trường phản chấn mỗi khi chặn đứng một phép tính chính xác."
+    "weapon": "Cú Đớp Bong Bóng Chữ",
+    "description": "Chú khủng long bạo chúa T-Rex nhỏ màu xanh lá thích ăn các chữ cái tiếng Anh để ghép vần thành từ.",
+    "promptSnippet": "Nhân vật là Chú Khủng Long Xanh 🦖. Bàn tay của học sinh điều khiển chiếc đầu khủng long đớp vỡ các bong bóng chữ cái tiếng Anh rơi xuống."
   }
 ]

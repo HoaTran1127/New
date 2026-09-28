@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>English Word Ninja AR - Hiệp Sĩ Từ Vựng Tiếng Anh Vận Động</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Tone.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js" crossorigin="anonymous"></script>
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- MediaPipe Hands & Camera Utils -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700;800&family=Outfit:wght@600;800;900&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            title: ['"Outfit"', '"Fredoka"', 'sans-serif'],
+            game: ['"Fredoka"', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-slate-950 text-white select-none overflow-hidden m-0 p-0 w-screen h-screen font-game flex flex-col">
+
+  <!-- HUD ĐẦU MÀN HÌNH -->
+  <header class="absolute top-0 left-0 right-0 z-30 p-2 sm:p-4 flex items-center justify-between pointer-events-none gap-2">
+    <!-- Nút Home & Máu -->
+    <div class="flex items-center gap-2 pointer-events-auto">
+      <a href="../../index.html" class="w-10 h-10 bg-slate-900/80 hover:bg-slate-800 border border-slate-700 rounded-2xl flex items-center justify-center text-slate-300 transition shadow-lg backdrop-blur-md">
+        <i class="fa-solid fa-house"></i>
+      </a>
+      <div class="bg-slate-900/85 backdrop-blur-md px-3 py-1.5 rounded-2xl border border-white/10 flex items-center gap-2">
+        <span class="text-xs font-bold text-red-400">MÁU:</span>
+        <div id="englishHealth" class="flex gap-1 text-red-500 text-sm sm:text-base">
+          <i class="fa-solid fa-heart"></i>
+          <i class="fa-solid fa-heart"></i>
+          <i class="fa-solid fa-heart"></i>
+          <i class="fa-solid fa-heart"></i>
+          <i class="fa-solid fa-heart"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- Nhiệm Vụ Từ Vựng Đang Chơi -->
+    <div class="flex flex-col items-center pointer-events-auto">
+      <div id="missionBox" class="bg-indigo-500/20 text-indigo-300 border border-indigo-400/30 px-4 py-1.5 rounded-full text-xs sm:text-sm font-bold tracking-wider backdrop-blur-md shadow-lg flex items-center gap-2">
+        <i class="fa-solid fa-bullseye text-pink-400"></i>
+        <span id="missionText">CHÉM TỪ THUỘC: ANIMALS 🦁</span>
+      </div>
+    </div>
+
+    <!-- Điểm Số & Mute -->
+    <div class="flex items-center gap-2 pointer-events-auto">
+      <div class="bg-slate-900/85 backdrop-blur-md px-4 py-1.5 rounded-2xl border border-amber-400/30 flex items-center gap-2 shadow-xl">
+        <span class="text-xl">⭐</span>
+        <div class="text-right">
+          <div class="text-[9px] text-amber-300/80 font-bold uppercase">ĐIỂM</div>
+          <div id="englishScore" class="font-title text-xl font-black text-amber-300 leading-none">0</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- BANNER CẢNH BÁO KHI CHÉM NHẦM TỪ BẪY -->
+  <div id="wrongWordBanner" class="absolute top-20 left-1/2 -translate-x-1/2 z-30 pointer-events-none transition-all duration-300 transform -translate-y-6 opacity-0 scale-95 max-w-[90vw] sm:max-w-lg">
+    <div class="bg-gradient-to-r from-red-600 via-rose-600 to-red-600 text-white px-5 py-3 rounded-2xl border-2 border-red-300 shadow-[0_0_30px_rgba(239,68,68,0.8)] backdrop-blur-lg flex items-center gap-3">
+      <div class="text-3xl animate-pulse">💥</div>
+      <div>
+        <div class="text-xs uppercase font-extrabold tracking-wider text-red-200">KÍNH VỠ! TỪ NÀY BỊ SAI:</div>
+        <div id="wrongWordExplanation" class="font-title font-black text-sm text-yellow-200">APPLE là Quả Táo (Fruits), không phải Động vật!</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VÙNG CANVAS AR -->
+  <main class="relative flex-1 w-full h-full overflow-hidden bg-black">
+    <video id="englishWebcam" class="absolute inset-0 w-full h-full object-cover transform -scale-x-100 opacity-80" playsinline autoplay muted></video>
+    <canvas id="englishCanvas" class="absolute inset-0 w-full h-full z-10"></canvas>
+
+    <div class="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 pointer-events-none bg-black/60 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/10 text-xs text-slate-300">
+      🥷 Vung tay chém đúng từ tiếng Anh theo nhiệm vụ • Bỏ qua từ bẫy khác chủ đề
+    </div>
+  </main>
+
+  <script src="../../src/core/AudioManager.js"></script>
+  <script src="../../src/core/HandTracker.js"></script>
+  <script src="../../src/core/ParticleSystem.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
