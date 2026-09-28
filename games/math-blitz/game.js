@@ -317,7 +317,10 @@ const GameApp = {
         maxNumHands: 1, // 1 tay duy nhất chống spam
         minDetectionConfidence: 0.6,
         minTrackingConfidence: 0.6,
-        smoothingFactor: 0.45
+        smoothingFactor: 0.45,
+        strikeSpeedThreshold: 1.15,
+        strikeReleaseThreshold: 0.55,
+        strikeCooldownMs: 220
       });
 
       this.tracker.init(
@@ -533,14 +536,9 @@ const GameApp = {
         // Vẽ con trỏ đấm bốc / tâm ngắm phát sáng
         this.drawPunchCrosshair(hx, hy, h.isStriking, h.isFist);
 
-        // Kiểm tra va chạm tay với thẻ
-        for (let i = this.cards.length - 1; i >= 0; i--) {
-          const card = this.cards[i];
-          if (card.isHit(hx, hy, 40)) {
-            this.processHit(card, hx, hy);
-            this.cards.splice(i, 1);
-            break;
-          }
+        // Chỉ đánh khi MediaPipe phát ra một strikePulse thật sự.
+        if (h.strikePulse) {
+          this.strikeAt(hx, hy);
         }
       }
 
