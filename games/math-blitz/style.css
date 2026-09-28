@@ -1,0 +1,39 @@
+/* games/math-blitz/style.css */
+
+/* Tùy biến thanh cuộn trong modal */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.6);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(56, 189, 248, 0.4);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(56, 189, 248, 0.7);
+}
+
+/* Hiệu ứng rung nhẹ khi đấm trúng */
+@keyframes shakeScreen {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-4px, 4px); }
+  40% { transform: translate(4px, -3px); }
+  60% { transform: translate(-3px, -2px); }
+  80% { transform: translate(2px, 3px); }
+  100% { transform: translate(0, 0); }
+}
+
+.shake-active {
+  animation: shakeScreen 0.25s ease-out;
+}
+
+/* Nút chọn chủ đề được active */
+.topic-card.selected {
+  border-color: #00F0FF !important;
+  background: rgba(6, 182, 212, 0.15) !important;
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.25);
+}

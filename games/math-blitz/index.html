@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Subway Math Blitz AR - Đấu Trường Toán Lớp 4 & 5</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Tone.js cho âm thanh Arcade -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js" crossorigin="anonymous"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google MediaPipe Hands & Camera Utils -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+
+  <!-- Google Fonts: Fredoka & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700;800&family=Outfit:wght@600;800;900&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            title: ['"Outfit"', '"Fredoka"', 'sans-serif'],
+            game: ['"Fredoka"', 'sans-serif'],
+            num: ['"Outfit"', 'monospace']
+          },
+          colors: {
+            brandYellow: '#FFE600',
+            brandOrange: '#FF7A00',
+            neonCyan: '#00F0FF',
+            neonPink: '#FF007A',
+            neonGreen: '#00FF66'
+          }
+        }
+      }
+    };
+  </script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-slate-950 text-white select-none overflow-hidden m-0 p-0 w-screen h-screen font-game flex flex-col">
+
+  <!-- HUD ĐẦU MÀN HÌNH -->
+  <header class="absolute top-0 left-0 right-0 z-30 p-2 sm:p-4 flex items-center justify-between pointer-events-none gap-2">
+    <!-- Nút Home & Máu -->
+    <div class="flex items-center gap-2 sm:gap-3 pointer-events-auto">
+      <a href="../../index.html" class="w-10 h-10 sm:w-12 sm:h-12 bg-slate-900/80 hover:bg-slate-800 border-2 border-slate-700/60 rounded-2xl flex items-center justify-center text-slate-300 hover:text-white transition shadow-lg backdrop-blur-md" title="Về trang chủ">
+        <i class="fa-solid fa-house text-sm sm:text-base"></i>
+      </a>
+      <div class="bg-slate-900/85 backdrop-blur-md px-3 sm:px-4 py-1.5 sm:py-2 rounded-2xl border border-white/10 flex items-center gap-2 shadow-xl">
+        <span class="text-xs sm:text-sm font-bold text-red-400 uppercase tracking-wider hidden xs:inline">MÁU</span>
+        <div id="healthBar" class="flex gap-1 text-red-500 text-base sm:text-xl">
+          <i class="fa-solid fa-heart"></i>
+          <i class="fa-solid fa-heart"></i>
+          <i class="fa-solid fa-heart"></i>
+          <i class="fa-solid fa-heart"></i>
+          <i class="fa-solid fa-heart"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tên chủ đề đang chơi & Combo -->
+    <div class="flex flex-col items-center">
+      <div id="currentTopicBadge" class="bg-cyan-500/20 text-cyan-300 border border-cyan-400/30 px-3 py-1 rounded-full text-xs sm:text-sm font-bold tracking-wider backdrop-blur-md shadow-lg pointer-events-auto flex items-center gap-1.5 cursor-pointer hover:bg-cyan-500/30 transition" onclick="GameApp.openTopicModal()">
+        <i class="fa-solid fa-graduation-cap"></i>
+        <span id="topicNameText">Toán Lớp 4 - 5 AR</span>
+        <i class="fa-solid fa-chevron-down text-xs opacity-70"></i>
+      </div>
+      <div id="comboContainer" class="opacity-0 transition-opacity duration-200 mt-1">
+        <span id="comboText" class="font-title font-black text-amber-300 text-lg sm:text-2xl drop-shadow-[0_2px_10px_rgba(251,191,36,0.8)] animate-bounce inline-block">COMBO x2!</span>
+      </div>
+    </div>
+
+    <!-- Điểm số & Âm thanh -->
+    <div class="flex items-center gap-2 pointer-events-auto">
+      <div class="bg-slate-900/85 backdrop-blur-md px-3 sm:px-5 py-1.5 sm:py-2 rounded-2xl border border-amber-400/30 flex items-center gap-2 sm:gap-3 shadow-xl">
+        <span class="text-xl sm:text-2xl">🪙</span>
+        <div class="text-right">
+          <div class="text-[10px] text-amber-300/80 font-bold uppercase tracking-wider">ĐIỂM</div>
+          <div id="scoreDisplay" class="font-num text-xl sm:text-3xl font-black text-amber-300 leading-none">0</div>
+        </div>
+      </div>
+
+      <button id="btnMute" class="w-10 h-10 sm:w-12 sm:h-12 bg-slate-900/80 hover:bg-slate-800 border-2 border-slate-700/60 rounded-2xl flex items-center justify-center text-amber-400 hover:text-amber-300 transition shadow-lg backdrop-blur-md" title="Bật/Tắt âm thanh">
+        <i id="audioIcon" class="fa-solid fa-volume-high text-sm sm:text-base"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- BANNER CẢNH BÁO KÍNH VỠ KHI ĐẤM SAI -->
+  <div id="wrongWarningBanner" class="absolute top-20 left-1/2 -translate-x-1/2 z-30 pointer-events-none transition-all duration-300 transform -translate-y-6 opacity-0 scale-95 max-w-[90vw] sm:max-w-lg">
+    <div class="bg-gradient-to-r from-red-600 via-rose-600 to-red-600 text-white px-5 py-3 rounded-2xl border-2 border-red-300 shadow-[0_0_30px_rgba(239,68,68,0.8)] backdrop-blur-lg flex items-center gap-3">
+      <div class="text-3xl animate-pulse">💥</div>
+      <div>
+        <div class="text-xs uppercase font-extrabold tracking-wider text-red-200">KÍNH VỠ TOẢNG! PHÉP TÍNH BỊ SAI:</div>
+        <div id="wrongReasonText" class="font-title font-black text-sm sm:text-base text-yellow-200">3/4 + 1/4 = 1 (không phải 4/8)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VÙNG CHƠI CHÍNH: WEBCAM VÀ CANVAS AR -->
+  <main class="relative flex-1 w-full h-full overflow-hidden bg-black">
+    <!-- Video Webcam nền (Lật gương scaleX(-1)) -->
+    <video id="webcam" class="absolute inset-0 w-full h-full object-cover transform -scale-x-100 opacity-80" playsinline autoplay muted></video>
+
+    <!-- Canvas 2D vẽ thẻ rơi, hiệu ứng hạt, đường kiếm, kính vỡ -->
+    <canvas id="gameCanvas" class="absolute inset-0 w-full h-full z-10"></canvas>
+
+    <!-- Hướng dẫn điều khiển dạng Overlay mờ góc dưới -->
+    <div class="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 pointer-events-none bg-black/50 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/10 text-xs sm:text-sm text-slate-300 flex items-center gap-2">
+      <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+      <span>Đứng cách 1.5m - 2m • Vung tay đấm thẻ <b>ĐÚNG</b> • Bỏ qua thẻ <b>SAI</b></span>
+    </div>
+  </main>
+
+  <!-- MODAL CHÀO MỪNG / CHỌN CHỦ ĐỀ TOÁN HỌC -->
+  <div id="startModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-xl">
+    <div class="relative w-full max-w-xl bg-slate-900 border-2 border-cyan-400/40 rounded-3xl p-6 sm:p-8 shadow-[0_0_60px_rgba(0,240,255,0.25)] text-center flex flex-col max-h-[90vh] overflow-y-auto">
+      
+      <!-- Logo Game -->
+      <div class="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-cyan-500/20 to-pink-500/20 px-4 py-1 rounded-full border border-cyan-400/30 text-cyan-300 text-xs font-black uppercase tracking-widest mx-auto mb-2">
+        <i class="fa-solid fa-gamepad"></i> AR Math Game Platform
+      </div>
+
+      <h1 class="font-title font-black text-3xl sm:text-5xl text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-orange-400 to-pink-500 leading-tight">
+        SUBWAY MATH BLITZ
+      </h1>
+      <p class="text-cyan-400 font-extrabold text-sm sm:text-base mt-1 tracking-wider uppercase">
+        Đấu Trường Toán Học Thực Tế Ảo
+      </p>
+
+      <p class="text-slate-300 text-xs sm:text-sm mt-3 leading-relaxed">
+        Đứng lùi xa camera <b>1.5m - 2m</b>. Vung tay như đấm bốc vào các thẻ phép tính <b>ĐÚNG</b>. Tuyệt đối không đấm vào thẻ <b>SAI</b> kẻo nứt vỡ màn hình!
+      </p>
+
+      <!-- Bộ lọc Khối Lớp -->
+      <div class="mt-5 text-left">
+        <label class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-2">
+          1. Chọn Khối Lớp & Cấp Độ:
+        </label>
+        <div class="grid grid-cols-4 gap-2 mb-3">
+          <button type="button" class="grade-tab-btn active px-3 py-2 rounded-xl text-xs font-extrabold transition border border-cyan-400 bg-cyan-500 text-slate-950 shadow-md" data-grade="all">
+            Tất Cả
+          </button>
+          <button type="button" class="grade-tab-btn px-3 py-2 rounded-xl text-xs font-extrabold transition border border-slate-700 bg-slate-800 text-slate-300 hover:border-slate-500" data-grade="4">
+            Lớp 4
+          </button>
+          <button type="button" class="grade-tab-btn px-3 py-2 rounded-xl text-xs font-extrabold transition border border-slate-700 bg-slate-800 text-slate-300 hover:border-slate-500" data-grade="5">
+            Lớp 5
+          </button>
+          <button type="button" class="grade-tab-btn px-3 py-2 rounded-xl text-xs font-extrabold transition border border-slate-700 bg-slate-800 text-slate-300 hover:border-slate-500" data-grade="cuuchuong">
+            Cửu Chương
+          </button>
+        </div>
+
+        <label class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-2">
+          2. Chọn Chủ Đề Bài Tập:
+        </label>
+        <div id="topicListContainer" class="space-y-2 max-h-48 overflow-y-auto pr-1">
+          <!-- Render động từ TopicRegistry -->
+        </div>
+      </div>
+
+      <!-- Tốc độ rơi -->
+      <div class="mt-4 text-left">
+        <label class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-2">
+          3. Tốc Độ Thẻ Rơi:
+        </label>
+        <div class="grid grid-cols-3 gap-2">
+          <button type="button" class="speed-btn px-3 py-2 rounded-xl text-xs font-extrabold transition border border-slate-700 bg-slate-800 text-slate-300" data-speed="1.2">
+            🌱 Dễ
+          </button>
+          <button type="button" class="speed-btn active px-3 py-2 rounded-xl text-xs font-extrabold transition border border-amber-400 bg-amber-500 text-slate-950 shadow-md" data-speed="2.0">
+            ⚡ Vừa Phải
+          </button>
+          <button type="button" class="speed-btn px-3 py-2 rounded-xl text-xs font-extrabold transition border border-slate-700 bg-slate-800 text-slate-300" data-speed="2.8">
+            🔥 Thần Tốc
+          </button>
+        </div>
+      </div>
+
+      <!-- Nút Khởi động Camera & Vào Chơi -->
+      <button id="btnStartGame" class="mt-6 w-full py-4 bg-gradient-to-r from-amber-400 via-orange-500 to-pink-500 hover:from-amber-300 hover:via-orange-400 hover:to-pink-400 text-slate-950 font-title font-black text-xl rounded-2xl shadow-[0_0_30px_rgba(251,146,60,0.5)] transform hover:scale-[1.02] active:scale-95 transition flex items-center justify-center gap-3">
+        <i class="fa-solid fa-video"></i>
+        <span>BẬT CAMERA & CHIẾN NGAY</span>
+      </button>
+
+      <div class="mt-3 text-[11px] text-slate-400 flex items-center justify-center gap-1.5">
+        <i class="fa-solid fa-shield-halved text-emerald-400"></i>
+        <span>Video chỉ xử lý trực tiếp trên máy của bạn (100% Client-side), không tải lên mạng.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL GAME OVER -->
+  <div id="gameOverModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-950/90 backdrop-blur-2xl">
+    <div class="relative w-full max-w-md bg-slate-900 border-2 border-red-500/50 rounded-3xl p-6 sm:p-8 shadow-[0_0_60px_rgba(239,68,68,0.3)] text-center flex flex-col">
+      <div class="w-16 h-16 bg-red-500/20 text-red-400 rounded-3xl border border-red-400/40 flex items-center justify-center text-3xl mx-auto mb-3 animate-bounce">
+        💔
+      </div>
+      <h2 class="font-title font-black text-3xl sm:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-rose-300">
+        HẾT MÁU RỒI!
+      </h2>
+      <p class="text-slate-400 text-xs sm:text-sm mt-1">Đừng nản chí, luyện tập thêm là sẽ đạt kỷ lục mới!</p>
+
+      <!-- Bảng Thống kê điểm -->
+      <div class="bg-slate-950/60 rounded-2xl border border-slate-800 p-4 my-5 grid grid-cols-2 gap-3 text-left">
+        <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-800">
+          <div class="text-[10px] text-slate-400 uppercase font-bold">Tổng Điểm</div>
+          <div id="finalScore" class="font-num text-2xl font-black text-amber-300">0</div>
+        </div>
+        <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-800">
+          <div class="text-[10px] text-slate-400 uppercase font-bold">Kỷ Lục Cao Nhất</div>
+          <div id="highScore" class="font-num text-2xl font-black text-emerald-400">0</div>
+        </div>
+        <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-800">
+          <div class="text-[10px] text-slate-400 uppercase font-bold">Đấm Trúng (Đúng)</div>
+          <div id="finalCorrect" class="font-num text-lg font-bold text-cyan-300">0</div>
+        </div>
+        <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-800">
+          <div class="text-[10px] text-slate-400 uppercase font-bold">Đấm Nhầm (Sai)</div>
+          <div id="finalWrong" class="font-num text-lg font-bold text-rose-400">0</div>
+        </div>
+      </div>
+
+      <!-- Nút Chơi Lại / Đổi Chủ Đề -->
+      <div class="flex flex-col gap-2">
+        <button id="btnPlayAgain" class="w-full py-3.5 bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 text-slate-950 font-title font-black text-lg rounded-2xl shadow-lg transition">
+          <i class="fa-solid fa-rotate-right mr-2"></i> CHƠI LẠI VÒNG NÀY
+        </button>
+        <button id="btnChangeTopic" class="w-full py-3 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-sm rounded-2xl border border-slate-700 transition">
+          <i class="fa-solid fa-sliders mr-2"></i> ĐỔI CHỦ ĐỀ BÀI TẬP
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Nạp các module Core Engine & Data -->
+  <script src="../../src/core/AudioManager.js"></script>
+  <script src="../../src/core/HandTracker.js"></script>
+  <script src="../../src/core/ParticleSystem.js"></script>
+  <script src="../../src/data/topics-cuuchuong.js"></script>
+  <script src="../../src/data/topics-lop4.js"></script>
+  <script src="../../src/data/topics-lop5.js"></script>
+  <script src="../../src/data/index.js"></script>
+
+  <!-- Script Game Logic -->
+  <script src="game.js"></script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>AR Math Catcher - Hứng Bóng Toán Học Lớp 4 & 5</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Tone.js cho âm thanh -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js" crossorigin="anonymous"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- MediaPipe Hands & Camera Utils -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700;800&family=Outfit:wght@600;800;900&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            title: ['"Outfit"', '"Fredoka"', 'sans-serif'],
+            game: ['"Fredoka"', 'sans-serif'],
+            num: ['"Outfit"', 'monospace']
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-slate-950 text-white select-none overflow-hidden m-0 p-0 w-screen h-screen font-game flex flex-col">
+
+  <!-- HUD -->
+  <header class="absolute top-0 left-0 right-0 z-30 p-2 sm:p-4 flex items-center justify-between pointer-events-none">
+    <div class="flex items-center gap-2 pointer-events-auto">
+      <a href="../../index.html" class="w-10 h-10 sm:w-12 sm:h-12 bg-slate-900/80 hover:bg-slate-800 border-2 border-slate-700/60 rounded-2xl flex items-center justify-center text-slate-300 hover:text-white transition shadow-lg backdrop-blur-md">
+        <i class="fa-solid fa-house"></i>
+      </a>
+      <div class="bg-slate-900/85 backdrop-blur-md px-3 sm:px-4 py-2 rounded-2xl border border-white/10 flex items-center gap-2">
+        <span class="text-xs font-bold text-red-400">MÁU:</span>
+        <div id="catcherHealth" class="flex gap-1 text-red-500 text-base">
+          <i class="fa-solid fa-heart"></i>
+          <i class="fa-solid fa-heart"></i>
+          <i class="fa-solid fa-heart"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- Điểm số -->
+    <div class="bg-slate-900/85 backdrop-blur-md px-4 py-2 rounded-2xl border border-emerald-400/30 flex items-center gap-2 shadow-xl pointer-events-auto">
+      <span class="text-2xl">🍎</span>
+      <div class="text-right">
+        <div class="text-[10px] text-emerald-300 font-bold uppercase">ĐÃ HỨNG</div>
+        <div id="catcherScore" class="font-num text-2xl font-black text-emerald-300">0</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MÀN CHƠI CANVAS -->
+  <main class="relative flex-1 w-full h-full overflow-hidden bg-black">
+    <video id="catcherWebcam" class="absolute inset-0 w-full h-full object-cover transform -scale-x-100 opacity-75" playsinline autoplay muted></video>
+    <canvas id="catcherCanvas" class="absolute inset-0 w-full h-full z-10"></canvas>
+
+    <div class="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 pointer-events-none bg-black/60 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/15 text-xs text-slate-300">
+      Di chuyển bàn tay (hoặc chuột) làm <b>Giỏ Hứng 🧺</b> để bắt các quả táo toán học <b>ĐÚNG</b>
+    </div>
+  </main>
+
+  <!-- Nạp modules -->
+  <script src="../../src/core/AudioManager.js"></script>
+  <script src="../../src/core/HandTracker.js"></script>
+  <script src="../../src/core/ParticleSystem.js"></script>
+  <script src="../../src/data/topics-cuuchuong.js"></script>
+  <script src="../../src/data/topics-lop4.js"></script>
+  <script src="../../src/data/topics-lop5.js"></script>
+  <script src="../../src/data/index.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>

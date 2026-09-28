@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AR Math Kids - Hệ Thống Game Toán Lớp 4 & 5 Thực Tế Ảo</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts: Outfit & Fredoka -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700;800&family=Outfit:wght@600;800;900&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            title: ['"Outfit"', '"Fredoka"', 'sans-serif'],
+            body: ['"Fredoka"', 'sans-serif']
+          },
+          colors: {
+            brandYellow: '#FFE600',
+            neonCyan: '#00F0FF',
+            neonPink: '#FF007A'
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-slate-950 text-white font-body min-h-screen flex flex-col selection:bg-cyan-500 selection:text-black">
+
+  <!-- NAVBAR -->
+  <header class="border-b border-slate-800/80 bg-slate-900/60 backdrop-blur-xl sticky top-0 z-40">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-tr from-amber-400 via-orange-500 to-pink-500 flex items-center justify-center text-xl shadow-[0_0_20px_rgba(251,146,60,0.4)]">
+          🥊
+        </div>
+        <div>
+          <span class="font-title font-black text-xl sm:text-2xl text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-orange-400 to-pink-400">
+            AR MATH KIDS
+          </span>
+          <span class="hidden sm:inline-block ml-2 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-cyan-500/20 text-cyan-300 border border-cyan-400/30">
+            LỚP 4 & 5
+          </span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <a href="#games" class="text-xs sm:text-sm font-bold text-slate-300 hover:text-white px-3 py-2 transition">
+          🎮 Danh Sách Game
+        </a>
+        <a href="#topics" class="text-xs sm:text-sm font-bold text-slate-300 hover:text-white px-3 py-2 transition">
+          📚 Chủ Đề Toán
+        </a>
+        <a href="./docs/README.html" class="hidden sm:flex items-center gap-1.5 text-xs sm:text-sm font-bold bg-slate-800 hover:bg-slate-700 text-cyan-300 px-4 py-2 rounded-xl border border-cyan-500/30 transition shadow-sm">
+          <i class="fa-solid fa-book-open"></i> Series Hướng Dẫn
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="relative overflow-hidden py-12 sm:py-20 px-4">
+    <!-- Glow BG -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-gradient-to-r from-cyan-500/15 via-orange-500/15 to-pink-500/15 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-4xl mx-auto text-center relative z-10">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900/80 border border-slate-700 text-xs sm:text-sm text-amber-300 font-extrabold mb-6 shadow-xl">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        Công Nghệ Nhận Diện Cử Chỉ Tay MediaPipe 100% Client-side
+      </div>
+
+      <h1 class="font-title font-black text-4xl sm:text-6xl text-white tracking-tight leading-tight">
+        Học Toán Lớp 4 & 5 Bằng
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-orange-400 to-pink-500">
+          Đấm Bốc Thực Tế Ảo
+        </span>
+      </h1>
+
+      <p class="text-slate-300 text-sm sm:text-lg mt-5 max-w-2xl mx-auto leading-relaxed">
+        Biến việc luyện tập tính nhẩm phân số, số thập phân, bảng nhân chia thành trò chơi vận động hào hứng. Đứng trước webcam, vung tay chém vỡ thẻ phép tính đúng và né bẫy thẻ sai!
+      </p>
+
+      <div class="flex flex-wrap items-center justify-center gap-4 mt-8">
+        <a href="./games/math-blitz/index.html" class="px-7 py-4 rounded-2xl bg-gradient-to-r from-amber-400 via-orange-500 to-pink-500 text-slate-950 font-title font-black text-lg shadow-[0_0_30px_rgba(251,146,60,0.5)] transform hover:scale-105 active:scale-95 transition flex items-center gap-3">
+          <i class="fa-solid fa-play"></i>
+          <span>CHIẾN NGAY (MATH BLITZ)</span>
+        </a>
+        <a href="./games/math-catcher/index.html" class="px-6 py-4 rounded-2xl bg-slate-900 hover:bg-slate-800 text-slate-200 font-title font-bold text-base border border-slate-700 hover:border-slate-500 transition flex items-center gap-2">
+          <span>🧺 THỬ GAME HỨNG TÁO</span>
+        </a>
+      </div>
+
+      <!-- Feature Badges -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mt-12 max-w-3xl mx-auto text-left">
+        <div class="bg-slate-900/60 border border-slate-800 p-4 rounded-2xl">
+          <div class="text-2xl mb-1">📷</div>
+          <div class="font-bold text-sm text-white">Không Cài App</div>
+          <div class="text-xs text-slate-400">Chạy thẳng trên Chrome/Edge qua Webcam</div>
+        </div>
+        <div class="bg-slate-900/60 border border-slate-800 p-4 rounded-2xl">
+          <div class="text-2xl mb-1">🔒</div>
+          <div class="font-bold text-sm text-white">Bảo Mật 100%</div>
+          <div class="text-xs text-slate-400">Video xử lý tại máy, không gửi lên server</div>
+        </div>
+        <div class="bg-slate-900/60 border border-slate-800 p-4 rounded-2xl">
+          <div class="text-2xl mb-1">⚡</div>
+          <div class="font-bold text-sm text-white">Khung Cắm / Rút</div>
+          <div class="text-xs text-slate-400">Dễ dàng thêm bớt chủ đề & mini-game mới</div>
+        </div>
+        <div class="bg-slate-900/60 border border-slate-800 p-4 rounded-2xl">
+          <div class="text-2xl mb-1">🚀</div>
+          <div class="font-bold text-sm text-white">GitHub Pages</div>
+          <div class="text-xs text-slate-400">Deploy miễn phí 1-click cho trường học</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DANH SÁCH GAMES -->
+  <section id="games" class="py-12 px-4 max-w-6xl mx-auto w-full">
+    <div class="flex items-center justify-between mb-8">
+      <div>
+        <h2 class="font-title font-black text-2xl sm:text-4xl text-white">
+          Kho Game Thực Tế Ảo (AR Games)
+        </h2>
+        <p class="text-slate-400 text-xs sm:text-sm mt-1">Chọn kiểu chơi phù hợp với sở thích của học sinh</p>
+      </div>
+      <span class="px-3 py-1 rounded-full bg-slate-900 border border-slate-700 text-xs text-amber-300 font-extrabold">
+        2 Mini-Games Sẵn Sàng
+      </span>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Card Game 1: Math Blitz -->
+      <div class="group relative bg-gradient-to-b from-slate-900 to-slate-950 border-2 border-slate-800 hover:border-cyan-400/60 rounded-3xl p-6 sm:p-8 transition-all duration-300 shadow-xl flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="px-3 py-1 rounded-xl text-xs font-black uppercase bg-amber-400 text-slate-950">
+              GAME CHÍNH ⭐
+            </span>
+            <span class="text-xs font-bold text-slate-400">Đấm bốc / Chém kiếm</span>
+          </div>
+
+          <h3 class="font-title font-black text-2xl sm:text-3xl text-white group-hover:text-cyan-300 transition">
+            Subway Math Blitz AR
+          </h3>
+          <p class="text-slate-300 text-xs sm:text-sm mt-2 leading-relaxed">
+            Các thẻ phép tính rơi nhanh từ trên xuống. Học sinh vung 1 bàn tay như đấm bốc để phá tan thẻ <b>ĐÚNG</b>, né thẻ <b>SAI</b>. Nếu đấm nhầm thẻ sai, kính màn hình sẽ bị nứt toảng và trừ mạng!
+          </p>
+
+          <div class="flex flex-wrap gap-2 my-5">
+            <span class="px-2.5 py-1 rounded-lg bg-slate-800 text-[11px] font-bold text-slate-300">Nhận diện 1 tay</span>
+            <span class="px-2.5 py-1 rounded-lg bg-slate-800 text-[11px] font-bold text-slate-300">Vết chém neon</span>
+            <span class="px-2.5 py-1 rounded-lg bg-slate-800 text-[11px] font-bold text-slate-300">Kính nứt mạng nhện</span>
+            <span class="px-2.5 py-1 rounded-lg bg-slate-800 text-[11px] font-bold text-slate-300">Combo âm thanh</span>
+          </div>
+        </div>
+
+        <a href="./games/math-blitz/index.html" class="w-full py-3.5 rounded-2xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-title font-black text-center text-base transition shadow-[0_0_20px_rgba(6,182,212,0.4)]">
+          Vào Chơi Subway Math Blitz →
+        </a>
+      </div>
+
+      <!-- Card Game 2: Math Catcher -->
+      <div class="group relative bg-gradient-to-b from-slate-900 to-slate-950 border-2 border-slate-800 hover:border-emerald-400/60 rounded-3xl p-6 sm:p-8 transition-all duration-300 shadow-xl flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="px-3 py-1 rounded-xl text-xs font-black uppercase bg-emerald-400 text-slate-950">
+              MINI-GAME MỚI 🍏
+            </span>
+            <span class="text-xs font-bold text-slate-400">Hứng quả / Đỡ bóng</span>
+          </div>
+
+          <h3 class="font-title font-black text-2xl sm:text-3xl text-white group-hover:text-emerald-300 transition">
+            AR Math Catcher
+          </h3>
+          <p class="text-slate-300 text-xs sm:text-sm mt-2 leading-relaxed">
+            Học sinh di chuyển bàn tay làm chiếc giỏ để hứng các quả táo mang phép tính <b>ĐÚNG</b> rơi xuống và né các quả táo <b>SAI</b>. Giúp rèn luyện tính kiên nhẫn và phản xạ nhẹ nhàng.
+          </p>
+
+          <div class="flex flex-wrap gap-2 my-5">
+            <span class="px-2.5 py-1 rounded-lg bg-slate-800 text-[11px] font-bold text-slate-300">Giỏ hứng di động</span>
+            <span class="px-2.5 py-1 rounded-lg bg-slate-800 text-[11px] font-bold text-slate-300">Âm thanh Pop</span>
+            <span class="px-2.5 py-1 rounded-lg bg-slate-800 text-[11px] font-bold text-slate-300">Tái dùng Core Engine</span>
+          </div>
+        </div>
+
+        <a href="./games/math-catcher/index.html" class="w-full py-3.5 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-title font-black text-center text-base transition shadow-[0_0_20px_rgba(16,185,129,0.4)]">
+          Vào Chơi AR Math Catcher →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHỦ ĐỀ TOÁN HỌC -->
+  <section id="topics" class="py-12 px-4 max-w-6xl mx-auto w-full">
+    <div class="text-center max-w-2xl mx-auto mb-10">
+      <h2 class="font-title font-black text-3xl sm:text-4xl text-white">
+        Chương Trình Toán Lớp 4 & 5
+      </h2>
+      <p class="text-slate-400 text-xs sm:text-sm mt-2">
+        Thiết kế theo chuẩn GDPT, tập trung vào các dạng toán nhẩm hay nhầm lẫn nhất
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Khối Cửu Chương -->
+      <div class="bg-slate-900/60 border border-slate-800 p-6 rounded-3xl">
+        <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-2xl mb-4">
+          ✖️
+        </div>
+        <h3 class="font-title font-black text-xl text-white">Bảng Cửu Chương</h3>
+        <p class="text-xs text-slate-400 mt-1">Dành cho ôn tập nền tảng</p>
+        <ul class="mt-4 space-y-2 text-xs sm:text-sm text-slate-300">
+          <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400 text-xs"></i> Bảng nhân nhẩm 2 đến 9</li>
+          <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400 text-xs"></i> Bảng chia nhẩm 2 đến 9</li>
+          <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400 text-xs"></i> Bẫy số kề & nhầm hàng đơn vị</li>
+        </ul>
+      </div>
+
+      <!-- Khối Lớp 4 -->
+      <div class="bg-slate-900/60 border border-cyan-500/30 p-6 rounded-3xl relative">
+        <span class="absolute top-4 right-4 px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-cyan-400 text-slate-950">
+          TRỌNG TÂM LỚP 4
+        </span>
+        <div class="w-12 h-12 rounded-2xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-2xl mb-4">
+          📐
+        </div>
+        <h3 class="font-title font-black text-xl text-white">Toán Lớp 4</h3>
+        <p class="text-xs text-slate-400 mt-1">Phân số & Đại lượng đo</p>
+        <ul class="mt-4 space-y-2 text-xs sm:text-sm text-slate-300">
+          <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400 text-xs"></i> Nhân nhẩm 11 & số tròn chục</li>
+          <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400 text-xs"></i> Rút gọn & cộng trừ phân số cùng mẫu</li>
+          <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400 text-xs"></i> Đổi đơn vị tấn, tạ, yến, m², dm²</li>
+          <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400 text-xs"></i> Dấu hiệu chia hết cho 2, 3, 5, 9</li>
+        </ul>
+      </div>
+
+      <!-- Khối Lớp 5 -->
+      <div class="bg-slate-900/60 border border-pink-500/30 p-6 rounded-3xl relative">
+        <span class="absolute top-4 right-4 px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-pink-500 text-white">
+          NÂNG CAO LỚP 5
+        </span>
+        <div class="w-12 h-12 rounded-2xl bg-pink-500/20 text-pink-400 flex items-center justify-center text-2xl mb-4">
+          🚀
+        </div>
+        <h3 class="font-title font-black text-xl text-white">Toán Lớp 5</h3>
+        <p class="text-xs text-slate-400 mt-1">Số thập phân, % & Chuyển động</p>
+        <ul class="mt-4 space-y-2 text-xs sm:text-sm text-slate-300">
+          <li class="flex items-center gap-2"><i class="fa-solid fa-check text-pink-400 text-xs"></i> Tính nhẩm số thập phân (0.25 × 4...)</li>
+          <li class="flex items-center gap-2"><i class="fa-solid fa-check text-pink-400 text-xs"></i> Tỉ số phần trăm (10%, 20%, 50%)</li>
+          <li class="flex items-center gap-2"><i class="fa-solid fa-check text-pink-400 text-xs"></i> Toán chuyển động đều s = v × t</li>
+          <li class="flex items-center gap-2"><i class="fa-solid fa-check text-pink-400 text-xs"></i> Diện tích tam giác & chu vi hình tròn</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERIES HƯỚNG DẪN CODING -->
+  <section class="py-12 px-4 max-w-6xl mx-auto w-full">
+    <div class="bg-gradient-to-r from-blue-900/40 via-purple-900/30 to-pink-900/30 border border-cyan-500/30 rounded-3xl p-6 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="max-w-2xl text-left">
+        <span class="px-3 py-1 rounded-full text-xs font-black uppercase bg-cyan-400 text-slate-950 mb-3 inline-block">
+          DÀNH CHO GIÁO VIÊN & HỌC SINH TỰ HỌC CODE
+        </span>
+        <h2 class="font-title font-black text-2xl sm:text-4xl text-white leading-tight">
+          Series Hướng Dẫn Tự Làm Game AR Này Từ Con Số 0
+        </h2>
+        <p class="text-slate-300 text-xs sm:text-sm mt-3 leading-relaxed">
+          Bộ giáo trình gồm 7 bài chi tiết: Giải thích từng dòng code từ nhận diện bàn tay MediaPipe, vẽ hiệu ứng Canvas, cấu hình bẫy toán học đến cách triển khai lên GitHub Pages miễn phí.
+        </p>
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+        <a href="./docs/README.md" class="px-6 py-3.5 rounded-2xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-title font-black text-center text-sm transition">
+          <i class="fa-solid fa-book mr-1.5"></i> Đọc Toàn Bộ Giáo Trình
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-slate-800/80 py-8 px-4 text-center text-xs text-slate-500 mt-auto">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div>
+        <b>AR Math Kids Platform</b> • Mã nguồn mở dành cho Giáo dục Tiểu học
+      </div>
+      <div class="flex items-center gap-4">
+        <span>Xử lý bởi Google MediaPipe Hands & Tone.js</span>
+        <span>•</span>
+        <span>Deploy trên GitHub Pages</span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
