@@ -12,10 +12,24 @@
 | Động cơ | Không tim, không điểm, không combo, không xếp hạng | Có tim, điểm, chuỗi combo, thẻ vàng x2, mascot |
 | Bảng phấn | Chiếm >= 70% màn chiếu, chữ phấn >= 50 px tính theo khoảng cách em cuối lớp, không bao giờ tự lau | Bảng chữ L <= 40% khung hình, chữ 34 px, tự lau sau mỗi lượt |
 | Kiểm đề | `verifyQuestionBank()` chạy một lần trước Bước 5 | `verifyQuestionBank()` chạy trước vòng chơi đầu tiên |
-| Nguồn quy định | `tools/lib/chalk.mjs` + `tools/lib/lesson.mjs` + `tools/lib/verify.mjs` | `tools/lib/feel.mjs` + `tools/lib/classroom.mjs` |
+| Camera | Panel soi tay >= 24% ở cột biên, bảng >= 70%; có bộ xương 21 khớp + trạng thái + độ trễ ms cho cả lớp nhìn; có phép biến đổi tay→mặt bảng | Video phủ kín khung hình vì khung hình CHÍNH LÀ màn chơi; vật thể bay, spawn, va chạm, speed lines |
+| Nguồn quy định | `tools/lib/chalk.mjs` + `tools/lib/lesson.mjs` + `tools/lib/verify.mjs` + `AR_LESSON` trong `tools/lib/ar.mjs` | `tools/lib/feel.mjs` + `tools/lib/classroom.mjs` + `AR_RENDER` trong `tools/lib/ar.mjs` |
 
 Hai bộ dùng chung một nguồn vật thật (`tools/data/props.mjs`) nên cùng một cụm kiến thức thì vật vẽ phấn
 giống hệt nhau — học sinh gặp lại đúng cái pizza đó khi chuyển từ tiết giảng sang giờ luyện tập.
+
+## Quy định hình học chỉ in vào bài có hình học
+
+Mục 4 của giáo án có 11 quy định luôn đúng với mọi bài, cộng tối đa hai quy định nối theo cụm:
+
+| Quy định | In vào bài | Vì sao không in đại trà |
+| --- | --- | --- |
+| `CHALK.solid3d` — cạnh khuất nét đứt, kéo ngang xoay khối, nút mở hộp trải lưới khai triển, xếp lớp đếm từng tầng | `the-tich` · `hinh-hoc-on-tap` | bài phân số hay chia số không có khối nào để xoay |
+| `CHALK.bodyTool` — vai 11/12 làm đỉnh góc, hai khuỷu 13/14 làm hai tia, ê-ke và thước phủ lên ảnh để chốt lại | `goc` · `vuong-goc-song-song` · `hinh-binh-hanh` · `hinh-thoi` · `hinh-hoc-on-tap` | bắt học sinh đứng tạo góc vuông trong bài đo đại lượng là phản tác dụng |
+
+`node tools/validate.mjs` kiểm cả hai chiều: bài thuộc danh sách mà thiếu thì báo "thiếu quy định",
+bài không thuộc danh sách mà vẫn mang theo thì báo "lọt vào bài không có hình học", và tiêu đề mục 4
+phải ghi đúng số quy định của chính bài đó.
 
 ## Cách dùng
 
@@ -89,7 +103,8 @@ không ghi sang hồ sơ đọc lại được sau tiết.
 ## Muốn thêm hoặc sửa giáo án
 
 - Thêm cụm kiến thức mới: sửa `tools/data/clusters.mjs`, `tools/data/props.mjs` (đủ 5 trường) và `tools/data/lessons.mjs` (đủ 3 trường), rồi chạy `node tools/build.mjs`.
-- Đổi quy định bảng phấn: `tools/lib/chalk.mjs` (10 quy định).
-- Đổi quy định chế độ giảng bài: `tools/lib/lesson.mjs` (11 quy định).
+- Đổi quy định bảng phấn: `tools/lib/chalk.mjs` (10 quy định chung + 2 quy định hình học nối theo cụm, danh sách ở `SOLID_CLUSTERS` / `BODY_CLUSTERS`).
+- Đổi quy định chế độ giảng bài: `tools/lib/lesson.mjs` (12 quy định).
 - Đổi quy định tự kiểm đề: `tools/lib/verify.mjs` (dùng chung với 85 prompt game).
-- `node tools/validate.mjs` sẽ chặn nếu thiếu quy định nào, nếu vật thật thiếu trường, hoặc nếu cơ chế game lọt vào giáo án.
+- Đổi bố cục AR của tiết học: `AR_LESSON` trong `tools/lib/ar.mjs`. `AR_RENDER` trong cùng file là khối của game — hai khối chiếu tọa độ theo hai hình chữ nhật khác nhau nên không đổi chỗ cho nhau được.
+- `node tools/validate.mjs` sẽ chặn nếu thiếu quy định nào, nếu vật thật thiếu trường, nếu quy định hình học lọt vào bài không có hình học, hoặc nếu cơ chế game lọt vào giáo án.

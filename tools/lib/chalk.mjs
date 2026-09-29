@@ -1,4 +1,4 @@
-// Mười quy định "bảng phấn + vật thật" cho môn Toán: biến đề bài thành thứ học sinh nhìn thấy,
+// Mười hai quy định "bảng phấn + vật thật" cho môn Toán: biến đề bài thành thứ học sinh nhìn thấy,
 // đếm được và điều khiển bằng ngón tay. validate.mjs so khớp nguyên văn các chuỗi này,
 // nên đổi ở đây phải chạy lại node tools/build.mjs.
 //
@@ -24,6 +24,16 @@
 //      viết dài ("gorilla arm"). → handCare
 //   4. 0 quy định occlusion: đứng sát bảng và quay nghiêng thì tay dễ khuất sau thân và đầu. → handCare
 //   5. Bảng của tiết dạy mất trắng khi tải lại trang. → persist
+//
+// VÒNG 3 (2026-09-30) — grep trên 39 file prompts/giao-an/ sau vòng 2 cho thấy hai lỗ hình học:
+//   6. 0/39 giáo án có một chữ nào về cạnh khuất, xoay khối hay lưới khai triển. Hai chỗ duy nhất
+//      chứa "nét đứt" là ô dấu "?" và gạch chân số; "xoay" chỉ xuất hiện trong câu an toàn
+//      "không xoay người nhanh". Trong khi đó props.mjs mô tả "hình hộp chữ nhật trong suốt" và
+//      "khay khối lập phương 1 cm³" — không có quy định nào buộc khối phải là khối ba chiều, nên
+//      mô hình sẽ vẽ một hình thoi nét liền và học sinh không bao giờ thấy chuyện "xếp lớp". → solid3d
+//   7. Bài góc và hai đường vuông góc chỉ có dụng cụ vẽ trên bảng (thước nửa tròn, ê-ke phấn),
+//      không quy định nào cho học sinh DÙNG CƠ THỂ mình tạo góc dù game cùng cụm đã dùng ANGLE_POSE.
+//      Góc là kiến thức mà trẻ lớp 4 hiểu bằng cánh tay trước khi hiểu bằng số đo. → bodyTool
 
 export const CHALK = {
   // Bảng phấn là vật ảo bán trong suốt đứng trong lớp học thật, không phải tấm nền đục che mất camera.
@@ -54,6 +64,14 @@ export const CHALK = {
   measure:
     'Số đo đọc từ dụng cụ thật: mọi đại lượng trong đề (độ dài, khối lượng, diện tích, thể tích, thời gian, góc) đều phải hiện thành dụng cụ vẽ phấn có vạch chia ĐÚNG đơn vị mà đề bài dùng — thước có vạch cm, cân có quả cân, bình chia vạch, lưới ô vuông, mặt đồng hồ, thước nửa tròn. Dụng cụ đó phải cầm và kéo được bằng ngón tay: nắm kéo quả cân bỏ lên đĩa, nắm kéo kim đồng hồ, quẹt để tô từng ô vuông, nắm kéo khối lập phương xếp thành lớp. Khi đọc kết quả, bảng tự kẻ một đường phấn nối từ mép vật sang đúng vạch đang đọc để học sinh thấy mình đọc ở đâu. Con số đọc ra phải trùng giá trị của vạch, cấm làm tròn hiển thị và cấm hiện sẵn đáp số cạnh dụng cụ.',
 
+  // Khối lớp 5 là khối ba chiều; vẽ nó thành hình phẳng trên bảng thì học sinh không thấy chuyện "xếp lớp".
+  solid3d:
+    'Vật có chiều sâu phải được dựng như khối ba chiều, không như hình phẳng: áp cho mọi bài có khối lập phương 1 cm³, hình hộp chữ nhật hoặc vật tròn có chiều cao. (a) CẠNH KHUẤT của khối bắt buộc vẽ nét đứt 3 px cùng màu phấn #F4F1E4 ở alpha 0.55, cạnh nhìn thấy vẽ nét liền 4–7 px — nếu cả mười hai cạnh đều nét liền thì học sinh chỉ thấy một hình thoi chứ không thấy một khối. (b) Mặt quay về phía người xem tô lưới ô đậm hơn mặt bên 20% để khối có hướng. (c) XOAY KHỐI: nắm kéo ngang trên thân khối (KHÔNG cần pinch, để khỏi mỏi tay) xoay khối từ -90° đến +90° quanh trục thẳng đứng, mỗi bước 15° có khựng nhẹ kèm tiếng "cạch", và mặt đang quay về phía người xem được gọi tên bằng phấn ("mặt trước", "mặt bên", "mặt trên"). (d) MỞ HỘP: nút "mở hộp" trải khối thành lưới khai triển ĐÚNG 6 mặt trong animation >= 800 ms, mỗi mặt giữ nguyên số ô 1 cm³ đếm được trên nó và mỗi cặp mặt đối diện tô cùng một hoa văn phấn để học sinh thấy chúng bằng nhau; nút "gấp lại" làm ngược lại, và khi gấp thì mỗi cạnh khớp vào đúng một cạnh của khối, đếm được 12 cặp khớp. (e) XẾP LỚP PHẢI ĐẾM ĐƯỢC TỪNG BƯỚC: lớp đáy hiện đúng dài × rộng ô tô đậm kèm nhãn "lớp 1: 12 khối", mỗi lần quẹt nhân một tầng thì chiều cao tăng đúng 1 cm và bộ đếm "tầng 2/3" hiện cạnh hình; phép tính thể tích chỉ được viết ra sau khi các tầng đã xếp xong. (f) Khối có chiều sâu z và bóng dưới chân theo hợp đồng AR, bóng đổi hướng và độ dài theo góc xoay chứ không đứng yên.',
+
+  // Với góc và đường, thân người học sinh là dụng cụ đo đầu tiên; thước phấn chỉ là bước xác nhận.
+  bodyTool:
+    'Cơ thể là dụng cụ đo đầu tiên, thước phấn là bước xác nhận: áp cho bài có góc, hai đường vuông góc, hai đường song song và ôn tập hình học. (a) Nút "Cả lớp làm bằng tay" biến chính người đứng trước camera thành góc: ĐỈNH góc là một vai (landmark 11 hoặc 12, chọn vai thuận theo câu hỏi tay thuận lúc calibration), HAI TIA đi qua hai khuỷu (13 và 14); bảng tính góc từ hai vectơ vai→khuỷu rồi vẽ một cung phấn tại đỉnh kèm số đo, và phân loại đúng ngưỡng: 90° ± 8° là góc vuông, nhỏ hơn 82° là góc nhọn, lớn hơn 98° mà dưới 170° là góc tù, từ 170° đến 190° là góc bẹt. (b) Cung góc và số đo vẽ ngay tại vị trí khớp vai trên khung hình, chữ số cao >= 34 px, để cả lớp nhìn thấy góc của bạn mình mở to cỡ nào chứ không chỉ nghe nói. (c) Muốn kiểm chứng thì học sinh nắm kéo một ê-ke phấn hoặc thước nửa tròn phủ lên góc vừa tạo trên ảnh; hai cạnh khớp nhau thì vạch khớp sáng 400 ms — nhờ vậy "đo bằng mắt" biến thành "đo bằng dụng cụ". (d) Bài hai đường vuông góc thì hai cánh tay duỗi thẳng là hai đường thẳng, và vuông góc chỉ được xác nhận khi góc ở vai rơi vào 90° ± 8°; bài hai đường song song thì hai tay cùng duỗi về một phía và bảng kẻ hai nét phấn dọc theo hai cánh tay để học sinh thấy hai đường không gặp nhau dù kéo dài. (e) Không có camera, hoặc em ngồi cuối lớp ngoài tầm nhìn, thì vẫn làm được bằng chuột: kéo hai tia từ một đỉnh chung, số đo cập nhật theo từng px. (f) Động tác cơ thể chỉ diễn ra trong tầm tay: không nhảy, không xoay người nhanh, không rời khỏi chỗ.',
+
   // Bảng viết từng dòng và hỏi lại trước khi viết tiếp — không trình chiếu lời giải hoàn chỉnh.
   narrate:
     'Lời giải viết phấn từng bước: bài giải hiện ra từng dòng, mỗi dòng tối đa 12 từ và một lượt có tối đa 6 dòng. Bảng KHÔNG BAO GIỜ tự viết hết lời giải — sau mỗi dòng là một câu hỏi nhỏ một chạm ("bước tiếp theo cộng hay trừ?", "mấy kiện tất cả?") và bảng chỉ viết tiếp khi học sinh trả lời bằng ngón tay. Dòng đang làm được gạch chân bằng phấn; quẹt ngang sang phải để sang bước, quẹt sang trái để lùi về bước trước và sửa. Trả lời sai thì dòng sai bị gạch chéo bằng phấn đỏ nhạt #C9564B và giẻ lau chỉ xoá ĐÚNG dòng đó, mọi bước đúng phía trên được giữ nguyên — không xoá cả bảng vì một dòng sai. Xong lượt thì toàn bộ bài giải còn nguyên trên bảng trong 5 giây kèm một dòng phấn tóm tắt đáp số, và sau đó CHỈ lau khi người dạy bấm lau chứ bảng không tự lau.',
@@ -69,4 +87,16 @@ export const CHALK = {
 
 // Dòng rút gọn dùng cho checklist tự kiểm của mỗi giáo án.
 export const CHALK_SHORT =
-  'bảng phấn ảo alpha 0.55–0.70, mép trên không quá vai + 15% chiều cao khung hình, bảng chữ L <= 40% hoặc bảng to <= 68% khi đứng nép · pinch ngón 4–8 để viết phấn và nắm bàn tay 350–500 ms để lau · không con số nào hiện trơ, mỗi số là một chồng vật đếm được và 10 đơn vị gộp thành một bó · đi đúng ba chặng VẬT THẬT rồi SƠ ĐỒ rồi PHÉP TÍNH, mỗi số trong phép tính có một đường phấn nối về sơ đồ · đề bài tối đa 2 dòng chữ, bài toán đố dựng thành cảnh bằng cách kéo từng vật, ẩn số là ô "?" · phân số chọn số phần 2–12 bằng khay thẻ hoặc bằng ngón tay 2/4/8, mỗi lần quẹt một nhát, tô từng phần rồi mới viết k/N, cùng một giá trị hiện được bằng >= 2 mô hình · đại lượng đo bằng dụng cụ có vạch đúng đơn vị và có đường phấn nối tới vạch đang đọc · lời giải viết từng dòng <= 12 từ, mỗi dòng hỏi một câu trước khi viết tiếp, sai chỉ xoá đúng dòng đó · chạm-bật viết, nghỉ bắt buộc sau 90 giây pinch, mất tay quá 500 ms thì đóng băng nét tại chỗ · lưu bảng vào localStorage khoá "miti-board" tối đa 200 KB, không lưu ảnh hay video camera';
+  'bảng phấn ảo alpha 0.55–0.70, mép trên không quá vai + 15% chiều cao khung hình, bảng chữ L <= 40% hoặc bảng to <= 68% khi đứng nép · pinch ngón 4–8 để viết phấn và nắm bàn tay 350–500 ms để lau · không con số nào hiện trơ, mỗi số là một chồng vật đếm được và 10 đơn vị gộp thành một bó · đi đúng ba chặng VẬT THẬT rồi SƠ ĐỒ rồi PHÉP TÍNH, mỗi số trong phép tính có một đường phấn nối về sơ đồ · đề bài tối đa 2 dòng chữ, bài toán đố dựng thành cảnh bằng cách kéo từng vật, ẩn số là ô "?" · phân số chọn số phần 2–12 bằng khay thẻ hoặc bằng ngón tay 2/4/8, mỗi lần quẹt một nhát, tô từng phần rồi mới viết k/N, cùng một giá trị hiện được bằng >= 2 mô hình · đại lượng đo bằng dụng cụ có vạch đúng đơn vị và có đường phấn nối tới vạch đang đọc · lời giải viết từng dòng <= 12 từ, mỗi dòng hỏi một câu trước khi viết tiếp, sai chỉ xoá đúng dòng đó · chạm-bật viết, nghỉ bắt buộc sau 90 giây pinch, mất tay quá 500 ms thì đóng băng nét tại chỗ · lưu bảng vào localStorage khoá "miti-board" tối đa 200 KB, không lưu ảnh hay video camera · khi bài có khối: cạnh khuất nét đứt 3 px alpha 0.55, kéo ngang xoay -90° đến +90° mỗi 15°, nút mở hộp trải đúng 6 mặt lưới khai triển, xếp lớp đếm từng tầng · khi bài có góc hoặc hai đường: vai 11/12 là đỉnh, hai khuỷu 13/14 là hai tia, 90° ± 8° là góc vuông, rồi xác nhận bằng ê-ke phủ lên ảnh';
+
+// Hai quy định hình học chỉ có nghĩa với đúng một số cụm kiến thức. In vào cả 39 giáo án thì mô
+// hình sẽ vẽ cạnh khuất trong bài chia số và biến thân học sinh thành ê-ke trong bài phân số —
+// vì vậy build-lessons.mjs nối có điều kiện và validate.mjs chặn cả hai chiều (thiếu và thừa).
+// Lập bảng theo đúng chuỗi vat + so_do trong tools/data/props.mjs, không theo cảm giác chủ đề.
+export const SOLID_CLUSTERS = ['the-tich', 'hinh-hoc-on-tap'];
+export const BODY_CLUSTERS = ['goc', 'vuong-goc-song-song', 'hinh-binh-hanh', 'hinh-thoi', 'hinh-hoc-on-tap'];
+
+// Số quy định in bằng chữ trong tiêu đề mục 4. build-lessons.mjs và validate.mjs dùng chung bảng này
+// để tiêu đề và bộ kiểm không bao giờ nói hai con số khác nhau.
+export const SO_QUY_DINH = { 11: 'MƯỜI MỘT', 12: 'MƯỜI HAI', 13: 'MƯỜI BA' };
+export const SO_TU_CHUNG = 11; // boardText + 10 quy định bảng phấn luôn có ở mọi bài

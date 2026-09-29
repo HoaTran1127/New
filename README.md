@@ -202,9 +202,9 @@ Nguồn: `tools/lib/verify.mjs`. Đây là tầng sửa hai lỗi **không ai nh
 | Nhịp | Chờ giáo viên bấm "Bước tiếp", không tự chuyển | 12 lượt, tăng độ khó ở lượt 5 và lượt 9 |
 | Động cơ | Không tim, không điểm, không combo, không xếp hạng | Có tim, điểm, chuỗi combo, thẻ vàng x2, mascot |
 | Bảng phấn | ≥ 70% màn chiếu, chữ phấn ≥ 50 px tính theo khoảng cách em cuối lớp, **không bao giờ tự lau**, tối đa 8 trang | Bảng chữ L ≤ 40% khung hình, chữ 34 px, tự lau sau mỗi lượt |
-| Camera | Phụ: dạy trọn vẹn bằng chuột và bàn phím | Chính: khung hình webcam là màn chơi |
+| Camera | **Panel soi tay ≥ 24% ở cột biên**, đóng/mở được; mặt bảng không bị phủ tối; có bộ xương 21 khớp + trạng thái + độ trễ ms cho cả lớp nhìn; có phép biến đổi tay → mặt bảng | Chính: khung hình webcam **là** màn chơi, video phủ kín 100vw/100vh, có vật thể bay, spawn, va chạm, speed lines |
 | Kiểm đề | `verifyQuestionBank()` chạy một lần **trước Bước 5** | `verifyQuestionBank()` chạy trước vòng chơi đầu tiên |
-| Nguồn quy định | `tools/lib/chalk.mjs` + `tools/lib/lesson.mjs` + `tools/lib/verify.mjs` | `tools/lib/feel.mjs` + `tools/lib/classroom.mjs` + `tools/lib/verify.mjs` |
+| Nguồn quy định | `tools/lib/chalk.mjs` + `tools/lib/lesson.mjs` + `tools/lib/verify.mjs` + `AR_LESSON` trong `tools/lib/ar.mjs` | `tools/lib/feel.mjs` + `tools/lib/classroom.mjs` + `tools/lib/verify.mjs` + `AR_RENDER` trong `tools/lib/ar.mjs` |
 
 ### Mạch bài năm bước, giống nhau ở cả 39 giáo án
 
@@ -212,7 +212,7 @@ Nguồn: `tools/lib/verify.mjs`. Đây là tầng sửa hai lỗi **không ai nh
 
 Trình tự này theo khung **Concrete – Representational – Abstract**: lỗi kinh điển khi dạy Toán bằng vật thật là nhảy thẳng từ vật sang thuật toán, bỏ qua bước biểu diễn bán cụ thể. Vì vậy mỗi cụm trong `tools/data/props.mjs` có **5 trường** chứ không phải 4 — trường `so_do` là sơ đồ học sinh phải tự dựng, và `validate.mjs` chặn nếu để trống.
 
-### 🖍️ Mười quy định bảng phấn + vật thật (`tools/lib/chalk.mjs`)
+### 🖍️ Mười quy định bảng phấn + vật thật (`tools/lib/chalk.mjs`), cộng hai quy định hình học theo cụm
 
 - **Bảng phấn ảo**: alpha nền **0.55–0.70** (vẫn thấy lớp học phía sau), nền `#2E4638`, viền gỗ 12–18 px, nét phấn 4–7 px `#F4F1E4` rơi 8–12 hạt bụi mỗi nét. **Mép trên không cao quá landmark vai + 15% chiều cao khung hình** — đứng sát bảng mà phải với quá đầu thì bàn tay bị chính thân người che khỏi camera.
 - **Viết phấn bằng đầu ngón tay**: pinch ngón 4–8 (≤ 0.06 lần khoảng cách 5–17) thì đầu ngón 8 thành đầu phấn; **nắm bàn tay giữ 350–500 ms** là giẻ lau xoá bán kính 110 px; Hoàn tác 20 bước; không camera thì giữ chuột là viết, phím E là lau.
@@ -221,11 +221,13 @@ Trình tự này theo khung **Concrete – Representational – Abstract**: lỗ
 - **Bài toán đố dựng thành cảnh**: đề tối đa **2 dòng chữ**, mỗi danh từ là một hình vẽ phấn trong khay để kéo vào cảnh; ẩn số là ô nét đứt có dấu `?`; thả sai thì cảnh đã dựng **giữ nguyên**.
 - **Phân số chia theo số phần 2–12**: khay 11 thẻ số phần cho mọi mẫu số (đề trong repo có cả 1/3, 1/5, 1/6), vẫn giữ đường tắt ngón tay 2/4/8. Luỹ thừa của 2 thì số nhát bằng `log2` số phần; không phải luỹ thừa thì bảng kẻ đường mốc mờ để quẹt xác nhận. Cùng một giá trị phải hiện được bằng **≥ 2 trong 4 mô hình** {diện tích, băng giấy, tia số, tập hợp}.
 - **Số đo đọc từ dụng cụ có vạch**: đúng đơn vị đề dùng, cầm kéo được bằng ngón tay, có đường phấn nối từ mép vật sang vạch đang đọc.
+- **Khối 3D** — *chỉ in vào bài có khối* (`the-tich`, `hinh-hoc-on-tap`): cạnh khuất **nét đứt 3 px alpha 0.55**, mặt quay về người xem đậm hơn mặt bên 20%, nắm kéo ngang xoay **−90° đến +90° mỗi bước 15°**, nút "mở hộp" trải **đúng 6 mặt** lưới khai triển trong animation ≥ 800 ms với 12 cặp khớp, xếp lớp thì **đếm từng tầng** ("lớp 1: 12 khối · tầng 2/3"). 0/39 giáo án trước vòng 3 nói về cạnh khuất, xoay khối hay lưới khai triển.
+- **Thân người là dụng cụ hình học** — *chỉ in vào bài có góc hoặc hai đường* (`goc`, `vuong-goc-song-song`, `hinh-binh-hanh`, `hinh-thoi`, `hinh-hoc-on-tap`): nút "Cả lớp làm bằng tay" lấy **đỉnh góc là một vai (11/12)**, **hai tia đi qua hai khuỷu (13/14)**, khớp 90° ± 8° là góc vuông, < 82° nhọn, > 98° mà < 170° tù, 170–190° bẹt; cung góc + số đo ≥ 34 px tại khớp vai, rồi **xác nhận bằng ê-ke/thước phủ lên ảnh** với vạch khớp sáng 400 ms; hai tay duỗi = hai đường thẳng, song song thì kẻ nét dọc hai cánh tay.
 - **Lời giải viết từng dòng ≤ 12 từ**, bảng không bao giờ tự viết hết — mỗi dòng hỏi lại một câu; sai thì gạch chéo `#C9564B` và giẻ lau chỉ xoá **đúng dòng đó**.
 - **Chống mỏi tay** (viết phấn giữa không trung là động tác mỏi nhanh nhất của hand tracking): chế độ **chạm-bật viết** để không phải giữ pinch, **nghỉ bắt buộc sau 90 giây** pinch liên tục kèm đếm ngược 5 giây, khay phấn đặt ngang khuỷu tay làm điểm tựa, và **mất landmark quá 500 ms thì nét dở đóng băng tại chỗ** chứ không xoá hay nhảy nét.
 - **Lưu bảng của tiết dạy**: tuần tự hoá nét vẽ + vật + sơ đồ vào `localStorage` khoá `miti-board`, tối đa **200 KB**, có nút Lưu / Mở / In (nền trắng chữ đen). **Tuyệt đối không lưu ảnh hay video camera.**
 
-### 👩‍🏫 Mười một quy định chế độ giảng bài (`tools/lib/lesson.mjs`)
+### 👩‍🏫 Mười hai quy định chế độ giảng bài (`tools/lib/lesson.mjs`)
 
 - **Giáo viên trình bày**: màn chiếu 16:9, bảng chiếm ≥ 70% diện tích màn chiếu; điều khiển trọn bài bằng chuột và bàn phím, camera chỉ bật khi mời em lên bảng.
 - **Quyền ưu tiên cỡ chữ — cỡ bảng**: khi giảng bài thì trần `≤ 40%` / `≤ 68%` và sàn `34 px` của bản game **đứng hưu**, thay bằng bảng ≥ 70% màn chiếu, chữ phấn ≥ 50 px, thẻ đáp án ≥ 44 px. Mức đó **không phải hằng số**: bảng hỏi "em cuối lớp cách màn chiếu mấy mét?" (mặc định 8 m) rồi tính chiều cao chữ tối thiểu = khoảng cách × 0.7 ÷ 100 (cm) và tự đổi ra px theo bề rộng thật của màn chiếu; dải điều khiển hiện dòng tự kiểm "chữ cao X cm · em cuối lớp Y mét · ĐẠT / CHƯA ĐẠT" và tự phóng chữ khi chưa đạt.
@@ -238,6 +240,11 @@ Trình tự này theo khung **Concrete – Representational – Abstract**: lỗ
 - **Biểu quyết theo NHÃN chứ không theo giá trị**: 1 ngón = A, 2 = B, 3 = C, 4 = D, nắm tay = "em chưa chắc"; bảng đối chiếu hiện ≥ 60 px, mỗi thẻ đáp án mang nhãn in hoa ≥ 44 px, bài chỉ có 3 phương án thì hàng D bị gạch chéo ghi "không có đáp án D". Lý do: đáp án Toán hay là phân số hoặc một mệnh đề — bản cũ bắt "giơ số ngón bằng đáp án" nên không dùng được với `3/8`. Giơ ≥ 5 ngón hoặc đổi ngón liên tục trong 500 ms cuối thì cột hiện "không rõ".
 - **Bảng chẩn đoán cuối tiết** cho riêng giáo viên, không chiếu lên bảng lớp: gom lượt trả lời theo `errorTag` thành tối đa 5 hàng "lỗi · số em · tỉ lệ · nút Giảng lại", và mỗi nút nhảy về **đúng chặng CRA đã sinh ra lỗi** (số không nối về sơ đồ → chặng SƠ ĐỒ; tính sai → chặng PHÉP TÍNH; hiểu nhầm đề → bước dựng cảnh). Không nêu tên, không xếp hạng, không ghi sang hồ sơ đọc lại được sau tiết.
 - **Bảng không bao giờ tự lau**: cả năm bước cộng lại thành một trang bảng hoàn chỉnh để cuối tiết cả lớp nhìn lại mạch bài.
+- **Phản hồi nhận diện chiếu lên màn hình**: vì người bị camera "đọc" là em đứng trước bảng nên cả lớp phải **nhìn thấy** máy đang thấy gì — panel soi tay hiện **đủ 21 khớp** (chấm 6 px, xương 3 px, hai ngón pinch 4/8 to 9 px và sáng lên khi pinch) **cho riêng bàn tay đã gán**, tay lạ bị lọc thì không vẽ xương và cũng không khoanh đỏ; kèm trạng thái bốn mức `CHƯA CHỌN TAY / ĐANG NHẬN DIỆN / ĐÃ PINCH / MẤT TAY` ≥ 32 px (chữ + hình, không chỉ màu) và **số đo thật** "độ trễ X ms" lấy từ `performance.now()`. Vượt 150 ms thì báo "bảng đang chậm, cô trò mình dùng chuột được" rồi chạy tiếp; bốn thứ này **không** bị tắt theo chế độ Giảm hiệu ứng vì là thông tin vận hành, không phải hiệu ứng.
+
+### 📐 Vì sao khối AR phải tách làm hai (`AR_RENDER` và `AR_LESSON` trong `tools/lib/ar.mjs`)
+
+Đến vòng 3, cả **39/39** giáo án vẫn mang nguyên văn khối AR của game — trong đó có "khung hình webcam CHÍNH LÀ màn chơi", "vị trí spawn, va chạm", "speed lines". Hai hệ quả: lệnh vẽ **mâu thuẫn** (`video phủ 100vw/100vh` đứng cạnh `bảng ≥ 70% màn chiếu`, `mascot` bị cấm ở quy định khác nhưng vẫn được nhắc ở quy định này), và **hỏng hình học** — khối game chiếu landmark theo `(offX, offY, drawW, drawH)` của cả khung hình, nên khi bảng chỉ chiếm 70% thì tay em học sinh một nơi, nét phấn một nơi. Cách sửa: bốn mảnh kỹ thuật (cover-fit, `toScreen`, neo landmark, chiều sâu) viết **một lần** rồi lắp cho hai bộ; `AR_LESSON` thêm quy định **ÁNH XẠ TAY → MẶT BẢNG** (`boardFrom(cam)`, hiệu chỉnh bằng bốn góc tầm tay, một điểm tay có đúng một điểm bảng, ngoài tầm thì nét dừng ở mép, đổi cỡ cửa sổ thì tính lại tỉ lệ). `validate.mjs` giờ chặn cả hai chiều: game không được mang `AR_LESSON`, giáo án không được mang `AR_RENDER`.
 
 ### Vật thật và sơ đồ theo cụm kiến thức (`tools/data/props.mjs`)
 
@@ -266,14 +273,14 @@ tools/data/examples.mjs      câu mẫu few-shot cho từng cụm
 tools/data/error-notes.mjs   nhãn lỗi tiếng Việt (errorTag + loiViet)
 tools/data/props.mjs         vật thật vẽ phấn cho 38 cụm Toán (vat · don_vi · ngon_tay · so_do · doc)
 tools/data/lessons.mjs       38 giáo án: tên bài, câu khởi động, dòng ghi nhớ
-tools/lib/ar.mjs             hợp đồng AR (cover-fit, toScreen, alpha, z, neo landmark) — dùng chung mọi chỗ
+tools/lib/ar.mjs             hợp đồng AR — AR_RENDER cho game (video phủ khung hình), AR_LESSON cho giáo án (panel soi tay + boardFrom), bốn mảnh kỹ thuật viết một lần dùng chung
 tools/lib/rules.mjs          quy định lớp học (60/40, calibration, Pause, FPS, an toàn, tổng kết 3 thẻ)
 tools/lib/feel.mjs           quy định vận động to + cảm giác arcade (biên độ, mép khung, trạm nghỉ, hit-stop, combo)
 tools/lib/classroom.mjs      quy định lớp học thật (vùng an toàn cho chữ, đàm phán camera, miti-mastery, 2 học sinh)
 tools/lib/access.mjs         tiếp cận + an toàn thần kinh (trần nhấp nháy, reduced-motion, không chỉ dùng màu, phụ đề, tương phản, tay thuận)
 tools/lib/verify.mjs         tự kiểm chứng đề + độ khó thích ứng (verifyQuestionBank, nhiễu theo lỗi thật, guard phạm vi, chống mẹo, level thích ứng, sàn chống nản)
-tools/lib/chalk.mjs          bảng phấn + vật thật, 10 quy định — dùng cho BỘ GIÁO ÁN
-tools/lib/lesson.mjs         chế độ giảng bài, 11 quy định — dùng cho BỘ GIÁO ÁN
+tools/lib/chalk.mjs          bảng phấn + vật thật, 10 quy định chung + 2 quy định hình học theo cụm — dùng cho BỘ GIÁO ÁN
+tools/lib/lesson.mjs         chế độ giảng bài, 12 quy định — dùng cho BỘ GIÁO ÁN
         │
         └─ node tools/build.mjs
              ├─ catalogs/GAME_CATALOG.csv + .md
@@ -285,7 +292,8 @@ tools/lib/lesson.mjs         chế độ giảng bài, 11 quy định — dùng 
              └─ node tools/validate.mjs   → chặn MIXED, thiếu hợp đồng AR, thiếu quy định lớp học,
                                             425 block biến thể, link gãy, thiếu chữ ký MiTi, rò ${},
                                             giáo án thiếu quy định bảng phấn / chế độ giảng bài /
-                                            vật thật thiếu trường, và CƠ CHẾ GAME LỌT SANG GIÁO ÁN
+                                            vật thật thiếu trường, quy định HÌNH HỌC LỌT VÀO BÀI KHÔNG
+                                            CÓ HÌNH HỌC, và CƠ CHẾ GAME LỌT SANG GIÁO ÁN
 ```
 
 ```bash

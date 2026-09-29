@@ -12,8 +12,9 @@ import { MOTION, FEEL } from './lib/feel.mjs';
 import { CLASSROOM } from './lib/classroom.mjs';
 import { ACCESS, ACCESS_SHORT } from './lib/access.mjs';
 import { VERIFY, ADAPT, VERIFY_SHORT } from './lib/verify.mjs';
-import { CHALK, CHALK_SHORT } from './lib/chalk.mjs';
+import { CHALK, CHALK_SHORT, SOLID_CLUSTERS, BODY_CLUSTERS, SO_QUY_DINH, SO_TU_CHUNG } from './lib/chalk.mjs';
 import { LESSON, LESSON_SHORT } from './lib/lesson.mjs';
+import { AR_LESSON } from './lib/ar.mjs';
 import { PROP_KEYS, PROP_FIELDS, prop } from './data/props.mjs';
 import { buildLessons, LESSON_EXTRA_KEYS, LESSON_FIELDS } from './data/lessons.mjs';
 
@@ -129,6 +130,12 @@ const CHALK_RULES = [
   [CHALK.handCare, 'thiếu quy định chống mỏi tay và đóng băng nét khi mất tay'],
   [CHALK.persist, 'thiếu quy định lưu bảng của tiết dạy vào localStorage'],
 ];
+// Hai quy định hình học chỉ đúng với một số cụm kiến thức, nên kiểm cả hai chiều:
+// bài có khối mà thiếu là lỗ hổng, bài chỉ có phân số mà mang theo là rác trong prompt.
+const CHALK_COND = [
+  [CHALK.solid3d, SOLID_CLUSTERS, 'khối 3D', 'thiếu quy định vẽ khối (cạnh khuất nét đứt, xoay khối, mở hộp, xếp lớp đếm tầng)'],
+  [CHALK.bodyTool, BODY_CLUSTERS, 'dụng cụ thân người', 'thiếu quy định dùng thân người làm thước góc và ê-ke (đỉnh là vai 11/12, hai tia qua khuỷu 13/14)'],
+];
 const LESSON_RULES = [
   [LESSON.teacher, 'thiếu chế độ giáo viên trình bày trên màn chiếu'],
   [LESSON.boardText, 'thiếu quy định quyền ưu tiên cỡ chữ cỡ bảng khi giảng bài'],
@@ -141,6 +148,7 @@ const LESSON_RULES = [
   [LESSON.voteMap, 'thiếu quy định ánh xạ số ngón tay sang nhãn đáp án A–D'],
   [LESSON.diagnose, 'thiếu bảng chẩn đoán cuối tiết theo errorTag'],
   [LESSON.retain, 'thiếu quy định bảng không bao giờ tự lau'],
+  [LESSON.recog, 'thiếu quy định phản hồi nhận diện trên màn chiếu (bộ xương 21 khớp, trạng thái bốn mức, độ trễ ms)'],
 ];
 // Ngân hàng LESSON_DATA phải được kiểm chứng y hệt QUESTION_DATA, nếu không thì giáo án âm thầm dạy sai.
 const LESSON_VERIFY_RULES = [
@@ -149,7 +157,7 @@ const LESSON_VERIFY_RULES = [
   [VERIFY.rangeGuard, 'thiếu guard phạm vi kiến thức cho LESSON_DATA'],
   [VERIFY.noGuessable, 'thiếu quy định chống đoán mò bằng cấu trúc đáp án cho LESSON_DATA'],
 ];
-const LESSON_FAMILY_RULES = [...CHALK_RULES, ...LESSON_RULES].map(([n]) => n);
+const LESSON_FAMILY_RULES = [...CHALK_RULES, ...CHALK_COND, ...LESSON_RULES].map(([n]) => n).concat([AR_LESSON]);
 for (const g of GAMES) {
   const rel = PATH_OF.get(g.id);
   if (!rel) { bad(`${g.id}: không có đường dẫn prompt trong catalog.`); continue; }
@@ -298,7 +306,7 @@ if (!fs.existsSync(LESSON_DIR)) {
     '1. MỤC TIÊU VÀ ĐỒ DÙNG',
     '2. MẠCH BÀI GỒM NĂM BƯỚC',
     '3. DỮ LIỆU CỦA BÀI (LESSON_DATA)',
-    '4. BẢNG PHẤN VÀ VẬT THẬT — MƯỜI QUY ĐỊNH BẮT BUỘC',
+    '4. BẢNG PHẤN VÀ VẬT THẬT',
     '5. CẢ LỚP THAM GIA',
     '6. NỀN AR, CAMERA VÀ NHẬN DIỆN TAY',
     '7. CHẾ ĐỘ KHÔNG CAMERA (bắt buộc, đây là chế độ dạy chính ở nhiều lớp)',
@@ -314,6 +322,9 @@ if (!fs.existsSync(LESSON_DIR)) {
     'const QUESTION_DATA', 'miti-collection', '12 lượt chính', '+10 nhân chuỗi', 'hết 5 tim',
     MOTION.amplitude, MOTION.breather, FEEL.hitStop, FEEL.combo, FEEL.bonus, FEEL.mascot,
     RULES.antiLuck, RULES.summary, CLASSROOM.mastery, CLASSROOM.twoPlayer,
+    // Ba vế này lọt vào giáo án qua khối AR dùng chung từ 2026-09-30 đến vòng 3 mới bị chặn:
+    // giáo án vẽ video trong panel còn game vẽ phủ khung hình, nên hai hình học khác nhau.
+    'CHÍNH LÀ màn chơi', 'vị trí spawn, va chạm', 'đường tốc độ (speed lines) dọc hai bên mép',
   ];
   const files = fs.readdirSync(LESSON_DIR);
   if (!files.includes('README.md')) bad('Thiếu prompts/giao-an/README.md — trang mục lục của bộ giáo án.');
@@ -336,6 +347,22 @@ if (!fs.existsSync(LESSON_DIR)) {
     for (const [needle, msg] of CHALK_RULES) if (!t.includes(needle)) bad(`${tag}: ${msg}.`);
     for (const [needle, msg] of LESSON_RULES) if (!t.includes(needle)) bad(`${tag}: ${msg}.`);
     for (const [needle, msg] of LESSON_VERIFY_RULES) if (!t.includes(needle)) bad(`${tag}: ${msg}.`);
+    // AR của tiết học: bảng >= 70% màn chiếu và camera chỉ là panel soi tay, không phải nền lớp học.
+    if (!t.includes(AR_LESSON)) bad(`${tag}: thiếu khối AR riêng của công cụ giảng bài (AR_LESSON trong tools/lib/ar.mjs).`);
+    for (const [re, msg] of [
+      [/boardFrom\(cam\)/, 'thiếu phép biến đổi một điểm bàn tay → một điểm trên mặt bảng'],
+      [/camX \+ \(1 - lx\) \* camW/, 'thiếu hàm chiếu landmark theo chữ nhật panel'],
+      [/độ trễ X ms|độ trễ giữa chuyển động tay và nét phấn/, 'thiếu số đo độ trễ thật của nét phấn'],
+    ]) if (!re.test(t)) bad(`${tag}: ${msg}.`);
+    // Quy định hình học nối theo cụm: thiếu ở bài có hình học là lỗ, thừa ở bài không có là rác.
+    const soThem = CHALK_COND.filter(([, list]) => list.includes(L.cluster)).length;
+    if (!t.includes(`4. BẢNG PHẤN VÀ VẬT THẬT — ${SO_QUY_DINH[SO_TU_CHUNG + soThem]} QUY ĐỊNH BẮT BUỘC`)) {
+      bad(`${tag}: tiêu đề mục 4 ghi sai số quy định (bài này thuộc ${SO_TU_CHUNG + soThem} quy định).`);
+    }
+    for (const [needle, list, nhan, thieu] of CHALK_COND) {
+      if (list.includes(L.cluster)) { if (!t.includes(needle)) bad(`${tag}: ${thieu}.`); }
+      else if (t.includes(needle)) bad(`${tag}: quy định "${nhan}" lọt vào bài không có hình học khối/góc (${L.cluster}).`);
+    }
     for (const [needle, msg] of ACCESS_RULES) if (!t.includes(needle)) bad(`${tag}: ${msg}.`);
     if (!t.includes(CLASSROOM.safeZone)) bad(`${tag}: thiếu vùng an toàn cho chữ trên màn chiếu.`);
     if (!t.includes(CLASSROOM.framing)) bad(`${tag}: thiếu đàm phán theo mức camera đang thấy.`);

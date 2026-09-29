@@ -7,11 +7,11 @@ import { ERROR_NOTES } from './data/error-notes.mjs';
 import { PROP_KEYS, prop } from './data/props.mjs';
 import { buildLessons } from './data/lessons.mjs';
 import { readCatalog } from './lib/csv.mjs';
-import { AR_RENDER, TASKS_VISION } from './lib/ar.mjs';
+import { AR_LESSON, TASKS_VISION } from './lib/ar.mjs';
 import { RULES } from './lib/rules.mjs';
 import { CLASSROOM } from './lib/classroom.mjs';
 import { ACCESS, ACCESS_SHORT } from './lib/access.mjs';
-import { CHALK, CHALK_SHORT } from './lib/chalk.mjs';
+import { CHALK, CHALK_SHORT, SOLID_CLUSTERS, BODY_CLUSTERS, SO_QUY_DINH, SO_TU_CHUNG } from './lib/chalk.mjs';
 import { LESSON, LESSON_SHORT } from './lib/lesson.mjs';
 import { VERIFY, VERIFY_SHORT } from './lib/verify.mjs';
 
@@ -44,6 +44,20 @@ const gameLinks = (games, lop) =>
       return hit ? `\`${g.id} — ${g.name}\` (prompts/${dir}/${hit})` : `\`${g.id} — ${g.name}\``;
     })
     .join(' · ');
+
+// Hai quy định hình học chỉ in vào bài có hình học — xem SOLID_CLUSTERS / BODY_CLUSTERS trong chalk.mjs.
+const them = (c) => (SOLID_CLUSTERS.includes(c) ? 1 : 0) + (BODY_CLUSTERS.includes(c) ? 1 : 0);
+
+// Mục 4 của giáo án: 10 quy định bảng phấn luôn có, hai quy định hình học nối xen giữa theo cụm
+// (xen ở đây để khối 3D và góc đứng cạnh narrate, đúng chỗ mạch bài cần chúng).
+const chalkBlock = (c) => {
+  const list = [CHALK.board, CHALK.chalkWrite, CHALK.concretize, CHALK.represent, CHALK.wordProblem, CHALK.fractionCut, CHALK.measure];
+  if (SOLID_CLUSTERS.includes(c)) list.push(CHALK.solid3d);
+  if (BODY_CLUSTERS.includes(c)) list.push(CHALK.bodyTool);
+  list.push(CHALK.narrate, CHALK.handCare, CHALK.persist);
+  return list.map((r) => `- ${r}`).join('\n');
+};
+
 
 function render(L) {
   const cl = cluster(L.cluster);
@@ -96,18 +110,9 @@ Không dùng Tailwind Play CDN, không file .css/.js/.json/ảnh/mp3 ngoài. Ch�
 - Hai mục mẫu phải chép nguyên văn:
 ${jsonBlock(EXAMPLES[L.cluster], cl.tags, notes)}
 
-4. BẢNG PHẤN VÀ VẬT THẬT — MƯỜI QUY ĐỊNH BẮT BUỘC
+4. BẢNG PHẤN VÀ VẬT THẬT — ${SO_QUY_DINH[SO_TU_CHUNG + them(L.cluster)]} QUY ĐỊNH BẮT BUỘC
 - ${LESSON.boardText}
-- ${CHALK.board}
-- ${CHALK.chalkWrite}
-- ${CHALK.concretize}
-- ${CHALK.represent}
-- ${CHALK.wordProblem}
-- ${CHALK.fractionCut}
-- ${CHALK.measure}
-- ${CHALK.narrate}
-- ${CHALK.handCare}
-- ${CHALK.persist}
+${chalkBlock(L.cluster)}
 
 5. CẢ LỚP THAM GIA
 - ${LESSON.classVote}
@@ -118,7 +123,7 @@ ${jsonBlock(EXAMPLES[L.cluster], cl.tags, notes)}
 - ${LESSON.retain}
 
 6. NỀN AR, CAMERA VÀ NHẬN DIỆN TAY
-${AR_RENDER}
+${AR_LESSON}
 - MediaPipe Tasks Vision, pin phiên bản: import từ ${TASKS_VISION.bundle}
   wasm: ${TASKS_VISION.wasm}
   model: ${TASKS_VISION.hand} (HandLandmarker) và ${TASKS_VISION.pose} (PoseLandmarker, chỉ dùng để đặt mép trên của bảng theo landmark vai)
@@ -126,8 +131,9 @@ ${AR_RENDER}
 - Chỉ xin quyền camera SAU khi giáo viên bấm "Bật camera" hoặc "Mời em lên bảng". Trạng thái bằng tiếng Việt: Đang tải → Xin quyền camera → Camera sẵn sàng → Đang nhận diện → Lỗi (kèm nút Thử lại).
 - ${CLASSROOM.framing}
 - ${CLASSROOM.safeZone}
-- Ở công cụ giảng bài thì dải trên cùng đặt thanh tiến trình năm bước và hai cột biên đặt dải điều khiển cùng khay vật thật; vì không có điểm, tim hay mascot nên toàn bộ chỗ đó dành cho nút bấm và nhãn bước.
-- Calibration động: ${RULES.calibration} Calibration ở công cụ này là giáo viên đứng đúng chỗ sẽ đứng khi giảng, không phải học sinh.
+- ${LESSON.recog}
+- Vùng an toàn ở chế độ giảng bài: dải trên cùng đặt thanh tiến trình năm bước, hai cột biên đặt dải điều khiển cùng khay vật thật, panel soi tay nằm ở một cột biên; vì không có điểm, tim hay nhân vật mừng thắng nên toàn bộ chỗ đó dành cho nút bấm và nhãn bước.
+- Calibration động: ${RULES.calibration} Calibration ở công cụ này là giáo viên đứng đúng chỗ sẽ đứng khi giảng, không phải học sinh, và phải lấy thêm bốn góc tầm tay để chốt phép biến đổi boardFrom(cam) của quy định ÁNH XẠ TAY → MẶT BẢNG ở trên; bấm "Chỉnh lại tư thế" thì tính lại cả đơn vị người lẫn bốn góc đó, không mất nét phấn nào đang có trên bảng.
 - ${ACCESS.handedness}
 - Camera chỉ bật được trong môi trường an toàn (HTTPS, localhost hoặc mở file trực tiếp). Nếu trình duyệt chặn, báo một dòng tiếng Việt "Muốn dùng camera thì mở file qua HTTPS hoặc bấm nút Bật camera lại" rồi dạy tiếp bằng chuột và bàn phím, không để giáo viên kẹt ở màn lỗi tiếng Anh.
 - Nếu CDN hoặc model không tải được: hiện thông báo tiếng Việt rồi chạy tiếp ở chế độ không camera, tiết dạy vẫn đủ 100% nội dung.
@@ -143,7 +149,7 @@ ${AR_RENDER}
 - ${ACCESS.caption}
 - ${ACCESS.flash}
 - ${ACCESS.reducedMotion}
-- Ở công cụ giảng bài không có hit-stop và không có mascot, nên chế độ Giảm hiệu ứng chỉ còn việc tắt particle, tắt speed lines và bỏ mọi chuyển động trang trí; chữ viết phấn, vật thật và sơ đồ vẫn hiện đầy đủ.
+- Ở công cụ giảng bài không có hit-stop và không có nhân vật mừng thắng, nên chế độ Giảm hiệu ứng chỉ còn việc tắt particle và bỏ mọi chuyển động trang trí; chữ viết phấn, vật thật, sơ đồ, bộ xương bàn tay, trạng thái nhận diện và dòng độ trễ vẫn hiện đầy đủ vì bốn thứ cuối là thông tin vận hành chứ không phải hiệu ứng.
 - ${RULES.autoPause} Ở công cụ giảng bài, tự Pause KHÔNG được làm mất nội dung đang có trên bảng: quay lại thì bảng còn nguyên như lúc rời đi.
 - ${RULES.perf} Riêng khi đang viết phấn trên bảng thì ưu tiên nhận diện bàn tay mỗi khung hình và giảm particle, vì độ trễ nét viết quan trọng hơn hiệu ứng.
 - ${RULES.audio}
@@ -160,7 +166,7 @@ ${AR_RENDER}
 10. ĐẦU RA
 - Chỉ xuất toàn bộ file HTML hoàn chỉnh, không kèm giải thích dài.
 - Không TODO, không pseudocode, không "...", không "// code tương tự ở trên", không phần "bạn tự bổ sung".
-- Tự kiểm tra trước khi xuất: ${LESSON_SHORT} · ${CHALK_SHORT} · ${VERIFY_SHORT} · ${ACCESS_SHORT} · có đủ năm bước và không bước nào tự chuyển khi giáo viên chưa bấm · LESSON_DATA đủ 6 mục với 2 mục mẫu nguyên văn và đã chạy qua verifyQuestionBank() trước bước 5 · mọi thẻ đáp án mang nhãn in hoa A-D và bảng đối chiếu ngón tay hiện đủ · cỡ chữ đang phát đạt theo dòng tự kiểm ĐẠT / CHƯA ĐẠT · bảng không tự lau ở bất kì bước nào · in được bản nền trắng chữ đen · chữ ký MiTi ở ba chỗ · file chạy độc lập không lỗi console.
+- Tự kiểm tra trước khi xuất: ${LESSON_SHORT} · ${CHALK_SHORT} · ${VERIFY_SHORT} · ${ACCESS_SHORT} · có đủ năm bước và không bước nào tự chuyển khi giáo viên chưa bấm · LESSON_DATA đủ 6 mục với 2 mục mẫu nguyên văn và đã chạy qua verifyQuestionBank() trước bước 5 · mọi thẻ đáp án mang nhãn in hoa A-D và bảng đối chiếu ngón tay hiện đủ · panel soi tay có bộ xương 21 khớp cho riêng tay đã gán, có trạng thái bốn mức và độ trễ ms đo thật · một điểm bàn tay chỉ có một điểm trên mặt bảng, ngoài tầm thì nét dừng ở mép · bài có khối thì đủ cạnh khuất + xoay + mở hộp, bài có góc hoặc hai đường thì đủ bộ dụng cụ thân người · cỡ chữ đang phát đạt theo dòng tự kiểm ĐẠT / CHƯA ĐẠT · bảng không tự lau ở bất kì bước nào · in được bản nền trắng chữ đen · chữ ký MiTi ở ba chỗ · file chạy độc lập không lỗi console.
 \`\`\`
 
 ## Ghi chú cho người tạo prompt (không gửi Gemini)
@@ -191,10 +197,24 @@ function renderIndex(lessons) {
 | Động cơ | Không tim, không điểm, không combo, không xếp hạng | Có tim, điểm, chuỗi combo, thẻ vàng x2, mascot |
 | Bảng phấn | Chiếm >= 70% màn chiếu, chữ phấn >= 50 px tính theo khoảng cách em cuối lớp, không bao giờ tự lau | Bảng chữ L <= 40% khung hình, chữ 34 px, tự lau sau mỗi lượt |
 | Kiểm đề | \`verifyQuestionBank()\` chạy một lần trước Bước 5 | \`verifyQuestionBank()\` chạy trước vòng chơi đầu tiên |
-| Nguồn quy định | \`tools/lib/chalk.mjs\` + \`tools/lib/lesson.mjs\` + \`tools/lib/verify.mjs\` | \`tools/lib/feel.mjs\` + \`tools/lib/classroom.mjs\` |
+| Camera | Panel soi tay >= 24% ở cột biên, bảng >= 70%; có bộ xương 21 khớp + trạng thái + độ trễ ms cho cả lớp nhìn; có phép biến đổi tay→mặt bảng | Video phủ kín khung hình vì khung hình CHÍNH LÀ màn chơi; vật thể bay, spawn, va chạm, speed lines |
+| Nguồn quy định | \`tools/lib/chalk.mjs\` + \`tools/lib/lesson.mjs\` + \`tools/lib/verify.mjs\` + \`AR_LESSON\` trong \`tools/lib/ar.mjs\` | \`tools/lib/feel.mjs\` + \`tools/lib/classroom.mjs\` + \`AR_RENDER\` trong \`tools/lib/ar.mjs\` |
 
 Hai bộ dùng chung một nguồn vật thật (\`tools/data/props.mjs\`) nên cùng một cụm kiến thức thì vật vẽ phấn
 giống hệt nhau — học sinh gặp lại đúng cái pizza đó khi chuyển từ tiết giảng sang giờ luyện tập.
+
+## Quy định hình học chỉ in vào bài có hình học
+
+Mục 4 của giáo án có 11 quy định luôn đúng với mọi bài, cộng tối đa hai quy định nối theo cụm:
+
+| Quy định | In vào bài | Vì sao không in đại trà |
+| --- | --- | --- |
+| \`CHALK.solid3d\` — cạnh khuất nét đứt, kéo ngang xoay khối, nút mở hộp trải lưới khai triển, xếp lớp đếm từng tầng | \`${SOLID_CLUSTERS.join('\` · \`')}\` | bài phân số hay chia số không có khối nào để xoay |
+| \`CHALK.bodyTool\` — vai 11/12 làm đỉnh góc, hai khuỷu 13/14 làm hai tia, ê-ke và thước phủ lên ảnh để chốt lại | \`${BODY_CLUSTERS.join('\` · \`')}\` | bắt học sinh đứng tạo góc vuông trong bài đo đại lượng là phản tác dụng |
+
+\`node tools/validate.mjs\` kiểm cả hai chiều: bài thuộc danh sách mà thiếu thì báo "thiếu quy định",
+bài không thuộc danh sách mà vẫn mang theo thì báo "lọt vào bài không có hình học", và tiêu đề mục 4
+phải ghi đúng số quy định của chính bài đó.
 
 ## Cách dùng
 
@@ -231,10 +251,11 @@ ${byLop[5].map(row).join('\n')}
 ## Muốn thêm hoặc sửa giáo án
 
 - Thêm cụm kiến thức mới: sửa \`tools/data/clusters.mjs\`, \`tools/data/props.mjs\` (đủ 5 trường) và \`tools/data/lessons.mjs\` (đủ 3 trường), rồi chạy \`node tools/build.mjs\`.
-- Đổi quy định bảng phấn: \`tools/lib/chalk.mjs\` (10 quy định).
-- Đổi quy định chế độ giảng bài: \`tools/lib/lesson.mjs\` (11 quy định).
+- Đổi quy định bảng phấn: \`tools/lib/chalk.mjs\` (10 quy định chung + 2 quy định hình học nối theo cụm, danh sách ở \`SOLID_CLUSTERS\` / \`BODY_CLUSTERS\`).
+- Đổi quy định chế độ giảng bài: \`tools/lib/lesson.mjs\` (12 quy định).
 - Đổi quy định tự kiểm đề: \`tools/lib/verify.mjs\` (dùng chung với 85 prompt game).
-- \`node tools/validate.mjs\` sẽ chặn nếu thiếu quy định nào, nếu vật thật thiếu trường, hoặc nếu cơ chế game lọt vào giáo án.
+- Đổi bố cục AR của tiết học: \`AR_LESSON\` trong \`tools/lib/ar.mjs\`. \`AR_RENDER\` trong cùng file là khối của game — hai khối chiếu tọa độ theo hai hình chữ nhật khác nhau nên không đổi chỗ cho nhau được.
+- \`node tools/validate.mjs\` sẽ chặn nếu thiếu quy định nào, nếu vật thật thiếu trường, nếu quy định hình học lọt vào bài không có hình học, hoặc nếu cơ chế game lọt vào giáo án.
 `;
 }
 
