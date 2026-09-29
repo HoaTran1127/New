@@ -1,69 +1,95 @@
 # 🟡 MiTi — Prompt Library Game Giáo Dục
 
-**MiTi** là thư viện prompt để tạo game giáo dục web cho học sinh Việt Nam bằng **Google Gemini Canvas**.
+**MiTi** là thư viện prompt giúp tạo game giáo dục web cho học sinh Việt Nam bằng **Google Gemini Canvas**.
 
-> **Chọn game → xem mục tiêu/nhiệm vụ → mở Prompt → copy → dán vào Gemini Canvas → tạo game HTML.**
+## 🚀 Luồng sử dụng duy nhất
 
-## 🚀 Dashboard
+**1. MỞ DASHBOARD** → **2. CHỌN LỚP + MÔN** → **3. CHỌN GAME** → **4. MỞ PROMPT** → **5. COPY TOÀN BỘ** → **6. DÁN VÀO GEMINI CANVAS** → **7. GEMINI TẠO 1 FILE HTML** → **8. GAME CÓ CHỮ KÝ MiTi**
 
-👉 **[Mở MiTi Dashboard](index.html)**
+👉 [Mở MiTi Dashboard](index.html)
 
-Dashboard hiển thị toàn bộ **85 game có file prompt thật**, tìm kiếm theo lớp/môn/điều khiển và mở trực tiếp từng prompt.
+## 🎮 Kho game thật
 
-## 📊 Kho hiện tại
-
-| Hạng mục | Số lượng |
+| Nhóm | Số game |
 |---|---:|
-| Game Toán lớp 4 | 40 |
-| Game Toán lớp 5 | 15 |
-| Game Tiếng Anh lớp 4 | 15 |
-| Game Tiếng Anh lớp 5 | 15 |
-| **Tổng game có file thật** | **85** |
-| Game gốc dùng để tạo biến thể | **65** |
-| Prompt biến thể | **325 = 65 × 5** |
-| Game mở rộng ngoài bộ 65 | **20** |
+| Toán lớp 4 | 40 |
+| Toán lớp 5 | 15 |
+| Tiếng Anh lớp 4 | 15 |
+| Tiếng Anh lớp 5 | 15 |
+| **Tổng** | **85 game có file prompt thật** |
 
-### 5 biến thể của mỗi game gốc
+Trong 85 game này:
+- **65 game gốc** có đủ **5 biến thể**.
+- **325 prompt biến thể = 65 × 5**.
+- **20 game mở rộng** là các game bổ sung ngoài bộ 65.
 
-1. **Camera Point** — chỉ tay
-2. **Camera Swipe** — vuốt/chém
-3. **Drag & Grab** — kéo/thả
-4. **Voice** — giọng nói
-5. **No Camera** — chuột/chạm/bàn phím
+👉 [Xem 325 biến thể](prompts/VARIANTS_325.md)
 
-👉 [Mở 325 Prompt Variants](prompts/VARIANTS_325.md)
+## 🧭 4 nơi chính trong repository
 
-## 🇻🇳 Chuẩn hoá tiếng Việt
+**Dashboard** — `index.html`  
+Nơi duy nhất người dùng nên bắt đầu.
 
-Nội dung hiển thị trong dashboard và catalogue dùng tiếng Việt:
-- tên game hiển thị bằng tiếng Việt;
-- mục tiêu học tập;
-- nhiệm vụ học sinh;
-- điều khiển;
-- chức năng chính;
-- hướng dẫn/feedback trong prompt.
+**Catalogue** — `catalogs/GAME_CATALOG.md`  
+Danh sách game, mục tiêu, nhiệm vụ, điều khiển và link prompt thật.
 
-**ID và đường dẫn file được giữ ổn định** để không phá liên kết kỹ thuật.
+**Prompt Library** — `prompts/`  
+Nơi chứa prompt chuẩn, master prompt và 325 biến thể.
 
-## 📁 Cấu trúc chính
+**Reference** — `games/`, `src/`, `docs/`, `research/`  
+Tài liệu/kỹ thuật/thử nghiệm. Không phải luồng sử dụng chính.
 
-- `index.html` — dashboard MiTi chính.
-- `catalogs/GAME_CATALOG.csv` — catalogue dữ liệu chuẩn, **85 dòng game**.
+## ✂️ Cách chọn prompt
+
+Mỗi game có:
+- **Mục tiêu học tập**
+- **Nhiệm vụ học sinh**
+- **Cơ chế chơi**
+- **Điều khiển**
+- **Prompt copy trực tiếp**
+
+5 biến thể của game gốc:
+**Camera Point · Camera Swipe · Drag & Grab · Voice · No Camera**
+
+## 🇻🇳 Chuẩn nội dung Việt Nam
+
+Prompt phải yêu cầu:
+- tiêu đề, nút, hướng dẫn và feedback bằng tiếng Việt;
+- mục tiêu và nhiệm vụ phù hợp học sinh Việt Nam;
+- nội dung môn Tiếng Anh chỉ giữ tiếng Anh ở chính phần kiến thức cần học;
+- không dùng tiếng Anh cho UI nếu không cần thiết.
+
+## 🟡 Chuẩn thương hiệu MiTi
+
+**MiTi không chỉ là logo của repository. MiTi phải trở thành chữ ký của game được Gemini tạo ra.**
+
+Mỗi prompt độc lập phải chứa yêu cầu:
+- logo MiTi nhúng trực tiếp vào HTML;
+- biểu tượng **M** + chữ **MiTi** + dấu ✦;
+- xuất hiện ở Bắt đầu / HUD / Kết quả;
+- dòng chữ **MiTi • Học bằng chuyển động**;
+- không phụ thuộc asset của repository.
+
+👉 [Xem Brand Contract](prompts/BRAND_MITI.md)
+
+## 📁 Cấu trúc
+
+- `index.html` — dashboard chính.
+- `catalogs/GAME_CATALOG.csv` — dữ liệu catalogue chuẩn.
 - `catalogs/GAME_CATALOG.md` — catalogue đọc nhanh.
 - `prompts/00-master-canvas-prompt.md` — master prompt.
+- `prompts/BRAND_MITI.md` — hợp đồng thương hiệu cho Gemini.
 - `prompts/VARIANTS_325.md` — 325 prompt biến thể.
 - `prompts/01-toan4/` — 40 game Toán 4.
 - `prompts/02-toan5/` — 15 game Toán 5.
 - `prompts/03-english4/` — 15 game Tiếng Anh 4.
 - `prompts/04-english5/` — 15 game Tiếng Anh 5.
-- `games/` và `src/` — code demo/reference, không phải sản phẩm prompt chính.
 
-## 🔎 Kiểm tra kho
+## ✅ Nguyên tắc chống file ảo
 
-Catalogue chỉ trỏ tới **file prompt tồn tại thật** trong bốn thư mục game. Không dùng đường dẫn giả để làm dashboard đẹp.
+Catalogue chỉ được trỏ tới **file prompt tồn tại thật**.  
+Dashboard chỉ được lấy dữ liệu từ catalogue.  
+Không tạo card cho game không có prompt.  
+Không dùng đường dẫn giả để làm giao diện đẹp.
 
-## 🧠 Nguyên tắc sản phẩm
-
-**Prompt là sản phẩm. Code demo chỉ là reference.**
-
-Mỗi prompt độc lập phải có thể copy vào Gemini Canvas mà không cần Gemini biết repository này.
+> **Prompt là sản phẩm. Game HTML được Gemini sinh ra. MiTi là chữ ký đi cùng prompt vào game.**
