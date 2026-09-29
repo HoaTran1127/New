@@ -1,18 +1,40 @@
-# L4-24 — Fraction Fusion
+# L4-24 — Hợp Nhất Phân Số
 
-- **Khối:** Toán 4
-- **Mục tiêu:** Cộng phân số cùng mẫu.
-- **Nhiệm vụ:** Ghép các phần để tạo tổng.
-- **Điều khiển:** GRAB
+Tạo game giáo dục web **một file HTML duy nhất** cho học sinh Việt Nam lớp 4, môn Toán.
 
-## Prompt copy trực tiếp
+## 1. Mục tiêu và nhiệm vụ
+**Mục tiêu học tập:** Cộng, trừ và biến đổi phân số phù hợp
+**Nhiệm vụ học sinh:** Ghép các mảnh để tạo kết quả
+**Điều khiển chính:** GRAB
+**Chức năng chính:** "fraction bars; same denominator"
 
-```text
-Tạo game giáo dục "Fraction Fusion" cho Toán lớp 4, 1 HTML duy nhất.
-Mục tiêu: cộng phân số cùng mẫu và hiểu vì sao mẫu giữ nguyên.
-Nhiệm vụ: pinch/grab kéo các phần phân số vào một thanh tổng hợp.
-Gameplay: cho ví dụ như 2/7 + 3/7; hai thanh phân số được ghép thành 5/7. Không cộng mẫu. Tạo bẫy 5/14 và giải thích trực quan. Có generator ít nhất 10 bài và độ khó tăng dần.
-Camera MediaPipe Hands, pinch/grab + release state, smoothing, confidence, cooldown, camera loading/error/calibration sau Start.
-Đúng: fusion animation + điểm. Sai: giữ nguyên mô hình để chỉ ra mẫu không thay đổi.
-Fallback mouse/touch. Có Start/Tutorial/Play/Summary/Replay. Không upload video, không TODO, 1 HTML.
-```
+## 2. Gameplay học qua hành động
+- Thiết kế bối cảnh đúng tên game và biến mục tiêu thành hành động chơi trực tiếp.
+- Có **12 lượt**, ngân hàng **ít nhất 40 câu/tình huống**, 3 mức độ khó.
+- Xáo trộn đáp án và vị trí.
+- Phương án nhiễu phải đại diện cho lỗi thường gặp.
+- Câu sai: giải thích bằng trực quan + cho cơ hội luyện lại.
+- Có điểm, tiến độ, chuỗi đúng và tổng kết kỹ năng.
+- Không để hiệu ứng che kiến thức.
+
+## 3. Camera / nhận diện
+MediaPipe Hands; pinch/grab để bắt và release để thả; smoothing/hysteresis; cooldown 300ms.
+- Xin quyền camera/micro chỉ sau **Bắt đầu**.
+- Có trạng thái Đang tải → Xin quyền → Sẵn sàng → Đang nhận diện → Lỗi.
+- Có calibration/framing, smoothing và ngưỡng confidence.
+- Một gesture chỉ tạo một event; không spam khi giữ gesture.
+
+## 4. Fallback
+Mouse/touch/keyboard phải mô phỏng hành động chính.
+
+## 5. Luồng
+**Bắt đầu → Kiểm tra thiết bị → Hiệu chỉnh → Hướng dẫn → Luyện mẫu → 12 lượt → Phản hồi → Ôn câu sai → Kết quả → Chơi lại**
+
+## 6. Ngôn ngữ
+Tất cả UI, hướng dẫn, nút, feedback và lỗi bằng **tiếng Việt**. Chỉ kiến thức Tiếng Anh được dùng tiếng Anh. Chữ lớn, tương phản tốt, mobile-friendly, reduced-motion.
+
+## 8. CHỮ KÝ MiTi
+HTML đầu ra **bắt buộc** tự chứa chữ ký **MiTi**: biểu tượng ô bo góc #FFD84D có chữ M #07111F + wordmark **MiTi** đậm + dấu ✦. Đặt logo nhỏ ở Bắt đầu, HUD và Kết quả; không che gameplay. Có dòng **MiTi • Học bằng chuyển động**. Dùng inline SVG/CSS/HTML, không tham chiếu repository hoặc URL logo bên ngoài. Không xóa logo ở fallback/replay.
+
+## 9. Đầu ra
+Chỉ xuất **toàn bộ HTML hoàn chỉnh**, không TODO, không pseudocode, không phụ thuộc repository này.
