@@ -1,18 +1,38 @@
-# L4-26 — Treasure Split
+# L4-26 — Chia Kho Báu
 
-- **Khối:** Toán 4
-- **Mục tiêu:** Tìm phân số của một số.
-- **Nhiệm vụ:** Chia kho báu thành các nhóm bằng nhau rồi lấy số nhóm cần tìm.
-- **Điều khiển:** GRAB
+Tạo game giáo dục web **một file HTML duy nhất** cho học sinh Việt Nam lớp 4, môn Toán.
 
-## Prompt copy trực tiếp
+## Mục tiêu
+Giải quyết bài toán chia phần
 
-```text
-Tạo game giáo dục "Treasure Split" cho Toán lớp 4 trong 1 HTML duy nhất.
-Mục tiêu: tìm phân số của một số.
-Nhiệm vụ: học sinh dùng pinch/grab chia kho báu thành các nhóm bằng nhau và chọn số phần được yêu cầu.
-Gameplay: ví dụ 3/5 của 20 viên vàng: chia 20 thành 5 nhóm bằng nhau, lấy 3 nhóm, kết quả 12. Visualize “1 phần = 20 : 5”, rồi “3 phần = 1 phần × 3”. Tránh công thức trừu tượng đơn độc. Generator ít nhất 10 bài số đẹp chia hết.
-Camera MediaPipe Hands, grab/release, smoothing, confidence, cooldown, calibration/error.
-Sai: chỉ rõ bước chia cho mẫu trước khi nhân tử. Đúng: hiệu ứng mở rương + điểm.
-Fallback mouse/touch. UI ngắn. Không upload video, không TODO, 1 HTML.
-```
+## Nhiệm vụ
+Chia kho báu theo phân số hoặc tỉ số
+
+## Cơ chế và nội dung
+Điều khiển chính: **GRAB**. Chức năng: "groups; fraction-of-number".
+- Thiết kế bối cảnh đúng tên game và mục tiêu.
+- 12 lượt chơi; ngân hàng ít nhất 40 câu/tình huống; 3 mức độ.
+- Random vị trí đáp án; distractor dựa trên lỗi thường gặp.
+- Sai phải có giải thích trực quan và câu luyện lại; đúng có feedback ngay.
+- Có điểm, tiến độ, chuỗi đúng và tổng kết kỹ năng.
+
+## Camera / nhận diện
+MediaPipe Hands; pinch/grab để bắt và release để thả; smoothing/hysteresis; cooldown 300ms.
+- Xin quyền chỉ sau Bắt đầu.
+- Có Đang tải → Xin quyền → Sẵn sàng → Đang nhận diện → Lỗi.
+- Calibration/framing + smoothing + confidence; một gesture = một event.
+
+## Fallback
+Mouse/touch/keyboard mô phỏng được gameplay chính.
+
+## Luồng
+Bắt đầu → Kiểm tra thiết bị → Hiệu chỉnh → Hướng dẫn → Luyện mẫu → 12 lượt → Phản hồi → Ôn câu sai → Kết quả → Chơi lại.
+
+## Ngôn ngữ / an toàn
+UI và phản hồi bằng **tiếng Việt**. Không yêu cầu động tác nguy hiểm; reduced-motion; không tải/lưu dữ liệu camera/microphone; responsive.
+
+## MiTi — CHỮ KÝ BẮT BUỘC
+HTML phải tự chứa logo **MiTi**: biểu tượng ô bo góc #FFD84D có chữ M #07111F + chữ MiTi đậm + ✦; xuất hiện ở Bắt đầu, HUD và Kết quả; có dòng **MiTi • Học bằng chuyển động**. Dùng inline SVG/CSS/HTML, không phụ thuộc repository hoặc URL logo ngoài.
+
+## Đầu ra
+Chỉ xuất toàn bộ **HTML hoàn chỉnh**, không TODO, không pseudocode, không phụ thuộc repository này.
