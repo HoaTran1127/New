@@ -1,19 +1,40 @@
-# L4-22 — Common Denominator Factory
+# L4-22 — Nhà Máy Quy Đồng
 
-- **Khối:** Toán 4
-- **Mục tiêu:** Quy đồng mẫu số.
-- **Nhiệm vụ:** Kéo hai phân số về cùng mẫu.
-- **Điều khiển:** GRAB
+Tạo game giáo dục web **một file HTML duy nhất** cho học sinh Việt Nam lớp 4, môn Toán.
 
-## Prompt copy trực tiếp
+## 1. Mục tiêu và nhiệm vụ
+**Mục tiêu học tập:** Quy đồng mẫu số trong trường hợp phù hợp
+**Nhiệm vụ học sinh:** Ghép các phân số về cùng mẫu
+**Điều khiển chính:** DRAG
+**Chức năng chính:** "grid; multiply both terms"
 
-```text
-Tạo game giáo dục "Common Denominator Factory" cho học sinh lớp 4, 1 file HTML duy nhất.
-Mục tiêu: quy đồng mẫu số hai phân số.
-Nhiệm vụ: học sinh dùng pinch/grab kéo các phần của hai phân số vào cùng một lưới mẫu số.
-Gameplay: hiển thị hai phân số; cho phép chọn mẫu chung phù hợp; animation chia mỗi phần thành số phần nhỏ hơn và đồng thời nhân tử/mẫu tương ứng. Tạo bẫy từ lỗi chỉ đổi mẫu mà quên đổi tử. Có ít nhất 10 câu.
-Camera: MediaPipe Hands, pinch/grab có threshold, release state, debounce/cooldown, confidence; xin camera sau Start; calibration và error state.
-Sai phải minh họa vì sao phải nhân cả tử và mẫu. Đúng có điểm/combo.
-Fallback mouse/touch. UI ngắn, chữ lớn, có summary.
-Không upload camera; không TODO; không framework build; trả 1 HTML hoàn chỉnh.
-```
+## 2. Gameplay học qua hành động
+- Thiết kế bối cảnh đúng tên game và biến mục tiêu thành hành động chơi trực tiếp.
+- Có **12 lượt**, ngân hàng **ít nhất 40 câu/tình huống**, 3 mức độ khó.
+- Xáo trộn đáp án và vị trí.
+- Phương án nhiễu phải đại diện cho lỗi thường gặp.
+- Câu sai: giải thích bằng trực quan + cho cơ hội luyện lại.
+- Có điểm, tiến độ, chuỗi đúng và tổng kết kỹ năng.
+- Không để hiệu ứng che kiến thức.
+
+## 3. Camera / nhận diện
+MediaPipe Hands; pinch/grab để bắt và release để thả; smoothing/hysteresis; cooldown 300ms.
+- Xin quyền camera/micro chỉ sau **Bắt đầu**.
+- Có trạng thái Đang tải → Xin quyền → Sẵn sàng → Đang nhận diện → Lỗi.
+- Có calibration/framing, smoothing và ngưỡng confidence.
+- Một gesture chỉ tạo một event; không spam khi giữ gesture.
+
+## 4. Fallback
+Mouse/touch/keyboard phải mô phỏng hành động chính.
+
+## 5. Luồng
+**Bắt đầu → Kiểm tra thiết bị → Hiệu chỉnh → Hướng dẫn → Luyện mẫu → 12 lượt → Phản hồi → Ôn câu sai → Kết quả → Chơi lại**
+
+## 6. Ngôn ngữ
+Tất cả UI, hướng dẫn, nút, feedback và lỗi bằng **tiếng Việt**. Chỉ kiến thức Tiếng Anh được dùng tiếng Anh. Chữ lớn, tương phản tốt, mobile-friendly, reduced-motion.
+
+## 8. CHỮ KÝ MiTi
+HTML đầu ra **bắt buộc** tự chứa chữ ký **MiTi**: biểu tượng ô bo góc #FFD84D có chữ M #07111F + wordmark **MiTi** đậm + dấu ✦. Đặt logo nhỏ ở Bắt đầu, HUD và Kết quả; không che gameplay. Có dòng **MiTi • Học bằng chuyển động**. Dùng inline SVG/CSS/HTML, không tham chiếu repository hoặc URL logo bên ngoài. Không xóa logo ở fallback/replay.
+
+## 9. Đầu ra
+Chỉ xuất **toàn bộ HTML hoàn chỉnh**, không TODO, không pseudocode, không phụ thuộc repository này.
