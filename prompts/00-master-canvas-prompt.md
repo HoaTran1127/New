@@ -1,43 +1,129 @@
-# 👑 MASTER SYSTEM PROMPT CHO GEMINI CANVAS (AR & 2D WEB GAMES)
+# 👑 MASTER PROMPT — GEMINI CANVAS MOTION EDUCATION GAME
 
-> **Mục đích:** Đây là Prompt Gốc (Master Prompt) chứa toàn bộ các quy tắc kỹ thuật nghiêm ngặt. Khi đưa prompt này vào Gemini (bật chế độ Canvas), Gemini sẽ tự động lập trình ra game AR hoàn hảo chạy 100% trong 1 file HTML, không bị lỗi thiếu thư viện, không bị giật lag và có âm thanh cực đỉnh.
+> Prompt khung dùng để tạo **một game độc lập** trong Gemini Canvas. Thay phần GAME SPEC bằng nội dung của game cụ thể.
 
----
+## Prompt copy trực tiếp
 
-## 📋 NỘI DUNG PROMPT COPY VÀO GEMINI CANVAS:
+```text
+Bạn là chuyên gia thiết kế và lập trình game giáo dục HTML5 Canvas có tương tác bằng webcam.
 
-```markdown
-Bạn là một Chuyên gia Lập trình Game Giáo dục Web AR (HTML5, Canvas 2D, MediaPipe, Web Audio).
-Hãy tạo cho tôi một ứng dụng Game Tương Tác Học Tập hoàn chỉnh đóng gói trong DUY NHẤT 1 FILE HTML (Single File HTML) để chạy trực tiếp trên trình duyệt web máy tính / laptop.
+Hãy tạo một WEB GAME GIÁO DỤC HOÀN CHỈNH trong DUY NHẤT 1 FILE HTML. Game phải có thể preview/chạy trong môi trường web phù hợp với quyền webcam của trình duyệt.
 
-### YÊU CẦU KỸ THUẬT BẮT BUỘC:
-1. **Công nghệ Thị giác Máy tính (Web AR):**
-   - Sử dụng Google MediaPipe Hands nhúng qua CDN:
-     * `https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js`
-     * `https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js`
-   - Video webcam nền đặt lật gương ngang (`transform: -scale-x-100`) để người chơi có cảm giác soi gương tự nhiên.
-   - Áp dụng bộ lọc mượt chuyển động tay Exponential Moving Average (EMA với alpha ~ 0.45) để chống giật rung từ webcam.
-   - Phát hiện cú vung đấm / chém (Strike): tính tốc độ di chuyển của tay qua các frame, khi tốc độ vượt ngưỡng thì kích hoạt chém.
-   - BẮT BUỘC có chế độ Fallback: Nếu người chơi không có camera hoặc từ chối cấp quyền, vẫn có thể click chuột hoặc chạm màn hình để chơi bình thường.
+========================
+1. GAME SPEC
+========================
+Tên game: [GAME NAME]
+Khối lớp: [GRADE]
+Môn học: [SUBJECT]
+Mục tiêu học tập: [LEARNING OBJECTIVE]
+Nhiệm vụ một câu của học sinh: [PLAYER MISSION]
 
-2. **Giao diện & Đồ họa (UI/UX Arcade):**
-   - Dùng Tailwind CSS CDN + Google Fonts (Fredoka cho chữ game, Outfit cho số điểm).
-   - Canvas 2D phủ tràn màn hình (Full Screen), co giãn linh hoạt theo kích thước cửa sổ.
-   - Phản hồi thị giác thỏa mãn (Juice): Vệt kiếm neon theo tay, hạt nổ tung tóe khi trúng thẻ đúng, sóng chấn động shockwave, và hiệu ứng nứt vỡ màn hình (Cracked screen effect) khi chọn sai.
-   - HUD đầu màn hình: Thanh máu (5 trái tim), điểm số coin 🪙, chuỗi Combo x2, x3, x4 và tên chủ đề bài học.
+Cơ chế chính: [PRIMARY MECHANIC]
+Cử chỉ chính: [PRIMARY GESTURE]
+Ý nghĩa của cử chỉ: [GESTURE MEANING]
 
-3. **Âm thanh Arcade sống động (Tone.js):**
-   - Nhúng Tone.js qua CDN: `https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js`.
-   - KHÔNG tải file mp3 ngoài (để tránh lỗi 404/CORS). Tất cả âm thanh đều tự tổng hợp bằng Synthesizer:
-     * Tiếng vung tay gió rít: Tone.NoiseSynth (pink noise).
-     * Tiếng nhặt xu / đúng: Tone.PolySynth (hợp âm tăng dần theo combo).
-     * Tiếng kính vỡ khi sai: Tone.NoiseSynth (white noise) + Tone.PolySynth nốt cao.
-   - Mở khóa AudioContext đúng chuẩn: gọi `await Tone.start()` khi người chơi bấm nút "Bắt đầu chơi".
+========================
+2. CAMERA + TRACKING
+========================
+- Chọn MediaPipe Hands khi cần tay/ngón; chọn MediaPipe Pose khi cần thân người/chân.
+- Không dùng cả hai nếu mechanic không cần.
+- Chỉ xin quyền camera sau khi người chơi bấm BẮT ĐẦU.
+- Có trạng thái rõ ràng: loading → requesting camera → camera ready → tracking ready → error.
+- Có vùng framing/calibration để trẻ biết đưa tay hoặc cơ thể vào đâu.
+- Làm mượt landmark bằng EMA hoặc bộ lọc tương đương.
+- Cử chỉ phải có threshold, debounce/cooldown và state transition.
+- Một lần gesture chỉ phát một game event; giữ gesture không được spam event.
+- Không coi hover là hit nếu mechanic yêu cầu swipe/punch/pinch.
+- Confidence thấp thì không chốt đáp án.
 
-4. **Ngân hàng Kiến thức Sư phạm:**
-   - Dạng toán: [ĐIỀN DẠNG TOÁN Ở ĐÂY - Ví dụ: Toán Lớp 4 Phân số / Toán Lớp 5 Số thập phân].
-   - Tỉ lệ xuất hiện: 60% phép tính ĐÚNG (để người chơi chém ăn điểm), 40% phép tính SAI (làm bẫy sư phạm để người chơi né).
-   - Khi chém nhầm thẻ sai, hiện banner giải thích chi tiết vì sao sai để người chơi rút kinh nghiệm.
+========================
+3. FALLBACK
+========================
+Nếu webcam không khả dụng:
+- Mouse/touch/keyboard phải mô phỏng đúng hành động chính.
+- Hiển thị rõ chế độ FALLBACK.
+- Nội dung học tập vẫn đầy đủ.
 
-Hãy viết trọn vẹn toàn bộ mã nguồn HTML, CSS và JavaScript hoàn chỉnh, không dùng mã rút gọn hay comment `// TODO`.
+========================
+4. GAME LOOP
+========================
+START
+→ CAMERA CHECK
+→ CALIBRATION
+→ SHOW HOW TO MOVE
+→ PRACTICE
+→ ROUND
+→ INSTANT FEEDBACK
+→ VISUAL EXPLANATION
+→ NEXT QUESTION
+→ FINAL SUMMARY
+→ PLAY AGAIN
+
+Không dùng tutorial dài. Round đầu phải hiểu nhanh.
+
+========================
+5. LEARNING-FIRST
+========================
+- Chuyển động phải phục vụ trực tiếp mục tiêu học tập.
+- Mỗi round ưu tiên một mechanic chính.
+- Đúng: phản hồi tích cực ngay.
+- Sai: giải thích bằng số, sơ đồ, hình, trục hoặc animation.
+- Bẫy sai phải đại diện cho lỗi học sinh thường mắc.
+- Không để VFX che mất kiến thức.
+
+========================
+6. GAME UI
+========================
+- Start screen.
+- Tutorial bằng icon + câu ngắn.
+- HUD: task + score + combo/progress + camera status.
+- Playfield lớn, chữ lớn, tương phản tốt.
+- Pause/replay.
+- Kết quả: số câu, đúng/sai, accuracy và kỹ năng cần luyện.
+- Không cần leaderboard.
+
+========================
+7. AUDIO + VISUAL
+========================
+- Có thể dùng Web Audio API hoặc Tone.js.
+- Ưu tiên âm thanh tổng hợp, không cần mp3 ngoài.
+- VFX phục vụ phản hồi.
+- Có thể vẽ asset bằng Canvas/SVG/CSS thay vì phụ thuộc asset ngoài.
+
+========================
+8. SAFETY + ACCESSIBILITY
+========================
+- Có upper-body/seated fallback khi bài cho phép.
+- Không yêu cầu chạy khỏi vùng camera.
+- Không yêu cầu động tác nguy hiểm.
+- Có nút tắt camera/thoát.
+- Không upload video camera; chỉ dùng landmark/local state cần thiết cho gameplay.
+
+========================
+9. TECHNICAL OUTPUT
+========================
+- TOÀN BỘ code trong đúng 1 file HTML.
+- Không TODO, pseudocode hoặc phần “tự bổ sung”.
+- Không cần npm/build tool.
+- Nếu dùng CDN/model, khai báo URL cụ thể và xử lý lỗi tải.
+- Không dùng thư viện không cần thiết.
+- Có generator dữ liệu, không chỉ một câu hỏi mẫu.
+- Reset/replay hoàn chỉnh.
+
+========================
+10. SELF-CHECK
+========================
+Trước khi trả code hãy tự kiểm tra:
+[ ] camera permission sau Start
+[ ] loading/error state
+[ ] framing/calibration
+[ ] gesture threshold + cooldown
+[ ] không hover-hit sai mechanic
+[ ] fallback
+[ ] tối thiểu 10 dữ liệu/câu hỏi hợp lệ
+[ ] feedback giải thích
+[ ] restart
+[ ] game chạy như một file độc lập
+
+Sau khi tự kiểm tra, chỉ xuất ra file HTML hoàn chỉnh.
 ```
