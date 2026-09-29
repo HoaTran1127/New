@@ -9,7 +9,7 @@
 export const CLASSROOM = {
   // Chữ và HUD không được đè lên người học sinh.
   safeZone:
-    'Vùng an toàn cho HUD: chia khung hình thành lưới 3×3; phần thân học sinh (ô giữa và ô giữa trên) là vùng CẤM đặt chữ — HUD, điểm, tim, đề bài, thẻ đáp án và mascot chỉ nằm ở dải trên cùng, hai cột biên và dải dưới. Chữ không được đè lên tay, mặt hay lồng ngực của các em. Vật thể tương tác vẫn được bay qua vùng giữa, nhưng mọi chữ hướng dẫn thì không.',
+    'Vùng an toàn cho HUD: chia khung hình thành lưới 3×3; phần thân học sinh (ô giữa và ô giữa trên) là vùng CẤM đặt chữ — HUD, điểm, tim, đề bài, thẻ đáp án và mascot chỉ nằm ở dải trên cùng, hai cột biên và dải dưới. Chữ không được đè lên tay, mặt hay lồng ngực của các em. Vật thể tương tác vẫn được bay qua vùng giữa, nhưng mọi chữ hướng dẫn thì không. Vùng cấm này TÍNH ĐỘNG theo thân người thật: nếu PoseLandmarker thấy hai vai 11/12 thì vùng cấm là cột đang chứa hai vai đó cộng thêm một ô đệm mỗi bên chứ không cố định ở ô giữa — nhờ vậy học sinh đứng nép sang một bên thì HUD tự dịch sang phía trống thay vì đè lên người các em; không thấy vai thì giữ nguyên lưới 3×3 mặc định.',
 
   // Không đòi hỏi mức nhận diện cao hơn những gì camera đang thấy.
   framing:
