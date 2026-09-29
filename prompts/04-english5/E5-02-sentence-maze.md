@@ -1,52 +1,37 @@
-# E5-02 — Sentence Maze
+# E5-02 — Mê Cung Câu
 
-- **Khối:** English 5
-- **Mục tiêu:** Đọc hiểu và trật tự câu
-- **Nhiệm vụ:** Đi qua mê cung bằng các câu đúng
-- **Điều khiển:** STEP
+Tạo game giáo dục web **một file HTML duy nhất** cho học sinh Việt Nam lớp 5, môn Tiếng Anh.
 
-## Prompt copy trực tiếp
+## Mục tiêu học tập
+Phát triển đọc, nghe, từ vựng, ngữ pháp và giao tiếp tiếng Anh lớp 5
 
-```text
-Tạo game giáo dục "Sentence Maze" cho học sinh English 5 trong đúng 1 file HTML.
+## Nhiệm vụ học sinh
+Hoàn thành chuỗi nhiệm vụ ngôn ngữ và nhận phản hồi
 
-MỤC TIÊU HỌC TẬP
-Đọc hiểu và trật tự câu
+## Gameplay
+Điều khiển: **MIXED**. Chức năng: tương tác; phản hồi tức thì; tăng độ khó; ôn lại lỗi.
+- 12 lượt; ngân hàng tối thiểu 60 mục; 3 mức độ.
+- Nội dung đọc/nghe/từ vựng/ngữ pháp/giao tiếp phải phù hợp lớp 5.
+- Xáo trộn đáp án; distractor dựa trên lỗi phổ biến.
+- Sai: giải thích bằng tiếng Việt, nêu câu/từ đúng và cho luyện lại; đúng: phản hồi tức thì.
+- Có điểm, tiến độ, chuỗi đúng và tổng kết kỹ năng.
 
-NHIỆM VỤ
-Đi qua mê cung bằng các câu đúng
+## Camera / tương tác
+MediaPipe Hands; đầu ngón trỏ làm con trỏ; calibration; smoothing; confidence >= 0.65; chỉ chốt khi chạm.
+- Xin quyền sau Bắt đầu; có loading/permission/ready/tracking/error.
+- Calibration/framing + smoothing + confidence; một gesture chỉ tạo một event.
 
-GAMEPLAY
-- maze; sentence choices; checkpoints.
-- Mỗi round dùng một hành động chính; không nhồi nhiều gesture.
-- Tạo ngân hàng nội dung ít nhất 60 items phù hợp trình độ lớp 5.
-- Random vị trí đáp án và tránh pattern đoán bằng vị trí.
-- Bẫy phải phản ánh lỗi thực tế như spelling gần đúng, word choice sai, subject-verb agreement hoặc distractor cùng chủ đề.
-- Đúng có feedback ngay; sai có explanation/hint và cơ hội luyện lại.
+## Fallback
+Mouse/touch/keyboard mô phỏng được gameplay chính.
 
+## Luồng
+Bắt đầu → Kiểm tra thiết bị → Hiệu chỉnh → Hướng dẫn → Luyện mẫu → 12 lượt → Phản hồi → Ôn câu sai → Kết quả → Chơi lại.
 
-CAMERA
-- Dùng MediaPipe Hands hoặc Pose tùy mechanic; không bật cả hai nếu không cần.
-- Xin camera sau Start; có loading, permission, ready, tracking và error.
-- Có calibration/framing, smoothing, confidence threshold.
-- Gesture có threshold, state, debounce/cooldown; một hành động chỉ tạo một event.
-- Không chốt đáp án khi confidence thấp.
+## Ngôn ngữ / an toàn
+UI, nút, hướng dẫn và feedback bằng **tiếng Việt**; phần kiến thức tiếng Anh giữ tiếng Anh. Responsive, chữ lớn, reduced-motion; không động tác nguy hiểm; không lưu/tải dữ liệu camera/micro.
 
-FALLBACK
-- Mouse/touch/keyboard mô phỏng gameplay chính.
-- Với voice, nếu speech recognition không có thì dùng nút chọn/keyboard thay thế.
+## MiTi — CHỮ KÝ BẮT BUỘC
+HTML phải tự chứa logo **MiTi**: ô bo góc #FFD84D có chữ M #07111F + chữ MiTi đậm + ✦; xuất hiện ở Bắt đầu, HUD và Kết quả; có dòng **MiTi • Học bằng chuyển động**. Dùng inline SVG/CSS/HTML, không phụ thuộc repository hoặc URL logo ngoài.
 
-UX
-Start → Camera/Audio Check → Tutorial → Practice → Play → Result → Replay.
-Chữ lớn, câu ngắn, màu tương phản. Không leaderboard áp lực.
-
-SAFETY
-Không upload video/audio. Không yêu cầu chạy khỏi vùng camera. Có chế độ ngồi khi phù hợp.
-
-OUTPUT
-- Trả toàn bộ mã trong 1 file HTML.
-- Không TODO/pseudocode.
-- Không npm/build.
-- Có generator dữ liệu và reset/replay.
-- Tự kiểm tra camera/audio/error/fallback trước khi trả code.
-```
+## Đầu ra
+Chỉ xuất **toàn bộ HTML hoàn chỉnh**, không TODO, không pseudocode, không phụ thuộc repository này.
