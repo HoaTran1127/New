@@ -1,5 +1,8 @@
 # Bài 7: Hướng Dẫn Tự Phát Triển Thêm Mini-Game Mới
 
+> **⚠️ Cập nhật chuẩn MiTi (2026-09)** — bài này vẫn đúng về ý tưởng, nhưng ba phụ thuộc đã đổi: **Tone.js → Web Audio API tự tổng hợp**, **MediaPipe Hands legacy → MediaPipe Tasks Vision pin `@1.0.1`** (vision_bundle.mjs + wasm + hand_landmarker.task), **Tailwind Play CDN → CSS nội tuyến một khối `<style>`**. Bản chuẩn để viết prompt cho Gemini Canvas: `prompts/00-master-canvas-prompt.md` §2 (hợp đồng AR: cover-fit, `toScreen(lx, ly)`, lớp phủ alpha ≤ 0.45, chiều sâu z, neo landmark) + `tools/lib/ar.mjs` + `tools/lib/rules.mjs`; 425 prompt biến thể trong `prompts/VARIANTS_425.md`. Mã nguồn demo trong `games/` là bản cũ, chưa theo hợp đồng AR này.
+
+
 > **Hai đường song song, đừng nhầm.** Bài này dạy đường **tự code**: dùng `src/core/*.js` và `src/data/*.js` nhiều file, kiểu mà 4 demo trong `games/` đang chạy. Đường còn lại — **85 prompt game chuẩn** trong `prompts/` — bắt buộc Gemini xuất ra **1 file HTML duy nhất, CSS nội tuyến, không file .js ngoài**, nên không dùng `src/`. Chọn một đường rồi theo đến cùng.
 >
 > `src/data/*.js` là **bộ sinh câu hỏi theo topic** (10 chủ đề Toán), không phải ngân hàng `QUESTION_DATA` mà prompt yêu cầu. Game làm bằng prompt phải tự khai báo `QUESTION_DATA` trong file của nó.

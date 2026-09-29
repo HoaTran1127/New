@@ -6,6 +6,9 @@ import { CLUSTER_KEYS, cluster } from './data/clusters.mjs';
 import { EXAMPLES } from './data/examples.mjs';
 import { ERROR_NOTES } from './data/error-notes.mjs';
 import { readCatalog } from './lib/csv.mjs';
+import { AR_RENDER, TASKS_VISION } from './lib/ar.mjs';
+import { RULES } from './lib/rules.mjs';
+import { MOTION, FEEL, MOTION_SHORT, FEEL_SHORT } from './lib/feel.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 
@@ -33,10 +36,12 @@ function gestureBlock(gestures) {
   const main = GESTURES[gestures[0]];
   if (!main) throw new Error('Không có khối gesture: ' + gestures[0]);
   let out = `- Cử chỉ chính — ${main.vi}: ${main.landmark}\n`;
+  out += `- Biên độ động tác của cơ chế này: ${main.bien_do}\n`;
   out += `- Điều kiện chốt đáp án (hit): ${main.hinh_hoc}\n`;
   out += `- Làm mượt và chống spam: ${main.muot}\n`;
   out += `- Ngưỡng tin cậy: ${main.nguong}\n`;
   out += `- Phản hồi hình ảnh cho người chơi: ${main.nguoi_choi}\n`;
+  out += `- Hòa vào nền AR: ${main.ar}\n`;
   if (gestures[1]) {
     const sub = GESTURES[gestures[1]];
     if (!sub) throw new Error('Không có khối gesture phụ: ' + gestures[1]);
@@ -70,12 +75,18 @@ Không dùng Tailwind Play CDN, không file .css/.js/.json/ảnh/mp3 ngoài. Ch�
 - Lỗi học sinh thường mắc ở chủ đề này (mỗi câu sai ghi đúng một trong các lỗi này): ${ERROR_NOTES[g.cluster]}.
 - Vòng đầu tiên phải dễ để hiểu luật trong vài giây, không cần đọc hướng dẫn dài.
 
-2. BỐI CẢNH VÀ VÒNG CHƠI
+2. THẾ GIỚI AR VÀ VÒNG CHƠI
 - Bối cảnh: ${g.setting}
+- Không gian chơi: học sinh đứng trước camera và mọi vật thể xuất hiện NGAY TRONG khung hình thật của các em (đi vào từ phía sau, tiến về phía người chơi), không nằm trong một bảng game tách rời.
 - Cơ chế chính: ${GESTURES[g.gestures[0]].vi}. Nhiệm vụ hiển thị bằng một dòng chữ to trên HUD, không cần đọc hướng dẫn.
+- ${MOTION.amplitude}
+- ${MOTION.reach}
+- ${MOTION.variety}
+- ${MOTION.breather}
 - Độ dài: 12 lượt chính. Tăng độ khó ở lượt 5 và lượt 9 (thêm bước trung gian hoặc rút ngắn thời gian suy nghĩ).
 - Điểm: +10 nhân chuỗi trả lời đúng. Sai không phạt bằng cách biến mất kiến thức: vẫn hiện lời giải đầy đủ.
 - Điều kiện thua: ${english ? 'hết 5 tim (mỗi đáp án sai trừ 1 tim)' : 'hết 5 tim (mỗi đáp án sai trừ 1 tim)'}. Điều kiện thắng: hết 12 lượt, hiện tổng kết.
+- Chống ăn may: ${RULES.antiLuck}
 - ${english ? 'Từ và câu tiếng Anh xuất hiện trong phần học liệu; mọi hướng dẫn, nút bấm, lời giải thích bằng tiếng Việt.' : 'Toàn bộ lời giải phải dùng đúng thuật ngữ Toán của SGK ' + gradeTxt + '.'}
 
 3. NGÂN HÀNG DỮ LIỆU (QUESTION_DATA)
@@ -89,13 +100,15 @@ Không dùng Tailwind Play CDN, không file .css/.js/.json/ảnh/mp3 ngoài. Ch�
 - Hai mục mẫu để bám theo khuôn (viết tiếp ${bank.so - 2} mục nữa, không được ít hơn):
 ${jsonBlock(ex, cl.tags, ERROR_NOTES[g.cluster].split('; '))}
 
-4. CAMERA VÀ GESTURE
-- MediaPipe Tasks Vision, pin phiên bản: import từ https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@1.0.1/vision_bundle.mjs
-  wasm: https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@1.0.1/wasm
-  model: ${g.gestures.some((x) => ['STEP', 'TWO_HAND_STRETCH', 'TWO_HAND_BALANCE', 'ANGLE_POSE'].includes(x)) ? 'https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_lite/float16/1/pose_landmarker_lite.task (PoseLandmarker)' : 'https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task (HandLandmarker)'}
+4. NỀN AR, CAMERA VÀ GESTURE
+${AR_RENDER}
+- MediaPipe Tasks Vision, pin phiên bản: import từ ${TASKS_VISION.bundle}
+  wasm: ${TASKS_VISION.wasm}
+  model: ${g.gestures.some((x) => ['STEP', 'TWO_HAND_STRETCH', 'TWO_HAND_BALANCE', 'ANGLE_POSE'].includes(x)) ? TASKS_VISION.pose + ' (PoseLandmarker)' : TASKS_VISION.hand + ' (HandLandmarker)'}
 ${g.gestures.includes('VOICE') ? '- Riêng phần nói dùng Web Speech API SpeechRecognition (en-US), không dùng MediaPipe.\n' : ''}- Cấu hình camera: getUserMedia({ video: { facingMode: "user", width: { ideal: 640 }, height: { ideal: 480 }, frameRate: { ideal: 30 } } }). Khung hình 4:3; nếu camera cho tỉ lệ khác thì crop về vùng vẽ cố định, không để giãn hình làm sai tọa độ. Lật gương ngang khi hiển thị và khi tính tọa độ.
 - Chỉ xin quyền camera SAU khi học sinh bấm BẮT ĐẦU. Trạng thái bằng tiếng Việt: Đang tải → Xin quyền camera → Camera sẵn sàng → Đang nhận diện → Lỗi (kèm nút Thử lại).
-- Có khung định vị/calibration để học sinh biết đặt tay hoặc đứng ở đâu.
+- Calibration động: ${RULES.calibration}
+- Camera chỉ bật được trong môi trường an toàn (HTTPS, localhost hoặc mở file trực tiếp). Nếu trình duyệt chặn, báo một dòng tiếng Việt "Muốn dùng camera thì mở game qua HTTPS hoặc file trên máy em" rồi vào thẳng chế độ không camera, không để học sinh kẹt ở màn lỗi tiếng Anh.
 ${gestureBlock(g.gestures)}- Cử chỉ chỉ fire ở lượt chuyển trạng thái, có hysteresis hai ngưỡng và cooldown; giữ nguyên tư thế không được spam event, không được trừ tim.
 - Confidence thấp thì không chốt đáp án.
 - Nếu CDN hoặc model không tải được: hiện thông báo tiếng Việt rồi tự chuyển sang chế độ không camera, game vẫn chơi đủ.
@@ -107,18 +120,29 @@ ${gestureBlock(g.gestures)}- Cử chỉ chỉ fire ở lượt chuyển trạng 
 
 6. PHẢN HỒI HỌC TẬP
 - Đúng: phản hồi tích cực ngay (âm thanh vui + hạt sáng) và một dòng ghi nhớ ngắn.
+- ${FEEL.hitStop}
+- ${FEEL.cheer}
 - Sai: DỪNG 2 giây, ${cl.giai_thich}; chỉ rõ bước hoặc chữ số hoặc từ cần sửa; không để hiệu ứng che lời giải.
 - Câu sai được xếp vào CUỐI vòng chơi để luyện lại trong cùng phiên, ưu tiên xuất hiện lại sớm.
 - Màn tổng kết nhóm theo errorTag: "Em hay sai ở: ${ERROR_NOTES[g.cluster].split('; ')[0]}" — kèm số câu đúng/sai theo mức độ, không chỉ báo điểm.
-${english ? '- Dùng window.speechSynthesis đọc to từ/câu tiếng Anh (en-US hoặc en-GB) khi trả lời đúng, có nút phát lại ở màn học liệu.' : '- Hiện lại phép tính theo cột dọc hoặc sơ đồ đoạn thẳng cho đúng dạng bài của ' + gradeTxt + '.'}
+- ${RULES.summary}
+- ${MOTION.meter}
+${english ? `- ${RULES.listening}\n` : ''}${english ? `- ${RULES.listening}\n- Dùng window.speechSynthesis đọc to từ/câu tiếng Anh (en-US hoặc en-GB) khi trả lời đúng, có nút phát lại ở màn học liệu.` : '- Hiện lại phép tính theo cột dọc hoặc sơ đồ đoạn thẳng cho đúng dạng bài của ' + gradeTxt + '.'}
 
 7. GIAO DIỆN VÀ AN TOÀN
 - Bố cục: Bắt đầu → Kiểm tra thiết bị → Định vị → Xem cách chuyển động → 2 lượt luyện mẫu → 12 lượt chính → Phản hồi → Ôn câu sai → Kết quả → Chơi lại.
 - Vùng chơi lớn, chữ to (đề bài >= 28px desktop, >= 20px điện thoại), tương phản tốt, responsive cả dọc và ngang.
-- Có Pause, Replay, Tắt camera, Giảm hiệu ứng chuyển động. Không leaderboard, không quảng cáo.
-- Âm thanh tổng hợp bằng Web Audio API, bật sau cú bấm đầu tiên; không dùng file mp3.
+- Có Pause, Replay, Tắt camera, Giảm hiệu ứng chuyển động và nút "Chỉnh lại tư thế". Không leaderboard, không quảng cáo.
+- ${RULES.autoPause}
+- ${RULES.perf}
+- ${RULES.audio}
+- ${FEEL.combo}
+- ${FEEL.fx}
+- ${FEEL.bonus}
+- ${FEEL.mascot}
 - Bộ sưu tập: mỗi màn thắng mở khóa 1 thẻ theo chủ đề ${g.name}, lưu localStorage key "miti-collection", có màn "Sưu tập của em".
 - Ngồi tại chỗ vẫn chơi được; không yêu cầu chạy nhảy hay động tác nguy hiểm; không rời khỏi vùng camera.
+- ${RULES.safety}
 - KHÔNG upload ảnh/video từ camera; chỉ dùng landmark trong bộ nhớ; không thu thập dữ liệu cá nhân.
 - Toàn bộ UI, tên nút, hướng dẫn, thông báo lỗi, lời giải thích bằng TIẾNG VIỆT${english ? ' (chỉ học liệu tiếng Anh giữ nguyên tiếng Anh)' : ''}. Không để thuật ngữ kỹ thuật (confidence, cooldown, fallback) hiện trên giao diện học sinh.
 
@@ -131,7 +155,7 @@ ${english ? '- Dùng window.speechSynthesis đọc to từ/câu tiếng Anh (en-
 9. ĐẦU RA
 - Chỉ xuất toàn bộ file HTML hoàn chỉnh, không kèm giải thích dài.
 - Không TODO, không pseudocode, không "...", không "// code tương tự ở trên", không phần "bạn tự bổ sung".
-- Tự kiểm tra trước khi xuất: camera xin sau nút Bắt đầu · có loading/error/định vị · 640×480 và lật gương · gesture fire theo lượt chuyển + cooldown + confidence · không tính hover là đã chọn · ${GESTURES[g.gestures[0]].vi.toLowerCase()} hoạt động đúng cơ chế · fallback chuột/chạm chơi trọn vẹn · QUESTION_DATA đủ ${bank.so} mục, mỗi mục có answer + explanation + loiViet · câu sai vào hàng đợi luyện lại · tổng kết theo nhóm lỗi · bộ sưu tập lưu localStorage · chữ ký MiTi ở ba màn · file chạy độc lập không lỗi console.
+- Tự kiểm tra trước khi xuất: camera xin sau nút Bắt đầu · có loading/error/định vị · 640×480 và lật gương · nền AR là khung hình camera với lớp phủ tối không vượt 0.45 · mọi tọa độ đi qua toScreen, không còn phép nhân thô với W/H · vật thể có z và bóng dưới chân · có ít nhất một vật ảo neo vào landmark cơ thể · gesture fire theo lượt chuyển + cooldown + confidence · không tính hover là đã chọn · calibration đo tầm tay và đặt ngưỡng theo đơn vị vừa đo · ${MOTION_SHORT} · ${FEEL_SHORT} · tab ẩn hoặc mất tiêu điểm là tự Pause, quay lại đếm 3-2-1 · nhận diện 1 lần mỗi 2–3 khung hình, particle có pool, tự giảm chi tiết khi FPS tụt · tổng kết ba thẻ "Làm tốt / Cần luyện / Động tác lần sau" · ${GESTURES[g.gestures[0]].vi.toLowerCase()} hoạt động đúng cơ chế · fallback chuột/chạm chơi trọn vẹn · QUESTION_DATA đủ ${bank.so} mục, mỗi mục có answer + explanation + loiViet · câu sai vào hàng đợi luyện lại · tổng kết theo nhóm lỗi · bộ sưu tập lưu localStorage · chữ ký MiTi ở ba màn · file chạy độc lập không lỗi console.
 \`\`\`
 
 ## Ghi chú cho người tạo prompt (không gửi Gemini)

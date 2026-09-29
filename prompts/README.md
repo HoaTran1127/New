@@ -41,9 +41,9 @@ Logo phải xuất hiện ở Bắt đầu, HUD và Kết quả, không phụ th
 👉 [Brand Contract](BRAND_MITI.md)
 👉 [Logo nguồn](../brand/miti-logo.svg)
 
-## 🎯 325 biến thể
+## 🎯 425 biến thể
 
-**65 game gốc × 5 biến thể = 325 prompt** (phủ 65/85 game; 20 game thêm sau này chưa có biến thể riêng).
+**85 game × 5 biến thể = 425 prompt**, do `tools/build-variants.mjs` sinh từ `tools/data/games.mjs` — phủ đủ toàn bộ catalog, không còn 20 game thiếu biến thể như bản cũ.
 
 1. Camera Point — chỉ tay
 2. Camera Swipe — vuốt/chém
@@ -51,7 +51,9 @@ Logo phải xuất hiện ở Bắt đầu, HUD và Kết quả, không phụ th
 4. Voice — giọng nói
 5. No Camera — chuột/chạm/bàn phím
 
-👉 [Mở 325 Prompt Variants](VARIANTS_325.md)
+Bốn biến thể đầu dùng **cùng một hợp đồng AR** như prompt game: nền là khung hình webcam cover-fit, tọa độ qua `toScreen(lx, ly)`, vật thể có chiều sâu z và neo vào landmark. Muốn đổi nội dung thì sửa dữ liệu rồi chạy `node tools/build.mjs`, đừng sửa tay file sinh ra.
+
+👉 [Mở 425 Prompt Variants](VARIANTS_425.md)
 
 ## 🗂️ Tổ chức thư mục
 
@@ -63,7 +65,7 @@ Logo phải xuất hiện ở Bắt đầu, HUD và Kết quả, không phụ th
 - `03-english4/` — 15 game Tiếng Anh 4.
 - `04-english5/` — 15 game Tiếng Anh 5.
 - `01-prompt-…` đến `12-prompt-…` — **12 prompt legacy** đời đầu: giữ nguyên cơ chế game, đã thay MediaPipe Legacy/Tailwind CDN/Tone.js bằng chuẩn hiện hành và gắn nhãn `LEGACY`. Không dùng làm khuôn cho game mới.
-- `VARIANTS_325.md` — 325 biến thể của 65 game gốc.
+- `VARIANTS_425.md` — 425 biến thể (85 game × 5 kiểu điều khiển), do `tools/build-variants.mjs` sinh.
 
 ## 🔁 Pipeline của thư viện
 

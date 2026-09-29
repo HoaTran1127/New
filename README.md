@@ -47,7 +47,7 @@ Toàn bộ prompt nằm trong file `.md` riêng, mỗi file một game, copy ngu
 | Prompt game chuẩn (Toán 4 · Toán 5 · Tiếng Anh 4 · Tiếng Anh 5) | **85** | [Dashboard MiTi](https://hoatran1127.github.io/New/) — bấm **Sao chép prompt**, hoặc [catalogs/GAME_CATALOG.md](catalogs/GAME_CATALOG.md) |
 | Khung master 9 mục để tự tạo prompt mới | 1 | [prompts/00-master-canvas-prompt.md](prompts/00-master-canvas-prompt.md) |
 | Biểu mẫu điền nhanh | 1 | [prompts/templates/game-prompt-template.md](prompts/templates/game-prompt-template.md) |
-| Biến thể điều khiển (Point · Swipe · Drag/Grab · Voice · No Camera) | **325** | [prompts/VARIANTS_325.md](prompts/VARIANTS_325.md) |
+| Biến thể điều khiển (Point · Swipe · Drag/Grab · Voice · No Camera) | **425** | [prompts/VARIANTS_425.md](prompts/VARIANTS_425.md) — 85 game × 5 kiểu, sinh tự động |
 | Prompt legacy đời đầu (cơ chế arcade, đã nâng cấp lên chuẩn hiện hành) | **12** | Bảng mở rộng dưới đây |
 
 <details>
@@ -83,7 +83,7 @@ Tất cả các file prompt trong thư mục `prompts/` đều là **prompt th�
 | 🇬🇧 **Tiếng Anh Lớp 4** | **15 Game** | Từ vựng chủ đề, nghe chọn tranh, chính tả từ ngữ, ghép câu, phát âm chuẩn... | [👉 Xem 15 Prompt Tiếng Anh 4](prompts/03-english4/) |
 | 🌍 **Tiếng Anh Lớp 5** | **15 Game** | Đọc hiểu thám tử, ngữ pháp tương tác, thử thách câu đố, bản đồ phiêu lưu... | [👉 Xem 15 Prompt Tiếng Anh 5](prompts/04-english5/) |
 
-### 🕹️ 10 kiểu điều khiển (mỗi prompt khai báo rõ, không còn "MIXED")
+### 🕹️ 10 kiểu điều khiển đang dùng (mỗi prompt khai báo rõ, không còn "MIXED")
 
 | Mã | Học sinh làm gì | Số game |
 |:---|:---|:---:|
@@ -100,6 +100,54 @@ Tất cả các file prompt trong thư mục `prompts/` đều là **prompt th�
 
 Số liệu do `tools/build-dashboard.mjs` đếm từ catalog — sửa game xong build lại là bảng này tự đúng nếu bạn chạy `node tools/build.mjs` trước khi commit.
 
+`tools/data/gestures.mjs` còn định nghĩa sẵn **3 mã mở rộng** (chưa game nào dùng, dành cho prompt bạn tự viết thêm): `CLAP` (vỗ hai tay, chốt khi hai tâm bàn tay sát nhau dưới 12% bề rộng vai rồi phải tách ra mới tính nhịp kế), `PINCH` (bóp ngón cái–trỏ, ngưỡng theo bề rộng bàn tay + hysteresis để không nháy liên tục), `HOLD_POSE` (giữ bất động tư thế 1.5 giây, dùng cho game vẽ hình/so sánh góc). Cả 13 mã đều phải đủ 8 trường `vi · landmark · hinh_hoc · muot · nguong · nguoi_choi · ar · fallback` — `node tools/validate.mjs` chặn nếu thiếu, và bắt template khai báo đủ mọi mã đang có.
+
+### 🕶️ Chuẩn AR — camera CHÍNH LÀ màn chơi
+
+Cả 85 prompt + 12 prompt legacy đều phải nêu đủ 5 ràng buộc này (thiếu một là game chỉ còn canvas 2D kèm webcam, không phải AR). `tools/validate.mjs` chặn bằng 6 regex:
+
+| Ràng buộc | Nội dung phải có trong prompt |
+|:---|:---|
+| Nền AR | Vẽ video vào canvas mỗi khung hình, lật gương + **cover-fit** `scale = Math.max(W / video.videoWidth, H / video.videoHeight)`; hoặc `<video object-fit:cover opacity:1>` + canvas trong suốt. Chọn một cách. |
+| Lớp phủ tối | Đúng MỘT lớp `rgba(8,5,20,0.4)`, **alpha không vượt 0.45**; thẻ tự có nền gradient + stroke, không nhờ lớp phủ. |
+| Tọa độ | **Hàm chiếu duy nhất `toScreen(lx, ly)`** cho landmark 0..1. CẤM `lx * W` — camera bị crop là vật lệch khỏi người học sinh. |
+| Chiều sâu | Mỗi vật mang `z từ 1.6` (xa) về 0.35 (sát mặt), vẽ theo 1/z + ellipse bóng dưới chân + speed lines. |
+| Neo cơ thể | Vật ảo đeo vào landmark thật (cổ tay 0, khuỷu 13/14, vai 11/12, hông 23/24, tâm bàn tay 5/9/13/17); mất landmark thì biến mất kèm hướng dẫn tiếng Việt. |
+
+Mỗi mã điều khiển trong `tools/data/gestures.mjs` có thêm trường `ar` mô tả cử chỉ đó hòa vào nền AR thế nào (găng neon bọc cổ tay, khung xương dọc thân, vệt kiếm mọc từ tay…), và được in vào mục 4 của prompt game.
+
+### 🏫 Sáu quy định lớp học thật
+
+Cả 85 prompt + 425 biến thể đều mang sáu dòng này (nguồn: `tools/lib/rules.mjs`, validate chặn nếu thiếu) — chúng sinh ra từ những gì hỏng khi đem game webcam vào lớp:
+
+- **60/40 chống ăn may**: vật đúng/sai trộn xấp xỉ 60/40; chạm sai trừ tim, bỏ lỡ đúng chỉ mất chuỗi → vung tay bừa không thắng.
+- **Calibration động 3 giây**: đo bề rộng vai + tầm tay của chính học sinh rồi đặt ngưỡng theo đơn vị vừa đo, thay vì hằng số pixel (ngồi gần thì fire liên tục, ngồi xa thì vung hết cỡ vẫn không được tính).
+- **Tự Pause khi tab ẩn** (`visibilitychange`/`blur`) + đếm 3-2-1 khi quay lại, reset cooldown để một cú vung dở dang không thành nhát chém.
+- **Ngân sách 30 FPS**: nhận diện 1 lần mỗi 2–3 khung hình, particle có pool, FPS < 28 thì tự giảm hiệu ứng — không bao giờ giảm nội dung học.
+- **An toàn ánh sáng + không gian**: gợi ý bật đèn/chỉnh hướng ngược sáng (vẫn cho chơi tiếp), nhắc dọn vật cản và cách tường một bước.
+- **Tổng kết ba thẻ** "Làm tốt / Cần luyện / Động tác lần sau" và nguyên tắc **nghe-trước** cho game Tiếng Anh (audio trước, chữ sau).
+
+### 💪 Vận động to + cảm giác arcade
+
+Hai lỗi khiến game webcam thất bại khi đưa vào lớp: trẻ chỉ nhấc ngón tay trước ngực (không phải vận động) và cú chạm không có phản ứng nào (chơi như làm bài tập). `tools/lib/feel.mjs` khóa cả hai, và được in vào 85 prompt + 425 biến thể + 12 legacy:
+
+**Năm ràng buộc vận động (`MOTION`)**
+- **Biên độ**: mỗi lượt là động tác >= 50% tầm với đã đo lúc calibration, khuỷu duỗi gần thẳng khi chốt — không có đường thắng cả vòng bằng cổ tay.
+- **Vùng đích sát mép**: tâm vùng đáp án cách trục cơ thể >= 45% tầm với, nằm trong 12% bề rộng từ cạnh khung, đổi vị trí theo lượt.
+- **Xen kẽ nhóm cơ**: một bên tay/một hướng không quá 4 lượt liên tiếp; mỗi 3 lượt đổi mặt phẳng động tác (ngang vai → với cao → xuống thấp).
+- **3 hiệp + trạm nghỉ**: 12 lượt chia 3 hiệp, giữa hiệp nghỉ 5 giây đếm ngược, không trừ tim — tương đương 4–6 phút vận động vừa.
+- **Thẻ đếm vận động**: "Em đã vận động N động tác trong M phút" ở màn tổng kết, không phải điểm và không so với bạn.
+
+**Sáu ràng buộc arcade (`FEEL`)**
+- **Hit-stop 70–90 ms** + giật màn hình 4–6 px + thẻ lún 0.85 rồi nảy (squash & stretch) — nhìn thấy lực của cú chạm.
+- **Combo** "x2→x5" hiện to dần kèm vệt neon từ tay tới vật, cao độ âm thanh nhảy bậc theo chuỗi, đứt thì âm rơi và số tan thành hạt.
+- **Chữ khen** tiếng Việt bật lên đúng điểm chạm; câu sai dùng chữ đỡ, không chữ đỏ gây sợ.
+- **Thẻ vàng x2 điểm** (2 lần/vòng) + 1 câu thử thách xuất hiện từ z xa, biến mất sau 3 giây — hồi hộp mà không đổi dữ liệu học tập.
+- **FX hòa vào nền AR** (particle, vệt kiếm từ cổ tay, kính vỡ mạng nhện từ điểm va chạm) trong trần alpha 0.45 và ngân sách particle.
+- **Mascot phản ứng**: nghiêng theo hướng với tay, ăn mừng khi combo >= 3, che mắt khi hụt, chỉ về camera khi mất landmark.
+
+Mỗi mã điều khiển còn có thêm trường `bien_do` mô tả động tác to riêng cho cơ chế đó (SWIPE chém từ vai >= 60% tầm với, TWO_HAND_STRETCH dang từ 40% → 100% sải tay…), được in vào mục 4 của prompt và block điều khiển của biến thể.
+
 ---
 
 ## 🔁 Pipeline: sửa dữ liệu một chỗ, mọi thứ dựng lại
@@ -107,16 +155,21 @@ Số liệu do `tools/build-dashboard.mjs` đếm từ catalog — sửa game xo
 ```text
 tools/data/games.mjs         85 game: tên, gesture, bối cảnh, nhiệm vụ, cụm kiến thức
 tools/data/clusters.mjs      57 cụm kiến thức + nội dung + giải thích sư phạm
-tools/data/gestures.mjs      10 mã điều khiển: landmark, hình học chốt, ngưỡng, fallback
+tools/data/gestures.mjs      mã điều khiển: landmark, hình học chốt, ngưỡng, bien_do, fallback + trường `ar`
 tools/data/examples.mjs      câu mẫu few-shot cho từng cụm
 tools/data/error-notes.mjs   nhãn lỗi tiếng Việt (errorTag + loiViet)
+tools/lib/ar.mjs             hợp đồng AR (cover-fit, toScreen, alpha, z, neo landmark) — dùng chung mọi chỗ
+tools/lib/rules.mjs          quy định lớp học (60/40, calibration, Pause, FPS, an toàn, tổng kết 3 thẻ)
+tools/lib/feel.mjs           quy định vận động to + cảm giác arcade (biên độ, mép khung, trạm nghỉ, hit-stop, combo)
         │
         └─ node tools/build.mjs
              ├─ catalogs/GAME_CATALOG.csv + .md
              ├─ prompts/01-toan4 · 02-toan5 · 03-english4 · 04-english5 (85 file)
+             ├─ prompts/VARIANTS_425.md   (85 game × 5 kiểu điều khiển)
              ├─ prompts/01..12 legacy (nâng cấp phụ thuộc, gắn nhãn)
              ├─ catalogs/GAME_CATALOG.js  → index.html vẽ lưới + lọc + copy
-             └─ node tools/validate.mjs   → chặn MIXED, link gãy, thiếu chữ ký MiTi, rò ${}
+             └─ node tools/validate.mjs   → chặn MIXED, thiếu hợp đồng AR, thiếu quy định lớp học,
+                                            425 block biến thể, link gãy, thiếu chữ ký MiTi, rò ${}
 ```
 
 ```bash
