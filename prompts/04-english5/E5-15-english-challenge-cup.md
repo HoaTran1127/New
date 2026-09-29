@@ -1,19 +1,38 @@
-# E5-15 — English Challenge Cup
+# E5-15 — Cúp Thử Thách Tiếng Anh
 
-Create a standalone single-file English Grade 5 game.
+Tạo game giáo dục web **một file HTML duy nhất** cho học sinh Việt Nam lớp 5, môn Tiếng Anh.
 
-Learning objective: review vocabulary, listening, reading, spelling, grammar and communication.
+## Mục tiêu học tập
+"Ôn tổng hợp kỹ năng tiếng Anh"
 
-Mission: complete a six-event English cup and improve weak skills.
+## Nhiệm vụ học sinh
+"Hoàn thành sáu sự kiện kỹ năng"
 
-Events: Listening Sprint, Vocabulary Target, Reading Evidence, Grammar Repair, Spelling Relay and Speaking Mission. Each event uses a different interaction.
+## Gameplay
+Điều khiển: **MIXED**. Chức năng: "listening; vocabulary; reading; grammar; spelling; speaking".
+- 12 lượt; ngân hàng tối thiểu 60 mục; 3 mức độ.
+- Nội dung tiếng Anh phù hợp trình độ lớp 5.
+- Xáo trộn đáp án; distractor dựa trên lỗi phổ biến.
+- Sai: giải thích bằng tiếng Việt, chỉ ra từ/cấu trúc đúng và cho luyện lại.
+- Đúng: phản hồi tức thì; nghe lại/phát âm khi phù hợp.
+- Có điểm, tiến độ, chuỗi đúng và tổng kết kỹ năng.
 
-Generate at least 90 tagged questions/tasks and randomize order while keeping difficulty balanced. Missed skills must be recycled later.
+## Camera / tương tác
+MediaPipe Hands; đầu ngón trỏ làm con trỏ; calibration; smoothing; confidence >= 0.65; chỉ chốt khi chạm.
+- Xin quyền sau Bắt đầu; có loading/permission/ready/tracking/error.
+- Có calibration/framing; confidence thấp không chốt; một gesture chỉ tạo một event.
 
-Camera/gesture input is optional and should only control selection/swiping. Use calibration, confidence >= 0.65, smoothing and cooldown. Mouse/touch/keyboard fallback.
+## Fallback
+Mouse/touch/keyboard mô phỏng được gameplay chính.
 
-Feedback must teach: reveal the answer, explain the mistake and provide one retry.
+## Luồng
+Bắt đầu → Kiểm tra thiết bị → Hiệu chỉnh → Hướng dẫn → Luyện mẫu → 12 lượt → Phản hồi → Ôn câu sai → Kết quả → Chơi lại.
 
-Include progress by skill, not only total score; avoid speed-only ranking. Provide reduced motion, text-to-speech where available, camera/mic-off alternatives and privacy notices.
+## Ngôn ngữ / an toàn
+UI, nút, hướng dẫn và feedback bằng **tiếng Việt**; phần kiến thức tiếng Anh giữ tiếng Anh. Responsive, chữ lớn, reduced-motion; không động tác nguy hiểm; không lưu/tải dữ liệu camera/micro.
 
-Output one complete HTML file, no TODOs or pseudocode.
+## MiTi — CHỮ KÝ BẮT BUỘC
+HTML phải tự chứa logo **MiTi**: ô bo góc #FFD84D có chữ M #07111F + chữ MiTi đậm + ✦; xuất hiện ở Bắt đầu, HUD và Kết quả; có dòng **MiTi • Học bằng chuyển động**. Dùng inline SVG/CSS/HTML, không phụ thuộc repository hoặc URL logo ngoài.
+
+## Đầu ra
+Chỉ xuất **toàn bộ HTML hoàn chỉnh**, không TODO, không pseudocode, không phụ thuộc repository này.
