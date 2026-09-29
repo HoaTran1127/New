@@ -11,6 +11,16 @@ Mỗi prompt yêu cầu Gemini tạo **một file HTML duy nhất**, không TODO
 
 ## Prompt 001 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Number Dash**.
 
 **Mục tiêu học tập:** Đọc, viết và nhận biết cấu tạo số đến 100000.
@@ -37,6 +47,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 002 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Number Dash**.
 
@@ -65,6 +85,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 003 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Number Dash**.
 
 **Mục tiêu học tập:** Đọc, viết và nhận biết cấu tạo số đến 100000.
@@ -92,6 +122,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 004 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Number Dash**.
 
 **Mục tiêu học tập:** Đọc, viết và nhận biết cấu tạo số đến 100000.
@@ -118,6 +158,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 005 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Number Dash**.
 
@@ -149,6 +199,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 006 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Million Mountain**.
 
 **Mục tiêu học tập:** Đọc, so sánh và sắp thứ tự số đến hàng triệu.
@@ -175,6 +235,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 007 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Million Mountain**.
 
@@ -203,6 +273,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 008 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Million Mountain**.
 
 **Mục tiêu học tập:** Đọc, so sánh và sắp thứ tự số đến hàng triệu.
@@ -230,6 +310,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 009 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Million Mountain**.
 
 **Mục tiêu học tập:** Đọc, so sánh và sắp thứ tự số đến hàng triệu.
@@ -256,6 +346,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 010 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Million Mountain**.
 
@@ -287,6 +387,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 011 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Rounding Hoops**.
 
 **Mục tiêu học tập:** Làm tròn số.
@@ -313,6 +423,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 012 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Rounding Hoops**.
 
@@ -341,6 +461,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 013 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Rounding Hoops**.
 
 **Mục tiêu học tập:** Làm tròn số.
@@ -368,6 +498,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 014 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Rounding Hoops**.
 
 **Mục tiêu học tập:** Làm tròn số.
@@ -394,6 +534,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 015 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Rounding Hoops**.
 
@@ -425,6 +575,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 016 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Even Odd Dance**.
 
 **Mục tiêu học tập:** Nhận biết số chẵn và số lẻ.
@@ -451,6 +611,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 017 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Even Odd Dance**.
 
@@ -479,6 +649,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 018 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Even Odd Dance**.
 
 **Mục tiêu học tập:** Nhận biết số chẵn và số lẻ.
@@ -506,6 +686,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 019 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Even Odd Dance**.
 
 **Mục tiêu học tập:** Nhận biết số chẵn và số lẻ.
@@ -532,6 +722,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 020 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Even Odd Dance**.
 
@@ -563,6 +763,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 021 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Weight Factory**.
 
 **Mục tiêu học tập:** Đổi đơn vị khối lượng.
@@ -589,6 +799,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 022 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Weight Factory**.
 
@@ -617,6 +837,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 023 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Weight Factory**.
 
 **Mục tiêu học tập:** Đổi đơn vị khối lượng.
@@ -644,6 +874,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 024 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Weight Factory**.
 
 **Mục tiêu học tập:** Đổi đơn vị khối lượng.
@@ -670,6 +910,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 025 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Weight Factory**.
 
@@ -701,6 +951,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 026 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Area Builder**.
 
 **Mục tiêu học tập:** Nhận biết đơn vị và tính diện tích.
@@ -727,6 +987,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 027 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Area Builder**.
 
@@ -755,6 +1025,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 028 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Area Builder**.
 
 **Mục tiêu học tập:** Nhận biết đơn vị và tính diện tích.
@@ -782,6 +1062,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 029 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Area Builder**.
 
 **Mục tiêu học tập:** Nhận biết đơn vị và tính diện tích.
@@ -808,6 +1098,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 030 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Area Builder**.
 
@@ -839,6 +1139,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 031 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Time Machine**.
 
 **Mục tiêu học tập:** Đọc và tính thời gian.
@@ -865,6 +1175,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 032 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Time Machine**.
 
@@ -893,6 +1213,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 033 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Time Machine**.
 
 **Mục tiêu học tập:** Đọc và tính thời gian.
@@ -920,6 +1250,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 034 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Time Machine**.
 
 **Mục tiêu học tập:** Đọc và tính thời gian.
@@ -946,6 +1286,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 035 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Time Machine**.
 
@@ -977,6 +1327,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 036 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Angle Hero**.
 
 **Mục tiêu học tập:** Nhận biết và đo góc.
@@ -1003,6 +1363,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 037 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Angle Hero**.
 
@@ -1031,6 +1401,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 038 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Angle Hero**.
 
 **Mục tiêu học tập:** Nhận biết và đo góc.
@@ -1058,6 +1438,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 039 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Angle Hero**.
 
 **Mục tiêu học tập:** Nhận biết và đo góc.
@@ -1084,6 +1474,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 040 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Angle Hero**.
 
@@ -1115,6 +1515,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 041 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Laser Architect**.
 
 **Mục tiêu học tập:** Nhận biết quan hệ vuông góc và song song.
@@ -1141,6 +1551,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 042 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Laser Architect**.
 
@@ -1169,6 +1589,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 043 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Laser Architect**.
 
 **Mục tiêu học tập:** Nhận biết quan hệ vuông góc và song song.
@@ -1196,6 +1626,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 044 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Laser Architect**.
 
 **Mục tiêu học tập:** Nhận biết quan hệ vuông góc và song song.
@@ -1222,6 +1662,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 045 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Laser Architect**.
 
@@ -1253,6 +1703,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 046 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Math Boxing**.
 
 **Mục tiêu học tập:** Cộng, trừ và biểu thức.
@@ -1279,6 +1739,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 047 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Math Boxing**.
 
@@ -1307,6 +1777,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 048 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Math Boxing**.
 
 **Mục tiêu học tập:** Cộng, trừ và biểu thức.
@@ -1334,6 +1814,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 049 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Math Boxing**.
 
 **Mục tiêu học tập:** Cộng, trừ và biểu thức.
@@ -1360,6 +1850,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 050 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Math Boxing**.
 
@@ -1391,6 +1891,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 051 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Multiplication Rocket**.
 
 **Mục tiêu học tập:** Thực hiện phép nhân số tự nhiên.
@@ -1417,6 +1927,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 052 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Multiplication Rocket**.
 
@@ -1445,6 +1965,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 053 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Multiplication Rocket**.
 
 **Mục tiêu học tập:** Thực hiện phép nhân số tự nhiên.
@@ -1472,6 +2002,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 054 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Multiplication Rocket**.
 
 **Mục tiêu học tập:** Thực hiện phép nhân số tự nhiên.
@@ -1498,6 +2038,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 055 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Multiplication Rocket**.
 
@@ -1529,6 +2079,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 056 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Division Conveyor**.
 
 **Mục tiêu học tập:** Thực hiện phép chia, thương và số dư.
@@ -1555,6 +2115,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 057 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Division Conveyor**.
 
@@ -1583,6 +2153,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 058 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Division Conveyor**.
 
 **Mục tiêu học tập:** Thực hiện phép chia, thương và số dư.
@@ -1610,6 +2190,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 059 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Division Conveyor**.
 
 **Mục tiêu học tập:** Thực hiện phép chia, thương và số dư.
@@ -1636,6 +2226,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 060 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Division Conveyor**.
 
@@ -1667,6 +2267,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 061 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Balance Lab**.
 
 **Mục tiêu học tập:** Nhận biết tính chất và biểu thức tương đương.
@@ -1693,6 +2303,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 062 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Balance Lab**.
 
@@ -1721,6 +2341,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 063 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Balance Lab**.
 
 **Mục tiêu học tập:** Nhận biết tính chất và biểu thức tương đương.
@@ -1748,6 +2378,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 064 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Balance Lab**.
 
 **Mục tiêu học tập:** Nhận biết tính chất và biểu thức tương đương.
@@ -1774,6 +2414,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 065 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Balance Lab**.
 
@@ -1805,6 +2455,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 066 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Delivery Route**.
 
 **Mục tiêu học tập:** Giải bài toán nhiều bước.
@@ -1831,6 +2491,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 067 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Delivery Route**.
 
@@ -1859,6 +2529,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 068 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Delivery Route**.
 
 **Mục tiêu học tập:** Giải bài toán nhiều bước.
@@ -1886,6 +2566,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 069 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Delivery Route**.
 
 **Mục tiêu học tập:** Giải bài toán nhiều bước.
@@ -1912,6 +2602,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 070 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Delivery Route**.
 
@@ -1943,6 +2643,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 071 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Data Catch**.
 
 **Mục tiêu học tập:** Đọc và khai thác dãy số liệu.
@@ -1969,6 +2679,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 072 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Data Catch**.
 
@@ -1997,6 +2717,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 073 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Data Catch**.
 
 **Mục tiêu học tập:** Đọc và khai thác dãy số liệu.
@@ -2024,6 +2754,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 074 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Data Catch**.
 
 **Mục tiêu học tập:** Đọc và khai thác dãy số liệu.
@@ -2050,6 +2790,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 075 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Data Catch**.
 
@@ -2081,6 +2831,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 076 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Bar Builder**.
 
 **Mục tiêu học tập:** Đọc và tạo biểu đồ cột.
@@ -2107,6 +2867,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 077 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Bar Builder**.
 
@@ -2135,6 +2905,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 078 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Bar Builder**.
 
 **Mục tiêu học tập:** Đọc và tạo biểu đồ cột.
@@ -2162,6 +2942,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 079 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Bar Builder**.
 
 **Mục tiêu học tập:** Đọc và tạo biểu đồ cột.
@@ -2188,6 +2978,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 080 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Bar Builder**.
 
@@ -2219,6 +3019,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 081 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Picture Market**.
 
 **Mục tiêu học tập:** Đọc biểu đồ tranh.
@@ -2245,6 +3055,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 082 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Picture Market**.
 
@@ -2273,6 +3093,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 083 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Picture Market**.
 
 **Mục tiêu học tập:** Đọc biểu đồ tranh.
@@ -2300,6 +3130,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 084 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Picture Market**.
 
 **Mục tiêu học tập:** Đọc biểu đồ tranh.
@@ -2326,6 +3166,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 085 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Picture Market**.
 
@@ -2357,6 +3207,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 086 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Chance Lab**.
 
 **Mục tiêu học tập:** Nhận biết chắc chắn, có thể, không thể.
@@ -2383,6 +3243,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 087 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Chance Lab**.
 
@@ -2411,6 +3281,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 088 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Chance Lab**.
 
 **Mục tiêu học tập:** Nhận biết chắc chắn, có thể, không thể.
@@ -2438,6 +3318,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 089 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Chance Lab**.
 
 **Mục tiêu học tập:** Nhận biết chắc chắn, có thể, không thể.
@@ -2464,6 +3354,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 090 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Chance Lab**.
 
@@ -2495,6 +3395,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 091 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Fraction Pizza**.
 
 **Mục tiêu học tập:** Nhận biết và biểu diễn phân số.
@@ -2521,6 +3431,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 092 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Fraction Pizza**.
 
@@ -2549,6 +3469,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 093 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Fraction Pizza**.
 
 **Mục tiêu học tập:** Nhận biết và biểu diễn phân số.
@@ -2576,6 +3506,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 094 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Fraction Pizza**.
 
 **Mục tiêu học tập:** Nhận biết và biểu diễn phân số.
@@ -2602,6 +3542,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 095 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Fraction Pizza**.
 
@@ -2633,6 +3583,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 096 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Fraction Mirror**.
 
 **Mục tiêu học tập:** Nhận biết phân số bằng nhau.
@@ -2659,6 +3619,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 097 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Fraction Mirror**.
 
@@ -2687,6 +3657,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 098 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Fraction Mirror**.
 
 **Mục tiêu học tập:** Nhận biết phân số bằng nhau.
@@ -2714,6 +3694,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 099 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Fraction Mirror**.
 
 **Mục tiêu học tập:** Nhận biết phân số bằng nhau.
@@ -2740,6 +3730,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 100 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Fraction Mirror**.
 
@@ -2771,6 +3771,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 101 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Fraction Ninja**.
 
 **Mục tiêu học tập:** Rút gọn phân số.
@@ -2797,6 +3807,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 102 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Fraction Ninja**.
 
@@ -2825,6 +3845,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 103 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Fraction Ninja**.
 
 **Mục tiêu học tập:** Rút gọn phân số.
@@ -2852,6 +3882,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 104 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Fraction Ninja**.
 
 **Mục tiêu học tập:** Rút gọn phân số.
@@ -2878,6 +3918,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 105 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Fraction Ninja**.
 
@@ -2909,6 +3959,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 106 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Common Denominator Factory**.
 
 **Mục tiêu học tập:** Quy đồng mẫu số.
@@ -2935,6 +3995,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 107 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Common Denominator Factory**.
 
@@ -2963,6 +4033,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 108 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Common Denominator Factory**.
 
 **Mục tiêu học tập:** Quy đồng mẫu số.
@@ -2990,6 +4070,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 109 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Common Denominator Factory**.
 
 **Mục tiêu học tập:** Quy đồng mẫu số.
@@ -3016,6 +4106,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 110 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Common Denominator Factory**.
 
@@ -3047,6 +4147,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 111 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Fraction Race**.
 
 **Mục tiêu học tập:** So sánh phân số.
@@ -3073,6 +4183,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 112 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Fraction Race**.
 
@@ -3101,6 +4221,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 113 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Fraction Race**.
 
 **Mục tiêu học tập:** So sánh phân số.
@@ -3128,6 +4258,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 114 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Fraction Race**.
 
 **Mục tiêu học tập:** So sánh phân số.
@@ -3154,6 +4294,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 115 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Fraction Race**.
 
@@ -3185,6 +4335,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 116 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Fraction Fusion**.
 
 **Mục tiêu học tập:** Cộng phân số cùng mẫu.
@@ -3211,6 +4371,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 117 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Fraction Fusion**.
 
@@ -3239,6 +4409,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 118 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Fraction Fusion**.
 
 **Mục tiêu học tập:** Cộng phân số cùng mẫu.
@@ -3266,6 +4446,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 119 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Fraction Fusion**.
 
 **Mục tiêu học tập:** Cộng phân số cùng mẫu.
@@ -3292,6 +4482,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 120 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Fraction Fusion**.
 
@@ -3323,6 +4523,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 121 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Fraction Reactor**.
 
 **Mục tiêu học tập:** Trừ phân số cùng mẫu.
@@ -3349,6 +4559,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 122 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Fraction Reactor**.
 
@@ -3377,6 +4597,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 123 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Fraction Reactor**.
 
 **Mục tiêu học tập:** Trừ phân số cùng mẫu.
@@ -3404,6 +4634,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 124 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Fraction Reactor**.
 
 **Mục tiêu học tập:** Trừ phân số cùng mẫu.
@@ -3430,6 +4670,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 125 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Fraction Reactor**.
 
@@ -3461,6 +4711,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 126 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Treasure Split**.
 
 **Mục tiêu học tập:** Tìm phân số của một số.
@@ -3487,6 +4747,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 127 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Treasure Split**.
 
@@ -3515,6 +4785,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 128 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Treasure Split**.
 
 **Mục tiêu học tập:** Tìm phân số của một số.
@@ -3542,6 +4822,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 129 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Treasure Split**.
 
 **Mục tiêu học tập:** Tìm phân số của một số.
@@ -3568,6 +4858,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 130 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Treasure Split**.
 
@@ -3599,6 +4899,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 131 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Ratio Rescue**.
 
 **Mục tiêu học tập:** Giải bài toán theo sơ đồ tổng-tỉ/hiệu-tỉ.
@@ -3625,6 +4935,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 132 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Ratio Rescue**.
 
@@ -3653,6 +4973,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 133 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Ratio Rescue**.
 
 **Mục tiêu học tập:** Giải bài toán theo sơ đồ tổng-tỉ/hiệu-tỉ.
@@ -3680,6 +5010,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 134 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Ratio Rescue**.
 
 **Mục tiêu học tập:** Giải bài toán theo sơ đồ tổng-tỉ/hiệu-tỉ.
@@ -3706,6 +5046,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 135 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Ratio Rescue**.
 
@@ -3737,6 +5087,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 136 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Map Explorer**.
 
 **Mục tiêu học tập:** Đọc và sử dụng tỉ lệ bản đồ.
@@ -3763,6 +5123,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 137 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Map Explorer**.
 
@@ -3791,6 +5161,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 138 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Map Explorer**.
 
 **Mục tiêu học tập:** Đọc và sử dụng tỉ lệ bản đồ.
@@ -3818,6 +5198,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 139 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Map Explorer**.
 
 **Mục tiêu học tập:** Đọc và sử dụng tỉ lệ bản đồ.
@@ -3844,6 +5234,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 140 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Map Explorer**.
 
@@ -3875,6 +5275,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 141 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Parallelogram Pull**.
 
 **Mục tiêu học tập:** Nhận biết và tính diện tích hình bình hành.
@@ -3901,6 +5311,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 142 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Parallelogram Pull**.
 
@@ -3929,6 +5349,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 143 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Parallelogram Pull**.
 
 **Mục tiêu học tập:** Nhận biết và tính diện tích hình bình hành.
@@ -3956,6 +5386,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 144 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Parallelogram Pull**.
 
 **Mục tiêu học tập:** Nhận biết và tính diện tích hình bình hành.
@@ -3982,6 +5422,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 145 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Parallelogram Pull**.
 
@@ -4013,6 +5463,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 146 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Diamond Builder**.
 
 **Mục tiêu học tập:** Nhận biết và tính diện tích hình thoi.
@@ -4039,6 +5499,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 147 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Diamond Builder**.
 
@@ -4067,6 +5537,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 148 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Diamond Builder**.
 
 **Mục tiêu học tập:** Nhận biết và tính diện tích hình thoi.
@@ -4094,6 +5574,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 149 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Diamond Builder**.
 
 **Mục tiêu học tập:** Nhận biết và tính diện tích hình thoi.
@@ -4120,6 +5610,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 150 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Diamond Builder**.
 
@@ -4151,6 +5651,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 151 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Mixed Sprint**.
 
 **Mục tiêu học tập:** Ôn số và phép tính.
@@ -4177,6 +5687,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 152 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Mixed Sprint**.
 
@@ -4205,6 +5725,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 153 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Mixed Sprint**.
 
 **Mục tiêu học tập:** Ôn số và phép tính.
@@ -4232,6 +5762,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 154 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Mixed Sprint**.
 
 **Mục tiêu học tập:** Ôn số và phép tính.
@@ -4258,6 +5798,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 155 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Mixed Sprint**.
 
@@ -4289,6 +5839,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 156 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Geometry Arena**.
 
 **Mục tiêu học tập:** Ôn hình học và đo lường.
@@ -4315,6 +5875,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 157 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Geometry Arena**.
 
@@ -4343,6 +5913,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 158 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Geometry Arena**.
 
 **Mục tiêu học tập:** Ôn hình học và đo lường.
@@ -4370,6 +5950,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 159 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Geometry Arena**.
 
 **Mục tiêu học tập:** Ôn hình học và đo lường.
@@ -4396,6 +5986,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 160 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Geometry Arena**.
 
@@ -4427,6 +6027,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 161 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Fraction Arena**.
 
 **Mục tiêu học tập:** Ôn phân số.
@@ -4453,6 +6063,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 162 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Fraction Arena**.
 
@@ -4481,6 +6101,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 163 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Fraction Arena**.
 
 **Mục tiêu học tập:** Ôn phân số.
@@ -4508,6 +6138,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 164 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Fraction Arena**.
 
 **Mục tiêu học tập:** Ôn phân số.
@@ -4534,6 +6174,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 165 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Fraction Arena**.
 
@@ -4565,6 +6215,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 166 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Data Arena**.
 
 **Mục tiêu học tập:** Ôn dữ liệu và khả năng xảy ra.
@@ -4591,6 +6251,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 167 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Data Arena**.
 
@@ -4619,6 +6289,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 168 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Data Arena**.
 
 **Mục tiêu học tập:** Ôn dữ liệu và khả năng xảy ra.
@@ -4646,6 +6326,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 169 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Data Arena**.
 
 **Mục tiêu học tập:** Ôn dữ liệu và khả năng xảy ra.
@@ -4672,6 +6362,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 170 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Data Arena**.
 
@@ -4703,6 +6403,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 171 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Grand Math Arena**.
 
 **Mục tiêu học tập:** Ôn tổng hợp Toán 4.
@@ -4729,6 +6439,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 172 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Grand Math Arena**.
 
@@ -4757,6 +6477,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 173 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Grand Math Arena**.
 
 **Mục tiêu học tập:** Ôn tổng hợp Toán 4.
@@ -4784,6 +6514,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 174 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Grand Math Arena**.
 
 **Mục tiêu học tập:** Ôn tổng hợp Toán 4.
@@ -4810,6 +6550,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 175 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Toán, tên **Grand Math Arena**.
 
@@ -4841,6 +6591,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 176 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Multi Operation Quest**.
 
 **Mục tiêu học tập:** Giải biểu thức và bài toán nhiều phép tính.
@@ -4867,6 +6627,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 177 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Multi Operation Quest**.
 
@@ -4895,6 +6665,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 178 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Multi Operation Quest**.
 
 **Mục tiêu học tập:** Giải biểu thức và bài toán nhiều phép tính.
@@ -4922,6 +6702,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 179 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Multi Operation Quest**.
 
 **Mục tiêu học tập:** Giải biểu thức và bài toán nhiều phép tính.
@@ -4948,6 +6738,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 180 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Multi Operation Quest**.
 
@@ -4979,6 +6779,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 181 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Decimal Dash**.
 
 **Mục tiêu học tập:** Đọc, so sánh và tính với số thập phân.
@@ -5005,6 +6815,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 182 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Decimal Dash**.
 
@@ -5033,6 +6853,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 183 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Decimal Dash**.
 
 **Mục tiêu học tập:** Đọc, so sánh và tính với số thập phân.
@@ -5060,6 +6890,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 184 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Decimal Dash**.
 
 **Mục tiêu học tập:** Đọc, so sánh và tính với số thập phân.
@@ -5086,6 +6926,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 185 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Decimal Dash**.
 
@@ -5117,6 +6967,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 186 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Fraction Decimal Percentage Memory**.
 
 **Mục tiêu học tập:** Liên hệ phân số, số thập phân và phần trăm.
@@ -5143,6 +7003,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 187 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Fraction Decimal Percentage Memory**.
 
@@ -5171,6 +7041,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 188 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Fraction Decimal Percentage Memory**.
 
 **Mục tiêu học tập:** Liên hệ phân số, số thập phân và phần trăm.
@@ -5198,6 +7078,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 189 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Fraction Decimal Percentage Memory**.
 
 **Mục tiêu học tập:** Liên hệ phân số, số thập phân và phần trăm.
@@ -5224,6 +7114,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 190 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Fraction Decimal Percentage Memory**.
 
@@ -5255,6 +7155,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 191 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Percentage Shop**.
 
 **Mục tiêu học tập:** Giải bài toán phần trăm trong thực tế.
@@ -5281,6 +7191,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 192 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Percentage Shop**.
 
@@ -5309,6 +7229,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 193 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Percentage Shop**.
 
 **Mục tiêu học tập:** Giải bài toán phần trăm trong thực tế.
@@ -5336,6 +7266,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 194 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Percentage Shop**.
 
 **Mục tiêu học tập:** Giải bài toán phần trăm trong thực tế.
@@ -5362,6 +7302,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 195 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Percentage Shop**.
 
@@ -5393,6 +7343,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 196 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Volume Builder**.
 
 **Mục tiêu học tập:** Tính thể tích hình hộp chữ nhật và hình lập phương.
@@ -5419,6 +7379,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 197 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Volume Builder**.
 
@@ -5447,6 +7417,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 198 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Volume Builder**.
 
 **Mục tiêu học tập:** Tính thể tích hình hộp chữ nhật và hình lập phương.
@@ -5474,6 +7454,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 199 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Volume Builder**.
 
 **Mục tiêu học tập:** Tính thể tích hình hộp chữ nhật và hình lập phương.
@@ -5500,6 +7490,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 200 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Volume Builder**.
 
@@ -5531,6 +7531,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 201 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Ratio Chef**.
 
 **Mục tiêu học tập:** Giải bài toán tỉ số trong ngữ cảnh thực tế.
@@ -5557,6 +7567,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 202 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Ratio Chef**.
 
@@ -5585,6 +7605,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 203 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Ratio Chef**.
 
 **Mục tiêu học tập:** Giải bài toán tỉ số trong ngữ cảnh thực tế.
@@ -5612,6 +7642,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 204 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Ratio Chef**.
 
 **Mục tiêu học tập:** Giải bài toán tỉ số trong ngữ cảnh thực tế.
@@ -5638,6 +7678,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 205 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Ratio Chef**.
 
@@ -5669,6 +7719,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 206 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Motion Racer**.
 
 **Mục tiêu học tập:** Giải bài toán chuyển động.
@@ -5695,6 +7755,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 207 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Motion Racer**.
 
@@ -5723,6 +7793,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 208 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Motion Racer**.
 
 **Mục tiêu học tập:** Giải bài toán chuyển động.
@@ -5750,6 +7830,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 209 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Motion Racer**.
 
 **Mục tiêu học tập:** Giải bài toán chuyển động.
@@ -5776,6 +7866,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 210 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Motion Racer**.
 
@@ -5807,6 +7907,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 211 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Geometry Gym**.
 
 **Mục tiêu học tập:** Ôn diện tích, chu vi và hình học.
@@ -5833,6 +7943,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 212 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Geometry Gym**.
 
@@ -5861,6 +7981,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 213 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Geometry Gym**.
 
 **Mục tiêu học tập:** Ôn diện tích, chu vi và hình học.
@@ -5888,6 +8018,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 214 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Geometry Gym**.
 
 **Mục tiêu học tập:** Ôn diện tích, chu vi và hình học.
@@ -5914,6 +8054,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 215 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Geometry Gym**.
 
@@ -5945,6 +8095,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 216 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Decimal Balance**.
 
 **Mục tiêu học tập:** So sánh và cân bằng các số thập phân.
@@ -5971,6 +8131,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 217 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Decimal Balance**.
 
@@ -5999,6 +8169,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 218 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Decimal Balance**.
 
 **Mục tiêu học tập:** So sánh và cân bằng các số thập phân.
@@ -6026,6 +8206,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 219 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Decimal Balance**.
 
 **Mục tiêu học tập:** So sánh và cân bằng các số thập phân.
@@ -6052,6 +8242,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 220 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Decimal Balance**.
 
@@ -6083,6 +8283,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 221 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Grand Math Quest**.
 
 **Mục tiêu học tập:** Ôn tổng hợp Toán 5.
@@ -6109,6 +8319,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 222 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Grand Math Quest**.
 
@@ -6137,6 +8357,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 223 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Grand Math Quest**.
 
 **Mục tiêu học tập:** Ôn tổng hợp Toán 5.
@@ -6164,6 +8394,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 224 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Grand Math Quest**.
 
 **Mục tiêu học tập:** Ôn tổng hợp Toán 5.
@@ -6190,6 +8430,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 225 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Toán, tên **Grand Math Quest**.
 
@@ -6221,6 +8471,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 226 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Vocabulary Quest**.
 
 **Mục tiêu học tập:** Nhận biết và sử dụng từ vựng theo chủ đề.
@@ -6247,6 +8507,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 227 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Vocabulary Quest**.
 
@@ -6275,6 +8545,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 228 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Vocabulary Quest**.
 
 **Mục tiêu học tập:** Nhận biết và sử dụng từ vựng theo chủ đề.
@@ -6302,6 +8582,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 229 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Vocabulary Quest**.
 
 **Mục tiêu học tập:** Nhận biết và sử dụng từ vựng theo chủ đề.
@@ -6328,6 +8618,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 230 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Vocabulary Quest**.
 
@@ -6359,6 +8659,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 231 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Listening Pick**.
 
 **Mục tiêu học tập:** Nghe và chọn từ hoặc hình đúng.
@@ -6385,6 +8695,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 232 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Listening Pick**.
 
@@ -6413,6 +8733,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 233 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Listening Pick**.
 
 **Mục tiêu học tập:** Nghe và chọn từ hoặc hình đúng.
@@ -6440,6 +8770,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 234 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Listening Pick**.
 
 **Mục tiêu học tập:** Nghe và chọn từ hoặc hình đúng.
@@ -6466,6 +8806,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 235 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Listening Pick**.
 
@@ -6497,6 +8847,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 236 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Picture Word Match**.
 
 **Mục tiêu học tập:** Ghép từ với tranh.
@@ -6523,6 +8883,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 237 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Picture Word Match**.
 
@@ -6551,6 +8921,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 238 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Picture Word Match**.
 
 **Mục tiêu học tập:** Ghép từ với tranh.
@@ -6578,6 +8958,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 239 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Picture Word Match**.
 
 **Mục tiêu học tập:** Ghép từ với tranh.
@@ -6604,6 +8994,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 240 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Picture Word Match**.
 
@@ -6635,6 +9035,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 241 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Spelling Stars**.
 
 **Mục tiêu học tập:** Đánh vần từ quen thuộc.
@@ -6661,6 +9071,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 242 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Spelling Stars**.
 
@@ -6689,6 +9109,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 243 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Spelling Stars**.
 
 **Mục tiêu học tập:** Đánh vần từ quen thuộc.
@@ -6716,6 +9146,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 244 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Spelling Stars**.
 
 **Mục tiêu học tập:** Đánh vần từ quen thuộc.
@@ -6742,6 +9182,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 245 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Spelling Stars**.
 
@@ -6773,6 +9223,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 246 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Missing Letter Mission**.
 
 **Mục tiêu học tập:** Điền chữ cái còn thiếu.
@@ -6799,6 +9259,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 247 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Missing Letter Mission**.
 
@@ -6827,6 +9297,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 248 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Missing Letter Mission**.
 
 **Mục tiêu học tập:** Điền chữ cái còn thiếu.
@@ -6854,6 +9334,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 249 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Missing Letter Mission**.
 
 **Mục tiêu học tập:** Điền chữ cái còn thiếu.
@@ -6880,6 +9370,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 250 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Missing Letter Mission**.
 
@@ -6911,6 +9411,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 251 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Word Builder**.
 
 **Mục tiêu học tập:** Ghép chữ thành từ đúng.
@@ -6937,6 +9447,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 252 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Word Builder**.
 
@@ -6965,6 +9485,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 253 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Word Builder**.
 
 **Mục tiêu học tập:** Ghép chữ thành từ đúng.
@@ -6992,6 +9522,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 254 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Word Builder**.
 
 **Mục tiêu học tập:** Ghép chữ thành từ đúng.
@@ -7018,6 +9558,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 255 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Word Builder**.
 
@@ -7049,6 +9599,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 256 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Sentence Race**.
 
 **Mục tiêu học tập:** Sắp xếp và hoàn thành câu đơn.
@@ -7075,6 +9635,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 257 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Sentence Race**.
 
@@ -7103,6 +9673,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 258 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Sentence Race**.
 
 **Mục tiêu học tập:** Sắp xếp và hoàn thành câu đơn.
@@ -7130,6 +9710,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 259 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Sentence Race**.
 
 **Mục tiêu học tập:** Sắp xếp và hoàn thành câu đơn.
@@ -7156,6 +9746,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 260 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Sentence Race**.
 
@@ -7187,6 +9787,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 261 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Word Memory**.
 
 **Mục tiêu học tập:** Ghi nhớ và ghép cặp từ.
@@ -7213,6 +9823,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 262 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Word Memory**.
 
@@ -7241,6 +9861,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 263 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Word Memory**.
 
 **Mục tiêu học tập:** Ghi nhớ và ghép cặp từ.
@@ -7268,6 +9898,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 264 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Word Memory**.
 
 **Mục tiêu học tập:** Ghi nhớ và ghép cặp từ.
@@ -7294,6 +9934,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 265 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Word Memory**.
 
@@ -7325,6 +9975,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 266 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Listening Lane**.
 
 **Mục tiêu học tập:** Nghe và chọn đáp án đúng.
@@ -7351,6 +10011,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 267 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Listening Lane**.
 
@@ -7379,6 +10049,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 268 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Listening Lane**.
 
 **Mục tiêu học tập:** Nghe và chọn đáp án đúng.
@@ -7406,6 +10086,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 269 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Listening Lane**.
 
 **Mục tiêu học tập:** Nghe và chọn đáp án đúng.
@@ -7432,6 +10122,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 270 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Listening Lane**.
 
@@ -7463,6 +10163,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 271 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Word Whack**.
 
 **Mục tiêu học tập:** Nhận diện từ đúng trong thời gian ngắn.
@@ -7489,6 +10199,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 272 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Word Whack**.
 
@@ -7517,6 +10237,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 273 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Word Whack**.
 
 **Mục tiêu học tập:** Nhận diện từ đúng trong thời gian ngắn.
@@ -7544,6 +10274,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 274 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Word Whack**.
 
 **Mục tiêu học tập:** Nhận diện từ đúng trong thời gian ngắn.
@@ -7570,6 +10310,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 275 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 4, môn Tiếng Anh, tên **Word Whack**.
 
@@ -7601,6 +10351,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 276 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Listening Boss**.
 
 **Mục tiêu học tập:** Nghe hiểu từ, cụm từ và câu ngắn.
@@ -7627,6 +10387,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 277 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Listening Boss**.
 
@@ -7655,6 +10425,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 278 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Listening Boss**.
 
 **Mục tiêu học tập:** Nghe hiểu từ, cụm từ và câu ngắn.
@@ -7682,6 +10462,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 279 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Listening Boss**.
 
 **Mục tiêu học tập:** Nghe hiểu từ, cụm từ và câu ngắn.
@@ -7708,6 +10498,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 280 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Listening Boss**.
 
@@ -7739,6 +10539,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 281 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Sentence Maze**.
 
 **Mục tiêu học tập:** Xây dựng câu đúng ngữ pháp.
@@ -7765,6 +10575,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 282 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Sentence Maze**.
 
@@ -7793,6 +10613,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 283 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Sentence Maze**.
 
 **Mục tiêu học tập:** Xây dựng câu đúng ngữ pháp.
@@ -7820,6 +10650,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 284 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Sentence Maze**.
 
 **Mục tiêu học tập:** Xây dựng câu đúng ngữ pháp.
@@ -7846,6 +10686,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 285 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Sentence Maze**.
 
@@ -7877,6 +10727,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 286 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Word Hunter**.
 
 **Mục tiêu học tập:** Tìm và sử dụng từ vựng theo ngữ cảnh.
@@ -7903,6 +10763,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 287 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Word Hunter**.
 
@@ -7931,6 +10801,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 288 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Word Hunter**.
 
 **Mục tiêu học tập:** Tìm và sử dụng từ vựng theo ngữ cảnh.
@@ -7958,6 +10838,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 289 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Word Hunter**.
 
 **Mục tiêu học tập:** Tìm và sử dụng từ vựng theo ngữ cảnh.
@@ -7984,6 +10874,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 290 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Word Hunter**.
 
@@ -8015,6 +10915,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 291 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Grammar Gates**.
 
 **Mục tiêu học tập:** Vận dụng ngữ pháp cơ bản.
@@ -8041,6 +10951,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 292 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Grammar Gates**.
 
@@ -8069,6 +10989,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 293 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Grammar Gates**.
 
 **Mục tiêu học tập:** Vận dụng ngữ pháp cơ bản.
@@ -8096,6 +11026,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 294 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Grammar Gates**.
 
 **Mục tiêu học tập:** Vận dụng ngữ pháp cơ bản.
@@ -8122,6 +11062,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 295 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Grammar Gates**.
 
@@ -8153,6 +11103,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 296 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Cloze Canyon**.
 
 **Mục tiêu học tập:** Điền từ phù hợp vào đoạn văn.
@@ -8179,6 +11139,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 297 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Cloze Canyon**.
 
@@ -8207,6 +11177,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 298 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Cloze Canyon**.
 
 **Mục tiêu học tập:** Điền từ phù hợp vào đoạn văn.
@@ -8234,6 +11214,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 299 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Cloze Canyon**.
 
 **Mục tiêu học tập:** Điền từ phù hợp vào đoạn văn.
@@ -8260,6 +11250,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 300 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Cloze Canyon**.
 
@@ -8291,6 +11291,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 301 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Spelling Blaster**.
 
 **Mục tiêu học tập:** Đánh vần và viết đúng từ.
@@ -8317,6 +11327,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 302 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Spelling Blaster**.
 
@@ -8345,6 +11365,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 303 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Spelling Blaster**.
 
 **Mục tiêu học tập:** Đánh vần và viết đúng từ.
@@ -8372,6 +11402,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 304 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Spelling Blaster**.
 
 **Mục tiêu học tập:** Đánh vần và viết đúng từ.
@@ -8398,6 +11438,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 305 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Spelling Blaster**.
 
@@ -8429,6 +11479,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 306 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Phrase Builder**.
 
 **Mục tiêu học tập:** Ghép cụm từ và câu theo mẫu.
@@ -8455,6 +11515,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 307 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Phrase Builder**.
 
@@ -8483,6 +11553,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 308 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Phrase Builder**.
 
 **Mục tiêu học tập:** Ghép cụm từ và câu theo mẫu.
@@ -8510,6 +11590,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 309 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Phrase Builder**.
 
 **Mục tiêu học tập:** Ghép cụm từ và câu theo mẫu.
@@ -8536,6 +11626,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 310 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Phrase Builder**.
 
@@ -8567,6 +11667,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 311 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Memory Triplet**.
 
 **Mục tiêu học tập:** Ghép từ, nghĩa/tranh và câu.
@@ -8593,6 +11703,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 312 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Memory Triplet**.
 
@@ -8621,6 +11741,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 313 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Memory Triplet**.
 
 **Mục tiêu học tập:** Ghép từ, nghĩa/tranh và câu.
@@ -8648,6 +11778,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 314 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Memory Triplet**.
 
 **Mục tiêu học tập:** Ghép từ, nghĩa/tranh và câu.
@@ -8674,6 +11814,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 315 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Memory Triplet**.
 
@@ -8705,6 +11855,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 316 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Voice Route**.
 
 **Mục tiêu học tập:** Nói câu ngắn theo tình huống.
@@ -8731,6 +11891,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 317 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Voice Route**.
 
@@ -8759,6 +11929,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 318 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Voice Route**.
 
 **Mục tiêu học tập:** Nói câu ngắn theo tình huống.
@@ -8786,6 +11966,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 319 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Voice Route**.
 
 **Mục tiêu học tập:** Nói câu ngắn theo tình huống.
@@ -8812,6 +12002,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 320 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Voice Route**.
 
@@ -8843,6 +12043,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ## Prompt 321 — V1 — CAMERA POINT
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Island Review**.
 
 **Mục tiêu học tập:** Ôn tổng hợp kỹ năng tiếng Anh.
@@ -8869,6 +12079,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 322 — V2 — CAMERA SWIPE
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Island Review**.
 
@@ -8897,6 +12117,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 323 — V3 — DRAG & GRAB
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Island Review**.
 
 **Mục tiêu học tập:** Ôn tổng hợp kỹ năng tiếng Anh.
@@ -8924,6 +12154,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 ---
 ## Prompt 324 — V4 — VOICE
 
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
+
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Island Review**.
 
 **Mục tiêu học tập:** Ôn tổng hợp kỹ năng tiếng Anh.
@@ -8950,6 +12190,16 @@ Tạo một game giáo dục web **một file HTML duy nhất** dành cho học 
 
 ---
 ## Prompt 325 — V5 — NO-CAMERA
+
+## 🟡 MiTi — DẤU ẤN BẮT BUỘC TRONG GAME
+
+Trong file HTML Gemini tạo ra, **bắt buộc nhúng chữ ký MiTi trực tiếp vào giao diện**, không tham chiếu repository hoặc asset bên ngoài.
+
+- Logo: ô bo góc màu `#FFD84D` chứa chữ **M** màu `#07111F` + wordmark **MiTi** đậm + dấu **✦** nhỏ.
+- Xuất hiện ở **Bắt đầu + HUD khi chơi + Kết quả**; nhỏ, không che vùng tương tác.
+- Có dòng: **MiTi • Học bằng chuyển động**.
+- Dùng inline SVG/CSS/HTML; không hotlink ảnh/logo.
+- Không xóa hoặc thay đổi chữ **MiTi** ở các chế độ camera, fallback và replay.
 
 Tạo một game giáo dục web **một file HTML duy nhất** dành cho học sinh Việt Nam lớp 5, môn Tiếng Anh, tên **Island Review**.
 
