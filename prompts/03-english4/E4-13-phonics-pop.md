@@ -1,17 +1,37 @@
-# E4-13 — Phonics Pop
+# E4-13 — Bóng Âm
 
-Create a standalone single-file English Grade 4 phonics game.
+Tạo game giáo dục web **một file HTML duy nhất** cho học sinh Việt Nam lớp 5, môn Tiếng Anh.
 
-Learning objective: distinguish common English sounds, identify the sound in a word and connect sound patterns with spelling.
+## Mục tiêu học tập
+"Âm và mẫu chữ thông dụng"
 
-Mission: pop only the bubbles whose words contain the target sound or spelling pattern.
+## Nhiệm vụ học sinh
+"Chọn từ chứa âm/mẫu chữ mục tiêu"
 
-Gameplay: display a target sound/pattern such as /sh/, /ch/, /th/, /ee/, /oa/ and spawn word bubbles. Correct bubbles pop; distractors remain.
+## Gameplay
+Điều khiển: **SWIPE**. Chức năng: "phonics; spelling pattern; audio".
+- 12 lượt; ngân hàng tối thiểu 60 mục; 3 mức độ.
+- Nội dung kiến thức tiếng Anh phải phù hợp trình độ lớp 4.
+- Xáo trộn đáp án; distractor dựa trên lỗi từ vựng/chính tả/cấu trúc thường gặp.
+- Sai: giải thích bằng tiếng Việt + chỉ ra đáp án đúng + luyện lại; đúng: phản hồi tức thì.
+- Có điểm, tiến độ, chuỗi đúng và tổng kết.
 
-Optional webcam fingertip swipe/pop using MediaPipe Hands. Require confidence >= 0.65, smoothing, swipe velocity threshold, explicit action detection and 300ms cooldown. Mouse/touch fallback.
+## Camera / tương tác
+MediaPipe Hands; swipe theo hướng + vận tốc; smoothing; cooldown 450ms.
+- Xin quyền sau Bắt đầu; có loading/permission/ready/tracking/error.
+- Có calibration/framing, smoothing, confidence; một gesture chỉ tạo một event.
 
-Generate at least 50 word items grouped by sound pattern. Avoid ambiguous pronunciation unless the word is explicitly marked as an exception.
+## Fallback
+Mouse/touch/keyboard mô phỏng được gameplay chính.
 
-After each miss, play the word and highlight the target sound pattern.
+## Luồng
+Bắt đầu → Kiểm tra thiết bị → Hiệu chỉnh → Hướng dẫn → Luyện mẫu → 12 lượt → Phản hồi → Ôn câu sai → Kết quả → Chơi lại.
 
-Include reduced motion, readable font, no camera upload. Output one complete HTML file, no TODOs.
+## Ngôn ngữ / an toàn
+UI, nút, hướng dẫn, feedback bằng **tiếng Việt**; từ/câu/audio tiếng Anh chỉ dùng cho phần kiến thức. Responsive, chữ lớn, reduced-motion; không động tác nguy hiểm; không lưu/tải dữ liệu camera/micro.
+
+## MiTi — CHỮ KÝ BẮT BUỘC
+HTML phải tự chứa logo **MiTi**: ô bo góc #FFD84D có chữ M #07111F + chữ MiTi đậm + ✦; xuất hiện ở Bắt đầu, HUD và Kết quả; có dòng **MiTi • Học bằng chuyển động**. Dùng inline SVG/CSS/HTML, không phụ thuộc repository hoặc URL logo ngoài.
+
+## Đầu ra
+Chỉ xuất **toàn bộ HTML hoàn chỉnh**, không TODO, không pseudocode, không phụ thuộc repository này.
