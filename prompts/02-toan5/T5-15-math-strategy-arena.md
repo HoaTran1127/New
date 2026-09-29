@@ -1,19 +1,36 @@
-# T5-15 — Math Strategy Arena
+# T5-15 — Đấu Trường Chiến Thuật Toán
 
-Build a standalone single-file HTML Grade 5 mathematics review game.
+Tạo game giáo dục web **một file HTML duy nhất** cho học sinh Việt Nam lớp 5, môn Tiếng Anh.
 
-Learning goal: integrate decimals, fractions, percentages, measurement, geometry, data and multi-step reasoning.
+## Mục tiêu học tập
+"Ôn tổng hợp Toán 5; chiến lược giải"
 
-Player mission: enter six themed challenge zones and choose a mathematical strategy before solving each problem.
+## Nhiệm vụ học sinh
+"Chọn chiến lược rồi giải bài"
 
-Zones: Decimal Track, Fraction Forge, Percentage Market, Measurement Workshop, Geometry Grid and Data Lab. Each zone uses a different visual interaction, but every task includes a visible reasoning step.
+## Gameplay
+Điều khiển: **MIXED**. Chức năng: "decimals; fractions; percentages; measurement; data; geometry".
+- Biến kiến thức thành hành động chơi trực tiếp.
+- 12 lượt; ít nhất 40 câu/tình huống; 3 mức độ.
+- Random đáp án; distractor mô phỏng lỗi thường gặp.
+- Câu sai có giải thích trực quan + luyện lại; đúng có phản hồi ngay.
+- Có điểm, tiến độ, chuỗi đúng và tổng kết kỹ năng.
 
-Generate at least 72 tagged questions and balance the strands. If the player misses a skill twice, present a simpler example and explanation before increasing difficulty.
+## Camera
+MediaPipe Hands; đầu ngón trỏ làm con trỏ; calibration; smoothing; confidence >= 0.65; chỉ chốt khi chạm.
+Xin quyền camera/micro sau Bắt đầu; có loading/permission/ready/tracking/error; calibration/framing; confidence thấp không chốt; một gesture chỉ tạo một event.
 
-Input: optional webcam gestures only for selecting or navigating. Use calibration, smoothing, confidence threshold 0.65, explicit action state and cooldown. Mouse, touch and keyboard fallback are required.
+## Fallback
+Mouse/touch/keyboard mô phỏng đầy đủ gameplay chính.
 
-Feedback explains the strategy, calculation and common misconception. Track mastery by strand rather than only a total score.
+## Luồng
+Bắt đầu → Kiểm tra thiết bị → Hiệu chỉnh → Hướng dẫn → Luyện mẫu → 12 lượt → Phản hồi → Ôn câu sai → Kết quả → Chơi lại.
 
-Include reduced motion, large text, camera-off mode and privacy notice. Do not upload camera frames.
+## Tiếng Việt và an toàn
+UI, nút, hướng dẫn, feedback bằng tiếng Việt; thuật ngữ Toán lớp 5 chính xác; chữ lớn, responsive, reduced-motion; không động tác nguy hiểm; không tải/lưu dữ liệu camera/micro.
 
-Return one complete HTML file, all question data embedded, no TODOs and no pseudocode.
+## MiTi — CHỮ KÝ BẮT BUỘC
+HTML phải tự chứa logo **MiTi**: biểu tượng ô bo góc #FFD84D có chữ M #07111F + chữ MiTi đậm + ✦; xuất hiện ở Bắt đầu, HUD và Kết quả; có dòng **MiTi • Học bằng chuyển động**. Dùng inline SVG/CSS/HTML, không phụ thuộc repository hoặc URL logo ngoài.
+
+## Đầu ra
+Chỉ xuất **toàn bộ HTML hoàn chỉnh**, không TODO, không pseudocode, không phụ thuộc repository này.
