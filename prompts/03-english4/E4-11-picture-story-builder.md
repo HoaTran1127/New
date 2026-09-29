@@ -1,17 +1,37 @@
-# E4-11 — Picture Story Builder
+# E4-11 — Xây Câu Chuyện Tranh
 
-Create a standalone single-file English Grade 4 game.
+Tạo game giáo dục web **một file HTML duy nhất** cho học sinh Việt Nam lớp 5, môn Tiếng Anh.
 
-Learning objective: build simple correct sentences and short stories using familiar vocabulary, verbs, adjectives and sequence words.
+## Mục tiêu học tập
+"Câu đơn; từ vựng; trật tự câu; kể chuyện ngắn"
 
-Mission: turn a sequence of pictures into a correct mini-story.
+## Nhiệm vụ học sinh
+"Ghép câu theo chuỗi tranh"
 
-Gameplay: show 3–5 illustrated scenes. The learner chooses word tiles to form a sentence for each scene, then arranges the sentences in logical order.
+## Gameplay
+Điều khiển: **POINT+DRAG**. Chức năng: "story sequence; sentence building; TTS".
+- 12 lượt; ngân hàng tối thiểu 60 mục; 3 mức độ.
+- Nội dung kiến thức tiếng Anh phải phù hợp trình độ lớp 4.
+- Xáo trộn đáp án; distractor dựa trên lỗi từ vựng/chính tả/cấu trúc thường gặp.
+- Sai: giải thích bằng tiếng Việt + chỉ ra đáp án đúng + luyện lại; đúng: phản hồi tức thì.
+- Có điểm, tiến độ, chuỗi đúng và tổng kết.
 
-Primary control: POINT/DRAG. Optional webcam fingertip tracking with smoothing, confidence >= 0.65 and 300ms drop cooldown. Mouse/touch fallback.
+## Camera / tương tác
+MediaPipe Hands; pinch/grab và release; smoothing/hysteresis; cooldown 300ms.
+- Xin quyền sau Bắt đầu; có loading/permission/ready/tracking/error.
+- Có calibration/framing, smoothing, confidence; một gesture chỉ tạo một event.
 
-Generate at least 25 story sets with reusable word banks. Include common errors in word order, missing verb, article choice and singular/plural agreement.
+## Fallback
+Mouse/touch/keyboard mô phỏng được gameplay chính.
 
-Feedback highlights the incorrect position and gives a simple grammar explanation. Read the completed sentence aloud with browser speech synthesis when available.
+## Luồng
+Bắt đầu → Kiểm tra thiết bị → Hiệu chỉnh → Hướng dẫn → Luyện mẫu → 12 lượt → Phản hồi → Ôn câu sai → Kết quả → Chơi lại.
 
-Use age-appropriate English, large text, no camera upload, and a camera-off mode. Output one complete HTML file with no TODOs.
+## Ngôn ngữ / an toàn
+UI, nút, hướng dẫn, feedback bằng **tiếng Việt**; từ/câu/audio tiếng Anh chỉ dùng cho phần kiến thức. Responsive, chữ lớn, reduced-motion; không động tác nguy hiểm; không lưu/tải dữ liệu camera/micro.
+
+## MiTi — CHỮ KÝ BẮT BUỘC
+HTML phải tự chứa logo **MiTi**: ô bo góc #FFD84D có chữ M #07111F + chữ MiTi đậm + ✦; xuất hiện ở Bắt đầu, HUD và Kết quả; có dòng **MiTi • Học bằng chuyển động**. Dùng inline SVG/CSS/HTML, không phụ thuộc repository hoặc URL logo ngoài.
+
+## Đầu ra
+Chỉ xuất **toàn bộ HTML hoàn chỉnh**, không TODO, không pseudocode, không phụ thuộc repository này.
