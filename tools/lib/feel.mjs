@@ -44,7 +44,7 @@ export const FEEL = {
 
   // FX arcade nhưng vẫn hòa vào khung hình thật.
   fx:
-    'FX arcade hòa vào nền AR: particle màu nổ theo khối, vệt kiếm neon mọc từ cổ tay thật, kính vỡ mạng nhện lan từ điểm va chạm khi hụt, viền HUD nhấp nháy theo combo — tất cả vẽ trên canvas trong suốt phủ đúng khung hình camera, tôn trọng trần alpha 0.45 và ngân sách particle đã quy định.',
+    'FX arcade hòa vào nền AR: particle màu nổ theo khối, vệt kiếm neon mọc từ cổ tay thật, kính vỡ mạng nhện lan từ điểm va chạm khi hụt, viền HUD sáng DẦN theo combo (đổi độ sáng mượt, không bật tắt) — tất cả vẽ trên canvas trong suốt phủ đúng khung hình camera, tôn trọng trần alpha 0.45, trần nhấp nháy an toàn ở mục tiếp cận và ngân sách particle đã quy định.',
 
   // Nhân vật phản ứng để trẻ thấy có người chơi cùng.
   mascot:

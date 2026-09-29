@@ -157,6 +157,17 @@ Nguồn: `tools/lib/classroom.mjs` — cũng được in nguyên văn vào 85 pr
 - **Hồ sơ tiến bộ `miti-mastery`**: ghi số lần gặp, số lần đúng, errorTag sai nhiều nhất, chuỗi đúng và ngày chơi gần nhất theo từng cụm kiến thức (không lưu ảnh/video). Lần chơi sau tự xếp câu theo lỗi yếu nhất (lặp lại cách quãng) và tổng kết so với lần trước; mất hồ sơ thì vẫn chơi trọn.
 - **Chế độ hai học sinh**: nút bật/tắt, `maxNumHands: 2`, chia khung hình hai nửa theo trục dọc, mỗi tay chỉ chốt trong nửa của mình (gán theo vai nếu có pose), điểm và tim tách riêng, không xếp hạng — lớp 35 em với vài máy tính vẫn chơi được. Biến thể VOICE không dùng chế độ này vì chỉ có một micro.
 
+### ♿ Sáu quy định tiếp cận + an toàn thần kinh
+
+Nguồn: `tools/lib/access.mjs` — in nguyên văn vào 85 prompt + 425 biến thể + 12 legacy, `validate.mjs` chặn nếu thiếu. Đây là nhóm quy định dễ bị bỏ nhất vì game vẫn "chạy được" mà không ai biết có em đang chơi mà không hiểu mình đúng hay sai:
+
+- **Trần nhấp nháy 3 lần/giây**: không hiệu ứng nào bật–tắt quá 3 lần mỗi giây, không giật sáng phủ toàn màn hình, vùng đang chớp ≤ 25% khung hình. Flash khi mất máu là viền mép mờ dần 200–300 ms, viền HUD theo combo đổi độ sáng mượt.
+- **Tự đọc `prefers-reduced-motion`**: đọc cài đặt máy lúc khởi động rồi **bật sẵn** chế độ Giảm hiệu ứng (tắt particle, bỏ giật màn hình, hit-stop còn ~30 ms) nhưng giữ nguyên 100% nội dung học — vì trong lớp thật thì không em nào bấm nút Giảm hiệu ứng.
+- **Màu không là kênh duy nhất**: đúng/sai/đang chọn/bị khóa phân biệt được bằng ≥ 2 kênh ngoài màu (biểu tượng ✓ ✗, chữ, hình dạng, âm thanh); không dựa vào cặp đỏ–xanh lá vì khoảng 8% học sinh nam và 0,5% học sinh nữ mù màu đỏ–lục.
+- **Phụ đề cho mọi âm thanh**: nút "Hiện chữ" bật được ngay từ đầu chứ không chờ trả lời sai; lời giải, lời khen, thông báo lỗi đều có dạng chữ — lớp ồn hay học sinh nghe kém vẫn đạt 100% mục tiêu, còn em đọc chưa vững vẫn chơi bằng tai.
+- **Tương phản ≥ 4.5:1** giữa chữ và nền ngay sau lưng nó (chữ lớn ≥ 3:1), mỗi thẻ tự có nền + viền ≥ 2px + bóng đổ: tắt lớp phủ tối đi thì chữ vẫn đọc được trên khung hình có cửa sổ sáng phía sau.
+- **Câu hỏi tay thuận**: calibration hỏi một chạm "Em thuận tay nào?" (Trái / Phải / Cả hai) rồi gương lại hướng dẫn và gán tay điều khiển theo lựa chọn đó, mốc biên độ 50% tầm với đo theo đúng tay — thuận tay trái không phải với chéo người suốt 12 lượt.
+
 ---
 
 ## 🔁 Pipeline: sửa dữ liệu một chỗ, mọi thứ dựng lại
@@ -171,6 +182,7 @@ tools/lib/ar.mjs             hợp đồng AR (cover-fit, toScreen, alpha, z, ne
 tools/lib/rules.mjs          quy định lớp học (60/40, calibration, Pause, FPS, an toàn, tổng kết 3 thẻ)
 tools/lib/feel.mjs           quy định vận động to + cảm giác arcade (biên độ, mép khung, trạm nghỉ, hit-stop, combo)
 tools/lib/classroom.mjs      quy định lớp học thật (vùng an toàn cho chữ, đàm phán camera, miti-mastery, 2 học sinh)
+tools/lib/access.mjs         tiếp cận + an toàn thần kinh (trần nhấp nháy, reduced-motion, không chỉ dùng màu, phụ đề, tương phản, tay thuận)
         │
         └─ node tools/build.mjs
              ├─ catalogs/GAME_CATALOG.csv + .md

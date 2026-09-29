@@ -249,7 +249,8 @@ Cân bằng lượt chơi (chống ăn may):
 - Âm thanh phân biệt rõ: đúng (in âm vui), sai (cảnh báo nhẹ, không gây sợ), hết máu, hoàn thành màn.
 - Hiệu ứng AR-arcade (chọn theo mechanic, vẽ trên canvas tại tọa độ toScreen): hạt nổ + shockwave tại điểm chạm,
   vệt kiếm neon bám theo tay, kính vỡ mạng nhện phủ khắp khung hình khi sai, viền neon phát sáng khi combo cao,
-  flash đỏ ngắn khi mất máu, xu/điểm bay lên, đường tốc độ hai bên mép. Mọi hiệu ứng tôn trọng tùy chọn Giảm hiệu ứng.
+  viền mép đỏ mờ dần 200–300 ms khi mất máu (không giật sáng cả khung hình), xu/điểm bay lên, đường tốc độ hai bên mép.
+  Mọi hiệu ứng tôn trọng tùy chọn Giảm hiệu ứng và trần nhấp nháy ở mục 9.1.
 - Hiệu ứng không được che kiến thức: khi DỪNG 2 giây để giải thích thì dừng spawn vật thể và làm mờ/giảm hạt nổ,
   lời giải phải đọc được trọn vẹn.
 - Game Tiếng Anh: dùng window.speechSynthesis đọc từ/câu bằng giọng en-US hoặc en-GB, có nút phát lại.
@@ -277,7 +278,27 @@ Cân bằng lượt chơi (chống ăn may):
   "Bật đèn lên hoặc quay lưng về phía cửa sổ để camera nhìn rõ em hơn" rồi vẫn cho chơi tiếp, không chặn màn chơi.
 - KHÔNG upload video/ảnh từ camera. Chỉ dùng landmark và state trong bộ nhớ; không ghi video ra đĩa.
 - Không thu thập dữ liệu cá nhân; tiến độ chỉ lưu localStorage của máy đó.
-- Chữ dễ đọc, không truyền thông tin chỉ bằng màu (kèm hình hoặc chữ), có reduced-motion.
+
+9.1 TIẾP CẬN + AN TOÀN THẦN KINH (bắt buộc — nguồn: `tools/lib/access.mjs`, validate chặn nếu thiếu)
+- TRẦN NHẤP NHÁY: không hiệu ứng nào bật–tắt quá 3 lần/giây, không giật sáng phủ toàn màn hình, tổng diện tích vùng
+  đang nhấp nháy <= 25% khung hình. Flash khi mất máu là viền mép mờ dần 200–300 ms; viền HUD theo combo đổi độ sáng
+  MƯỢT chứ không bật tắt; particle và vệt neon không chớp theo nhịp.
+- TỰ ĐỌC CÀI ĐẶT MÁY: `matchMedia("(prefers-reduced-motion: reduce)")` và `matchMedia("(prefers-contrast: more)")`
+  chạy một lần lúc khởi động. Reduce = true thì BẬT SẴN chế độ Giảm hiệu ứng (tắt particle + speed lines, bỏ giật màn
+  hình, hit-stop hạ còn ~30 ms, mascot chỉ đổi biểu cảm) nhưng GIỮ NGUYÊN 100% nội dung học, số lượt, điểm và lời giải.
+  Lựa chọn của em lưu vào localStorage, không hỏi lại lần sau, không bắt em tự tìm nút.
+- MÀU KHÔNG LÀ KÊNH DUY NHẤT: đúng/sai/đang chọn/bị khóa/hết giờ phân biệt được bằng ÍT NHẤT HAI kênh ngoài màu —
+  biểu tượng ✓ ✗, một chữ tiếng Việt ngắn, hình dạng khác nhau, độ đậm viền và âm thanh khác nhau. Không dựa vào cặp
+  đỏ–xanh lá (khoảng 8% học sinh nam và 0,5% học sinh nữ mù màu đỏ–lục); đã dùng màu thì hai màu phải khác hẳn độ sáng.
+- PHỤ ĐỀ CHO MỌI ÂM THANH: nút "Hiện chữ" bật được NGAY TỪ ĐẦU chứ không chờ sai mới hiện (nghe-trước vẫn giữ: audio
+  phát trước, chữ hiện khi em bấm hoặc sau khi chốt); lời giải, lời khen, thông báo lỗi, chữ mascot nói đều có dạng chữ;
+  âm báo combo/mất máu/thắng màn kèm biểu tượng nhìn thấy được. Lớp ồn hay học sinh nghe kém vẫn đạt 100% mục tiêu.
+- TƯƠNG PHẢN: chữ so với nền ngay sau lưng nó >= 4.5:1 (chữ lớn >= 24px thì >= 3:1); mỗi thẻ tự có nền gradient tối +
+  viền stroke >= 2px + bóng đổ, không trông chờ lớp phủ rgba(8,5,20,0.4). Không chữ nghiêng mảnh, không chữ chỉ có viền,
+  không gradient nhiều màu trong một dòng. Tự kiểm: tắt lớp phủ đi thì chữ vẫn đọc được trên khung hình sáng.
+- TAY THUẬN: calibration hỏi một chạm "Em thuận tay nào?" (Trái / Phải / Cả hai, mặc định Phải) rồi gán tay điều khiển
+  theo đó — landmark đổi vai trò trái/phải, hướng dẫn hình VÀ chữ được gương lại đúng bên, vùng đích ưu tiên phía tay
+  thuận, mốc 50% tầm với đo theo chính tay đó. Đổi giữa chừng qua nút "Chỉnh lại tư thế", không mất điểm và lượt.
 
 ========================
 10. MiTi — DẤU ẤN THƯƠNG HIỆU (bắt buộc trong file HTML)
@@ -320,6 +341,12 @@ Cân bằng lượt chơi (chống ăn may):
 [ ] cơ chế chọn theo mức camera đang thấy (chỉ tay / nửa thân trên / toàn thân), có dòng tiếng Việt báo mức nhận diện
 [ ] hồ sơ "miti-mastery" được đọc khi mở game và xếp câu theo errorTag yếu nhất; mất hồ sơ thì vẫn chơi trọn
 [ ] có nút bật chế độ hai học sinh chạy maxNumHands: 2, hai nửa khung hình, điểm và tim tách riêng, không xếp hạng
+[ ] không hiệu ứng nào nhấp nháy quá 3 lần/giây, không giật sáng phủ toàn màn hình, vùng chớp <= 25% khung hình
+[ ] prefers-reduced-motion được đọc lúc khởi động và bật sẵn chế độ Giảm hiệu ứng, không bắt em tự tìm nút
+[ ] đúng/sai phân biệt được bằng >= 2 kênh ngoài màu (biểu tượng ✓ ✗, chữ, hình dạng, âm thanh)
+[ ] mọi audio có bản chữ tương đương; nút "Hiện chữ" bật được ngay từ đầu, không chờ trả lời sai
+[ ] chữ so với nền thẻ >= 4.5:1 (chữ lớn >= 3:1), tắt lớp phủ đi vẫn đọc được trên khung hình sáng
+[ ] calibration có hỏi tay thuận Trái/Phải/Cả hai và gương lại hướng dẫn đúng bên, không mất điểm khi đổi
 [ ] fallback chuột/chạm/phím chơi trọn vẹn, tự kích hoạt khi camera lỗi
 [ ] QUESTION_DATA có ít nhất 40 mục (Toán) hoặc 60 mục (Tiếng Anh), mỗi mục có đáp án + lời giải + errorTag + loiViet
 [ ] dữ liệu đặt đầu file, code engine đặt sau, không có chỗ nào rút gọn
@@ -352,6 +379,16 @@ Sau khi tự kiểm tra, CHỈ xuất ra file HTML hoàn chỉnh, không kèm gi
   Không có hồ sơ thì mỗi phiên là một bài kiểm tra mới và giáo viên không thấy tiến bộ.
 - **Hai học sinh một khung hình**: lớp 35 em với 5 máy tính chỉ khả thi nếu hai em chơi chung một khung; `maxNumHands: 2`
   có sẵn trong MediaPipe nên chi phí gần như bằng 0, nhưng phải nói rõ mới được dùng.
+- **Trần nhấp nháy 3 lần/giây**: đây là ngưỡng an toàn với học sinh nhạy cảm ánh sáng, không phải gu thẩm mỹ. Prompt trước
+  yêu cầu cả "flash đỏ khi mất máu" lẫn viền HUD chớp theo combo mà không có trần nào — đúng công thức sinh ra hiệu ứng giật sáng liên tục.
+- **Tự đọc `prefers-reduced-motion`**: nút Giảm hiệu ứng gần như không bao giờ được bấm trong lớp; đọc cài đặt của máy thì
+  em nào cần là có sẵn, và phải nói rõ "giảm hiệu ứng chứ không giảm nội dung học" để mô hình không cắt bớt lời giải cho nhẹ code.
+- **Màu không là kênh duy nhất**: game báo đúng/sai bằng đỏ–xanh lá thì khoảng 8% học sinh nam chơi mà không biết mình đúng hay sai;
+  chỉ nói "tương phản tốt, không chỉ dùng màu" là câu chung chung — phải ràng số kênh và nêu rõ cặp đỏ–xanh lá là cặp bị cấm dựa vào một mình.
+- **Phụ đề bật được ngay từ đầu**: nguyên tắc nghe-trước của game Tiếng Anh rất dễ biến thành "không nghe được thì thua";
+  cho nút "Hiện chữ" từ đầu thì học sinh nghe kém vẫn đạt mục tiêu, còn học sinh đọc chưa vững vẫn chơi bằng tai.
+- **Tay thuận là một câu hỏi lúc calibration**: gần như mọi gesture một tay mặc định tay phải. Một chạm hỏi tay thuận rẻ hơn nhiều
+  so với việc em thuận tay trái phải với chéo người suốt 12 lượt — và mốc biên độ 50% tầm với cũng phải đo theo đúng tay đó.
 - **Hợp đồng render AR**: camera phủ kín + lớp tối không quá alpha 0.45 + chiều sâu z + vật neo vào landmark,
   để game trông như thực tế tăng cường thay vì "canvas 2D có webcam kèm theo".
 - **Calibration động + ngưỡng theo đơn vị cơ thể**: mỗi học sinh đứng cách camera một khoảng khác nhau; ngưỡng pixel cố định
