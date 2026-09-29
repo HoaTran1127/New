@@ -1,17 +1,38 @@
-# E5-13 — Speaking Mission
+# E5-13 — Nhiệm Vụ Nói
 
-Create a standalone single-file English Grade 5 speaking practice game.
+Tạo game giáo dục web **một file HTML duy nhất** cho học sinh Việt Nam lớp 5, môn Tiếng Anh.
 
-Learning objective: produce short spoken answers using familiar vocabulary, sentence frames and clear pronunciation.
+## Mục tiêu học tập
+"Nói câu trả lời ngắn trong tình huống quen thuộc"
 
-Mission: complete five real-life communication missions such as ordering food, asking directions, describing a hobby, making a plan and describing a picture.
+## Nhiệm vụ học sinh
+"Hoàn thành năm nhiệm vụ giao tiếp"
 
-Gameplay: show a prompt and optional sentence starters. The learner records a short answer through the browser microphone. Do not upload audio.
+## Gameplay
+Điều khiển: **VOICE**. Chức năng: "speech recognition; sentence frames; self-check".
+- 12 lượt; ngân hàng tối thiểu 60 mục; 3 mức độ.
+- Nội dung tiếng Anh phù hợp trình độ lớp 5.
+- Xáo trộn đáp án; distractor dựa trên lỗi phổ biến.
+- Sai: giải thích bằng tiếng Việt, chỉ ra từ/cấu trúc đúng và cho luyện lại.
+- Đúng: phản hồi tức thì; nghe lại/phát âm khi phù hợp.
+- Có điểm, tiến độ, chuỗi đúng và tổng kết kỹ năng.
 
-Use browser speech recognition only when available. If unavailable, provide a speaking-self-check mode with transcript-free practice and a checklist.
+## Camera / tương tác
+Microphone + Web Speech API nếu hỗ trợ; so khớp bảo thủ; bàn phím fallback.
+- Xin quyền sau Bắt đầu; có loading/permission/ready/tracking/error.
+- Có calibration/framing; confidence thấp không chốt; một gesture chỉ tạo một event.
 
-Evaluate only observable language features that can be reliably detected: required keywords, answer length range and presence of a sentence frame. Never claim human-level pronunciation scoring.
+## Fallback
+Mouse/touch/keyboard mô phỏng được gameplay chính.
 
-Give supportive feedback and a retry. Generate at least 40 prompts.
+## Luồng
+Bắt đầu → Kiểm tra thiết bị → Hiệu chỉnh → Hướng dẫn → Luyện mẫu → 12 lượt → Phản hồi → Ôn câu sai → Kết quả → Chơi lại.
 
-Include privacy notice, microphone permission state, mute/retry controls and keyboard fallback. Output one complete HTML file, no TODOs.
+## Ngôn ngữ / an toàn
+UI, nút, hướng dẫn và feedback bằng **tiếng Việt**; phần kiến thức tiếng Anh giữ tiếng Anh. Responsive, chữ lớn, reduced-motion; không động tác nguy hiểm; không lưu/tải dữ liệu camera/micro.
+
+## MiTi — CHỮ KÝ BẮT BUỘC
+HTML phải tự chứa logo **MiTi**: ô bo góc #FFD84D có chữ M #07111F + chữ MiTi đậm + ✦; xuất hiện ở Bắt đầu, HUD và Kết quả; có dòng **MiTi • Học bằng chuyển động**. Dùng inline SVG/CSS/HTML, không phụ thuộc repository hoặc URL logo ngoài.
+
+## Đầu ra
+Chỉ xuất **toàn bộ HTML hoàn chỉnh**, không TODO, không pseudocode, không phụ thuộc repository này.
