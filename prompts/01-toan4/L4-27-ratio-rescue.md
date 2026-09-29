@@ -1,18 +1,38 @@
-# L4-27 — Ratio Rescue
+# L4-27 — Cứu Hộ Tỉ Số
 
-- **Khối:** Toán 4 — nội dung mở rộng, cần đối chiếu SGK/PPCT cụ thể.
-- **Mục tiêu:** Trực quan hóa bài toán tổng-tỉ/hiệu-tỉ bằng sơ đồ đoạn thẳng.
-- **Nhiệm vụ:** Kéo các đoạn bằng nhau để dựng sơ đồ đúng.
-- **Điều khiển:** TWO_HAND_STRETCH
+Tạo game giáo dục web **một file HTML duy nhất** cho học sinh Việt Nam lớp 4, môn Toán.
 
-## Prompt copy trực tiếp
+## Mục tiêu
+Nhận biết và vận dụng tỉ số
 
-```text
-Tạo game giáo dục "Ratio Rescue" bằng 1 file HTML duy nhất cho học sinh lớp 4.
-Mục tiêu: dùng sơ đồ đoạn thẳng để hiểu bài toán tổng-tỉ hoặc hiệu-tỉ.
-Nhiệm vụ: dùng hai tay kéo các thanh đoạn thẳng để tạo đúng số phần theo tỉ số, sau đó chọn giá trị từng phần và hai số.
-Gameplay: hiển thị bài toán thực tế; tự dựng bar model theo tỉ số; cho học sinh thao tác từ tổng số phần → một phần → số bé/số lớn. Bẫy phản ánh lỗi lấy tổng chia nhầm một số hạng hoặc quên nhân số phần. Có ít nhất 10 bài số nguyên đẹp.
-Camera MediaPipe Hands, hai tay, smoothing, confidence, stretch threshold, debounce; calibration sau Start.
-Sai: animate lại sơ đồ và giải thích từng bước. Đúng: hoàn thành cứu hộ + điểm.
-Fallback mouse/touch. UI chữ lớn, không leaderboard, không upload video, không TODO, 1 HTML.
-```
+## Nhiệm vụ
+Giải cứu nhân vật bằng tỉ số đúng
+
+## Cơ chế và nội dung
+Điều khiển chính: **POINT**. Chức năng: "bar model".
+- Thiết kế bối cảnh đúng tên game và mục tiêu.
+- 12 lượt chơi; ngân hàng ít nhất 40 câu/tình huống; 3 mức độ.
+- Random vị trí đáp án; distractor dựa trên lỗi thường gặp.
+- Sai phải có giải thích trực quan và câu luyện lại; đúng có feedback ngay.
+- Có điểm, tiến độ, chuỗi đúng và tổng kết kỹ năng.
+
+## Camera / nhận diện
+MediaPipe Hands; đầu ngón trỏ làm con trỏ; calibration; smoothing; confidence >= 0.65; chỉ chốt khi chạm hitbox.
+- Xin quyền chỉ sau Bắt đầu.
+- Có Đang tải → Xin quyền → Sẵn sàng → Đang nhận diện → Lỗi.
+- Calibration/framing + smoothing + confidence; một gesture = một event.
+
+## Fallback
+Mouse/touch/keyboard mô phỏng được gameplay chính.
+
+## Luồng
+Bắt đầu → Kiểm tra thiết bị → Hiệu chỉnh → Hướng dẫn → Luyện mẫu → 12 lượt → Phản hồi → Ôn câu sai → Kết quả → Chơi lại.
+
+## Ngôn ngữ / an toàn
+UI và phản hồi bằng **tiếng Việt**. Không yêu cầu động tác nguy hiểm; reduced-motion; không tải/lưu dữ liệu camera/microphone; responsive.
+
+## MiTi — CHỮ KÝ BẮT BUỘC
+HTML phải tự chứa logo **MiTi**: biểu tượng ô bo góc #FFD84D có chữ M #07111F + chữ MiTi đậm + ✦; xuất hiện ở Bắt đầu, HUD và Kết quả; có dòng **MiTi • Học bằng chuyển động**. Dùng inline SVG/CSS/HTML, không phụ thuộc repository hoặc URL logo ngoài.
+
+## Đầu ra
+Chỉ xuất toàn bộ **HTML hoàn chỉnh**, không TODO, không pseudocode, không phụ thuộc repository này.
