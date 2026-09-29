@@ -1,18 +1,38 @@
-# L4-29 — Parallelogram Pull
+# L4-29 — Kéo Hình Bình Hành
 
-- **Khối:** Toán 4 — nội dung mở rộng, cần đối chiếu SGK/PPCT cụ thể.
-- **Mục tiêu:** Hiểu diện tích hình bình hành bằng cách biến đổi thành hình chữ nhật.
-- **Nhiệm vụ:** Kéo phần thừa sang bên kia để biến thành hình chữ nhật.
-- **Điều khiển:** TWO_HAND_STRETCH
+Tạo game giáo dục web **một file HTML duy nhất** cho học sinh Việt Nam lớp 4, môn Toán.
 
-## Prompt copy trực tiếp
+## Mục tiêu
+Nhận biết đặc điểm hình bình hành
 
-```text
-Tạo game giáo dục "Parallelogram Pull" cho Toán lớp 4 trong 1 HTML.
-Mục tiêu: hiểu diện tích hình bình hành và mối quan hệ với hình chữ nhật.
-Nhiệm vụ: dùng hai tay kéo phần tam giác ở một đầu sang đầu kia để biến hình bình hành thành hình chữ nhật.
-Gameplay: hiển thị đáy và chiều cao; cho phép thao tác biến đổi hình; sau đó hỏi diện tích. Visual phải cho thấy chiều cao vuông góc và vì sao S = đáy × chiều cao. Bẫy nhầm dùng cạnh xiên làm chiều cao.
-Camera MediaPipe Hands hai tay, tracking mượt, confidence, stretch threshold, cooldown, camera states.
-Đúng + điểm; sai animate lại phép cắt-ghép và chỉ rõ chiều cao vuông góc.
-Fallback mouse/touch. Không upload video, không TODO, 1 HTML.
-```
+## Nhiệm vụ
+Điều chỉnh hình theo tính chất
+
+## Cơ chế và nội dung
+Điều khiển chính: **DRAG**. Chức năng: "cut-and-rearrange; area".
+- Thiết kế bối cảnh đúng tên game và mục tiêu.
+- 12 lượt chơi; ngân hàng ít nhất 40 câu/tình huống; 3 mức độ.
+- Random vị trí đáp án; distractor dựa trên lỗi thường gặp.
+- Sai phải có giải thích trực quan và câu luyện lại; đúng có feedback ngay.
+- Có điểm, tiến độ, chuỗi đúng và tổng kết kỹ năng.
+
+## Camera / nhận diện
+MediaPipe Hands; pinch/grab để bắt và release để thả; smoothing/hysteresis; cooldown 300ms.
+- Xin quyền chỉ sau Bắt đầu.
+- Có Đang tải → Xin quyền → Sẵn sàng → Đang nhận diện → Lỗi.
+- Calibration/framing + smoothing + confidence; một gesture = một event.
+
+## Fallback
+Mouse/touch/keyboard mô phỏng được gameplay chính.
+
+## Luồng
+Bắt đầu → Kiểm tra thiết bị → Hiệu chỉnh → Hướng dẫn → Luyện mẫu → 12 lượt → Phản hồi → Ôn câu sai → Kết quả → Chơi lại.
+
+## Ngôn ngữ / an toàn
+UI và phản hồi bằng **tiếng Việt**. Không yêu cầu động tác nguy hiểm; reduced-motion; không tải/lưu dữ liệu camera/microphone; responsive.
+
+## MiTi — CHỮ KÝ BẮT BUỘC
+HTML phải tự chứa logo **MiTi**: biểu tượng ô bo góc #FFD84D có chữ M #07111F + chữ MiTi đậm + ✦; xuất hiện ở Bắt đầu, HUD và Kết quả; có dòng **MiTi • Học bằng chuyển động**. Dùng inline SVG/CSS/HTML, không phụ thuộc repository hoặc URL logo ngoài.
+
+## Đầu ra
+Chỉ xuất toàn bộ **HTML hoàn chỉnh**, không TODO, không pseudocode, không phụ thuộc repository này.
