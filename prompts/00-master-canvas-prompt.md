@@ -187,6 +187,19 @@ Cân bằng lượt chơi (chống ăn may):
   không phải điểm số, không so với bạn.
 
 ========================
+4.4 ĐỘ KHÓ THÍCH ỨNG (độ khó đi theo năng lực, không theo vị trí lượt chơi)
+========================
+Nguồn: `tools/lib/verify.mjs` (khối `ADAPT`), validate chặn nếu thiếu.
+- Hai câu ĐÚNG liên tiếp → câu kế tiếp lên một level (trần level 3), ưu tiên cùng cụm kiến thức.
+  Hai câu SAI liên tiếp → xuống một level và BẮT BUỘC cùng `errorTag` với câu vừa sai, để em sửa đúng chỗ yếu
+  chứ không phải gặp chủ đề lạ. Lượt 5 và lượt 9 chỉ còn là mốc NHỊP, không phải thang độ khó.
+- SÀN CHỐNG NẢN: không để trẻ sai quá 3 câu liên tiếp. Câu thứ tư là level 1 cùng errorTag và hiện lời giải
+  TỪNG BƯỚC (mỗi bước một dòng, đúng dạng bài: cột dọc / sơ đồ đoạn thẳng / lưới ô / trục số) TRƯỚC khi cho chọn lại.
+  Chọn lại đúng thì không trừ tim lần hai, không tính là câu sai mới, chỉ không cộng chuỗi; tổng kết ghi "em đã sửa được".
+- LEVEL ẨN VỚI HỌC SINH: không hiện chữ "level", "trình độ", số sao xếp hạng hay thanh tiến độ so với bạn.
+  Chuỗi thích ứng chạy im lặng phía sau; phân bố số câu và tỉ lệ đúng theo level chỉ ở màn tổng kết cho giáo viên.
+
+========================
 5. HỌC TẬP DẪN LỐI (LEARNING-FIRST)
 ========================
 - Chuyển động phải phục vụ trực tiếp mục tiêu học tập; nếu bỏ camera mà bài học mất ý nghĩa thì cử chỉ đang sai.
@@ -219,6 +232,24 @@ Cân bằng lượt chơi (chống ăn may):
   hoặc "Lần này em gặp ... lần, đúng ... lần". Không dùng chữ "kém hơn bạn".
 - localStorage bị chặn (mở file trực tiếp ở một số trình duyệt, chế độ ẩn danh) hoặc hồ sơ hỏng thì bắt đầu lại
   từ hồ sơ trống, game vẫn chạy trọn vẹn — không báo lỗi, không chặn vào vòng chơi.
+
+========================
+6.2 TỰ KIỂM CHỨNG NGÂN HÀNG CÂU HỎI (game không được âm thầm dạy sai)
+========================
+Nguồn: `tools/lib/verify.mjs` (khối `VERIFY`), validate chặn nếu thiếu. Một mô hình sinh 40–60 mục chắc chắn
+vài mục lỗi; nếu chỉ viết "mỗi mục một đáp án đúng duy nhất" thì không gì đảm bảo. Engine phải tự kiểm đề của chính nó:
+- `verifyQuestionBank()` chạy MỘT LẦN trước vòng chơi đầu tiên: `answer` có trong `choices` và chỉ xuất hiện đúng một lần;
+  `explanation` / `errorTag` / `loiViet` khác rỗng; `errorTag` thuộc đúng danh sách đã khai báo; không hai mục trùng `prompt`;
+  `level` chỉ nhận 1/2/3 và mỗi level chiếm tối thiểu 1/4 số mục. Mục trượt bị LOẠI KHỎI vòng chơi + `console.warn` nêu id và lý do.
+- Mỗi phương án nhiễu phải sai theo MỘT LỖI THẬT trong danh sách lỗi. Thử từng nhiễu: "nói theo cách hiểu hợp lý nào
+  thì phương án này đúng?" — nếu có thì thay phương án khác. Hai đáp án cùng đúng làm lời giải thành vô nghĩa.
+- Guard phạm vi: số trong phạm vi SGK đã khai báo, không số âm ngoài phạm vi đã học, không chia cho 0, kết quả hữu hạn;
+  game Tiếng Anh thì mọi từ phải có trong word list đã khai báo. Viết thành điều kiện kiểm thật, không chỉ ghi comment.
+- Chống đoán mò bằng CẤU TRÚC (rule 60/40 chỉ chống vung bừa, không chống được mẹo chọn đáp án): đáp án đúng không được
+  là số lớn nhất/nhỏ nhất ở quá 20% số mục, không được là phương án dài nhất ở quá 20%, không lặp nguyên văn cụm từ hiếm
+  trong đề; vị trí đúng phân bố đều mỗi chỗ 1/3 số mục ± 10%, đếm được bằng chính hàm seed đã dùng để xáo.
+- Level khớp số bước thật: 1 = một phép tính một bước, 2 = hai bước, 3 = ba bước trở lên hoặc hai lần đổi đơn vị.
+  Không dán nhãn level 3 cho phép một bước chỉ để đủ chỉ tiêu 1/4 mỗi level.
 
 ========================
 7. GIAO DIỆN
@@ -347,6 +378,14 @@ Cân bằng lượt chơi (chống ăn may):
 [ ] mọi audio có bản chữ tương đương; nút "Hiện chữ" bật được ngay từ đầu, không chờ trả lời sai
 [ ] chữ so với nền thẻ >= 4.5:1 (chữ lớn >= 3:1), tắt lớp phủ đi vẫn đọc được trên khung hình sáng
 [ ] calibration có hỏi tay thuận Trái/Phải/Cả hai và gương lại hướng dẫn đúng bên, không mất điểm khi đổi
+[ ] verifyQuestionBank() chạy một lần lúc nạp và loại mục lỗi: answer có trong choices đúng một lần, errorTag hợp lệ, không trùng prompt, mỗi level >= 1/4
+[ ] mỗi phương án nhiễu sai theo một lỗi thật trong danh sách lỗi, không có phương án tình cờ đúng
+[ ] mọi số và từ nằm trong phạm vi SGK đã khai báo; không chia cho 0, không kết quả vô hạn
+[ ] đáp án đúng không đoán được bằng mẹo hình thức; vị trí đúng phân bố đều 1/3 ± 10%
+[ ] level khớp số bước thật (1 = một bước, 2 = hai bước, 3 = ba bước trở lên)
+[ ] 2 câu đúng liên tiếp lên một level, 2 câu sai liên tiếp xuống một level cùng errorTag
+[ ] không cho sai quá 3 câu liên tiếp; câu thứ 4 là level 1 kèm lời giải từng bước, chọn lại đúng không trừ tim lần hai
+[ ] không hiện "level"/sao xếp hạng cho học sinh; phân bố level chỉ ở màn tổng kết cho giáo viên
 [ ] fallback chuột/chạm/phím chơi trọn vẹn, tự kích hoạt khi camera lỗi
 [ ] QUESTION_DATA có ít nhất 40 mục (Toán) hoặc 60 mục (Tiếng Anh), mỗi mục có đáp án + lời giải + errorTag + loiViet
 [ ] dữ liệu đặt đầu file, code engine đặt sau, không có chỗ nào rút gọn
@@ -389,6 +428,16 @@ Sau khi tự kiểm tra, CHỈ xuất ra file HTML hoàn chỉnh, không kèm gi
   cho nút "Hiện chữ" từ đầu thì học sinh nghe kém vẫn đạt mục tiêu, còn học sinh đọc chưa vững vẫn chơi bằng tai.
 - **Tay thuận là một câu hỏi lúc calibration**: gần như mọi gesture một tay mặc định tay phải. Một chạm hỏi tay thuận rẻ hơn nhiều
   so với việc em thuận tay trái phải với chéo người suốt 12 lượt — và mốc biên độ 50% tầm với cũng phải đo theo đúng tay đó.
+- **`verifyQuestionBank()` thay cho lời hứa "một đáp án đúng duy nhất"**: viết "mỗi mục một đáp án đúng duy nhất kiểm chứng được bằng code"
+  là mô tả, không phải cơ chế — không ai kiểm 60 mục. Bắt engine tự kiểm lúc nạp thì mục lỗi bị loại NGAY, và game không âm thầm dạy sai.
+  Đây là ràng buộc duy nhất trong bộ quy định mà học sinh không bao giờ thấy nhưng mọi câu hỏi đều đi qua.
+- **Chống đoán mò bằng cấu trúc**: quy tắc 60/40 chặn vung tay bừa, nhưng trẻ còn một cách gian lận khác — nhìn hình thái đáp án
+  ("câu trả lời luôn là số to nhất", "chọn cái nào lặp lại từ trong đề"). Chỉ có đếm được mới sửa được: 20% trần cho mẹo to/nhất-dài nhất
+  và 1/3 ± 10% cho vị trí đáp án là hai con số viết thành assert trong code.
+- **Độ khó theo năng lực, không theo vị trí**: "tăng độ khó ở lượt 5 và lượt 9" nhìn có vẻ hợp lý nhưng đảm bảo rằng trẻ yếu sẽ trượt
+  đúng vào lúc bài khó nhất, và trẻ giỏi được thưởng bằng hai câu dễ. Hai chuỗi đúng/sai là bộ đếm đơn giản nhất chạy được trong 1 file.
+- **Sàn chống nản 3 câu**: với game lớp học, bỏ một em ở lại sau 4 câu sai liên tiếp là mất em đó luôn. Câu thứ tư là level 1 cùng
+  `errorTag` + lời giải từng bước biến thất bại thành đúng một lượt dạy kèm, và "chọn lại không trừ tim lần hai" giữ được động lực.
 - **Hợp đồng render AR**: camera phủ kín + lớp tối không quá alpha 0.45 + chiều sâu z + vật neo vào landmark,
   để game trông như thực tế tăng cường thay vì "canvas 2D có webcam kèm theo".
 - **Calibration động + ngưỡng theo đơn vị cơ thể**: mỗi học sinh đứng cách camera một khoảng khác nhau; ngưỡng pixel cố định

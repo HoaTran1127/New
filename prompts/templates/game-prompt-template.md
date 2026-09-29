@@ -32,7 +32,10 @@ Không dùng Tailwind Play CDN, không file .css/.js/.json/ảnh/mp3 ngoài. Ch�
 - Vùng đích dàn ra mép khung: tâm các vùng đáp án cách trục cơ thể >= 45% tầm với và nằm trong 12% bề rộng tính từ cạnh khung hình, đồng thời đổi vị trí giữa các lượt; cấm đặt hai vùng cạnh nhau. Vùng chạm không được chồng lên vùng ngực–mặt để chữ vẫn đọc được.
 - Xen kẽ nhóm cơ: trong 12 lượt, không để cùng một bên tay hoặc một hướng chịu quá 4 lượt liên tiếp; luân phiên trái – phải – hai tay – nghiêng thân, mỗi 3 lượt đổi mặt phẳng động tác (ngang tầm vai → với cao → xuống thấp trong tầm với an toàn).
 - Nhịp vận động: 12 lượt chia thành 3 hiệp 4 lượt; giữa hai hiệp là "trạm nghỉ" 5 giây có đếm ngược, không tính sai, không mất tim, không trừ điểm. Một vòng chơi tương đương 4–6 phút đứng vận động vừa, vẫn tại chỗ.
-- Độ dài: 12 lượt chính. Tăng độ khó ở lượt 5 và lượt 9.
+- Độ dài: 12 lượt chính. Lượt 5 và lượt 9 chỉ là mốc NHỊP: thêm một bước trung gian và rút thời gian hiển thị hạt, không rút thời gian đọc đề. Level không đổi theo vị trí mà do thích ứng quyết định (ba dòng dưới).
+- Thích ứng trong phiên: 2 câu ĐÚNG liên tiếp thì câu kế lên một level (trần level 3, ưu tiên cùng cụm kiến thức); 2 câu SAI liên tiếp thì xuống một level và BẮT BUỘC cùng errorTag với câu vừa sai, để em sửa đúng chỗ yếu chứ không gặp chủ đề lạ.
+- Sàn chống nản: tuyệt đối không để học sinh sai quá 3 câu LIÊN TIẾP. Câu thứ tư bắt buộc là level 1 cùng errorTag, và trước khi cho chọn lại phải hiện lời giải TỪNG BƯỚC — mỗi bước một dòng, đúng dạng bài (cột dọc / sơ đồ đoạn thẳng / lưới ô / trục số). Chọn lại đúng thì không trừ tim lần hai và không tính là câu sai mới, chỉ không được cộng chuỗi; tổng kết ghi "em đã sửa được".
+- Level ẩn với học sinh: không hiện chữ "level", "trình độ", số sao hay thanh tiến độ so với bạn; trẻ chỉ thấy nhiệm vụ tiếp theo. Phân bố số câu và tỉ lệ đúng theo level chỉ xuất hiện ở màn tổng kết dành cho giáo viên.
 - Điểm: +10 nhân chuỗi trả lời đúng. Sai không xóa kiến thức: vẫn hiện lời giải đầy đủ.
 - Điều kiện thua: hết 5 tim (mỗi đáp án sai trừ 1 tim). Điều kiện thắng: hết 12 lượt, hiện tổng kết.
 - Chống ăn may: vật thể đúng và vật thể sai trộn theo tỉ lệ xấp xỉ 60/40 trong mỗi lượt; chạm vào vật SAI trừ tim ngay và cắt chuỗi đúng, còn BỎ LỠ vật ĐÚNG chỉ cắt chuỗi đúng chứ không trừ tim — vung tay bừa không thắng được, đứng chờ cũng không bị phạt oan.
@@ -44,6 +47,11 @@ Không dùng Tailwind Play CDN, không file .css/.js/.json/ảnh/mp3 ngoài. Ch�
 - errorTag là mã máy của lỗi; loiViet là cụm tiếng Việt có dấu lấy nguyên văn từ danh sách lỗi ở mục 1 và là thứ hiển thị cho học sinh.
 - Xáo trộn vị trí đáp án bằng thuật toán có seed theo lượt; không để đáp án đúng luôn ở một vị trí.
 - Phương án nhiễu mô phỏng đúng lỗi thật của học sinh, không phải giá trị ngẫu nhiên vô nghĩa.
+- Tự kiểm chứng khi nạp: viết hàm `verifyQuestionBank()` chạy MỘT LẦN trước vòng chơi đầu tiên — answer phải có trong choices và chỉ xuất hiện đúng một lần; explanation, errorTag, loiViet khác rỗng; errorTag thuộc đúng danh sách đã khai báo; không hai mục trùng prompt (so sau khi bỏ khoảng trắng và chữ thường); level chỉ nhận 1/2/3 và mỗi level chiếm tối thiểu 1/4 số mục. Mục trượt thì LOẠI KHỎI vòng chơi kèm `console.warn` nêu id + lý do bằng tiếng Việt; dưới ngưỡng thì cảnh báo ở màn chỉ giáo viên thấy.
+- Mỗi phương án nhiễu phải sai theo MỘT LỖI THẬT trong danh sách lỗi ở mục 1. Trước khi chốt mục, thử từng nhiễu bằng câu hỏi "nói theo cách hiểu hợp lý nào thì phương án này đúng?" — nếu có thì thay phương án khác; hai đáp án cùng đúng làm lời giải thành vô nghĩa. Phương án đúng không được nổi bật về độ dài hay định dạng.
+- Guard phạm vi: mọi số nằm trong phạm vi SGK đã khai báo ở mục 1, không có số âm ngoài phạm vi đã học, không chia cho 0, kết quả hữu hạn và so sánh chính xác bằng số học trong file; game Tiếng Anh thì mọi từ phải có trong word list đã khai báo. Viết thành điều kiện kiểm thật trong `verifyQuestionBank`, không chỉ ghi comment.
+- Chống đoán mò bằng cấu trúc: đáp án đúng không được là số lớn nhất/nhỏ nhất ở quá 20% số mục, không được là phương án dài nhất ở quá 20%, không lặp lại nguyên văn cụm từ hiếm trong đề; vị trí đáp án đúng phân bố đều mỗi chỗ 1/3 số mục ± 10% — đếm được bằng chính hàm seed đã dùng để xáo.
+- Level phải khớp số bước thật: level 1 giải trong MỘT phép tính một bước; level 2 cần HAI bước (đổi đơn vị rồi tính, tìm thành phần chưa biết); level 3 cần BA bước trở lên hoặc hai lần đổi đơn vị. Không dán nhãn level 3 cho phép một bước chỉ để đủ chỉ tiêu.
 - Một mục mẫu để bám theo khuôn (viết tiếp cho đủ số mục, không được ít hơn):
   id: "q1", level: 1, prompt: "[...]", choices: ["[...]","[...]","[...]"], answer: "[...]", explanation: "[...]", errorTag: "[...]", loiViet: "[...]"
 
@@ -137,6 +145,8 @@ Không dùng Tailwind Play CDN, không file .css/.js/.json/ảnh/mp3 ngoài. Ch�
 - [ ] Phần arcade đã điền đủ: hit-stop, combo có cao độ tăng, chữ khen tại điểm chạm, thẻ vàng x2, mascot phản ứng.
 - [ ] Phần lớp học đã điền đủ: vùng an toàn cho chữ (lưới 3×3), đàm phán theo mức camera đang thấy, hồ sơ "miti-mastery", chế độ hai học sinh `maxNumHands: 2`.
 - [ ] Phần tiếp cận đã điền đủ: trần nhấp nháy 3 lần/giây, tự đọc `prefers-reduced-motion`, đúng/sai có >= 2 kênh ngoài màu, phụ đề cho mọi âm thanh, tương phản >= 4.5:1, câu hỏi tay thuận.
+- [ ] Phần kiểm chứng đề đã điền đủ: `verifyQuestionBank()` chạy lúc nạp và loại mục lỗi, mọi nhiễu sai theo một lỗi thật, số/từ trong phạm vi SGK, đáp án đúng không đoán được bằng mẹo hình thức, level khớp số bước.
+- [ ] Phần thích ứng đã điền đủ: 2 đúng lên level / 2 sai xuống level cùng `errorTag`, sàn chống nản 3 câu, level ẩn với học sinh — và **không** còn dòng "tăng độ khó ở lượt 5 và 9" như thang level.
 - [ ] Bối cảnh là AR thật: vật thể sinh trong khung hình camera (có z, có bóng dưới chân, có vật neo vào người), không phải bảng game đặt cạnh video.
 - [ ] Mục tiêu học tập cụ thể theo SGK — **cấm** các câu chung chung kiểu "vận dụng kiến thức qua tình huống tương tác".
 - [ ] Bối cảnh và cơ chế khớp nhau: bỏ camera đi thì bài học vẫn còn ý nghĩa, nhưng cử chỉ phải đang kiểm tra đúng kỹ năng.

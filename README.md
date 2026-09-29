@@ -168,6 +168,24 @@ Nguồn: `tools/lib/access.mjs` — in nguyên văn vào 85 prompt + 425 biến 
 - **Tương phản ≥ 4.5:1** giữa chữ và nền ngay sau lưng nó (chữ lớn ≥ 3:1), mỗi thẻ tự có nền + viền ≥ 2px + bóng đổ: tắt lớp phủ tối đi thì chữ vẫn đọc được trên khung hình có cửa sổ sáng phía sau.
 - **Câu hỏi tay thuận**: calibration hỏi một chạm "Em thuận tay nào?" (Trái / Phải / Cả hai) rồi gương lại hướng dẫn và gán tay điều khiển theo lựa chọn đó, mốc biên độ 50% tầm với đo theo đúng tay — thuận tay trái không phải với chéo người suốt 12 lượt.
 
+### 🧪 Đề phải tự kiểm chứng + độ khó theo năng lực
+
+Nguồn: `tools/lib/verify.mjs`. Đây là tầng sửa hai lỗi **không ai nhìn thấy khi test**:
+
+**Tự kiểm chứng (`VERIFY`)** — một mô hình sinh 40–60 mục chắc chắn vài mục lỗi, và game sẽ âm thầm dạy sai. Prompt cũ chỉ viết "mỗi mục một đáp án đúng duy nhất kiểm chứng được bằng code", đó là lời hứa chứ không phải cơ chế:
+
+- **`verifyQuestionBank()` chạy một lần lúc nạp**: `answer` phải có trong `choices` và xuất hiện đúng một lần; `errorTag` thuộc đúng danh sách đã khai báo; không hai mục trùng `prompt`; mỗi level chiếm tối thiểu 1/4 số mục. Mục trượt bị **loại khỏi vòng chơi** + `console.warn` nêu id và lý do.
+- **Mỗi phương án nhiễu sai theo MỘT LỖI THẬT** (quên nhớ, quên chia đôi diện tích tam giác…), không phải `3 + 2 = 99`; trước khi chốt mục phải thử "theo cách hiểu hợp lý nào thì phương án này đúng?".
+- **Guard phạm vi**: mọi số nằm trong phạm vi SGK đã khai báo, không chia cho 0, kết quả hữu hạn; game Tiếng Anh thì mọi từ phải có trong word list.
+- **Chống đoán mò bằng cấu trúc**: quy tắc 60/40 chặn vung tay bừa, nhưng trẻ còn mẹo "chọn số to nhất / cái lặp lại từ trong đề". Trần đếm được: không quá 20% cho mẹo to-nhất và dài-nhất, vị trí đáp án đúng phân bố đều `1/3 ± 10%` theo chính hàm seed.
+- **Level khớp số bước thật**: 1 = một bước, 2 = hai bước, 3 = ba bước trở lên — không dán nhãn level 3 cho phép một bước chỉ để đủ chỉ tiêu.
+
+**Thích ứng (`ADAPT`)** — prompt cũ ghi "tăng độ khó ở lượt 5 và lượt 9", tức là đảm bảo trẻ yếu trượt đúng lúc bài khó nhất:
+
+- **2 câu đúng liên tiếp lên một level, 2 câu sai liên tiếp xuống một level và bắt buộc cùng `errorTag`** — sử đúng chỗ yếu, không gặp chủ đề lạ. Lượt 5 và 9 chỉ còn là mốc nhịp.
+- **Sàn chống nản**: không em nào được sai quá 3 câu liên tiếp; câu thứ 4 là level 1 cùng `errorTag` kèm lời giải **từng bước** trước khi chọn lại, và chọn lại đúng thì không trừ tim lần hai.
+- **Level ẩn với học sinh**: không "level", không sao xếp hạng; phân bố theo level chỉ hiện ở màn tổng kết dành cho giáo viên.
+
 ---
 
 ## 🔁 Pipeline: sửa dữ liệu một chỗ, mọi thứ dựng lại
@@ -183,6 +201,7 @@ tools/lib/rules.mjs          quy định lớp học (60/40, calibration, Pause,
 tools/lib/feel.mjs           quy định vận động to + cảm giác arcade (biên độ, mép khung, trạm nghỉ, hit-stop, combo)
 tools/lib/classroom.mjs      quy định lớp học thật (vùng an toàn cho chữ, đàm phán camera, miti-mastery, 2 học sinh)
 tools/lib/access.mjs         tiếp cận + an toàn thần kinh (trần nhấp nháy, reduced-motion, không chỉ dùng màu, phụ đề, tương phản, tay thuận)
+tools/lib/verify.mjs         tự kiểm chứng đề + độ khó thích ứng (verifyQuestionBank, nhiễu theo lỗi thật, guard phạm vi, chống mẹo, level thích ứng, sàn chống nản)
         │
         └─ node tools/build.mjs
              ├─ catalogs/GAME_CATALOG.csv + .md

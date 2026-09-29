@@ -10,6 +10,7 @@ import { RULES } from './lib/rules.mjs';
 import { MOTION, FEEL, MOTION_SHORT, FEEL_SHORT } from './lib/feel.mjs';
 import { CLASSROOM, CLASSROOM_SHORT } from './lib/classroom.mjs';
 import { ACCESS, ACCESS_SHORT } from './lib/access.mjs';
+import { VERIFY, ADAPT, VERIFY_SHORT, ADAPT_SHORT } from './lib/verify.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const OUT = path.join(ROOT, 'prompts', 'VARIANTS_425.md');
@@ -59,11 +60,12 @@ function block(n, row, g, v) {
   const calib = camera && !voice ? RULES.calibration : 'Biến thể này không đọc chuyển động tay nên không cần calibration; vẫn phải có một màn hướng dẫn ngắn, không tutorial dài.';
   // Biến thể VOICE chỉ có một micro nên không có chế độ hai người chơi: lấy 3 vế đầu của chuỗi rút gọn.
   const voiceShort = CLASSROOM_SHORT.split(' · ').slice(0, 3).join(' · ');
+  const qCheck = ' · ' + VERIFY_SHORT + ' · ' + ADAPT_SHORT;
   const selfCheck = voice
-    ? 'nền AR phủ kín khung hình với lớp tối alpha không vượt 0.45 · sóng âm và khối từ nổi đặt ngay trong khung hình thật · transcript lệch một bên không che người nói · ' + MOTION_SHORT + ' · ' + FEEL_SHORT + ' · ' + voiceShort + ' · ' + ACCESS_SHORT
+    ? 'nền AR phủ kín khung hình với lớp tối alpha không vượt 0.45 · sóng âm và khối từ nổi đặt ngay trong khung hình thật · transcript lệch một bên không che người nói · ' + MOTION_SHORT + ' · ' + FEEL_SHORT + ' · ' + voiceShort + ' · ' + ACCESS_SHORT + qCheck
     : camera
-      ? 'nền AR phủ kín khung hình với alpha không vượt 0.45 · mọi tọa độ qua toScreen(lx, ly), không còn lx * W · vật thể có z từ 1.6 và bóng dưới chân · có vật neo vào landmark · hover không bị tính là chọn · ' + MOTION_SHORT + ' · ' + FEEL_SHORT + ' · ' + CLASSROOM_SHORT + ' · ' + ACCESS_SHORT
-      : 'game chạy trọn 12 lượt chỉ bằng phím và chuột, không tải MediaPipe · phụ đề lời đọc cho mọi phản hồi âm thanh · không xin quyền camera · hồ sơ "miti-mastery" vẫn ghi và vẫn đọc được · ' + FEEL_SHORT + ' · ' + ACCESS_SHORT;
+      ? 'nền AR phủ kín khung hình với alpha không vượt 0.45 · mọi tọa độ qua toScreen(lx, ly), không còn lx * W · vật thể có z từ 1.6 và bóng dưới chân · có vật neo vào landmark · hover không bị tính là chọn · ' + MOTION_SHORT + ' · ' + FEEL_SHORT + ' · ' + CLASSROOM_SHORT + ' · ' + ACCESS_SHORT + qCheck
+      : 'game chạy trọn 12 lượt chỉ bằng phím và chuột, không tải MediaPipe · phụ đề lời đọc cho mọi phản hồi âm thanh · không xin quyền camera · hồ sơ "miti-mastery" vẫn ghi và vẫn đọc được · ' + FEEL_SHORT + ' · ' + ACCESS_SHORT + qCheck;
   const subjectNote = english ? 'tiếng Anh giữ nguyên tiếng Anh' : 'dùng đúng thuật ngữ SGK ' + gradeTxt;
   const motion = camera
     ? `${MOTION.amplitude} ${MOTION.reach} ${MOTION.variety} ${MOTION.breather} ${MOTION.meter}`
@@ -82,8 +84,10 @@ ${cameraLine}
 **Xin quyền + trạng thái:** chỉ xin camera${voice ? ' và micro' : ''} SAU khi học sinh bấm BẮT ĐẦU; nhãn tiếng Việt Đang tải → Xin quyền ${voice ? 'micro' : 'camera'} → Sẵn sàng → Đang nhận diện → Lỗi (kèm nút Thử lại). ${voice ? 'Micro bị từ chối hoặc trình duyệt không hỗ trợ SpeechRecognition thì hiện nút "Nghe mẫu + chọn đáp án bằng chuột".' : 'Camera bị chặn vì môi trường không an toàn thì báo "Muốn dùng camera thì mở game qua HTTPS hoặc file trên máy em" rồi vào thẳng chế độ không camera.'}
 ${controlBlock(v, g)}` : controlBlock(v, g)}
 
-**Vòng chơi:** 12 lượt. ${RULES.antiLuck} ${RULES.autoPause} Độ khó tăng ở lượt 5 và lượt 9 bằng cách thêm bước trung gian hoặc rút ngắn thời gian hiển thị hạt, không rút thời gian đọc đề. ${calib}
+**Vòng chơi:** 12 lượt. ${RULES.antiLuck} ${RULES.autoPause} ${calib}
+**Nhịp và độ khó:** lượt 5 và lượt 9 chỉ là mốc NHỊP — thêm một bước trung gian và rút thời gian hiển thị hạt, không rút thời gian đọc đề; level không đổi theo vị trí mà do thích ứng quyết định. ${ADAPT.levelShift} ${ADAPT.failFloor} ${ADAPT.hiddenLevel}
 **Vận động:** ${motion}
+**Tự kiểm chứng đề:** ${VERIFY.selfCheck} ${VERIFY.distractorValid} ${VERIFY.rangeGuard} ${VERIFY.noGuessable} ${VERIFY.difficultySteps}
 **Ngân hàng dữ liệu:** \`const QUESTION_DATA = [...]\` đặt ở ĐẦU khối <script>, engine đặt phía sau; tối thiểu ${bank.so} mục chia 3 mức độ theo khuôn { id, level, prompt, choices, answer, explanation, errorTag, loiViet }; mỗi mục một đáp án đúng duy nhất kiểm chứng được bằng code; ${bank.luu_y} errorTag lấy đúng một trong: ${cl.tags.join(', ')}; loiViet là cụm tiếng Việt có dấu lấy nguyên văn từ danh sách lỗi: ${ERROR_NOTES[g.cluster]}. Xáo trộn vị trí đáp án có seed theo lượt.
 **Phản hồi học tập:** đúng thì phản hồi tích cực ngay kèm một dòng ghi nhớ; sai thì DỪNG 2 giây, ${cl.giai_thich}, chỉ rõ bước hoặc chữ số hoặc từ cần sửa, không hiệu ứng nào che lời giải; câu sai xếp vào CUỐI vòng để luyện lại. ${RULES.summary}${english ? ` ${RULES.listening} ${RULES.speechSynthesis}` : ''}
 **Cảm giác arcade:** ${FEEL.hitStop} ${FEEL.combo} ${FEEL.cheer} ${FEEL.bonus} ${FEEL.fx} ${camera ? FEEL.mascot : 'Mascot của game đứng ở góc HUD, nhảy lên khi đúng và gật đầu khi sai — phản ứng theo kết quả chứ không theo chuyển động.'}
@@ -122,6 +126,8 @@ let out = `# 🎯 425 PROMPT BIẾN THỂ — MiTi (85 game × 5 kiểu điều 
 - **Vận động + arcade:** mỗi lượt là một động tác to (>= 50% tầm với), vùng đích nằm sát mép khung, 3 hiệp kèm trạm nghỉ 5 giây; cú chạm có hit-stop, combo và chữ khen bật lên trong khung hình.
 - **Lớp học thật:** chữ và HUD không đè lên thân học sinh, cơ chế chọn theo mức camera đang thấy, hồ sơ tiến bộ "miti-mastery" xếp câu theo lỗi yếu nhất, có chế độ hai học sinh trong một khung hình (trừ biến thể VOICE).
 - **Tiếp cận:** không hiệu ứng nào nhấp nháy quá 3 lần/giây, \`prefers-reduced-motion\` được đọc lúc khởi động và bật sẵn chế độ Giảm hiệu ứng (không giảm nội dung học), đúng/sai phân biệt bằng >= 2 kênh ngoài màu, mọi âm thanh có bản chữ, tương phản chữ >= 4.5:1, có chọn tay thuận lúc calibration (trừ biến thể VOICE và NO-CAMERA).
+- **Đề phải tự kiểm được:** engine chạy \`verifyQuestionBank()\` một lần lúc nạp và loại mọi mục lỗi (đáp án không có trong choices, hai phương án trùng nhau, level lệch với số bước, số vượt phạm vi SGK); vị trí đáp án đúng phân bố đều 1/3 ± 10%.
+- **Độ khó theo năng lực:** 2 câu đúng liên tiếp thì lên một level, 2 câu sai liên tiếp thì xuống một level cùng \`errorTag\`; không em nào được phép sai quá 3 câu liên tiếp; level ẩn với học sinh và chỉ hiện ở tổng kết cho giáo viên.
 - Chữ ký MiTi có ở ba màn: Bắt đầu, HUD, Kết quả.
 
 `;

@@ -11,6 +11,7 @@ import { RULES } from './lib/rules.mjs';
 import { MOTION, FEEL, MOTION_SHORT, FEEL_SHORT } from './lib/feel.mjs';
 import { CLASSROOM, CLASSROOM_SHORT } from './lib/classroom.mjs';
 import { ACCESS, ACCESS_SHORT } from './lib/access.mjs';
+import { VERIFY, ADAPT, VERIFY_SHORT, ADAPT_SHORT } from './lib/verify.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 
@@ -85,7 +86,10 @@ Không dùng Tailwind Play CDN, không file .css/.js/.json/ảnh/mp3 ngoài. Ch�
 - ${MOTION.reach}
 - ${MOTION.variety}
 - ${MOTION.breather}
-- Độ dài: 12 lượt chính. Tăng độ khó ở lượt 5 và lượt 9 (thêm bước trung gian hoặc rút ngắn thời gian suy nghĩ).
+- Độ dài: 12 lượt chính. Lượt 5 và lượt 9 chỉ là mốc NHỊP: thêm một bước trung gian và rút thời gian hiển thị hạt, không rút thời gian đọc đề. Level của lượt chơi không đổi theo vị trí mà do thích ứng quyết định (bốn dòng dưới).
+- ${ADAPT.levelShift}
+- ${ADAPT.failFloor}
+- ${ADAPT.hiddenLevel}
 - Điểm: +10 nhân chuỗi trả lời đúng. Sai không phạt bằng cách biến mất kiến thức: vẫn hiện lời giải đầy đủ.
 - Điều kiện thua: ${english ? 'hết 5 tim (mỗi đáp án sai trừ 1 tim)' : 'hết 5 tim (mỗi đáp án sai trừ 1 tim)'}. Điều kiện thắng: hết 12 lượt, hiện tổng kết.
 - Chống ăn may: ${RULES.antiLuck}
@@ -99,6 +103,11 @@ Không dùng Tailwind Play CDN, không file .css/.js/.json/ảnh/mp3 ngoài. Ch�
 - errorTag là mã máy của lỗi, lấy đúng một trong các nhãn: ${cl.tags.join(', ')}. loiViet là cụm tiếng Việt có dấu in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 1, cùng chỉ lỗi đó và là thứ hiển thị cho học sinh. Mỗi câu sai lưu cả hai trường.
 - xáo trộn vị trí đáp án bằng thuật toán có seed theo lượt; không để đáp án đúng luôn ở một vị trí.
 - Trước khi viết engine, liệt kê trong comment 3 mục theo đúng khuôn rồi mới viết trọn mảng.
+- ${VERIFY.selfCheck}
+- ${VERIFY.distractorValid}
+- ${VERIFY.rangeGuard}
+- ${VERIFY.noGuessable}
+- ${VERIFY.difficultySteps}
 - Hai mục mẫu để bám theo khuôn (viết tiếp ${bank.so - 2} mục nữa, không được ít hơn):
 ${jsonBlock(ex, cl.tags, ERROR_NOTES[g.cluster].split('; '))}
 
@@ -167,7 +176,7 @@ ${english ? `- ${RULES.listening}\n` : ''}${english ? `- ${RULES.listening}\n- D
 9. ĐẦU RA
 - Chỉ xuất toàn bộ file HTML hoàn chỉnh, không kèm giải thích dài.
 - Không TODO, không pseudocode, không "...", không "// code tương tự ở trên", không phần "bạn tự bổ sung".
-- Tự kiểm tra trước khi xuất: camera xin sau nút Bắt đầu · có loading/error/định vị · 640×480 và lật gương · nền AR là khung hình camera với lớp phủ tối không vượt 0.45 · mọi tọa độ đi qua toScreen, không còn phép nhân thô với W/H · vật thể có z và bóng dưới chân · có ít nhất một vật ảo neo vào landmark cơ thể · gesture fire theo lượt chuyển + cooldown + confidence · không tính hover là đã chọn · calibration đo tầm tay và đặt ngưỡng theo đơn vị vừa đo · ${MOTION_SHORT} · ${FEEL_SHORT} · ${CLASSROOM_SHORT} · ${ACCESS_SHORT} · tab ẩn hoặc mất tiêu điểm là tự Pause, quay lại đếm 3-2-1 · nhận diện 1 lần mỗi 2–3 khung hình, particle có pool, tự giảm chi tiết khi FPS tụt · tổng kết ba thẻ "Làm tốt / Cần luyện / Động tác lần sau" · ${GESTURES[g.gestures[0]].vi.toLowerCase()} hoạt động đúng cơ chế · fallback chuột/chạm chơi trọn vẹn · QUESTION_DATA đủ ${bank.so} mục, mỗi mục có answer + explanation + loiViet · câu sai vào hàng đợi luyện lại · tổng kết theo nhóm lỗi · bộ sưu tập lưu localStorage · chữ ký MiTi ở ba màn · file chạy độc lập không lỗi console.
+- Tự kiểm tra trước khi xuất: camera xin sau nút Bắt đầu · có loading/error/định vị · 640×480 và lật gương · nền AR là khung hình camera với lớp phủ tối không vượt 0.45 · mọi tọa độ đi qua toScreen, không còn phép nhân thô với W/H · vật thể có z và bóng dưới chân · có ít nhất một vật ảo neo vào landmark cơ thể · gesture fire theo lượt chuyển + cooldown + confidence · không tính hover là đã chọn · calibration đo tầm tay và đặt ngưỡng theo đơn vị vừa đo · ${MOTION_SHORT} · ${FEEL_SHORT} · ${CLASSROOM_SHORT} · ${ACCESS_SHORT} · ${VERIFY_SHORT} · ${ADAPT_SHORT} · tab ẩn hoặc mất tiêu điểm là tự Pause, quay lại đếm 3-2-1 · nhận diện 1 lần mỗi 2–3 khung hình, particle có pool, tự giảm chi tiết khi FPS tụt · tổng kết ba thẻ "Làm tốt / Cần luyện / Động tác lần sau" · ${GESTURES[g.gestures[0]].vi.toLowerCase()} hoạt động đúng cơ chế · fallback chuột/chạm chơi trọn vẹn · QUESTION_DATA đủ ${bank.so} mục, mỗi mục có answer + explanation + loiViet · câu sai vào hàng đợi luyện lại · tổng kết theo nhóm lỗi · bộ sưu tập lưu localStorage · chữ ký MiTi ở ba màn · file chạy độc lập không lỗi console.
 \`\`\`
 
 ## Ghi chú cho người tạo prompt (không gửi Gemini)
