@@ -1,19 +1,38 @@
-# L4-39 — Data Detective
+# L4-39 — Thám Tử Dữ Liệu
 
-Create a standalone single-file Grade 4 Math game.
+Tạo game giáo dục web **một file HTML duy nhất** cho học sinh Việt Nam lớp 4, môn Toán.
 
-Learning objective: read tables, picture charts and bar charts; answer questions from data.
+## Mục tiêu
+Đọc bảng, biểu đồ và tìm bằng chứng
 
-Mission: investigate a mystery by finding evidence in the correct chart.
+## Nhiệm vụ
+Điều tra dữ liệu để trả lời câu hỏi
 
-Gameplay: each case contains a small dataset and a visual chart. Ask questions about greatest/least, difference, total, frequency and simple comparisons. The player points to the correct evidence card or chart bar.
+## Cơ chế chơi
+Điều khiển chính: **POINT**. Các chức năng: "tables; picture charts; bar charts; evidence".
+- Biến mục tiêu học tập thành hành động chơi trực tiếp.
+- 12 lượt; ngân hàng ít nhất 40 câu/tình huống; 3 mức độ khó.
+- Đáp án xáo trộn; bẫy phản ánh lỗi thường gặp.
+- Sai: giải thích trực quan + luyện lại; đúng: phản hồi tức thì.
+- Có điểm, tiến độ, chuỗi đúng và tổng kết.
 
-Camera: optional MediaPipe Hands index-fingertip tracking with smoothing, confidence >= 0.65 and 350ms selection cooldown. Mouse/touch fallback.
+## Camera / nhận diện
+MediaPipe Hands; đầu ngón trỏ làm con trỏ; calibration; smoothing; confidence >= 0.65; chỉ chốt khi chạm hitbox.
+- Xin quyền chỉ sau Bắt đầu.
+- Có Đang tải → Xin quyền → Sẵn sàng → Đang nhận diện → Lỗi.
+- Calibration/framing + smoothing + confidence; một gesture chỉ tạo một event.
 
-Game loop: briefing → evidence tutorial → 10 cases → evidence explanation → detective score.
+## Fallback
+Mouse/touch/keyboard mô phỏng được gameplay chính.
 
-Generate at least 30 datasets with varied categories and values. Randomize labels and answer positions. Include traps involving reading the wrong category, confusing total with difference and misreading the chart scale.
+## Luồng
+Bắt đầu → Kiểm tra thiết bị → Hiệu chỉnh → Hướng dẫn → Luyện mẫu → 12 lượt → Phản hồi → Ôn câu sai → Kết quả → Chơi lại.
 
-Feedback highlights the exact bars/cells used and computes the answer step by step.
+## Ngôn ngữ / an toàn
+UI, hướng dẫn, nút và feedback bằng **tiếng Việt**. Với môn Tiếng Anh, chỉ dữ liệu học dùng tiếng Anh. Responsive, chữ lớn, reduced-motion; không động tác nguy hiểm; không tải/lưu video hoặc âm thanh.
 
-Accessible, calm UI; no camera upload; no flashing. Output one complete HTML file, all data embedded, no TODOs.
+## MiTi — CHỮ KÝ BẮT BUỘC
+HTML phải tự chứa logo **MiTi**: biểu tượng ô bo góc #FFD84D có chữ M #07111F + chữ MiTi đậm + ✦; xuất hiện ở Bắt đầu, HUD và Kết quả; có dòng **MiTi • Học bằng chuyển động**. Dùng inline SVG/CSS/HTML, không phụ thuộc repository hoặc URL logo ngoài.
+
+## Đầu ra
+Chỉ xuất **toàn bộ HTML hoàn chỉnh**, không TODO, không pseudocode, không phụ thuộc repository này.
