@@ -114,7 +114,7 @@ export const GESTURES = {
     fallback: "nút Nghe mẫu để nghe phát âm chuẩn rồi chọn đáp án bằng chuột",
   },
 
-  // ── Ba mã mở rộng ── chưa game nào trong catalog dùng, dành cho prompt viết tay và game tương lai.
+  // ── Bốn mã mở rộng ── chưa game nào trong catalog dùng, dành cho prompt viết tay và game tương lai.
   CLAP: {
     vi: 'Vỗ hai tay (Clap)',
     bien_do: 'Vỗ từ tư thế dang tay: hai bàn tay khép lại từ khoảng >= 40% tầm sải về sát nhau, mỗi nhịp là động tác toàn tay chứ không phải đập bằng cổ tay.',
@@ -147,6 +147,17 @@ export const GESTURES = {
     nguoi_choi: 'Vòng tiến trình 1.5 giây vẽ quanh tư thế mục tiêu, đầy vòng là đạt; khung xương neon của học sinh chuyển dần sang xanh khi khớp vào khung đích.',
     ar: 'Khung xương đích là bóng neon đặt trong chính khung hình camera, canh theo toScreen của vai và hông học sinh; vòng tiến trình nằm quanh khớp đang giữ; khi lệch, hai khung xương tách rời nhau nên các em thấy ngay phải chỉnh gì.',
     fallback: 'giữ phím Space đủ 1.5 giây để tính là giữ tư thế',
+  },
+  FINGER_COUNT: {
+    vi: 'Đếm ngón tay chọn đáp án (Finger count)',
+    bien_do: 'Giơ cả bàn tay lên ngang vai rồi đếm ngón 1–4 ở vị trí cách thân >= 40% tầm với; đổi tay trái/phải xen kẽ để mỗi lượt là một lần nâng cánh tay, không giơ tay ngay trước mặt.',
+    landmark: 'HandLandmarker; đếm số ngón duỗi theo góc khớp (PIP–DIP) của ngón trỏ 6/8, giữa 10/12, áp út 14/16, út 18/20; riêng ngón cái so khoảng cách landmark 4 tới 17 theo bề rộng bàn tay.',
+    hinh_hoc: 'Số ngón duỗi (1–4) chính là đáp án; chỉ chốt khi số ngón ổn định trong 5 khung hình liên tiếp VÀ bàn tay nằm trong hitbox của thẻ mang số đó. Giơ 0 ngón hoặc nhiều hơn 4 ngón là chưa hợp lệ, hiện nhắc "Giơ từ 1 đến 4 ngón tay" chứ không tự đoán.',
+    muot: 'Lấy trung vị (median) số ngón duỗi trong cửa sổ 7 khung hình để không nháy khi ngón đang chuyển; debounce 400ms trước khi bắt đầu đếm; cooldown 600ms giữa hai lần chốt.',
+    nguong: 'confidence bàn tay >= 0.65, lòng bàn tay hướng về camera (độ phẳng của bốn khớp MCP dưới ngưỡng nghiêng) và bàn tay nằm trong vùng khung hình hợp lệ; ngón bị che thì giữ nguyên trạng thái cũ, không suy diễn.',
+    nguoi_choi: 'Bốn thẻ đáp án đánh số 1–4 đặt ở bốn góc khung hình; vòng đếm quanh cổ tay sáng dần theo số ngón đã ổn định, đầy vòng là chốt và thẻ số đó bay về phía bàn tay.',
+    ar: 'Bốn thẻ đáp án treo ở bốn góc theo z (xa nhỏ và mờ, gần to và rực); vòng tiến trình neon vẽ quanh cổ tay thật tại toScreen(landmark 0) và lấp dần khi học sinh giữ yên số ngón; chốt đúng thì thẻ bay từ z 1.6 về z 0.35 rồi nổ ngay tại bàn tay, có bóng đổ dưới "sàn" ảo.',
+    fallback: 'bấm phím số 1–4 hoặc chạm vào thẻ đáp án mang số tương ứng',
   },
 };
 

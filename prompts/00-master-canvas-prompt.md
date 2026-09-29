@@ -113,6 +113,21 @@ Cấu hình camera:
   rồi đo lại; không vào vòng chơi với ngưỡng vừa đo sai.
 - Trên HUD giữ nút "Chỉnh lại tư thế" để calibration lại trong 3 giây mà không tải lại trang, không mất điểm và lượt đang có.
 
+2.5 Vùng an toàn cho chữ (chữ đè lên mặt học sinh là lỗi giao diện số một của game webcam)
+- Chia khung hình thành lưới 3×3. Ô giữa và ô giữa trên là phần thân học sinh → VÙNG CẤM đặt chữ.
+- HUD, điểm, tim, đề bài, thẻ đáp án, nút bấm và mascot chỉ nằm ở dải trên cùng, hai cột biên và dải dưới.
+- Vật thể tương tác (thẻ bay, vật rơi) vẫn được đi qua vùng giữa; chỉ chữ hướng dẫn và khung HUD là không.
+- Khi tính vị trí chữ, lấy tọa độ vai (landmark 11/12) nếu có pose để biết thân học sinh đang lệch về phía nào
+  và dịch HUD sang phía trống; không có pose thì giữ HUD ở hai cột biên cố định.
+
+2.6 Đàm phán theo khả năng camera (máy trường thường chỉ thấy nửa người, đừng đòi toàn thân)
+- Khi bắt đầu, xác định hệ thống ĐANG thấy tới đâu: chỉ bàn tay (HandLandmarker) → nửa thân trên (thêm vai 11/12)
+  → toàn thân (thêm hông 23/24). Chọn cơ chế theo mức tốt nhất đang có, không đòi mức cao nhất rồi báo lỗi.
+- Thiếu vai thì bỏ động tác nghiêng thân; thiếu hông thì bỏ bước chân; chỉ thấy một tay thì chuyển sang cơ chế một tay.
+- Hiện một dòng tiếng Việt nói rõ mức đang nhận diện ("Camera đang thấy: hai tay + vai") và gợi ý lùi ra xa
+  hoặc xoay người nếu thiếu bộ phận mà cơ chế đang chạy cần.
+- Mọi nhánh cơ chế đều phải chơi được trọn 12 lượt và giữ đủ mục tiêu học tập.
+
 Nhận diện chuyển động — đây là phần hay hỏng nhất, làm đúng như sau:
 - Làm mượt landmark bằng EMA (alpha 0.4–0.5). Không đọc landmark thô trực tiếp trong logic gameplay.
 - Cử chỉ là MACHINE TRẠNG THÁI, chỉ fire event ở LƯỢT CHUYỂN (idle → active). Giữ nguyên tư thế không được spam event.
@@ -195,6 +210,16 @@ Cân bằng lượt chơi (chống ăn may):
 - Thưởng dạng BỘ SƯU TẬP: mỗi màn thắng thả ra 1 thẻ nhân vật/huy hiệu, lưu localStorage (key "miti-collection"),
   có màn "Sưu tập của em". Không thưởng ngẫu nhiên vô nghĩa, không cần server, không leaderboard.
 
+6.1 HỒ SƠ TIẾN BỘ XUYÊN PHIÊN (mỗi lần chơi phải kế thừa lần trước, không bắt đầu lại từ số 0)
+- Lưu vào localStorage key "miti-mastery" một bản ghi nhỏ theo từng cụm kiến thức: số lần gặp, số lần đúng,
+  errorTag sai nhiều nhất, số lần đúng liên tiếp, ngày chơi gần nhất. KHÔNG lưu ảnh, video hay dữ liệu cá nhân.
+- Khi mở game, đọc hồ sơ trước rồi xếp câu theo ưu tiên: errorTag em sai nhiều nhất lên trước (lặp lại cách quãng),
+  câu đã đúng 3 lần liên tiếp thì giãn ra. Câu mới vẫn phải xuất hiện để không kẹt ở lỗi cũ.
+- Màn tổng kết so với lần chơi trước bằng đúng một câu: "Em đã sửa được lỗi ... so với lần trước"
+  hoặc "Lần này em gặp ... lần, đúng ... lần". Không dùng chữ "kém hơn bạn".
+- localStorage bị chặn (mở file trực tiếp ở một số trình duyệt, chế độ ẩn danh) hoặc hồ sơ hỏng thì bắt đầu lại
+  từ hồ sơ trống, game vẫn chạy trọn vẹn — không báo lỗi, không chặn vào vòng chơi.
+
 ========================
 7. GIAO DIỆN
 ========================
@@ -204,6 +229,17 @@ Cân bằng lượt chơi (chống ăn may):
 - Game tự Pause khi tab ẩn hoặc mất tiêu điểm (mục 4.2); nút Tiếp tục to, một cái là đi tiếp được.
 - Màn kết quả: số câu, đúng/sai, theo nhóm lỗi, kỹ năng cần luyện, nút Chơi lại và nút Chơi màn khác nếu có.
 - Không leaderboard, không quảng cáo, không theo dõi người dùng.
+
+7.1 CHẾ ĐỘ HAI HỌC SINH (lớp đông: một máy, một khung hình, hai em cùng chơi)
+- Nút bật/tắt ở màn Bắt đầu, mặc định là một người chơi.
+- Bật chế độ này thì HandLandmarker chạy maxNumHands: 2; chia khung hình thành hai nửa theo trục dọc
+  và đánh dấu nửa của từng em bằng viền màu riêng + tên "Em bên trái" / "Em bên phải".
+- Mỗi bàn tay chỉ chốt được đáp án nằm trong nửa của mình: gán tay theo vai (landmark 11/12) nếu có PoseLandmarker,
+  không có pose thì gán theo tay trái/tay phải; tay vượt sang nửa kia thì không fire event.
+- Điểm, tim và chuỗi đúng của hai em TÁCH RIÊNG, không cộng gộp, không hiển thị bảng so sánh.
+- Đề bài hiện chung ở giữa nhưng mỗi em có lượt riêng; em chốt trước được cộng chuỗi, em kia vẫn còn đủ thời gian trả lời.
+- Không xếp hạng, không trừ điểm vì chậm hơn bạn; màn tổng kết của chế độ này vẫn là ba thẻ cho TỪNG em.
+- Biến thể VOICE (Web Speech API chỉ có một micro) không dùng chế độ hai người; hiện dòng giải thích tiếng Việt khi em bấm vào.
 
 ========================
 8. ÂM THANH + HIỆU ỨNG HÌNH ẢNH
@@ -280,6 +316,10 @@ Cân bằng lượt chơi (chống ăn may):
 [ ] combo hiển thị to dần, cao độ âm thanh tăng theo combo, đứt chuỗi có âm rơi và số tan thành hạt
 [ ] chữ khen tiếng Việt bật lên tại đúng điểm chạm; câu sai dùng chữ đỡ, không chữ đỏ gây sợ
 [ ] mỗi vòng có 2 thẻ vàng "x2 điểm trong 5 giây"; mascot phản ứng theo động tác và theo combo
+[ ] chữ và HUD không đè lên thân học sinh (lưới 3×3, ô giữa và ô giữa trên là vùng cấm đặt chữ)
+[ ] cơ chế chọn theo mức camera đang thấy (chỉ tay / nửa thân trên / toàn thân), có dòng tiếng Việt báo mức nhận diện
+[ ] hồ sơ "miti-mastery" được đọc khi mở game và xếp câu theo errorTag yếu nhất; mất hồ sơ thì vẫn chơi trọn
+[ ] có nút bật chế độ hai học sinh chạy maxNumHands: 2, hai nửa khung hình, điểm và tim tách riêng, không xếp hạng
 [ ] fallback chuột/chạm/phím chơi trọn vẹn, tự kích hoạt khi camera lỗi
 [ ] QUESTION_DATA có ít nhất 40 mục (Toán) hoặc 60 mục (Tiếng Anh), mỗi mục có đáp án + lời giải + errorTag + loiViet
 [ ] dữ liệu đặt đầu file, code engine đặt sau, không có chỗ nào rút gọn
@@ -304,6 +344,14 @@ Sau khi tự kiểm tra, CHỈ xuất ra file HTML hoàn chỉnh, không kèm gi
   thường là nhấc ngón tay trước ngực. Ràng buộc ">= 50% tầm với + vùng đích sát mép" mới buộc mô hình đặt hitbox ở chỗ bắt buộc với tay.
 - **Hit-stop + combo âm cao dần**: cảm giác "vui" của game arcade đến từ 80 ms đóng băng và cao độ tăng theo chuỗi, không từ số lượng hạt;
   hai thứ này rẻ nên request cụ thể, nếu không mô hình chỉ vẽ particle rồi thôi.
+- **Vùng an toàn cho chữ theo lưới 3×3**: nếu chỉ nói "đừng che học sinh", mô hình vẫn đặt HUD giữa màn hình vì đó là chỗ dễ code nhất;
+  quy thành vùng cấm cụ thể (ô giữa + ô giữa trên) mới kiểm được bằng mắt.
+- **Đàm phán theo khả năng camera**: laptop trường học thường chỉ thấy tay và vai. Prompt đòi toàn thân sẽ ra game báo lỗi liên tục
+  thay vì game chơi được — nên cho mô hình quyền hạ cơ chế xuống mức đang thấy và nói rõ bằng tiếng Việt.
+- **Hồ sơ `miti-mastery`**: giá trị sư phạm nằm ở lần chơi thứ hai trở đi (lặp lại cách quãng theo lỗi yếu nhất).
+  Không có hồ sơ thì mỗi phiên là một bài kiểm tra mới và giáo viên không thấy tiến bộ.
+- **Hai học sinh một khung hình**: lớp 35 em với 5 máy tính chỉ khả thi nếu hai em chơi chung một khung; `maxNumHands: 2`
+  có sẵn trong MediaPipe nên chi phí gần như bằng 0, nhưng phải nói rõ mới được dùng.
 - **Hợp đồng render AR**: camera phủ kín + lớp tối không quá alpha 0.45 + chiều sâu z + vật neo vào landmark,
   để game trông như thực tế tăng cường thay vì "canvas 2D có webcam kèm theo".
 - **Calibration động + ngưỡng theo đơn vị cơ thể**: mỗi học sinh đứng cách camera một khoảng khác nhau; ngưỡng pixel cố định

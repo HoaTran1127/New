@@ -8,7 +8,7 @@
 
 - Game ID: [ID] · Khối: [GRADE] · Môn: [SUBJECT]
 - Cụm kiến thức: [CLUSTER] — phải có trong `tools/data/clusters.mjs`
-- Điều khiển: [GESTURE] — **một trong 13 mã** `POINT · SWIPE · PUNCH · GRAB · DRAG · STEP · TWO_HAND_STRETCH · TWO_HAND_BALANCE · ANGLE_POSE · VOICE` (10 mã đang có trong catalog) + `CLAP · PINCH · HOLD_POSE` (mã mở rộng), tối đa 2 mã, mã đầu là mechanic chính. **Không được ghi `MIXED`.**
+- Điều khiển: [GESTURE] — **một trong 14 mã** `POINT · SWIPE · PUNCH · GRAB · DRAG · STEP · TWO_HAND_STRETCH · TWO_HAND_BALANCE · ANGLE_POSE · VOICE` (10 mã đang có trong catalog) + `CLAP · PINCH · HOLD_POSE · FINGER_COUNT` (mã mở rộng), tối đa 2 mã, mã đầu là mechanic chính. **Không được ghi `MIXED`.**
 
 ## Prompt copy trực tiếp
 
@@ -65,6 +65,8 @@ Không dùng Tailwind Play CDN, không file .css/.js/.json/ảnh/mp3 ngoài. Ch�
   model: https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task (HandLandmarker), pose_landmarker_lite.task nếu cần tư thế toàn thân.
 - Cấu hình camera: getUserMedia({ video: { facingMode: "user", width: { ideal: 640 }, height: { ideal: 480 }, frameRate: { ideal: 30 } } }). Khung 4:3, crop nếu camera cho tỉ lệ khác, lật gương ngang khi hiển thị và khi tính tọa độ.
 - Chỉ xin quyền camera SAU khi học sinh bấm BẮT ĐẦU. Trạng thái tiếng Việt: Đang tải → Xin quyền camera → Camera sẵn sàng → Đang nhận diện → Lỗi (kèm nút Thử lại).
+- Đàm phán khung hình theo khả năng camera: khi bắt đầu, kiểm tra hệ thống đang thấy tới đâu — chỉ bàn tay (HandLandmarker), nửa thân trên (thêm vai 11/12) hay toàn thân (thêm hông 23/24) — rồi chọn cơ chế theo mức tốt nhất ĐANG CÓ, không đòi mức cao nhất. Thiếu vai thì bỏ động tác nghiêng thân, thiếu hông thì bỏ bước chân, chỉ thấy một tay thì chuyển sang cơ chế một tay. Hiện một dòng tiếng Việt nói rõ "camera đang thấy: hai tay + vai" và gợi ý lùi ra xa nếu thiếu.
+- Vùng an toàn cho HUD: chia khung hình thành lưới 3×3; phần thân học sinh (ô giữa và ô giữa trên) là vùng CẤM đặt chữ — HUD, điểm, tim, đề bài, thẻ đáp án và mascot chỉ nằm ở dải trên cùng, hai cột biên và dải dưới. Chữ không được đè lên tay, mặt hay lồng ngực của các em.
 - Calibration động: màn calibration 3 giây ở tư thế trung tính, đo bề rộng hai vai + khoảng cách cổ tay trái–phải + tầm với xa nhất, suy ra đơn vị chuẩn của phiên chơi rồi đặt MỌI ngưỡng (tốc độ vung, góc, bán kính chấm chọn) theo đơn vị đó, không dùng hằng số pixel cố định. Tầm đo bất thường thì nhắc chỉnh khoảng cách và đo lại. Có nút "Chỉnh lại tư thế" hiệu chỉnh lại không tải trang, không mất điểm và lượt.
 - Camera chỉ bật được trong môi trường an toàn (HTTPS, localhost hoặc mở file trực tiếp); nếu bị chặn thì báo một dòng tiếng Việt "Muốn dùng camera thì mở game qua HTTPS hoặc file trên máy em" rồi vào thẳng chế độ không camera.
 - Cử chỉ chính — [GESTURE]: [landmark nào, hình học nào].
@@ -88,6 +90,7 @@ Không dùng Tailwind Play CDN, không file .css/.js/.json/ảnh/mp3 ngoài. Ch�
 - Màn tổng kết nhóm theo loiViet: "Em hay sai ở: [...]" kèm số câu đúng/sai theo mức độ, không chỉ báo điểm.
 - Tổng kết trình bày thành ba thẻ chữ to đọc xong trong 5 giây: "Làm tốt: ..." (tối đa 2 kỹ năng đúng nhiều nhất), "Cần luyện: ..." (loiViet của nhóm lỗi nhiều nhất), "Động tác lần sau: ..." (một câu nhắc tư thế/cử chỉ). Không so sánh điểm với bạn khác.
 - Thước đo vận động: đếm số động tác hợp lệ và thời lượng chơi, hiển thị một thẻ "Em đã vận động N động tác trong M phút" ở màn tổng kết; con số này không phải điểm số và không so sánh với bạn nào.
+- Hồ sơ tiến bộ xuyên phiên: lưu vào localStorage key "miti-mastery" một bản ghi nhỏ theo từng cụm kiến thức — số lần gặp, số lần đúng, errorTag sai nhiều nhất, số lần đúng liên tiếp và ngày chơi gần nhất; KHÔNG lưu ảnh, video hay dữ liệu cá nhân. Khi mở game đọc hồ sơ trước rồi xếp câu theo ưu tiên (errorTag sai nhiều nhất lên trước, câu đúng 3 lần liên tiếp giãn ra); tổng kết so với lần chơi trước bằng một câu. Mất hồ sơ thì game vẫn chạy trọn vẹn.
 - Game Tiếng Anh theo nguyên tắc nghe-trước: phát audio trước khi hiện chữ, có nút phát lại, sai thì phát lại chậm 0.8x và chỉ hiện chữ sau khi đã chốt đáp án, từ nghe sai được xếp lại ở lượt sau.
 
 7. GIAO DIỆN VÀ AN TOÀN
@@ -101,6 +104,7 @@ Không dùng Tailwind Play CDN, không file .css/.js/.json/ảnh/mp3 ngoài. Ch�
 - FX arcade hòa vào nền AR: particle màu nổ theo khối, vệt kiếm neon mọc từ cổ tay thật, kính vỡ mạng nhện lan từ điểm va chạm khi hụt, viền HUD nhấp nháy theo combo — tất cả vẽ trên canvas trong suốt phủ đúng khung hình camera, tôn trọng trần alpha 0.45 và ngân sách particle.
 - Sự kiện ngẫu nhiên: mỗi vòng có đúng 2 thẻ vàng "nhân đôi điểm trong 5 giây" và 1 "câu thử thách" phát ra từ z xa với âm báo riêng, biến mất sau 3 giây nếu không kịp với; tỉ lệ 60/40 và ngân hàng dữ liệu không đổi.
 - Nhân vật phản ứng: mascot của game đứng ở một góc khung hình (không che người chơi), nghiêng người theo hướng với tay, giơ tay ăn mừng khi combo >= 3 và che mắt khi hụt; mất landmark thì mascot đưa tay chỉ về phía camera để nhắc chỉnh tư thế.
+- Chế độ hai học sinh (nút bật/tắt, mặc định một người): HandLandmarker chạy maxNumHands: 2, chia khung hình thành hai nửa theo trục dọc và đánh dấu nửa của từng em bằng viền màu. Mỗi bàn tay chỉ chốt được đáp án trong nửa của mình — gán theo vai nếu có PoseLandmarker, không có pose thì theo tay trái/tay phải; điểm, tim và chuỗi của hai em tách riêng, không cộng gộp. Mỗi em có lượt riêng, không xếp hạng, không trừ điểm vì chậm hơn bạn.
 - Bộ sưu tập: mỗi màn thắng mở khóa 1 thẻ, lưu localStorage key "miti-collection", có màn "Sưu tập của em".
 - Ngồi tại chỗ vẫn chơi được; không động tác nguy hiểm; không rời khỏi vùng camera.
 - Trước khi chơi nhắc một dòng: "Dọn vật cản khỏi vùng đứng, giữ cách tường một bước, chỉ chuyển động trong tầm tay". Khung hình tối hoặc ngược sáng thì gợi ý "Bật đèn lên hoặc quay lưng về phía cửa sổ để camera nhìn rõ em hơn" rồi vẫn cho chơi tiếp.
@@ -116,15 +120,16 @@ Không dùng Tailwind Play CDN, không file .css/.js/.json/ảnh/mp3 ngoài. Ch�
 9. ĐẦU RA
 - Chỉ xuất toàn bộ file HTML hoàn chỉnh, không kèm giải thích dài.
 - Không TODO, không pseudocode, không "...", không "// code tương tự ở trên", không phần "bạn tự bổ sung".
-- Tự kiểm tra trước khi xuất: camera xin sau nút Bắt đầu · có loading/error/định vị · 640×480 và lật gương · nền AR là khung hình camera với lớp phủ tối không vượt 0.45 · mọi tọa độ đi qua toScreen, không còn phép nhân thô với W/H · vật thể có z và bóng dưới chân · có ít nhất một vật ảo neo vào landmark cơ thể · gesture fire theo lượt chuyển + cooldown + confidence · không tính hover là đã chọn · calibration đo tầm tay và đặt ngưỡng theo đơn vị vừa đo · động tác to (>= 50% tầm với), vùng đích sát mép khung, xen kẽ trái/phải, trạm nghỉ 5 giây giữa hiệp, đếm động tác ở tổng kết · hit-stop 70–90 ms + giật màn hình, combo có vệt neon và cao độ tăng, chữ khen bật tại điểm chạm, thẻ vàng x2 ngẫu nhiên, mascot phản ứng theo động tác · tab ẩn là tự Pause, quay lại đếm 3-2-1 · nhận diện 1 lần mỗi 2–3 khung hình, particle có pool, tự giảm chi tiết khi FPS tụt · tổng kết ba thẻ "Làm tốt / Cần luyện / Động tác lần sau" · [cơ chế chính] hoạt động đúng · fallback chuột/chạm chơi trọn vẹn · QUESTION_DATA đủ số mục, mỗi mục có answer + explanation + loiViet · câu sai vào hàng đợi luyện lại · tổng kết theo nhóm lỗi · bộ sưu tập lưu localStorage · chữ ký MiTi ở ba màn · file chạy độc lập không lỗi console.
+- Tự kiểm tra trước khi xuất: camera xin sau nút Bắt đầu · có loading/error/định vị · 640×480 và lật gương · nền AR là khung hình camera với lớp phủ tối không vượt 0.45 · mọi tọa độ đi qua toScreen, không còn phép nhân thô với W/H · vật thể có z và bóng dưới chân · có ít nhất một vật ảo neo vào landmark cơ thể · gesture fire theo lượt chuyển + cooldown + confidence · không tính hover là đã chọn · calibration đo tầm tay và đặt ngưỡng theo đơn vị vừa đo · động tác to (>= 50% tầm với), vùng đích sát mép khung, xen kẽ trái/phải, trạm nghỉ 5 giây giữa hiệp, đếm động tác ở tổng kết · hit-stop 70–90 ms + giật màn hình, combo có vệt neon và cao độ tăng, chữ khen bật tại điểm chạm, thẻ vàng x2 ngẫu nhiên, mascot phản ứng theo động tác · HUD không đè lên thân học sinh · chọn cơ chế theo mức camera đang thấy · hồ sơ "miti-mastery" xếp câu theo lỗi yếu nhất · có chế độ 2 người chơi maxNumHands: 2 · tab ẩn là tự Pause, quay lại đếm 3-2-1 · nhận diện 1 lần mỗi 2–3 khung hình, particle có pool, tự giảm chi tiết khi FPS tụt · tổng kết ba thẻ "Làm tốt / Cần luyện / Động tác lần sau" · [cơ chế chính] hoạt động đúng · fallback chuột/chạm chơi trọn vẹn · QUESTION_DATA đủ số mục, mỗi mục có answer + explanation + loiViet · câu sai vào hàng đợi luyện lại · tổng kết theo nhóm lỗi · bộ sưu tập lưu localStorage · chữ ký MiTi ở ba màn · file chạy độc lập không lỗi console.
 ```
 
 ## Checklist trước khi nộp game mới
 
-- [ ] Điều khiển là một trong 13 mã (10 mã catalog + `CLAP · PINCH · HOLD_POSE`), **không có `MIXED`**.
+- [ ] Điều khiển là một trong 14 mã (10 mã catalog + `CLAP · PINCH · HOLD_POSE · FINGER_COUNT`), **không có `MIXED`**.
 - [ ] Hợp đồng AR đã điền đủ: cover-fit + `toScreen(lx, ly)` + lớp phủ alpha ≤ 0.45 + chiều sâu z từ 1.6 + ít nhất một vật neo vào landmark.
 - [ ] Phần vận động đã điền đủ: biên độ >= 50% tầm với, vùng đích sát mép khung, xen kẽ nhóm cơ, 3 hiệp + trạm nghỉ, thẻ đếm động tác.
 - [ ] Phần arcade đã điền đủ: hit-stop, combo có cao độ tăng, chữ khen tại điểm chạm, thẻ vàng x2, mascot phản ứng.
+- [ ] Phần lớp học đã điền đủ: vùng an toàn cho chữ (lưới 3×3), đàm phán theo mức camera đang thấy, hồ sơ "miti-mastery", chế độ hai học sinh `maxNumHands: 2`.
 - [ ] Bối cảnh là AR thật: vật thể sinh trong khung hình camera (có z, có bóng dưới chân, có vật neo vào người), không phải bảng game đặt cạnh video.
 - [ ] Mục tiêu học tập cụ thể theo SGK — **cấm** các câu chung chung kiểu "vận dụng kiến thức qua tình huống tương tác".
 - [ ] Bối cảnh và cơ chế khớp nhau: bỏ camera đi thì bài học vẫn còn ý nghĩa, nhưng cử chỉ phải đang kiểm tra đúng kỹ năng.

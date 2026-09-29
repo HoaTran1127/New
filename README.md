@@ -100,7 +100,7 @@ Tất cả các file prompt trong thư mục `prompts/` đều là **prompt th�
 
 Số liệu do `tools/build-dashboard.mjs` đếm từ catalog — sửa game xong build lại là bảng này tự đúng nếu bạn chạy `node tools/build.mjs` trước khi commit.
 
-`tools/data/gestures.mjs` còn định nghĩa sẵn **3 mã mở rộng** (chưa game nào dùng, dành cho prompt bạn tự viết thêm): `CLAP` (vỗ hai tay, chốt khi hai tâm bàn tay sát nhau dưới 12% bề rộng vai rồi phải tách ra mới tính nhịp kế), `PINCH` (bóp ngón cái–trỏ, ngưỡng theo bề rộng bàn tay + hysteresis để không nháy liên tục), `HOLD_POSE` (giữ bất động tư thế 1.5 giây, dùng cho game vẽ hình/so sánh góc). Cả 13 mã đều phải đủ 8 trường `vi · landmark · hinh_hoc · muot · nguong · nguoi_choi · ar · fallback` — `node tools/validate.mjs` chặn nếu thiếu, và bắt template khai báo đủ mọi mã đang có.
+`tools/data/gestures.mjs` còn định nghĩa sẵn **4 mã mở rộng** (chưa game nào dùng, dành cho prompt bạn tự viết thêm): `CLAP` (vỗ hai tay, chốt khi hai tâm bàn tay sát nhau dưới 12% bề rộng vai rồi phải tách ra mới tính nhịp kế), `PINCH` (bóp ngón cái–trỏ, ngưỡng theo bề rộng bàn tay + hysteresis để không nháy liên tục), `HOLD_POSE` (giữ bất động tư thế 1.5 giây, dùng cho game vẽ hình/so sánh góc), `FINGER_COUNT` (giơ 1–4 ngón để chọn đáp án, trung vị cửa sổ 7 khung hình nên không nháy khi ngón đang chuyển — hợp với học sinh lớp 4 mới làm quen camera). Cả 14 mã đều phải đủ 9 trường `vi · landmark · hinh_hoc · muot · nguong · nguoi_choi · bien_do · ar · fallback` — `node tools/validate.mjs` chặn nếu thiếu, và bắt template khai báo đủ mọi mã đang có.
 
 ### 🕶️ Chuẩn AR — camera CHÍNH LÀ màn chơi
 
@@ -148,6 +148,15 @@ Hai lỗi khiến game webcam thất bại khi đưa vào lớp: trẻ chỉ nh�
 
 Mỗi mã điều khiển còn có thêm trường `bien_do` mô tả động tác to riêng cho cơ chế đó (SWIPE chém từ vai >= 60% tầm với, TWO_HAND_STRETCH dang từ 40% → 100% sải tay…), được in vào mục 4 của prompt và block điều khiển của biến thể.
 
+### 🎒 Bốn quy định lớp học thật (giao diện + tiến bộ)
+
+Nguồn: `tools/lib/classroom.mjs` — cũng được in nguyên văn vào 85 prompt + 425 biến thể + 12 legacy, `validate.mjs` chặn nếu thiếu:
+
+- **Vùng an toàn cho chữ**: chia khung hình 3×3, ô giữa và ô giữa trên (đúng chỗ thân học sinh) là vùng cấm đặt chữ; HUD, đề bài, thẻ đáp án và mascot chỉ ở dải trên, hai cột biên và dải dưới.
+- **Đàm phán theo khả năng camera**: game tự nhận biết đang thấy tới đâu (chỉ tay / nửa thân trên / toàn thân) rồi chọn cơ chế theo mức tốt nhất đang có — thiếu vai thì bỏ nghiêng thân, thiếu hông thì bỏ bước chân — và báo bằng tiếng Việt, thay vì đòi toàn thân rồi kẹt ở màn lỗi.
+- **Hồ sơ tiến bộ `miti-mastery`**: ghi số lần gặp, số lần đúng, errorTag sai nhiều nhất, chuỗi đúng và ngày chơi gần nhất theo từng cụm kiến thức (không lưu ảnh/video). Lần chơi sau tự xếp câu theo lỗi yếu nhất (lặp lại cách quãng) và tổng kết so với lần trước; mất hồ sơ thì vẫn chơi trọn.
+- **Chế độ hai học sinh**: nút bật/tắt, `maxNumHands: 2`, chia khung hình hai nửa theo trục dọc, mỗi tay chỉ chốt trong nửa của mình (gán theo vai nếu có pose), điểm và tim tách riêng, không xếp hạng — lớp 35 em với vài máy tính vẫn chơi được. Biến thể VOICE không dùng chế độ này vì chỉ có một micro.
+
 ---
 
 ## 🔁 Pipeline: sửa dữ liệu một chỗ, mọi thứ dựng lại
@@ -161,6 +170,7 @@ tools/data/error-notes.mjs   nhãn lỗi tiếng Việt (errorTag + loiViet)
 tools/lib/ar.mjs             hợp đồng AR (cover-fit, toScreen, alpha, z, neo landmark) — dùng chung mọi chỗ
 tools/lib/rules.mjs          quy định lớp học (60/40, calibration, Pause, FPS, an toàn, tổng kết 3 thẻ)
 tools/lib/feel.mjs           quy định vận động to + cảm giác arcade (biên độ, mép khung, trạm nghỉ, hit-stop, combo)
+tools/lib/classroom.mjs      quy định lớp học thật (vùng an toàn cho chữ, đàm phán camera, miti-mastery, 2 học sinh)
         │
         └─ node tools/build.mjs
              ├─ catalogs/GAME_CATALOG.csv + .md
