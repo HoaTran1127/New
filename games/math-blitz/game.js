@@ -113,6 +113,10 @@ const GameApp = {
   video: null,
   audio: null,
   tracker: null,
+  poseTracker: null,
+  movementEngine: null,
+  lastPose: null,
+  movementEvents: [],
   crackedEffect: null,
   bladeTrail: null,
 
@@ -146,6 +150,7 @@ const GameApp = {
     this.video = document.getElementById('webcam');
 
     this.audio = new AudioManager();
+    this.movementEngine = new MovementEngine({ cooldownMs: 180 });
     this.crackedEffect = new CrackedScreenEffect(window.innerWidth, window.innerHeight);
     this.bladeTrail = new BladeTrail(16, '#00F0FF');
 
@@ -326,9 +331,25 @@ const GameApp = {
       this.tracker.init(
         () => {
           console.log("[GameApp] HandTracker đã sẵn sàng.");
+          // PoseTracker dùng chung chính stream webcam của HandTracker.
+          this.poseTracker = new PoseTracker({
+            videoElement: this.video,
+            minDetectionConfidence: 0.55,
+            minTrackingConfidence: 0.55
+          });
+          this.poseTracker.init(
+            () => console.log("[GameApp] PoseTracker đã sẵn sàng."),
+            (pose) => { this.lastPose = pose; },
+            (err) => console.warn("[GameApp] Pose tracking unavailable:", err)
+          );
         },
         (hands) => {
           this.playerHands = hands;
+          this.movementEvents = this.movementEngine.update({
+            hands,
+            pose: this.lastPose,
+            timestamp: performance.now()
+          });
         },
         (err) => {
           console.warn("[GameApp] Không thể mở webcam, chuyển sang chế độ chuột/chạm:", err);
@@ -542,6 +563,9 @@ const GameApp = {
         }
       }
 
+      // Hiển thị trạng thái body tracking để chuẩn bị cho các world toàn thân.
+      this.drawMovementStatus();
+
       // Cập nhật hiệu ứng hạt & chữ bay
       for (let i = this.particles.length - 1; i >= 0; i--) {
         if (!this.particles[i].update()) {
@@ -573,6 +597,19 @@ const GameApp = {
     }
 
     requestAnimationFrame((t) => this.gameLoop(t));
+  },
+
+  drawMovementStatus() {
+    const ctx = this.ctx;
+    const events = this.movementEvents || [];
+    const bodyEvents = events.filter(e => ['LEFT_RAISE','RIGHT_RAISE','BOTH_RAISE','SQUAT','JUMP'].includes(e.type));
+    ctx.save();
+    ctx.font = '700 12px "Outfit", sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillStyle = bodyEvents.length ? '#86EFAC' : 'rgba(226,232,240,0.72)';
+    const label = bodyEvents.length ? '🏃 ' + bodyEvents.map(e => e.type).join(' • ') : '📷 CAMERA READY';
+    ctx.fillText(label, 16, this.canvas.height - 18);
+    ctx.restore();
   },
 
   drawPunchCrosshair(x, y, isStriking, isFist) {
