@@ -1,6 +1,6 @@
 # E4-14 — Xây Câu Hỏi
 
-Tạo game giáo dục web **một file HTML duy nhất** cho học sinh Việt Nam lớp 5, môn Tiếng Anh.
+Tạo game giáo dục web **một file HTML duy nhất** cho học sinh Việt Nam lớp 4, môn Tiếng Anh.
 
 ## Mục tiêu học tập
 "Tạo câu hỏi cơ bản và câu trả lời"
@@ -9,26 +9,24 @@ Tạo game giáo dục web **một file HTML duy nhất** cho học sinh Việt 
 "Sắp xếp từ thành câu hỏi đúng"
 
 ## Gameplay
-Điều khiển: **POINT+DRAG**. Chức năng: "question words; word order; sentence frames".
-- 12 lượt; ngân hàng tối thiểu 60 mục; 3 mức độ.
-- Nội dung kiến thức tiếng Anh phải phù hợp trình độ lớp 4.
-- Xáo trộn đáp án; distractor dựa trên lỗi từ vựng/chính tả/cấu trúc thường gặp.
-- Sai: giải thích bằng tiếng Việt + chỉ ra đáp án đúng + luyện lại; đúng: phản hồi tức thì.
-- Có điểm, tiến độ, chuỗi đúng và tổng kết.
+Điều khiển: **POINT+DRAG**. Chức năng: "question words; trật tự từ; sentence frames".
+- 12 lượt; tối thiểu 60 mục học tập; 3 mức độ.
+- Dùng từ/câu phù hợp trình độ lớp 4; random vị trí và tạo distractor theo lỗi phổ biến.
+- Câu sai phải giải thích bằng tiếng Việt, chỉ ra kiến thức đúng và cho luyện lại.
+- Đúng có feedback tức thì; có điểm, tiến độ, chuỗi đúng và tổng kết.
 
 ## Camera / tương tác
-MediaPipe Hands; pinch/grab và release; smoothing/hysteresis; cooldown 300ms.
-- Xin quyền sau Bắt đầu; có loading/permission/ready/tracking/error.
-- Có calibration/framing, smoothing, confidence; một gesture chỉ tạo một event.
+Dùng mechanic **POINT+DRAG** với threshold, smoothing, confidence và debounce/cooldown phù hợp; một gesture chỉ tạo một event.
+Xin quyền camera/micro chỉ sau Bắt đầu; có loading/permission/ready/tracking/error và calibration/framing.
 
 ## Fallback
-Mouse/touch/keyboard mô phỏng được gameplay chính.
+Mouse/touch/keyboard mô phỏng đầy đủ gameplay chính.
 
 ## Luồng
 Bắt đầu → Kiểm tra thiết bị → Hiệu chỉnh → Hướng dẫn → Luyện mẫu → 12 lượt → Phản hồi → Ôn câu sai → Kết quả → Chơi lại.
 
 ## Ngôn ngữ / an toàn
-UI, nút, hướng dẫn, feedback bằng **tiếng Việt**; từ/câu/audio tiếng Anh chỉ dùng cho phần kiến thức. Responsive, chữ lớn, reduced-motion; không động tác nguy hiểm; không lưu/tải dữ liệu camera/micro.
+UI, nút, hướng dẫn và feedback bằng **tiếng Việt**. Từ/câu/audio tiếng Anh chỉ dùng cho phần kiến thức cần học. Responsive, chữ lớn, reduced-motion; không động tác nguy hiểm; không lưu/tải dữ liệu camera/micro.
 
 ## MiTi — CHỮ KÝ BẮT BUỘC
 HTML phải tự chứa logo **MiTi**: ô bo góc #FFD84D có chữ M #07111F + chữ MiTi đậm + ✦; xuất hiện ở Bắt đầu, HUD và Kết quả; có dòng **MiTi • Học bằng chuyển động**. Dùng inline SVG/CSS/HTML, không phụ thuộc repository hoặc URL logo ngoài.
