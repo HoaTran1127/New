@@ -1,21 +1,38 @@
-# L4-37 — Fraction Market
+# L4-37 — Chợ Phân Số
 
-Create a standalone single-file HTML game for Grade 4 Math.
+Tạo game giáo dục web **một file HTML duy nhất** cho học sinh Việt Nam lớp 4, môn Toán.
 
-Learning objective: recognize fractions, equivalent fractions, compare fractions and find a fraction of a collection.
+## Mục tiêu
+Vận dụng phân số trong tình huống mua bán
 
-Mission: shop for the exact fraction of items requested before the market timer expires.
+## Nhiệm vụ
+Chọn giá và phần hàng đúng
 
-Core gameplay: present fruit/objects as equal groups. A customer asks for a fraction such as 3/4. The player selects or physically grabs the correct number of equal parts. Add equivalent-fraction rounds and comparison rounds.
+## Cơ chế chơi
+Điều khiển chính: **GRAB**. Các chức năng: "fraction models; equivalent fractions; market".
+- Biến mục tiêu học tập thành hành động chơi trực tiếp.
+- 12 lượt; ngân hàng ít nhất 40 câu/tình huống; 3 mức độ khó.
+- Đáp án xáo trộn; bẫy phản ánh lỗi thường gặp.
+- Sai: giải thích trực quan + luyện lại; đúng: phản hồi tức thì.
+- Có điểm, tiến độ, chuỗi đúng và tổng kết.
 
-Primary control: GRAB/POINT. Webcam mode uses MediaPipe Hands with smoothed fingertip tracking, confidence >= 0.65, 250ms selection cooldown and explicit press/release state. Mouse/touch/keyboard fallback is mandatory.
+## Camera / nhận diện
+MediaPipe Hands; pinch/grab để bắt và release để thả; smoothing/hysteresis; cooldown 300ms.
+- Xin quyền chỉ sau Bắt đầu.
+- Có Đang tải → Xin quyền → Sẵn sàng → Đang nhận diện → Lỗi.
+- Calibration/framing + smoothing + confidence; một gesture chỉ tạo một event.
 
-Game loop: Start → calibration → tutorial → practice → 12-round market → feedback/explanation → mastery summary.
+## Fallback
+Mouse/touch/keyboard mô phỏng được gameplay chính.
 
-Data: at least 50 questions spanning proper fractions, equivalent models, fraction comparison and fraction-of-number. Include traps: unequal partitions, reversed numerator/denominator, non-equivalent visual groups and wrong whole.
+## Luồng
+Bắt đầu → Kiểm tra thiết bị → Hiệu chỉnh → Hướng dẫn → Luyện mẫu → 12 lượt → Phản hồi → Ôn câu sai → Kết quả → Chơi lại.
 
-Feedback: animate the fraction model and explain numerator, denominator and the whole after each answer. Recycle missed concepts later in the same session.
+## Ngôn ngữ / an toàn
+UI, hướng dẫn, nút và feedback bằng **tiếng Việt**. Với môn Tiếng Anh, chỉ dữ liệu học dùng tiếng Anh. Responsive, chữ lớn, reduced-motion; không động tác nguy hiểm; không tải/lưu video hoặc âm thanh.
 
-Accessibility/safety: large targets, reduced-motion mode, no upload, camera optional.
+## MiTi — CHỮ KÝ BẮT BUỘC
+HTML phải tự chứa logo **MiTi**: biểu tượng ô bo góc #FFD84D có chữ M #07111F + chữ MiTi đậm + ✦; xuất hiện ở Bắt đầu, HUD và Kết quả; có dòng **MiTi • Học bằng chuyển động**. Dùng inline SVG/CSS/HTML, không phụ thuộc repository hoặc URL logo ngoài.
 
-Output one complete HTML file, self-contained, no TODO/pseudocode.
+## Đầu ra
+Chỉ xuất **toàn bộ HTML hoàn chỉnh**, không TODO, không pseudocode, không phụ thuộc repository này.
