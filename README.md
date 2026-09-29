@@ -1,10 +1,10 @@
 # 🟡 MiTi ✦ Học bằng chuyển động
 
-> **Chọn game → lấy prompt → dán vào Gemini → tạo game.**
+> **Chọn game → lấy prompt → vào Gemini → chọn Canva → gán prompt → tạo game.**
 
-**Đây là thư viện để chọn trò chơi và lấy prompt thật — không phải README để đọc dài.**
+MiTi là thư viện **prompt game giáo dục**. Người dùng không cần đọc repository; chỉ cần chọn trò chơi và lấy đúng prompt.
 
-## 🎮 CHỌN GAME NGAY
+## 🎮 CHỌN GAME
 
 ### 👩‍🏫 Chọn theo lớp + môn
 
@@ -17,16 +17,25 @@
 
 **🥊 Đấm** · **🗡️ Chém** · **🎯 Phản xạ** · **🧩 Kéo-thả** · **🔗 Ghép đôi** · **📷 Camera / chuyển động**
 
-> 🔎 Muốn tìm theo **tên game, mục tiêu học, lớp, môn hoặc kiểu tương tác**?  
-> **[🚀 MỞ DASHBOARD MiTi →](index.html)**
+> 🔎 **[🚀 MỞ DASHBOARD MiTi →](index.html)** để tìm theo tên game, mục tiêu học, lớp, môn hoặc kiểu tương tác.
 
-## ⚡ CÁCH LẤY PROMPT
+## ⚡ TẠO GAME — QUY TRÌNH BẮT BUỘC
 
-**① Chọn game** → **② Mở prompt** → **③ Copy toàn bộ** → **④ Dán vào Gemini**
+**① Chọn game**  
+↓  
+**② Mở prompt thật**  
+↓  
+**③ Copy toàn bộ prompt**  
+↓  
+**④ Vào Gemini**  
+↓  
+**⑤ Chọn plugin Canva**  
+↓  
+**⑥ Gán / đưa prompt MiTi vào Canva**  
+↓  
+**⑦ Tạo game HTML**
 
-Không cần tự viết prompt. Không cần đọc các thư mục kỹ thuật.
-
-### 🎯 Một game mẫu
+### 🎯 Game mẫu
 
 **L4-01 — Đường Đua Hàng Số**
 
@@ -34,26 +43,26 @@ Không cần tự viết prompt. Không cần đọc các thư mục kỹ thuậ
 🕹️ Trải nghiệm: học qua tương tác/game  
 📄 **[MỞ PROMPT THẬT →](prompts/01-toan4/L4-01-number-dash.md)**
 
-## 🚀 DASHBOARD = CỬA VÀO CHÍNH
+> **Không tạo game bằng cách bỏ qua bước Canva. Prompt MiTi phải được đưa vào Canva trước khi tạo game.**
 
-**[🎮 CHỌN GAME TRONG DASHBOARD →](index.html)**
+## 🚀 DASHBOARD = CỬA CHỌN GAME
 
-Dashboard phải lấy dữ liệu từ **GAME_CATALOG.csv** và chỉ hiển thị các game có **prompt thật**.
+**[🎮 CHỌN GAME →](index.html)**
 
-Luồng dữ liệu:
+Dashboard lấy dữ liệu từ **GAME_CATALOG.csv** và chỉ được hiển thị game có **prompt thật**.
 
-**GAME_CATALOG.csv → Game → Prompt thật → Copy → Gemini → Game HTML**
+Luồng chuẩn:
 
-## 🟡 MiTi ĐI CÙNG GAME
+**GAME_CATALOG.csv → Game → Prompt thật → Gemini → Canva → Game HTML**
 
-Mỗi prompt độc lập phải yêu cầu game được Gemini tạo ra có:
+## 🟡 CHỮ KÝ MiTi TRONG GAME
+
+Mỗi prompt độc lập phải yêu cầu game được tạo ra có nhận diện:
 
 **M + MiTi + ✦**  
 **MiTi • Học bằng chuyển động**
 
-Chữ ký xuất hiện ở:
-
-**Bắt đầu → HUD → Kết quả**
+Chữ ký được yêu cầu ở **Bắt đầu / HUD / Kết quả**.
 
 Game không được phụ thuộc asset bên ngoài repository.
 
@@ -71,31 +80,24 @@ Giao diện game ưu tiên **tiếng Việt**:
 
 Với môn Tiếng Anh, tiếng Anh tập trung ở phần **kiến thức đang học**; UI không dùng tiếng Anh một cách không cần thiết.
 
-## ✨ THƯ VIỆN
+## 📚 BIẾN THỂ
 
-| Bộ game | Số lượng |
-|---|---:|
-| 🔢 Toán 4 | 40 |
-| 🔢 Toán 5 | 15 |
-| 🇬🇧 Tiếng Anh 4 | 15 |
-| 🇬🇧 Tiếng Anh 5 | 15 |
-| **🎮 Tổng** | **85** |
-
-**[📚 Xem 325 biến thể →](prompts/VARIANTS_325.md)**
+**[Xem 325 biến thể →](prompts/VARIANTS_325.md)**
 
 ## 🧭 CHỈ CẦN NHỚ
 
-**README** → dẫn đường  
+**README** → vào thư viện  
 **Dashboard** → chọn game  
 **Prompt** → copy  
-**Gemini** → tạo game  
-**MiTi ✦** → chữ ký đi cùng game
+**Gemini** → mở Canva  
+**Canva** → gán prompt + tạo game  
+**HTML** → game hoàn chỉnh
 
-> **Prompt là sản phẩm. Game HTML được Gemini sinh ra. MiTi là chữ ký đi cùng prompt vào game.**
+> **Prompt là sản phẩm. Canva là bước tạo game. MiTi là chữ ký đi cùng prompt vào game.**
 
-## 🔒 KHÔNG CÓ “GAME MA”
+## 🔒 NGUYÊN TẮC DỮ LIỆU
 
-**Catalogue → Prompt thật → Game**
+**Catalogue → Prompt thật → Gemini + Canva → Game HTML**
 
 Không:
 
@@ -103,4 +105,4 @@ Không:
 - đường dẫn giả;
 - dữ liệu riêng lệch khỏi catalogue.
 
-**Mục tiêu của MiTi rất đơn giản: vào → chọn → lấy prompt → tạo game → học.**
+**Mục tiêu: vào → chọn → lấy prompt → Gemini → Canva → tạo game.**
