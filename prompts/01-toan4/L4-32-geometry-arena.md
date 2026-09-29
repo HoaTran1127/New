@@ -1,18 +1,38 @@
-# L4-32 — Geometry Arena
+# L4-32 — Đấu Trường Hình Học
 
-- **Khối:** Toán 4
-- **Mục tiêu:** Ôn góc, đường, hình và diện tích.
-- **Nhiệm vụ:** Hoàn thành chuỗi thử thách hình học.
-- **Điều khiển:** MIXED
+Tạo game giáo dục web **một file HTML duy nhất** cho học sinh Việt Nam lớp 4, môn Toán.
 
-## Prompt copy trực tiếp
+## Mục tiêu
+Ôn tập hình học
 
-```text
-Tạo game "Geometry Arena" cho Toán lớp 4 trong 1 HTML.
-Mục tiêu: ôn góc, vuông góc/song song và diện tích hình cơ bản.
-Nhiệm vụ: hoàn thành các round ngắn; mỗi round kiểm tra một kỹ năng.
-Gameplay: Round 1 phân loại góc, Round 2 tạo vuông góc/song song, Round 3 tính diện tích. Mỗi round chỉ dùng một gesture chính. Có visual explanation sau mỗi lỗi.
-Camera chọn Hands hoặc Pose theo round; có calibration, confidence, smoothing, cooldown và fallback.
-UI chuyển round nhanh, chữ lớn, progress mastery, replay.
-Không upload video. Không TODO/pseudocode. Trả 1 HTML hoàn chỉnh.
-```
+## Nhiệm vụ
+Vượt các cửa hình học
+
+## Cơ chế và nội dung
+Điều khiển chính: **MIXED**. Chức năng: "angles; lines; area".
+- Thiết kế bối cảnh đúng tên game và mục tiêu.
+- 12 lượt chơi; ngân hàng ít nhất 40 câu/tình huống; 3 mức độ.
+- Random vị trí đáp án; distractor dựa trên lỗi thường gặp.
+- Sai phải có giải thích trực quan và câu luyện lại; đúng có feedback ngay.
+- Có điểm, tiến độ, chuỗi đúng và tổng kết kỹ năng.
+
+## Camera / nhận diện
+MediaPipe Hands; đầu ngón trỏ làm con trỏ; calibration; smoothing; confidence >= 0.65; chỉ chốt khi chạm hitbox.
+- Xin quyền chỉ sau Bắt đầu.
+- Có Đang tải → Xin quyền → Sẵn sàng → Đang nhận diện → Lỗi.
+- Calibration/framing + smoothing + confidence; một gesture = một event.
+
+## Fallback
+Mouse/touch/keyboard mô phỏng được gameplay chính.
+
+## Luồng
+Bắt đầu → Kiểm tra thiết bị → Hiệu chỉnh → Hướng dẫn → Luyện mẫu → 12 lượt → Phản hồi → Ôn câu sai → Kết quả → Chơi lại.
+
+## Ngôn ngữ / an toàn
+UI và phản hồi bằng **tiếng Việt**. Không yêu cầu động tác nguy hiểm; reduced-motion; không tải/lưu dữ liệu camera/microphone; responsive.
+
+## MiTi — CHỮ KÝ BẮT BUỘC
+HTML phải tự chứa logo **MiTi**: biểu tượng ô bo góc #FFD84D có chữ M #07111F + chữ MiTi đậm + ✦; xuất hiện ở Bắt đầu, HUD và Kết quả; có dòng **MiTi • Học bằng chuyển động**. Dùng inline SVG/CSS/HTML, không phụ thuộc repository hoặc URL logo ngoài.
+
+## Đầu ra
+Chỉ xuất toàn bộ **HTML hoàn chỉnh**, không TODO, không pseudocode, không phụ thuộc repository này.
