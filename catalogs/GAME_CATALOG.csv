@@ -34,3 +34,23 @@ L4-32,Geometry Arena,4,Toán,"Ôn hình học và đo lường","Hoàn thành ch
 L4-33,Fraction Arena,4,Toán,"Ôn phân số","Hoàn thành combo phân số",MIXED,"fraction mechanics",prompts/01-toan4/L4-33-fraction-arena.md
 L4-34,Data Arena,4,Toán,"Ôn dữ liệu và khả năng xảy ra","Đọc bắt dự đoán",MIXED,"tables; charts; probability",prompts/01-toan4/L4-34-data-arena.md
 L4-35,Grand Math Arena,4,Toán,"Ôn cuối năm","Hoàn thành campaign",MIXED,"map; mastery; adaptive review",prompts/01-toan4/L4-35-grand-math-arena.md
+L4-36,Place Value Forge,4,Toán,"Giá trị theo hàng; số có nhiều chữ số","Đặt chữ số vào đúng hàng",POINT+DRAG,"place value; expanded form; distractors",prompts/01-toan4/L4-36-place-value-forge.md
+L4-37,Fraction Market,4,Toán,"Phân số; phân số bằng nhau; phân số của một nhóm","Hoàn thành đơn hàng phân số",GRAB+POINT,"fraction models; equivalent fractions; market",prompts/01-toan4/L4-37-fraction-market.md
+L4-38,Angle Rescue,4,Toán,"Góc nhọn; góc vuông; góc tù; ước lượng số đo","Chọn cổng góc đúng",POINT,"angle types; protractor; tolerance",prompts/01-toan4/L4-38-angle-rescue.md
+L4-39,Data Detective,4,Toán,"Đọc bảng và biểu đồ; khai thác dữ liệu","Tìm bằng chứng đúng trong biểu đồ",POINT,"tables; picture charts; bar charts; evidence",prompts/01-toan4/L4-39-data-detective.md
+L4-40,Math Boss Lab,4,Toán,"Ôn tổng hợp Toán 4","Vượt sáu thử thách kỹ năng",MIXED,"adaptive review; number; fraction; geometry; data",prompts/01-toan4/L4-40-math-boss-lab.md
+T5-11,Decimal Shop,5,Toán,"Số thập phân; so sánh; cộng trừ","Hoàn thành đơn hàng bằng số thập phân",POINT+DRAG,"place value; decimal operations; money",prompts/02-toan5/T5-11-decimal-shop.md
+T5-12,Percentage Lab,5,Toán,"Phần trăm; phân số; số thập phân","Đổi biểu diễn và giải bài toán phần trăm",POINT,"hundred grid; conversions; percentage of quantity",prompts/02-toan5/T5-12-percentage-lab.md
+T5-13,Volume Vault,5,Toán,"Thể tích hình hộp chữ nhật","Tính thể tích để mở kho",POINT+DRAG,"cuboid; cubic units; formula",prompts/02-toan5/T5-13-volume-vault.md
+T5-14,Motion Word-Problem Racer,5,Toán,"Bài toán chuyển động; quan hệ quãng đường-thời gian-vận tốc","Chọn dữ kiện và giải chặng đua",POINT,"timeline; units; word problems",prompts/02-toan5/T5-14-motion-word-problem.md
+T5-15,Math Strategy Arena,5,Toán,"Ôn tổng hợp Toán 5; chiến lược giải","Chọn chiến lược rồi giải bài",MIXED,"decimals; fractions; percentages; measurement; data; geometry",prompts/02-toan5/T5-15-math-strategy-arena.md
+E4-11,Picture Story Builder,4,English,"Câu đơn; từ vựng; trật tự câu; kể chuyện ngắn","Ghép câu theo chuỗi tranh",POINT+DRAG,"story sequence; sentence building; TTS",prompts/03-english4/E4-11-picture-story-builder.md
+E4-12,Listen and Sort,4,English,"Nghe hiểu từ và cụm từ quen thuộc","Nghe rồi phân loại vào chủ đề",POINT+DRAG,"listening; topics; replay; weak-word recycle",prompts/03-english4/E4-12-listen-and-sort.md
+E4-13,Phonics Pop,4,English,"Âm và mẫu chữ thông dụng","Chọn từ chứa âm/mẫu chữ mục tiêu",SWIPE,"phonics; spelling pattern; audio",prompts/03-english4/E4-13-phonics-pop.md
+E4-14,Question Builder,4,English,"Tạo câu hỏi cơ bản và câu trả lời","Sắp xếp từ thành câu hỏi đúng",POINT+DRAG,"question words; word order; sentence frames",prompts/03-english4/E4-14-question-builder.md
+E4-15,English Adventure Map,4,English,"Ôn từ vựng; nghe; chính tả; câu; ngữ pháp","Hoàn thành năm đảo kỹ năng",MIXED,"adaptive review; vocabulary; listening; spelling; grammar",prompts/03-english4/E4-15-english-adventure-map.md
+E5-11,Reading Detective,5,English,"Ý chính; chi tiết; trình tự; suy luận đơn giản","Tìm bằng chứng trong bài đọc",POINT,"reading evidence; inference; context",prompts/04-english5/E5-11-reading-detective.md
+E5-12,Grammar Builder,5,English,"Cấu trúc câu và ngữ pháp cốt lõi","Sửa câu sai để mở màn",POINT+DRAG,"grammar categories; sentence repair; mastery",prompts/04-english5/E5-12-grammar-builder.md
+E5-13,Speaking Mission,5,English,"Nói câu trả lời ngắn trong tình huống quen thuộc","Hoàn thành năm nhiệm vụ giao tiếp",VOICE,"speech recognition; sentence frames; self-check",prompts/04-english5/E5-13-speaking-mission.md
+E5-14,Word Formation Lab,5,English,"Họ từ; tiền tố/hậu tố; từ loại","Biến đổi từ để hoàn thành câu",POINT+DRAG,"word families; affixes; part of speech",prompts/04-english5/E5-14-word-formation-lab.md
+E5-15,English Challenge Cup,5,English,"Ôn tổng hợp kỹ năng tiếng Anh","Hoàn thành sáu sự kiện kỹ năng",MIXED,"listening; vocabulary; reading; grammar; spelling; speaking",prompts/04-english5/E5-15-english-challenge-cup.md
