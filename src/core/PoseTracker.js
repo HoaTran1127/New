@@ -49,7 +49,12 @@ class PoseTracker {
         document.body.appendChild(this.videoElement);
       }
 
-      if (typeof Camera !== 'undefined') {
+      // Nếu HandTracker đã mở webcam, dùng chung stream/video thay vì xin quyền lần hai.
+      if (this.videoElement.srcObject) {
+        if (this.videoElement.readyState < 2) await this.videoElement.play();
+        this.isRunning = true;
+        this._startVideoLoop();
+      } else if (typeof Camera !== 'undefined') {
         this.camera = new Camera(this.videoElement, {
           onFrame: async () => {
             if (this.isRunning && this.videoElement.readyState >= 2) await this.pose.send({ image: this.videoElement });
