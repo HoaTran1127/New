@@ -1,18 +1,38 @@
-# L4-25 — Fraction Reactor
+# L4-25 — Lò Phản Ứng Phân Số
 
-- **Khối:** Toán 4
-- **Mục tiêu:** Trừ phân số cùng mẫu.
-- **Nhiệm vụ:** Lấy đúng số phần khỏi reactor.
-- **Điều khiển:** GRAB
+Tạo game giáo dục web **một file HTML duy nhất** cho học sinh Việt Nam lớp 4, môn Toán.
 
-## Prompt copy trực tiếp
+## Mục tiêu
+Vận dụng phân số trong bài toán tổng hợp
 
-```text
-Tạo game "Fraction Reactor" cho học sinh lớp 4 trong 1 HTML.
-Mục tiêu: trừ phân số cùng mẫu.
-Nhiệm vụ: dùng pinch/grab lấy đi đúng số phần từ một thanh phân số.
-Gameplay: ví dụ 6/8 - 2/8, hiện 8 phần bằng nhau, học sinh lấy 2 phần, còn 4/8. Bẫy phổ biến là đổi mẫu hoặc trừ cả mẫu. Có visual explanation và generator ít nhất 10 bài.
-Camera MediaPipe Hands; pinch/grab threshold; release; EMA; confidence; cooldown; calibration và camera errors.
-Đúng + điểm/combo; sai giải thích bằng phần đã lấy đi.
-Fallback mouse/touch. UI chữ lớn, round ngắn, result/replay. Không upload video, không TODO, 1 file HTML.
-```
+## Nhiệm vụ
+Kích hoạt phản ứng bằng đáp án đúng
+
+## Cơ chế và nội dung
+Điều khiển chính: **POINT**. Chức năng: "take-away; same denominator".
+- Thiết kế bối cảnh đúng tên game và mục tiêu.
+- 12 lượt chơi; ngân hàng ít nhất 40 câu/tình huống; 3 mức độ.
+- Random vị trí đáp án; distractor dựa trên lỗi thường gặp.
+- Sai phải có giải thích trực quan và câu luyện lại; đúng có feedback ngay.
+- Có điểm, tiến độ, chuỗi đúng và tổng kết kỹ năng.
+
+## Camera / nhận diện
+MediaPipe Hands; đầu ngón trỏ làm con trỏ; calibration; smoothing; confidence >= 0.65; chỉ chốt khi chạm hitbox.
+- Xin quyền chỉ sau Bắt đầu.
+- Có Đang tải → Xin quyền → Sẵn sàng → Đang nhận diện → Lỗi.
+- Calibration/framing + smoothing + confidence; một gesture = một event.
+
+## Fallback
+Mouse/touch/keyboard mô phỏng được gameplay chính.
+
+## Luồng
+Bắt đầu → Kiểm tra thiết bị → Hiệu chỉnh → Hướng dẫn → Luyện mẫu → 12 lượt → Phản hồi → Ôn câu sai → Kết quả → Chơi lại.
+
+## Ngôn ngữ / an toàn
+UI và phản hồi bằng **tiếng Việt**. Không yêu cầu động tác nguy hiểm; reduced-motion; không tải/lưu dữ liệu camera/microphone; responsive.
+
+## MiTi — CHỮ KÝ BẮT BUỘC
+HTML phải tự chứa logo **MiTi**: biểu tượng ô bo góc #FFD84D có chữ M #07111F + chữ MiTi đậm + ✦; xuất hiện ở Bắt đầu, HUD và Kết quả; có dòng **MiTi • Học bằng chuyển động**. Dùng inline SVG/CSS/HTML, không phụ thuộc repository hoặc URL logo ngoài.
+
+## Đầu ra
+Chỉ xuất toàn bộ **HTML hoàn chỉnh**, không TODO, không pseudocode, không phụ thuộc repository này.
