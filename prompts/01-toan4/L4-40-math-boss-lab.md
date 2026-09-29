@@ -1,19 +1,38 @@
-# L4-40 — Math Boss Lab
+# L4-40 — Phòng Boss Toán
 
-Create a standalone single-file Grade 4 Math review game.
+Tạo game giáo dục web **một file HTML duy nhất** cho học sinh Việt Nam lớp 4, môn Toán.
 
-Learning objective: integrate number sense, operations, fractions, measurement, geometry and data.
+## Mục tiêu
+Vận dụng chiến lược giải toán tổng hợp
 
-Mission: defeat a sequence of six bosses by solving the exact skill each boss tests.
+## Nhiệm vụ
+Đánh bại Boss bằng chuỗi đáp án đúng
 
-Gameplay: each boss uses a distinct mechanic: Number Forge, Operation Punch, Fraction Shield, Measurement Aim, Geometry Align and Data Detective. Keep mechanics lightweight and educational rather than combat-heavy.
+## Cơ chế chơi
+Điều khiển chính: **MIXED**. Các chức năng: "adaptive review; number; fraction; geometry; data".
+- Biến mục tiêu học tập thành hành động chơi trực tiếp.
+- 12 lượt; ngân hàng ít nhất 40 câu/tình huống; 3 mức độ khó.
+- Đáp án xáo trộn; bẫy phản ánh lỗi thường gặp.
+- Sai: giải thích trực quan + luyện lại; đúng: phản hồi tức thì.
+- Có điểm, tiến độ, chuỗi đúng và tổng kết.
 
-Camera: optional hand/pose control with MediaPipe. Each gesture must map to one explicit action, use confidence >= 0.65, smoothing, state/debounce and 300–500ms cooldown. Never use hover as a hit. Mouse/touch/keyboard fallback.
+## Camera / nhận diện
+MediaPipe Hands; đầu ngón trỏ làm con trỏ; calibration; smoothing; confidence >= 0.65; chỉ chốt khi chạm hitbox.
+- Xin quyền chỉ sau Bắt đầu.
+- Có Đang tải → Xin quyền → Sẵn sàng → Đang nhận diện → Lỗi.
+- Calibration/framing + smoothing + confidence; một gesture chỉ tạo một event.
 
-Campaign: calibration → tutorial → 6 boss stages → adaptive review of missed skills → final mastery report.
+## Fallback
+Mouse/touch/keyboard mô phỏng được gameplay chính.
 
-Generate at least 60 questions with skill tags. If a learner misses a skill twice, bring back a simpler example before increasing difficulty.
+## Luồng
+Bắt đầu → Kiểm tra thiết bị → Hiệu chỉnh → Hướng dẫn → Luyện mẫu → 12 lượt → Phản hồi → Ôn câu sai → Kết quả → Chơi lại.
 
-Feedback explains the mathematical reasoning, not merely correct/incorrect.
+## Ngôn ngữ / an toàn
+UI, hướng dẫn, nút và feedback bằng **tiếng Việt**. Với môn Tiếng Anh, chỉ dữ liệu học dùng tiếng Anh. Responsive, chữ lớn, reduced-motion; không động tác nguy hiểm; không tải/lưu video hoặc âm thanh.
 
-Accessibility: reduced motion, large text, camera-off mode, no upload. Output one complete HTML file, no TODOs.
+## MiTi — CHỮ KÝ BẮT BUỘC
+HTML phải tự chứa logo **MiTi**: biểu tượng ô bo góc #FFD84D có chữ M #07111F + chữ MiTi đậm + ✦; xuất hiện ở Bắt đầu, HUD và Kết quả; có dòng **MiTi • Học bằng chuyển động**. Dùng inline SVG/CSS/HTML, không phụ thuộc repository hoặc URL logo ngoài.
+
+## Đầu ra
+Chỉ xuất **toàn bộ HTML hoàn chỉnh**, không TODO, không pseudocode, không phụ thuộc repository này.
