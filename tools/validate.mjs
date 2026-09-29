@@ -11,7 +11,7 @@ import { RULES } from './lib/rules.mjs';
 import { MOTION, FEEL } from './lib/feel.mjs';
 import { CLASSROOM } from './lib/classroom.mjs';
 import { ACCESS, ACCESS_SHORT } from './lib/access.mjs';
-import { VERIFY, ADAPT } from './lib/verify.mjs';
+import { VERIFY, ADAPT, VERIFY_SHORT } from './lib/verify.mjs';
 import { CHALK, CHALK_SHORT } from './lib/chalk.mjs';
 import { LESSON, LESSON_SHORT } from './lib/lesson.mjs';
 import { PROP_KEYS, PROP_FIELDS, prop } from './data/props.mjs';
@@ -131,13 +131,23 @@ const CHALK_RULES = [
 ];
 const LESSON_RULES = [
   [LESSON.teacher, 'thiếu chế độ giáo viên trình bày trên màn chiếu'],
+  [LESSON.boardText, 'thiếu quy định quyền ưu tiên cỡ chữ cỡ bảng khi giảng bài'],
   [LESSON.noGame, 'thiếu quy định cấm cơ chế game trong tiết giảng'],
   [LESSON.pace, 'thiếu quy định nhịp giảng do giáo viên quyết định'],
-  [LESSON.flow, 'thiếu năm bước của giáo án kèm ngân sách phút'],
+  [LESSON.flow, 'thiếu năm bước của giáo án kèm ngân sách phút của tiết 35 phút'],
   [LESSON.handover, 'thiếu quy định "Mời em lên bảng"'],
   [LESSON.strayHands, 'thiếu quy định bỏ qua bàn tay lạ trong lớp đông'],
   [LESSON.classVote, 'thiếu quy định cả lớp trả lời bằng ngón tay'],
+  [LESSON.voteMap, 'thiếu quy định ánh xạ số ngón tay sang nhãn đáp án A–D'],
+  [LESSON.diagnose, 'thiếu bảng chẩn đoán cuối tiết theo errorTag'],
   [LESSON.retain, 'thiếu quy định bảng không bao giờ tự lau'],
+];
+// Ngân hàng LESSON_DATA phải được kiểm chứng y hệt QUESTION_DATA, nếu không thì giáo án âm thầm dạy sai.
+const LESSON_VERIFY_RULES = [
+  [VERIFY.selfCheck, 'thiếu hàm verifyQuestionBank() kiểm LESSON_DATA trước Bước 5'],
+  [VERIFY.distractorValid, 'thiếu quy định phương án nhiễu của LESSON_DATA sai theo một lỗi thật'],
+  [VERIFY.rangeGuard, 'thiếu guard phạm vi kiến thức cho LESSON_DATA'],
+  [VERIFY.noGuessable, 'thiếu quy định chống đoán mò bằng cấu trúc đáp án cho LESSON_DATA'],
 ];
 const LESSON_FAMILY_RULES = [...CHALK_RULES, ...LESSON_RULES].map(([n]) => n);
 for (const g of GAMES) {
@@ -297,8 +307,11 @@ if (!fs.existsSync(LESSON_DIR)) {
     '10. ĐẦU RA',
   ];
   // Cơ chế chỉ được có ở game. Lọt sang giáo án là sai mục đích của cả nhánh này.
+  // Cơ chế chỉ được có ở game. Với ngân hàng câu hỏi thì bắt đúng CHỮ KÝ KHAI BÁO
+  // "const QUESTION_DATA", vì giáo án được phép NHẮC tên QUESTION_DATA khi so sánh với
+  // LESSON_DATA — cái cấm là mang luôn ngân hàng của game vào tiết giảng.
   const GAME_ONLY = [
-    'QUESTION_DATA', 'miti-collection', '12 lượt chính', '+10 nhân chuỗi', 'hết 5 tim',
+    'const QUESTION_DATA', 'miti-collection', '12 lượt chính', '+10 nhân chuỗi', 'hết 5 tim',
     MOTION.amplitude, MOTION.breather, FEEL.hitStop, FEEL.combo, FEEL.bonus, FEEL.mascot,
     RULES.antiLuck, RULES.summary, CLASSROOM.mastery, CLASSROOM.twoPlayer,
   ];
@@ -322,6 +335,7 @@ if (!fs.existsSync(LESSON_DIR)) {
     for (const m of LESSON_MUST) if (!t.includes(m)) bad(`${tag}: giáo án thiếu mục ${m}.`);
     for (const [needle, msg] of CHALK_RULES) if (!t.includes(needle)) bad(`${tag}: ${msg}.`);
     for (const [needle, msg] of LESSON_RULES) if (!t.includes(needle)) bad(`${tag}: ${msg}.`);
+    for (const [needle, msg] of LESSON_VERIFY_RULES) if (!t.includes(needle)) bad(`${tag}: ${msg}.`);
     for (const [needle, msg] of ACCESS_RULES) if (!t.includes(needle)) bad(`${tag}: ${msg}.`);
     if (!t.includes(CLASSROOM.safeZone)) bad(`${tag}: thiếu vùng an toàn cho chữ trên màn chiếu.`);
     if (!t.includes(CLASSROOM.framing)) bad(`${tag}: thiếu đàm phán theo mức camera đang thấy.`);
@@ -331,7 +345,7 @@ if (!fs.existsSync(LESSON_DIR)) {
     for (const f of LESSON_FIELDS) if (!t.includes(L[f])) bad(`${tag}: giáo án thiếu nội dung ${f} từ tools/data/lessons.mjs.`);
     // Câu mẫu nằm trong file dưới dạng JSON.stringify nên phải so theo đúng dạng đã escape dấu nháy.
     for (const ex of EXAMPLES[L.cluster]) if (!t.includes(JSON.stringify(ex.prompt)) || !t.includes(JSON.stringify(ex.answer))) bad(`${tag}: thiếu câu luyện tập mẫu của cụm ${L.cluster}.`);
-    for (const s of [CHALK_SHORT, LESSON_SHORT, ACCESS_SHORT]) if (!t.includes(s)) bad(`${tag}: checklist tự kiểm thiếu một dòng rút gọn (${s.slice(0, 30)}...).`);
+    for (const s of [CHALK_SHORT, LESSON_SHORT, VERIFY_SHORT, ACCESS_SHORT]) if (!t.includes(s)) bad(`${tag}: checklist tự kiểm thiếu một dòng rút gọn (${s.slice(0, 30)}...).`);
     for (const needle of ['LESSON_DATA', '#FFD84D', 'MiTi • Giảng bài bằng vật thật', 'tasks-vision@1.0.1', 'Không dùng Tailwind Play CDN']) {
       if (!t.includes(needle)) bad(`${tag}: giáo án thiếu ${needle}.`);
     }

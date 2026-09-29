@@ -10,8 +10,9 @@
 | Ai dùng | **Giáo viên** trình bày, cả lớp xem màn chiếu | **Học sinh** tự chơi, một máy một em hoặc hai em |
 | Nhịp | Chờ giáo viên bấm "Bước tiếp", không tự chuyển | 12 lượt, tăng độ khó ở lượt 5 và lượt 9 |
 | Động cơ | Không tim, không điểm, không combo, không xếp hạng | Có tim, điểm, chuỗi combo, thẻ vàng x2, mascot |
-| Bảng phấn | Chiếm >= 70% màn chiếu, không bao giờ tự lau | Bảng chữ L <= 40% khung hình, tự lau sau mỗi lượt |
-| Nguồn quy định | `tools/lib/chalk.mjs` + `tools/lib/lesson.mjs` | `tools/lib/feel.mjs` + `tools/lib/classroom.mjs` |
+| Bảng phấn | Chiếm >= 70% màn chiếu, chữ phấn >= 50 px tính theo khoảng cách em cuối lớp, không bao giờ tự lau | Bảng chữ L <= 40% khung hình, chữ 34 px, tự lau sau mỗi lượt |
+| Kiểm đề | `verifyQuestionBank()` chạy một lần trước Bước 5 | `verifyQuestionBank()` chạy trước vòng chơi đầu tiên |
+| Nguồn quy định | `tools/lib/chalk.mjs` + `tools/lib/lesson.mjs` + `tools/lib/verify.mjs` | `tools/lib/feel.mjs` + `tools/lib/classroom.mjs` |
 
 Hai bộ dùng chung một nguồn vật thật (`tools/data/props.mjs`) nên cùng một cụm kiến thức thì vật vẽ phấn
 giống hệt nhau — học sinh gặp lại đúng cái pizza đó khi chuyển từ tiết giảng sang giờ luyện tập.
@@ -28,7 +29,13 @@ giống hệt nhau — học sinh gặp lại đúng cái pizza đó khi chuyể
 Cấu trúc này giống nhau ở cả 39 bài để giáo viên thuộc được mạch:
 **Khởi động** (2–3 phút, hỏi gắn với vật thật, chưa viết gì) → **Vật thật** (4–5 phút, thao tác tay)
 → **Sơ đồ** (3–4 phút, học sinh tự dựng biểu diễn bán cụ thể) → **Phép tính** (3–4 phút, mỗi con số
-nối ngược về sơ đồ) → **Luyện tập chung** (3–4 phút, cả lớp biểu quyết bằng ngón tay). Tổng 15–20 phút.
+nối ngược về sơ đồ) → **Luyện tập chung** (3–4 phút, cả lớp biểu quyết theo nhãn A–D).
+Năm bước chiếm 15–20 phút đầu của **tiết 35 phút**; thời gian còn lại là luyện tập và chốt bài,
+và thanh tiến trình trên màn chiếu luôn hiện cả "phút của bước" lẫn "phút còn lại của tiết".
+
+Cuối tiết, bảng rút ra **bảng chẩn đoán cho riêng giáo viên**: số em mắc từng lỗi (theo `errorTag`)
+và mỗi lỗi có một nút nhảy về đúng chặng CRA đã sinh ra lỗi đó. Không nêu tên, không xếp hạng,
+không ghi sang hồ sơ đọc lại được sau tiết.
 
 ## Toán lớp 4 (29 giáo án)
 
@@ -83,5 +90,6 @@ nối ngược về sơ đồ) → **Luyện tập chung** (3–4 phút, cả l�
 
 - Thêm cụm kiến thức mới: sửa `tools/data/clusters.mjs`, `tools/data/props.mjs` (đủ 5 trường) và `tools/data/lessons.mjs` (đủ 3 trường), rồi chạy `node tools/build.mjs`.
 - Đổi quy định bảng phấn: `tools/lib/chalk.mjs` (10 quy định).
-- Đổi quy định chế độ giảng bài: `tools/lib/lesson.mjs` (8 quy định).
+- Đổi quy định chế độ giảng bài: `tools/lib/lesson.mjs` (11 quy định).
+- Đổi quy định tự kiểm đề: `tools/lib/verify.mjs` (dùng chung với 85 prompt game).
 - `node tools/validate.mjs` sẽ chặn nếu thiếu quy định nào, nếu vật thật thiếu trường, hoặc nếu cơ chế game lọt vào giáo án.

@@ -201,13 +201,14 @@ Nguồn: `tools/lib/verify.mjs`. Đây là tầng sửa hai lỗi **không ai nh
 | Ai dùng | Giáo viên trình bày, cả lớp xem màn chiếu | Học sinh tự chơi, một máy một hoặc hai em |
 | Nhịp | Chờ giáo viên bấm "Bước tiếp", không tự chuyển | 12 lượt, tăng độ khó ở lượt 5 và lượt 9 |
 | Động cơ | Không tim, không điểm, không combo, không xếp hạng | Có tim, điểm, chuỗi combo, thẻ vàng x2, mascot |
-| Bảng phấn | ≥ 70% màn chiếu, **không bao giờ tự lau**, tối đa 8 trang | Bảng chữ L ≤ 40% khung hình, tự lau sau mỗi lượt |
+| Bảng phấn | ≥ 70% màn chiếu, chữ phấn ≥ 50 px tính theo khoảng cách em cuối lớp, **không bao giờ tự lau**, tối đa 8 trang | Bảng chữ L ≤ 40% khung hình, chữ 34 px, tự lau sau mỗi lượt |
 | Camera | Phụ: dạy trọn vẹn bằng chuột và bàn phím | Chính: khung hình webcam là màn chơi |
-| Nguồn quy định | `tools/lib/chalk.mjs` + `tools/lib/lesson.mjs` | `tools/lib/feel.mjs` + `tools/lib/classroom.mjs` |
+| Kiểm đề | `verifyQuestionBank()` chạy một lần **trước Bước 5** | `verifyQuestionBank()` chạy trước vòng chơi đầu tiên |
+| Nguồn quy định | `tools/lib/chalk.mjs` + `tools/lib/lesson.mjs` + `tools/lib/verify.mjs` | `tools/lib/feel.mjs` + `tools/lib/classroom.mjs` + `tools/lib/verify.mjs` |
 
 ### Mạch bài năm bước, giống nhau ở cả 39 giáo án
 
-**Khởi động** 2–3 phút (hỏi gắn với vật thật, chưa viết gì lên bảng) → **Vật thật** 4–5 phút (thao tác tay trên vật đếm được) → **Sơ đồ** 3–4 phút (học sinh tự tay dựng biểu diễn bán cụ thể) → **Phép tính** 3–4 phút (mỗi con số nối ngược về sơ đồ) → **Luyện tập chung** 3–4 phút (cả lớp biểu quyết bằng ngón tay). Tổng 15–20 phút, có thanh tiến trình giáo viên kéo được để đổi ngân sách theo lớp mình.
+**Khởi động** 2–3 phút (hỏi gắn với vật thật, chưa viết gì lên bảng) → **Vật thật** 4–5 phút (thao tác tay trên vật đếm được) → **Sơ đồ** 3–4 phút (học sinh tự tay dựng biểu diễn bán cụ thể) → **Phép tính** 3–4 phút (mỗi con số nối ngược về sơ đồ) → **Luyện tập chung** 3–4 phút (cả lớp biểu quyết theo nhãn A–D). Năm bước nằm trong 15–20 phút **đầu của một tiết 35 phút**; thời gian còn lại là luyện tập và chốt bài, và thanh tiến trình giáo viên kéo được để đổi ngân sách theo lớp mình.
 
 Trình tự này theo khung **Concrete – Representational – Abstract**: lỗi kinh điển khi dạy Toán bằng vật thật là nhảy thẳng từ vật sang thuật toán, bỏ qua bước biểu diễn bán cụ thể. Vì vậy mỗi cụm trong `tools/data/props.mjs` có **5 trường** chứ không phải 4 — trường `so_do` là sơ đồ học sinh phải tự dựng, và `validate.mjs` chặn nếu để trống.
 
@@ -224,15 +225,18 @@ Trình tự này theo khung **Concrete – Representational – Abstract**: lỗ
 - **Chống mỏi tay** (viết phấn giữa không trung là động tác mỏi nhanh nhất của hand tracking): chế độ **chạm-bật viết** để không phải giữ pinch, **nghỉ bắt buộc sau 90 giây** pinch liên tục kèm đếm ngược 5 giây, khay phấn đặt ngang khuỷu tay làm điểm tựa, và **mất landmark quá 500 ms thì nét dở đóng băng tại chỗ** chứ không xoá hay nhảy nét.
 - **Lưu bảng của tiết dạy**: tuần tự hoá nét vẽ + vật + sơ đồ vào `localStorage` khoá `miti-board`, tối đa **200 KB**, có nút Lưu / Mở / In (nền trắng chữ đen). **Tuyệt đối không lưu ảnh hay video camera.**
 
-### 👩‍🏫 Tám quy định chế độ giảng bài (`tools/lib/lesson.mjs`)
+### 👩‍🏫 Mười một quy định chế độ giảng bài (`tools/lib/lesson.mjs`)
 
-- **Giáo viên trình bày**: màn chiếu 16:9, bảng chiếm ≥ 70%, chữ phấn **≥ 40 px** (lớn hơn mức 34 px của game) vì người đọc đứng ở cuối phòng; điều khiển trọn bài bằng chuột và bàn phím, camera chỉ bật khi mời em lên bảng.
+- **Giáo viên trình bày**: màn chiếu 16:9, bảng chiếm ≥ 70% diện tích màn chiếu; điều khiển trọn bài bằng chuột và bàn phím, camera chỉ bật khi mời em lên bảng.
+- **Quyền ưu tiên cỡ chữ — cỡ bảng**: khi giảng bài thì trần `≤ 40%` / `≤ 68%` và sàn `34 px` của bản game **đứng hưu**, thay bằng bảng ≥ 70% màn chiếu, chữ phấn ≥ 50 px, thẻ đáp án ≥ 44 px. Mức đó **không phải hằng số**: bảng hỏi "em cuối lớp cách màn chiếu mấy mét?" (mặc định 8 m) rồi tính chiều cao chữ tối thiểu = khoảng cách × 0.7 ÷ 100 (cm) và tự đổi ra px theo bề rộng thật của màn chiếu; dải điều khiển hiện dòng tự kiểm "chữ cao X cm · em cuối lớp Y mét · ĐẠT / CHƯA ĐẠT" và tự phóng chữ khi chưa đạt.
 - **Không một cơ chế game nào**: không tim, điểm, combo, xếp hạng, đồng hồ gây áp lực, hit-stop, giật màn hình, mascot. Sai thì chỉ có một dòng phấn đỡ bằng chữ.
 - **Nhịp do giáo viên quyết định**: dựng cảnh ≥ 600 ms, có nút đổi tốc độ 0.5x/1x/1.5x và **phát lại bước tối đa 8 giây, không giới hạn số lần**.
-- **Năm bước có ngân sách phút** và thanh tiến trình kéo được; hết ngân sách thì báo "quá giờ" chứ không tự cắt bài.
+- **Năm bước có ngân sách phút khớp một tiết 35 phút** (đổi được thành 40): năm bước chiếm 15–20 phút đầu, thời gian còn lại là luyện tập và chốt bài; thanh tiến trình hiện cả "phút của bước" lẫn "phút còn lại của tiết", hết ngân sách thì báo "quá giờ" chứ không tự cắt bài và không phát tiếng báo hiệu.
 - **"Mời em lên bảng"**: chuyển quyền trong ≤ 5 giây, hàng đợi 4 em, ghi vị trí cổ tay (landmark 0) của bàn tay được gán, tự trả quyền sau 3 giây không thao tác, tối đa 12 lượt một tiết.
 - **Bỏ qua bàn tay lạ trong lớp đông**: `maxNumHands: 2`, mọi bàn tay có gốc cổ tay ngoài vùng bảng + 10% đệm bị bỏ qua hoàn toàn — em ngồi dưới giơ tay phát biểu không vẽ bậy lên bảng được; nhiều tay trong vùng bảng thì tạm khoá và hỏi giáo viên chứ không tự đoán.
 - **Cả lớp trả lời bằng ngón tay**: đếm số bàn tay theo từng đáp án trong 5 giây, ghi rõ "camera thấy N em" và có nút cộng tay cho số em camera không thấy; cột đáp án sai cao hơn 1/3 thì bảng gợi ý giảng lại bước SƠ ĐỒ.
+- **Biểu quyết theo NHÃN chứ không theo giá trị**: 1 ngón = A, 2 = B, 3 = C, 4 = D, nắm tay = "em chưa chắc"; bảng đối chiếu hiện ≥ 60 px, mỗi thẻ đáp án mang nhãn in hoa ≥ 44 px, bài chỉ có 3 phương án thì hàng D bị gạch chéo ghi "không có đáp án D". Lý do: đáp án Toán hay là phân số hoặc một mệnh đề — bản cũ bắt "giơ số ngón bằng đáp án" nên không dùng được với `3/8`. Giơ ≥ 5 ngón hoặc đổi ngón liên tục trong 500 ms cuối thì cột hiện "không rõ".
+- **Bảng chẩn đoán cuối tiết** cho riêng giáo viên, không chiếu lên bảng lớp: gom lượt trả lời theo `errorTag` thành tối đa 5 hàng "lỗi · số em · tỉ lệ · nút Giảng lại", và mỗi nút nhảy về **đúng chặng CRA đã sinh ra lỗi** (số không nối về sơ đồ → chặng SƠ ĐỒ; tính sai → chặng PHÉP TÍNH; hiểu nhầm đề → bước dựng cảnh). Không nêu tên, không xếp hạng, không ghi sang hồ sơ đọc lại được sau tiết.
 - **Bảng không bao giờ tự lau**: cả năm bước cộng lại thành một trang bảng hoàn chỉnh để cuối tiết cả lớp nhìn lại mạch bài.
 
 ### Vật thật và sơ đồ theo cụm kiến thức (`tools/data/props.mjs`)
@@ -269,7 +273,7 @@ tools/lib/classroom.mjs      quy định lớp học thật (vùng an toàn cho 
 tools/lib/access.mjs         tiếp cận + an toàn thần kinh (trần nhấp nháy, reduced-motion, không chỉ dùng màu, phụ đề, tương phản, tay thuận)
 tools/lib/verify.mjs         tự kiểm chứng đề + độ khó thích ứng (verifyQuestionBank, nhiễu theo lỗi thật, guard phạm vi, chống mẹo, level thích ứng, sàn chống nản)
 tools/lib/chalk.mjs          bảng phấn + vật thật, 10 quy định — dùng cho BỘ GIÁO ÁN
-tools/lib/lesson.mjs         chế độ giảng bài, 8 quy định — dùng cho BỘ GIÁO ÁN
+tools/lib/lesson.mjs         chế độ giảng bài, 11 quy định — dùng cho BỘ GIÁO ÁN
         │
         └─ node tools/build.mjs
              ├─ catalogs/GAME_CATALOG.csv + .md

@@ -13,6 +13,7 @@ import { CLASSROOM } from './lib/classroom.mjs';
 import { ACCESS, ACCESS_SHORT } from './lib/access.mjs';
 import { CHALK, CHALK_SHORT } from './lib/chalk.mjs';
 import { LESSON, LESSON_SHORT } from './lib/lesson.mjs';
+import { VERIFY, VERIFY_SHORT } from './lib/verify.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const OUT_DIR = path.join(ROOT, 'prompts', 'giao-an');
@@ -78,20 +79,25 @@ Không dùng Tailwind Play CDN, không file .css/.js/.json/ảnh/mp3 ngoài. Ch�
 - BƯỚC 2 · VẬT THẬT — vật vẽ phấn trên bảng là ${L.vat}. Một đơn vị đếm được là ${L.don_vi}. Điều khiển bằng ngón tay: ${L.ngon_tay}.
 - BƯỚC 3 · SƠ ĐỒ — học sinh hoặc giáo viên tự tay dựng: ${L.so_do}. Sơ đồ này KHÔNG được hiện sẵn hoàn chỉnh; nó phải được kéo hoặc vẽ ra từng phần.
 - BƯỚC 4 · PHÉP TÍNH — đọc đáp án ra từ vật và từ sơ đồ: ${L.doc}. Cách giải thích trực quan khi học sinh vướng: ${L.giai_thich}.
-- BƯỚC 5 · LUYỆN TẬP CHUNG — cả lớp làm bài cùng dạng, giáo viên dùng nút "Cả lớp trả lời" để biểu quyết bằng ngón tay.
+- BƯỚC 5 · LUYỆN TẬP CHUNG — cả lớp làm bài cùng dạng, giáo viên dùng nút "Cả lớp trả lời" để biểu quyết bằng số ngón tay theo NHÃN đáp án (1 ngón A, 2 ngón B, 3 ngón C, 4 ngón D), không theo giá trị đáp án.
 - Giáo viên bấm "Bước tiếp" để sang bước; mỗi bước dừng lại bao lâu là do giáo viên quyết định.
 - ${LESSON.pace}
 
-3. DỮ LIỆU CỦA BÀI (LESSON_DATA)
+3. DỮ LIỆU CỦA BÀI (LESSON_DATA) VÀ TỰ KIỂM CHỨNG
 - Khai báo \`const LESSON_DATA = [...]\` ở ĐẦU khối <script>, phần engine đặt phía sau.
 - Mỗi mục theo đúng khuôn: { id, prompt, choices, answer, explanation, errorTag, loiViet }.
 - Tối thiểu 6 mục: 2 mục mẫu cho sẵn bên dưới phải xuất hiện NGUYÊN VĂN, cộng thêm 4 mục nữa cùng cụm kiến thức và cùng độ khó của Toán lớp ${L.lop}. Mỗi mục một đáp án đúng duy nhất kiểm chứng được bằng code.
 - errorTag là mã máy của lỗi, lấy đúng một trong các nhãn: ${cl.tags.join(', ')}. loiViet là cụm tiếng Việt có dấu in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 1 và là thứ hiển thị cho giáo viên.
+- Trong công cụ giảng bài thì LESSON_DATA đóng đúng vai trò mà QUESTION_DATA đóng trong game, nên BỐN quy định kiểm chứng dưới đây áp nguyên văn cho LESSON_DATA; hàm verifyQuestionBank() chạy MỘT LẦN trước BƯỚC 5 (Luyện tập chung), không chạy trước bước nào khác vì bốn bước đầu là giảng, không phải làm bài. LESSON_DATA của giáo án KHÔNG có trường level (một bài giảng chỉ có một mạch độ khó), vì vậy mọi điều khoản về level trong các quy định dưới đây được bỏ qua một cách tường minh, còn mọi điều khoản khác giữ nguyên. Mục nào trượt thì loại khỏi danh sách hỏi và ghi console.warn bằng tiếng Việt; số mục còn lại dưới 4 thì dải điều khiển của giáo viên báo "ngân hàng câu hỏi của bài này còn N mục, giáo viên tự ra thêm" chứ không hỏi lại mục lỗi.
+- ${VERIFY.selfCheck}
+- ${VERIFY.distractorValid}
+- ${VERIFY.rangeGuard}
+- ${VERIFY.noGuessable}
 - Hai mục mẫu phải chép nguyên văn:
 ${jsonBlock(EXAMPLES[L.cluster], cl.tags, notes)}
 
 4. BẢNG PHẤN VÀ VẬT THẬT — MƯỜI QUY ĐỊNH BẮT BUỘC
-- CỠ BẢNG Ở CÔNG CỤ GIẢNG BÀI: mặc định dùng mức BẢNG TO, bảng phấn chiếm >= 70% màn chiếu; mức bảng chữ L <= 40% khung hình trong quy định bên dưới chỉ áp cho bản game học sinh tự chơi. Bảng phải nằm gọn trong vùng không bị thân người che và mép trên theo đúng trần đã quy định.
+- ${LESSON.boardText}
 - ${CHALK.board}
 - ${CHALK.chalkWrite}
 - ${CHALK.concretize}
@@ -105,8 +111,10 @@ ${jsonBlock(EXAMPLES[L.cluster], cl.tags, notes)}
 
 5. CẢ LỚP THAM GIA
 - ${LESSON.classVote}
+- ${LESSON.voteMap}
 - ${LESSON.handover}
 - ${LESSON.strayHands}
+- ${LESSON.diagnose}
 - ${LESSON.retain}
 
 6. NỀN AR, CAMERA VÀ NHẬN DIỆN TAY
@@ -152,7 +160,7 @@ ${AR_RENDER}
 10. ĐẦU RA
 - Chỉ xuất toàn bộ file HTML hoàn chỉnh, không kèm giải thích dài.
 - Không TODO, không pseudocode, không "...", không "// code tương tự ở trên", không phần "bạn tự bổ sung".
-- Tự kiểm tra trước khi xuất: ${LESSON_SHORT} · ${CHALK_SHORT} · ${ACCESS_SHORT} · có đủ năm bước và không bước nào tự chuyển khi giáo viên chưa bấm · LESSON_DATA đủ 6 mục với 2 mục mẫu nguyên văn · bảng không tự lau ở bất kì bước nào · in được bản nền trắng chữ đen · chữ ký MiTi ở ba chỗ · file chạy độc lập không lỗi console.
+- Tự kiểm tra trước khi xuất: ${LESSON_SHORT} · ${CHALK_SHORT} · ${VERIFY_SHORT} · ${ACCESS_SHORT} · có đủ năm bước và không bước nào tự chuyển khi giáo viên chưa bấm · LESSON_DATA đủ 6 mục với 2 mục mẫu nguyên văn và đã chạy qua verifyQuestionBank() trước bước 5 · mọi thẻ đáp án mang nhãn in hoa A-D và bảng đối chiếu ngón tay hiện đủ · cỡ chữ đang phát đạt theo dòng tự kiểm ĐẠT / CHƯA ĐẠT · bảng không tự lau ở bất kì bước nào · in được bản nền trắng chữ đen · chữ ký MiTi ở ba chỗ · file chạy độc lập không lỗi console.
 \`\`\`
 
 ## Ghi chú cho người tạo prompt (không gửi Gemini)
@@ -181,8 +189,9 @@ function renderIndex(lessons) {
 | Ai dùng | **Giáo viên** trình bày, cả lớp xem màn chiếu | **Học sinh** tự chơi, một máy một em hoặc hai em |
 | Nhịp | Chờ giáo viên bấm "Bước tiếp", không tự chuyển | 12 lượt, tăng độ khó ở lượt 5 và lượt 9 |
 | Động cơ | Không tim, không điểm, không combo, không xếp hạng | Có tim, điểm, chuỗi combo, thẻ vàng x2, mascot |
-| Bảng phấn | Chiếm >= 70% màn chiếu, không bao giờ tự lau | Bảng chữ L <= 40% khung hình, tự lau sau mỗi lượt |
-| Nguồn quy định | \`tools/lib/chalk.mjs\` + \`tools/lib/lesson.mjs\` | \`tools/lib/feel.mjs\` + \`tools/lib/classroom.mjs\` |
+| Bảng phấn | Chiếm >= 70% màn chiếu, chữ phấn >= 50 px tính theo khoảng cách em cuối lớp, không bao giờ tự lau | Bảng chữ L <= 40% khung hình, chữ 34 px, tự lau sau mỗi lượt |
+| Kiểm đề | \`verifyQuestionBank()\` chạy một lần trước Bước 5 | \`verifyQuestionBank()\` chạy trước vòng chơi đầu tiên |
+| Nguồn quy định | \`tools/lib/chalk.mjs\` + \`tools/lib/lesson.mjs\` + \`tools/lib/verify.mjs\` | \`tools/lib/feel.mjs\` + \`tools/lib/classroom.mjs\` |
 
 Hai bộ dùng chung một nguồn vật thật (\`tools/data/props.mjs\`) nên cùng một cụm kiến thức thì vật vẽ phấn
 giống hệt nhau — học sinh gặp lại đúng cái pizza đó khi chuyển từ tiết giảng sang giờ luyện tập.
@@ -199,7 +208,13 @@ giống hệt nhau — học sinh gặp lại đúng cái pizza đó khi chuyể
 Cấu trúc này giống nhau ở cả ${lessons.length} bài để giáo viên thuộc được mạch:
 **Khởi động** (2–3 phút, hỏi gắn với vật thật, chưa viết gì) → **Vật thật** (4–5 phút, thao tác tay)
 → **Sơ đồ** (3–4 phút, học sinh tự dựng biểu diễn bán cụ thể) → **Phép tính** (3–4 phút, mỗi con số
-nối ngược về sơ đồ) → **Luyện tập chung** (3–4 phút, cả lớp biểu quyết bằng ngón tay). Tổng 15–20 phút.
+nối ngược về sơ đồ) → **Luyện tập chung** (3–4 phút, cả lớp biểu quyết theo nhãn A–D).
+Năm bước chiếm 15–20 phút đầu của **tiết 35 phút**; thời gian còn lại là luyện tập và chốt bài,
+và thanh tiến trình trên màn chiếu luôn hiện cả "phút của bước" lẫn "phút còn lại của tiết".
+
+Cuối tiết, bảng rút ra **bảng chẩn đoán cho riêng giáo viên**: số em mắc từng lỗi (theo \`errorTag\`)
+và mỗi lỗi có một nút nhảy về đúng chặng CRA đã sinh ra lỗi đó. Không nêu tên, không xếp hạng,
+không ghi sang hồ sơ đọc lại được sau tiết.
 
 ## Toán lớp 4 (${byLop[4].length} giáo án)
 
@@ -217,7 +232,8 @@ ${byLop[5].map(row).join('\n')}
 
 - Thêm cụm kiến thức mới: sửa \`tools/data/clusters.mjs\`, \`tools/data/props.mjs\` (đủ 5 trường) và \`tools/data/lessons.mjs\` (đủ 3 trường), rồi chạy \`node tools/build.mjs\`.
 - Đổi quy định bảng phấn: \`tools/lib/chalk.mjs\` (10 quy định).
-- Đổi quy định chế độ giảng bài: \`tools/lib/lesson.mjs\` (8 quy định).
+- Đổi quy định chế độ giảng bài: \`tools/lib/lesson.mjs\` (11 quy định).
+- Đổi quy định tự kiểm đề: \`tools/lib/verify.mjs\` (dùng chung với 85 prompt game).
 - \`node tools/validate.mjs\` sẽ chặn nếu thiếu quy định nào, nếu vật thật thiếu trường, hoặc nếu cơ chế game lọt vào giáo án.
 `;
 }
