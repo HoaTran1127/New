@@ -1,49 +1,69 @@
-# 🎮 GEMINI CANVAS GAME PROMPT STUDIO
+# 🟡 MiTi — Prompt Library Game Giáo Dục
 
-### Kho tổng hợp Prompt Game Giáo Dục Web Motion dành cho Gemini Canvas
+**MiTi** là thư viện prompt để tạo game giáo dục web cho học sinh Việt Nam bằng **Google Gemini Canvas**.
 
-Đây là **Prompt Library**: anh chọn một game, copy prompt và dán vào **Google Gemini Canvas** để Gemini tự tạo game HTML.
+> **Chọn game → xem mục tiêu/nhiệm vụ → mở Prompt → copy → dán vào Gemini Canvas → tạo game HTML.**
 
-## Workflow
+## 🚀 Dashboard
 
-**GAME CATALOG → CHỌN GAME → COPY PROMPT → DÁN GEMINI CANVAS → PREVIEW → CHỈNH TIẾP TRONG CANVAS**
+👉 **[Mở MiTi Dashboard](index.html)**
 
-Mỗi game có 4 lớp thông tin:
-1. **Mục tiêu học tập** — học sinh cần nắm điều gì.
-2. **Nhiệm vụ** — học sinh phải làm gì.
-3. **Chức năng/gameplay** — game vận hành thế nào.
-4. **Prompt** — khối lệnh hoàn chỉnh để copy.
+Dashboard hiển thị toàn bộ **85 game có file prompt thật**, tìm kiếm theo lớp/môn/điều khiển và mở trực tiếp từng prompt.
 
-## Bắt đầu
+## 📊 Kho hiện tại
 
-👉 [Mở Game Catalogue](catalogs/GAME_CATALOG.md)
+| Hạng mục | Số lượng |
+|---|---:|
+| Game Toán lớp 4 | 40 |
+| Game Toán lớp 5 | 15 |
+| Game Tiếng Anh lớp 4 | 15 |
+| Game Tiếng Anh lớp 5 | 15 |
+| **Tổng game có file thật** | **85** |
+| Game gốc dùng để tạo biến thể | **65** |
+| Prompt biến thể | **325 = 65 × 5** |
+| Game mở rộng ngoài bộ 65 | **20** |
 
-👉 [Mở thư viện Prompt](prompts/README.md)
+### 5 biến thể của mỗi game gốc
 
-👉 [GitHub Pages](https://hoatran1127.github.io/New/)
+1. **Camera Point** — chỉ tay
+2. **Camera Swipe** — vuốt/chém
+3. **Drag & Grab** — kéo/thả
+4. **Voice** — giọng nói
+5. **No Camera** — chuột/chạm/bàn phím
 
-## Phạm vi hiện tại
+👉 [Mở 325 Prompt Variants](prompts/VARIANTS_325.md)
 
-- ✅ Prompt library.
-- ✅ Game catalogue.
-- ✅ Prompt master/template.
-- ✅ Toán lớp 4 và lớp 5.
-- ✅ English lớp 4 và lớp 5.
-- ✅ Catalogue CSV hiện có **55 game entries**.
-- ✅ Đợt mở rộng mới thêm **20 prompt**: 5 Toán 4 + 5 Toán 5 + 5 English 4 + 5 English 5.
-- 🧪 Demo code trong games/ chỉ dùng để tham khảo và thử nghiệm.
-- 🧪 Camera/gesture accuracy cần kiểm tra trên webcam và điều kiện ánh sáng thực tế.
+## 🇻🇳 Chuẩn hoá tiếng Việt
 
-## Nguyên tắc sản phẩm
+Nội dung hiển thị trong dashboard và catalogue dùng tiếng Việt:
+- tên game hiển thị bằng tiếng Việt;
+- mục tiêu học tập;
+- nhiệm vụ học sinh;
+- điều khiển;
+- chức năng chính;
+- hướng dẫn/feedback trong prompt.
+
+**ID và đường dẫn file được giữ ổn định** để không phá liên kết kỹ thuật.
+
+## 📁 Cấu trúc chính
+
+- `index.html` — dashboard MiTi chính.
+- `catalogs/GAME_CATALOG.csv` — catalogue dữ liệu chuẩn, **85 dòng game**.
+- `catalogs/GAME_CATALOG.md` — catalogue đọc nhanh.
+- `prompts/00-master-canvas-prompt.md` — master prompt.
+- `prompts/VARIANTS_325.md` — 325 prompt biến thể.
+- `prompts/01-toan4/` — 40 game Toán 4.
+- `prompts/02-toan5/` — 15 game Toán 5.
+- `prompts/03-english4/` — 15 game Tiếng Anh 4.
+- `prompts/04-english5/` — 15 game Tiếng Anh 5.
+- `games/` và `src/` — code demo/reference, không phải sản phẩm prompt chính.
+
+## 🔎 Kiểm tra kho
+
+Catalogue chỉ trỏ tới **file prompt tồn tại thật** trong bốn thư mục game. Không dùng đường dẫn giả để làm dashboard đẹp.
+
+## 🧠 Nguyên tắc sản phẩm
 
 **Prompt là sản phẩm. Code demo chỉ là reference.**
 
-Mỗi prompt mới phải có thể copy độc lập vào Gemini Canvas; Gemini không cần biết repository này để tạo game.
-
-Engine trong src/ không phải dependency bắt buộc của prompt.
-
-## Research / QA
-
-Đợt mở rộng 5 vòng được ghi tại:
-
-research/PROMPT_LIBRARY_5_ROUND_EXPANSION.md
+Mỗi prompt độc lập phải có thể copy vào Gemini Canvas mà không cần Gemini biết repository này.
