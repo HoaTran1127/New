@@ -23,27 +23,34 @@ Chào mừng thầy cô, phụ huynh và các bạn đam mê lập trình sáng 
 Dự án được thiết kế theo tư duy **Module hóa (Pluggable)** để sau này bạn có thể thêm bớt chủ đề toán học hoặc thêm mini-game mới cực kỳ dễ dàng:
 
 ```text
-├── index.html                   # Cổng chọn game & xem giáo trình
+├── index.html                   # Dashboard 85 prompt + 12 legacy (lọc, tìm, 1-click copy)
+├── prompts/                     # 85 prompt game chuẩn + 12 prompt legacy + master + biến thể
+├── catalogs/                    # GAME_CATALOG.csv · .md · .js — sinh từ tools/data
+├── tools/                       # Pipeline build: node tools/build.mjs
 ├── src/
-│   ├── core/                    # Engine dùng chung cho MỌI game
+│   ├── core/                    # Engine dùng chung cho các game TỰ CODE (không dùng cho prompt 1 file)
 │   │   ├── HandTracker.js       # Bọc Google MediaPipe Hands, khử rung tay
 │   │   ├── AudioManager.js      # Tạo âm thanh bằng Tone.js
 │   │   └── ParticleSystem.js    # Hạt nổ, sóng xung kích, nứt vỡ kính
-│   └── data/                    # Ngân hàng câu hỏi (DỄ DÀNG THÊM BỚT)
+│   └── data/                    # Bộ sinh câu hỏi theo topic (khác với QUESTION_DATA trong prompt)
 │       ├── index.js             # TopicRegistry tự động gom tất cả chủ đề
 │       ├── topics-cuuchuong.js  # Bảng nhân chia 2-9
 │       ├── topics-lop4.js       # Phân số, nhân 11, đổi đơn vị, chia hết
 │       └── topics-lop5.js       # Số thập phân, %, s = v * t, hình học
 └── games/
-    ├── math-blitz/              # Game 1: Đấm / Chém thẻ rơi (Subway Math Blitz)
-    └── math-catcher/            # Game 2: Hứng quả táo toán học (Math Catcher)
+    ├── math-blitz/              # Demo 1: Đấm / Chém thẻ rơi (Subway Math Blitz)
+    ├── math-catcher/            # Demo 2: Hứng quả táo toán học (Math Catcher)
+    ├── math-bubble/             # Demo 3: Chém bong bóng phép tính
+    └── english-word-ninja/      # Demo 4: Chém từ vựng tiếng Anh
 ```
+
+> **Giáo trình này dạy đường "tự code" nhiều file.** 85 prompt trong `prompts/` đi đường khác: Gemini xuất **một file HTML duy nhất, CSS nội tuyến**, không nạp `src/core/*.js`. `src/data/*.js` cũng là **bộ sinh câu hỏi**, không phải ngân hàng `QUESTION_DATA` mà prompt yêu cầu. Xem rõ ở [bai-07](bai-07-huong-dan-tu-tao-mini-game-moi.md).
 
 ---
 
 ## 🚀 Cách Chạy Thử Trên Máy Tính Của Bạn
 
-1. Bạn có thể mở trực tiếp file `index.html` trên trình duyệt Chrome, Edge hoặc Cốc Cốc.
+1. Bạn có thể mở trực tiếp file `index.html` trên trình duyệt Chrome, Edge hoặc Cốc Cốc. Lưu ý: lưới prompt và bộ lọc chạy bình thường, nhưng nút **Sao chép prompt** phải tải file `.md` nên cần mở qua localhost hoặc GitHub Pages (mở bằng `file://` trình duyệt chặn fetch).
 2. Hoặc dùng tiện ích **Live Server** (trên VS Code / Antigravity) để mở cổng localhost (khuyên dùng để MediaPipe nạp model qua webcam mượt mà nhất):
    ```bash
    # Nếu bạn cài python:

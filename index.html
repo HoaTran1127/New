@@ -17,6 +17,8 @@ linear-gradient(180deg,#07111e,#050b14 75%);min-height:100vh}a{color:inherit;tex
 .library{margin-top:18px}.toolbar{position:sticky;top:0;z-index:5;background:rgba(6,16,29,.94);backdrop-filter:blur(14px);padding:13px 0;border-bottom:1px solid var(--line);margin-bottom:16px}.filters{display:grid;grid-template-columns:2fr 1fr 1fr 1.1fr;gap:9px}.input,.select{width:100%;background:#091827;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:11px 12px;outline:none}.input:focus,.select:focus{border-color:var(--cyan)}.tabs{display:flex;gap:7px;overflow:auto;margin-top:10px}.tab{white-space:nowrap;cursor:pointer;padding:8px 11px;border-radius:9px;border:1px solid var(--line);color:var(--muted);background:#091827;font-weight:800}.tab.active{background:var(--cyan);color:#07111f;border-color:var(--cyan)}
 .libraryMeta{display:flex;justify-content:space-between;gap:15px;align-items:center;color:var(--muted);font-size:12px;margin:15px 0}.libraryMeta b{color:#dff7ff}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}.card{background:linear-gradient(180deg,#0d1f31,#081523);border:1px solid var(--line);border-radius:17px;padding:17px;display:flex;flex-direction:column;min-height:295px;transition:.18s}.card:hover{transform:translateY(-2px);border-color:#355b76}.badge{display:flex;justify-content:space-between;gap:8px;color:var(--muted);font-size:10px;font-weight:900}.badge strong{color:var(--cyan)}.card h3{margin:11px 0 8px;font-size:19px}.label{font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:#6f899f;font-weight:1000;margin-top:10px}.objective,.mission{font-size:12px;line-height:1.5}.objective{color:#d5e2ee}.mission{color:#bdd0e0;margin-top:3px}.chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}.chip{font-size:9px;padding:5px 7px;border-radius:7px;background:#12263a;color:#a9c2d8}.actions{display:flex;gap:7px;margin-top:auto;padding-top:15px}.action{flex:1;text-align:center;padding:10px;border-radius:9px;font-size:11px;font-weight:1000;border:1px solid var(--line)}.primary{background:var(--brand);color:#07111f;border-color:var(--brand)}.secondary{background:#10243a}.empty{padding:50px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:15px;grid-column:1/-1}
 .note{margin-top:18px;border:1px solid #4e4020;background:linear-gradient(90deg,#1a170d,#0b1520);border-radius:16px;padding:13px 15px;color:#d9cda7;font-size:11px;line-height:1.55}.note b{color:var(--brand)}
+.note code{background:#12263a;border:1px solid var(--line);border-radius:5px;padding:1px 5px;font-size:10px;color:#bce9ff}
+.action[disabled]{opacity:.65;cursor:default}
 footer{padding:35px 0 0;color:#70879d;text-align:center;font-size:11px}@media(max-width:1050px){.hero{grid-template-columns:1fr}.routes{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:700px){.wrap{padding:16px 14px 45px}.top{align-items:flex-start;flex-direction:column}.brandcopy{display:none}.links{width:100%}.heroMain{padding:25px}.hero h1{letter-spacing:-2.5px}.filters{grid-template-columns:1fr 1fr}.filters .input{grid-column:1/-1}.routes{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.sectionHead,.libraryMeta{align-items:flex-start;flex-direction:column}}
 </style>
 </head>
@@ -28,6 +30,8 @@ footer{padding:35px 0 0;color:#70879d;text-align:center;font-size:11px}@media(ma
     <div class="brandcopy"><b>Học bằng chuyển động</b><span>Thư viện prompt game giáo dục</span></div>
   </div>
   <nav class="links">
+    <a class="ghost" href="prompts/00-master-canvas-prompt.md">Master prompt</a>
+    <a class="ghost" href="catalogs/GAME_CATALOG.md">Danh mục 85 game</a>
     <a class="ghost" href="prompts/VARIANTS_325.md">325 biến thể</a>
     <a class="ghost" href="prompts/BRAND_MITI.md">Chuẩn MiTi</a>
   </nav>
@@ -55,8 +59,10 @@ footer{padding:35px 0 0;color:#70879d;text-align:center;font-size:11px}@media(ma
       </div>
     </div>
     <div class="sideStats">
-      <div class="tinyStat"><strong id="realGames">—</strong><span>prompt game thật</span></div>
-      <div class="tinyStat"><strong>325</strong><span>biến thể thiết kế</span></div>
+      <div class="tinyStat"><strong id="realGames">—</strong><span>prompt game chuẩn</span></div>
+      <div class="tinyStat"><strong id="legacyGames">—</strong><span>prompt legacy</span></div>
+      <div class="tinyStat"><strong id="controlKinds">—</strong><span>kiểu điều khiển</span></div>
+      <div class="tinyStat"><strong>325</strong><span>biến thể (65 game)</span></div>
     </div>
   </aside>
 </section>
@@ -78,33 +84,158 @@ footer{padding:35px 0 0;color:#70879d;text-align:center;font-size:11px}@media(ma
       <input id="search" class="input" placeholder="🔎 Tìm theo tên, mục tiêu, nhiệm vụ...">
       <select id="grade" class="select"><option value="">Tất cả lớp</option><option value="4">Lớp 4</option><option value="5">Lớp 5</option></select>
       <select id="subject" class="select"><option value="">Tất cả môn</option><option>Toán</option><option>Tiếng Anh</option></select>
-      <select id="control" class="select"><option value="">Kiểu tương tác</option><option>POINT</option><option>SWIPE</option><option>PUNCH</option><option>GRAB</option><option>DRAG</option><option>MIXED</option><option>VOICE</option></select>
+      <select id="control" class="select"><option value="">Kiểu tương tác</option></select>
     </div>
-    <div class="tabs">
+    <div class="tabs" id="tabs">
       <button class="tab active" data-tab="">Tất cả</button>
       <button class="tab" data-tab="Toán|4">Toán 4</button>
       <button class="tab" data-tab="Toán|5">Toán 5</button>
       <button class="tab" data-tab="Tiếng Anh|4">Tiếng Anh 4</button>
       <button class="tab" data-tab="Tiếng Anh|5">Tiếng Anh 5</button>
+      <button class="tab" data-tab="legacy">Prompt legacy</button>
     </div>
   </div>
   <div class="libraryMeta"><span id="count"></span><span><b>MiTi</b> • prompt thật • HTML game độc lập • chữ ký thương hiệu</span></div>
   <main id="grid" class="grid"></main>
-  <div class="note"><b>Lưu ý dữ liệu:</b> catalogue hiện là nguồn chuẩn của dashboard. Nếu phát hiện ID, lớp hoặc môn lệch với thư mục prompt thật, ưu tiên sửa catalogue trước; không tạo giao diện để che dữ liệu sai.</div>
+  <div class="note"><b>Nguồn dữ liệu:</b> lưới game này được sinh từ <code>catalogs/GAME_CATALOG.csv</code> qua <code>node tools/build.mjs</code> → <code>catalogs/GAME_CATALOG.js</code>. Không sửa tay file JS và không thêm card thủ công: muốn đổi nội dung thì sửa <code>tools/data/games.mjs</code> rồi build lại. Nút <b>Sao chép prompt</b> tải file .md và chỉ lấy khối <code>text</code>, phần ghi chú dành cho người tạo không bị chép theo.</div>
 </section>
 
 <footer>MiTi ✦ <b>MiTi • Học bằng chuyển động</b> · Prompt là sản phẩm. Game HTML được Gemini sinh ra.</footer>
 </div>
 
+<script src="catalogs/GAME_CATALOG.js"></script>
 <script>
-const DATA = [];
-// DATA hiện được để rỗng có chủ ý: dashboard cần pipeline sinh từ catalogs/GAME_CATALOG.csv, không hard-code dữ liệu song song.
-/*
-  DATA phải được lấy trực tiếp từ catalogues/GAME_CATALOG.csv khi pipeline build.
-  Không hard-code một catalogue khác trong giao diện.
-  Bản hiện tại vẫn giữ dữ liệu dashboard cũ bên dưới để tránh phá luồng; bước tiếp theo
-  nên chuyển hẳn sang generated catalog nếu repository có pipeline build.
-*/
+const CAT = window.MITI_CATALOG || { games: [], legacy: [], controls: [] };
+const ALL = CAT.games.concat(CAT.legacy);
+const state = { q: '', grade: '', subject: '', control: '', tab: '' };
+
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const $ = (id) => document.getElementById(id);
+
+CAT.controls.forEach((c) => {
+  const o = document.createElement('option');
+  o.value = c.code;
+  o.textContent = c.vi + ' (' + c.count + ')';
+  $('control').appendChild(o);
+});
+
+$('realGames').textContent = CAT.games.length;
+$('legacyGames').textContent = CAT.legacy.length;
+$('controlKinds').textContent = CAT.controls.length;
+document.querySelector('[data-tab="legacy"]').textContent = 'Prompt legacy (' + CAT.legacy.length + ')';
+
+function visible() {
+  const q = state.q.trim().toLowerCase();
+  return ALL.filter((g) => {
+    if (state.tab === 'legacy') { if (!g.legacy) return false; }
+    else if (g.legacy) return false;
+    else if (state.tab) { const [mon, lop] = state.tab.split('|'); if (g.subject !== mon || g.grade !== lop) return false; }
+    if (state.grade && g.grade !== state.grade) return false;
+    if (state.subject && g.subject !== state.subject) return false;
+    if (state.control && !g.controls.includes(state.control)) return false;
+    if (q && !(g.id + ' ' + g.name + ' ' + g.objective + ' ' + g.mission + ' ' + g.controls.join(' ')).toLowerCase().includes(q)) return false;
+    return true;
+  });
+}
+
+function card(g) {
+  const chips = g.controlLabels.map((c) => '<span class="chip">' + esc(c) + '</span>').join('') + (g.legacy ? '<span class="chip">LEGACY</span>' : '');
+  return '<article class="card">' +
+    '<div class="badge"><strong>' + esc(g.id) + '</strong><span>' + esc(g.subject) + ' · Lớp ' + esc(g.grade) + '</span></div>' +
+    '<h3>' + esc(g.name) + '</h3>' +
+    '<div class="label">Mục tiêu học tập</div><div class="objective">' + esc(g.objective) + '</div>' +
+    '<div class="label">Nhiệm vụ của học sinh</div><div class="mission">' + esc(g.mission) + '</div>' +
+    '<div class="chips">' + chips + '</div>' +
+    '<div class="actions">' +
+      '<button class="action primary" data-copy="' + esc(g.prompt) + '">Sao chép prompt</button>' +
+      '<a class="action secondary" href="' + esc(g.prompt) + '">Mở file</a>' +
+    '</div></article>';
+}
+
+function draw() {
+  const list = visible();
+  $('count').innerHTML = 'Hiển thị <b>' + list.length + '</b> / ' + ALL.length + ' prompt' + (state.tab === 'legacy' ? ' (nhóm legacy — không dùng làm khuôn cho game mới)' : '');
+  $('grid').innerHTML = list.length ? list.map(card).join('') : '<div class="empty">Không có prompt nào khớp bộ lọc. Đổi kiểu tương tác hoặc bỏ trống ô tìm kiếm.</div>';
+}
+
+// Lấy đúng khối prompt trong file .md: khối fenced đầu tiên, bỏ qua ghi chú dành cho người tạo.
+function extractPrompt(md) {
+  const m = md.match(/^```[a-zA-Z]*\r?\n([\s\S]*?)^```/m);
+  return (m ? m[1] : md).trim();
+}
+
+async function copyText(text) {
+  try { await navigator.clipboard.writeText(text); return true; }
+  catch (e) {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.cssText = 'position:fixed;top:-1000px';
+    document.body.appendChild(ta);
+    ta.select();
+    let ok = false;
+    try { ok = document.execCommand('copy'); } catch (_) { ok = false; }
+    ta.remove();
+    return ok;
+  }
+}
+
+function toast(msg) {
+  let t = $('toast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'toast';
+    t.style.cssText = 'position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:#ffd84d;color:#07111f;font-weight:900;font-size:13px;padding:12px 18px;border-radius:12px;z-index:50;box-shadow:0 10px 30px rgba(0,0,0,.45)';
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  clearTimeout(t._h);
+  t._h = setTimeout(() => t.remove(), 2600);
+}
+
+$('grid').addEventListener('click', async (e) => {
+  const btn = e.target.closest('[data-copy]');
+  if (!btn) return;
+  const path = btn.dataset.copy;
+  btn.disabled = true;
+  const old = btn.textContent;
+  btn.textContent = 'Đang lấy...';
+  try {
+    const res = await fetch(path, { cache: 'no-store' });
+    if (!res.ok) throw new Error(res.status);
+    const ok = await copyText(extractPrompt(await res.text()));
+    btn.textContent = ok ? 'Đã chép ✓' : 'Bấm lại để chép';
+    toast(ok ? 'Đã chép prompt — dán vào Gemini (chế độ Canvas) là có game.' : 'Trình duyệt chặn clipboard. Mở file prompt bằng nút bên cạnh rồi chọn toàn bộ khối text để chép.');
+  } catch (err) {
+    btn.textContent = 'Mở file để chép';
+    toast('Không tải được file prompt khi mở bằng file:///. Hãy mở dashboard qua GitHub Pages hoặc mở trực tiếp file prompt.');
+    window.open(path, '_blank');
+  }
+  setTimeout(() => { btn.textContent = old; btn.disabled = false; }, 1800);
+});
+
+$('search').addEventListener('input', (e) => { state.q = e.target.value; draw(); });
+['grade', 'subject', 'control'].forEach((id) => $(id).addEventListener('change', (e) => { state[id] = e.target.value; draw(); }));
+$('tabs').addEventListener('click', (e) => {
+  const t = e.target.closest('.tab');
+  if (!t) return;
+  document.querySelectorAll('.tab').forEach((x) => x.classList.toggle('active', x === t));
+  state.tab = t.dataset.tab;
+  state.grade = state.subject = '';
+  $('grade').value = '';
+  $('subject').value = '';
+  draw();
+});
+document.querySelectorAll('.route').forEach((r) => r.addEventListener('click', () => {
+  const jump = r.dataset.jump;
+  const map = { grade4: 'Toán|4', grade5: 'Toán|5', eng4: 'Tiếng Anh|4', eng5: 'Tiếng Anh|5' };
+  const t = document.querySelector('.tab[data-tab="' + (map[jump] || '') + '"]');
+  if (t) t.click();
+}));
+
+if (!CAT.games.length) {
+  $('grid').innerHTML = '<div class="empty">Chưa có dữ liệu. Chạy <b>node tools/build.mjs</b> để sinh catalogs/GAME_CATALOG.js rồi tải lại trang.</div>';
+} else draw();
 </script>
 </body>
 </html>

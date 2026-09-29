@@ -1,5 +1,9 @@
 # Bài 7: Hướng Dẫn Tự Phát Triển Thêm Mini-Game Mới
 
+> **Hai đường song song, đừng nhầm.** Bài này dạy đường **tự code**: dùng `src/core/*.js` và `src/data/*.js` nhiều file, kiểu mà 4 demo trong `games/` đang chạy. Đường còn lại — **85 prompt game chuẩn** trong `prompts/` — bắt buộc Gemini xuất ra **1 file HTML duy nhất, CSS nội tuyến, không file .js ngoài**, nên không dùng `src/`. Chọn một đường rồi theo đến cùng.
+>
+> `src/data/*.js` là **bộ sinh câu hỏi theo topic** (10 chủ đề Toán), không phải ngân hàng `QUESTION_DATA` mà prompt yêu cầu. Game làm bằng prompt phải tự khai báo `QUESTION_DATA` trong file của nó.
+
 ## 1. Sức mạnh của Khung Sườn (Framework Architecture)
 Khi bạn muốn tạo một mini-game mới, bạn **không bao giờ phải viết lại** các phần phức tạp sau:
 - ❌ Không phải cấu hình lại AI MediaPipe Hands.

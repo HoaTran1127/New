@@ -1,6 +1,6 @@
 # 🎯 325 PROMPT VARIANTS — MiTi
 
-**65 game gốc × 5 biến thể = 325 prompt độc lập.** Mỗi block dưới đây là một prompt hoàn chỉnh có thể copy riêng vào Gemini Canvas. Nội dung hướng tới học sinh Việt Nam lớp 4–5; giao diện, hướng dẫn và phản hồi trong game phải dùng tiếng Việt.
+**65 game gốc × 5 biến thể = 325 prompt độc lập.** Phủ 65/85 game trong catalog — 20 game thêm sau (L4-36→40, T5-11→15, E4-11→15, E5-11→15) chưa có biến thể riêng. Mỗi block dưới đây là một prompt hoàn chỉnh có thể copy riêng vào Gemini Canvas. Nội dung hướng tới học sinh Việt Nam lớp 4–5; giao diện, hướng dẫn và phản hồi trong game phải dùng tiếng Việt.
 
 ## Quy ước chung
 

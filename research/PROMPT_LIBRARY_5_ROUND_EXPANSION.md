@@ -2,6 +2,8 @@
 
 Date: 2026-09-29
 
+> **Status note (đọc trước):** đây là nhật ký lịch sử, số liệu trong bài đã lỗi thời. Catalog hiện tại có **85 dòng game chuẩn** (`catalogs/GAME_CATALOG.csv`, sinh lại bằng `node tools/build.mjs`) cộng **12 prompt legacy**. Mọi con số "55/35/20 rows" bên dưới chỉ mô tả thời điểm viết log.
+
 ## Objective
 Expand the Gemini Canvas Prompt Library for Grade 4–5 Math and English while keeping the repository focused on standalone prompts, not a game-engine implementation.
 

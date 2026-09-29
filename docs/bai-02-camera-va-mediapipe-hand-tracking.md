@@ -54,9 +54,13 @@ if (prevHand) {
 
 ## 4. Bí quyết 3: Bắt cú vung đấm (Punch / Strike Detection)
 Làm sao phân biệt học sinh đang giơ tay bình thường với lúc học sinh **vung tay đấm vào thẻ**?
-- Ta tính vector vận tốc `speed` giữa 2 khung hình liên tiếp.
-- Khi `speed > 0.035` (tương đương tay vung nhanh có chủ đích), hệ thống kích hoạt trạng thái `isStriking = true`.
+- `speed` được chuẩn hoá theo thời gian chứ không theo khung hình: `distance / (dt / 1000)`, tức **số lần chiều rộng khung hình mỗi giây** (`src/core/HandTracker.js:136-138`).
+- Ngưỡng thật trong engine: `strikeSpeedThreshold = 1.15` để **bắt đầu** cú đấm và `strikeReleaseThreshold = 0.55` để **thả** trạng thái — hai ngưỡng khác nhau cố ý (hysteresis) để tư thế giữ nguyên không spam event.
+- Ngoài hysteresis còn `strikeCooldownMs`: hai cú đấm liên tiếp phải cách nhau một khoảng, nên vung tay lia lịa không trừ tim học sinh.
+- Mẹo chống nhận nhầm: kết hợp hình học bàn tay — `isFist` so khoảng cách đầu ngón trỏ → cổ tay với khớp ngón (`HandTracker.js:143-146`). Đấm thật là **xòe → nắm**, không chỉ là tay di chuyển nhanh.
 - Đồng thời vẽ hiệu ứng tâm ngắm đấm bốc 🥊 đổi từ màu Xanh Cyan sang màu Hồng Neon phát sáng, báo hiệu cú đánh uy lực!
+
+> Bản cũ của bài này ghi `speed > 0.035` (tính theo khung hình). Con số đó đã lỗi thời so với engine hiện tại; nếu bạn làm game bằng prompt MiTi, ngưỡng và hysteresis đã được khai báo thẳng trong prompt.
 
 ---
 

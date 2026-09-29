@@ -1,52 +1,92 @@
 # L4-02 — Núi Hàng Triệu
 
-Tạo game giáo dục web **một file HTML duy nhất** cho học sinh Việt Nam lớp 4, môn Toán.
+> Toán lớp 4 · Điều khiển: Vuốt / chém (Swipe) · Cụm kiến thức: so-sanh-sap-xep
+> Prompt độc lập: copy nguyên khối `text` bên dưới dán vào **Google Gemini (bật chế độ Canvas)**. Không cần repo này.
 
-## 1. Thông tin học tập
-**Mục tiêu:** Đọc, so sánh và sắp xếp số lớn
-**Nhiệm vụ học sinh:** Sắp các số theo thứ tự được yêu cầu
-**Điều khiển chính:** SWIPE
-**Chức năng:** "mountain; sắp xếp; place value"
+```text
+Tạo game giáo dục web "NÚI HÀNG TRIỆU" cho học sinh Việt Nam lớp 4, môn Toán.
+Toàn bộ game nằm trong DUY NHẤT 1 FILE HTML: HTML + CSS (trong một khối <style> nội tuyến) + JavaScript.
+Không dùng Tailwind Play CDN, không file .css/.js/.json/ảnh/mp3 ngoài. Chỉ được tải MediaPipe (CDN + file model) và font có dự phòng.
 
-## 2. Gameplay
-- Thiết kế bối cảnh đúng với tên game và biến mục tiêu học tập thành hành động chơi trực tiếp.
-- Mỗi lượt chỉ có một nhiệm vụ chính; người chơi phải hiểu trong vài giây.
-- Tạo **12 lượt chính**, có ít nhất **40 câu/tình huống hợp lệ**, chia 3 mức độ.
-- Random vị trí đáp án; không để đáp án đúng luôn ở một vị trí.
-- Tạo phương án nhiễu dựa trên lỗi học sinh thường mắc.
-- Sau câu sai: giải thích ngắn, trực quan, chỉ ra bước/số/từ cần sửa; đưa câu luyện lại vào cuối vòng.
-- Có điểm, tiến độ, chuỗi đúng và tổng kết kỹ năng cần luyện.
+1. HỌC TẬP
+- Mục tiêu học tập: so sánh hai số nhiều chữ số; sắp xếp 4 số theo thứ tự từ bé đến lớn và ngược lại; số lớn nhất có n chữ số.
+- Nhiệm vụ của học sinh trong mỗi lượt: Vuốt để đổi thứ tự các toa xe sao cho dãy số tăng dần hoặc giảm dần.
+- Phạm vi kiến thức: chỉ dùng nội dung Toán lớp 4 đã học. Cấm ra đề vượt chương trình, cấm số hoặc từ vựng ngoài phạm vi trên.
+- Lỗi học sinh thường mắc ở chủ đề này (mỗi câu sai ghi đúng một trong các lỗi này): so sánh mà chưa đưa về cùng số chữ số; chọn nhầm dấu lớn bé; sắp ngược chiều yêu cầu.
+- Vòng đầu tiên phải dễ để hiểu luật trong vài giây, không cần đọc hướng dẫn dài.
 
-## 3. Camera / tương tác
-MediaPipe Hands; nhận swipe theo hướng bằng chuyển vị + vận tốc tương đối, debounce và cooldown khoảng 450ms; giữ tay không được phát lặp.
-- Chỉ xin quyền camera/microphone sau khi bấm **Bắt đầu**.
-- Có trạng thái: Đang tải → Xin quyền → Đã sẵn sàng → Đang nhận diện → Lỗi.
-- Có calibration/framing để học sinh biết đứng/ngồi và đưa tay vào đâu.
-- Làm mượt landmark; không chốt khi confidence thấp.
-- Một gesture chỉ tạo một game event; không spam khi giữ gesture.
+2. BỐI CẢNH VÀ VÒNG CHƠI
+- Bối cảnh: Vượt đèo trên dãy núi xếp theo độ cao là giá trị số.
+- Cơ chế chính: Vuốt / chém (Swipe). Nhiệm vụ hiển thị bằng một dòng chữ to trên HUD, không cần đọc hướng dẫn.
+- Độ dài: 12 lượt chính. Tăng độ khó ở lượt 5 và lượt 9 (thêm bước trung gian hoặc rút ngắn thời gian suy nghĩ).
+- Điểm: +10 nhân chuỗi trả lời đúng. Sai không phạt bằng cách biến mất kiến thức: vẫn hiện lời giải đầy đủ.
+- Điều kiện thua: hết 5 tim (mỗi đáp án sai trừ 1 tim). Điều kiện thắng: hết 12 lượt, hiện tổng kết.
+- Toàn bộ lời giải phải dùng đúng thuật ngữ Toán của SGK Toán lớp 4.
 
-## 4. Fallback
-Mouse/touch/keyboard phải mô phỏng được hành động chính để mục tiêu học tập vẫn chơi đầy đủ khi camera hoặc microphone không khả dụng.
+3. NGÂN HÀNG DỮ LIỆU (QUESTION_DATA)
+- Khai báo `const QUESTION_DATA = [...]` ở ĐẦU khối <script>, engine đặt phía sau.
+- Mỗi mục theo đúng khuôn: { id, level, prompt, choices, answer, explanation, errorTag, loiViet }.
+- Tối thiểu 40 mục, chia 3 mức độ (level 1/2/3), mỗi mục có một đáp án đúng duy nhất kiểm chứng được bằng code.
+- Đáp án phải tính lại được bằng số học trong code, không so khớp chuỗi tự do; mỗi phương án nhiễu là một kết quả thật của lỗi đã nêu, không phải số ngẫu nhiên.
+- errorTag là mã máy của lỗi, lấy đúng một trong các nhãn: so_sanh_khong_cung_hang, dau_lon_hon_be_hon, sap_xep_nguoc_chieu. loiViet là cụm tiếng Việt có dấu in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 1, cùng chỉ lỗi đó và là thứ hiển thị cho học sinh. Mỗi câu sai lưu cả hai trường.
+- xáo trộn vị trí đáp án bằng thuật toán có seed theo lượt; không để đáp án đúng luôn ở một vị trí.
+- Trước khi viết engine, liệt kê trong comment 3 mục theo đúng khuôn rồi mới viết trọn mảng.
+- Hai mục mẫu để bám theo khuôn (viết tiếp 38 mục nữa, không được ít hơn):
+  id: "q1", level: 1, prompt: "Sắp xếp tăng dần: 65 412 · 65 142 · 6 541 · 654 120", choices: null, answer: "6 541 < 65 142 < 65 412 < 654 120", explanation: "Số ít chữ số hơn thì nhỏ hơn. Hai số 5 chữ số có cùng 65 nghìn thì so hàng nghìn: 1 < 4.", errorTag: "so_sanh_khong_cung_hang", loiViet: "so sánh mà chưa đưa về cùng số chữ số"
+  id: "q2", level: 2, prompt: "Chọn dấu đúng: 1 299 999 ... 1 300 001", choices: [">","<","="], answer: "<", explanation: "So từ trái sang: hàng triệu và trăm nghìn bằng nhau (1, 3), hàng chục nghìn 9 < 0? Không — 1 299 999 có trăm nghìn là 2, còn 1 300 001 có trăm nghìn là 3, nên số trước bé hơn.", errorTag: "dau_lon_hon_be_hon", loiViet: "chọn nhầm dấu lớn bé"
 
-## 5. Luồng game
-**Bắt đầu → Kiểm tra thiết bị → Hiệu chỉnh → Hướng dẫn → 2 lượt luyện → 12 lượt chính → Phản hồi → Ôn câu sai → Kết quả → Chơi lại**
+4. CAMERA VÀ GESTURE
+- MediaPipe Tasks Vision, pin phiên bản: import từ https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@1.0.1/vision_bundle.mjs
+  wasm: https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@1.0.1/wasm
+  model: https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task (HandLandmarker)
+- Cấu hình camera: getUserMedia({ video: { facingMode: "user", width: { ideal: 640 }, height: { ideal: 480 }, frameRate: { ideal: 30 } } }). Khung hình 4:3; nếu camera cho tỉ lệ khác thì crop về vùng vẽ cố định, không để giãn hình làm sai tọa độ. Lật gương ngang khi hiển thị và khi tính tọa độ.
+- Chỉ xin quyền camera SAU khi học sinh bấm BẮT ĐẦU. Trạng thái bằng tiếng Việt: Đang tải → Xin quyền camera → Camera sẵn sàng → Đang nhận diện → Lỗi (kèm nút Thử lại).
+- Có khung định vị/calibration để học sinh biết đặt tay hoặc đứng ở đâu.
+- Cử chỉ chính — Vuốt / chém (Swipe): HandLandmarker, đường đi của đầu ngón trỏ (landmark 8) trong 5–8 khung hình gần nhất tạo thành vệt kiếm.
+- Điều kiện chốt đáp án (hit): Chém chỉ được tính khi đồng thời: độ dài quãng đường vung tay trong một khung > ngưỡng px/s (qui đổi theo kích thước vùng vẽ, không dùng hằng số không thứ nguyên) VÀ hướng chuyển động khớp hướng của vật thể bị chém VÀ vệt cắt đi qua hitbox của vật.
+- Làm mượt và chống spam: Lưu quỹ đạo 8 khung hình gần nhất để dựng vệt kiếm; EMA trên vị trí; cooldown 250ms giữa hai nhát chém.
+- Ngưỡng tin cậy: Vận tốc phải vượt ngưỡng rồi rơi xuống dưới ngưỡng nhả thấp hơn mới được tính là một nhát (hysteresis), tránh một cái vung tính hai nhát.
+- Phản hồi hình ảnh cho người chơi: Vệt kiếm neon hiện theo tay; vật bị cắt đôi chân thực khi chém trúng.
+- Cử chỉ chỉ fire ở lượt chuyển trạng thái, có hysteresis hai ngưỡng và cooldown; giữ nguyên tư thế không được spam event, không được trừ tim.
+- Confidence thấp thì không chốt đáp án.
+- Nếu CDN hoặc model không tải được: hiện thông báo tiếng Việt rồi tự chuyển sang chế độ không camera, game vẫn chơi đủ.
 
-## 6. Ngôn ngữ nội dung
-Tất cả nút, tiêu đề, hướng dẫn, thông báo lỗi và phản hồi phải bằng **tiếng Việt**. Với môn Tiếng Anh, chỉ phần kiến thức cần học mới dùng tiếng Anh. Không dùng văn bản UI tiếng Anh không cần thiết.
+5. FALLBACK (bắt buộc)
+- Mouse / cảm ứng / phím mũi tên mô phỏng ĐÚNG hành động chính: kéo chuột hoặc vuốt màn hình nhanh qua vật để tạo nhát chém.
+- Có nhãn "Chế độ không dùng camera" và nút Tắt camera riêng, không cần tải lại trang.
+- Mục tiêu học tập vẫn đủ 100% khi chơi bằng fallback.
 
-## 7. UI và an toàn
-- Chữ lớn, nút lớn, tương phản tốt, responsive điện thoại/laptop.
-- Có Pause, Replay, reduced-motion.
-- Không yêu cầu chạy hoặc động tác nguy hiểm.
-- Không lưu hoặc tải video camera/microphone lên server.
-- Nếu dùng CDN/model, khai báo URL và xử lý lỗi tải.
+6. PHẢN HỒI HỌC TẬP
+- Đúng: phản hồi tích cực ngay (âm thanh vui + hạt sáng) và một dòng ghi nhớ ngắn.
+- Sai: DỪNG 2 giây, xếp các số thẳng hàng theo cột hàng đơn vị rồi so sánh từ trái sang phải; chỉ rõ bước hoặc chữ số hoặc từ cần sửa; không để hiệu ứng che lời giải.
+- Câu sai được xếp vào CUỐI vòng chơi để luyện lại trong cùng phiên, ưu tiên xuất hiện lại sớm.
+- Màn tổng kết nhóm theo errorTag: "Em hay sai ở: so sánh mà chưa đưa về cùng số chữ số" — kèm số câu đúng/sai theo mức độ, không chỉ báo điểm.
+- Hiện lại phép tính theo cột dọc hoặc sơ đồ đoạn thẳng cho đúng dạng bài của Toán lớp 4.
 
-MÌTI — CHỮ KÝ THƯƠNG HIỆU BẮT BUỘC
-- HTML đầu ra phải tự chứa logo MiTi, không phụ thuộc repository hoặc file ngoài.
-- Góc trên trái: biểu tượng ô bo góc #FFD84D có chữ M #07111F + chữ MiTi đậm + dấu ✦ nhỏ.
-- Logo xuất hiện ở Bắt đầu, HUD khi chơi và Kết quả; không che nội dung.
-- Có dòng: “MiTi • Học bằng chuyển động”.
-- Dùng inline SVG/CSS/HTML; không hotlink logo và không xóa logo ở fallback/replay.
+7. GIAO DIỆN VÀ AN TOÀN
+- Bố cục: Bắt đầu → Kiểm tra thiết bị → Định vị → Xem cách chuyển động → 2 lượt luyện mẫu → 12 lượt chính → Phản hồi → Ôn câu sai → Kết quả → Chơi lại.
+- Vùng chơi lớn, chữ to (đề bài >= 28px desktop, >= 20px điện thoại), tương phản tốt, responsive cả dọc và ngang.
+- Có Pause, Replay, Tắt camera, Giảm hiệu ứng chuyển động. Không leaderboard, không quảng cáo.
+- Âm thanh tổng hợp bằng Web Audio API, bật sau cú bấm đầu tiên; không dùng file mp3.
+- Bộ sưu tập: mỗi màn thắng mở khóa 1 thẻ theo chủ đề Núi Hàng Triệu, lưu localStorage key "miti-collection", có màn "Sưu tập của em".
+- Ngồi tại chỗ vẫn chơi được; không yêu cầu chạy nhảy hay động tác nguy hiểm; không rời khỏi vùng camera.
+- KHÔNG upload ảnh/video từ camera; chỉ dùng landmark trong bộ nhớ; không thu thập dữ liệu cá nhân.
+- Toàn bộ UI, tên nút, hướng dẫn, thông báo lỗi, lời giải thích bằng TIẾNG VIỆT. Không để thuật ngữ kỹ thuật (confidence, cooldown, fallback) hiện trên giao diện học sinh.
 
-## 8. Đầu ra
-Chỉ trả về **toàn bộ HTML hoàn chỉnh**. Không TODO, không pseudocode, không phần cần bổ sung, không phụ thuộc repository này.
+8. MiTi — CHỮ KÝ BẮT BUỘC TRONG HTML
+- Ô bo góc màu #FFD84D chứa chữ M màu #07111F + chữ MiTi đậm + dấu ✦ nhỏ, inline SVG/CSS, không hotlink ảnh ngoài.
+- Xuất hiện ở màn Bắt đầu, HUD khi chơi và màn Kết quả; nhỏ, không che vùng tương tác.
+- Chân trang hoặc màn kết quả có dòng: MiTi • Học bằng chuyển động.
+- Không xóa hoặc đổi tên thương hiệu khi replay, khi vào gameplay hoặc ở chế độ không camera.
+
+9. ĐẦU RA
+- Chỉ xuất toàn bộ file HTML hoàn chỉnh, không kèm giải thích dài.
+- Không TODO, không pseudocode, không "...", không "// code tương tự ở trên", không phần "bạn tự bổ sung".
+- Tự kiểm tra trước khi xuất: camera xin sau nút Bắt đầu · có loading/error/định vị · 640×480 và lật gương · gesture fire theo lượt chuyển + cooldown + confidence · không tính hover là đã chọn · vuốt / chém (swipe) hoạt động đúng cơ chế · fallback chuột/chạm chơi trọn vẹn · QUESTION_DATA đủ 40 mục, mỗi mục có answer + explanation + loiViet · câu sai vào hàng đợi luyện lại · tổng kết theo nhóm lỗi · bộ sưu tập lưu localStorage · chữ ký MiTi ở ba màn · file chạy độc lập không lỗi console.
+```
+
+## Ghi chú cho người tạo prompt (không gửi Gemini)
+
+- Cluster kiến thức: `so-sanh-sap-xep` — đổi cluster nếu đổi dạng bài.
+- Gesture: `SWIPE` — mỗi game tối đa 2 mã, mã đầu là mechanic chính.
+- Muốn thêm nội dung mới: sửa `tools/data/games.mjs` rồi chạy `node tools/build-prompts.mjs`, không sửa tay file này.

@@ -1,0 +1,101 @@
+// Thư mô tả camera + gesture cho từng mã điều khiển.
+// Mỗi khối cho Gemini thấy rõ: chuyển động gì, tính từ landmark nào, điều kiện chốt ra sao.
+
+export const GESTURES = {
+  POINT: {
+    vi: 'Chỉ ngón tay trỏ (Point)',
+    landmark: 'MediaPipe Tasks Vision HandLandmarker, đầu ngón trỏ landmark 8 làm con trỏ.',
+    hinh_hoc: 'Con trỏ phải nằm trong hitbox của đáp án trong ÍT NHẤT 3 khung hình liên tiếp rồi mới release bằng thao tác bấm/giữ 400ms; chỉ trỏ lướt qua (hover) không được tính là đã chọn.',
+    muot: 'EMA alpha 0.45 trên tọa độ con trỏ; cooldown 300ms sau mỗi lần chốt.',
+    nguong: 'confidence tay >= 0.6; đầu ngón tay phải ở trong vùng khung hình hợp lệ (lề 40px).',
+    nguoi_choi: 'Học sinh nhìn thấy vòng ngắm sáng bám theo đầu ngón tay và hitbox sáng lên khi con trỏ ở trong.',
+    fallback: "chạm hoặc click vào đáp án thay cho con trỏ ngón tay, giữ 400ms để chốt như khi giữ tay",
+  },
+  SWIPE: {
+    vi: 'Vuốt / chém (Swipe)',
+    landmark: 'HandLandmarker, đường đi của đầu ngón trỏ (landmark 8) trong 5–8 khung hình gần nhất tạo thành vệt kiếm.',
+    hinh_hoc: 'Chém chỉ được tính khi đồng thời: độ dài quãng đường vung tay trong một khung > ngưỡng px/s (qui đổi theo kích thước vùng vẽ, không dùng hằng số không thứ nguyên) VÀ hướng chuyển động khớp hướng của vật thể bị chém VÀ vệt cắt đi qua hitbox của vật.',
+    muot: 'Lưu quỹ đạo 8 khung hình gần nhất để dựng vệt kiếm; EMA trên vị trí; cooldown 250ms giữa hai nhát chém.',
+    nguong: 'Vận tốc phải vượt ngưỡng rồi rơi xuống dưới ngưỡng nhả thấp hơn mới được tính là một nhát (hysteresis), tránh một cái vung tính hai nhát.',
+    nguoi_choi: 'Vệt kiếm neon hiện theo tay; vật bị cắt đôi chân thực khi chém trúng.',
+    fallback: "kéo chuột hoặc vuốt màn hình nhanh qua vật để tạo nhát chém",
+  },
+  PUNCH: {
+    vi: 'Vung tay đấm (Punch)',
+    landmark: 'HandLandmarker: vị trí cổ tay (landmark 0) và mũi (landmark 15) để tính hướng đấm; độ gập các ngón để xác nhận nắm tay.',
+    hinh_hoc: 'Đấm hợp lệ khi đồng thời: tốc độ cổ tay vượt ngưỡng kích hoạt, các ngón đã gập (>= 3 ngón có góc nhỏ) VÀ khoảng cách trung bình 4 đầu ngón tới tâm bàn tay nhỏ hơn 1.3× kích thước bàn tay.',
+    muot: 'Hysteresis hai ngưỡng (ngưỡng kích hoạt cao hơn ngưỡng nhả); cooldown 400ms; một cái giữ tay không được trừ máu.',
+    nguong: 'Không có "đấm ảo": nếu tay đứng yên thì không có event dù đầu ngón tay đè lên thẻ.',
+    nguoi_choi: 'Găng đấm bốc neon tại cổ tay kèm vệt hào quang; thẻ vỡ ra 24 mảnh hạt khi trúng.',
+    fallback: "click vào vật để mô phỏng cú đấm; rê chuột lên vật không được tính",
+  },
+  GRAB: {
+    vi: 'Nắm và thả (Grab / Catch)',
+    landmark: 'HandLandmarker: tâm bàn tay = trung bình các landmark 5, 9, 13, 17; trạng thái nắm/xòe từ khoảng cách đầu ngón tới tâm.',
+    hinh_hoc: 'Chỉ fire ở LƯỢT CHUYỂN trạng thái: xòe → nắm mới tính là bốc, nắm → xòe mới tính là thả. Giữ nguyên bàn tay không được spam event.',
+    muot: 'EMA alpha 0.45; vùng hứng có bán kính bám theo độ xòe tay; debounce 250ms giữa hai lần chuyển trạng thái.',
+    nguong: 'Kiểm tra hình học kép: vừa đủ số ngón gập/xòe vừa đủ gần tâm; confidence >= 0.6.',
+    nguoi_choi: 'Vật bám theo lòng bàn tay và rung nhẹ khi vào vùng hợp lệ.',
+    fallback: "kéo vật bằng chuột hoặc một ngón tay, nhả ra để mô phỏng xòe tay",
+  },
+  DRAG: {
+    vi: 'Kéo thả (Drag)',
+    landmark: 'HandLandmarker, đầu ngón trỏ làm điểm kéo; có thể thêm landmark 8 giữ vật.',
+    hinh_hoc: 'Vật chỉ được tính là đúng khi thả VÀO TRONG ô đích (không phải chỉ đi ngang qua), và vị trí thả khớp ô đích sau khi snap lưới.',
+    muot: 'Kèm vật theo ngón tay có độ trễ đàn hồi; grid snap; cooldown 200ms.',
+    nguong: 'Nếu confidence tụt dưới ngưỡng khi đang kéo thì vật rơi về vị trí cũ, không tính là sai.',
+    nguoi_choi: 'Ô đích sáng lên khi vật ở trong tầm thả.',
+    fallback: "kéo thả bằng chuột hoặc chạm màn hình rồi thả vào ô đích",
+  },
+  STEP: {
+    vi: 'Nghiêng người / bước sang vùng (Body tilt)',
+    landmark: 'PoseLandmarker: hai vai (landmark 11, 12) và mũi (0) để tính góc nghiêng thân người so với phương thẳng đứng.',
+    hinh_hoc: 'Học sinh phải giữ tư thế nghiêng qua ngưỡng trong 2 khung hình liên tiếp để "chốt" vào vùng; khi đứng thẳng lại thì không đổi vùng.',
+    muot: 'Góc nghiêng có deadzone ±6°, hysteresis ngưỡng nhả thấp hơn ngưỡng kích hoạt 3°; cooldown 500ms.',
+    nguong: 'Yêu cầu thấy cả hai vai; vai bị khuất thì hiện "Đưa vai vào khung hình" và không chốt.',
+    nguoi_choi: 'Khung xương neon tối giản + vạch chỉ vùng CHẴN/LẺ hoặc cổng trái/phải.',
+    fallback: "phím mũi tên trái hoặc phải, hoặc chạm vào vùng, để đổi làn",
+  },
+  TWO_HAND_STRETCH: {
+    vi: 'Khom hai tay (Two-hand stretch)',
+    landmark: 'HandLandmarker hai tay hoặc PoseLandmarker hai cổ tay (15, 16) để đo khoảng cách và góc giữa hai tay.',
+    hinh_hoc: 'Gameplay đọc khoảng cách giữa hai tay (chiều rộng) và/hoặc góc tạo bởi hai cánh tay; kết quả chỉ chốt khi học sinh GIỮ tư thế ổn định (độ lệch dưới ngưỡng) trong 1.5–2 giây.',
+    muot: 'Lấy trung bình trượt 5 khung hình của khoảng cách; không chốt khi một tay bị mất landmark.',
+    nguong: 'Hiện thanh tiến trình "giữ nguyên" khi đang căn chỉnh; sai quá ngưỡng thì thanh tụt về 0.',
+    nguoi_choi: 'Hai điểm neo bám hai bàn tay, đường nối đổi màu khi đạt yêu cầu.',
+    fallback: "kéo hai điểm neo bằng chuột hoặc hai ngón trên màn cảm ứng",
+  },
+  TWO_HAND_BALANCE: {
+    vi: 'Cân bằng hai tay (Two-hand balance)',
+    landmark: 'HandLandmarker hai tay, lấy cao độ cổ tay (landmark 0) của mỗi tay.',
+    hinh_hoc: 'So sánh độ cao hai bàn tay: tay cao hơn = lớn hơn, ngang nhau (chênh < 4% chiều cao vùng vẽ, giữ 800ms) = bằng nhau. Chỉ chốt khi cả hai tay đều trong khung và ổn định.',
+    muot: 'Chênh lệch cao độ có deadzone; EMA trên cả hai tay; cooldown 600ms.',
+    nguong: 'Một tay ra khỏi khung thì hiện hướng dẫn và tạm dừng chấm điểm.',
+    nguoi_choi: 'Cân thăng bằng trên HUD nghiêng theo hai bàn tay thật.',
+    fallback: "kéo hai đĩa cân lên xuống bằng chuột để so sánh hai số",
+  },
+  ANGLE_POSE: {
+    vi: 'Tạo góc bằng cánh tay (Angle pose)',
+    landmark: 'PoseLandmarker: vai (11, 12), khuỷu (13, 14), cổ tay (15, 16) để tính góc tại khuỷu.',
+    hinh_hoc: 'Đếm ngược "3–2–1" khi góc nằm trong dung sai ±7° so với góc mục tiêu; góc ngoài dung sai thì bộ đếm về 0. Không tính theo vị trí tay tự do.',
+    muot: 'Góc có deadzone ±2° quanh mục tiêu để không nhấp nháy; EMA trên ba landmark.',
+    nguong: 'Hiện thước đo góc ảo với vạch chia và số đo trực tiếp để học sinh đối chiếu với đề bài.',
+    nguoi_choi: 'Sơ đồ góc vẽ ngay trên cánh tay học sinh, đỉnh nằm tại khuỷu.',
+    fallback: "dùng thanh trượt góc hoặc kéo cạnh góc bằng chuột",
+  },
+  VOICE: {
+    vi: 'Nói (Voice)',
+    landmark: 'Web Speech API SpeechRecognition (ngôn ngữ en-US hoặc en-GB) cho phần phát âm; KHÔNG dùng MediaPipe.',
+    hinh_hoc: 'Chấp nhận theo tỉ lệ khớp từ (word-level match) với câu mục tiêu: >= 70% từ đúng là đạt; hiện transcript để học sinh tự thấy mình nói gì.',
+    muot: 'Chỉ ghi nhận sau khi người chơi bấm NÓI (push-to-talk), tự dừng sau 3 giây im lặng; tối đa 3 lần thử mỗi câu.',
+    nguong: 'Micro bị từ chối hoặc trình duyệt không hỗ trợ SpeechRecognition → tự chuyển sang nút "Hiện đáp án + đọc mẫu" và chọn đáp án bằng chuột.',
+    nguoi_choi: 'Sóng âm hiển thị khi đang ghi; mỗi từ đúng tô xanh, từ sai gạch chân kèm phát lại từ đó.',
+    fallback: "nút Nghe mẫu để nghe phát âm chuẩn rồi chọn đáp án bằng chuột",
+  },
+};
+
+// Khối dữ liệu chuẩn theo môn
+export const BANK = {
+  Toán: { so: 40, luu_y: 'Đáp án phải tính lại được bằng số học trong code, không so khớp chuỗi tự do; mỗi phương án nhiễu là một kết quả thật của lỗi đã nêu, không phải số ngẫu nhiên.' },
+  'Tiếng Anh': { so: 60, luu_y: 'Mỗi mục có từ hoặc câu tiếng Anh, gợi nghĩa tiếng Việt, phiên âm khi phù hợp, và audio bằng window.speechSynthesis; đáp án là chuỗi cố định.' },
+};
