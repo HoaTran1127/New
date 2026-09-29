@@ -1,17 +1,38 @@
-# E5-14 — Word Formation Lab
+# E5-14 — Phòng Thí Nghiệm Tạo Từ
 
-Create a standalone single-file English Grade 5 game.
+Tạo game giáo dục web **một file HTML duy nhất** cho học sinh Việt Nam lớp 5, môn Tiếng Anh.
 
-Learning objective: recognize and use word families and common prefixes/suffixes at an upper-primary level.
+## Mục tiêu học tập
+"Họ từ; tiền tố/hậu tố; từ loại"
 
-Mission: transform a base word into the form needed to complete a sentence.
+## Nhiệm vụ học sinh
+"Biến đổi từ để hoàn thành câu"
 
-Gameplay: present a base word and a sentence gap. The learner chooses or assembles the correct related word. Use child-friendly transformations such as happy → unhappy, help → helpful, quick → quickly only where pedagogically appropriate.
+## Gameplay
+Điều khiển: **POINT+DRAG**. Chức năng: "word families; affixes; part of speech".
+- 12 lượt; ngân hàng tối thiểu 60 mục; 3 mức độ.
+- Nội dung tiếng Anh phù hợp trình độ lớp 5.
+- Xáo trộn đáp án; distractor dựa trên lỗi phổ biến.
+- Sai: giải thích bằng tiếng Việt, chỉ ra từ/cấu trúc đúng và cho luyện lại.
+- Đúng: phản hồi tức thì; nghe lại/phát âm khi phù hợp.
+- Có điểm, tiến độ, chuỗi đúng và tổng kết kỹ năng.
 
-Generate at least 60 items with clear answer keys. Include traps from wrong suffix, wrong part of speech and spelling changes.
+## Camera / tương tác
+MediaPipe Hands; pinch/grab và release; smoothing/hysteresis; cooldown 300ms.
+- Xin quyền sau Bắt đầu; có loading/permission/ready/tracking/error.
+- Có calibration/framing; confidence thấp không chốt; một gesture chỉ tạo một event.
 
-Primary control: POINT/DRAG with optional fingertip tracking, confidence >= 0.65, smoothing and 300ms cooldown. Mouse/touch fallback.
+## Fallback
+Mouse/touch/keyboard mô phỏng được gameplay chính.
 
-Feedback shows base word, transformed word, part of speech and sentence meaning.
+## Luồng
+Bắt đầu → Kiểm tra thiết bị → Hiệu chỉnh → Hướng dẫn → Luyện mẫu → 12 lượt → Phản hồi → Ôn câu sai → Kết quả → Chơi lại.
 
-Include accessibility, camera-off mode and no upload. Output one complete HTML file, no TODOs.
+## Ngôn ngữ / an toàn
+UI, nút, hướng dẫn và feedback bằng **tiếng Việt**; phần kiến thức tiếng Anh giữ tiếng Anh. Responsive, chữ lớn, reduced-motion; không động tác nguy hiểm; không lưu/tải dữ liệu camera/micro.
+
+## MiTi — CHỮ KÝ BẮT BUỘC
+HTML phải tự chứa logo **MiTi**: ô bo góc #FFD84D có chữ M #07111F + chữ MiTi đậm + ✦; xuất hiện ở Bắt đầu, HUD và Kết quả; có dòng **MiTi • Học bằng chuyển động**. Dùng inline SVG/CSS/HTML, không phụ thuộc repository hoặc URL logo ngoài.
+
+## Đầu ra
+Chỉ xuất **toàn bộ HTML hoàn chỉnh**, không TODO, không pseudocode, không phụ thuộc repository này.
