@@ -1,20 +1,40 @@
-# L4-21 — Fraction Ninja
+# L4-21 — Ninja Phân Số
 
-- **Khối:** Toán 4
-- **Mục tiêu:** Rút gọn phân số.
-- **Nhiệm vụ:** Chém cặp tử và mẫu cùng chia hết cho một số.
-- **Điều khiển:** SWIPE
+Tạo game giáo dục web **một file HTML duy nhất** cho học sinh Việt Nam lớp 4, môn Toán.
 
-## Prompt copy trực tiếp
+## 1. Mục tiêu và nhiệm vụ
+**Mục tiêu học tập:** So sánh và nhận biết phân số
+**Nhiệm vụ học sinh:** Chém vào phân số đúng
+**Điều khiển chính:** SWIPE
+**Chức năng chính:** "common factors; simplify"
 
-```text
-Tạo game giáo dục "Fraction Ninja" cho học sinh lớp 4 trong đúng 1 file HTML.
-Mục tiêu: rút gọn phân số bằng cách tìm thừa số chung.
-Nhiệm vụ: học sinh dùng ngón trỏ vung tay chém đúng thừa số chung để rút gọn phân số.
-Gameplay: các phân số xuất hiện như mục tiêu ninja; mỗi round yêu cầu rút gọn một phân số. Hiển thị tử và mẫu lớn, các lựa chọn thừa số chung, chỉ chém thừa số hợp lệ. Sau mỗi bước animate phép chia cả tử và mẫu cho cùng số. Tạo ít nhất 10 câu hợp lệ.
-Camera: MediaPipe Hands, xin quyền sau Start, có loading/camera-error/calibration, EMA, confidence, swipe threshold, debounce/cooldown và không spam event khi giữ tay.
-Sai: giải thích “cả tử và mẫu phải cùng chia cho cùng một số”. Đúng: hiệu ứng chém + điểm + combo.
-Fallback: mouse/touch mô phỏng swipe.
-UI: Start → Camera Check → Tutorial → Practice → Play → Result → Replay. Chữ lớn, rõ.
-Không upload video. Không TODO/pseudocode. Không npm/build. Trả toàn bộ HTML duy nhất.
-```
+## 2. Gameplay học qua hành động
+- Thiết kế bối cảnh đúng tên game và biến mục tiêu thành hành động chơi trực tiếp.
+- Có **12 lượt**, ngân hàng **ít nhất 40 câu/tình huống**, 3 mức độ khó.
+- Xáo trộn đáp án và vị trí.
+- Phương án nhiễu phải đại diện cho lỗi thường gặp.
+- Câu sai: giải thích bằng trực quan + cho cơ hội luyện lại.
+- Có điểm, tiến độ, chuỗi đúng và tổng kết kỹ năng.
+- Không để hiệu ứng che kiến thức.
+
+## 3. Camera / nhận diện
+MediaPipe Hands; nhận swipe bằng hướng + vận tốc tương đối; smoothing; debounce/cooldown 450ms; giữ tay không spam.
+- Xin quyền camera/micro chỉ sau **Bắt đầu**.
+- Có trạng thái Đang tải → Xin quyền → Sẵn sàng → Đang nhận diện → Lỗi.
+- Có calibration/framing, smoothing và ngưỡng confidence.
+- Một gesture chỉ tạo một event; không spam khi giữ gesture.
+
+## 4. Fallback
+Mouse/touch/keyboard phải mô phỏng hành động chính.
+
+## 5. Luồng
+**Bắt đầu → Kiểm tra thiết bị → Hiệu chỉnh → Hướng dẫn → Luyện mẫu → 12 lượt → Phản hồi → Ôn câu sai → Kết quả → Chơi lại**
+
+## 6. Ngôn ngữ
+Tất cả UI, hướng dẫn, nút, feedback và lỗi bằng **tiếng Việt**. Chỉ kiến thức Tiếng Anh được dùng tiếng Anh. Chữ lớn, tương phản tốt, mobile-friendly, reduced-motion.
+
+## 8. CHỮ KÝ MiTi
+HTML đầu ra **bắt buộc** tự chứa chữ ký **MiTi**: biểu tượng ô bo góc #FFD84D có chữ M #07111F + wordmark **MiTi** đậm + dấu ✦. Đặt logo nhỏ ở Bắt đầu, HUD và Kết quả; không che gameplay. Có dòng **MiTi • Học bằng chuyển động**. Dùng inline SVG/CSS/HTML, không tham chiếu repository hoặc URL logo bên ngoài. Không xóa logo ở fallback/replay.
+
+## 9. Đầu ra
+Chỉ xuất **toàn bộ HTML hoàn chỉnh**, không TODO, không pseudocode, không phụ thuộc repository này.
