@@ -1,56 +1,86 @@
-id,game,grade,subject,learning_objective,player_mission,primary_control,key_functions,prompt
-L4-01,Number Dash,4,Toán,"Đọc viết cấu tạo số đến 100000","Chọn số theo yêu cầu",POINT,"lane; place value; combo",prompts/01-toan4/L4-01-number-dash.md
-L4-02,Million Mountain,4,Toán,"Số đến hàng triệu; so sánh sắp thứ tự","Sắp số đúng",SWIPE,"mountain; ordering; place value",prompts/01-toan4/L4-02-million-mountain.md
-L4-03,Rounding Hoops,4,Toán,"Làm tròn số","Đưa số vào vòng đúng",PUNCH,"rounding target; number line",prompts/01-toan4/L4-03-rounding-hoops.md
-L4-04,Even Odd Dance,4,Toán,"Số chẵn số lẻ","Di chuyển đến vùng đúng",STEP,"left/right; rhythm; last digit",prompts/01-toan4/L4-04-even-odd-dance.md
-L4-05,Weight Factory,4,Toán,"Đổi đơn vị khối lượng","Kéo vật vào đơn vị đúng",GRAB,"scale; conversion",prompts/01-toan4/L4-05-weight-factory.md
-L4-06,Area Builder,4,Toán,"Đơn vị diện tích","Kéo giãn mô hình",TWO_HAND_STRETCH,"grid; square units",prompts/01-toan4/L4-06-area-builder.md
-L4-07,Time Machine,4,Toán,"Thời gian","Đặt đúng mốc/kim",POINT+TWO_HAND,"clock; timeline",prompts/01-toan4/L4-07-time-machine.md
-L4-08,Angle Hero,4,Toán,"Nhận biết và đo góc","Tạo và giữ đúng góc",ANGLE_POSE,"protractor; tolerance; hold",prompts/01-toan4/L4-08-angle-hero.md
-L4-09,Laser Architect,4,Toán,"Vuông góc song song","Tạo quan hệ đường đúng",TWO_HAND_STRETCH,"laser; snap; geometry",prompts/01-toan4/L4-09-laser-architect.md
-L4-10,Math Boxing,4,Toán,"Cộng trừ và biểu thức","Đấm đáp án đúng",PUNCH,"cards; combo; traps",prompts/01-toan4/L4-10-math-boxing.md
-L4-11,Multiplication Rocket,4,Toán,"Nhân số tự nhiên","Bắn kết quả đúng",PUNCH,"rocket; decomposition",prompts/01-toan4/L4-11-multiplication-rocket.md
-L4-12,Division Conveyor,4,Toán,"Chia thương số dư","Chia nhóm đúng",GRAB,"conveyor; grouping; remainder",prompts/01-toan4/L4-12-division-conveyor.md
-L4-13,Balance Lab,4,Toán,"Tính chất phép tính","Cân biểu thức tương đương",TWO_HAND_STRETCH,"scale; transformations",prompts/01-toan4/L4-13-balance-lab.md
-L4-14,Delivery Route,4,Toán,"Bài toán nhiều bước","Qua checkpoint đúng thứ tự",STEP,"map; checkpoints; hints",prompts/01-toan4/L4-14-delivery-route.md
-L4-15,Data Catch,4,Toán,"Dãy số liệu","Bắt dữ liệu cần tìm",GRAB,"data cards; filtering",prompts/01-toan4/L4-15-data-catch.md
-L4-16,Bar Builder,4,Toán,"Biểu đồ cột","Nâng cột đến giá trị",TWO_HAND_STRETCH,"axis; scaling; snap",prompts/01-toan4/L4-16-bar-builder.md
-L4-17,Picture Market,4,Toán,"Biểu đồ tranh","Chọn nhóm biểu tượng",POINT,"legend; chart reading",prompts/01-toan4/L4-17-picture-market.md
-L4-18,Chance Lab,4,Toán,"Khả năng xảy ra","Dự đoán rồi kiểm tra",LEFT_RIGHT_RAISE,"certain; possible; impossible",prompts/01-toan4/L4-18-chance-lab.md
-L4-19,Fraction Pizza,4,Toán,"Khái niệm phân số","Ghép đủ phần",GRAB,"equal parts; fraction model",prompts/01-toan4/L4-19-fraction-pizza.md
-L4-20,Fraction Mirror,4,Toán,"Phân số bằng nhau","Ghép mô hình tương đương",TWO_HAND_STRETCH,"equivalent models",prompts/01-toan4/L4-20-fraction-mirror.md
-L4-21,Fraction Ninja,4,Toán,"Rút gọn phân số","Chém thừa số chung",SWIPE,"common factors; simplify",prompts/01-toan4/L4-21-fraction-ninja.md
-L4-22,Common Denominator Factory,4,Toán,"Quy đồng mẫu số","Kéo về cùng mẫu",GRAB,"grid; multiply both terms",prompts/01-toan4/L4-22-common-denominator-factory.md
-L4-23,Fraction Race,4,Toán,"So sánh phân số","Đi vào làn phân số lớn hơn",STEP,"race; number line",prompts/01-toan4/L4-23-fraction-race.md
-L4-24,Fraction Fusion,4,Toán,"Cộng phân số cùng mẫu","Ghép để tạo tổng",GRAB,"fraction bars; same denominator",prompts/01-toan4/L4-24-fraction-fusion.md
-L4-25,Fraction Reactor,4,Toán,"Trừ phân số cùng mẫu","Lấy đúng số phần",GRAB,"take-away; same denominator",prompts/01-toan4/L4-25-fraction-reactor.md
-L4-26,Treasure Split,4,Toán,"Tìm phân số của một số","Chia kho báu thành nhóm",GRAB,"groups; fraction-of-number",prompts/01-toan4/L4-26-treasure-split.md
-L4-27,Ratio Rescue,4,Toán,"Sơ đồ tổng-tỉ/hiệu-tỉ*","Dựng sơ đồ và tìm số",TWO_HAND_STRETCH,"bar model",prompts/01-toan4/L4-27-ratio-rescue.md
-L4-28,Map Explorer,4,Toán,"Tỉ lệ bản đồ*","Nối khoảng cách bản đồ và thực",STEP,"map scale",prompts/01-toan4/L4-28-map-explorer.md
-L4-29,Parallelogram Pull,4,Toán,"Diện tích hình bình hành*","Biến đổi thành hình chữ nhật",TWO_HAND_STRETCH,"cut-and-rearrange; area",prompts/01-toan4/L4-29-parallelogram-pull.md
-L4-30,Diamond Builder,4,Toán,"Diện tích hình thoi*","Kéo hai đường chéo",TWO_HAND_STRETCH,"diagonals; area",prompts/01-toan4/L4-30-diamond-builder.md
-L4-31,Mixed Sprint,4,Toán,"Ôn số và phép tính","Vượt checkpoint",MIXED,"mixed rounds; mastery",prompts/01-toan4/L4-31-mixed-sprint.md
-L4-32,Geometry Arena,4,Toán,"Ôn hình học và đo lường","Hoàn thành chuỗi thử thách",MIXED,"angles; lines; area",prompts/01-toan4/L4-32-geometry-arena.md
-L4-33,Fraction Arena,4,Toán,"Ôn phân số","Hoàn thành combo phân số",MIXED,"fraction mechanics",prompts/01-toan4/L4-33-fraction-arena.md
-L4-34,Data Arena,4,Toán,"Ôn dữ liệu và khả năng xảy ra","Đọc bắt dự đoán",MIXED,"tables; charts; probability",prompts/01-toan4/L4-34-data-arena.md
-L4-35,Grand Math Arena,4,Toán,"Ôn cuối năm","Hoàn thành campaign",MIXED,"map; mastery; adaptive review",prompts/01-toan4/L4-35-grand-math-arena.md
-L4-36,Place Value Forge,4,Toán,"Giá trị theo hàng; số có nhiều chữ số","Đặt chữ số vào đúng hàng",POINT+DRAG,"place value; expanded form; distractors",prompts/01-toan4/L4-36-place-value-forge.md
-L4-37,Fraction Market,4,Toán,"Phân số; phân số bằng nhau; phân số của một nhóm","Hoàn thành đơn hàng phân số",GRAB+POINT,"fraction models; equivalent fractions; market",prompts/01-toan4/L4-37-fraction-market.md
-L4-38,Angle Rescue,4,Toán,"Góc nhọn; góc vuông; góc tù; ước lượng số đo","Chọn cổng góc đúng",POINT,"angle types; protractor; tolerance",prompts/01-toan4/L4-38-angle-rescue.md
-L4-39,Data Detective,4,Toán,"Đọc bảng và biểu đồ; khai thác dữ liệu","Tìm bằng chứng đúng trong biểu đồ",POINT,"tables; picture charts; bar charts; evidence",prompts/01-toan4/L4-39-data-detective.md
-L4-40,Math Boss Lab,4,Toán,"Ôn tổng hợp Toán 4","Vượt sáu thử thách kỹ năng",MIXED,"adaptive review; number; fraction; geometry; data",prompts/01-toan4/L4-40-math-boss-lab.md
-T5-11,Decimal Shop,5,Toán,"Số thập phân; so sánh; cộng trừ","Hoàn thành đơn hàng bằng số thập phân",POINT+DRAG,"place value; decimal operations; money",prompts/02-toan5/T5-11-decimal-shop.md
-T5-12,Percentage Lab,5,Toán,"Phần trăm; phân số; số thập phân","Đổi biểu diễn và giải bài toán phần trăm",POINT,"hundred grid; conversions; percentage of quantity",prompts/02-toan5/T5-12-percentage-lab.md
-T5-13,Volume Vault,5,Toán,"Thể tích hình hộp chữ nhật","Tính thể tích để mở kho",POINT+DRAG,"cuboid; cubic units; formula",prompts/02-toan5/T5-13-volume-vault.md
-T5-14,Motion Word-Problem Racer,5,Toán,"Bài toán chuyển động; quan hệ quãng đường-thời gian-vận tốc","Chọn dữ kiện và giải chặng đua",POINT,"timeline; units; word problems",prompts/02-toan5/T5-14-motion-word-problem.md
-T5-15,Math Strategy Arena,5,Toán,"Ôn tổng hợp Toán 5; chiến lược giải","Chọn chiến lược rồi giải bài",MIXED,"decimals; fractions; percentages; measurement; data; geometry",prompts/02-toan5/T5-15-math-strategy-arena.md
-E4-11,Picture Story Builder,4,English,"Câu đơn; từ vựng; trật tự câu; kể chuyện ngắn","Ghép câu theo chuỗi tranh",POINT+DRAG,"story sequence; sentence building; TTS",prompts/03-english4/E4-11-picture-story-builder.md
-E4-12,Listen and Sort,4,English,"Nghe hiểu từ và cụm từ quen thuộc","Nghe rồi phân loại vào chủ đề",POINT+DRAG,"listening; topics; replay; weak-word recycle",prompts/03-english4/E4-12-listen-and-sort.md
-E4-13,Phonics Pop,4,English,"Âm và mẫu chữ thông dụng","Chọn từ chứa âm/mẫu chữ mục tiêu",SWIPE,"phonics; spelling pattern; audio",prompts/03-english4/E4-13-phonics-pop.md
-E4-14,Question Builder,4,English,"Tạo câu hỏi cơ bản và câu trả lời","Sắp xếp từ thành câu hỏi đúng",POINT+DRAG,"question words; word order; sentence frames",prompts/03-english4/E4-14-question-builder.md
-E4-15,English Adventure Map,4,English,"Ôn từ vựng; nghe; chính tả; câu; ngữ pháp","Hoàn thành năm đảo kỹ năng",MIXED,"adaptive review; vocabulary; listening; spelling; grammar",prompts/03-english4/E4-15-english-adventure-map.md
-E5-11,Reading Detective,5,English,"Ý chính; chi tiết; trình tự; suy luận đơn giản","Tìm bằng chứng trong bài đọc",POINT,"reading evidence; inference; context",prompts/04-english5/E5-11-reading-detective.md
-E5-12,Grammar Builder,5,English,"Cấu trúc câu và ngữ pháp cốt lõi","Sửa câu sai để mở màn",POINT+DRAG,"grammar categories; sentence repair; mastery",prompts/04-english5/E5-12-grammar-builder.md
-E5-13,Speaking Mission,5,English,"Nói câu trả lời ngắn trong tình huống quen thuộc","Hoàn thành năm nhiệm vụ giao tiếp",VOICE,"speech recognition; sentence frames; self-check",prompts/04-english5/E5-13-speaking-mission.md
-E5-14,Word Formation Lab,5,English,"Họ từ; tiền tố/hậu tố; từ loại","Biến đổi từ để hoàn thành câu",POINT+DRAG,"word families; affixes; part of speech",prompts/04-english5/E5-14-word-formation-lab.md
-E5-15,English Challenge Cup,5,English,"Ôn tổng hợp kỹ năng tiếng Anh","Hoàn thành sáu sự kiện kỹ năng",MIXED,"listening; vocabulary; reading; grammar; spelling; speaking",prompts/04-english5/E5-15-english-challenge-cup.md
+"id","ten_game","lop","mon","muc_tieu_hoc_tap","nhiem_vu","dieu_khien","chuc_nang_chinh","prompt"
+"L4-01","Đường Đua Hàng Số","4","Toán","Đọc, viết và phân tích cấu tạo số","Chọn số đúng theo yêu cầu về hàng và giá trị","POINT","""lane; place value; combo""","prompts/01-toan4/L4-01-number-dash.md"
+"L4-02","Núi Hàng Triệu","4","Toán","Đọc, so sánh và sắp xếp số lớn","Sắp các số theo thứ tự được yêu cầu","SWIPE","""mountain; ordering; place value""","prompts/01-toan4/L4-02-million-mountain.md"
+"L4-03","Ném Vòng Làm Tròn","4","Toán","Làm tròn số theo hàng cho trước","Đưa số vào vùng kết quả đúng","PUNCH","""rounding target; number line""","prompts/01-toan4/L4-03-rounding-hoops.md"
+"L4-04","Vũ Điệu Chẵn Lẻ","4","Toán","Phân biệt số chẵn và số lẻ","Di chuyển tới vùng chẵn hoặc lẻ","STEP","""left/right; rhythm; last digit""","prompts/01-toan4/L4-04-even-odd-dance.md"
+"L4-05","Nhà Máy Khối Lượng","4","Toán","Đổi và so sánh đơn vị khối lượng","Kéo vật vào đơn vị tương ứng","GRAB","""scale; conversion""","prompts/01-toan4/L4-05-weight-factory.md"
+"L4-06","Xưởng Diện Tích","4","Toán","Tính diện tích bằng đơn vị vuông","Dựng mô hình có diện tích yêu cầu","TWO_HAND_STRETCH","""grid; square units""","prompts/01-toan4/L4-06-area-builder.md"
+"L4-07","Cỗ Máy Thời Gian","4","Toán","Đọc giờ và tính khoảng thời gian","Đặt đồng hồ hoặc mốc thời gian chính xác","POINT+TWO_HAND","""clock; timeline""","prompts/01-toan4/L4-07-time-machine.md"
+"L4-08","Anh Hùng Góc","4","Toán","Nhận biết và đo góc","Tạo góc đạt yêu cầu","ANGLE_POSE","""protractor; tolerance; hold""","prompts/01-toan4/L4-08-angle-hero.md"
+"L4-09","Kiến Trúc Sư Laser","4","Toán","Nhận biết quan hệ vuông góc và song song","Điều chỉnh các đường theo quan hệ yêu cầu","TWO_HAND_STRETCH","""laser; snap; geometry""","prompts/01-toan4/L4-09-laser-architect.md"
+"L4-10","Đấm Bốc Toán","4","Toán","Cộng, trừ và tính biểu thức","Đấm vào đáp án đúng","PUNCH","""cards; combo; traps""","prompts/01-toan4/L4-10-math-boxing.md"
+"L4-11","Tên Lửa Phép Nhân","4","Toán","Vận dụng bảng nhân và tính tích","Bắn tên lửa vào kết quả đúng","PUNCH","""rocket; decomposition""","prompts/01-toan4/L4-11-multiplication-rocket.md"
+"L4-12","Băng Chuyền Phép Chia","4","Toán","Thực hiện phép chia và xác định thương, số dư","Chia nhóm vật đúng quy tắc","GRAB","""conveyor; grouping; remainder""","prompts/01-toan4/L4-12-division-conveyor.md"
+"L4-13","Phòng Thí Nghiệm Cân Bằng","4","Toán","Hiểu quan hệ bằng nhau và cân bằng","Cân hai vế của bài toán","GRAB","""scale; transformations""","prompts/01-toan4/L4-13-balance-lab.md"
+"L4-14","Tuyến Giao Hàng","4","Toán","Giải bài toán thực tế theo tuyến đường","Chọn chặng và phép tính phù hợp","POINT","""map; checkpoints; hints""","prompts/01-toan4/L4-14-delivery-route.md"
+"L4-15","Săn Dữ Liệu","4","Toán","Đọc bảng và thu thập dữ liệu","Chọn dữ liệu đúng theo câu hỏi","GRAB","""data cards; filtering""","prompts/01-toan4/L4-15-data-catch.md"
+"L4-16","Xây Biểu Đồ Cột","4","Toán","Đọc và biểu diễn dữ liệu bằng biểu đồ cột","Xây cột đúng chiều cao","DRAG","""axis; scaling; snap""","prompts/01-toan4/L4-16-bar-builder.md"
+"L4-17","Chợ Tranh Toán","4","Toán","Giải bài toán tiền và mua bán","Chọn món, tính tiền và tiền thừa","GRAB","""legend; chart reading""","prompts/01-toan4/L4-17-picture-market.md"
+"L4-18","Phòng Thí Nghiệm Xác Suất","4","Toán","Nhận biết khả năng xảy ra của sự kiện","Phân loại sự kiện theo khả năng","POINT","""certain; possible; impossible""","prompts/01-toan4/L4-18-chance-lab.md"
+"L4-19","Pizza Phân Số","4","Toán","Nhận biết và biểu diễn phân số","Chọn phần bánh đúng với phân số","POINT","""equal parts; fraction model""","prompts/01-toan4/L4-19-fraction-pizza.md"
+"L4-20","Gương Phân Số","4","Toán","Nhận biết phân số tương đương","Ghép các biểu diễn tương đương","DRAG","""equivalent models""","prompts/01-toan4/L4-20-fraction-mirror.md"
+"L4-21","Ninja Phân Số","4","Toán","So sánh và nhận biết phân số","Chém vào phân số đúng","SWIPE","""common factors; simplify""","prompts/01-toan4/L4-21-fraction-ninja.md"
+"L4-22","Nhà Máy Quy Đồng","4","Toán","Quy đồng mẫu số trong trường hợp phù hợp","Ghép các phân số về cùng mẫu","DRAG","""grid; multiply both terms""","prompts/01-toan4/L4-22-common-denominator-factory.md"
+"L4-23","Đua Phân Số","4","Toán","So sánh phân số","Đua tới phân số lớn hoặc bé theo yêu cầu","SWIPE","""race; number line""","prompts/01-toan4/L4-23-fraction-race.md"
+"L4-24","Hợp Nhất Phân Số","4","Toán","Cộng, trừ và biến đổi phân số phù hợp","Ghép các mảnh để tạo kết quả","GRAB","""fraction bars; same denominator""","prompts/01-toan4/L4-24-fraction-fusion.md"
+"L4-25","Lò Phản Ứng Phân Số","4","Toán","Vận dụng phân số trong bài toán tổng hợp","Kích hoạt phản ứng bằng đáp án đúng","POINT","""take-away; same denominator""","prompts/01-toan4/L4-25-fraction-reactor.md"
+"L4-26","Chia Kho Báu","4","Toán","Giải quyết bài toán chia phần","Chia kho báu theo phân số hoặc tỉ số","GRAB","""groups; fraction-of-number""","prompts/01-toan4/L4-26-treasure-split.md"
+"L4-27","Cứu Hộ Tỉ Số","4","Toán","Nhận biết và vận dụng tỉ số","Giải cứu nhân vật bằng tỉ số đúng","POINT","""bar model""","prompts/01-toan4/L4-27-ratio-rescue.md"
+"L4-28","Nhà Thám Hiểm Bản Đồ","4","Toán","Đọc bản đồ và xác định vị trí","Chọn đường đi và vị trí theo dữ kiện","SWIPE","""map scale""","prompts/01-toan4/L4-28-map-explorer.md"
+"L4-29","Kéo Hình Bình Hành","4","Toán","Nhận biết đặc điểm hình bình hành","Điều chỉnh hình theo tính chất","DRAG","""cut-and-rearrange; area""","prompts/01-toan4/L4-29-parallelogram-pull.md"
+"L4-30","Xây Hình Thoi","4","Toán","Nhận biết đặc điểm hình thoi","Ghép cạnh để tạo hình đúng","GRAB","""diagonals; area""","prompts/01-toan4/L4-30-diamond-builder.md"
+"L4-31","Bứt Tốc Tổng Hợp","4","Toán","Ôn tập nhiều mạch kiến thức Toán 4","Vượt liên tiếp các thử thách tổng hợp","MIXED","""mixed rounds; mastery""","prompts/01-toan4/L4-31-mixed-sprint.md"
+"L4-32","Đấu Trường Hình Học","4","Toán","Ôn tập hình học","Vượt các cửa hình học","MIXED","""angles; lines; area""","prompts/01-toan4/L4-32-geometry-arena.md"
+"L4-33","Đấu Trường Phân Số","4","Toán","Ôn tập phân số","Hoàn thành chuỗi thử thách phân số","MIXED","""fraction mechanics""","prompts/01-toan4/L4-33-fraction-arena.md"
+"L4-34","Đấu Trường Dữ Liệu","4","Toán","Ôn tập dữ liệu và biểu đồ","Đọc và xử lý dữ liệu nhanh","MIXED","""tables; charts; probability""","prompts/01-toan4/L4-34-data-arena.md"
+"L4-35","Đại Đấu Trường Toán","4","Toán","Ôn tập tổng hợp Toán 4","Hoàn thành trận đấu cuối cấp độ","MIXED","""map; mastery; adaptive review""","prompts/01-toan4/L4-35-grand-math-arena.md"
+"L4-36","Lò Rèn Hàng Số","4","Toán","Đọc và phân tích giá trị theo hàng","Rèn số đúng trong lò hàng số","POINT","""place value; expanded form; distractors""","prompts/01-toan4/L4-36-place-value-forge.md"
+"L4-37","Chợ Phân Số","4","Toán","Vận dụng phân số trong tình huống mua bán","Chọn giá và phần hàng đúng","GRAB","""fraction models; equivalent fractions; market""","prompts/01-toan4/L4-37-fraction-market.md"
+"L4-38","Giải Cứu Góc","4","Toán","Nhận biết, đo và phân loại góc","Điều khiển nhân vật tới góc đúng","POINT","""angle types; protractor; tolerance""","prompts/01-toan4/L4-38-angle-rescue.md"
+"L4-39","Thám Tử Dữ Liệu","4","Toán","Đọc bảng, biểu đồ và tìm bằng chứng","Điều tra dữ liệu để trả lời câu hỏi","POINT","""tables; picture charts; bar charts; evidence""","prompts/01-toan4/L4-39-data-detective.md"
+"L4-40","Phòng Boss Toán","4","Toán","Vận dụng chiến lược giải toán tổng hợp","Đánh bại Boss bằng chuỗi đáp án đúng","MIXED","""adaptive review; number; fraction; geometry; data""","prompts/01-toan4/L4-40-math-boss-lab.md"
+"T5-01","Nhiệm Vụ Phép Tính","5","Tiếng Anh","Vận dụng kiến thức Toán 5 qua tình huống tương tác","Giải nhiệm vụ theo từng màn và nhận phản hồi","MIXED","tương tác; phản hồi tức thì; tăng độ khó; ôn lại lỗi","prompts/02-toan5/T5-01-multi-operation-quest.md"
+"T5-02","Đường Đua Số Thập Phân","5","Tiếng Anh","Vận dụng kiến thức Toán 5 qua tình huống tương tác","Giải nhiệm vụ theo từng màn và nhận phản hồi","MIXED","tương tác; phản hồi tức thì; tăng độ khó; ôn lại lỗi","prompts/02-toan5/T5-02-decimal-dash.md"
+"T5-03","Ghép Phân Số – Thập Phân – Phần Trăm","5","Tiếng Anh","Vận dụng kiến thức Toán 5 qua tình huống tương tác","Giải nhiệm vụ theo từng màn và nhận phản hồi","MIXED","tương tác; phản hồi tức thì; tăng độ khó; ôn lại lỗi","prompts/02-toan5/T5-03-fraction-decimal-percentage-memory.md"
+"T5-04","Cửa Hàng Phần Trăm","5","Tiếng Anh","Vận dụng kiến thức Toán 5 qua tình huống tương tác","Giải nhiệm vụ theo từng màn và nhận phản hồi","MIXED","tương tác; phản hồi tức thì; tăng độ khó; ôn lại lỗi","prompts/02-toan5/T5-04-percentage-shop.md"
+"T5-05","Xây Kho Thể Tích","5","Tiếng Anh","Vận dụng kiến thức Toán 5 qua tình huống tương tác","Giải nhiệm vụ theo từng màn và nhận phản hồi","MIXED","tương tác; phản hồi tức thì; tăng độ khó; ôn lại lỗi","prompts/02-toan5/T5-05-volume-builder.md"
+"T5-06","Đầu Bếp Tỉ Số","5","Tiếng Anh","Vận dụng kiến thức Toán 5 qua tình huống tương tác","Giải nhiệm vụ theo từng màn và nhận phản hồi","MIXED","tương tác; phản hồi tức thì; tăng độ khó; ôn lại lỗi","prompts/02-toan5/t5-06.md"
+"T5-07","Đua Chuyển Động","5","Tiếng Anh","Vận dụng kiến thức Toán 5 qua tình huống tương tác","Giải nhiệm vụ theo từng màn và nhận phản hồi","MIXED","tương tác; phản hồi tức thì; tăng độ khó; ôn lại lỗi","prompts/02-toan5/t5-07.md"
+"T5-08","Phòng Tập Hình Học","5","Tiếng Anh","Vận dụng kiến thức Toán 5 qua tình huống tương tác","Giải nhiệm vụ theo từng màn và nhận phản hồi","MIXED","tương tác; phản hồi tức thì; tăng độ khó; ôn lại lỗi","prompts/02-toan5/t5-08.md"
+"T5-09","Cân Bằng Số Thập Phân","5","Tiếng Anh","Vận dụng kiến thức Toán 5 qua tình huống tương tác","Giải nhiệm vụ theo từng màn và nhận phản hồi","MIXED","tương tác; phản hồi tức thì; tăng độ khó; ôn lại lỗi","prompts/02-toan5/t5-09.md"
+"T5-10","Đại Nhiệm Vụ Toán","5","Tiếng Anh","Vận dụng kiến thức Toán 5 qua tình huống tương tác","Giải nhiệm vụ theo từng màn và nhận phản hồi","MIXED","tương tác; phản hồi tức thì; tăng độ khó; ôn lại lỗi","prompts/02-toan5/t5-10.md"
+"T5-11","Cửa Hàng Thập Phân","5","Tiếng Anh","""Số thập phân; so sánh; cộng trừ""","""Hoàn thành đơn hàng bằng số thập phân""","POINT+DRAG","""place value; decimal operations; money""","prompts/02-toan5/T5-11-decimal-shop.md"
+"T5-12","Phòng Thí Nghiệm Phần Trăm","5","Tiếng Anh","""Phần trăm; phân số; số thập phân""","""Đổi biểu diễn và giải bài toán phần trăm""","POINT","""hundred grid; conversions; percentage of quantity""","prompts/02-toan5/T5-12-percentage-lab.md"
+"T5-13","Kho Báu Thể Tích","5","Tiếng Anh","""Thể tích hình hộp chữ nhật""","""Tính thể tích để mở kho""","POINT+DRAG","""cuboid; cubic units; formula""","prompts/02-toan5/T5-13-volume-vault.md"
+"T5-14","Đua Bài Toán Chuyển Động","5","Tiếng Anh","""Bài toán chuyển động; quan hệ quãng đường-thời gian-vận tốc""","""Chọn dữ kiện và giải chặng đua""","POINT","""timeline; units; word problems""","prompts/02-toan5/T5-14-motion-word-problem.md"
+"T5-15","Đấu Trường Chiến Thuật Toán","5","Tiếng Anh","""Ôn tổng hợp Toán 5; chiến lược giải""","""Chọn chiến lược rồi giải bài""","MIXED","""decimals; fractions; percentages; measurement; data; geometry""","prompts/02-toan5/T5-15-math-strategy-arena.md"
+"E4-01","Nhiệm Vụ Từ Vựng","5","Tiếng Anh","Phát triển từ vựng, nghe, nói, đọc và viết tiếng Anh lớp 4","Hoàn thành chuỗi nhiệm vụ ngôn ngữ và nhận phản hồi","MIXED","tương tác; phản hồi tức thì; tăng độ khó; ôn lại lỗi","prompts/03-english4/E4-01-vocab-quest.md"
+"E4-02","Chọn Đáp Án Nghe","5","Tiếng Anh","Phát triển từ vựng, nghe, nói, đọc và viết tiếng Anh lớp 4","Hoàn thành chuỗi nhiệm vụ ngôn ngữ và nhận phản hồi","MIXED","tương tác; phản hồi tức thì; tăng độ khó; ôn lại lỗi","prompts/03-english4/E4-02-listening-pick.md"
+"E4-03","Ghép Tranh – Từ","5","Tiếng Anh","Phát triển từ vựng, nghe, nói, đọc và viết tiếng Anh lớp 4","Hoàn thành chuỗi nhiệm vụ ngôn ngữ và nhận phản hồi","MIXED","tương tác; phản hồi tức thì; tăng độ khó; ôn lại lỗi","prompts/03-english4/E4-03-picture-word-match.md"
+"E4-04","Ngôi Sao Chính Tả","5","Tiếng Anh","Phát triển từ vựng, nghe, nói, đọc và viết tiếng Anh lớp 4","Hoàn thành chuỗi nhiệm vụ ngôn ngữ và nhận phản hồi","MIXED","tương tác; phản hồi tức thì; tăng độ khó; ôn lại lỗi","prompts/03-english4/E4-04-spelling-stars.md"
+"E4-05","Nhiệm Vụ Điền Chữ","5","Tiếng Anh","Phát triển từ vựng, nghe, nói, đọc và viết tiếng Anh lớp 4","Hoàn thành chuỗi nhiệm vụ ngôn ngữ và nhận phản hồi","MIXED","tương tác; phản hồi tức thì; tăng độ khó; ôn lại lỗi","prompts/03-english4/E4-05-missing-letter-mission.md"
+"E4-06","Xây Từ","5","Tiếng Anh","Phát triển từ vựng, nghe, nói, đọc và viết tiếng Anh lớp 4","Hoàn thành chuỗi nhiệm vụ ngôn ngữ và nhận phản hồi","MIXED","tương tác; phản hồi tức thì; tăng độ khó; ôn lại lỗi","prompts/03-english4/E4-06-word-builder.md"
+"E4-07","Đua Xếp Câu","5","Tiếng Anh","Phát triển từ vựng, nghe, nói, đọc và viết tiếng Anh lớp 4","Hoàn thành chuỗi nhiệm vụ ngôn ngữ và nhận phản hồi","MIXED","tương tác; phản hồi tức thì; tăng độ khó; ôn lại lỗi","prompts/03-english4/E4-07-sentence-race.md"
+"E4-08","Trí Nhớ Từ Vựng","5","Tiếng Anh","Phát triển từ vựng, nghe, nói, đọc và viết tiếng Anh lớp 4","Hoàn thành chuỗi nhiệm vụ ngôn ngữ và nhận phản hồi","MIXED","tương tác; phản hồi tức thì; tăng độ khó; ôn lại lỗi","prompts/03-english4/E4-08-word-memory.md"
+"E4-09","Đường Đua Nghe","5","Tiếng Anh","Phát triển từ vựng, nghe, nói, đọc và viết tiếng Anh lớp 4","Hoàn thành chuỗi nhiệm vụ ngôn ngữ và nhận phản hồi","MIXED","tương tác; phản hồi tức thì; tăng độ khó; ôn lại lỗi","prompts/03-english4/E4-09-listening-lane.md"
+"E4-10","Đập Từ","5","Tiếng Anh","Phát triển từ vựng, nghe, nói, đọc và viết tiếng Anh lớp 4","Hoàn thành chuỗi nhiệm vụ ngôn ngữ và nhận phản hồi","MIXED","tương tác; phản hồi tức thì; tăng độ khó; ôn lại lỗi","prompts/03-english4/E4-10-word-whack.md"
+"E4-11","Xây Câu Chuyện Tranh","5","Tiếng Anh","""Câu đơn; từ vựng; trật tự câu; kể chuyện ngắn""","""Ghép câu theo chuỗi tranh""","POINT+DRAG","""story sequence; sentence building; TTS""","prompts/03-english4/E4-11-picture-story-builder.md"
+"E4-12","Nghe Và Phân Loại","5","Tiếng Anh","""Nghe hiểu từ và cụm từ quen thuộc""","""Nghe rồi phân loại vào chủ đề""","POINT+DRAG","""listening; topics; replay; weak-word recycle""","prompts/03-english4/E4-12-listen-and-sort.md"
+"E4-13","Bóng Âm","5","Tiếng Anh","""Âm và mẫu chữ thông dụng""","""Chọn từ chứa âm/mẫu chữ mục tiêu""","SWIPE","""phonics; spelling pattern; audio""","prompts/03-english4/E4-13-phonics-pop.md"
+"E4-14","Xây Câu Hỏi","5","Tiếng Anh","""Tạo câu hỏi cơ bản và câu trả lời""","""Sắp xếp từ thành câu hỏi đúng""","POINT+DRAG","""question words; word order; sentence frames""","prompts/03-english4/E4-14-question-builder.md"
+"E4-15","Bản Đồ Phiêu Lưu Tiếng Anh","5","Tiếng Anh","""Ôn từ vựng; nghe; chính tả; câu; ngữ pháp""","""Hoàn thành năm đảo kỹ năng""","MIXED","""adaptive review; vocabulary; listening; spelling; grammar""","prompts/03-english4/E4-15-english-adventure-map.md"
+"E5-01","Trùm Nghe Hiểu","5","Tiếng Anh","Phát triển đọc, nghe, từ vựng, ngữ pháp và giao tiếp tiếng Anh lớp 5","Hoàn thành chuỗi nhiệm vụ ngôn ngữ và nhận phản hồi","MIXED","tương tác; phản hồi tức thì; tăng độ khó; ôn lại lỗi","prompts/04-english5/E5-01-listening-boss.md"
+"E5-02","Mê Cung Câu","5","Tiếng Anh","Phát triển đọc, nghe, từ vựng, ngữ pháp và giao tiếp tiếng Anh lớp 5","Hoàn thành chuỗi nhiệm vụ ngôn ngữ và nhận phản hồi","MIXED","tương tác; phản hồi tức thì; tăng độ khó; ôn lại lỗi","prompts/04-english5/E5-02-sentence-maze.md"
+"E5-03","Thợ Săn Từ","5","Tiếng Anh","Phát triển đọc, nghe, từ vựng, ngữ pháp và giao tiếp tiếng Anh lớp 5","Hoàn thành chuỗi nhiệm vụ ngôn ngữ và nhận phản hồi","MIXED","tương tác; phản hồi tức thì; tăng độ khó; ôn lại lỗi","prompts/04-english5/E5-03-word-hunter.md"
+"E5-04","Cổng Ngữ Pháp","5","Tiếng Anh","Phát triển đọc, nghe, từ vựng, ngữ pháp và giao tiếp tiếng Anh lớp 5","Hoàn thành chuỗi nhiệm vụ ngôn ngữ và nhận phản hồi","MIXED","tương tác; phản hồi tức thì; tăng độ khó; ôn lại lỗi","prompts/04-english5/E5-04-grammar-gates.md"
+"E5-05","Hẻm Núi Điền Từ","5","Tiếng Anh","Phát triển đọc, nghe, từ vựng, ngữ pháp và giao tiếp tiếng Anh lớp 5","Hoàn thành chuỗi nhiệm vụ ngôn ngữ và nhận phản hồi","MIXED","tương tác; phản hồi tức thì; tăng độ khó; ôn lại lỗi","prompts/04-english5/E5-05-cloze-canyon.md"
+"E5-06","Pháo Đài Chính Tả","5","Tiếng Anh","Phát triển đọc, nghe, từ vựng, ngữ pháp và giao tiếp tiếng Anh lớp 5","Hoàn thành chuỗi nhiệm vụ ngôn ngữ và nhận phản hồi","MIXED","tương tác; phản hồi tức thì; tăng độ khó; ôn lại lỗi","prompts/04-english5/E5-06-spelling-blaster.md"
+"E5-07","Xây Cụm Từ","5","Tiếng Anh","Phát triển đọc, nghe, từ vựng, ngữ pháp và giao tiếp tiếng Anh lớp 5","Hoàn thành chuỗi nhiệm vụ ngôn ngữ và nhận phản hồi","MIXED","tương tác; phản hồi tức thì; tăng độ khó; ôn lại lỗi","prompts/04-english5/E5-07-phrase-builder.md"
+"E5-08","Bộ Ba Trí Nhớ","5","Tiếng Anh","Phát triển đọc, nghe, từ vựng, ngữ pháp và giao tiếp tiếng Anh lớp 5","Hoàn thành chuỗi nhiệm vụ ngôn ngữ và nhận phản hồi","MIXED","tương tác; phản hồi tức thì; tăng độ khó; ôn lại lỗi","prompts/04-english5/E5-08-memory-triplet.md"
+"E5-09","Tuyến Đường Nói","5","Tiếng Anh","Phát triển đọc, nghe, từ vựng, ngữ pháp và giao tiếp tiếng Anh lớp 5","Hoàn thành chuỗi nhiệm vụ ngôn ngữ và nhận phản hồi","MIXED","tương tác; phản hồi tức thì; tăng độ khó; ôn lại lỗi","prompts/04-english5/E5-09-voice-route.md"
+"E5-10","Đảo Ôn Tập","5","Tiếng Anh","Phát triển đọc, nghe, từ vựng, ngữ pháp và giao tiếp tiếng Anh lớp 5","Hoàn thành chuỗi nhiệm vụ ngôn ngữ và nhận phản hồi","MIXED","tương tác; phản hồi tức thì; tăng độ khó; ôn lại lỗi","prompts/04-english5/E5-10-island-review.md"
+"E5-11","Thám Tử Đọc Hiểu","5","Tiếng Anh","""Ý chính; chi tiết; trình tự; suy luận đơn giản""","""Tìm bằng chứng trong bài đọc""","POINT","""reading evidence; inference; context""","prompts/04-english5/E5-11-reading-detective.md"
+"E5-12","Xây Ngữ Pháp","5","Tiếng Anh","""Cấu trúc câu và ngữ pháp cốt lõi""","""Sửa câu sai để mở màn""","POINT+DRAG","""grammar categories; sentence repair; mastery""","prompts/04-english5/E5-12-grammar-builder.md"
+"E5-13","Nhiệm Vụ Nói","5","Tiếng Anh","""Nói câu trả lời ngắn trong tình huống quen thuộc""","""Hoàn thành năm nhiệm vụ giao tiếp""","VOICE","""speech recognition; sentence frames; self-check""","prompts/04-english5/E5-13-speaking-mission.md"
+"E5-14","Phòng Thí Nghiệm Tạo Từ","5","Tiếng Anh","""Họ từ; tiền tố/hậu tố; từ loại""","""Biến đổi từ để hoàn thành câu""","POINT+DRAG","""word families; affixes; part of speech""","prompts/04-english5/E5-14-word-formation-lab.md"
+"E5-15","Cúp Thử Thách Tiếng Anh","5","Tiếng Anh","""Ôn tổng hợp kỹ năng tiếng Anh""","""Hoàn thành sáu sự kiện kỹ năng""","MIXED","""listening; vocabulary; reading; grammar; spelling; speaking""","prompts/04-english5/E5-15-english-challenge-cup.md"
