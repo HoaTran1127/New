@@ -253,6 +253,17 @@ Vòng 4 đọc lại chính prompt của mình và thấy một lệnh sai nằm
 
 `LESSON.release` tách hai trục: mỗi mục LESSON_DATA thêm trường `ho_tro` nhận một trong ba giá trị `"cô làm mẫu" / "cả lớp làm cùng cô" / "em tự làm"`, 6 mục bắt buộc chia **đúng 2-2-2**, kèm cổng ready đếm được (rời một mức khi ≥ 2/3 lớp đúng; dưới 1/2 phải thêm một mục ở chính mức đó; quá 20 giây không ai trả lời thì bấm "Làm mẫu lại" để **tăng** hỗ trợ). Ba mức khác nhau ở **lượng giàn giáo trên bảng**, không ở độ khó đề bài — nên vẫn giữ đúng một mức hợp lệ của SGK lớp 4/5. `validate.mjs` chặn luôn cụm "cùng độ khó" để lệnh cũ không quay lại.
 
+### 🧹 Vì sao dữ liệu dùng chung vẫn lọt tiếng game vào giáo án (`giao_an` + `tools/data/error-tags.mjs`)
+
+Vòng 5 đi tìm chỗ giáo án vẫn còn nói tiếng của trò chơi và thấy hai kênh, cả hai nằm ở **tầng dữ liệu** chứ không ở quy định:
+
+- **Lời mô tả** — `clusters.mjs` và `props.mjs` là nguồn chung với 85 prompt game, nên 2/38 cụm Toán sinh ra cho game mang theo "trận boss", "thẻ gợi ý miễn phí", "mỗi cửa ải viết một dòng phấn". `GAME_ONLY` trong validator bắt cơ chế, không bắt được lời.
+- **Nhãn lỗi** — 23/114 câu mẫu (rải trên 14/38 cụm Toán) có `errorTag` **ngoài** ba nhãn của cụm. Khuôn cũ `notes[tags.indexOf(tag)] ?? notes[0]` vì thế dán nhầm nhãn: mục "diện tích hình thoi, quên chia 2 khi nhân hai đường chéo" bị gán nhãn "nóng vội khi độ khó tăng". Hại hơn, mục 3 của prompt lại khai `errorTag` phải "thuộc đúng danh sách đã khai báo" — hai mục **bắt buộc** vì vậy bị `verifyQuestionBank()` loại ngay lúc nạp, và giáo án mất luôn cột mốc để mô hình viết 4 mục còn lại.
+
+Cách sửa không chạm vào prompt game: khối `giao_an` trong `tools/data/lessons.mjs` ghi đè bẩy trường lời (`muc_tieu · giai_thich · vat · don_vi · ngon_tay · so_do · doc`) và mảng `loi_viet` cho riêng giáo án — **chỉ đổi cách nói, không đổi kiến thức** — còn `tools/data/error-tags.mjs` (21 nhãn dùng chung) cùng `danhSachNhanLoi()` khai báo đủ cả nhãn của cụm lẫn nhãn mà hai mục mẫu thật sự dùng. `LESSON_BAN_WORDS` (11 từ) quét từng file `GA*.md` và khi thấy từ game thì gọi tên đúng cụm cần thêm override. 8/8 mutation probe vòng này xác nhận cả hai chiều: xoá override thì hệ thống báo, thêm từ game vào dữ liệu mà không override cũng bị chặn.
+
+Vòng này **không** chạm vào 85 prompt game (`git status` xác nhận `prompts/01..04` và `VARIANTS_425.md` không đổi một byte). 14/38 cụm Toán bên game vẫn còn nguyên khuôn `notes[tags.indexOf(tag)] ?? notes[0]` và danh sách nhãn chỉ gồm ba nhãn của cụm, tức là cùng lỗi tự mâu thuẫn như vừa sửa ở giáo án; `tools/data/error-tags.mjs` đã sẵn để áp sang bên đó khi nhánh game ngừng việc.
+
 ### Vật thật và sơ đồ theo cụm kiến thức (`tools/data/props.mjs`)
 
 38 cụm Toán, mỗi cụm đủ 5 trường `vat · don_vi · ngon_tay · so_do · doc`, không để mô hình tự bịa:
@@ -277,9 +288,10 @@ tools/data/games.mjs         85 game: tên, gesture, bối cảnh, nhiệm vụ,
 tools/data/clusters.mjs      57 cụm kiến thức + nội dung + giải thích sư phạm
 tools/data/gestures.mjs      mã điều khiển: landmark, hình học chốt, ngưỡng, bien_do, fallback + trường `ar`
 tools/data/examples.mjs      câu mẫu few-shot cho từng cụm
-tools/data/error-notes.mjs   nhãn lỗi tiếng Việt (errorTag + loiViet)
+tools/data/error-notes.mjs   nhãn lỗi tiếng Việt theo cụm (errorTag + loiViet) — nguồn chung với game
+tools/data/error-tags.mjs    21 nhãn lỗi dùng giữa các cụm, chỉ bộ giáo án đọc; thiếu một nhãn là builder dừng
 tools/data/props.mjs         vật thật vẽ phấn cho 38 cụm Toán (vat · don_vi · ngon_tay · so_do · doc)
-tools/data/lessons.mjs       38 giáo án: tên bài, câu khởi động, dòng ghi nhớ
+tools/data/lessons.mjs       38 giáo án: tên bài, câu khởi động, dòng ghi nhớ + khối `giao_an` ghi đè lời riêng cho tiết học
 tools/lib/ar.mjs             hợp đồng AR — AR_RENDER cho game (video phủ khung hình), AR_LESSON cho giáo án (panel soi tay + boardFrom), bốn mảnh kỹ thuật viết một lần dùng chung
 tools/lib/rules.mjs          quy định lớp học (60/40, calibration, Pause, FPS, an toàn, tổng kết 3 thẻ)
 tools/lib/feel.mjs           quy định vận động to + cảm giác arcade (biên độ, mép khung, trạm nghỉ, hit-stop, combo)
@@ -300,7 +312,8 @@ tools/lib/lesson.mjs         chế độ giảng bài, 13 quy định — dùng 
                                             425 block biến thể, link gãy, thiếu chữ ký MiTi, rò ${},
                                             giáo án thiếu quy định bảng phấn / chế độ giảng bài /
                                             vật thật thiếu trường, quy định HÌNH HỌC LỌT VÀO BÀI KHÔNG
-                                            CÓ HÌNH HỌC, và CƠ CHẾ GAME LỌT SANG GIÁO ÁN
+                                            CÓ HÌNH HỌC, CƠ CHẾ GAME LỌT SANG GIÁO ÁN, TỪ VỰNG GAME
+                                            TRONG LỜI GIÁO ÁN, và MỤC MẪU CÓ errorTag NGOÀI DANH SÁCH
 ```
 
 ```bash

@@ -3,9 +3,9 @@ import path from 'path';
 import { GAMES } from './data/games.mjs';
 import { cluster } from './data/clusters.mjs';
 import { EXAMPLES } from './data/examples.mjs';
-import { ERROR_NOTES } from './data/error-notes.mjs';
+import { danhSachNhanLoi, noteChoLoi } from './data/error-tags.mjs';
 import { PROP_KEYS, prop } from './data/props.mjs';
-import { buildLessons } from './data/lessons.mjs';
+import { buildLessons, notesCuaGiaoAn } from './data/lessons.mjs';
 import { readCatalog } from './lib/csv.mjs';
 import { AR_LESSON, TASKS_VISION } from './lib/ar.mjs';
 import { RULES } from './lib/rules.mjs';
@@ -22,7 +22,7 @@ const OUT_DIR = path.join(ROOT, 'prompts', 'giao-an');
 // Hai mục mẫu mang hai mức hỗ trợ ĐẦU TIÊN của bậc thang (làm mẫu rồi cùng làm), vì phần tử thứ
 // ba trở đi do mô hình tự viết và phải tự xếp đủ 2-2-2 theo quy định release.
 const HO_TRO_MAU = [HO_TRO[0], HO_TRO[1]];
-const jsonBlock = (rows, tags, notes) =>
+const jsonBlock = (rows, clusterKey, notes) =>
   rows
     .map((r, i) => {
       const o = {
@@ -32,7 +32,7 @@ const jsonBlock = (rows, tags, notes) =>
         answer: r.answer,
         explanation: r.explanation,
         errorTag: r.errorTag,
-        loiViet: notes[tags.indexOf(r.errorTag)] ?? notes[0],
+        loiViet: noteChoLoi(clusterKey, notes, r.errorTag),
         ho_tro: HO_TRO_MAU[i] ?? HO_TRO[2],
       };
       return '  ' + Object.entries(o).map(([k, v]) => k + ': ' + JSON.stringify(v)).join(', ');
@@ -64,8 +64,8 @@ const chalkBlock = (c) => {
 
 
 function render(L) {
-  const cl = cluster(L.cluster);
-  const notes = ERROR_NOTES[L.cluster].split('; ');
+  const notes = notesCuaGiaoAn(L);
+  const nhanLoi = danhSachNhanLoi(L.cluster, EXAMPLES[L.cluster]);
 
   return `# ${L.id} — ${L.ten}
 
@@ -87,7 +87,7 @@ Không dùng Tailwind Play CDN, không file .css/.js/.json/ảnh/mp3 ngoài. Ch�
 1. MỤC TIÊU VÀ ĐỒ DÙNG
 - Mục tiêu của tiết dạy: ${L.muc_tieu}.
 - Phạm vi kiến thức: chỉ dùng nội dung Toán lớp ${L.lop} đã học. Cấm ra đề vượt chương trình.
-- Lỗi học sinh thường mắc ở chủ đề này (mỗi câu sai ghi đúng một trong các lỗi này): ${ERROR_NOTES[L.cluster]}.
+- Lỗi học sinh thường mắc ở chủ đề này (mỗi câu sai ghi đúng một trong các lỗi này): ${notes.join('; ')}.
 - Đồ dùng thật cô giáo nên có trên bục để đối chiếu với bảng phấn ảo: ${L.vat}.
 - Dòng ghi nhớ viết bằng phấn ở cuối tiết, đúng một câu: "${L.chot}"
 
@@ -107,14 +107,14 @@ Không dùng Tailwind Play CDN, không file .css/.js/.json/ảnh/mp3 ngoài. Ch�
 - Mỗi mục theo đúng khuôn: { id, prompt, choices, answer, explanation, errorTag, loiViet, ho_tro }.
 - Trường \`ho_tro\` nhận đúng một trong ba chuỗi: ${HO_TRO.map((h) => '"' + h + '"').join(', ')}. Trong 6 mục bắt buộc, chia ĐÚNG 2 mục "cô làm mẫu" + 2 mục "cả lớp làm cùng cô" + 2 mục "em tự làm"; bộ đếm này kiểm bằng code ngay trong verifyQuestionBank() và mục nào làm sai phân bố thì xử lý như mục lỗi.
 - Tối thiểu 6 mục: 2 mục mẫu cho sẵn bên dưới phải xuất hiện NGUYÊN VĂN (kèm nguyên hai giá trị \`ho_tro\` của chúng), cộng thêm 4 mục nữa cùng cụm kiến thức và cùng phạm vi Toán lớp ${L.lop}. Ba mức hỗ trợ KHÁC NHAU ở lượng giàn giáo trên bảng chứ không phải ở độ khó đề bài — vẫn giữ nguyên một mức độ khó hợp lệ của lớp ${L.lop}, chỉ khác nhau chỗ bảng có làm mẫu hộ, có hỏi từng bước, hay để em tự làm. Mỗi mục một đáp án đúng duy nhất kiểm chứng được bằng code.
-- errorTag là mã máy của lỗi, lấy đúng một trong các nhãn: ${cl.tags.join(', ')}. loiViet là cụm tiếng Việt có dấu in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 1 và là thứ hiển thị cho giáo viên.
+- errorTag là mã máy của lỗi, lấy đúng một trong các nhãn: ${nhanLoi.join(', ')}. Danh sách này gồm ba nhãn của chủ đề VÀ mọi nhãn hai mục mẫu đang dùng — mục mới tự viết mà dùng nhãn ngoài danh sách thì chính nó bị verifyQuestionBank() loại. loiViet là cụm tiếng Việt có dấu in thường, lấy nguyên văn một mô tả trong danh sách lỗi ở mục 1 hoặc mô tả in ngay dưới mục mẫu, và là thứ hiển thị cho giáo viên.
 - Trong công cụ giảng bài thì LESSON_DATA đóng đúng vai trò mà QUESTION_DATA đóng trong game, nên BỐN quy định kiểm chứng dưới đây áp nguyên văn cho LESSON_DATA; hàm verifyQuestionBank() chạy MỘT LẦN trước BƯỚC 5 (Luyện tập chung), không chạy trước bước nào khác vì bốn bước đầu là giảng, không phải làm bài. LESSON_DATA của giáo án KHÔNG có trường level (một bài giảng chỉ có một mạch độ khó), vì vậy mọi điều khoản về level trong các quy định dưới đây được bỏ qua một cách tường minh, còn mọi điều khoản khác giữ nguyên. Mục nào trượt thì loại khỏi danh sách hỏi và ghi console.warn bằng tiếng Việt; số mục còn lại dưới 4 thì dải điều khiển của giáo viên báo "ngân hàng câu hỏi của bài này còn N mục, giáo viên tự ra thêm" chứ không hỏi lại mục lỗi.
 - ${VERIFY.selfCheck}
 - ${VERIFY.distractorValid}
 - ${VERIFY.rangeGuard}
 - ${VERIFY.noGuessable}
 - Hai mục mẫu phải chép nguyên văn:
-${jsonBlock(EXAMPLES[L.cluster], cl.tags, notes)}
+${jsonBlock(EXAMPLES[L.cluster], L.cluster, notes)}
 
 4. BẢNG PHẤN VÀ VẬT THẬT — ${SO_QUY_DINH[SO_TU_CHUNG + them(L.cluster)]} QUY ĐỊNH BẮT BUỘC
 - ${LESSON.boardText}
@@ -260,6 +260,24 @@ bấm "Làm mẫu lại" để **tăng** hỗ trợ trở lại. Lý do có mụ
 6 mục "cùng độ khó" (39/39 file) và không file nào nói tới làm mẫu (0/39) — tức là thả lớp rơi thẳng
 từ chỗ cô cầm tay sang chỗ tự làm, đúng cái lỗi mà khung GRR cảnh báo.
 
+## Hai kênh từ vựng game lọt vào giáo án, và cách chặn
+
+\`clusters.mjs\`, \`props.mjs\`, \`error-notes.mjs\` là ba nguồn **dùng chung** với 85 prompt game, nên một
+cụm sinh ra cho game sẽ mang theo tiếng của game. Vòng 5 đo được hai kênh và sửa cả hai ở tầng dữ liệu:
+
+- **Lời mô tả** — 2/38 cụm Toán nói bằng ngôn ngữ trò chơi: \`boss-cong-thu\` ("trận boss", "thẻ gợi ý",
+  "gợi ý miễn phí") và \`on-tap-toan-4\` ("mỗi cửa ải viết một dòng phấn"). Cách sửa là khối \`giao_an\`
+  trong \`tools/data/lessons.mjs\`: ghi đè bẩy trường lời (\`muc_tieu\`, \`giai_thich\`, \`vat\`, \`don_vi\`,
+  \`ngon_tay\`, \`so_do\`, \`doc\`) và mảng \`loi_viet\`, chỉ đổi cách nói chứ không đổi kiến thức. Builder và
+  validator cùng đi qua \`notesCuaGiaoAn()\` nên không thể lệch nhau. \`LESSON_BAN_WORDS\` quét từng file
+  \`GA*.md\` và báo đúng tên cụm cần thêm override.
+- **Nhãn lỗi** — 23/114 câu mẫu (thuộc 14/38 cụm Toán) mang \`errorTag\` **ngoài** ba nhãn của cụm, nên
+  khuôn cũ \`notes[tags.indexOf(tag)] ?? notes[0]\` dán cho chúng nhãn đầu tiên của cụm: câu "diện tích
+  hình thoi, quên chia 2" bị dán thành "nóng vội khi độ khó tăng". Tệ hơn, prompt lại khai errorTag phải
+  "thuộc đúng danh sách đã khai báo", tức là \`verifyQuestionBank()\` loại ngay hai mục bắt buộc lúc nạp.
+  Cách sửa: bảng tra \`tools/data/error-tags.mjs\` cho 21 nhãn dùng chung, và \`danhSachNhanLoi()\` khai báo
+  đủ cả nhãn của cụm lẫn nhãn mà hai mục mẫu thật sự dùng.
+
 ## Toán lớp 4 (${byLop[4].length} giáo án)
 
 | Mã | Bài giảng | Cụm kiến thức | Game cùng cụm |
@@ -279,6 +297,8 @@ ${byLop[5].map(row).join('\n')}
 - Đổi quy định chế độ giảng bài: \`tools/lib/lesson.mjs\` (13 quy định).
 - Đổi quy định tự kiểm đề: \`tools/lib/verify.mjs\` (dùng chung với 85 prompt game).
 - Đổi bố cục AR của tiết học: \`AR_LESSON\` trong \`tools/lib/ar.mjs\`. \`AR_RENDER\` trong cùng file là khối của game — hai khối chiếu tọa độ theo hai hình chữ nhật khác nhau nên không đổi chỗ cho nhau được.
+- Một \`GA*.md\` báo từ vựng game: **đừng** sửa \`clusters.mjs\` hay \`props.mjs\` — 85 prompt game đang đọc hai file đó — mà thêm khối \`giao_an\` cho cụm bị báo vào \`tools/data/lessons.mjs\`.
+- Câu mẫu mới trong \`examples.mjs\` dùng \`errorTag\` ngoài ba nhãn của cụm: thêm mô tả tiếng Việt vào \`tools/data/error-tags.mjs\`, nếu không builder sẽ dừng và gọi tên đúng nhãn thiếu.
 - \`node tools/validate.mjs\` sẽ chặn nếu thiếu quy định nào, nếu vật thật thiếu trường, nếu quy định hình học lọt vào bài không có hình học, hoặc nếu cơ chế game lọt vào giáo án.
 `;
 }

@@ -115,6 +115,17 @@ export const LESSON = {
 // mẫu theo bảng này, validate.mjs đòi đúng ba chuỗi — đổi ở đây phải chạy lại node tools/build.mjs.
 export const HO_TRO = ['cô làm mẫu', 'cả lớp làm cùng cô', 'em tự làm'];
 
+// Từ vựng trò chơi không được xuất hiện trong giáo án. Đây KHÔNG phải danh sách cơ chế (cơ chế đã
+// có GAME_ONLY trong validate.mjs chặn bằng chuỗi quy định) — đây là LỜI NHẮN: giáo án được ghép
+// từ tools/data/clusters.mjs và tools/data/props.mjs là hai nguồn dùng chung với 85 prompt game,
+// nên một cụm sinh ra cho game sẽ mang theo tiếng của game ("trận boss", "cửa ải", "thẻ gợi ý
+// miễn phí"). Cách sửa nằm ở dữ liệu: thêm khối `giao_an` cho cụm đó trong tools/data/lessons.mjs.
+// Chủ ý KHÔNG đưa 'combo', 'xếp hạng', 'điểm số' vì ba chữ đó nằm trong lời CẤM của chính quy định
+// noGame, và không đưa 'độ khó' vì quy định release cũng phải nói tới nó — cấm một thứ thì phải gọi
+// được tên nó. 'nóng vội' và 'thời gian nghĩ' thì ngược lại: đó là phản ứng của người chơi game có
+// đồng hồ, không phải một lỗi Toán.
+export const LESSON_BAN_WORDS = ['boss', 'trận', 'cửa ải', 'vượt ải', 'quái vật', 'thẻ gợi ý', 'gợi ý miễn phí', 'sinh tồn', 'lượt chơi', 'nóng vội', 'thời gian nghĩ'];
+
 // Dòng rút gọn dùng cho checklist tự kiểm của mỗi giáo án.
 export const LESSON_SHORT =
   'giáo viên trình bày trên màn chiếu 16:9, điều khiển trọn bài bằng chuột và bàn phím, camera chỉ bật khi mời em lên bảng · quyền ưu tiên cỡ giảng bài: bảng >= 70% màn chiếu, chữ phấn >= 50 px và tính lại theo khoảng cách em cuối lớp (mét x 0.7 chia 100, tính ra cm), có dòng tự kiểm ĐẠT / CHƯA ĐẠT · không tim, không điểm, không combo, không xếp hạng, không đồng hồ gây áp lực, không hit-stop, không giật màn hình · mọi bước chờ giáo viên bấm "Bước tiếp", dựng cảnh >= 600 ms, có phát lại bước tối đa 8 giây không giới hạn lần · năm bước Khởi động - Vật thật - Sơ đồ - Phép tính - Luyện tập chung trong tiết 35 phút, có thanh tiến trình kéo được · "Mời em lên bảng" chuyển quyền trong 5 giây, hàng đợi 4 em, ghi vị trí cổ tay landmark 0, tối đa 12 lượt một tiết · maxNumHands: 2 và bỏ qua mọi bàn tay có gốc ngoài vùng bảng cộng 10% đệm, nhiều tay trong bảng thì tạm khoá và hỏi giáo viên · biểu quyết 1 ngón A / 2 ngón B / 3 ngón C / 4 ngón D, nắm tay là chưa chắc, thẻ đáp án mang nhãn in hoa >= 44 px, ghi rõ camera thấy N em · bảng chẩn đoán cuối tiết theo errorTag, mỗi lỗi trỏ về đúng chặng CRA, không nêu tên và không xếp hạng · bảng không bao giờ tự lau, tối đa 8 trang, có nút in nền trắng chữ đen · panel soi tay hiện đủ 21 khớp (chấm 6 px, xương 3 px, ngón pinch 9 px) cho riêng bàn tay đã gán, trạng thái CHƯA CHỌN TAY / ĐANG NHẬN DIỆN / ĐÃ PINCH / MẤT TAY và độ trễ ms đo thật, vượt 150 ms thì báo và chạy tiếp bằng chuột · 6 mục LESSON_DATA mang ho_tro chia đúng 2-2-2 (cô làm mẫu / cả lớp làm cùng cô / em tự làm), chỉ rời một mức khi >= 2/3 lớp đúng, quá 20 giây không ai trả lời thì được Làm mẫu lại';

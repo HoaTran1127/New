@@ -69,6 +69,24 @@ bấm "Làm mẫu lại" để **tăng** hỗ trợ trở lại. Lý do có mụ
 6 mục "cùng độ khó" (39/39 file) và không file nào nói tới làm mẫu (0/39) — tức là thả lớp rơi thẳng
 từ chỗ cô cầm tay sang chỗ tự làm, đúng cái lỗi mà khung GRR cảnh báo.
 
+## Hai kênh từ vựng game lọt vào giáo án, và cách chặn
+
+`clusters.mjs`, `props.mjs`, `error-notes.mjs` là ba nguồn **dùng chung** với 85 prompt game, nên một
+cụm sinh ra cho game sẽ mang theo tiếng của game. Vòng 5 đo được hai kênh và sửa cả hai ở tầng dữ liệu:
+
+- **Lời mô tả** — 2/38 cụm Toán nói bằng ngôn ngữ trò chơi: `boss-cong-thu` ("trận boss", "thẻ gợi ý",
+  "gợi ý miễn phí") và `on-tap-toan-4` ("mỗi cửa ải viết một dòng phấn"). Cách sửa là khối `giao_an`
+  trong `tools/data/lessons.mjs`: ghi đè bẩy trường lời (`muc_tieu`, `giai_thich`, `vat`, `don_vi`,
+  `ngon_tay`, `so_do`, `doc`) và mảng `loi_viet`, chỉ đổi cách nói chứ không đổi kiến thức. Builder và
+  validator cùng đi qua `notesCuaGiaoAn()` nên không thể lệch nhau. `LESSON_BAN_WORDS` quét từng file
+  `GA*.md` và báo đúng tên cụm cần thêm override.
+- **Nhãn lỗi** — 23/114 câu mẫu (thuộc 14/38 cụm Toán) mang `errorTag` **ngoài** ba nhãn của cụm, nên
+  khuôn cũ `notes[tags.indexOf(tag)] ?? notes[0]` dán cho chúng nhãn đầu tiên của cụm: câu "diện tích
+  hình thoi, quên chia 2" bị dán thành "nóng vội khi độ khó tăng". Tệ hơn, prompt lại khai errorTag phải
+  "thuộc đúng danh sách đã khai báo", tức là `verifyQuestionBank()` loại ngay hai mục bắt buộc lúc nạp.
+  Cách sửa: bảng tra `tools/data/error-tags.mjs` cho 21 nhãn dùng chung, và `danhSachNhanLoi()` khai báo
+  đủ cả nhãn của cụm lẫn nhãn mà hai mục mẫu thật sự dùng.
+
 ## Toán lớp 4 (29 giáo án)
 
 | Mã | Bài giảng | Cụm kiến thức | Game cùng cụm |
@@ -125,4 +143,6 @@ từ chỗ cô cầm tay sang chỗ tự làm, đúng cái lỗi mà khung GRR c
 - Đổi quy định chế độ giảng bài: `tools/lib/lesson.mjs` (13 quy định).
 - Đổi quy định tự kiểm đề: `tools/lib/verify.mjs` (dùng chung với 85 prompt game).
 - Đổi bố cục AR của tiết học: `AR_LESSON` trong `tools/lib/ar.mjs`. `AR_RENDER` trong cùng file là khối của game — hai khối chiếu tọa độ theo hai hình chữ nhật khác nhau nên không đổi chỗ cho nhau được.
+- Một `GA*.md` báo từ vựng game: **đừng** sửa `clusters.mjs` hay `props.mjs` — 85 prompt game đang đọc hai file đó — mà thêm khối `giao_an` cho cụm bị báo vào `tools/data/lessons.mjs`.
+- Câu mẫu mới trong `examples.mjs` dùng `errorTag` ngoài ba nhãn của cụm: thêm mô tả tiếng Việt vào `tools/data/error-tags.mjs`, nếu không builder sẽ dừng và gọi tên đúng nhãn thiếu.
 - `node tools/validate.mjs` sẽ chặn nếu thiếu quy định nào, nếu vật thật thiếu trường, nếu quy định hình học lọt vào bài không có hình học, hoặc nếu cơ chế game lọt vào giáo án.

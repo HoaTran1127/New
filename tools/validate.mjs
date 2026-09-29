@@ -13,10 +13,11 @@ import { CLASSROOM } from './lib/classroom.mjs';
 import { ACCESS, ACCESS_SHORT } from './lib/access.mjs';
 import { VERIFY, ADAPT, VERIFY_SHORT } from './lib/verify.mjs';
 import { CHALK, CHALK_SHORT, SOLID_CLUSTERS, BODY_CLUSTERS, SO_QUY_DINH, SO_TU_CHUNG } from './lib/chalk.mjs';
-import { LESSON, LESSON_SHORT, HO_TRO } from './lib/lesson.mjs';
+import { LESSON, LESSON_SHORT, HO_TRO, LESSON_BAN_WORDS } from './lib/lesson.mjs';
 import { AR_LESSON } from './lib/ar.mjs';
-import { PROP_KEYS, PROP_FIELDS, prop } from './data/props.mjs';
-import { buildLessons, LESSON_EXTRA_KEYS, LESSON_FIELDS } from './data/lessons.mjs';
+import { PROP_KEYS, prop } from './data/props.mjs';
+import { buildLessons, LESSON_EXTRA, LESSON_EXTRA_KEYS, LESSON_FIELDS, OVERRIDE_FIELDS, notesCuaGiaoAn } from './data/lessons.mjs';
+import { danhSachNhanLoi, noteChoLoi, ERROR_TAGS, ERROR_TAG_KEYS } from './data/error-tags.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const errors = [];
@@ -377,8 +378,27 @@ if (!fs.existsSync(LESSON_DIR)) {
     if (!t.includes(CLASSROOM.safeZone)) bad(`${tag}: thiếu vùng an toàn cho chữ trên màn chiếu.`);
     if (!t.includes(CLASSROOM.framing)) bad(`${tag}: thiếu đàm phán theo mức camera đang thấy.`);
     // Vật thật và sơ đồ phải in nguyên văn, không để mô hình tự bịa vật khác cho cùng một cụm.
+    // Bảy trường này lấy từ clusters.mjs và props.mjs — nguồn DÙNG CHUNG với prompt game — nên giáo
+    // án được phép ghi đè lời qua khối `giao_an`. Kiểm cả nguồn gốc: đúng lời override hay nguyên văn data.
     const p = prop(L.cluster);
-    for (const f of PROP_FIELDS) if (!t.includes(p[f])) bad(`${tag}: giáo án thiếu trường ${f} của vật thật cụm ${L.cluster}.`);
+    const cl = cluster(L.cluster);
+    const ov = LESSON_EXTRA[L.cluster]?.giao_an || {};
+    const nguonGoc = {
+      muc_tieu: cl.noi_dung.charAt(0).toUpperCase() + cl.noi_dung.slice(1),
+      giai_thich: cl.giai_thich,
+      vat: p.vat,
+      don_vi: p.don_vi,
+      ngon_tay: p.ngon_tay,
+      so_do: p.so_do,
+      doc: p.doc,
+    };
+    for (const f of OVERRIDE_FIELDS) {
+      const nguon = ov[f] || nguonGoc[f];
+      if (L[f] !== nguon) {
+        bad(`${tag}: trường ${f} không khớp nguồn duy nhất (khối giao_an của cụm ${L.cluster} trong tools/data/lessons.mjs, hoặc nguyên văn clusters.mjs/props.mjs).`);
+      }
+      if (!t.includes(nguon)) bad(`${tag}: giáo án thiếu nội dung ${f} của cụm ${L.cluster}.`);
+    }
     for (const f of LESSON_FIELDS) if (!t.includes(L[f])) bad(`${tag}: giáo án thiếu nội dung ${f} từ tools/data/lessons.mjs.`);
     // Câu mẫu nằm trong file dưới dạng JSON.stringify nên phải so theo đúng dạng đã escape dấu nháy.
     for (const ex of EXAMPLES[L.cluster]) if (!t.includes(JSON.stringify(ex.prompt)) || !t.includes(JSON.stringify(ex.answer))) bad(`${tag}: thiếu câu luyện tập mẫu của cụm ${L.cluster}.`);
@@ -387,12 +407,56 @@ if (!fs.existsSync(LESSON_DIR)) {
       if (!t.includes(needle)) bad(`${tag}: giáo án thiếu ${needle}.`);
     }
     for (const needle of GAME_ONLY) if (t.includes(needle)) bad(`${tag}: cơ chế game lọt vào giáo án ("${String(needle).slice(0, 36)}").`);
+    // Cơ chế thì GAME_ONLY chặn được, còn TỪ VỰNG thì không: lời của cụm trong clusters.mjs và
+    // props.mjs mang theo "trận boss", "cửa ải", "thẻ gợi ý" vì hai họ dùng chung dữ liệu.
+    // Bỏ dòng trỏ tới prompt game và code span (tên cụm, tên file là định danh kỹ thuật, không phải lời dạy).
+    const loi = t
+      .split('\n')
+      .filter((l) => !l.includes('prompts/'))
+      .join('\n')
+      .replace(/`[^`\n]*`/g, ' ')
+      .toLowerCase();
+    const tuBan = LESSON_BAN_WORDS.filter((w) => loi.includes(w));
+    if (tuBan.length) {
+      bad(`${tag}: từ vựng game lọt vào lời giáo án (${tuBan.map((w) => `"${w}"`).join(', ')}) — thêm khối \`giao_an\` cho cụm ${L.cluster} trong tools/data/lessons.mjs để viết lại lời mà vẫn giữ kiến thức.`);
+    }
+    // Banco lỗi của giáo án phải tự nuôi được hai mục mẫu: verifyQuestionBank() khai báo rằng
+    // errorTag phải thuộc danh sách in ở mục 3, nên mục mẫu mang nhãn ngoài danh sách sẽ bị chính
+    // app loại ngay lúc nạp — giáo án mất hai mục bắt buộc mà không báo lỗi.
+    const notes = notesCuaGiaoAn(L);
+    const tagsCum = cluster(L.cluster).tags;
+    if (notes.length !== tagsCum.length) {
+      bad(`${tag}: danh sách lỗi có ${notes.length} mô tả nhưng cụm ${L.cluster} khai ${tagsCum.length} nhãn errorTag.`);
+    }
+    const nhanLoi = danhSachNhanLoi(L.cluster, EXAMPLES[L.cluster]);
+    for (const n of nhanLoi) if (!t.includes(n)) bad(`${tag}: thiếu nhãn lỗi "${n}" trong danh sách errorTag khai báo ở mục 3.`);
+    for (const [i, ex] of EXAMPLES[L.cluster].entries()) {
+      const v = noteChoLoi(L.cluster, notes, ex.errorTag);
+      if (!v || !String(v).trim()) bad(`${tag}: mục mẫu q${i + 1} không phân giải được loiViet cho nhãn ${ex.errorTag}.`);
+      if (!t.includes(JSON.stringify(v))) bad(`${tag}: mục mẫu q${i + 1} phải mang loiViet ${JSON.stringify(v)} — bảng chẩn đoán cuối tiết gom theo loiViet nên nhãn rỗng hoặc sai là vô nghĩa.`);
+    }
     if (t.includes('${')) bad(`${tag}: còn ký tự template chưa nội suy (${t.match(/\$\{[^}]*}/)[0]}).`);
     if (/[\u3400-\u9fff\u3040-\u30ff]/.test(t)) bad(`${tag}: giáo án lẫn ký tự CJK.`);
     // Chỉ bắt URL thật: câu "không dùng Tone.js" trong quy định âm thanh là lời CẤM, không phải phụ thuộc.
     if (/@mediapipe\/hands|@mediapipe\/camera_utils|cdn\.tailwindcss\.com/.test(t)) bad(`${tag}: còn phụ thuộc bị cấm.`);
     const lines = t.split('\n').length;
     if (lines < 110) bad(`${tag}: giáo án chỉ ${lines} dòng — nội dung bị cắt.`);
+  }
+
+
+  // Bảng tra dùng chung phải phủ kín: nhãn ngoài danh sách cụm vẫn phải có tiếng Việt để in vào
+  // mục mẫu, và bảng không được chứa nhãn chết (dấu hiệu data đã đổi tên lỗi mà quên cập nhật).
+  for (const [ck, exRows] of Object.entries(EXAMPLES)) {
+    const tagsCk = cluster(ck).tags;
+    for (const r of exRows) {
+      if (!tagsCk.includes(r.errorTag) && !ERROR_TAGS[r.errorTag]) {
+        bad(`Cụm ${ck}: câu mẫu mang errorTag "${r.errorTag}" không thuộc cụm và chưa có mô tả trong tools/data/error-tags.mjs.`);
+      }
+    }
+  }
+  for (const k of ERROR_TAG_KEYS) {
+    const dung = Object.entries(EXAMPLES).some(([ck, exRows]) => !cluster(ck).tags.includes(k) && exRows.some((r) => r.errorTag === k));
+    if (!dung) bad(`tools/data/error-tags.mjs: nhãn "${k}" là mục chết — không câu mẫu nào dùng nó ngoài cụm của chính nó.`);
   }
 
   // Mỗi cặp (cụm Toán, lớp) trong catalog phải có đúng một giáo án, không sót cụm nào.

@@ -14,6 +14,8 @@
 // đi từ vật thật tới phép tính, và mạch đó phải giống nhau ở mọi bài để giáo viên thuộc được.
 // Nếu để mô hình tự bịa mạch bài cho từng cụm thì 39 giáo án sẽ ra 39 kiểu dạy khác nhau.
 
+import { ERROR_NOTES } from './error-notes.mjs';
+
 const L = {
   'hang-so': {
     ten: 'Giá trị theo hàng: cùng một chữ số, đáng giá bao nhiêu',
@@ -154,11 +156,36 @@ const L = {
     ten: 'Ôn tập cuối lớp 4 trên bốn trạm vật thật',
     khoi_dong: 'Suốt năm lớp 4, chúng mình đã dùng những vật thật nào để học Toán?',
     chot: 'Mỗi mạch kiến thức có một vật thật và một sơ đồ riêng; nhận ra bài thuộc mạch nào thì chọn đúng vật của mạch đó.',
+    // Hai trường này của cụm gốc nói bằng tiếng trò chơi ("cửa ải"); giáo án phải nói bằng tiếng lớp.
+    giao_an: {
+      giai_thich: 'gọi lại kiến thức lớp 4 tương ứng với từng trạm',
+      doc: 'mỗi trạm viết một dòng phấn nhắc lại kiến thức của trạm vừa dùng trước khi ghi đáp số',
+    },
   },
   'boss-cong-thu': {
     ten: 'Tổng hợp chương: chọn đúng công thức trước khi tính',
     khoi_dong: 'Đọc xong đề bài, việc đầu tiên là tính luôn hay là nhận ra đề đang hỏi công thức nào?',
     chot: 'Viết lại đúng công thức cần dùng rồi mới thế số; sai công thức thì tính cẩn thận đến mấy cũng ra đáp số sai.',
+    // Cụm này sinh ra cho game "trận boss ba giai đoạn", nên mục tiêu, lời giải thích và cả năm
+    // trường vật thật của nó đều mang cơ chế trò chơi (vòng sáng lên khi "phá xong", thẻ gợi ý
+    // miễn phí). Giáo án giữ nguyên mạch ba bước nhưng phải nói bằng ngôn ngữ của một tiết học.
+    giao_an: {
+      muc_tieu: 'Tổng hợp ba mạch kiến thức đã học trong chương theo đúng ba bước của một bài giải: đọc đề để nhận ra mạch nào, chọn công thức của mạch đó, rồi kiểm lại đáp số',
+      giai_thich: 'sau mỗi bước giáo viên hỏi cả lớp "công thức nào vừa dùng?" rồi mới viết bước tiếp; bước nào lớp còn vướng thì dựng lại sơ đồ của bước đó từ đầu, không đưa sẵn đáp án',
+      vat: 'ba vòng tròn đồng tâm vẽ phấn, mỗi vòng là một bước của lời giải: đọc đề, chọn công thức, kiểm lại đáp số',
+      don_vi: 'một vật thật của mạch kiến thức đang được hỏi ở bước đó',
+      ngon_tay: 'viết xong một bước thì quẹt một đường để đóng vòng đó lại và vòng kế tiếp sáng lên; nội dung đã viết không bị xoá',
+      doc: 'sau mỗi bước hiện một dòng phấn ghi tên công thức vừa dùng; viết lại đúng công thức đó rồi mới sang bước tiếp',
+      so_do: 'ba vòng tròn đồng tâm vẽ lại thành bảng ba cột "bước / công thức cần dùng / lỗi hay mắc", mỗi cột điền bằng phấn trước khi vào bước đó',
+      // Ba nhãn lỗi của cụm này describe phản ứng khi chơi (nóng vội, thiếu thời gian nghĩ), vô nghĩa
+      // trên bảng chẩn đoán của một tiết học không có đồng hồ. giáo án đổi lời, vẫn giữ ba nhãn để
+      // errorTag của game cùng cụm và của giáo án nói chuyện được với nhau.
+      loi_viet: [
+        'đọc vội đề nên nhận sai mạch kiến thức',
+        'viết phép tính trước khi chọn công thức',
+        'thế số xong bỏ qua bước kiểm lại đáp số',
+      ],
+    },
   },
   'thap-phan-khai-niem': {
     ten: 'Số thập phân sinh ra từ lưới 100 ô',
@@ -210,6 +237,19 @@ const L = {
 export const LESSON_EXTRA = L;
 export const LESSON_EXTRA_KEYS = Object.keys(L);
 export const LESSON_FIELDS = ['ten', 'khoi_dong', 'chot'];
+// Các trường được phép ghi đè cho riêng giáo án. Đây là những chuỗi lấy từ clusters.mjs và
+// props.mjs — hai nguồn DÙNG CHUNG với 85 prompt game — nên một số cụm mang cơ chế trò chơi
+// ("trận boss", "cửa ải", "thẻ gợi ý miễn phí"). Override chỉ thay lời, không thay kiến thức:
+// vẫn cùng một mạch ba bước, chỉ nói bằng ngôn ngữ của một tiết học.
+export const OVERRIDE_FIELDS = ['muc_tieu', 'giai_thich', 'vat', 'don_vi', 'ngon_tay', 'so_do', 'doc'];
+// loi_viet là MẢNG, ghi đè danh sách lỗi in ở mục 1 cho riêng giáo án: ba nhãn lỗi của cụm boss
+// mô tả phản ứng của người chơi game (nóng vội, thiếu thời gian nghĩ) chứ không mô tả lỗi Toán.
+export const OVERRIDE_LIST_FIELDS = ['loi_viet'];
+export const hasOverride = (clusterKey) => Boolean(L[clusterKey] && L[clusterKey].giao_an);
+
+// Danh sách lỗi in ở mục 1 của giáo án: lời override nếu cụm có, nếu không thì nguyên văn
+// ERROR_NOTES. Builder và validator đi qua đúng một cửa này nên không thể lệch nhau.
+export const notesCuaGiaoAn = (L) => L.loi_viet || ERROR_NOTES[L.cluster].split('; ');
 
 // Ghép một giáo án hoàn chỉnh: nội dung tự viết tay + dữ liệu có sẵn của cụm kiến thức.
 // `rows` là các dòng của catalogs/GAME_CATALOG.csv, nguồn duy nhất cho biết cụm nào dạy ở lớp nào.
@@ -239,6 +279,28 @@ export function buildLessons(rows, { cluster, prop, EXAMPLES, GAMES }) {
     const ex = EXAMPLES[item.cluster];
     if (!ex || ex.length < 2) throw new Error(`Cụm ${item.cluster} không có đủ 2 câu mẫu để làm phần luyện tập cả lớp.`);
     seq[item.lop] += 1;
+    const ov = extra.giao_an || {};
+    for (const f of Object.keys(ov)) {
+      if (!OVERRIDE_FIELDS.includes(f) && !OVERRIDE_LIST_FIELDS.includes(f)) {
+        throw new Error(`Giáo án ${item.cluster}: "${f}" không phải trường được phép override.`);
+      }
+      if (OVERRIDE_LIST_FIELDS.includes(f)) {
+        const arr = ov[f];
+        if (!Array.isArray(arr)) throw new Error(`Giáo án ${item.cluster}: override ${f} phải là mảng.`);
+        if (arr.length !== cl.tags.length) {
+          throw new Error(`Giáo án ${item.cluster}: ${f} có ${arr.length} mô tả nhưng cụm khai ${cl.tags.length} nhãn errorTag.`);
+        }
+        for (const s of arr) {
+          if (!String(s).trim()) throw new Error(`Giáo án ${item.cluster}: một mục trong override ${f} rỗng.`);
+          if (String(s).includes(';')) throw new Error(`Giáo án ${item.cluster}: mục "${s}" của ${f} chứa dấu chấm phẩy, trùng ký tự phân cách danh sách lỗi.`);
+        }
+        continue;
+      }
+      const v = String(ov[f]).trim();
+      if (!v) throw new Error(`Giáo án ${item.cluster}: trường override ${f} rỗng.`);
+      // Khuôn render đã nối dấu chấm sẵn sau mỗi trường, nên lời override không được chấm ở cuối.
+      if (/[.;,]$/.test(v)) throw new Error(`Giáo án ${item.cluster}: override ${f} thừa dấu câu ở cuối ("${v.slice(-12)}") — khuôn in sẽ nối thêm dấu chấm, thành hai dấu.`);
+    }
     out.push({
       id: `GA${item.lop}-${String(seq[item.lop]).padStart(2, '0')}`,
       slug: item.cluster,
@@ -247,14 +309,15 @@ export function buildLessons(rows, { cluster, prop, EXAMPLES, GAMES }) {
       ten: extra.ten,
       khoi_dong: extra.khoi_dong,
       chot: extra.chot,
-      muc_tieu: cl.noi_dung.charAt(0).toUpperCase() + cl.noi_dung.slice(1),
-      giai_thich: cl.giai_thich,
+      muc_tieu: ov.muc_tieu || cl.noi_dung.charAt(0).toUpperCase() + cl.noi_dung.slice(1),
+      giai_thich: ov.giai_thich || cl.giai_thich,
       loi: cl.tags,
-      vat: p.vat,
-      don_vi: p.don_vi,
-      ngon_tay: p.ngon_tay,
-      so_do: p.so_do,
-      doc: p.doc,
+      loi_viet: ov.loi_viet || null,
+      vat: ov.vat || p.vat,
+      don_vi: ov.don_vi || p.don_vi,
+      ngon_tay: ov.ngon_tay || p.ngon_tay,
+      so_do: ov.so_do || p.so_do,
+      doc: ov.doc || p.doc,
       luyen_tap: ex,
       games: item.games,
     });
