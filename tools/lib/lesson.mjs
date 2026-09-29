@@ -1,4 +1,4 @@
-// Mười hai quy định của CÔNG CỤ GIẢNG BÀI: giáo viên trình bày, cả lớp xem.
+// Mười ba quy định của CÔNG CỤ GIẢNG BÀI: giáo viên trình bày, cả lớp xem.
 // Đây là tầng tách hẳn khỏi tools/lib/feel.mjs (vận động to + cảm giác arcade của game học sinh).
 // validate.mjs so khớp nguyên văn các chuỗi này, nên đổi ở đây phải chạy lại node tools/build.mjs.
 //
@@ -42,6 +42,19 @@
 // phải quay lại giải thích bằng miệng, hỏng đúng cái tiết AR đem lại. recog biến câu hỏi
 // "camera có thấy tay em không" thành thứ nhìn thấy được, kèm độ trễ đo thật thay cho cảm giác.
 // Cung vòng này: khối AR của game bị in thẳng vào 39 giáo án (xem chú thích tools/lib/ar.mjs) → AR_LESSON.
+//
+// VÒNG 4 (2026-09-30) — lỗ to nhất còn lại nằm ngay trong chữ của prompt:
+//   "cùng độ khó"      : 39/39 giáo án buộc 6 mục LESSON_DATA phải NGANG HÀNG về độ khó.
+//   "làm mẫu" / "cô làm": 0/39 — không bước nào của năm bước là bước cô làm mẫu có nói to suy nghĩ.
+//   "tăng dần"          : 1/39.
+// Kết quả: sau chặng VẬT THẬT và SƠ ĐỒ mà cô cầm tay học sinh làm, BƯỚC 5 "Luyện tập chung" thả
+// cả lớp làm một bài cùng dạng mà không còn giàn giáo nào, và 4 mục tự viết đều "cùng độ khó" nên
+// không có mục nào là mục làm mẫu. Khung Gradual Release of Responsibility của NSW Education
+// (education.nsw.gov.au, kiểm chứng 2026-09-30) gọi ba giai đoạn là "modelling, guided and
+// independent practice", cảnh báo rõ lỗi "moving too quickly to independent practice without
+// ensuring student readiness" và nói đường này KHÔNG tuyến tính — hỗ trợ phải tăng lại được khi
+// lớp chưa sẵn sàng. release dịch đúng ba giai đoạn đó thành ba giá trị của trường ho_tro, kèm
+// cổng ready đếm được (2/3) và nút "Làm mẫu lại" cho chiều tăng trở lại.
 
 export const LESSON = {
   // Giáo viên là người cầm lái; camera chỉ là công cụ phụ, không phải điều kiện để dạy.
@@ -91,8 +104,17 @@ export const LESSON = {
   // màn chiếu sẽ đoán mò, và giáo viên mất luôn đúng thứ tiết AR này sinh ra để đưa cho lớp nhìn.
   recog:
     'PHẢN HỒI NHẬN DIỆN HIỆN LÊN MÀN CHIẾU cho cả lớp cùng thấy, vì người cầm lái là giáo viên nhưng người bị camera "read" là em đứng trước bảng: trong panel soi tay bắt buộc có (a) BỘ XƯƠNG bàn tay đã được gán — đủ 21 khớp, chấm khớp đường kính 6 px, nối xương 3 px, hai đầu ngón pinch (landmark 4 và 8) vẽ to 9 px và viền sáng lên đúng lúc đang pinch; bàn tay bị bộ quy định strayHands lọc thì KHÔNG vẽ bộ xương và cũng không khoanh đỏ, để không em nào bị chỉ trước lớp; (b) TRẠNG THÁI bằng chữ tiếng Việt in đậm cao >= 32 px, đổi theo hai tín hiệu chữ + hình chứ không chỉ bằng màu, trong bốn trạng thái "CHƯA CHỌN TAY" / "ĐANG NHẬN DIỆN" / "ĐÃ PINCH — em đang viết" / "MẤT TAY — em đưa tay vào vùng bảng"; (c) SỐ ĐO THẬT chứ không phải nhãn trang trí: "độ trễ X ms" lấy từ performance.now() giữa khung hình camera và khung hình vẽ nét, "camera thấy N bàn tay", "Nét đang viết: dài Y cm"; (d) khi độ trễ vượt 150 ms thì hiện thêm dòng "bảng đang chậm, cô trò mình dùng chuột được" và tiết học chạy tiếp bình thường, không được đơ, không được bắt em trên bảng làm lại. Bộ xương và trạng thái chỉ nằm trong panel, không vẽ lên mặt bảng. Ở chế độ không camera thì panel ẩn hẳn, không để ô đen chữ "không có camera". Trong chế độ Giảm hiệu ứng thì bộ xương, trạng thái và số đo độ trễ VẪN hiện đầy đủ vì đó là thông tin vận hành chứ không phải hiệu ứng.',
+
+  // Ba mốc của mạch CRA là ba MỨC HỖ TRỢ khác nhau, không phải ba mức độ khó khác nhau:
+  // prompt cũ bắt 6 mục LESSON_DATA "cùng độ khó" nên lớp bị thả thẳng từ "cô làm" xuống "tự làm".
+  release:
+    'RÚT HỖ TRỢ DẦN DẦN, ba mức có tên, đếm được và đảo chiều được. Mỗi mục trong LESSON_DATA mang trường \`ho_tro\` nhận đúng một trong ba giá trị tiếng Việt: "cô làm mẫu", "cả lớp làm cùng cô", "em tự làm", và 6 mục bắt buộc chia ĐÚNG 2-2-2 (kiểm bằng code khi nạp, thiếu một mức thì mục đó bị loại khỏi vòng như mục lỗi). Ba mức chạy trên bảng như sau: (1) "cô làm mẫu" — bảng TỰ thao tác chậm trước mặt cả lớp, mỗi động tác kèm MỘT dòng nói to suy nghĩ của cô viết bằng phấn ("cô thấy chữ tổng nên cô đi tìm hai phần rồi gộp"), sơ đồ hiện sẵn MỘT PHẦN và cô kéo nốt phần còn lại; học sinh không chạm vào bảng ở mức này và KHÔNG có kiểm tra đáp án. (2) "cả lớp làm cùng cô" — bảng dừng ở TỪNG bước và hỏi "tiếp theo làm gì?" trước khi thi hành, thao tác được chọn bằng nút "Cả lớp trả lời" theo nhãn A-D; sơ đồ hiện khung mờ đúng bằng số phần còn thiếu để lớp kéo vào; chọn sai thì bảng không xoá mà hỏi lại một câu. (3) "em tự làm" — không còn sơ đồ dẫn, không còn câu hỏi gợi ý giữa bước, bảng chỉ có vật thật và câu hỏi; lời giải từng dòng theo quy định lời giải chỉ hiện SAU KHI cả lớp đã trả lời. CỔNG READY chống rơi quá nhanh vào thực hành độc lập: chỉ được rời một mức khi ÍT NHẤT 2/3 số em mà camera thấy trả lời đúng ở mức đó; dưới 1/2 thì BẮT BUỘC thêm một mục nữa ở chính mức đó rồi mới xét tiếp, không được nhảy xuống mức thấp hơn; nếu quá 20 giây mà không em nào trả lời thì giáo viên bấm "Làm mẫu lại" và bảng QUAY LẠI mức "cô làm mẫu" cho chính mục đang làm — đây là chiều được phép, vì đường rút hỗ trợ không phải đường một chiều. Nhãn mức hỗ trợ hiện trên dải điều khiển của giáo viên (>= 36 px) và trên bảng chẩn đoán cuối tiết, gom theo từng cặp (loiViet × ho_tro) để cô thấy lớp vỡ ở mức nào; trên màn chiếu cho học sinh KHÔNG hiện chữ "dễ", "khó", "mức 1", "level" hay sao xếp hạng, vì ba mức là kế hoạch giảng của cô, không phải thứ hạng của em.',
 };
+
+// Ba giá trị hợp lệ của trường ho_tro, theo đúng thứ tự rút hỗ trợ. build-lessons.mjs in hai mục
+// mẫu theo bảng này, validate.mjs đòi đúng ba chuỗi — đổi ở đây phải chạy lại node tools/build.mjs.
+export const HO_TRO = ['cô làm mẫu', 'cả lớp làm cùng cô', 'em tự làm'];
 
 // Dòng rút gọn dùng cho checklist tự kiểm của mỗi giáo án.
 export const LESSON_SHORT =
-  'giáo viên trình bày trên màn chiếu 16:9, điều khiển trọn bài bằng chuột và bàn phím, camera chỉ bật khi mời em lên bảng · quyền ưu tiên cỡ giảng bài: bảng >= 70% màn chiếu, chữ phấn >= 50 px và tính lại theo khoảng cách em cuối lớp (mét x 0.7 chia 100, tính ra cm), có dòng tự kiểm ĐẠT / CHƯA ĐẠT · không tim, không điểm, không combo, không xếp hạng, không đồng hồ gây áp lực, không hit-stop, không giật màn hình · mọi bước chờ giáo viên bấm "Bước tiếp", dựng cảnh >= 600 ms, có phát lại bước tối đa 8 giây không giới hạn lần · năm bước Khởi động - Vật thật - Sơ đồ - Phép tính - Luyện tập chung trong tiết 35 phút, có thanh tiến trình kéo được · "Mời em lên bảng" chuyển quyền trong 5 giây, hàng đợi 4 em, ghi vị trí cổ tay landmark 0, tối đa 12 lượt một tiết · maxNumHands: 2 và bỏ qua mọi bàn tay có gốc ngoài vùng bảng cộng 10% đệm, nhiều tay trong bảng thì tạm khoá và hỏi giáo viên · biểu quyết 1 ngón A / 2 ngón B / 3 ngón C / 4 ngón D, nắm tay là chưa chắc, thẻ đáp án mang nhãn in hoa >= 44 px, ghi rõ camera thấy N em · bảng chẩn đoán cuối tiết theo errorTag, mỗi lỗi trỏ về đúng chặng CRA, không nêu tên và không xếp hạng · bảng không bao giờ tự lau, tối đa 8 trang, có nút in nền trắng chữ đen · panel soi tay hiện đủ 21 khớp (chấm 6 px, xương 3 px, ngón pinch 9 px) cho riêng bàn tay đã gán, trạng thái CHƯA CHỌN TAY / ĐANG NHẬN DIỆN / ĐÃ PINCH / MẤT TAY và độ trễ ms đo thật, vượt 150 ms thì báo và chạy tiếp bằng chuột';
+  'giáo viên trình bày trên màn chiếu 16:9, điều khiển trọn bài bằng chuột và bàn phím, camera chỉ bật khi mời em lên bảng · quyền ưu tiên cỡ giảng bài: bảng >= 70% màn chiếu, chữ phấn >= 50 px và tính lại theo khoảng cách em cuối lớp (mét x 0.7 chia 100, tính ra cm), có dòng tự kiểm ĐẠT / CHƯA ĐẠT · không tim, không điểm, không combo, không xếp hạng, không đồng hồ gây áp lực, không hit-stop, không giật màn hình · mọi bước chờ giáo viên bấm "Bước tiếp", dựng cảnh >= 600 ms, có phát lại bước tối đa 8 giây không giới hạn lần · năm bước Khởi động - Vật thật - Sơ đồ - Phép tính - Luyện tập chung trong tiết 35 phút, có thanh tiến trình kéo được · "Mời em lên bảng" chuyển quyền trong 5 giây, hàng đợi 4 em, ghi vị trí cổ tay landmark 0, tối đa 12 lượt một tiết · maxNumHands: 2 và bỏ qua mọi bàn tay có gốc ngoài vùng bảng cộng 10% đệm, nhiều tay trong bảng thì tạm khoá và hỏi giáo viên · biểu quyết 1 ngón A / 2 ngón B / 3 ngón C / 4 ngón D, nắm tay là chưa chắc, thẻ đáp án mang nhãn in hoa >= 44 px, ghi rõ camera thấy N em · bảng chẩn đoán cuối tiết theo errorTag, mỗi lỗi trỏ về đúng chặng CRA, không nêu tên và không xếp hạng · bảng không bao giờ tự lau, tối đa 8 trang, có nút in nền trắng chữ đen · panel soi tay hiện đủ 21 khớp (chấm 6 px, xương 3 px, ngón pinch 9 px) cho riêng bàn tay đã gán, trạng thái CHƯA CHỌN TAY / ĐANG NHẬN DIỆN / ĐÃ PINCH / MẤT TAY và độ trễ ms đo thật, vượt 150 ms thì báo và chạy tiếp bằng chuột · 6 mục LESSON_DATA mang ho_tro chia đúng 2-2-2 (cô làm mẫu / cả lớp làm cùng cô / em tự làm), chỉ rời một mức khi >= 2/3 lớp đúng, quá 20 giây không ai trả lời thì được Làm mẫu lại';

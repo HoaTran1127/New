@@ -51,6 +51,24 @@ Cuối tiết, bảng rút ra **bảng chẩn đoán cho riêng giáo viên**: s
 và mỗi lỗi có một nút nhảy về đúng chặng CRA đã sinh ra lỗi đó. Không nêu tên, không xếp hạng,
 không ghi sang hồ sơ đọc lại được sau tiết.
 
+## Ba mức hỗ trợ của một tiết (trục thứ hai, đi cùng năm bước)
+
+Năm bước là trục **kiến thức** (CRA). Trục còn lại là **lượng giàn giáo**, theo khung Gradual Release
+of Responsibility — modelling → guided practice → independent practice
+([NSW Education](https://education.nsw.gov.au/teaching-and-learning/curriculum/explicit-teaching/explicit-teaching-strategies/gradual-release-of-responsibility), kiểm chứng 2026-09-30):
+
+| `ho_tro` | Bảng làm gì | Ai chạm vào bảng |
+| --- | --- | --- |
+| `cô làm mẫu` | bảng tự thao tác chậm, mỗi động tác kèm một dòng **nói to suy nghĩ** của cô; sơ đồ hiện sẵn một phần | chỉ giáo viên |
+| `cả lớp làm cùng cô` | bảng **dừng ở từng bước** hỏi "tiếp theo làm gì?" rồi mới thi hành; sơ đồ hiện khung mờ đúng số phần còn thiếu | cả lớp biểu quyết, một em lên bảng |
+| `em tự làm` | không sơ đồ dẫn, không gợi ý giữa bước; lời giải chỉ hiện **sau khi** lớp đã trả lời | em lên bảng |
+
+6 mục bắt buộc chia **đúng 2-2-2**, và cổng ready đếm được: chỉ rời một mức khi >= 2/3 số em camera
+thấy trả lời đúng, dưới 1/2 thì phải **thêm một mục ở chính mức đó**, quá 20 giây không ai trả lời thì
+bấm "Làm mẫu lại" để **tăng** hỗ trợ trở lại. Lý do có mục này: bản trước đó của chính prompt này bắt
+6 mục "cùng độ khó" (39/39 file) và không file nào nói tới làm mẫu (0/39) — tức là thả lớp rơi thẳng
+từ chỗ cô cầm tay sang chỗ tự làm, đúng cái lỗi mà khung GRR cảnh báo.
+
 ## Toán lớp 4 (29 giáo án)
 
 | Mã | Bài giảng | Cụm kiến thức | Game cùng cụm |
@@ -104,7 +122,7 @@ không ghi sang hồ sơ đọc lại được sau tiết.
 
 - Thêm cụm kiến thức mới: sửa `tools/data/clusters.mjs`, `tools/data/props.mjs` (đủ 5 trường) và `tools/data/lessons.mjs` (đủ 3 trường), rồi chạy `node tools/build.mjs`.
 - Đổi quy định bảng phấn: `tools/lib/chalk.mjs` (10 quy định chung + 2 quy định hình học nối theo cụm, danh sách ở `SOLID_CLUSTERS` / `BODY_CLUSTERS`).
-- Đổi quy định chế độ giảng bài: `tools/lib/lesson.mjs` (12 quy định).
+- Đổi quy định chế độ giảng bài: `tools/lib/lesson.mjs` (13 quy định).
 - Đổi quy định tự kiểm đề: `tools/lib/verify.mjs` (dùng chung với 85 prompt game).
 - Đổi bố cục AR của tiết học: `AR_LESSON` trong `tools/lib/ar.mjs`. `AR_RENDER` trong cùng file là khối của game — hai khối chiếu tọa độ theo hai hình chữ nhật khác nhau nên không đổi chỗ cho nhau được.
 - `node tools/validate.mjs` sẽ chặn nếu thiếu quy định nào, nếu vật thật thiếu trường, nếu quy định hình học lọt vào bài không có hình học, hoặc nếu cơ chế game lọt vào giáo án.

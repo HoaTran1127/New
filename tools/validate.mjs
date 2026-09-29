@@ -13,7 +13,7 @@ import { CLASSROOM } from './lib/classroom.mjs';
 import { ACCESS, ACCESS_SHORT } from './lib/access.mjs';
 import { VERIFY, ADAPT, VERIFY_SHORT } from './lib/verify.mjs';
 import { CHALK, CHALK_SHORT, SOLID_CLUSTERS, BODY_CLUSTERS, SO_QUY_DINH, SO_TU_CHUNG } from './lib/chalk.mjs';
-import { LESSON, LESSON_SHORT } from './lib/lesson.mjs';
+import { LESSON, LESSON_SHORT, HO_TRO } from './lib/lesson.mjs';
 import { AR_LESSON } from './lib/ar.mjs';
 import { PROP_KEYS, PROP_FIELDS, prop } from './data/props.mjs';
 import { buildLessons, LESSON_EXTRA_KEYS, LESSON_FIELDS } from './data/lessons.mjs';
@@ -149,6 +149,7 @@ const LESSON_RULES = [
   [LESSON.diagnose, 'thiếu bảng chẩn đoán cuối tiết theo errorTag'],
   [LESSON.retain, 'thiếu quy định bảng không bao giờ tự lau'],
   [LESSON.recog, 'thiếu quy định phản hồi nhận diện trên màn chiếu (bộ xương 21 khớp, trạng thái bốn mức, độ trễ ms)'],
+  [LESSON.release, 'thiếu quy định rút hỗ trợ dần dần ba mức (cô làm mẫu / cả lớp làm cùng cô / em tự làm)'],
 ];
 // Ngân hàng LESSON_DATA phải được kiểm chứng y hệt QUESTION_DATA, nếu không thì giáo án âm thầm dạy sai.
 const LESSON_VERIFY_RULES = [
@@ -347,6 +348,15 @@ if (!fs.existsSync(LESSON_DIR)) {
     for (const [needle, msg] of CHALK_RULES) if (!t.includes(needle)) bad(`${tag}: ${msg}.`);
     for (const [needle, msg] of LESSON_RULES) if (!t.includes(needle)) bad(`${tag}: ${msg}.`);
     for (const [needle, msg] of LESSON_VERIFY_RULES) if (!t.includes(needle)) bad(`${tag}: ${msg}.`);
+    // Bậc rút hỗ trợ: ba giá trị ho_tro, phân bố 2-2-2, và hai mục mẫu phải mang đúng hai mức đầu.
+    for (const h of HO_TRO) if (!t.includes(h)) bad(`${tag}: thiếu mức hỗ trợ "${h}" của trường ho_tro.`);
+    if (!t.includes('ho_tro')) bad(`${tag}: khuôn LESSON_DATA thiếu trường ho_tro.`);
+    if (!t.includes('2-2-2')) bad(`${tag}: thiếu phân bố bắt buộc 2-2-2 của ba mức hỗ trợ.`);
+    if (!t.includes('ho_tro: ' + JSON.stringify(HO_TRO[0])) || !t.includes('ho_tro: ' + JSON.stringify(HO_TRO[1]))) {
+      bad(`${tag}: hai mục mẫu chưa mang hai mức hỗ trợ đầu tiên (cô làm mẫu, cả lớp làm cùng cô).`);
+    }
+    // "cùng độ khó" là lệnh thả cả lớp từ chỗ cô cầm tay sang chỗ tự làm, đã bị LESSON.release thay.
+    if (t.includes('cùng độ khó')) bad(`${tag}: vẫn bắt LESSON_DATA "cùng độ khó" — phải chia bậc hỗ trợ 2-2-2 theo LESSON.release.`);
     // AR của tiết học: bảng >= 70% màn chiếu và camera chỉ là panel soi tay, không phải nền lớp học.
     if (!t.includes(AR_LESSON)) bad(`${tag}: thiếu khối AR riêng của công cụ giảng bài (AR_LESSON trong tools/lib/ar.mjs).`);
     for (const [re, msg] of [

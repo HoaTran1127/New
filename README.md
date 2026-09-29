@@ -227,7 +227,7 @@ Trình tự này theo khung **Concrete – Representational – Abstract**: lỗ
 - **Chống mỏi tay** (viết phấn giữa không trung là động tác mỏi nhanh nhất của hand tracking): chế độ **chạm-bật viết** để không phải giữ pinch, **nghỉ bắt buộc sau 90 giây** pinch liên tục kèm đếm ngược 5 giây, khay phấn đặt ngang khuỷu tay làm điểm tựa, và **mất landmark quá 500 ms thì nét dở đóng băng tại chỗ** chứ không xoá hay nhảy nét.
 - **Lưu bảng của tiết dạy**: tuần tự hoá nét vẽ + vật + sơ đồ vào `localStorage` khoá `miti-board`, tối đa **200 KB**, có nút Lưu / Mở / In (nền trắng chữ đen). **Tuyệt đối không lưu ảnh hay video camera.**
 
-### 👩‍🏫 Mười hai quy định chế độ giảng bài (`tools/lib/lesson.mjs`)
+### 👩‍🏫 Mười ba quy định chế độ giảng bài (`tools/lib/lesson.mjs`)
 
 - **Giáo viên trình bày**: màn chiếu 16:9, bảng chiếm ≥ 70% diện tích màn chiếu; điều khiển trọn bài bằng chuột và bàn phím, camera chỉ bật khi mời em lên bảng.
 - **Quyền ưu tiên cỡ chữ — cỡ bảng**: khi giảng bài thì trần `≤ 40%` / `≤ 68%` và sàn `34 px` của bản game **đứng hưu**, thay bằng bảng ≥ 70% màn chiếu, chữ phấn ≥ 50 px, thẻ đáp án ≥ 44 px. Mức đó **không phải hằng số**: bảng hỏi "em cuối lớp cách màn chiếu mấy mét?" (mặc định 8 m) rồi tính chiều cao chữ tối thiểu = khoảng cách × 0.7 ÷ 100 (cm) và tự đổi ra px theo bề rộng thật của màn chiếu; dải điều khiển hiện dòng tự kiểm "chữ cao X cm · em cuối lớp Y mét · ĐẠT / CHƯA ĐẠT" và tự phóng chữ khi chưa đạt.
@@ -241,10 +241,17 @@ Trình tự này theo khung **Concrete – Representational – Abstract**: lỗ
 - **Bảng chẩn đoán cuối tiết** cho riêng giáo viên, không chiếu lên bảng lớp: gom lượt trả lời theo `errorTag` thành tối đa 5 hàng "lỗi · số em · tỉ lệ · nút Giảng lại", và mỗi nút nhảy về **đúng chặng CRA đã sinh ra lỗi** (số không nối về sơ đồ → chặng SƠ ĐỒ; tính sai → chặng PHÉP TÍNH; hiểu nhầm đề → bước dựng cảnh). Không nêu tên, không xếp hạng, không ghi sang hồ sơ đọc lại được sau tiết.
 - **Bảng không bao giờ tự lau**: cả năm bước cộng lại thành một trang bảng hoàn chỉnh để cuối tiết cả lớp nhìn lại mạch bài.
 - **Phản hồi nhận diện chiếu lên màn hình**: vì người bị camera "đọc" là em đứng trước bảng nên cả lớp phải **nhìn thấy** máy đang thấy gì — panel soi tay hiện **đủ 21 khớp** (chấm 6 px, xương 3 px, hai ngón pinch 4/8 to 9 px và sáng lên khi pinch) **cho riêng bàn tay đã gán**, tay lạ bị lọc thì không vẽ xương và cũng không khoanh đỏ; kèm trạng thái bốn mức `CHƯA CHỌN TAY / ĐANG NHẬN DIỆN / ĐÃ PINCH / MẤT TAY` ≥ 32 px (chữ + hình, không chỉ màu) và **số đo thật** "độ trễ X ms" lấy từ `performance.now()`. Vượt 150 ms thì báo "bảng đang chậm, cô trò mình dùng chuột được" rồi chạy tiếp; bốn thứ này **không** bị tắt theo chế độ Giảm hiệu ứng vì là thông tin vận hành, không phải hiệu ứng.
+- **Rút hỗ trợ dần dần, ba mức, đảo chiều được**: mỗi mục LESSON_DATA mang `ho_tro` = `"cô làm mẫu"` / `"cả lớp làm cùng cô"` / `"em tự làm"`, 6 mục chia **đúng 2-2-2** và `verifyQuestionBank()` kiểm luôn phân bố này. Mức 1: bảng tự thao tác chậm, mỗi động tác một dòng **nói to suy nghĩ**, sơ đồ hiện sẵn một phần, học sinh không chạm. Mức 2: bảng **dừng ở từng bước** hỏi "tiếp theo làm gì?" rồi mới thi hành, sơ đồ hiện khung mờ đúng số phần còn thiếu. Mức 3: không sơ đồ dẫn, không gợi ý, lời giải chỉ hiện **sau khi** lớp trả lời. Cổng ready: chỉ rời một mức khi ≥ 2/3 số em camera thấy trả lời đúng; dưới 1/2 thì **thêm một mục ở chính mức đó**; quá 20 giây không ai trả lời thì "Làm mẫu lại" **tăng** hỗ trợ trở lại. Nhãn mức chỉ hiện trên dải điều khiển giáo viên và bảng chẩn đoán (gom theo `loiViet × ho_tro`), không hiện "dễ/khó/mức 1/sao" trước mặt lớp.
 
 ### 📐 Vì sao khối AR phải tách làm hai (`AR_RENDER` và `AR_LESSON` trong `tools/lib/ar.mjs`)
 
 Đến vòng 3, cả **39/39** giáo án vẫn mang nguyên văn khối AR của game — trong đó có "khung hình webcam CHÍNH LÀ màn chơi", "vị trí spawn, va chạm", "speed lines". Hai hệ quả: lệnh vẽ **mâu thuẫn** (`video phủ 100vw/100vh` đứng cạnh `bảng ≥ 70% màn chiếu`, `mascot` bị cấm ở quy định khác nhưng vẫn được nhắc ở quy định này), và **hỏng hình học** — khối game chiếu landmark theo `(offX, offY, drawW, drawH)` của cả khung hình, nên khi bảng chỉ chiếm 70% thì tay em học sinh một nơi, nét phấn một nơi. Cách sửa: bốn mảnh kỹ thuật (cover-fit, `toScreen`, neo landmark, chiều sâu) viết **một lần** rồi lắp cho hai bộ; `AR_LESSON` thêm quy định **ÁNH XẠ TAY → MẶT BẢNG** (`boardFrom(cam)`, hiệu chỉnh bằng bốn góc tầm tay, một điểm tay có đúng một điểm bảng, ngoài tầm thì nét dừng ở mép, đổi cỡ cửa sổ thì tính lại tỉ lệ). `validate.mjs` giờ chặn cả hai chiều: game không được mang `AR_LESSON`, giáo án không được mang `AR_RENDER`.
+
+### 🪜 Vì sao một tiết cần hai trục: CRA (kiến thức) và GRR (giàn giáo)
+
+Vòng 4 đọc lại chính prompt của mình và thấy một lệnh sai nằm trong **39/39** file: *"cộng thêm 4 mục nữa cùng cụm kiến thức và **cùng độ khó**"*, trong khi **0/39** file nhắc tới làm mẫu. Nghĩa là sau chặng VẬT THẬT và SƠ ĐỒ mà cô cầm tay học sinh, BƯỚC 5 thả cả lớp tự làm một bài cùng dạng với **không còn giàn giáo nào** — đúng cái lỗi mà khung Gradual Release of Responsibility cảnh báo ("moving too quickly to independent practice without ensuring student readiness"). Nguồn: [NSW Education — Explicit teaching strategies](https://education.nsw.gov.au/teaching-and-learning/curriculum/explicit-teaching/explicit-teaching-strategies/gradual-release-of-responsibility) (kiểm chứng 2026-09-30), ba giai đoạn *modelling → guided → independent practice* và lưu ý đường này **không tuyến tính**.
+
+`LESSON.release` tách hai trục: mỗi mục LESSON_DATA thêm trường `ho_tro` nhận một trong ba giá trị `"cô làm mẫu" / "cả lớp làm cùng cô" / "em tự làm"`, 6 mục bắt buộc chia **đúng 2-2-2**, kèm cổng ready đếm được (rời một mức khi ≥ 2/3 lớp đúng; dưới 1/2 phải thêm một mục ở chính mức đó; quá 20 giây không ai trả lời thì bấm "Làm mẫu lại" để **tăng** hỗ trợ). Ba mức khác nhau ở **lượng giàn giáo trên bảng**, không ở độ khó đề bài — nên vẫn giữ đúng một mức hợp lệ của SGK lớp 4/5. `validate.mjs` chặn luôn cụm "cùng độ khó" để lệnh cũ không quay lại.
 
 ### Vật thật và sơ đồ theo cụm kiến thức (`tools/data/props.mjs`)
 
@@ -280,7 +287,7 @@ tools/lib/classroom.mjs      quy định lớp học thật (vùng an toàn cho 
 tools/lib/access.mjs         tiếp cận + an toàn thần kinh (trần nhấp nháy, reduced-motion, không chỉ dùng màu, phụ đề, tương phản, tay thuận)
 tools/lib/verify.mjs         tự kiểm chứng đề + độ khó thích ứng (verifyQuestionBank, nhiễu theo lỗi thật, guard phạm vi, chống mẹo, level thích ứng, sàn chống nản)
 tools/lib/chalk.mjs          bảng phấn + vật thật, 10 quy định chung + 2 quy định hình học theo cụm — dùng cho BỘ GIÁO ÁN
-tools/lib/lesson.mjs         chế độ giảng bài, 12 quy định — dùng cho BỘ GIÁO ÁN
+tools/lib/lesson.mjs         chế độ giảng bài, 13 quy định — dùng cho BỘ GIÁO ÁN
         │
         └─ node tools/build.mjs
              ├─ catalogs/GAME_CATALOG.csv + .md

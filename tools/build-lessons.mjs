@@ -12,13 +12,16 @@ import { RULES } from './lib/rules.mjs';
 import { CLASSROOM } from './lib/classroom.mjs';
 import { ACCESS, ACCESS_SHORT } from './lib/access.mjs';
 import { CHALK, CHALK_SHORT, SOLID_CLUSTERS, BODY_CLUSTERS, SO_QUY_DINH, SO_TU_CHUNG } from './lib/chalk.mjs';
-import { LESSON, LESSON_SHORT } from './lib/lesson.mjs';
+import { LESSON, LESSON_SHORT, HO_TRO } from './lib/lesson.mjs';
 import { VERIFY, VERIFY_SHORT } from './lib/verify.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const OUT_DIR = path.join(ROOT, 'prompts', 'giao-an');
 
 // In câu mẫu theo đúng khuôn LESSON_DATA để mô hình có khuôn mà bám.
+// Hai mục mẫu mang hai mức hỗ trợ ĐẦU TIÊN của bậc thang (làm mẫu rồi cùng làm), vì phần tử thứ
+// ba trở đi do mô hình tự viết và phải tự xếp đủ 2-2-2 theo quy định release.
+const HO_TRO_MAU = [HO_TRO[0], HO_TRO[1]];
 const jsonBlock = (rows, tags, notes) =>
   rows
     .map((r, i) => {
@@ -30,6 +33,7 @@ const jsonBlock = (rows, tags, notes) =>
         explanation: r.explanation,
         errorTag: r.errorTag,
         loiViet: notes[tags.indexOf(r.errorTag)] ?? notes[0],
+        ho_tro: HO_TRO_MAU[i] ?? HO_TRO[2],
       };
       return '  ' + Object.entries(o).map(([k, v]) => k + ': ' + JSON.stringify(v)).join(', ');
     })
@@ -94,13 +98,15 @@ Không dùng Tailwind Play CDN, không file .css/.js/.json/ảnh/mp3 ngoài. Ch�
 - BƯỚC 3 · SƠ ĐỒ — học sinh hoặc giáo viên tự tay dựng: ${L.so_do}. Sơ đồ này KHÔNG được hiện sẵn hoàn chỉnh; nó phải được kéo hoặc vẽ ra từng phần.
 - BƯỚC 4 · PHÉP TÍNH — đọc đáp án ra từ vật và từ sơ đồ: ${L.doc}. Cách giải thích trực quan khi học sinh vướng: ${L.giai_thich}.
 - BƯỚC 5 · LUYỆN TẬP CHUNG — cả lớp làm bài cùng dạng, giáo viên dùng nút "Cả lớp trả lời" để biểu quyết bằng số ngón tay theo NHÃN đáp án (1 ngón A, 2 ngón B, 3 ngón C, 4 ngón D), không theo giá trị đáp án.
+- Ba chặng CRA và ba MỨC HỖ TRỢ là hai trục khác nhau của cùng một tiết: VẬT THẬT và SƠ ĐỒ đi ở mức "cô làm mẫu" rồi "cả lớp làm cùng cô", PHÉP TÍNH là lúc lớp đã theo kịp, còn LUYỆN TẬP CHUNG là mức "em tự làm". Không được để học sinh rơi thẳng từ chỗ cô cầm tay sang chỗ tự làm: ${LESSON.release}
 - Giáo viên bấm "Bước tiếp" để sang bước; mỗi bước dừng lại bao lâu là do giáo viên quyết định.
 - ${LESSON.pace}
 
 3. DỮ LIỆU CỦA BÀI (LESSON_DATA) VÀ TỰ KIỂM CHỨNG
 - Khai báo \`const LESSON_DATA = [...]\` ở ĐẦU khối <script>, phần engine đặt phía sau.
-- Mỗi mục theo đúng khuôn: { id, prompt, choices, answer, explanation, errorTag, loiViet }.
-- Tối thiểu 6 mục: 2 mục mẫu cho sẵn bên dưới phải xuất hiện NGUYÊN VĂN, cộng thêm 4 mục nữa cùng cụm kiến thức và cùng độ khó của Toán lớp ${L.lop}. Mỗi mục một đáp án đúng duy nhất kiểm chứng được bằng code.
+- Mỗi mục theo đúng khuôn: { id, prompt, choices, answer, explanation, errorTag, loiViet, ho_tro }.
+- Trường \`ho_tro\` nhận đúng một trong ba chuỗi: ${HO_TRO.map((h) => '"' + h + '"').join(', ')}. Trong 6 mục bắt buộc, chia ĐÚNG 2 mục "cô làm mẫu" + 2 mục "cả lớp làm cùng cô" + 2 mục "em tự làm"; bộ đếm này kiểm bằng code ngay trong verifyQuestionBank() và mục nào làm sai phân bố thì xử lý như mục lỗi.
+- Tối thiểu 6 mục: 2 mục mẫu cho sẵn bên dưới phải xuất hiện NGUYÊN VĂN (kèm nguyên hai giá trị \`ho_tro\` của chúng), cộng thêm 4 mục nữa cùng cụm kiến thức và cùng phạm vi Toán lớp ${L.lop}. Ba mức hỗ trợ KHÁC NHAU ở lượng giàn giáo trên bảng chứ không phải ở độ khó đề bài — vẫn giữ nguyên một mức độ khó hợp lệ của lớp ${L.lop}, chỉ khác nhau chỗ bảng có làm mẫu hộ, có hỏi từng bước, hay để em tự làm. Mỗi mục một đáp án đúng duy nhất kiểm chứng được bằng code.
 - errorTag là mã máy của lỗi, lấy đúng một trong các nhãn: ${cl.tags.join(', ')}. loiViet là cụm tiếng Việt có dấu in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 1 và là thứ hiển thị cho giáo viên.
 - Trong công cụ giảng bài thì LESSON_DATA đóng đúng vai trò mà QUESTION_DATA đóng trong game, nên BỐN quy định kiểm chứng dưới đây áp nguyên văn cho LESSON_DATA; hàm verifyQuestionBank() chạy MỘT LẦN trước BƯỚC 5 (Luyện tập chung), không chạy trước bước nào khác vì bốn bước đầu là giảng, không phải làm bài. LESSON_DATA của giáo án KHÔNG có trường level (một bài giảng chỉ có một mạch độ khó), vì vậy mọi điều khoản về level trong các quy định dưới đây được bỏ qua một cách tường minh, còn mọi điều khoản khác giữ nguyên. Mục nào trượt thì loại khỏi danh sách hỏi và ghi console.warn bằng tiếng Việt; số mục còn lại dưới 4 thì dải điều khiển của giáo viên báo "ngân hàng câu hỏi của bài này còn N mục, giáo viên tự ra thêm" chứ không hỏi lại mục lỗi.
 - ${VERIFY.selfCheck}
@@ -166,7 +172,7 @@ ${AR_LESSON}
 10. ĐẦU RA
 - Chỉ xuất toàn bộ file HTML hoàn chỉnh, không kèm giải thích dài.
 - Không TODO, không pseudocode, không "...", không "// code tương tự ở trên", không phần "bạn tự bổ sung".
-- Tự kiểm tra trước khi xuất: ${LESSON_SHORT} · ${CHALK_SHORT} · ${VERIFY_SHORT} · ${ACCESS_SHORT} · có đủ năm bước và không bước nào tự chuyển khi giáo viên chưa bấm · LESSON_DATA đủ 6 mục với 2 mục mẫu nguyên văn và đã chạy qua verifyQuestionBank() trước bước 5 · mọi thẻ đáp án mang nhãn in hoa A-D và bảng đối chiếu ngón tay hiện đủ · panel soi tay có bộ xương 21 khớp cho riêng tay đã gán, có trạng thái bốn mức và độ trễ ms đo thật · một điểm bàn tay chỉ có một điểm trên mặt bảng, ngoài tầm thì nét dừng ở mép · bài có khối thì đủ cạnh khuất + xoay + mở hộp, bài có góc hoặc hai đường thì đủ bộ dụng cụ thân người · cỡ chữ đang phát đạt theo dòng tự kiểm ĐẠT / CHƯA ĐẠT · bảng không tự lau ở bất kì bước nào · in được bản nền trắng chữ đen · chữ ký MiTi ở ba chỗ · file chạy độc lập không lỗi console.
+- Tự kiểm tra trước khi xuất: ${LESSON_SHORT} · ${CHALK_SHORT} · ${VERIFY_SHORT} · ${ACCESS_SHORT} · có đủ năm bước và không bước nào tự chuyển khi giáo viên chưa bấm · LESSON_DATA đủ 6 mục với 2 mục mẫu nguyên văn, mỗi mục có \`ho_tro\` và phân bố đúng 2-2-2, đã chạy qua verifyQuestionBank() trước bước 5 · mọi thẻ đáp án mang nhãn in hoa A-D và bảng đối chiếu ngón tay hiện đủ · panel soi tay có bộ xương 21 khớp cho riêng tay đã gán, có trạng thái bốn mức và độ trễ ms đo thật · một điểm bàn tay chỉ có một điểm trên mặt bảng, ngoài tầm thì nét dừng ở mép · bài có khối thì đủ cạnh khuất + xoay + mở hộp, bài có góc hoặc hai đường thì đủ bộ dụng cụ thân người · cỡ chữ đang phát đạt theo dòng tự kiểm ĐẠT / CHƯA ĐẠT · bảng không tự lau ở bất kì bước nào · in được bản nền trắng chữ đen · chữ ký MiTi ở ba chỗ · file chạy độc lập không lỗi console.
 \`\`\`
 
 ## Ghi chú cho người tạo prompt (không gửi Gemini)
@@ -236,6 +242,24 @@ Cuối tiết, bảng rút ra **bảng chẩn đoán cho riêng giáo viên**: s
 và mỗi lỗi có một nút nhảy về đúng chặng CRA đã sinh ra lỗi đó. Không nêu tên, không xếp hạng,
 không ghi sang hồ sơ đọc lại được sau tiết.
 
+## Ba mức hỗ trợ của một tiết (trục thứ hai, đi cùng năm bước)
+
+Năm bước là trục **kiến thức** (CRA). Trục còn lại là **lượng giàn giáo**, theo khung Gradual Release
+of Responsibility — modelling → guided practice → independent practice
+([NSW Education](https://education.nsw.gov.au/teaching-and-learning/curriculum/explicit-teaching/explicit-teaching-strategies/gradual-release-of-responsibility), kiểm chứng 2026-09-30):
+
+| \`ho_tro\` | Bảng làm gì | Ai chạm vào bảng |
+| --- | --- | --- |
+| \`${HO_TRO[0]}\` | bảng tự thao tác chậm, mỗi động tác kèm một dòng **nói to suy nghĩ** của cô; sơ đồ hiện sẵn một phần | chỉ giáo viên |
+| \`${HO_TRO[1]}\` | bảng **dừng ở từng bước** hỏi "tiếp theo làm gì?" rồi mới thi hành; sơ đồ hiện khung mờ đúng số phần còn thiếu | cả lớp biểu quyết, một em lên bảng |
+| \`${HO_TRO[2]}\` | không sơ đồ dẫn, không gợi ý giữa bước; lời giải chỉ hiện **sau khi** lớp đã trả lời | em lên bảng |
+
+6 mục bắt buộc chia **đúng 2-2-2**, và cổng ready đếm được: chỉ rời một mức khi >= 2/3 số em camera
+thấy trả lời đúng, dưới 1/2 thì phải **thêm một mục ở chính mức đó**, quá 20 giây không ai trả lời thì
+bấm "Làm mẫu lại" để **tăng** hỗ trợ trở lại. Lý do có mục này: bản trước đó của chính prompt này bắt
+6 mục "cùng độ khó" (39/39 file) và không file nào nói tới làm mẫu (0/39) — tức là thả lớp rơi thẳng
+từ chỗ cô cầm tay sang chỗ tự làm, đúng cái lỗi mà khung GRR cảnh báo.
+
 ## Toán lớp 4 (${byLop[4].length} giáo án)
 
 | Mã | Bài giảng | Cụm kiến thức | Game cùng cụm |
@@ -252,7 +276,7 @@ ${byLop[5].map(row).join('\n')}
 
 - Thêm cụm kiến thức mới: sửa \`tools/data/clusters.mjs\`, \`tools/data/props.mjs\` (đủ 5 trường) và \`tools/data/lessons.mjs\` (đủ 3 trường), rồi chạy \`node tools/build.mjs\`.
 - Đổi quy định bảng phấn: \`tools/lib/chalk.mjs\` (10 quy định chung + 2 quy định hình học nối theo cụm, danh sách ở \`SOLID_CLUSTERS\` / \`BODY_CLUSTERS\`).
-- Đổi quy định chế độ giảng bài: \`tools/lib/lesson.mjs\` (12 quy định).
+- Đổi quy định chế độ giảng bài: \`tools/lib/lesson.mjs\` (13 quy định).
 - Đổi quy định tự kiểm đề: \`tools/lib/verify.mjs\` (dùng chung với 85 prompt game).
 - Đổi bố cục AR của tiết học: \`AR_LESSON\` trong \`tools/lib/ar.mjs\`. \`AR_RENDER\` trong cùng file là khối của game — hai khối chiếu tọa độ theo hai hình chữ nhật khác nhau nên không đổi chỗ cho nhau được.
 - \`node tools/validate.mjs\` sẽ chặn nếu thiếu quy định nào, nếu vật thật thiếu trường, nếu quy định hình học lọt vào bài không có hình học, hoặc nếu cơ chế game lọt vào giáo án.
