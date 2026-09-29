@@ -23,11 +23,17 @@
 ## ⚡ 3 Bước Sử Dụng Trong 30 Giây
 
 ```text
-[1] CHỌN & COPY PROMPT         [2] DÁN VÀO GOOGLE GEMINI         [3] CHƠI GAME BẰNG CAMERA
-Bấm mở game bên dưới hoặc      Mở gemini.google.com, dán         Gemini sinh ra 1 file HTML,
-chọn trên Dashboard MiTi. ➔    prompt vào ô chat (Canvas).  ➔    bấm Run/mở file và vận
-Bấm copy toàn bộ prompt.       Nhấn Enter để AI lập trình.       động cơ thể trước webcam!
+[1] CHỌN & COPY PROMPT         [2] BẬT CANVAS & DÁN VÀO GEMINI    [3] CHƠI GAME TRÊN WEBCAM
+Bấm mở game bên dưới hoặc      Mở gemini.google.com, BẬT          Gemini mở cửa sổ Canvas,
+chọn trên Dashboard MiTi. ➔    CHẾ ĐỘ CANVAS ➔ Dán prompt ➔       bấm Run/Preview để chơi
+Bấm copy toàn bộ prompt.       Nhấn Enter để AI tạo game.         ngay bằng cử chỉ camera!
 ```
+
+> [!IMPORTANT]
+> **⚠️ BẮT BUỘC CHỌN CHẾ ĐỘ CANVAS TRÊN GEMINI:**
+> * **Nếu KHÔNG bật Canvas:** Gemini chỉ in ra chữ/code thông thường, bạn phải tự copy ra file `.html` lưu về máy mới mở được.
+> * **Khi BẬT CANVAS:** Gemini sẽ kích hoạt giao diện chuyên dụng bên phải màn hình có nút **"Run code" / "Preview"** để bạn chơi game trực tiếp ngay trên trình duyệt mà không cần tải bất cứ file nào!
+> * *Mẹo:* Nếu trên giao diện Gemini chưa thấy nút Canvas, bạn chỉ cần gõ thêm chữ `Mở Canvas và tạo game:` ở đầu prompt.
 
 ---
 
@@ -263,11 +269,13 @@ Tất cả các file prompt trong thư mục `prompts/` đều là **Prompt Th�
 ## 💡 Mẹo Chạy Game Cực Mượt Trên Google Gemini
 
 1. Truy cập **[Google Gemini](https://gemini.google.com)** trên máy tính hoặc laptop (khuyến nghị dùng trình duyệt Chrome/Edge để camera ổn định nhất).
-2. Dán prompt đã copy vào ô chat và gửi đi.
-3. Khi Gemini tạo xong mã nguồn:
-   - Bấm nút **"Run code"** hoặc **"Preview"** (nếu dùng giao diện Gemini Canvas).
-   - Hoặc bấm copy mã code, lưu thành file `game.html` trên máy và nhấp đúp để mở.
-4. Trình duyệt hiện thông báo hỏi quyền truy cập Webcam ➔ Bấm **"Allow / Cho phép"** để bắt đầu chơi!
+2. **Kích hoạt Canvas (Quan trọng nhất):**
+   - Bấm vào nút **Canvas** (biểu tượng trang soạn thảo/cửa sổ code) ở khung chat trước khi gửi prompt.
+   - *Nếu chưa thấy nút Canvas:* Thêm tiền tố `Tạo trong Canvas:` vào đầu prompt để Gemini tự động mở bảng tương tác.
+3. **Chạy game trực tiếp:**
+   - Khi Gemini code xong, bên phải màn hình sẽ có nút **"Run code"** hoặc **"Preview"** ➔ Bấm vào để kích hoạt game ngay trên trang web mà không cần tải file về máy.
+   - Trình duyệt hiện thông báo hỏi quyền truy cập Webcam ➔ Bấm **"Allow / Cho phép"** để hệ thống nhận diện cử chỉ bàn tay/cơ thể và bắt đầu chơi!
+4. *(Tùy chọn ngoại tuyến)*: Bạn cũng có thể bấm nút Copy code, lưu thành file `game.html` trên máy tính và nhấp đúp để mở chơi offline bất cứ lúc nào.
 
 ---
 
