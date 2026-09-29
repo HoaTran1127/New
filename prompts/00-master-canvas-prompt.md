@@ -3,6 +3,8 @@
 > Khung chuẩn của mọi prompt trong thư viện này. Muốn tạo game mới: copy khối bên dưới, thay phần **1. GAME SPEC** bằng nội dung game cụ thể, hoặc lấy một file prompt đã có sẵn spec.
 >
 > Chạy trên **Google Gemini → bật chế độ Canvas** để có nút Run/Preview chơi ngay.
+>
+> ⚠️ Khung 9 mục này dành cho **GAME học sinh tự chơi**. Muốn dựng **CÔNG CỤ GIẢNG BÀI cho giáo viên trình bày trước cả lớp** trên bảng phấn thì dùng khung 11 mục riêng ở [`giao-an/README.md`](giao-an/README.md) — hai khung ngược nhau về nhịp và về động cơ, không thay thế nhau được.
 
 ## Prompt copy trực tiếp
 
@@ -119,6 +121,8 @@ Cấu hình camera:
 - Vật thể tương tác (thẻ bay, vật rơi) vẫn được đi qua vùng giữa; chỉ chữ hướng dẫn và khung HUD là không.
 - Khi tính vị trí chữ, lấy tọa độ vai (landmark 11/12) nếu có pose để biết thân học sinh đang lệch về phía nào
   và dịch HUD sang phía trống; không có pose thì giữ HUD ở hai cột biên cố định.
+- Vùng cấm là TÍNH ĐỘNG theo thân người thật: có pose thì vùng cấm là cột đang chứa hai vai cộng thêm một ô đệm mỗi bên,
+  chứ không cố định ở ô giữa. Nhờ vậy học sinh đứng nép sang một bên thì HUD tự dịch sang phía trống thay vì đè lên người các em.
 
 2.6 Đàm phán theo khả năng camera (máy trường thường chỉ thấy nửa người, đừng đòi toàn thân)
 - Khi bắt đầu, xác định hệ thống ĐANG thấy tới đâu: chỉ bàn tay (HandLandmarker) → nửa thân trên (thêm vai 11/12)
@@ -368,7 +372,7 @@ vài mục lỗi; nếu chỉ viết "mỗi mục một đáp án đúng duy nh�
 [ ] combo hiển thị to dần, cao độ âm thanh tăng theo combo, đứt chuỗi có âm rơi và số tan thành hạt
 [ ] chữ khen tiếng Việt bật lên tại đúng điểm chạm; câu sai dùng chữ đỡ, không chữ đỏ gây sợ
 [ ] mỗi vòng có 2 thẻ vàng "x2 điểm trong 5 giây"; mascot phản ứng theo động tác và theo combo
-[ ] chữ và HUD không đè lên thân học sinh (lưới 3×3, ô giữa và ô giữa trên là vùng cấm đặt chữ)
+[ ] chữ và HUD không đè lên thân học sinh (lưới 3×3, ô giữa và ô giữa trên là vùng cấm đặt chữ; vùng cấm tính động theo hai vai 11/12 nếu pose thấy được)
 [ ] cơ chế chọn theo mức camera đang thấy (chỉ tay / nửa thân trên / toàn thân), có dòng tiếng Việt báo mức nhận diện
 [ ] hồ sơ "miti-mastery" được đọc khi mở game và xếp câu theo errorTag yếu nhất; mất hồ sơ thì vẫn chơi trọn
 [ ] có nút bật chế độ hai học sinh chạy maxNumHands: 2, hai nửa khung hình, điểm và tim tách riêng, không xếp hạng

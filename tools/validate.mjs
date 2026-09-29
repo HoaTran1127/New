@@ -10,8 +10,12 @@ import { readCatalog } from './lib/csv.mjs';
 import { RULES } from './lib/rules.mjs';
 import { MOTION, FEEL } from './lib/feel.mjs';
 import { CLASSROOM } from './lib/classroom.mjs';
-import { ACCESS } from './lib/access.mjs';
+import { ACCESS, ACCESS_SHORT } from './lib/access.mjs';
 import { VERIFY, ADAPT } from './lib/verify.mjs';
+import { CHALK, CHALK_SHORT } from './lib/chalk.mjs';
+import { LESSON, LESSON_SHORT } from './lib/lesson.mjs';
+import { PROP_KEYS, PROP_FIELDS, prop } from './data/props.mjs';
+import { buildLessons, LESSON_EXTRA_KEYS, LESSON_FIELDS } from './data/lessons.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const errors = [];
@@ -111,6 +115,31 @@ const ADAPT_RULES = [
   [ADAPT.failFloor, 'thiếu sàn chống nản (không cho sai quá 3 câu liên tiếp)'],
   [ADAPT.hiddenLevel, 'thiếu quy định ẩn level với học sinh'],
 ];
+// Quy định của BỘ GIÁO ÁN: khai báo ở đây để dùng cho cả hai chiều kiểm —
+// giáo án phải có đủ, và prompt game thì không được mang.
+const CHALK_RULES = [
+  [CHALK.board, 'thiếu quy định bảng phấn ảo (alpha, cỡ bảng, trần occlusion theo vai)'],
+  [CHALK.chalkWrite, 'thiếu quy định viết phấn bằng pinch ngón 4–8 và lau bằng nắm bàn tay'],
+  [CHALK.concretize, 'thiếu quy định mọi con số thành vật đếm được'],
+  [CHALK.represent, 'thiếu chặng SƠ ĐỒ của khung Concrete-Representational-Abstract'],
+  [CHALK.wordProblem, 'thiếu quy định dựng bài toán đố thành cảnh kéo được'],
+  [CHALK.fractionCut, 'thiếu quy định chia phân số theo số phần 2–12'],
+  [CHALK.measure, 'thiếu quy định đọc số đo từ dụng cụ có vạch chia'],
+  [CHALK.narrate, 'thiếu quy định lời giải viết phấn từng bước có hỏi lại'],
+  [CHALK.handCare, 'thiếu quy định chống mỏi tay và đóng băng nét khi mất tay'],
+  [CHALK.persist, 'thiếu quy định lưu bảng của tiết dạy vào localStorage'],
+];
+const LESSON_RULES = [
+  [LESSON.teacher, 'thiếu chế độ giáo viên trình bày trên màn chiếu'],
+  [LESSON.noGame, 'thiếu quy định cấm cơ chế game trong tiết giảng'],
+  [LESSON.pace, 'thiếu quy định nhịp giảng do giáo viên quyết định'],
+  [LESSON.flow, 'thiếu năm bước của giáo án kèm ngân sách phút'],
+  [LESSON.handover, 'thiếu quy định "Mời em lên bảng"'],
+  [LESSON.strayHands, 'thiếu quy định bỏ qua bàn tay lạ trong lớp đông'],
+  [LESSON.classVote, 'thiếu quy định cả lớp trả lời bằng ngón tay'],
+  [LESSON.retain, 'thiếu quy định bảng không bao giờ tự lau'],
+];
+const LESSON_FAMILY_RULES = [...CHALK_RULES, ...LESSON_RULES].map(([n]) => n);
 for (const g of GAMES) {
   const rel = PATH_OF.get(g.id);
   if (!rel) { bad(`${g.id}: không có đường dẫn prompt trong catalog.`); continue; }
@@ -135,6 +164,10 @@ for (const g of GAMES) {
   if (!t.includes('tasks-vision@1.0.1')) bad(`${g.id}: prompt chưa pin MediaPipe Tasks Vision 1.0.1.`);
   if (!t.includes('Không dùng Tailwind Play CDN')) bad(`${g.id}: prompt chưa cấm Tailwind Play CDN.`);
   if (!/loiViet/.test(t)) bad(`${g.id}: QUESTION_DATA chưa có trường loiViet.`);
+  // Hai sản phẩm tách bạch: quy định bảng phấn và chế độ giảng bài chỉ thuộc về prompts/giao-an/.
+  for (const needle of LESSON_FAMILY_RULES) {
+    if (t.includes(needle)) bad(`${g.id}: prompt game mang quy định của bộ giáo án ("${needle.slice(0, 40)}...") — bảng phấn thuộc về prompts/giao-an/.`);
+  }
   const lines = t.split('\n').length;
   if (lines < 85) bad(`${g.id}: prompt chỉ ${lines} dòng — nội dung bị cắt.`);
 }
@@ -168,6 +201,7 @@ for (const l of LEGACY) {
     if (!re.test(t)) bad(`${l.id}: ${msg}.`);
   }
   if (/cdn\.tailwindcss\.com|@mediapipe\/hands|@mediapipe\/camera_utils|Tone\.js/.test(t.replace(/LEGACY \(LEG-[\d]+\)[^\n]*/, ''))) bad(`${l.id}: vẫn còn phụ thuộc bị cấm (Tailwind CDN / MediaPipe legacy / Tone.js).`);
+  for (const needle of LESSON_FAMILY_RULES) if (t.includes(needle)) bad(`${l.id}: prompt legacy mang quy định của bộ giáo án ("${needle.slice(0, 40)}...").`);
 }
 
 // Block biến thể dùng bản hợp đồng AR rút gọn nên bộ kiểm cũng lấy theo từng vế của bản đầy đủ.
@@ -194,6 +228,7 @@ if (!fs.existsSync(VAR_FILE)) {
       if (!b.includes(need)) bad(`${tag}: thiếu ${need}.`);
     }
     if (/@mediapipe\/hands|@mediapipe\/camera_utils|cdn\.tailwindcss\.com/.test(b)) bad(`${tag}: còn phụ thuộc bị cấm.`);
+    for (const needle of LESSON_FAMILY_RULES) if (b.includes(needle)) bad(`${tag}: block biến thể mang quy định của bộ giáo án ("${needle.slice(0, 40)}...").`);
     if (camera) {
       for (const [re, msg] of VAR_AR_RULES) if (!re.test(b)) bad(`${tag}: ${msg}.`);
       if (!b.includes('Hòa vào nền AR')) bad(`${tag}: block camera thiếu mô tả AR của cử chỉ.`);
@@ -236,6 +271,93 @@ if (!fs.existsSync(VAR_FILE)) {
       if (!b.includes('V4 — VOICE') && !b.includes(ACCESS.handedness)) bad(`biến thể #${i + 1}: block camera thiếu câu hỏi tay thuận.`);
     }
   });
+}
+
+// 4c. Bộ giáo án giảng bài (prompts/giao-an/): tách hẳn khỏi 85 prompt game.
+// Hai bộ dùng chung chalk.mjs và props.mjs nhưng PHẢI khác nhau về cơ chế — giáo án mà lẫn
+// tim, điểm, combo hay mascot thì em lên bảng sợ sai hơn là muốn hiểu.
+const LESSON_DIR = path.join(ROOT, 'prompts', 'giao-an');
+let LESSON_COUNT = 0;
+if (!fs.existsSync(LESSON_DIR)) {
+  bad('Thiếu prompts/giao-an/ — chạy `node tools/build-lessons.mjs`.');
+} else {
+  const lessons = buildLessons(rows, { cluster, prop, EXAMPLES, GAMES });
+  LESSON_COUNT = lessons.length;
+  const LESSON_MUST = [
+    '0. ĐÂY LÀ CÔNG CỤ GIẢNG BÀI, KHÔNG PHẢI GAME',
+    '1. MỤC TIÊU VÀ ĐỒ DÙNG',
+    '2. MẠCH BÀI GỒM NĂM BƯỚC',
+    '3. DỮ LIỆU CỦA BÀI (LESSON_DATA)',
+    '4. BẢNG PHẤN VÀ VẬT THẬT — MƯỜI QUY ĐỊNH BẮT BUỘC',
+    '5. CẢ LỚP THAM GIA',
+    '6. NỀN AR, CAMERA VÀ NHẬN DIỆN TAY',
+    '7. CHẾ ĐỘ KHÔNG CAMERA (bắt buộc, đây là chế độ dạy chính ở nhiều lớp)',
+    '8. TIẾP CẬN, AN TOÀN VÀ HIỆU NĂNG',
+    '9. MiTi — CHỮ KÝ BẮT BUỘC TRONG HTML',
+    '10. ĐẦU RA',
+  ];
+  // Cơ chế chỉ được có ở game. Lọt sang giáo án là sai mục đích của cả nhánh này.
+  const GAME_ONLY = [
+    'QUESTION_DATA', 'miti-collection', '12 lượt chính', '+10 nhân chuỗi', 'hết 5 tim',
+    MOTION.amplitude, MOTION.breather, FEEL.hitStop, FEEL.combo, FEEL.bonus, FEEL.mascot,
+    RULES.antiLuck, RULES.summary, CLASSROOM.mastery, CLASSROOM.twoPlayer,
+  ];
+  const files = fs.readdirSync(LESSON_DIR);
+  if (!files.includes('README.md')) bad('Thiếu prompts/giao-an/README.md — trang mục lục của bộ giáo án.');
+  const expected = new Set([...lessons.map((l) => `${l.id}-${l.slug}.md`), 'README.md']);
+  for (const f of files) if (!expected.has(f)) bad(`prompts/giao-an/ thừa file không khớp danh sách giáo án: ${f}.`);
+  if (files.length !== expected.size) bad(`prompts/giao-an/ phải có đúng ${expected.size} file (${lessons.length} giáo án + README), hiện có ${files.length}.`);
+
+  const ids = new Set();
+  const clusterPairs = new Set();
+  for (const L of lessons) {
+    if (ids.has(L.id)) bad(`Trùng mã giáo án: ${L.id}`);
+    ids.add(L.id);
+    clusterPairs.add(`${L.cluster}|${L.lop}`);
+    const rel = `prompts/giao-an/${L.id}-${L.slug}.md`;
+    const file = path.join(ROOT, rel);
+    if (!fs.existsSync(file)) { bad(`Thiếu file giáo án: ${rel}`); continue; }
+    const t = fs.readFileSync(file, 'utf8');
+    const tag = L.id;
+    for (const m of LESSON_MUST) if (!t.includes(m)) bad(`${tag}: giáo án thiếu mục ${m}.`);
+    for (const [needle, msg] of CHALK_RULES) if (!t.includes(needle)) bad(`${tag}: ${msg}.`);
+    for (const [needle, msg] of LESSON_RULES) if (!t.includes(needle)) bad(`${tag}: ${msg}.`);
+    for (const [needle, msg] of ACCESS_RULES) if (!t.includes(needle)) bad(`${tag}: ${msg}.`);
+    if (!t.includes(CLASSROOM.safeZone)) bad(`${tag}: thiếu vùng an toàn cho chữ trên màn chiếu.`);
+    if (!t.includes(CLASSROOM.framing)) bad(`${tag}: thiếu đàm phán theo mức camera đang thấy.`);
+    // Vật thật và sơ đồ phải in nguyên văn, không để mô hình tự bịa vật khác cho cùng một cụm.
+    const p = prop(L.cluster);
+    for (const f of PROP_FIELDS) if (!t.includes(p[f])) bad(`${tag}: giáo án thiếu trường ${f} của vật thật cụm ${L.cluster}.`);
+    for (const f of LESSON_FIELDS) if (!t.includes(L[f])) bad(`${tag}: giáo án thiếu nội dung ${f} từ tools/data/lessons.mjs.`);
+    // Câu mẫu nằm trong file dưới dạng JSON.stringify nên phải so theo đúng dạng đã escape dấu nháy.
+    for (const ex of EXAMPLES[L.cluster]) if (!t.includes(JSON.stringify(ex.prompt)) || !t.includes(JSON.stringify(ex.answer))) bad(`${tag}: thiếu câu luyện tập mẫu của cụm ${L.cluster}.`);
+    for (const s of [CHALK_SHORT, LESSON_SHORT, ACCESS_SHORT]) if (!t.includes(s)) bad(`${tag}: checklist tự kiểm thiếu một dòng rút gọn (${s.slice(0, 30)}...).`);
+    for (const needle of ['LESSON_DATA', '#FFD84D', 'MiTi • Giảng bài bằng vật thật', 'tasks-vision@1.0.1', 'Không dùng Tailwind Play CDN']) {
+      if (!t.includes(needle)) bad(`${tag}: giáo án thiếu ${needle}.`);
+    }
+    for (const needle of GAME_ONLY) if (t.includes(needle)) bad(`${tag}: cơ chế game lọt vào giáo án ("${String(needle).slice(0, 36)}").`);
+    if (t.includes('${')) bad(`${tag}: còn ký tự template chưa nội suy (${t.match(/\$\{[^}]*}/)[0]}).`);
+    if (/[\u3400-\u9fff\u3040-\u30ff]/.test(t)) bad(`${tag}: giáo án lẫn ký tự CJK.`);
+    // Chỉ bắt URL thật: câu "không dùng Tone.js" trong quy định âm thanh là lời CẤM, không phải phụ thuộc.
+    if (/@mediapipe\/hands|@mediapipe\/camera_utils|cdn\.tailwindcss\.com/.test(t)) bad(`${tag}: còn phụ thuộc bị cấm.`);
+    const lines = t.split('\n').length;
+    if (lines < 110) bad(`${tag}: giáo án chỉ ${lines} dòng — nội dung bị cắt.`);
+  }
+
+  // Mỗi cặp (cụm Toán, lớp) trong catalog phải có đúng một giáo án, không sót cụm nào.
+  const mathPairs = new Set();
+  for (const r of rows) {
+    if (r.mon !== 'Toán') continue;
+    const g = GAMES.find((x) => x.id === r.id);
+    if (g) mathPairs.add(`${g.cluster}|${r.lop}`);
+  }
+  for (const k of mathPairs) if (!clusterPairs.has(k)) bad(`Cặp kiến thức Toán ${k} chưa có giáo án trong prompts/giao-an/.`);
+  for (const k of clusterPairs) if (!mathPairs.has(k)) bad(`Giáo án ${k} không có game Toán nào trong catalog tương ứng.`);
+  // props.mjs phải phủ đúng các cụm Toán đang có, không thừa không thiếu.
+  const mathClusters = new Set([...mathPairs].map((k) => k.split('|')[0]));
+  if (mathClusters.size !== PROP_KEYS.length) bad(`props.mjs phải phủ đúng ${mathClusters.size} cụm Toán, hiện có ${PROP_KEYS.length} cụm.`);
+  for (const k of PROP_KEYS) if (!mathClusters.has(k)) bad(`props.mjs thừa cụm không có game Toán nào dùng: ${k}.`);
+  for (const k of LESSON_EXTRA_KEYS) if (!mathClusters.has(k)) bad(`lessons.mjs thừa cụm không có game Toán nào dùng: ${k}.`);
 }
 
 // 5. Dashboard: dữ liệu sinh ra khớp catalog.
@@ -293,4 +415,4 @@ if (errors.length) {
   if (errors.length > 40) console.error('  ... và ' + (errors.length - 40) + ' vấn đề khác.');
   process.exit(1);
 }
-console.log(`Xác minh đạt: ${rows.length} dòng catalog, ${GAMES.length} prompt game, ${VAR_COUNT} prompt biến thể, ${CLUSTER_KEYS.length} cụm kiến thức, ${LEGACY.length} prompt legacy, ${cat.games.length + cat.legacy.length} card dashboard.`);
+console.log(`Xác minh đạt: ${rows.length} dòng catalog, ${GAMES.length} prompt game, ${VAR_COUNT} prompt biến thể, ${LESSON_COUNT} giáo án giảng bài trên ${PROP_KEYS.length} cụm vật thật, ${CLUSTER_KEYS.length} cụm kiến thức, ${LEGACY.length} prompt legacy, ${cat.games.length + cat.legacy.length} card dashboard.`);
