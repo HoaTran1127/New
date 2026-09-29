@@ -1,8 +1,20 @@
-# 👑 MASTER PROMPT — GEMINI CANVAS MOTION EDUCATION GAME
+# 👑 MASTER PROMPT — MiTi GEMINI CANVAS EDUCATION GAME
 
 > Prompt khung dùng để tạo **một game độc lập** trong Gemini Canvas. Thay phần GAME SPEC bằng nội dung của game cụ thể.
 
 ## Prompt copy trực tiếp
+
+========================
+MiTi — DẤU ẤN THƯƠNG HIỆU
+========================
+Game HTML do bạn tạo BẮT BUỘC phải có chữ ký **MiTi** ngay trong giao diện, không phụ thuộc file của repository này.
+- Nhúng logo bằng inline SVG/CSS hoặc HTML/CSS thuần; không hotlink ảnh bên ngoài.
+- Góc trên trái: biểu tượng ô bo góc màu #FFD84D có chữ M màu #07111F + chữ **MiTi** đậm bên cạnh + dấu ✦ nhỏ.
+- Logo phải xuất hiện ở màn hình Bắt đầu, HUD khi chơi và màn hình Kết quả; kích thước nhỏ, không che nội dung.
+- Chân trang hoặc vùng kết quả có dòng: **MiTi • Học bằng chuyển động**.
+- Không đổi tên thương hiệu, không xoá logo khi vào gameplay.
+- Logo là một phần của HTML đầu ra, để khi lưu một file .html hoặc copy game sang nơi khác vẫn còn chữ ký MiTi.
+
 
 ```text
 Bạn là chuyên gia thiết kế và lập trình game giáo dục HTML5 Canvas có tương tác bằng webcam.
@@ -126,4 +138,16 @@ Trước khi trả code hãy tự kiểm tra:
 [ ] game chạy như một file độc lập
 
 Sau khi tự kiểm tra, chỉ xuất ra file HTML hoàn chỉnh.
+
+========================
+MiTi — DẤU ẤN THƯƠNG HIỆU
+========================
+Game HTML do bạn tạo BẮT BUỘC phải có chữ ký **MiTi** ngay trong giao diện, không phụ thuộc file của repository này.
+- Nhúng logo bằng inline SVG/CSS hoặc HTML/CSS thuần; không hotlink ảnh bên ngoài.
+- Góc trên trái: biểu tượng ô bo góc màu #FFD84D có chữ M màu #07111F + chữ **MiTi** đậm bên cạnh + dấu ✦ nhỏ.
+- Logo phải xuất hiện ở màn hình Bắt đầu, HUD khi chơi và màn hình Kết quả; kích thước nhỏ, không che nội dung.
+- Chân trang hoặc vùng kết quả có dòng: **MiTi • Học bằng chuyển động**.
+- Không đổi tên thương hiệu, không xoá logo khi vào gameplay.
+- Logo là một phần của HTML đầu ra, để khi lưu một file .html hoặc copy game sang nơi khác vẫn còn chữ ký MiTi.
+
 ```
