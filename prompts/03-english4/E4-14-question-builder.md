@@ -1,17 +1,37 @@
-# E4-14 — Question Builder
+# E4-14 — Xây Câu Hỏi
 
-Create a standalone single-file English Grade 4 game.
+Tạo game giáo dục web **một file HTML duy nhất** cho học sinh Việt Nam lớp 5, môn Tiếng Anh.
 
-Learning objective: form simple questions and answers using who, what, where, when, why and how.
+## Mục tiêu học tập
+"Tạo câu hỏi cơ bản và câu trả lời"
 
-Mission: rescue a character by arranging word tiles into the correct question.
+## Nhiệm vụ học sinh
+"Sắp xếp từ thành câu hỏi đúng"
 
-Gameplay: show a picture/context and scrambled words. Learners arrange them into a grammatically correct question, then choose a matching answer.
+## Gameplay
+Điều khiển: **POINT+DRAG**. Chức năng: "question words; word order; sentence frames".
+- 12 lượt; ngân hàng tối thiểu 60 mục; 3 mức độ.
+- Nội dung kiến thức tiếng Anh phải phù hợp trình độ lớp 4.
+- Xáo trộn đáp án; distractor dựa trên lỗi từ vựng/chính tả/cấu trúc thường gặp.
+- Sai: giải thích bằng tiếng Việt + chỉ ra đáp án đúng + luyện lại; đúng: phản hồi tức thì.
+- Có điểm, tiến độ, chuỗi đúng và tổng kết.
 
-Control: DRAG/POINT with optional fingertip tracking, confidence >= 0.65, smoothing and 300ms drop cooldown; mouse/touch fallback.
+## Camera / tương tác
+MediaPipe Hands; pinch/grab và release; smoothing/hysteresis; cooldown 300ms.
+- Xin quyền sau Bắt đầu; có loading/permission/ready/tracking/error.
+- Có calibration/framing, smoothing, confidence; một gesture chỉ tạo một event.
 
-Generate at least 40 question sets. Cover simple present, present continuous and familiar past contexts only when appropriate. Include traps such as missing auxiliary, wrong question word and incorrect word order.
+## Fallback
+Mouse/touch/keyboard mô phỏng được gameplay chính.
 
-Feedback explains the sentence structure and reads the final question aloud.
+## Luồng
+Bắt đầu → Kiểm tra thiết bị → Hiệu chỉnh → Hướng dẫn → Luyện mẫu → 12 lượt → Phản hồi → Ôn câu sai → Kết quả → Chơi lại.
 
-Use short child-friendly text, camera optional, no upload. Output one complete HTML file with embedded question data and no TODOs.
+## Ngôn ngữ / an toàn
+UI, nút, hướng dẫn, feedback bằng **tiếng Việt**; từ/câu/audio tiếng Anh chỉ dùng cho phần kiến thức. Responsive, chữ lớn, reduced-motion; không động tác nguy hiểm; không lưu/tải dữ liệu camera/micro.
+
+## MiTi — CHỮ KÝ BẮT BUỘC
+HTML phải tự chứa logo **MiTi**: ô bo góc #FFD84D có chữ M #07111F + chữ MiTi đậm + ✦; xuất hiện ở Bắt đầu, HUD và Kết quả; có dòng **MiTi • Học bằng chuyển động**. Dùng inline SVG/CSS/HTML, không phụ thuộc repository hoặc URL logo ngoài.
+
+## Đầu ra
+Chỉ xuất **toàn bộ HTML hoàn chỉnh**, không TODO, không pseudocode, không phụ thuộc repository này.
