@@ -29,6 +29,7 @@ const games = GAMES.map((g) => {
     controls: g.gestures,
     controlLabels: g.gestures.map((c) => GESTURES[c].vi),
     prompt: r.prompt,
+    players: [1, 2, 3],
   };
 });
 
@@ -42,6 +43,7 @@ const legacy = LEGACY.map((l) => ({
   controls: l.gestures.split('+'),
   controlLabels: l.gestures.split('+').map((c) => GESTURES[c].vi),
   prompt: l.file,
+  players: [1, 2, 3],
   legacy: true,
 }));
 

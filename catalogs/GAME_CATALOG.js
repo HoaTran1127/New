@@ -18,7 +18,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Chỉ ngón tay trỏ (Point)"
    ],
-   "prompt": "prompts/01-toan4/L4-01-number-dash.md"
+   "prompt": "prompts/01-toan4/L4-01-number-dash.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "L4-02",
@@ -35,7 +40,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Vuốt / chém (Swipe)"
    ],
-   "prompt": "prompts/01-toan4/L4-02-million-mountain.md"
+   "prompt": "prompts/01-toan4/L4-02-million-mountain.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "L4-03",
@@ -52,7 +62,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Vung tay đấm (Punch)"
    ],
-   "prompt": "prompts/01-toan4/L4-03-rounding-hoops.md"
+   "prompt": "prompts/01-toan4/L4-03-rounding-hoops.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "L4-04",
@@ -69,7 +84,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Nghiêng người / bước sang vùng (Body tilt)"
    ],
-   "prompt": "prompts/01-toan4/L4-04-even-odd-dance.md"
+   "prompt": "prompts/01-toan4/L4-04-even-odd-dance.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "L4-05",
@@ -86,7 +106,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Nắm và thả (Grab / Catch)"
    ],
-   "prompt": "prompts/01-toan4/L4-05-weight-factory.md"
+   "prompt": "prompts/01-toan4/L4-05-weight-factory.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "L4-06",
@@ -103,7 +128,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Khom hai tay (Two-hand stretch)"
    ],
-   "prompt": "prompts/01-toan4/L4-06-area-builder.md"
+   "prompt": "prompts/01-toan4/L4-06-area-builder.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "L4-07",
@@ -122,7 +152,12 @@ window.MITI_CATALOG = {
     "Chỉ ngón tay trỏ (Point)",
     "Khom hai tay (Two-hand stretch)"
    ],
-   "prompt": "prompts/01-toan4/L4-07-time-machine.md"
+   "prompt": "prompts/01-toan4/L4-07-time-machine.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "L4-08",
@@ -139,7 +174,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Tạo góc bằng cánh tay (Angle pose)"
    ],
-   "prompt": "prompts/01-toan4/L4-08-angle-hero.md"
+   "prompt": "prompts/01-toan4/L4-08-angle-hero.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "L4-09",
@@ -156,7 +196,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Khom hai tay (Two-hand stretch)"
    ],
-   "prompt": "prompts/01-toan4/L4-09-laser-architect.md"
+   "prompt": "prompts/01-toan4/L4-09-laser-architect.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "L4-10",
@@ -173,7 +218,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Vung tay đấm (Punch)"
    ],
-   "prompt": "prompts/01-toan4/L4-10-math-boxing.md"
+   "prompt": "prompts/01-toan4/L4-10-math-boxing.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "L4-11",
@@ -190,7 +240,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Vung tay đấm (Punch)"
    ],
-   "prompt": "prompts/01-toan4/L4-11-multiplication-rocket.md"
+   "prompt": "prompts/01-toan4/L4-11-multiplication-rocket.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "L4-12",
@@ -207,7 +262,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Nắm và thả (Grab / Catch)"
    ],
-   "prompt": "prompts/01-toan4/L4-12-division-conveyor.md"
+   "prompt": "prompts/01-toan4/L4-12-division-conveyor.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "L4-13",
@@ -226,7 +286,12 @@ window.MITI_CATALOG = {
     "Nắm và thả (Grab / Catch)",
     "Chỉ ngón tay trỏ (Point)"
    ],
-   "prompt": "prompts/01-toan4/L4-13-balance-lab.md"
+   "prompt": "prompts/01-toan4/L4-13-balance-lab.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "L4-14",
@@ -243,7 +308,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Chỉ ngón tay trỏ (Point)"
    ],
-   "prompt": "prompts/01-toan4/L4-14-delivery-route.md"
+   "prompt": "prompts/01-toan4/L4-14-delivery-route.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "L4-15",
@@ -260,7 +330,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Nắm và thả (Grab / Catch)"
    ],
-   "prompt": "prompts/01-toan4/L4-15-data-catch.md"
+   "prompt": "prompts/01-toan4/L4-15-data-catch.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "L4-16",
@@ -277,7 +352,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Kéo thả (Drag)"
    ],
-   "prompt": "prompts/01-toan4/L4-16-bar-builder.md"
+   "prompt": "prompts/01-toan4/L4-16-bar-builder.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "L4-17",
@@ -294,7 +374,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Nắm và thả (Grab / Catch)"
    ],
-   "prompt": "prompts/01-toan4/L4-17-picture-market.md"
+   "prompt": "prompts/01-toan4/L4-17-picture-market.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "L4-18",
@@ -311,7 +396,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Chỉ ngón tay trỏ (Point)"
    ],
-   "prompt": "prompts/01-toan4/L4-18-chance-lab.md"
+   "prompt": "prompts/01-toan4/L4-18-chance-lab.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "L4-19",
@@ -328,7 +418,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Chỉ ngón tay trỏ (Point)"
    ],
-   "prompt": "prompts/01-toan4/L4-19-fraction-pizza.md"
+   "prompt": "prompts/01-toan4/L4-19-fraction-pizza.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "L4-20",
@@ -345,7 +440,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Kéo thả (Drag)"
    ],
-   "prompt": "prompts/01-toan4/L4-20-fraction-mirror.md"
+   "prompt": "prompts/01-toan4/L4-20-fraction-mirror.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "L4-21",
@@ -362,7 +462,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Vuốt / chém (Swipe)"
    ],
-   "prompt": "prompts/01-toan4/L4-21-fraction-ninja.md"
+   "prompt": "prompts/01-toan4/L4-21-fraction-ninja.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "L4-22",
@@ -379,7 +484,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Kéo thả (Drag)"
    ],
-   "prompt": "prompts/01-toan4/L4-22-common-denominator-factory.md"
+   "prompt": "prompts/01-toan4/L4-22-common-denominator-factory.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "L4-23",
@@ -396,7 +506,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Vuốt / chém (Swipe)"
    ],
-   "prompt": "prompts/01-toan4/L4-23-fraction-race.md"
+   "prompt": "prompts/01-toan4/L4-23-fraction-race.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "L4-24",
@@ -413,7 +528,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Nắm và thả (Grab / Catch)"
    ],
-   "prompt": "prompts/01-toan4/L4-24-fraction-fusion.md"
+   "prompt": "prompts/01-toan4/L4-24-fraction-fusion.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "L4-25",
@@ -430,7 +550,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Chỉ ngón tay trỏ (Point)"
    ],
-   "prompt": "prompts/01-toan4/L4-25-fraction-reactor.md"
+   "prompt": "prompts/01-toan4/L4-25-fraction-reactor.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "L4-26",
@@ -447,7 +572,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Nắm và thả (Grab / Catch)"
    ],
-   "prompt": "prompts/01-toan4/L4-26-treasure-split.md"
+   "prompt": "prompts/01-toan4/L4-26-treasure-split.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "L4-27",
@@ -466,7 +596,12 @@ window.MITI_CATALOG = {
     "Chỉ ngón tay trỏ (Point)",
     "Kéo thả (Drag)"
    ],
-   "prompt": "prompts/01-toan4/L4-27-ratio-rescue.md"
+   "prompt": "prompts/01-toan4/L4-27-ratio-rescue.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "L4-28",
@@ -483,7 +618,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Vuốt / chém (Swipe)"
    ],
-   "prompt": "prompts/01-toan4/L4-28-map-explorer.md"
+   "prompt": "prompts/01-toan4/L4-28-map-explorer.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "L4-29",
@@ -500,7 +640,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Kéo thả (Drag)"
    ],
-   "prompt": "prompts/01-toan4/L4-29-parallelogram-pull.md"
+   "prompt": "prompts/01-toan4/L4-29-parallelogram-pull.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "L4-30",
@@ -519,7 +664,12 @@ window.MITI_CATALOG = {
     "Nắm và thả (Grab / Catch)",
     "Kéo thả (Drag)"
    ],
-   "prompt": "prompts/01-toan4/L4-30-diamond-builder.md"
+   "prompt": "prompts/01-toan4/L4-30-diamond-builder.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "L4-31",
@@ -536,7 +686,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Vuốt / chém (Swipe)"
    ],
-   "prompt": "prompts/01-toan4/L4-31-mixed-sprint.md"
+   "prompt": "prompts/01-toan4/L4-31-mixed-sprint.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "L4-32",
@@ -553,7 +708,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Nghiêng người / bước sang vùng (Body tilt)"
    ],
-   "prompt": "prompts/01-toan4/L4-32-geometry-arena.md"
+   "prompt": "prompts/01-toan4/L4-32-geometry-arena.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "L4-33",
@@ -570,7 +730,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Nắm và thả (Grab / Catch)"
    ],
-   "prompt": "prompts/01-toan4/L4-33-fraction-arena.md"
+   "prompt": "prompts/01-toan4/L4-33-fraction-arena.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "L4-34",
@@ -587,7 +752,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Chỉ ngón tay trỏ (Point)"
    ],
-   "prompt": "prompts/01-toan4/L4-34-data-arena.md"
+   "prompt": "prompts/01-toan4/L4-34-data-arena.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "L4-35",
@@ -604,7 +774,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Vung tay đấm (Punch)"
    ],
-   "prompt": "prompts/01-toan4/L4-35-grand-math-arena.md"
+   "prompt": "prompts/01-toan4/L4-35-grand-math-arena.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "L4-36",
@@ -621,7 +796,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Chỉ ngón tay trỏ (Point)"
    ],
-   "prompt": "prompts/01-toan4/L4-36-place-value-forge.md"
+   "prompt": "prompts/01-toan4/L4-36-place-value-forge.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "L4-37",
@@ -638,7 +818,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Nắm và thả (Grab / Catch)"
    ],
-   "prompt": "prompts/01-toan4/L4-37-fraction-market.md"
+   "prompt": "prompts/01-toan4/L4-37-fraction-market.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "L4-38",
@@ -655,7 +840,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Chỉ ngón tay trỏ (Point)"
    ],
-   "prompt": "prompts/01-toan4/L4-38-angle-rescue.md"
+   "prompt": "prompts/01-toan4/L4-38-angle-rescue.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "L4-39",
@@ -672,7 +862,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Chỉ ngón tay trỏ (Point)"
    ],
-   "prompt": "prompts/01-toan4/L4-39-data-detective.md"
+   "prompt": "prompts/01-toan4/L4-39-data-detective.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "L4-40",
@@ -689,7 +884,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Vung tay đấm (Punch)"
    ],
-   "prompt": "prompts/01-toan4/L4-40-math-boss-lab.md"
+   "prompt": "prompts/01-toan4/L4-40-math-boss-lab.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "T5-01",
@@ -706,7 +906,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Vung tay đấm (Punch)"
    ],
-   "prompt": "prompts/02-toan5/T5-01-multi-operation-quest.md"
+   "prompt": "prompts/02-toan5/T5-01-multi-operation-quest.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "T5-02",
@@ -723,7 +928,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Vuốt / chém (Swipe)"
    ],
-   "prompt": "prompts/02-toan5/T5-02-decimal-dash.md"
+   "prompt": "prompts/02-toan5/T5-02-decimal-dash.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "T5-03",
@@ -740,7 +950,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Kéo thả (Drag)"
    ],
-   "prompt": "prompts/02-toan5/T5-03-fraction-decimal-percentage-memory.md"
+   "prompt": "prompts/02-toan5/T5-03-fraction-decimal-percentage-memory.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "T5-04",
@@ -759,7 +974,12 @@ window.MITI_CATALOG = {
     "Nắm và thả (Grab / Catch)",
     "Chỉ ngón tay trỏ (Point)"
    ],
-   "prompt": "prompts/02-toan5/T5-04-percentage-shop.md"
+   "prompt": "prompts/02-toan5/T5-04-percentage-shop.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "T5-05",
@@ -776,7 +996,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Kéo thả (Drag)"
    ],
-   "prompt": "prompts/02-toan5/T5-05-volume-builder.md"
+   "prompt": "prompts/02-toan5/T5-05-volume-builder.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "T5-06",
@@ -793,7 +1018,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Kéo thả (Drag)"
    ],
-   "prompt": "prompts/02-toan5/t5-06.md"
+   "prompt": "prompts/02-toan5/t5-06.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "T5-07",
@@ -810,7 +1040,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Chỉ ngón tay trỏ (Point)"
    ],
-   "prompt": "prompts/02-toan5/t5-07.md"
+   "prompt": "prompts/02-toan5/t5-07.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "T5-08",
@@ -827,7 +1062,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Nghiêng người / bước sang vùng (Body tilt)"
    ],
-   "prompt": "prompts/02-toan5/t5-08.md"
+   "prompt": "prompts/02-toan5/t5-08.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "T5-09",
@@ -844,7 +1084,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Cân bằng hai tay (Two-hand balance)"
    ],
-   "prompt": "prompts/02-toan5/t5-09.md"
+   "prompt": "prompts/02-toan5/t5-09.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "T5-10",
@@ -863,7 +1108,12 @@ window.MITI_CATALOG = {
     "Vung tay đấm (Punch)",
     "Chỉ ngón tay trỏ (Point)"
    ],
-   "prompt": "prompts/02-toan5/t5-10.md"
+   "prompt": "prompts/02-toan5/t5-10.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "T5-11",
@@ -882,7 +1132,12 @@ window.MITI_CATALOG = {
     "Chỉ ngón tay trỏ (Point)",
     "Kéo thả (Drag)"
    ],
-   "prompt": "prompts/02-toan5/T5-11-decimal-shop.md"
+   "prompt": "prompts/02-toan5/T5-11-decimal-shop.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "T5-12",
@@ -901,7 +1156,12 @@ window.MITI_CATALOG = {
     "Chỉ ngón tay trỏ (Point)",
     "Kéo thả (Drag)"
    ],
-   "prompt": "prompts/02-toan5/T5-12-percentage-lab.md"
+   "prompt": "prompts/02-toan5/T5-12-percentage-lab.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "T5-13",
@@ -920,7 +1180,12 @@ window.MITI_CATALOG = {
     "Chỉ ngón tay trỏ (Point)",
     "Kéo thả (Drag)"
    ],
-   "prompt": "prompts/02-toan5/T5-13-volume-vault.md"
+   "prompt": "prompts/02-toan5/T5-13-volume-vault.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "T5-14",
@@ -937,7 +1202,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Chỉ ngón tay trỏ (Point)"
    ],
-   "prompt": "prompts/02-toan5/T5-14-motion-word-problem.md"
+   "prompt": "prompts/02-toan5/T5-14-motion-word-problem.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "T5-15",
@@ -956,7 +1226,12 @@ window.MITI_CATALOG = {
     "Nắm và thả (Grab / Catch)",
     "Chỉ ngón tay trỏ (Point)"
    ],
-   "prompt": "prompts/02-toan5/T5-15-math-strategy-arena.md"
+   "prompt": "prompts/02-toan5/T5-15-math-strategy-arena.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "E4-01",
@@ -973,7 +1248,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Vuốt / chém (Swipe)"
    ],
-   "prompt": "prompts/03-english4/E4-01-vocab-quest.md"
+   "prompt": "prompts/03-english4/E4-01-vocab-quest.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "E4-02",
@@ -990,7 +1270,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Chỉ ngón tay trỏ (Point)"
    ],
-   "prompt": "prompts/03-english4/E4-02-listening-pick.md"
+   "prompt": "prompts/03-english4/E4-02-listening-pick.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "E4-03",
@@ -1007,7 +1292,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Kéo thả (Drag)"
    ],
-   "prompt": "prompts/03-english4/E4-03-picture-word-match.md"
+   "prompt": "prompts/03-english4/E4-03-picture-word-match.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "E4-04",
@@ -1024,7 +1314,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Vung tay đấm (Punch)"
    ],
-   "prompt": "prompts/03-english4/E4-04-spelling-stars.md"
+   "prompt": "prompts/03-english4/E4-04-spelling-stars.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "E4-05",
@@ -1041,7 +1336,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Chỉ ngón tay trỏ (Point)"
    ],
-   "prompt": "prompts/03-english4/E4-05-missing-letter-mission.md"
+   "prompt": "prompts/03-english4/E4-05-missing-letter-mission.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "E4-06",
@@ -1058,7 +1358,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Kéo thả (Drag)"
    ],
-   "prompt": "prompts/03-english4/E4-06-word-builder.md"
+   "prompt": "prompts/03-english4/E4-06-word-builder.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "E4-07",
@@ -1075,7 +1380,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Kéo thả (Drag)"
    ],
-   "prompt": "prompts/03-english4/E4-07-sentence-race.md"
+   "prompt": "prompts/03-english4/E4-07-sentence-race.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "E4-08",
@@ -1092,7 +1402,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Chỉ ngón tay trỏ (Point)"
    ],
-   "prompt": "prompts/03-english4/E4-08-word-memory.md"
+   "prompt": "prompts/03-english4/E4-08-word-memory.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "E4-09",
@@ -1109,7 +1424,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Nghiêng người / bước sang vùng (Body tilt)"
    ],
-   "prompt": "prompts/03-english4/E4-09-listening-lane.md"
+   "prompt": "prompts/03-english4/E4-09-listening-lane.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "E4-10",
@@ -1126,7 +1446,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Vung tay đấm (Punch)"
    ],
-   "prompt": "prompts/03-english4/E4-10-word-whack.md"
+   "prompt": "prompts/03-english4/E4-10-word-whack.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "E4-11",
@@ -1145,7 +1470,12 @@ window.MITI_CATALOG = {
     "Chỉ ngón tay trỏ (Point)",
     "Kéo thả (Drag)"
    ],
-   "prompt": "prompts/03-english4/E4-11-picture-story-builder.md"
+   "prompt": "prompts/03-english4/E4-11-picture-story-builder.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "E4-12",
@@ -1164,7 +1494,12 @@ window.MITI_CATALOG = {
     "Chỉ ngón tay trỏ (Point)",
     "Kéo thả (Drag)"
    ],
-   "prompt": "prompts/03-english4/E4-12-listen-and-sort.md"
+   "prompt": "prompts/03-english4/E4-12-listen-and-sort.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "E4-13",
@@ -1181,7 +1516,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Vuốt / chém (Swipe)"
    ],
-   "prompt": "prompts/03-english4/E4-13-phonics-pop.md"
+   "prompt": "prompts/03-english4/E4-13-phonics-pop.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "E4-14",
@@ -1200,7 +1540,12 @@ window.MITI_CATALOG = {
     "Chỉ ngón tay trỏ (Point)",
     "Kéo thả (Drag)"
    ],
-   "prompt": "prompts/03-english4/E4-14-question-builder.md"
+   "prompt": "prompts/03-english4/E4-14-question-builder.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "E4-15",
@@ -1217,7 +1562,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Chỉ ngón tay trỏ (Point)"
    ],
-   "prompt": "prompts/03-english4/E4-15-english-adventure-map.md"
+   "prompt": "prompts/03-english4/E4-15-english-adventure-map.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "E5-01",
@@ -1234,7 +1584,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Chỉ ngón tay trỏ (Point)"
    ],
-   "prompt": "prompts/04-english5/E5-01-listening-boss.md"
+   "prompt": "prompts/04-english5/E5-01-listening-boss.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "E5-02",
@@ -1251,7 +1606,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Kéo thả (Drag)"
    ],
-   "prompt": "prompts/04-english5/E5-02-sentence-maze.md"
+   "prompt": "prompts/04-english5/E5-02-sentence-maze.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "E5-03",
@@ -1268,7 +1628,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Vuốt / chém (Swipe)"
    ],
-   "prompt": "prompts/04-english5/E5-03-word-hunter.md"
+   "prompt": "prompts/04-english5/E5-03-word-hunter.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "E5-04",
@@ -1285,7 +1650,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Nghiêng người / bước sang vùng (Body tilt)"
    ],
-   "prompt": "prompts/04-english5/E5-04-grammar-gates.md"
+   "prompt": "prompts/04-english5/E5-04-grammar-gates.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "E5-05",
@@ -1302,7 +1672,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Kéo thả (Drag)"
    ],
-   "prompt": "prompts/04-english5/E5-05-cloze-canyon.md"
+   "prompt": "prompts/04-english5/E5-05-cloze-canyon.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "E5-06",
@@ -1319,7 +1694,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Vung tay đấm (Punch)"
    ],
-   "prompt": "prompts/04-english5/E5-06-spelling-blaster.md"
+   "prompt": "prompts/04-english5/E5-06-spelling-blaster.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "E5-07",
@@ -1336,7 +1716,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Kéo thả (Drag)"
    ],
-   "prompt": "prompts/04-english5/E5-07-phrase-builder.md"
+   "prompt": "prompts/04-english5/E5-07-phrase-builder.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "E5-08",
@@ -1353,7 +1738,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Chỉ ngón tay trỏ (Point)"
    ],
-   "prompt": "prompts/04-english5/E5-08-memory-triplet.md"
+   "prompt": "prompts/04-english5/E5-08-memory-triplet.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "E5-09",
@@ -1370,7 +1760,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Nói (Voice)"
    ],
-   "prompt": "prompts/04-english5/E5-09-voice-route.md"
+   "prompt": "prompts/04-english5/E5-09-voice-route.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "E5-10",
@@ -1387,7 +1782,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Chỉ ngón tay trỏ (Point)"
    ],
-   "prompt": "prompts/04-english5/E5-10-island-review.md"
+   "prompt": "prompts/04-english5/E5-10-island-review.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "E5-11",
@@ -1404,7 +1804,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Chỉ ngón tay trỏ (Point)"
    ],
-   "prompt": "prompts/04-english5/E5-11-reading-detective.md"
+   "prompt": "prompts/04-english5/E5-11-reading-detective.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "E5-12",
@@ -1423,7 +1828,12 @@ window.MITI_CATALOG = {
     "Chỉ ngón tay trỏ (Point)",
     "Kéo thả (Drag)"
    ],
-   "prompt": "prompts/04-english5/E5-12-grammar-builder.md"
+   "prompt": "prompts/04-english5/E5-12-grammar-builder.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "E5-13",
@@ -1440,7 +1850,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Nói (Voice)"
    ],
-   "prompt": "prompts/04-english5/E5-13-speaking-mission.md"
+   "prompt": "prompts/04-english5/E5-13-speaking-mission.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "E5-14",
@@ -1459,7 +1874,12 @@ window.MITI_CATALOG = {
     "Chỉ ngón tay trỏ (Point)",
     "Kéo thả (Drag)"
    ],
-   "prompt": "prompts/04-english5/E5-14-word-formation-lab.md"
+   "prompt": "prompts/04-english5/E5-14-word-formation-lab.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   },
   {
    "id": "E5-15",
@@ -1476,7 +1896,12 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Chỉ ngón tay trỏ (Point)"
    ],
-   "prompt": "prompts/04-english5/E5-15-english-challenge-cup.md"
+   "prompt": "prompts/04-english5/E5-15-english-challenge-cup.md",
+   "players": [
+    1,
+    2,
+    3
+   ]
   }
  ],
  "legacy": [
@@ -1494,6 +1919,11 @@ window.MITI_CATALOG = {
     "Vung tay đấm (Punch)"
    ],
    "prompt": "prompts/01-prompt-subway-math-blitz.md",
+   "players": [
+    1,
+    2,
+    3
+   ],
    "legacy": true
   },
   {
@@ -1510,6 +1940,11 @@ window.MITI_CATALOG = {
     "Nắm và thả (Grab / Catch)"
    ],
    "prompt": "prompts/02-prompt-math-catcher-ar.md",
+   "players": [
+    1,
+    2,
+    3
+   ],
    "legacy": true
   },
   {
@@ -1526,6 +1961,11 @@ window.MITI_CATALOG = {
     "Vuốt / chém (Swipe)"
    ],
    "prompt": "prompts/03-prompt-ninja-bubble-pop.md",
+   "players": [
+    1,
+    2,
+    3
+   ],
    "legacy": true
   },
   {
@@ -1542,6 +1982,11 @@ window.MITI_CATALOG = {
     "Vuốt / chém (Swipe)"
    ],
    "prompt": "prompts/04-prompt-english-vocab-ninja.md",
+   "players": [
+    1,
+    2,
+    3
+   ],
    "legacy": true
   },
   {
@@ -1560,6 +2005,11 @@ window.MITI_CATALOG = {
     "Khom hai tay (Two-hand stretch)"
    ],
    "prompt": "prompts/05-prompt-body-tilt-dodge.md",
+   "players": [
+    1,
+    2,
+    3
+   ],
    "legacy": true
   },
   {
@@ -1576,6 +2026,11 @@ window.MITI_CATALOG = {
     "Cân bằng hai tay (Two-hand balance)"
    ],
    "prompt": "prompts/06-prompt-two-hands-balance.md",
+   "players": [
+    1,
+    2,
+    3
+   ],
    "legacy": true
   },
   {
@@ -1592,6 +2047,11 @@ window.MITI_CATALOG = {
     "Chỉ ngón tay trỏ (Point)"
    ],
    "prompt": "prompts/07-prompt-finger-spell-english.md",
+   "players": [
+    1,
+    2,
+    3
+   ],
    "legacy": true
   },
   {
@@ -1610,6 +2070,11 @@ window.MITI_CATALOG = {
     "Vung tay đấm (Punch)"
    ],
    "prompt": "prompts/08-prompt-toan4-tong-ti-so-do.md",
+   "players": [
+    1,
+    2,
+    3
+   ],
    "legacy": true
   },
   {
@@ -1626,6 +2091,11 @@ window.MITI_CATALOG = {
     "Tạo góc bằng cánh tay (Angle pose)"
    ],
    "prompt": "prompts/09-prompt-toan4-hinh-hoc-goc-dien-tich.md",
+   "players": [
+    1,
+    2,
+    3
+   ],
    "legacy": true
   },
   {
@@ -1642,6 +2112,11 @@ window.MITI_CATALOG = {
     "Cân bằng hai tay (Two-hand balance)"
    ],
    "prompt": "prompts/10-prompt-toan5-chuyen-dong-gap-nhau.md",
+   "players": [
+    1,
+    2,
+    3
+   ],
    "legacy": true
   },
   {
@@ -1660,6 +2135,11 @@ window.MITI_CATALOG = {
     "Vuốt / chém (Swipe)"
    ],
    "prompt": "prompts/11-prompt-toan5-the-tich-hinh-khoi.md",
+   "players": [
+    1,
+    2,
+    3
+   ],
    "legacy": true
   },
   {
@@ -1678,6 +2158,11 @@ window.MITI_CATALOG = {
     "Vuốt / chém (Swipe)"
    ],
    "prompt": "prompts/12-prompt-toan5-ti-so-phan-tram-chiet-khau.md",
+   "players": [
+    1,
+    2,
+    3
+   ],
    "legacy": true
   }
  ],

@@ -37,7 +37,7 @@ Bấm copy toàn bộ prompt.       Nhấn Enter để AI tạo game.         ng
 > * *Mẹo:* Nếu trên giao diện Gemini chưa thấy nút Canvas, bạn chỉ cần gõ thêm chữ `Mở Canvas và tạo game:` ở đầu prompt.
 
 > [!TIP]
-> **Bước thứ tư (khuyên làm, khoảng 15 phút):** game mở ra rồi **bấm 7 lần vào logo MiTi** (hoặc `Ctrl+Alt+K`) để mở bảng kiểm nghiệm thu — 27 mục máy tự kiểm bằng code thật, rồi bấm "Xuất bản văn" để copy biên bản. Đối chiếu tiếp với 19 việc người thử trong `prompts/CHECKLIST_NGHIEP_THU.md` trước khi đưa game vào tiết học. Mục nào CHƯA ĐẠT thì dán lại nguyên văn quy định đó vào prompt và sinh lại file, không sửa tay HTML.
+> **Bước thứ tư (khuyên làm, khoảng 15 phút):** trước khi đưa game vào tiết học, làm lần lượt 14 việc người thử trong [`prompts/CHECKLIST_NGHIEP_THU.md`](prompts/CHECKLIST_NGHIEP_THU.md) — gồm chơi 1, 2 và 3 người, thử máy yếu và nút "Giảm hiệu ứng". Việc nào chưa ổn thì sửa prompt và sinh lại game, không sửa tay HTML.
 
 ---
 
@@ -48,9 +48,9 @@ Toàn bộ prompt nằm trong file `.md` riêng, mỗi file một game, copy ngu
 | Nhóm | Số lượng | Mở ở đâu |
 |:---|:---:|:---|
 | Prompt game chuẩn (Toán 4 · Toán 5 · Tiếng Anh 4 · Tiếng Anh 5) | **85** | [Dashboard MiTi](https://hoatran1127.github.io/New/) — bấm **Sao chép prompt**, hoặc [catalogs/GAME_CATALOG.md](catalogs/GAME_CATALOG.md) |
-| Khung master 13 mục (0 → 12) để tự tạo prompt mới | 1 | [prompts/00-master-canvas-prompt.md](prompts/00-master-canvas-prompt.md) |
+| Khung master 9 mục (1 → 9) để tự tạo prompt mới | 1 | [prompts/00-master-canvas-prompt.md](prompts/00-master-canvas-prompt.md) |
 | Biểu mẫu điền nhanh | 1 | [prompts/templates/game-prompt-template.md](prompts/templates/game-prompt-template.md) |
-| Bảng kiểm nghiệm thu cầm tay (27 mục máy tự kiểm + 19 việc người thử) | 1 | [prompts/CHECKLIST_NGHIEP_THU.md](prompts/CHECKLIST_NGHIEP_THU.md) |
+| Bảng kiểm cầm tay khi vào lớp (14 việc người thử) | 1 | [prompts/CHECKLIST_NGHIEP_THU.md](prompts/CHECKLIST_NGHIEP_THU.md) |
 | Biến thể điều khiển (Point · Swipe · Drag/Grab · Voice · No Camera) | **425** | [prompts/VARIANTS_425.md](prompts/VARIANTS_425.md) — 85 game × 5 kiểu, sinh tự động |
 | Prompt legacy đời đầu (cơ chế arcade, đã nâng cấp lên chuẩn hiện hành) | **12** | Bảng mở rộng dưới đây |
 
@@ -106,9 +106,44 @@ Số liệu do `tools/build-dashboard.mjs` đếm từ catalog — sửa game xo
 
 `tools/data/gestures.mjs` còn định nghĩa sẵn **4 mã mở rộng** (chưa game nào dùng, dành cho prompt bạn tự viết thêm): `CLAP` (vỗ hai tay, chốt khi hai tâm bàn tay sát nhau dưới 12% bề rộng vai rồi phải tách ra mới tính nhịp kế), `PINCH` (bóp ngón cái–trỏ, ngưỡng theo bề rộng bàn tay + hysteresis để không nháy liên tục), `HOLD_POSE` (giữ bất động tư thế 1.5 giây, dùng cho game vẽ hình/so sánh góc), `FINGER_COUNT` (giơ 1–4 ngón để chọn đáp án, trung vị cửa sổ 7 khung hình nên không nháy khi ngón đang chuyển — hợp với học sinh lớp 4 mới làm quen camera). Cả 14 mã đều phải đủ 9 trường `vi · landmark · hinh_hoc · muot · nguong · nguoi_choi · bien_do · ar · fallback` — `node tools/validate.mjs` chặn nếu thiếu, và bắt template khai báo đủ mọi mã đang có.
 
+### 👥 1, 2 hoặc 3 bạn cùng chơi trên một máy
+
+Nguồn: `tools/lib/players.mjs` + `tools/lib/compete.mjs`, in vào mục "2. CHẾ ĐỘ 1/2/3 NGƯỜI VÀ THI ĐUA" của mọi prompt.
+
+- **Chọn số người**: trước ván có ba nút to 1 · 2 · 3 (mặc định 1, nhớ trong `miti-players`).
+- **Mỗi em một làn**: màn hình chia N làn dọc, viền màu riêng (vàng · xanh · hồng) kèm nhãn P1/P2/P3 để không phụ thuộc màu. Game gán làn theo vị trí cơ thể thật (trung điểm hông, thiếu hông thì vai) và chỉ tính động tác nằm trong làn của chính em.
+- **Hiệu chỉnh từng làn**: các em đứng lùi khoảng 2 m, cách nhau một sải tay; làn nào có đúng một người liên tục 1 giây mới "P<n> sẵn sàng", đủ N làn mới đếm 3-2-1. Làn trống quá 2 giây thì dừng riêng làn đó; làn có hai người thì nhắc "Mỗi bạn đứng đúng làn của mình".
+- **Không camera**: vẫn giữ N làn, mỗi em một cụm phím (A/S/D · mũi tên · J/K/L) hoặc chạm trong làn của mình.
+
+**Thi đua cân bằng**
+
+| Luật | Nội dung |
+|:---|:---|
+| **Scoreboard** | 2–3 người: ô điểm P<n> theo màu làn ở dải trên, cập nhật ngay sau mỗi câu, người dẫn đầu có vương miện nhỏ |
+| **Podium** | hết ván xếp theo tổng điểm; bằng điểm thì xét số câu đúng rồi thời gian trả lời, vẫn bằng thì đồng hạng |
+| **Đuổi kịp có trần** | em kém người dẫn đầu từ 2 câu đúng trở lên được thẻ x2 cho câu kế, tối đa một thẻ mỗi 3 câu; ở hiệp quyết định thay bằng "câu lội ngược dòng" +15 điểm — hệ số điểm không bao giờ vượt x2 |
+| **Danh hiệu cho mọi em** | Nhanh nhất · Chính xác nhất · Vận động nhiều nhất · Chuỗi dài nhất, tính từ số liệu trong ván; em nào cũng có ít nhất một danh hiệu, kể cả em xếp cuối |
+| **Chơi một mình** | không có Podium; mốc để phá là kỷ lục của chính em trong `miti-best` — vượt thì nổ "PHÁ KỶ LỤC!" đúng một lần, vệt ghost mờ chạy theo lượt nhanh nhất cũ |
+
+**Nhận tay khi 2–3 bạn** (chỉ game dùng ngón tay — `tools/lib/input.mjs`). Nhận nhiều bàn tay cùng lúc làm máy yếu tụt khung hình và gán nhầm tay, nên nút bánh răng ở màn chọn số người có ba lựa chọn:
+
+- **Tự động** (mặc định): bắt đầu **theo lượt** — mỗi lượt hiện "Lượt của P<n> — sẵn sàng tay!", máy chỉ nhận tay trong làn đang có lượt; lượt xoay vòng, **mỗi em đúng 8 câu**.
+- **Tự chuyển sang cổ tay**: máy chậm (FPS < 15 suốt 3 giây), tay trượt hoặc mơ hồ 3 lần liên tiếp, hay model tay tải lỗi → chuyển ngay sang **cổ tay đồng thời** (cổ tay của từng em là con trỏ, mọi em trả lời cùng lúc), báo ngắn "Mình đổi sang chạm bằng cổ tay nhé!" và giữ nguyên điểm.
+- **Giáo viên cố định** "Theo lượt ngón tay" hoặc "Cổ tay đồng thời" thì giữ suốt ván (trừ khi model tay tải lỗi).
+
+Game điều khiển bằng thân người (bước, nghiêng, tạo góc…) thì mọi em chơi cùng lúc. Game VOICE: em giơ tay trong làn để giành lượt nói.
+
+### ✨ Hiệu ứng có nút "Giảm hiệu ứng"
+
+Nguồn: `tools/lib/effects.mjs`, in vào mọi prompt. Mỗi sự kiện có phản hồi nhìn thấy ngay: spotlight chuyển lượt, linh vật reo khi đúng và động viên khi sai, confetti màu của em bắn trong làn của em, rung nhẹ hoặc hit-stop ở khoảnh khắc lớn, điểm lăn số trên Scoreboard, các bậc Podium trồi lên lần lượt, thẻ đuổi kịp lật 3D. Giới hạn cố định: nhấp nháy ≤ 3 lần/giây; `prefers-reduced-motion` hoặc nút **"Giảm hiệu ứng"** thay rung, hit-stop và hạt bằng mờ dần tĩnh; máy chậm thì cắt hiệu ứng trước, sau đó mới giảm tần suất nhận diện.
+
+### 🪶 Prompt gọn hơn, trải nghiệm học sinh trước
+
+Mọi prompt ghép qua `tools/lib/skeleton.mjs` theo khung 9 mục; bốn mục đầu là **vòng lặp thu hút · chế độ 1/2/3 người và thi đua · chơi vận động · ghi nhớ bài học**, phần kỹ thuật (AR, camera, fallback) xếp sau. Mỗi chỉ dẫn chỉ xuất hiện một lần, nên prompt game còn khoảng **55–60% độ dài cũ** — Gemini đọc ít chữ hơn mà vẫn đủ luật.
+
 ### 🕶️ Chuẩn AR — camera CHÍNH LÀ màn chơi
 
-Cả 85 prompt + 12 prompt legacy đều phải nêu đủ 5 ràng buộc này (thiếu một là game chỉ còn canvas 2D kèm webcam, không phải AR). `tools/validate.mjs` chặn bằng 6 regex:
+Cả 85 prompt + 12 prompt legacy đều phải nêu đủ 5 ràng buộc này (thiếu một là game chỉ còn canvas 2D kèm webcam, không phải AR). `tools/validate.mjs` chặn nếu thiếu:
 
 | Ràng buộc | Nội dung phải có trong prompt |
 |:---|:---|
@@ -118,163 +153,86 @@ Cả 85 prompt + 12 prompt legacy đều phải nêu đủ 5 ràng buộc này (
 | Chiều sâu | Mỗi vật mang `z từ 1.6` (xa) về 0.35 (sát mặt), vẽ theo 1/z + ellipse bóng dưới chân + speed lines. |
 | Neo cơ thể | Vật ảo đeo vào landmark thật (cổ tay 0, khuỷu 13/14, vai 11/12, hông 23/24, tâm bàn tay 5/9/13/17); mất landmark thì biến mất kèm hướng dẫn tiếng Việt. |
 
-Mỗi mã điều khiển trong `tools/data/gestures.mjs` có thêm trường `ar` mô tả cử chỉ đó hòa vào nền AR thế nào (găng neon bọc cổ tay, khung xương dọc thân, vệt kiếm mọc từ tay…), và được in vào mục 4 của prompt game.
+Mỗi mã điều khiển trong `tools/data/gestures.mjs` có thêm trường `ar` mô tả cử chỉ đó hòa vào nền AR thế nào (găng neon bọc cổ tay, khung xương dọc thân, vệt kiếm mọc từ tay…), và được in vào mục "3. CHƠI VẬN ĐỘNG" của prompt game.
 
-### 🏫 Sáu quy định lớp học thật
+### 🏫 Quy định lớp học thật
 
-Cả 85 prompt + 425 biến thể đều mang sáu dòng này (nguồn: `tools/lib/rules.mjs`, validate chặn nếu thiếu) — chúng sinh ra từ những gì hỏng khi đem game webcam vào lớp:
+Nguồn: `tools/lib/rules.mjs`, in vào mọi prompt game, biến thể và legacy — chúng sinh ra từ những gì hỏng khi đem game webcam vào lớp:
 
 - **60/40 chống ăn may**: vật đúng/sai trộn xấp xỉ 60/40; chạm sai trừ tim, bỏ lỡ đúng chỉ mất chuỗi → vung tay bừa không thắng.
-- **Calibration động 3 giây**: đo bề rộng vai + tầm tay của chính học sinh rồi đặt ngưỡng theo đơn vị vừa đo, thay vì hằng số pixel (ngồi gần thì fire liên tục, ngồi xa thì vung hết cỡ vẫn không được tính).
+- **Calibration động 3 giây**: đo bề rộng vai + tầm tay của chính học sinh rồi đặt ngưỡng theo đơn vị vừa đo, thay vì hằng số pixel.
 - **Tự Pause khi tab ẩn** (`visibilitychange`/`blur`) + đếm 3-2-1 khi quay lại, reset cooldown để một cú vung dở dang không thành nhát chém.
-- **Ngân sách 30 FPS**: nhận diện 1 lần mỗi 2–3 khung hình, particle có pool, FPS < 28 thì tự giảm hiệu ứng — không bao giờ giảm nội dung học.
-- **An toàn ánh sáng + không gian**: gợi ý bật đèn/chỉnh hướng ngược sáng (vẫn cho chơi tiếp), nhắc dọn vật cản và cách tường một bước.
-- **Tổng kết ba thẻ** "Làm tốt / Cần luyện / Động tác lần sau" và nguyên tắc **nghe-trước** cho game Tiếng Anh (audio trước, chữ sau).
+- **Ngân sách 30 FPS**: nhận diện 1 lần mỗi 2–3 khung hình, particle có pool, FPS tụt thì giảm chi tiết — không bao giờ giảm nội dung học.
+- **An toàn ánh sáng + không gian**: nhắc dọn vật cản, cách tường một bước; ngược sáng thì gợi ý bật đèn rồi vẫn cho chơi.
+- **Nghe trước** cho game Tiếng Anh: audio trước, chữ sau, có nút phát lại.
 
 ### 💪 Vận động to + cảm giác arcade
 
-Hai lỗi khiến game webcam thất bại khi đưa vào lớp: trẻ chỉ nhấc ngón tay trước ngực (không phải vận động) và cú chạm không có phản ứng nào (chơi như làm bài tập). `tools/lib/feel.mjs` khóa cả hai, và được in vào 85 prompt + 425 biến thể + 12 legacy:
+Nguồn: `tools/lib/feel.mjs`. Hai lỗi hay gặp là trẻ chỉ nhấc ngón tay trước ngực và cú chạm không có phản ứng gì:
 
-**Năm ràng buộc vận động (`MOTION`)**
-- **Biên độ**: mỗi lượt là động tác >= 50% tầm với đã đo lúc calibration, khuỷu duỗi gần thẳng khi chốt — không có đường thắng cả vòng bằng cổ tay.
-- **Vùng đích sát mép**: tâm vùng đáp án cách trục cơ thể >= 45% tầm với, nằm trong 12% bề rộng từ cạnh khung, đổi vị trí theo lượt.
-- **Xen kẽ nhóm cơ**: một bên tay/một hướng không quá 4 lượt liên tiếp; mỗi 3 lượt đổi mặt phẳng động tác (ngang vai → với cao → xuống thấp).
-- **3 hiệp + trạm nghỉ**: 12 lượt chia 3 hiệp, giữa hiệp nghỉ 5 giây đếm ngược, không trừ tim — tương đương 4–6 phút vận động vừa.
-- **Thẻ đếm vận động**: "Em đã vận động N động tác trong M phút" ở màn tổng kết, không phải điểm và không so với bạn.
+- **Biên độ**: mỗi lượt là động tác >= 50% tầm với đo lúc calibration, khuỷu gần thẳng khi chốt.
+- **Vùng đích sát mép**: tâm vùng đáp án cách trục cơ thể >= 45% tầm với, đổi chỗ mỗi lượt.
+- **Xen kẽ**: một bên tay/một hướng không quá 4 lượt liên tiếp; mỗi 3 lượt đổi mặt phẳng động tác.
+- **Combo + chữ khen**: "x2, x3…" to dần, cao độ âm nhảy bậc; câu sai dùng chữ đỡ, không chữ đỏ gây sợ; mỗi vòng 2 thẻ vàng x2 và 1 câu thử thách.
+- **Sắp tới mốc**: còn đúng 1 câu nữa chạm mốc 10/20/30 thì làn của em hiện "Còn 1 câu nữa tới mốc <m>".
 
-**Sáu ràng buộc arcade (`FEEL`)**
-- **Hit-stop 70–90 ms** + giật màn hình 4–6 px + thẻ lún 0.85 rồi nảy (squash & stretch) — nhìn thấy lực của cú chạm.
-- **Combo** "x2→x5" hiện to dần kèm vệt neon từ tay tới vật, cao độ âm thanh nhảy bậc theo chuỗi, đứt thì âm rơi và số tan thành hạt.
-- **Chữ khen** tiếng Việt bật lên đúng điểm chạm; câu sai dùng chữ đỡ, không chữ đỏ gây sợ.
-- **Thẻ vàng x2 điểm** (2 lần/vòng) + 1 câu thử thách xuất hiện từ z xa, biến mất sau 3 giây — hồi hộp mà không đổi dữ liệu học tập.
-- **FX hòa vào nền AR** (particle, vệt kiếm từ cổ tay, kính vỡ mạng nhện từ điểm va chạm) trong trần alpha 0.45 và ngân sách particle.
-- **Mascot phản ứng**: nghiêng theo hướng với tay, ăn mừng khi combo >= 3, che mắt khi hụt, chỉ về camera khi mất landmark.
+Mỗi mã điều khiển còn có trường `bien_do` mô tả động tác to riêng cho cơ chế đó, được in vào mục "3. CHƠI VẬN ĐỘNG".
 
-Mỗi mã điều khiển còn có thêm trường `bien_do` mô tả động tác to riêng cho cơ chế đó (SWIPE chém từ vai >= 60% tầm với, TWO_HAND_STRETCH dang từ 40% → 100% sải tay…), được in vào mục 4 của prompt và block điều khiển của biến thể.
+### ♿ Giao diện + tiếp cận
 
-### 🎒 Bốn quy định lớp học thật (giao diện + tiến bộ)
+Nguồn: `tools/lib/classroom.mjs` và `tools/lib/access.mjs`:
 
-Nguồn: `tools/lib/classroom.mjs` — cũng được in nguyên văn vào 85 prompt + 425 biến thể + 12 legacy, `validate.mjs` chặn nếu thiếu:
+- **Vùng an toàn cho chữ**: lưới 3×3, ô giữa và ô giữa trên (thân học sinh) không đặt chữ; HUD, đề, thẻ đáp án, mascot ở dải trên, hai cột biên và dải dưới.
+- **Theo mức camera đang thấy**: chỉ tay / nửa thân / toàn thân → chọn cơ chế theo mức đang có và báo bằng tiếng Việt, thay vì kẹt ở màn lỗi.
+- **Không chỉ dùng màu**: đúng/sai có ✓ ✗ + chữ; âm thanh có phụ đề, nút "Hiện chữ" dùng được ngay; chữ tương phản >= 4.5:1.
+- **Tay thuận**: calibration hỏi "Em thuận tay nào?" rồi gán tay điều khiển và gương hướng dẫn theo lựa chọn đó.
 
-- **Vùng an toàn cho chữ**: chia khung hình 3×3, ô giữa và ô giữa trên (đúng chỗ thân học sinh) là vùng cấm đặt chữ; HUD, đề bài, thẻ đáp án và mascot chỉ ở dải trên, hai cột biên và dải dưới.
-- **Đàm phán theo khả năng camera**: game tự nhận biết đang thấy tới đâu (chỉ tay / nửa thân trên / toàn thân) rồi chọn cơ chế theo mức tốt nhất đang có — thiếu vai thì bỏ nghiêng thân, thiếu hông thì bỏ bước chân — và báo bằng tiếng Việt, thay vì đòi toàn thân rồi kẹt ở màn lỗi.
-- **Hồ sơ tiến bộ `miti-mastery`**: ghi số lần gặp, số lần đúng, errorTag sai nhiều nhất, chuỗi đúng và ngày chơi gần nhất theo từng cụm kiến thức (không lưu ảnh/video). Lần chơi sau tự xếp câu theo lỗi yếu nhất (lặp lại cách quãng) và tổng kết so với lần trước; mất hồ sơ thì vẫn chơi trọn.
-- **Chế độ hai học sinh**: nút bật/tắt, `maxNumHands: 2`, chia khung hình hai nửa theo trục dọc, mỗi tay chỉ chốt trong nửa của mình (gán theo vai nếu có pose), điểm và tim tách riêng, không xếp hạng — lớp 35 em với vài máy tính vẫn chơi được. Biến thể VOICE không dùng chế độ này vì chỉ có một micro.
+### 🧪 Đề tự kiểm chứng + độ khó theo năng lực
 
-### ♿ Sáu quy định tiếp cận + an toàn thần kinh
+Nguồn: `tools/lib/verify.mjs`. Một mô hình sinh 40–60 mục chắc chắn có vài mục lỗi, và game sẽ âm thầm dạy sai:
 
-Nguồn: `tools/lib/access.mjs` — in nguyên văn vào 85 prompt + 425 biến thể + 12 legacy, `validate.mjs` chặn nếu thiếu. Đây là nhóm quy định dễ bị bỏ nhất vì game vẫn "chạy được" mà không ai biết có em đang chơi mà không hiểu mình đúng hay sai:
-
-- **Trần nhấp nháy 3 lần/giây**: không hiệu ứng nào bật–tắt quá 3 lần mỗi giây, không giật sáng phủ toàn màn hình, vùng đang chớp ≤ 25% khung hình. Flash khi mất máu là viền mép mờ dần 200–300 ms, viền HUD theo combo đổi độ sáng mượt.
-- **Tự đọc `prefers-reduced-motion`**: đọc cài đặt máy lúc khởi động rồi **bật sẵn** chế độ Giảm hiệu ứng (tắt particle, bỏ giật màn hình, hit-stop còn ~30 ms) nhưng giữ nguyên 100% nội dung học — vì trong lớp thật thì không em nào bấm nút Giảm hiệu ứng.
-- **Màu không là kênh duy nhất**: đúng/sai/đang chọn/bị khóa phân biệt được bằng ≥ 2 kênh ngoài màu (biểu tượng ✓ ✗, chữ, hình dạng, âm thanh); không dựa vào cặp đỏ–xanh lá vì khoảng 8% học sinh nam và 0,5% học sinh nữ mù màu đỏ–lục.
-- **Phụ đề cho mọi âm thanh**: nút "Hiện chữ" bật được ngay từ đầu chứ không chờ trả lời sai; lời giải, lời khen, thông báo lỗi đều có dạng chữ — lớp ồn hay học sinh nghe kém vẫn đạt 100% mục tiêu, còn em đọc chưa vững vẫn chơi bằng tai.
-- **Tương phản ≥ 4.5:1** giữa chữ và nền ngay sau lưng nó (chữ lớn ≥ 3:1), mỗi thẻ tự có nền + viền ≥ 2px + bóng đổ: tắt lớp phủ tối đi thì chữ vẫn đọc được trên khung hình có cửa sổ sáng phía sau.
-- **Câu hỏi tay thuận**: calibration hỏi một chạm "Em thuận tay nào?" (Trái / Phải / Cả hai) rồi gương lại hướng dẫn và gán tay điều khiển theo lựa chọn đó, mốc biên độ 50% tầm với đo theo đúng tay — thuận tay trái không phải với chéo người suốt 12 lượt.
-
-### 🧪 Đề phải tự kiểm chứng + độ khó theo năng lực
-
-Nguồn: `tools/lib/verify.mjs`. Đây là tầng sửa hai lỗi **không ai nhìn thấy khi test**:
-
-**Tự kiểm chứng (`VERIFY`)** — một mô hình sinh 40–60 mục chắc chắn vài mục lỗi, và game sẽ âm thầm dạy sai. Prompt cũ chỉ viết "mỗi mục một đáp án đúng duy nhất kiểm chứng được bằng code", đó là lời hứa chứ không phải cơ chế:
-
-- **`verifyQuestionBank()` chạy một lần lúc nạp**: `answer` phải có trong `choices` và xuất hiện đúng một lần; `errorTag` thuộc đúng danh sách đã khai báo; không hai mục trùng `prompt`; mỗi level chiếm tối thiểu 1/4 số mục. Mục trượt bị **loại khỏi vòng chơi** + `console.warn` nêu id và lý do.
-- **Mỗi phương án nhiễu sai theo MỘT LỖI THẬT** (quên nhớ, quên chia đôi diện tích tam giác…), không phải `3 + 2 = 99`; trước khi chốt mục phải thử "theo cách hiểu hợp lý nào thì phương án này đúng?".
-- **Guard phạm vi**: mọi số nằm trong phạm vi SGK đã khai báo, không chia cho 0, kết quả hữu hạn; game Tiếng Anh thì mọi từ phải có trong word list.
-- **Chống đoán mò bằng cấu trúc**: quy tắc 60/40 chặn vung tay bừa, nhưng trẻ còn mẹo "chọn số to nhất / cái lặp lại từ trong đề". Trần đếm được: không quá 20% cho mẹo to-nhất và dài-nhất, vị trí đáp án đúng phân bố đều `1/3 ± 10%` theo chính hàm seed.
-- **Level khớp số bước thật**: 1 = một bước, 2 = hai bước, 3 = ba bước trở lên — không dán nhãn level 3 cho phép một bước chỉ để đủ chỉ tiêu.
-
-**Thích ứng (`ADAPT`)** — prompt cũ ghi "tăng độ khó ở lượt 5 và lượt 9", tức là đảm bảo trẻ yếu trượt đúng lúc bài khó nhất:
-
-- **2 câu đúng liên tiếp lên một level, 2 câu sai liên tiếp xuống một level và bắt buộc cùng `errorTag`** — sử đúng chỗ yếu, không gặp chủ đề lạ. Lượt 5 và 9 chỉ còn là mốc nhịp.
-- **Sàn chống nản**: không em nào được sai quá 3 câu liên tiếp; câu thứ 4 là level 1 cùng `errorTag` kèm lời giải **từng bước** trước khi chọn lại, và chọn lại đúng thì không trừ tim lần hai.
-- **Level ẩn với học sinh**: không "level", không sao xếp hạng; phân bố theo level chỉ hiện ở màn tổng kết dành cho giáo viên.
+- **`verifyQuestionBank()` chạy một lần lúc nạp**: `answer` có trong `choices` đúng một lần, `errorTag` hợp lệ, không trùng đề, nhiễu theo lỗi thật, số trong phạm vi SGK, chống mẹo "chọn số to nhất", mỗi level >= 1/4 số mục. Mục trượt bị loại khỏi vòng chơi + `console.warn`.
+- **Thích ứng**: 2 câu đúng liên tiếp lên một level, 2 câu sai liên tiếp xuống một level cùng `errorTag`; không để sai quá 3 câu liên tiếp — câu thứ tư là level 1 kèm lời giải từng bước. Level ẩn với học sinh, chỉ màn giáo viên thấy phân bố.
 
 ---
 
-### 🏃 Sáu quy định thể dục có cấu trúc
+### 🏃 Thể dục có cấu trúc
 
-Nguồn: `tools/lib/pe.mjs`, `validate.mjs` so nguyên văn từng chuỗi. Vòng 3 đã buộc "động tác >= 50% tầm với", nhưng chưa tầng nào hỏi ba câu của một hoạt động thể dục thật: cơ thể được làm nóng **trước** khi với tay mạnh chưa, cường độ **đo** được không, và kết thúc thì hạ nhiệt hay tắt máy luôn. Một game 12 lượt bắt trẻ đứng với tay hết tầm rồi đóng tab ngay là rủi ro cơ bắp nguội, không phải bài thể dục — mà mục tiêu của thư viện này là *giúp các con vận động thể dục vui vẻ mà vẫn hiểu bài*.
+Nguồn: `tools/lib/pe.mjs`. Một phiên chơi là một tiết thể dục thu nhỏ: làm nóng → nhịp đo được → hạ nhiệt → nước, trong trần tải trọng an toàn.
 
-| Quy định | Con số bắt buộc | Vì sao phải viết thành số |
-|:---|:---|:---|
-| **Khởi động** | 60–90 giây trước hiệp 1, bốn động tác (vai 10 nhịp · cổ tay 10 vòng/bên · tay cao 8 nhịp · bước tại chỗ 15 giây), không tính điểm, không trừ tim | "làm nóng người" chữ trơn thì mô hình sinh một dòng chữ chào mừng; liệt kê 4 động tác + số nhịp mới ra được màn khởi động chạy được |
-| **Nhịp thẻ + cường độ** | bay vào 3,0–4,5 giây, ở lại `<= 8` giây, giữa hai lượt `<= 1,5` giây, **>= 12 nhịp chuyển động mỗi phút** đếm theo ngưỡng 15% tầm với, chia số phút chơi thật | tim phải có nhịp; không có nhịp tối thiểu thì "4–6 phút vận động" chỉ là chữ quảng cáo. Vòng 7 bỏ con số cũ "8 động tác mỗi phút" vì 12 lượt / 4–6 phút **không thể** đạt tới nó |
-| **Đồng hồ vận động** | tích lũy giây tay/thân di chuyển thật (ngưỡng 15% tầm với), tổng kết in "X giây trên tổng Y giây", yêu cầu **>= 60%** | "có vận động không" phải là một con số giáo viên dự giờ kiểm được, không phải cảm giác "hơi mệt" |
-| **Hạ nhiệt** | 45–60 giây trước màn tổng kết (duỗi tay 15 giây/bên · cúi chạm mũi chân 15 giây · kéo vai 10 nhịp · hít thở 4 vào – 4 ra), **không có nút "Bỏ qua"** | dừng đột ngột khi tim đang nhanh là điểm khác biệt giữa trò chơi và bài thể dục |
-| **Nhắc uống nước** | phiên `>= 6` phút hoặc phiên thứ hai liên tiếp → đúng **MỘT dòng** "Mình uống vài ngụm nước rồi hãy chơi tiếp nhé" ở tổng kết, không pop-up giữa vòng | lời khuyên cho người lớn, không phải cơ chế chơi; pop-up giữa vòng bị trẻ bấm bỏ và cắt mạch vui |
-| **Trần tải trọng** | cấm nhảy tiếp đất · cấm xoay thân nhanh quá 90 độ · cấm giữ hai tay trên cao `> 15` giây · cúi thấp tối đa 3/12 lượt · FPS tụt thì hạ nhịp | nói "an toàn khi vận động" thì mô hình vẫn sinh động tác nhảy; phải kể tên từng động tác bị cấm mới chặn được |
+| Quy định | Con số bắt buộc |
+|:---|:---|
+| **Khởi động** | 60–90 giây trước hiệp 1 (vai 10 nhịp · cổ tay 10 vòng/bên · tay cao 8 nhịp · nâng gối 15 giây), không tính điểm |
+| **Nhịp thẻ + cường độ** | bay vào 3,0–4,5 giây, ở lại `<= 8` giây, **>= 12 nhịp chuyển động mỗi phút** (ngưỡng 15% tầm với); tổng kết in "Em đã chuyển động X giây trên Y giây", cần **>= 60%** |
+| **Hạ nhiệt** | 45–60 giây trước màn tổng kết, không bỏ qua (duỗi tay · cúi chạm mũi chân · kéo vai · hít thở 4 vào – 4 ra) |
+| **Nhắc uống nước** | phiên `>= 6` phút hoặc phiên thứ hai liền → đúng một dòng ở tổng kết, uống vài ngụm nước rồi hãy chơi tiếp |
+| **Trần tải trọng** | cấm nhảy tiếp đất · cấm xoay thân nhanh quá 90 độ · cấm giữ hai tay trên cao `> 15` giây · cúi thấp tối đa 3/12 lượt |
 
-Bản **không camera** giữ nguyên cấu trúc buổi tập (khởi động + hạ nhiệt rút thành cổ tay – bàn chân – vai + hít thở tại chỗ), bỏ mục đồng hồ vận động `>= 60%` và thay bằng đếm "số lượt em chủ động thao tác"; nhịp thẻ và trần tải trọng áp dụng nguyên văn.
+Bản **không camera** giữ khởi động + hạ nhiệt dạng tại chỗ, thay đồng hồ vận động bằng "số lượt em chủ động thao tác".
 
----
+### 🧠 Nhớ bài có lịch
 
-### 🧠 Sáu quy định nhớ bài có lịch
+Nguồn: `tools/lib/memory.mjs`. Mục tiêu là hiểu bài hôm nay và vẫn nhớ sau một tuần:
 
-Nguồn: `tools/lib/memory.mjs`, `validate.mjs` so nguyên văn từng chuỗi. Mục tiêu đề ra là "vận động thể dục vui vẻ **cũng hiểu bài nhớ bài**", nhưng đến vòng 6 phần "nhớ" chỉ có một chữ "lặp lại cách quãng" nằm trong ngoặc của `CLASSROOM.mastery` — không mốc thời gian, không bộ đếm, không gì kiểm được. Game vì thế dạy rất vui trong 5 phút và trả lại kiến thức cho cô giáo sau ba ngày.
+- **Lịch ôn `miti-review`**: errorTag sửa đúng 2 lần liên tiếp thì ôn ở mốc **+1, +3, +7 ngày**; tối đa 4/12 lượt là câu đến hạn; quên khi ôn không trừ tim, chỉ hạ về +1 ngày. Tổng kết ghi "Em vẫn nhớ / Cần ôn lại" và "Lần sau có <n> câu đang chờ".
+- **Xen cụm**: >= 3/12 lượt thuộc cụm khác, rải xen kẽ; trong một cụm vẫn dễ → khó.
+- **Gợi nhớ**: 10 giây "Em còn nhớ không?" trước lượt 1 (sai không trừ tim); ở 4/12 lượt hỏi "Vì sao đúng?" 3 phương án trong 5 giây.
 
-| Quy định | Con số bắt buộc | Vì sao phải viết thành số |
-|:---|:---|:---|
-| **Lịch ôn** | errorTag sửa đúng 2 lần liên tiếp → ôn lại **+1, +3, +7 ngày**; ôn đều đúng thì giãn **+21 ngày**; lưu `miti-review` dạng `{ id, due }`, tối đa **4/12 lượt** là câu đến hạn | "cách quãng" là tính từ, mô hình không code được; mốc ngày mới tạo ra hàng đợi kiểm được bằng `Date` |
-| **Xen cụm** | **>= 3/12 lượt** thuộc cụm khác cụm chính, rải xen kẽ chứ không dồn cuối | luyện xen kẽ nhớ lâu hơn luyện dồn một dạng, nhưng vẫn phải giữ thứ tự dễ → khó *trong* từng cụm |
-| **Câu mở màn** | **10 giây** "Em còn nhớ không?" trước lượt 1, lấy câu đúng của phiên trước, không gợi ý; sai thì không trừ tim, chỉ xếp vào lượt 3 | kéo kiến thức ra khỏi trí nhớ trước khi dạy lại mới đo được trí nhớ dài hạn; phiên đầu trên máy thì bỏ qua im lặng |
-| **"Vì sao đúng?"** | đúng **4/12 lượt** (mỗi hiệp một lượt + mọi lượt ôn), 3 phương án, **<= 5 giây**, sai không trừ tim | tự giải thích là cơ chế giúp nhớ; giới hạn 4/12 là để không phá nhịp 12 nhịp chuyển động mỗi phút |
-| **Quên không phạt** | từng đúng >= 2 lần mà sai khi ôn → không trừ tim, không cắt chuỗi, hạ lịch về +1 ngày; tổng kết chia "vẫn nhớ / cần ôn lại" | đây là phép đo trí nhớ chứ không phải phần chơi; phạt thì trẻ học cách không mở game lại |
-| **Tờ rời giáo viên** | nút "Copy tờ rời": 3 errorTag yếu nhất, số ngày từ lần chơi gần nhất, lịch ôn sắp tới, một đề xuất hành động, số động tác + phút vận động | cô cần một tờ giấy chứ không cần một hệ thống LMS; vẫn chỉ clipboard trên máy đó, không gửi đi đâu |
+### 🔥 Cao trào của ván
 
-Ba mục `[20] [21] [22]` của bảng kiểm máy tự kiểm chính là ba con số này, nên file HTML "chơi xong quên ngay" bị báo CHƯA ĐẠT mà không cần ai đọc code.
+Nguồn: `tools/lib/hype.mjs`:
+
+- **Ba giây đầu**: một vật thể AR lớn bay ngang sát người chơi kèm vệt neon và tiếng "vút", mascot nói đúng một dòng nhiệm vụ — không mở màn bằng chữ dài.
+- **Ba hiệp leo thang**: thẻ 4,5 → 3,75 giây, hiệp 3 "HIỆP QUYẾT ĐỊNH" nhân đôi điểm (hệ số không vượt x2); giữa hai hiệp nghỉ 5 giây, không mất tim.
+- **Mở thưởng** cuối mỗi hiệp: 2,5 giây quay qua ba phương án, luôn có quà, không đổi level thích ứng.
 
 ---
 
-### 🔥 Sáu quy định thi đua + cao trào
+### ✅ Thử game trước khi đưa vào lớp
 
-Nguồn: `tools/lib/hype.mjs`, `validate.mjs` so nguyên văn từng chuỗi. Vòng 6–7 làm game **vận động đủ** và **nhớ bài đủ**, nhưng khảo sát 85 prompt thì phần "muốn chơi" vẫn trống: "kỷ lục" = 0, "phá kỷ lục" = 0, "bóng ma" = 0, "mở thưởng/quay số" = 0, "hiệp quyết định" = 0, "đích chung" = 0. Một game có hit-stop đẹp vẫn nhàm sau phút thứ hai nếu không có gì để chờ. Và vì thư viện đã cấm leaderboard, mọi mốc so sánh dưới đây là với **chính em** hoặc với **một đích chung**.
+Bảng kiểm cầm tay **`prompts/CHECKLIST_NGHIEP_THU.md`** (do `tools/build-acceptance.mjs` sinh từ `tools/lib/acceptance.mjs`) gồm **14 việc người thử**, khoảng 15 phút: đứng xa tới mức chỉ còn hai bàn tay · giữ im một tư thế 5 giây · che nửa người · tắt camera giữa ván · rút mạng lúc tải model · cố tình sai 4 câu liên tiếp · mở bằng điện thoại đặt dọc · đưa một học sinh chưa đọc hướng dẫn chơi thử 60 giây · chơi trọn một phiên rồi xem em có thở nhanh hơn · **chơi 2 người** (làn riêng, bảng điểm trực tiếp, người thắng + danh hiệu cho cả hai) · **chơi 3 người** (không tính nhầm động tác sang làn bên cạnh) · **cố tình để hai em bằng điểm** · **game tay 3 người trên máy yếu** (tự chuyển sang cổ tay, giữ nguyên điểm) · **bật "Giảm hiệu ứng"**.
 
-| Quy định | Con số bắt buộc | Vì sao phải viết thành số |
-|:---|:---|:---|
-| **Cú "ồ" 3 giây đầu** | ngay khi vào gameplay (chưa vào lượt 1): một vật thể AR cỡ lớn bay ngang sát người chơi + vệt neon + tiếng "vút", mascot chào bằng đúng dòng nhiệm vụ, chữ >= 44px; không màn chữ dài | 3 giây đầu quyết định em có tin đây là game thật không; bản không camera dùng vệt sáng trên nền tối |
-| **Kỷ lục của chính em** | `miti-best` lưu đúng ba số {điểm cao nhất, chuỗi dài nhất, ngày}; từ hiệp 2 HUD hiện "Kỷ lục: <n> · Em đang: <m>"; vượt thì nổ ĐÚNG MỘT lần "PHÁ KỶ LỤC!" 1,2 giây + 1 thẻ sưu tập | mốc để phá phải kiểm được bằng một phép so sánh, không phải lời khen chung chung; chưa có dữ liệu thì ẩn hẳn, không hiện số 0 |
-| **Vệt ghost** | dải sáng hình người alpha <= 0.35 (không phải ảnh/video người chơi) chạy theo nhịp lượt tốt nhất phiên trước; về trước thì +5 điểm; không có dữ liệu thì bỏ vệt, cấm chữ "thua" | thi đua với chính mình tạo adrenaline mà không chạm vào Quy tắc riêng tư và không so sánh giữa các em |
-| **Hiệp quyết định** | hiệp 1 thẻ 4,5 giây → hiệp 2 3,75 giây → hiệp 3 "HIỆP QUYẾT ĐỊNH": điểm nhân đôi, thêm 1 thẻ vàng; vẫn 4 lượt/hiệp, vẫn trạm nghỉ 5 giây, level không đổi theo hiệp | cao trào phải có vị trí xác định trong 12 lượt; nếu hiệp 3 cũng như hiệp 1 thì không có gì để chờ |
-| **Nghi thức mở thưởng** | 2,5 giây cuối mỗi hiệp, ba nhịp quay qua đúng ba phương án (thẻ / +10 điểm / quyền chọn câu dễ hơn một bậc); luôn có quà, không đổi level thích ứng; reduced-motion thì mở ngay bằng chữ | chờ đợi phần thưởng là động lực thật (anticipation), nhưng không được biến thành cờ bạc đổi độ khó |
-| **Đích chung** | cột "Cả nhóm: <x>/<mốc 40>" (người lớn đổi 20–60) ở dải dưới, tăng theo mỗi lượt đúng; chạm mốc thì cả màn ăn mừng 3 giây + 1 thẻ CHUNG; không điểm từng em cạnh nhau, không tên, không hạng nhất | thi đua kiểu bảng xếp hạng làm em yếu bỏ cuộc; đích chung vẫn tạo không khí mà không xếp loại ai |
-
-Ba mục `[23] [24] [25]` của bảng kiểm máy tự kiểm chính là ba con số này (dòng kỷ lục + sự kiện PHÁ KỶ LỤC, hiệp 3 nhân đôi mà vẫn 4 lượt, mở thưởng 2,5 giây luôn có quà).
-
----
-
-### 🪝 Sáu quy định "ham quay lại"
-
-Nguồn: `tools/lib/anticipation.mjs`, `validate.mjs` so nguyên văn từng chuỗi. Vòng 8 cho em thứ để thi đua **trong** một phiên; khảo sát 85 prompt cho vòng 9 thấy từ vựng về **chờ đợi giữa hai phiên** vẫn bằng 0: "chương tiếp theo" = 0, "còn <n> câu nữa" = 0, "đang chờ" = 0, "để dành" = 0, "missing/danger" = 0. Một game kết thúc trọn vẹn mà không còn gì dở dang thì em đóng tab, và không có lý do gì để mở lại. Sáu quy định này tạo sự dở dang **lành mạnh** — cố tình tránh ba biến thể độc hại hay gặp: chuỗi ngày chơi (streak), quyền gửi thông báo, và "sống lại" xóa mất hình phạt sư phạm.
-
-| Quy định | Con số bắt buộc | Vì sao phải viết thành số |
-|:---|:---|:---|
-| **Sắp chạm mốc** | 1,5 giây trước lượt kế: "Còn 1 câu nữa tới mốc <m>" với mốc 10/20/30 câu đúng và lượt đó nhân đôi điểm; đích nhóm thì "Cả nhóm còn <k> câu tới mốc <m>" | gần-mà-chưa (near miss) là lý do người ta bấm lại câu tiếp theo; mốc cố định 10/20/30 kiểm được, mốc "sắp tới" mơ hồ thì không |
-| **Khiên chuỗi để dành** | `miti-tokens` giữ { khiên, quyền chọn câu, ngày }, tối đa **2**; khiên chỉ giữ chuỗi đúng, **vẫn trừ 1 tim, vẫn dừng 2 giây hiện lời giải, câu sai vẫn vào hàng đợi luyện lại**; hết 5 tim vẫn thua như cũ | để dành quyền lực sang phiên sau tạo lý do mở lại mà không phá vỡ Quy tắc chống may rủi; nếu khiên chặn cả lời giải thì nó thành gadget cheating |
-| **Chương còn dở** | màn tổng kết hiện "Chương tiếp theo: <tên chương>" + nút "Xem trước" chiếu đúng 6 giây; **cấm** đe dọa kiểu "không chơi lại là mất hết" | vòng lặp mở (open loop) thôi thúc quay lại; đe dọa mất tiến trình thì ngược lại, em sợ và bỏ |
-| **Hẹn câu đang chờ** | một dòng duy nhất "Lần sau em quay lại sẽ có <n> câu đang chờ", `<n>` đếm từ `miti-review` (mục đến hạn trong 7 ngày tới, trần 4); `<n> = 0` thì nói "Chưa có câu nào chờ em" | biến lịch ôn — thứ vốn vô hình — thành lời hẹn cụ thể; đếm được bằng code, không phải câu trang trí |
-| **Chỗ trống gọi tên** | lưới bộ sưu tập 6 ô, ô chưa mở hiện `? ? ?`; một dòng "Bộ <chủ đề> còn thiếu <k> thẻ" | ô trống vô danh thì quên, ô có hình mờ + số thẻ còn thiếu thì thành thứ cần lấp; không so sánh bộ của em này với em khác |
-| **Nghi thức lưu phiên** | 3 giây "Đã lưu: <điểm cao nhất>, chuỗi dài nhất <x>, <k> thẻ mới" trước màn tổng kết; localStorage bị chặn thì "Máy này không giữ được tiến trình"; reduced-motion rút còn 1 giây | em phải thấy rõ công sức của mình được giữ — nếu không, phiên chơi sau cảm giác như bắt đầu lại từ đầu |
-
-Ba mục `[26] [27]` của bảng kiểm máy tự kiểm và hai việc người thử tương ứng (để dành khiên sang phiên sau · đọc dòng "Chương tiếp theo") kiểm đúng các con số này. **Không** có chuỗi ngày chơi, **không** xin quyền thông báo, **nghỉ chơi không bị phạt** — nghỉ là quyền, và phần thưởng quay lại luôn đến từ những gì em đã làm được.
-
----
-
-### ✅ Nghiệm thu: game tự chứng minh nó đạt chuẩn
-
-Nguồn: `tools/lib/acceptance.mjs`. Đây là tầng sửa chỗ **gãy nhất của quy trình "chỉ viết prompt"**: bạn dán prompt vào Gemini Canvas, nhận về một file HTML dài vài nghìn dòng, và không có cách nào biết nó có `toScreen` thật không, `verifyQuestionBank()` có chạy không, hay mô hình đã lặng lẽ bỏ ba quy định ở giữa file. Không có nghiệm thu thì toàn bộ quy định ở các mục trên chỉ là lời mong đợi.
-
-**27 mục máy tự kiểm** (`ACCEPT.items`) — mỗi mục một hàm trả `true/false`, kiểm lúc chạy chứ không kê chữ sẵn:
-
-- Bảng kiểm ẩn trong game, mở bằng **7 lần bấm vào logo MiTi** hoặc `Ctrl+Alt+K`; bảng tĩnh in chữ "ĐẠT" mà không kiểm gì bị coi là lỗi nghiêm trọng nhất.
-- Đủ `QUESTION_DATA` + `verifyQuestionBank()` đã chạy · `answer` có trong `choices` đúng một lần · `drawImage` webcam đi qua `toScreen(lx, ly)` · alpha lớp phủ `<= 0.45` · có vật neo landmark · giữ tư thế 2 giây không spam cú chốt · tab ẩn tự Pause + đếm 3-2-1 · 3 hiệp + trạm nghỉ · `prefers-reduced-motion` có hiệu lực · bộ đếm flash `<= 3 lần/giây` · tương phản tính từ màu thật · tay thuận được áp dụng · localStorage `miti-collection` + `miti-mastery` · thích ứng level chạy thật · không tải URL bị cấm · chữ ký MiTi ba màn · **khởi động 60–90 giây đã chạy trước hiệp 1 và hạ nhiệt 45–60 giây đã chạy trước màn tổng kết** · **nhịp thẻ đúng chuẩn + `>= 12` nhịp chuyển động mỗi phút** · **📷 đồng hồ thời gian vận động `>= 60%`** · **lịch ôn `+1/+3/+7` đọc lại được từ `miti-review`** · **`>= 3/12` lượt xen cụm khác và `>= 1` lượt ôn đến hạn** · **10 giây "Em còn nhớ không?" trước lượt 1, sai không trừ tim** · **`miti-tokens` giữ khiên chuỗi sang phiên sau, tối đa 2, vỡ khiên vẫn trừ 1 tim và vẫn hiện lời giải** · **dòng "Lần sau em quay lại sẽ có <n> câu đang chờ" đếm từ `miti-review`, không chuỗi ngày chơi**.
-- **6 mục gắn 📷** chỉ áp dụng khi có camera; bản không camera bỏ 6 mục đó và vẫn phải đạt **21 mục còn lại**.
-
-**19 việc người thử phải bấm tay** (`ACCEPT.manual`, khoảng 15 phút, có ô ghi kết quả): đứng xa tới mức chỉ còn hai bàn tay · giữ im một tư thế 5 giây · lấy tay che nửa người · tắt camera giữa vòng chơi · rút mạng lúc đang tải model · đổi tay thuận sang Trái · bật reduced-motion ở hệ điều hành rồi mở game · cố tình sai 4 câu liên tiếp · mở bằng điện thoại đặt dọc · đưa một học sinh lớp 4 chưa đọc hướng dẫn chơi thử 60 giây · **chơi trọn một phiên rồi đứng lại 30 giây xem em có thở nhanh hơn và người ấm lên rõ rệt không** · **làm động tác cúi thấp ở lượt cuối rồi đứng thẳng lên nhanh xem có choáng váng hay mất thăng bằng không** · **chơi hai phiên cách nhau một ngày xem phiên sau có mở bằng đúng câu hôm trước không** · **cố tình trả lời sai một câu từng đúng hai lần xem game có giữ lời "quên thì không phạt" hay vẫn trừ tim** · **đóng tab giữa phiên rồi hôm sau mở lại: khiên chuỗi còn trong `miti-tokens` và dùng được thật không (làm sai một câu — chuỗi vẫn giữ mà tim vẫn giảm, lời giải vẫn hiện)** · **đọc dòng "Chương tiếp theo" ở màn tổng kết và bấm "Xem trước": em có tự hỏi khi nào được chơi chương đó, hay dòng chữ bị đọc như quảng cáo**.
-
-- **Xuất bản văn**: một nút sinh khối chữ tiếng Việt copy được (tên game, ngày giờ, kiểu điều khiển, số ĐẠT/CHƯA ĐẠT, lý do từng mục chưa đạt) — chỉ hiện trên màn hình và vào clipboard máy đó, **không gửi lên máy chủ nào**.
-- **Mục CHƯA ĐẠT phải kèm nguyên nhân + cách sửa**, cấm báo "lỗi" rồi im lặng. Thiếu mục nào thì dán lại nguyên văn quy định đó vào prompt rồi sinh lại file — không sửa tay file HTML.
-- Bảng in sẵn để cầm tay khi vào lớp: **`prompts/CHECKLIST_NGHIEP_THU.md`** (do `tools/build-acceptance.mjs` sinh, `validate.mjs` đếm 27 dòng máy + 19 dòng người thử).
+Việc nào trả lời "không" thì ghi lại, sửa prompt rồi sinh lại game — không sửa tay file HTML.
 
 ---
 
@@ -286,33 +244,38 @@ tools/data/clusters.mjs      57 cụm kiến thức + nội dung + giải thích
 tools/data/gestures.mjs      mã điều khiển: landmark, hình học chốt, ngưỡng, bien_do, fallback + trường `ar`
 tools/data/examples.mjs      câu mẫu few-shot cho từng cụm
 tools/data/error-notes.mjs   nhãn lỗi tiếng Việt (errorTag + loiViet)
-tools/lib/ar.mjs             hợp đồng AR (cover-fit, toScreen, alpha, z, neo landmark) — dùng chung mọi chỗ
-tools/lib/rules.mjs          quy định lớp học (60/40, calibration, Pause, FPS, an toàn, tổng kết 3 thẻ)
-tools/lib/feel.mjs           quy định vận động to + cảm giác arcade (biên độ, mép khung, trạm nghỉ, hit-stop, combo)
-tools/lib/classroom.mjs      quy định lớp học thật (vùng an toàn cho chữ, đàm phán camera, miti-mastery, 2 học sinh)
-tools/lib/access.mjs         tiếp cận + an toàn thần kinh (trần nhấp nháy, reduced-motion, không chỉ dùng màu, phụ đề, tương phản, tay thuận)
-tools/lib/verify.mjs         tự kiểm chứng đề + độ khó thích ứng (verifyQuestionBank, nhiễu theo lỗi thật, guard phạm vi, chống mẹo, level thích ứng, sàn chống nản)
-tools/lib/memory.mjs          nhớ bài có lịch (ôn +1/+3/+7 ngày, xen cụm, câu mở màn, vì sao đúng, quên không phạt, tờ rời giáo viên)
-tools/lib/hype.mjs         thi đua + cao trào (cú "ồ" 3 giây đầu, miti-best + PHÁ KỶ LỤC, vệt ghost, hiệp quyết định, mở thưởng, đích chung không xếp hạng)
-tools/lib/anticipation.mjs  ham quay lại (sắp chạm mốc, khiên chuỗi miti-tokens, chương còn dở, hẹn câu đang chờ, ô "? ? ?", nghi thức lưu phiên — không chuỗi ngày, không thông báo)
-tools/lib/pe.mjs              thể dục có cấu trúc (khởi động 60–90 giây · nhịp thẻ · >= 12 nhịp chuyển động/phút · đồng hồ vận động >= 60% · hạ nhiệt · nhắc nước · trần tải trọng)
-tools/lib/acceptance.mjs     nghiệm thu (27 mục máy tự kiểm + 19 việc người thử, xuất bản văn, nguyên nhân khi chưa đạt)
-tools/build-acceptance.mjs   sinh prompts/CHECKLIST_NGHIEP_THU.md từ lib trên
+tools/lib/skeleton.mjs       khung 9 mục dùng chung (4 mục đầu là trải nghiệm học sinh)
+tools/lib/players.mjs        chế độ 1/2/3 người: làn, gán làn, hiệu chỉnh, luật làn trống/đông, dự phòng phím
+tools/lib/compete.mjs        thi đua cân bằng: Scoreboard, Podium, phân định hòa, đuổi kịp x2 có trần, danh hiệu, kỷ lục solo
+tools/lib/compete-ref.mjs    hàm tham chiếu thuần khóa ngữ nghĩa các luật trên (chỉ dùng cho test)
+tools/lib/input.mjs          nhận tay khi 2–3 bạn (Tự động · theo lượt · cổ tay), chỉ in cho game dùng ngón tay
+tools/lib/effects.mjs        hiệu ứng + giới hạn an toàn/hiệu năng + nút "Giảm hiệu ứng"
+tools/lib/ar.mjs             hợp đồng AR (cover-fit, toScreen, alpha, z, neo landmark)
+tools/lib/rules.mjs          quy định lớp học (60/40, calibration, Pause, FPS, an toàn, nghe trước)
+tools/lib/feel.mjs           vận động to + combo, sắp tới mốc
+tools/lib/classroom.mjs      vùng an toàn cho chữ, chọn cơ chế theo mức camera
+tools/lib/access.mjs         tiếp cận (không chỉ dùng màu, phụ đề, tương phản, tay thuận)
+tools/lib/verify.mjs         verifyQuestionBank + độ khó thích ứng
+tools/lib/pe.mjs             khởi động · nhịp · hạ nhiệt · nước · trần tải trọng
+tools/lib/memory.mjs         lịch ôn +1/+3/+7 ngày, xen cụm, gợi nhớ
+tools/lib/hype.mjs           ba giây đầu, hiệp quyết định, mở thưởng
+tools/lib/acceptance.mjs     14 việc người thử → prompts/CHECKLIST_NGHIEP_THU.md
         │
         └─ node tools/build.mjs
              ├─ catalogs/GAME_CATALOG.csv + .md
              ├─ prompts/01-toan4 · 02-toan5 · 03-english4 · 04-english5 (85 file)
              ├─ prompts/VARIANTS_425.md   (85 game × 5 kiểu điều khiển)
-             ├─ prompts/01..12 legacy (nâng cấp phụ thuộc, gắn nhãn)
+             ├─ prompts/01..12 legacy + prompts/00-master-canvas-prompt.md
              ├─ catalogs/GAME_CATALOG.js  → index.html vẽ lưới + lọc + copy
-             ├─ prompts/CHECKLIST_NGHIEP_THU.md (bảng kiểm cầm tay khi vào lớp)
-             └─ node tools/validate.mjs   → chặn MIXED, thiếu hợp đồng AR, thiếu quy định lớp học,
-                                            425 block biến thể, thiếu nghiệm thu, thiếu quy định thể dục, thiếu quy định nhớ bài, thiếu quy tắc hào hứng, link gãy, thiếu chữ ký MiTi, rò ${}
+             ├─ prompts/CHECKLIST_NGHIEP_THU.md
+             ├─ node tools/validate.mjs   → chặn thiếu mục, thiếu hợp đồng AR, chuỗi cũ, prompt vượt trần độ dài, link gãy, rò ${}
+             └─ node --test "tools/test/*.test.mjs"
 ```
 
 ```bash
-node tools/build.mjs      # dựng lại catalog, prompt, dashboard rồi kiểm tra
-node tools/validate.mjs   # chỉ kiểm tra
+node tools/build.mjs                  # dựng lại catalog, prompt, dashboard rồi kiểm tra + chạy test
+node tools/validate.mjs               # chỉ kiểm tra
+node --test "tools/test/*.test.mjs"   # chỉ chạy unit test + property test
 ```
 
 ---
