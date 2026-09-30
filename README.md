@@ -238,6 +238,14 @@ Trình tự này theo khung **Concrete – Representational – Abstract**: lỗ
 - **Dạy được khi mất mạng**: mạng trường đứt là chuyện thường, nên CDN chết thì màn chờ chỉ tối đa **8 giây** rồi bảng phấn hiện ra dạy bình thường bằng chuột; không một lỗi tải nào được khoá nội dung; mở file trên máy khác, không mạng, không tài khoản vẫn chạy, và không có dữ liệu nào của lớp gửi đi.
 - **`verifyLessonBank()` chạy lúc nạp và trước khi lưu bảng**: `answer` có trong `choices` đúng một lần, ≥ 6 mục phủ ≥ 3 nhãn lỗi, mọi phương án sai phải mô phỏng một lỗi thật (cấm `3 + 2 = 99`), số trong đề đúng phạm vi SGK. Mục lỗi bị loại kèm `console.warn` tiếng Việt, còn dưới 5 mục hợp lệ thì nút "Cả lớp trả lời" và "Lưu bảng" tự khoá — cảnh báo chỉ hiện ở dải điều khiển của cô, không hiện lên bảng trước 35 em.
 
+### 📄 Ba quy định "từ bảng ra vở" (`tools/lib/handout.mjs`)
+
+Một tiết giảng chỉ xong khi các em làm được bài trên giấy. Khảo sát 39 giáo án cho thấy **0/39** có bất kì đầu ra nào cho tờ giấy — nút "In bảng" mới là in lại ảnh bảng phấn.
+
+- **Phiếu bài tập A4 sinh từ CHÍNH `LESSON_DATA`** đã được `verifyLessonBank()` kiểm, không phải danh sách câu hỏi thứ hai tự bịa: 6–8 câu theo đúng thứ tự đã giảng, bắt buộc **≥ 2 câu mang cùng một `errorTag`** với lỗi cả lớp hay mắc nhất, mỗi câu chừa khoảng trắng **≥ 3 cm** kèm dòng "Em viết phép tính hoặc sơ đồ ở đây". Chỉ một màu đen, in được khi mất mạng (`window.print()` + stylesheet nội tuyến, `@page` A4 lề 1.5 cm), có dòng "Họ và tên / Lớp" để viết tay và **không bao giờ in tên học sinh**.
+- **Trang đáp án riêng cho cô**: in bằng nút riêng, mỗi dòng ghi đáp án + lời giải ≤ 12 từ + nhãn lỗi `loiViet`; khi "In phiếu bài tập" thì không được sót trang đáp án vào phiếu của học sinh — kể cả chữ màu trắng hay `display:none`.
+- **Khung "Nội dung để chép"** cho lớp không có máy in: đúng **ba dòng** chữ ≥ 40 px — dòng ghi nhớ chốt, một ví dụ đã làm thật trên bảng ở bước PHÉP TÍNH, và một bài về nhà lấy từ `LESSON_DATA` (không tự bịa số ngoài SGK). Copy ra được văn bản thuần có dấu.
+
 ### Vật thật và sơ đồ theo cụm kiến thức (`tools/data/props.mjs`)
 
 38 cụm Toán, mỗi cụm đủ 5 trường `vat · don_vi · ngon_tay · so_do · doc`, không để mô hình tự bịa:
@@ -272,7 +280,8 @@ tools/lib/classroom.mjs      quy định lớp học thật (vùng an toàn cho 
 tools/lib/access.mjs         tiếp cận + an toàn thần kinh (trần nhấp nháy, reduced-motion, không chỉ dùng màu, phụ đề, tương phản, tay thuận)
 tools/lib/verify.mjs         tự kiểm chứng đề + độ khó thích ứng (verifyQuestionBank, nhiễu theo lỗi thật, guard phạm vi, chống mẹo, level thích ứng, sàn chống nản)
 tools/lib/chalk.mjs          bảng phấn + vật thật, 10 quy định — dùng cho BỘ GIÁO ÁN
-tools/lib/lesson.mjs         chế độ giảng bài, 8 quy định — dùng cho BỘ GIÁO ÁN
+tools/lib/lesson.mjs         chế độ giảng bài, 11 quy định — dùng cho BỘ GIÁO ÁN
+tools/lib/handout.mjs        từ bảng ra vở, 3 quy định (phiếu in, đáp án, chép vào vở)
         │
         └─ node tools/build.mjs
              ├─ catalogs/GAME_CATALOG.csv + .md

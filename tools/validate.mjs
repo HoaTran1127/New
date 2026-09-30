@@ -14,6 +14,7 @@ import { ACCESS, ACCESS_SHORT } from './lib/access.mjs';
 import { VERIFY, ADAPT } from './lib/verify.mjs';
 import { CHALK, CHALK_SHORT } from './lib/chalk.mjs';
 import { LESSON, LESSON_SHORT } from './lib/lesson.mjs';
+import { HANDOUT, HANDOUT_SHORT } from './lib/handout.mjs';
 import { PROP_KEYS, PROP_FIELDS, prop } from './data/props.mjs';
 import { buildLessons, LESSON_EXTRA_KEYS, LESSON_FIELDS } from './data/lessons.mjs';
 
@@ -143,7 +144,13 @@ const LESSON_RULES = [
   [LESSON.noNetwork, 'thiếu quy định dạy được khi mất mạng'],
   [LESSON.verifyData, 'thiếu hàm tự kiểm chứng verifyLessonBank chạy lúc nạp'],
 ];
-const LESSON_FAMILY_RULES = [...CHALK_RULES, ...LESSON_RULES].map(([n]) => n);
+// Từ bảng ra vở: một tiết giảng chỉ thật sự xong khi các em làm được bài trên giấy.
+const HANDOUT_RULES = [
+  [HANDOUT.worksheet, 'thiếu quy định in phiếu bài tập từ LESSON_DATA'],
+  [HANDOUT.answerKey, 'thiếu quy định trang đáp án riêng cho giáo viên'],
+  [HANDOUT.notebook, 'thiếu quy định khung nội dung để chép vào vở'],
+];
+const LESSON_FAMILY_RULES = [...CHALK_RULES, ...LESSON_RULES, ...HANDOUT_RULES].map(([n]) => n);
 
 for (const g of GAMES) {
   const rel = PATH_OF.get(g.id);
@@ -298,8 +305,9 @@ if (!fs.existsSync(LESSON_DIR)) {
     '6. NỀN AR, CAMERA VÀ NHẬN DIỆN TAY',
     '7. DẠY KHI KHÔNG CÓ CAMERA VÀ KHÔNG CÓ MẠNG (bắt buộc, đây là chế độ dạy chính ở nhiều lớp)',
     '8. TIẾP CẬN, AN TOÀN VÀ HIỆU NĂNG',
-    '9. MiTi — CHỮ KÝ BẮT BUỘC TRONG HTML',
-    '10. ĐẦU RA',
+    '9. TỪ BẢNG RA VỞ — PHIẾU BÀI TẬP, ĐÁP ÁN VÀ NỘI DUNG CHÉP',
+    '10. MiTi — CHỮ KÝ BẮT BUỘC TRONG HTML',
+    '11. ĐẦU RA',
   ];
   // Cơ chế chỉ được có ở game. Lọt sang giáo án là sai mục đích của cả nhánh này.
   const GAME_ONLY = [
@@ -327,6 +335,7 @@ if (!fs.existsSync(LESSON_DIR)) {
     for (const m of LESSON_MUST) if (!t.includes(m)) bad(`${tag}: giáo án thiếu mục ${m}.`);
     for (const [needle, msg] of CHALK_RULES) if (!t.includes(needle)) bad(`${tag}: ${msg}.`);
     for (const [needle, msg] of LESSON_RULES) if (!t.includes(needle)) bad(`${tag}: ${msg}.`);
+    for (const [needle, msg] of HANDOUT_RULES) if (!t.includes(needle)) bad(`${tag}: ${msg}.`);
     for (const [needle, msg] of ACCESS_RULES) if (!t.includes(needle)) bad(`${tag}: ${msg}.`);
     if (!t.includes(CLASSROOM.safeZone)) bad(`${tag}: thiếu vùng an toàn cho chữ trên màn chiếu.`);
     if (!t.includes(CLASSROOM.framing)) bad(`${tag}: thiếu đàm phán theo mức camera đang thấy.`);
@@ -336,7 +345,7 @@ if (!fs.existsSync(LESSON_DIR)) {
     for (const f of LESSON_FIELDS) if (!t.includes(L[f])) bad(`${tag}: giáo án thiếu nội dung ${f} từ tools/data/lessons.mjs.`);
     // Câu mẫu nằm trong file dưới dạng JSON.stringify nên phải so theo đúng dạng đã escape dấu nháy.
     for (const ex of EXAMPLES[L.cluster]) if (!t.includes(JSON.stringify(ex.prompt)) || !t.includes(JSON.stringify(ex.answer))) bad(`${tag}: thiếu câu luyện tập mẫu của cụm ${L.cluster}.`);
-    for (const s of [CHALK_SHORT, LESSON_SHORT, ACCESS_SHORT]) if (!t.includes(s)) bad(`${tag}: checklist tự kiểm thiếu một dòng rút gọn (${s.slice(0, 30)}...).`);
+    for (const s of [CHALK_SHORT, LESSON_SHORT, HANDOUT_SHORT, ACCESS_SHORT]) if (!t.includes(s)) bad(`${tag}: checklist tự kiểm thiếu một dòng rút gọn (${s.slice(0, 30)}...).`);
     for (const needle of ['LESSON_DATA', '#FFD84D', 'MiTi • Giảng bài bằng vật thật', 'tasks-vision@1.0.1', 'Không dùng Tailwind Play CDN']) {
       if (!t.includes(needle)) bad(`${tag}: giáo án thiếu ${needle}.`);
     }

@@ -9,6 +9,7 @@
 | --- | --- | --- |
 | Ai dùng | **Giáo viên** trình bày, cả lớp xem màn chiếu | **Học sinh** tự chơi, một máy một em hoặc hai em |
 | Nhịp | Chờ giáo viên bấm "Bước tiếp", không tự chuyển | 12 lượt, tăng độ khó ở lượt 5 và lượt 9 |
+| Đầu ra | Bảng phấn trên màn chiếu **và** phiếu bài tập + trang đáp án in được | Chỉ là màn chơi trong trình duyệt |
 | Động cơ | Không tim, không điểm, không combo, không xếp hạng | Có tim, điểm, chuỗi combo, thẻ vàng x2, mascot |
 | Bảng phấn | Chiếm >= 70% màn chiếu, không bao giờ tự lau | Bảng chữ L <= 40% khung hình, tự lau sau mỗi lượt |
 | Nguồn quy định | `tools/lib/chalk.mjs` + `tools/lib/lesson.mjs` | `tools/lib/feel.mjs` + `tools/lib/classroom.mjs` |
@@ -84,5 +85,6 @@ nối ngược về sơ đồ) → **Luyện tập chung** (3–4 phút, cả l�
 
 - Thêm cụm kiến thức mới: sửa `tools/data/clusters.mjs`, `tools/data/props.mjs` (đủ 5 trường) và `tools/data/lessons.mjs` (đủ 3 trường), rồi chạy `node tools/build.mjs`.
 - Đổi quy định bảng phấn: `tools/lib/chalk.mjs` (10 quy định).
+- Đổi quy định từ bảng ra vở: `tools/lib/handout.mjs` (3 quy định).
 - Đổi quy định chế độ giảng bài: `tools/lib/lesson.mjs` (11 quy định).
 - `node tools/validate.mjs` sẽ chặn nếu thiếu quy định nào, nếu vật thật thiếu trường, hoặc nếu cơ chế game lọt vào giáo án.

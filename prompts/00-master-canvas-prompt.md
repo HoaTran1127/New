@@ -4,7 +4,7 @@
 >
 > Chạy trên **Google Gemini → bật chế độ Canvas** để có nút Run/Preview chơi ngay.
 >
-> ⚠️ Khung 9 mục này dành cho **GAME học sinh tự chơi**. Muốn dựng **CÔNG CỤ GIẢNG BÀI cho giáo viên trình bày trước cả lớp** trên bảng phấn thì dùng khung 11 mục riêng ở [`giao-an/README.md`](giao-an/README.md) — hai khung ngược nhau về nhịp và về động cơ, không thay thế nhau được.
+> ⚠️ Khung 9 mục này dành cho **GAME học sinh tự chơi**. Muốn dựng **CÔNG CỤ GIẢNG BÀI cho giáo viên trình bày trước cả lớp** trên bảng phấn thì dùng khung 12 mục riêng ở [`giao-an/README.md`](giao-an/README.md) — hai khung ngược nhau về nhịp và về động cơ, không thay thế nhau được.
 
 ## Prompt copy trực tiếp
 

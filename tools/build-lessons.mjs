@@ -13,6 +13,7 @@ import { CLASSROOM } from './lib/classroom.mjs';
 import { ACCESS, ACCESS_SHORT } from './lib/access.mjs';
 import { CHALK, CHALK_SHORT } from './lib/chalk.mjs';
 import { LESSON, LESSON_SHORT } from './lib/lesson.mjs';
+import { HANDOUT, HANDOUT_SHORT } from './lib/handout.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const OUT_DIR = path.join(ROOT, 'prompts', 'giao-an');
@@ -146,16 +147,21 @@ ${AR_RENDER}
 - KHÔNG upload ảnh/video từ camera; chỉ dùng landmark trong bộ nhớ; không thu thập dữ liệu cá nhân của học sinh, kể cả tên trong hàng đợi lên bảng (tên chỉ nằm trong bộ nhớ của phiên đó).
 - Toàn bộ giao diện, tên nút, hướng dẫn, thông báo lỗi và lời giải bằng TIẾNG VIỆT, dùng đúng thuật ngữ Toán của SGK lớp ${L.lop}. Không để thuật ngữ kỹ thuật (confidence, cooldown, landmark, localStorage) hiện trên giao diện.
 
-9. MiTi — CHỮ KÝ BẮT BUỘC TRONG HTML
+9. TỪ BẢNG RA VỞ — PHIẾU BÀI TẬP, ĐÁP ÁN VÀ NỘI DUNG CHÉP
+- ${HANDOUT.worksheet}
+- ${HANDOUT.answerKey}
+- ${HANDOUT.notebook}
+
+10. MiTi — CHỮ KÝ BẮT BUỘC TRONG HTML
 - Ô bo góc màu #FFD84D chứa chữ M màu #07111F + chữ MiTi đậm + dấu ✦ nhỏ, inline SVG/CSS, không hotlink ảnh ngoài.
 - Xuất hiện ở màn Mở bài, trên dải điều khiển khi giảng và ở trang bảng cuối tiết; nhỏ, không che bảng phấn và không che nút bấm.
 - Chân trang có dòng: MiTi • Giảng bài bằng vật thật.
 - Không xóa hoặc đổi tên thương hiệu khi in bảng, khi lưu bảng hay ở chế độ không camera.
 
-10. ĐẦU RA
+11. ĐẦU RA
 - Chỉ xuất toàn bộ file HTML hoàn chỉnh, không kèm giải thích dài.
 - Không TODO, không pseudocode, không "...", không "// code tương tự ở trên", không phần "bạn tự bổ sung".
-- Tự kiểm tra trước khi xuất: ${LESSON_SHORT} · ${CHALK_SHORT} · ${ACCESS_SHORT} · có đủ năm bước và không bước nào tự chuyển khi giáo viên chưa bấm · LESSON_DATA đủ 6 mục với 2 mục mẫu nguyên văn · bảng không tự lau ở bất kì bước nào · in được bản nền trắng chữ đen · chữ ký MiTi ở ba chỗ · file chạy độc lập không lỗi console.
+- Tự kiểm tra trước khi xuất: ${LESSON_SHORT} · ${CHALK_SHORT} · ${HANDOUT_SHORT} · ${ACCESS_SHORT} · có đủ năm bước và không bước nào tự chuyển khi giáo viên chưa bấm · LESSON_DATA đủ 6 mục với 2 mục mẫu nguyên văn · bảng không tự lau ở bất kì bước nào · in được bản nền trắng chữ đen · phiếu bài tập in từ đúng LESSON_DATA và trang đáp án đi sau tách riêng · khung "Nội dung để chép" đúng ba dòng · chữ ký MiTi ở ba chỗ · file chạy độc lập không lỗi console.
 \`\`\`
 
 ## Ghi chú cho người tạo prompt (không gửi Gemini)
@@ -183,6 +189,7 @@ function renderIndex(lessons) {
 | --- | --- | --- |
 | Ai dùng | **Giáo viên** trình bày, cả lớp xem màn chiếu | **Học sinh** tự chơi, một máy một em hoặc hai em |
 | Nhịp | Chờ giáo viên bấm "Bước tiếp", không tự chuyển | 12 lượt, tăng độ khó ở lượt 5 và lượt 9 |
+| Đầu ra | Bảng phấn trên màn chiếu **và** phiếu bài tập + trang đáp án in được | Chỉ là màn chơi trong trình duyệt |
 | Động cơ | Không tim, không điểm, không combo, không xếp hạng | Có tim, điểm, chuỗi combo, thẻ vàng x2, mascot |
 | Bảng phấn | Chiếm >= 70% màn chiếu, không bao giờ tự lau | Bảng chữ L <= 40% khung hình, tự lau sau mỗi lượt |
 | Nguồn quy định | \`tools/lib/chalk.mjs\` + \`tools/lib/lesson.mjs\` | \`tools/lib/feel.mjs\` + \`tools/lib/classroom.mjs\` |
@@ -221,6 +228,7 @@ ${byLop[5].map(row).join('\n')}
 
 - Thêm cụm kiến thức mới: sửa \`tools/data/clusters.mjs\`, \`tools/data/props.mjs\` (đủ 5 trường) và \`tools/data/lessons.mjs\` (đủ 3 trường), rồi chạy \`node tools/build.mjs\`.
 - Đổi quy định bảng phấn: \`tools/lib/chalk.mjs\` (10 quy định).
+- Đổi quy định từ bảng ra vở: \`tools/lib/handout.mjs\` (3 quy định).
 - Đổi quy định chế độ giảng bài: \`tools/lib/lesson.mjs\` (11 quy định).
 - \`node tools/validate.mjs\` sẽ chặn nếu thiếu quy định nào, nếu vật thật thiếu trường, hoặc nếu cơ chế game lọt vào giáo án.
 `;
