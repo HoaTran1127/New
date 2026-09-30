@@ -166,6 +166,21 @@ const C = {
     noi_dung: 'nhân hai phân số; nhân phân số với số tự nhiên; tính chất giao hoán và kết hợp của phép nhân phân số',
     giai_thich: 'tô lưới ô đơn vị theo hai hướng: hàng theo phân số thứ nhất, cột theo phân số thứ hai, phần tô kép chính là tích',
   },
+  'chia-phan-so': {
+    tags: ['nhan_lien_ma_khong_dao_nguoc_phan_so_thu_hai', 'dao_nguoc_ca_so_bi_chia', 'thuong_khong_rut_gon'],
+    noi_dung: 'chia phân số cho phân số, chia phân số cho số tự nhiên; phép chia là phép nhân ngược',
+    giai_thich: 'giữ nguyên diện tích mảnh vườn hình chữ nhật rồi kéo cạnh chưa biết cho tới khi số ô khớp đúng diện tích đã cho, thương hiện ra cùng hàng với phân số đảo ngược',
+  },
+  'nhan-chia-thap-phan': {
+    tags: ['ngat_tich_bat_dau_tu_trai', 'dich_dau_phay_nguoc_chieu', 'thuong_thieu_chu_so_0_o_hang_phan_tram'],
+    noi_dung: 'nhân số thập phân với số thập phân; nhân và chia số thập phân với 10, 100, 0,1, 0,01; số chữ số thập phân của tích',
+    giai_thich: 'tô đủ số hàng rồi số cột của tấm thảm kẻ ô phần trăm để tích hiện bằng số ô; với 10 và 0,1 thì dấu phẩy trượt trên bảng hàng đúng số chữ số phải dịch',
+  },
+  'bieu-do-quat': {
+    tags: ['doc_phan_tram_nhu_so_luong', 'so_sanh_quat_cua_hai_bieu_do_khac_tong', 'quen_chia_100_khi_tinh_so_luong'],
+    noi_dung: 'đọc biểu đồ hình quạt tròn: mỗi quạt là một tỉ số phần trăm của toàn bộ; tính số lượng khi biết tổng số',
+    giai_thich: 'vòng tròn 100% chia thành các quạt kéo xoay được, dóng từng quạt sang dải băng 100 ô để phần trăm và số lượng đổi theo cùng một tổng',
+  },
   'on-tap-toan-4': {
     tags: ['trộn_loai_phep_tinh', 'quen_rut_gon_ket_qua', 'doc_de_thieu_dieu_kien'],
     noi_dung: 'ôn tổng hợp số tự nhiên, bốn phép tính, phân số, hình học và đo lường lớp 4',

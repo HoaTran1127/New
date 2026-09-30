@@ -191,6 +191,21 @@ const L = {
     khoi_dong: 'Tấm bảng che mất 2/3 chiều dài và 3/4 chiều rộng của một bức tường. Muốn biết nó che mấy phần tường, ta cộng hay nhân hai phân số?',
     chot: 'Nhân hai phân số thì lấy tử nhân tử, mẫu nhân mẫu; tô lưới theo hai hướng thì phần ô tô kép đúng bằng tích đó, và kết quả phải rút gọn.',
   },
+  'chia-phan-so': {
+    ten: 'Chia phân số: kéo cạnh chưa biết của mảnh vườn',
+    khoi_dong: 'Mảnh vườn hình chữ nhật rộng 4/5 m và phủ đúng 2/3 m² đất. Phải kéo cạnh dài tới ô nào thì diện tích vừa bằng 2/3?',
+    chot: 'Muốn chia một phân số cho một phân số, ta nhân phân số thứ nhất với phân số thứ hai viết ngược; tìm cạnh chưa biết của hình chữ nhật chính là làm ngược lại phép nhân diện tích.',
+  },
+  'nhan-chia-thap-phan': {
+    ten: 'Nhân chia số thập phân: ô phủ thảm và dấu phẩy chạy trên bảng hàng',
+    khoi_dong: 'Lớp mình dài 8,4 m và rộng 5,2 m. Trải thảm ô vuông xuống thì phủ bao nhiêu ô, và dấu phẩy của kết quả nên ngắt ở chỗ nào?',
+    chot: 'Nhân hai số thập phân thì nhân như số tự nhiên, rồi đếm tổng chữ số thập phân của hai thừa số để ngắt tích từ phải sang; nhân với 0,1 hay chia cho 10 đều dịch dấu phẩy sang trái một chữ số, còn chia cho 0,1 thì dịch sang phải.',
+  },
+  'bieu-do-quat': {
+    ten: 'Biểu đồ hình quạt tròn: một vòng tròn mang đúng 100%',
+    khoi_dong: 'Cả cái bánh tròn này là 160 quyển sách của thư viện. Một quạt bằng nửa cái bánh thì có bao nhiêu quyển, và vì sao?',
+    chot: 'Mỗi quạt là một tỉ số phần trăm của cùng một tổng 100%; muốn ra số lượng thì lấy tổng nhân số phần trăm rồi chia 100, còn hai quạt của hai biểu đồ có tổng khác nhau thì chưa so được bằng mắt.',
+  },
   'on-tap-toan-4': {
     ten: 'Ôn tập cuối lớp 4 trên bốn trạm vật thật',
     khoi_dong: 'Suốt năm lớp 4, chúng mình đã dùng những vật thật nào để học Toán?',
@@ -297,6 +312,9 @@ export const CHU_DE_CHI_CO_GIAO_AN = [
   { cluster: 'hinh-thang', lop: '5' },
   { cluster: 'dien-tich-xq-tp', lop: '5' },
   { cluster: 'nhan-phan-so', lop: '4' },
+  { cluster: 'chia-phan-so', lop: '4' },
+  { cluster: 'nhan-chia-thap-phan', lop: '5' },
+  { cluster: 'bieu-do-quat', lop: '5' },
 ];
 
 // Dòng thay cho "Bản game của cùng cụm kiến thức này" ở bài chưa có game. Builder in ra, validator

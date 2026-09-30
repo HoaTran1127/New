@@ -130,6 +130,18 @@ export const EXAMPLES = {
     { prompt: 'Tính 2/3 × 4/5.', choices: ['8/15', '6/15', '6/8'], answer: '8/15', explanation: 'Tử nhân tử, mẫu nhân mẫu: 2 × 4 = 8, 3 × 5 = 15. 6/8 là cộng cả tử lẫn mẫu.', errorTag: 'cong_ca_tu_va_mau_thay_vi_nhan' },
     { prompt: 'Tính 3/4 × 2.', choices: ['3/2', '3/8', '5/4'], answer: '3/2', explanation: '3/4 × 2 = 6/4 = 3/2. Số tự nhiên nhân vào tử, không nhân vào mẫu.', errorTag: 'nhan_so_tu_nhien_vao_mau_thay_vi_tu' },
   ],
+  'chia-phan-so': [
+    { prompt: 'Tính 2/3 : 1/6.', choices: ['1/9', '4', '9'], answer: '4', explanation: '2/3 : 1/6 = 2/3 × 6 = 12/3 = 4. 1/9 là đem nhân hai phân số, quên viết ngược phân số thứ hai.', errorTag: 'nhan_lien_ma_khong_dao_nguoc_phan_so_thu_hai' },
+    { prompt: 'Mảnh vườn hình chữ nhật diện tích 2/3 m², chiều rộng 4/5 m. Chiều dài?', choices: ['5/6 m', '10/12 m', '8/15 m'], answer: '5/6 m', explanation: '2/3 : 4/5 = 2/3 × 5/4 = 10/12 = 5/6 m. 10/12 là thương chưa rút gọn, 8/15 là kết quả phép nhân.', errorTag: 'thuong_khong_rut_gon' },
+  ],
+  'nhan-chia-thap-phan': [
+    { prompt: 'Tính 8,4 × 5,2.', choices: ['436,8', '4,368', '43,68'], answer: '43,68', explanation: '84 × 52 = 4368; hai thừa số có tổng cộng 2 chữ số thập phân nên ngắt tích từ phải sang hai chữ số: 43,68. 436,8 là ngắt từ trái.', errorTag: 'ngat_tich_bat_dau_tu_trai' },
+    { prompt: 'Tính 7,5 : 0,1.', choices: ['0,75', '75', '750'], answer: '75', explanation: 'Chia cho 0,1 là dịch dấu phẩy sang bên phải một chữ số: 7,5 → 75. 0,75 là dịch sai sang trái.', errorTag: 'dich_dau_phay_nguoc_chieu' },
+  ],
+  'bieu-do-quat': [
+    { prompt: 'Thư viện có 160 quyển sách, ngăn văn học chiếm 50% biểu đồ hình quạt tròn. Hỏi số quyển văn học.', choices: ['80 quyển', '50 quyển', '800 quyển'], answer: '80 quyển', explanation: '160 × 50 : 100 = 80 quyển. 50 quyển là lấy luôn số phần trăm làm số quyển.', errorTag: 'doc_phan_tram_nhu_so_luong' },
+    { prompt: 'Trường A có 160 học sinh bán trú, khối 5 chiếm 25%. Trường B có 80 học sinh bán trú, khối 5 chiếm 40%. Trường nào có nhiều học sinh khối 5 bán trú hơn?', choices: ['Trường B', 'Hai trường bằng nhau', 'Trường A'], answer: 'Trường A', explanation: 'A: 160 × 25 : 100 = 40 em; B: 80 × 40 : 100 = 32 em. Quạt 40% trông to hơn nhưng hai biểu đồ có tổng khác nhau nên không so bằng mắt được.', errorTag: 'so_sanh_quat_cua_hai_bieu_do_khac_tong' },
+  ],
   'on-tap-toan-4': [
     { prompt: 'Số gồm 4 triệu, 0 trăm nghìn, 7 nghìn, 5 chục?', choices: ['4 007 050', '4 070 050', '4 700 500'], answer: '4 007 050', explanation: 'Viết đủ cả ba lớp, hàng nào thiếu thì ghi 0.', errorTag: 'thieu_hang_trong' },
     { prompt: 'Tính nhanh: 25 × 9 × 4.', choices: ['900', '360', '225'], answer: '900', explanation: 'Đổi chỗ 25 × 4 = 100 rồi × 9 = 900 (tính chất giao hoán).', errorTag: 'nhan_sai_thu_tu_thuc_hien' },

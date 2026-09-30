@@ -1,6 +1,6 @@
 # Bộ giáo án bảng phấn — công cụ giảng bài cho giáo viên
 
-> 44 giáo án Toán lớp 4–5, mỗi bài một file prompt độc lập dán vào **Google Gemini (bật chế độ Canvas)**.
+> 47 giáo án Toán lớp 4–5, mỗi bài một file prompt độc lập dán vào **Google Gemini (bật chế độ Canvas)**.
 > Sinh tự động bằng `node tools/build-lessons.mjs` — **không sửa tay** các file trong thư mục này.
 
 ## Đây là gì, và khác gì với 85 prompt game
@@ -17,7 +17,7 @@
 
 Hai bộ dùng chung một nguồn vật thật (`tools/data/props.mjs`) nên cùng một cụm kiến thức thì vật vẽ phấn
 giống hệt nhau — học sinh gặp lại đúng cái pizza đó khi chuyển từ tiết giảng sang giờ luyện tập. Ngoại lệ
-là 5 chủ đề mới chỉ có giáo án (`hinh-tron`, `hinh-tam-giac`, `hinh-thang`, `dien-tich-xq-tp`, `nhan-phan-so`), một phía chưa có gì để gặp lại.
+là 8 chủ đề mới chỉ có giáo án (`hinh-tron`, `hinh-tam-giac`, `hinh-thang`, `dien-tich-xq-tp`, `nhan-phan-so`, `chia-phan-so`, `nhan-chia-thap-phan`, `bieu-do-quat`), một phía chưa có gì để gặp lại.
 
 ## Quy định hình học chỉ in vào bài có hình học
 
@@ -35,7 +35,7 @@ phải ghi đúng số quy định của chính bài đó.
 Vế rút gọn của hai quy định này trong checklist tự kiểm (mục 10) cũng đi qua cùng hai danh sách, nhờ
 `chalkShortFor(c)` trong `tools/lib/chalk.mjs` — builder in ra và bộ kiểm đòi cùng một chuỗi nên không
 thể xảy ra chuyện mục 4 bắt xoay khối mà checklist lại không có dòng đó cho học sinh tự kiểm. Trước
-vòng 7 hai vế này nằm thường trực trong `CHALK_SHORT`, thành thử 44 bài đều mang theo
+vòng 7 hai vế này nằm thường trực trong `CHALK_SHORT`, thành thử 47 bài đều mang theo
 "xoay khối", kể cả bài chia số và phân số không có khối nào.
 
 ## Cách dùng
@@ -47,7 +47,7 @@ vòng 7 hai vế này nằm thường trực trong `CHALK_SHORT`, thành thử 4
 
 ## Mỗi giáo án gồm năm bước
 
-Cấu trúc này giống nhau ở cả 44 bài để giáo viên thuộc được mạch:
+Cấu trúc này giống nhau ở cả 47 bài để giáo viên thuộc được mạch:
 **Khởi động** (2–3 phút, hỏi gắn với vật thật, chưa viết gì) → **Vật thật** (4–5 phút, thao tác tay)
 → **Sơ đồ** (3–4 phút, học sinh tự dựng biểu diễn bán cụ thể) → **Phép tính** (3–4 phút, mỗi con số
 nối ngược về sơ đồ) → **Luyện tập chung** (3–4 phút, cả lớp biểu quyết theo nhãn A–D).
@@ -101,7 +101,7 @@ cho 39 bài, nhưng chưa đúng với phần còn lại của sách giáo khoa:
 phải dạy trên lớp thì phải có bài giảng, kể cả khi thư viện chưa viết game nào cho nó. Hai cơ chế trong
 `tools/data/lessons.mjs` mở đường đó, và validator chỉ cho đi đúng hai đường này:
 
-- **`CHU_DE_CHI_CO_GIAO_AN`** — khai báo tường minh cặp (cụm, lớp) chỉ có giáo án. 5 bài đang dùng: `hinh-tron` lớp 5, `hinh-tam-giac` lớp 5, `hinh-thang` lớp 5, `dien-tich-xq-tp` lớp 5, `nhan-phan-so` lớp 4.
+- **`CHU_DE_CHI_CO_GIAO_AN`** — khai báo tường minh cặp (cụm, lớp) chỉ có giáo án. 8 bài đang dùng: `hinh-tron` lớp 5, `hinh-tam-giac` lớp 5, `hinh-thang` lớp 5, `dien-tich-xq-tp` lớp 5, `nhan-phan-so` lớp 4, `chia-phan-so` lớp 4, `nhan-chia-thap-phan` lớp 5, `bieu-do-quat` lớp 5.
   Cụm vẫn phải đủ bộ như mọi cụm (`clusters.mjs` + `props.mjs` 5 trường + `examples.mjs` ≥ 2 câu +
   `error-notes.mjs` đúng 3 mô tả + ba trường viết tay), chỉ mảng game là trống. Đầu file giáo án thay dòng
   "Bản game của cùng cụm" bằng một câu nói thẳng là chưa có, để cô không đi tìm file không tồn tại và mô
@@ -112,7 +112,7 @@ phải dạy trên lớp thì phải có bài giảng, kể cả khi thư viện
   bằng bó que", còn lớp 5 (game T5-01 tính theo thứ tự ưu tiên) đọc "giá trị biểu thức: tính trước, tính sau".
   Lớp phủ này chỉ đổi cách nói theo đúng vế kiến thức đã có trong `noi_dung` của cụm, không thêm phạm vi mới.
 
-## Toán lớp 4 (30 giáo án)
+## Toán lớp 4 (31 giáo án)
 
 | Mã | Bài giảng | Cụm kiến thức | Game cùng cụm |
 | --- | --- | --- | --- |
@@ -146,8 +146,9 @@ phải dạy trên lớp thì phải có bài giảng, kể cả khi thư viện
 | `GA4-28` | [Ôn tập cuối lớp 4 trên bốn trạm vật thật](GA4-28-on-tap-toan-4.md) | `on-tap-toan-4` | L4-31, L4-32, L4-35 |
 | `GA4-29` | [Tổng hợp chương: chọn đúng công thức trước khi tính](GA4-29-boss-cong-thu.md) | `boss-cong-thu` | L4-40 |
 | `GA4-30` | [Nhân phân số bằng tấm lưới tô kép](GA4-30-nhan-phan-so.md) | `nhan-phan-so` | *(chưa có game cùng cụm)* |
+| `GA4-31` | [Chia phân số: kéo cạnh chưa biết của mảnh vườn](GA4-31-chia-phan-so.md) | `chia-phan-so` | *(chưa có game cùng cụm)* |
 
-## Toán lớp 5 (14 giáo án)
+## Toán lớp 5 (16 giáo án)
 
 | Mã | Bài giảng | Cụm kiến thức | Game cùng cụm |
 | --- | --- | --- | --- |
@@ -165,6 +166,8 @@ phải dạy trên lớp thì phải có bài giảng, kể cả khi thư viện
 | `GA5-12` | [Diện tích tam giác: ghép hai tấm bìa thành một hình bình hành](GA5-12-hinh-tam-giac.md) | `hinh-tam-giac` | *(chưa có game cùng cụm)* |
 | `GA5-13` | [Diện tích hình thang: xoay một mảnh để về hình đã học](GA5-13-hinh-thang.md) | `hinh-thang` | *(chưa có game cùng cụm)* |
 | `GA5-14` | [Mở hộp: bốn mặt xung quanh và sáu mặt toàn phần](GA5-14-dien-tich-xq-tp.md) | `dien-tich-xq-tp` | *(chưa có game cùng cụm)* |
+| `GA5-15` | [Nhân chia số thập phân: ô phủ thảm và dấu phẩy chạy trên bảng hàng](GA5-15-nhan-chia-thap-phan.md) | `nhan-chia-thap-phan` | *(chưa có game cùng cụm)* |
+| `GA5-16` | [Biểu đồ hình quạt tròn: một vòng tròn mang đúng 100%](GA5-16-bieu-do-quat.md) | `bieu-do-quat` | *(chưa có game cùng cụm)* |
 
 ## Muốn thêm hoặc sửa giáo án
 

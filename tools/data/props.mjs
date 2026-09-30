@@ -246,6 +246,27 @@ export const PROPS = {
     doc: 'đếm số ô tô kép trên tổng số ô của lưới ra phân số tích, rồi đối chiếu: tử nhân tử đặt ở tử, mẫu nhân mẫu đặt ở mẫu',
     so_do: 'lưới hai chiều có nhãn hàng là tử trên mẫu của phân số thứ nhất, nhãn cột là tử trên mẫu của phân số thứ hai; khối ô tô kép ghi đúng tích và có ngoặc chỉ chỗ cần rút gọn',
   },
+  'chia-phan-so': {
+    vat: 'mảnh vườn hình chữ nhật kẻ lưới ô trên bảng: diện tích ghi sẵn bằng phân số, một cạnh dán nhãn cho trước, cạnh còn lại là thanh kéo được có dấu "?"',
+    don_vi: 'một ô của lưới, tức là một phần (số hàng nhân số cột) của mảnh vườn',
+    ngon_tay: 'chạm vào cạnh chưa biết rồi kéo cho dài ra hoặc ngắn lại tới khi số ô tô sáng khớp đúng diện tích đề cho; kéo xong bảng tự hiện phép nhân ngược và thương',
+    doc: 'đọc số ô theo hàng của cạnh vừa kéo: cạnh tìm được chính là thương, hiện cả dạng phân số lẫn dạng "nhân với phân số viết ngược"',
+    so_do: 'lưới hai chiều đặt cạnh mảnh vườn, ô tô sáng đúng bằng diện tích đã cho; bên cạnh là hàng "diện tích : cạnh đã biết = cạnh chưa biết" với phân số thứ hai viết ngược và dấu gạch chân chỗ cần rút gọn',
+  },
+  'nhan-chia-thap-phan': {
+    vat: 'tấm thảm lớp học vẽ trên lưới ô vuông: cạnh dài và cạnh rộng kéo được theo vạch phần mười, ô phủ thảm sáng lên, hai cột đếm được ở mép thảm',
+    don_vi: 'một ô nhỏ bằng một phần trăm mét vuông; mười ô thành một hàng bằng một phần mười mét',
+    ngon_tay: 'kéo hai cạnh thảm tới số đo đề bài rồi đếm ô phủ; với 10 và 0,1 thì chấm vào dấu phẩy trên bảng hàng và kéo nó chạy sang trái hoặc sang phải',
+    doc: 'đọc số ô phủ theo hai cột hàng – phần mười – phần trăm: tích có số chữ số thập phân đúng bằng tổng chữ số thập phân của hai thừa số, và dấu phẩy vừa dịch đứng đúng chỗ ngắt tích',
+    so_do: 'bảng hàng "đơn vị · phần mười · phần trăm" có dấu phẩy trượt được, đặt ngay dưới hình chữ nhật phủ ô; hai hàng trên ghi số chữ số thập phân của từng thừa số, hàng dưới ghi tổng và mũi tên chỉ chỗ ngắt tích từ phải sang',
+  },
+  'bieu-do-quat': {
+    vat: 'cái bánh tròn 100% trên bảng chia thành các quạt màu, mỗi quạt có nhãn phần trăm và một vạch chia kéo xoay được giữa hai quạt',
+    don_vi: 'một phần trăm của cả vòng tròn; cả vòng tròn luôn bằng 100%',
+    ngon_tay: 'chạm vào một quạt để quạt sáng lên và hiện số lượng; kéo vạch chia để chuyển phần trăm từ quạt này sang quạt kia, hai nhãn luôn cộng lại thành 100%',
+    doc: 'đọc nhãn phần trăm trên quạt rồi dóng sang dải băng: số lượng bằng tổng số nhân phần trăm chia 100, in ngay dưới quạt đúng bằng số ô đã tô',
+    so_do: 'vòng tròn quạt đặt cạnh dải băng 100 ô (mỗi ô một phần trăm) ghi tổng số lượng ở đầu dải; từng quạt dóng sang đúng số ô tương ứng, hai quạt của hai biểu đồ khác tổng thì có dấu hỏi giữa hai dải băng',
+  },
   'on-tap-toan-4': {
     vat: 'bốn trạm vật thật đặt ở bốn góc bảng, mỗi trạm một mạch kiến thức lớp 4',
     don_vi: 'một vật thật của trạm đang mở: que tính, ô vuông, thanh phân số hoặc dụng cụ đo',
