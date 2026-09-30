@@ -1,4 +1,4 @@
-# Giáo án AR trên bảng phấn — nguồn cộng đồng và bài học sau 18 vòng
+# Giáo án AR trên bảng phấn — nguồn cộng đồng và bài học sau 19 vòng
 
 Tài liệu này để **người khác tham khảo và nối tiếp**, không phải mô tả tính năng. Phần tính năng nằm ở
 [`prompts/giao-an/README.md`](../prompts/giao-an/README.md); ở đây chỉ ghi: cái gì đã đo được, cái gì đã
@@ -61,7 +61,7 @@ lỗi hình học trong `roomFootprint`: nó đồng nhất "không có lối đ
 dùng người làm phân số mới cần. `tightRoomFocus` sửa cả hai: giữ nhịp đứng-tại-chỗ, và bù cho biên độ nhỏ
 bằng cách hạ ngưỡng ngồi xuống ≤ 8 phút trong nấc chật. Vòng 18 rời khỏi chuỗi vận động để đo một giả định im
 lặng nằm sâu hơn, ngay trong **chính modality cảm biến** mà mọi quy định phản hồi đều đứng trên: HandLandmarker.
-Toàn bộ vòng "camera thấy N/32 em", đếm ngón tay và lọc tay lạ (`classBoard`, `wholeClassVote`, `strayHands`,
+Toàn bộ vòng "camera thấy N/32 em", đếm ngón tay và lọc tay lạ (`classBoard`, `classVote`, `strayHands`,
 `cameraGeometry`) đang coi việc nhận ra một bàn tay là **chính xác như nhau với mọi bàn tay**. Đo trên 39 giáo
 án xác nhận độ lệch giữa cái có và cái thiếu: "HandLandmarker" và "camera thấy" có ở **39/39**, nhưng "tone
 da", "da sẫm", "bàn tay nhỏ", "găng tay", "ướt", "không thấy tay" đều **0/39**. Nghiên cứu nhận diện tư thế
@@ -75,13 +75,21 @@ có nút cộng tay +1/+5 cùng lượt, một bước tự kiểm độ phủ l
 Vòng 18 cũng sửa một lỗi **khả năng đọc của chính validator**: khi giáo án bị cắt, `validate.mjs` chỉ in 40 lỗi
 đầu, nên phép thử cắt-file (P12) bỗng "thoát" chỉ vì hai quy định mới đẩy chẩn đoán "nội dung bị cắt" xuống
 dưới cửa sổ in; bèn đưa kiểm tra cắt-file lên **đầu** vòng lặp để nó luôn được báo trước khi ngập trong lỗi dây
-chuyền.
+chuyền. Vòng 19 không đi tìm một quy định mới mà **đo độ tin cậy của chính bộ 44 quy định**: khi một quy định
+dẫn chứng một quy định khác bằng `` `tênQuyDinh` ``, mô hình copy nguyên cái tên đó vào cả 39 giáo án, nên một
+cái tên sai sẽ nhân bản 39 lần. Quét máy mọi token `` `camelCase` `` trong `LESSON`/`CHALK`/`HANDOUT` và đối
+chiếu với danh sách khoá có thật, phát hiện `detectionEquity` (vòng 18) tham chiếu `wholeClassVote` trong khi
+quy định đếm ngón tay thật tên là `classVote` — một con trỏ ma nằm trong cả 40 file (39 giáo án + chính file
+nguồn). Vòng 19 sửa lại thành `classVote` và thêm một khoá **toàn-cục** vào validator: mọi tham chiếu chéo
+phải khớp một khoá đã xuất, trừ đúng bốn tên được phép vì chúng là trường dữ liệu/API trình duyệt
+(`errorTag`, `loiViet`, `localStorage`, `speechSynthesis`), cùng hai phép đột biến chứng minh khoá đó đỏ khi
+đứa vào một cái tên ma.
 3. **Quy định phải có con số.** "Chữ phải to" không kiểm chứng được; "≥ 40 px **và** ≥ 5.5% chiều cao khung
    hình, ≤ 12 chữ một dòng" thì validator bắt được. Mọi quy định trong `tools/lib/*.mjs` là chuỗi nguyên văn,
    `tools/validate.mjs` so bằng `includes()`, nên lời văn và mắt kiểm không bao giờ lệch nhau.
 4. **Chốt chặn hai chiều.** Cơ chế game lọt vào giáo án và quy định giáo án lọt sang game đều làm build đỏ.
    Thêm một quy định mới là tự động thêm một khoá bị cấm ở phía bên kia (`LESSON_FAMILY_RULES`).
-5. **Probe đột biến là đơn vị kiểm thử thật.** 85 phép, mỗi phép phá đúng một thứ và đòi đúng thông báo.
+5. **Probe đột biến là đơn vị kiểm thử thật.** 87 phép, mỗi phép phá đúng một thứ và đòi đúng thông báo.
    Không có probe thì một quy định chỉ là câu văn đẹp.
 6. **Tách công cụ giảng bài khỏi game.** Cùng một kiến thức, hai động cơ đối lập: game cần hồi hộp,
    tiết giảng cần giáo viên cầm lái. Nhét tim/điểm/combo vào bảng phấn làm em lên bảng sợ sai hơn là muốn hiểu.
@@ -108,6 +116,7 @@ chuyền.
 | 16 | **đo chính hệ quả của quy định vòng 15**: `movementBreak`/`groupWork`/`handover`/`boardEquity` âm thầm đòi khoảng trống trên sàn, trong khi `bigClass` mới hỏi SĨ SỐ chứ chưa hỏi diện tích — 0/39 "chật" · 0/39 "không đủ chỗ" · 0/39 "lối đi" · 0/39 "dịch bàn" · 0/39 "đứng tại chỗ" · 0/39 "chỗ đứng", dù "đứng lên" và "nhóm 4 em" có ở 39/39 file · số thật: định mức VN ~1,5 m²/đầu em, phòng 48 m² chỉ chuẩn ở ~32 em → 45 em/48 m² ~1,07 m² | `roomFootprint` (hỏi m² một lần → m²/đầu em; ≥ 1,8 + lối đi ≥ 60 cm mới cho đứng quay người/xếp hình; < 1,2 bỏ nhịp dịch ngang, giữ đứng-tại-chỗ (vòng 17 hiệu chỉnh); an toàn: không lách qua bạn, giữ lối thoát, không kê bàn chắn cửa) |
 | 17 | **đo tiếp hệ quả của vòng 16**: `movementBreak` giữ ngưỡng ngồi liền ≤ 12 phút với giả định nhịp còn là nhịp toàn thân, nhưng `roomFootprint` vừa rút nhịp đó ở phòng chật (< 1,2 m²/đầu em) xuống còn vươn tay/xoay cổ — chính lớp đông-trật nhất nhận nhịp yếu nhất mà vẫn chờ đủ 12 phút; và `roomFootprint` đồng nhất "không lối đi" với "không đứng được" dù đứng-thẳng-tại-chỗ không cần lối đi | `tightRoomFocus` (nấc chật: giữ nhịp đứng-tại-chỗ 20–60s vẫn là Toán, hạ ngưỡng ngồi liền ≤ 12 → ≤ 8 phút, tổng nghỉ ≤ 4 phút, không cắt VẬT THẬT, camera vẫn tắt; sửa `roomFootprint` để chỉ cắt nhịp dịch ngang/di chuyển) |
 | 18 | **đo giả định im lặng trong modality cảm biến trung tâm**: mọi vòng phản hồi chạy trên HandLandmarker và coi "nhận ra một bàn tay" là chính xác như nhau với mọi em — đo: "HandLandmarker" 39/39 và "camera thấy" 39/39, nhưng "tone da" 0/39 · "da sẫm" 0/39 · "bàn tay nhỏ" 0/39 · "găng tay" 0/39 · "ướt" 0/39 · "không thấy tay" 0/39 · "bỏ sót" 2/39; nguồn: tài liệu nhận diện tư thế tay (bàn tay da sẫm underrepresented trong dữ liệu huấn luyện) + Gender Shades (khuôn mặt, 0,8%→34,7%, chỉ dùng làm bằng chứng *chiều*) | `detectionEquity` ("camera thấy N" = cận dưới số TAY máy nhận ra, không phải số EM đã trả lời; mọi đáp án camera có nút cộng tay +1/+5 cùng lượt; một bước tự kiểm độ phủ lúc chạy thử → hay lọt thì chuyển mặc định bảng-con-nhập-tay; KHÔNG phân loại/chấm/lưu màu da, không xếp em hay bị lọt; ngưỡng "thường xuyên lọt" là dự án chọn). Kèm sửa lỗi đọc của validator: đưa kiểm tra "giáo án bị cắt" lên ĐẦU vòng lặp để không bị nhấn chìm dưới cửa sổ in 40 lỗi |
+| 19 | **đo độ tin cậy của chính bộ quy định**: mô hình copy nguyên mọi tham chiếu chéo `` `tênQuyDinh` `` vào cả 39 giáo án, nên một cái tên sai nhân bản 39 lần — quét máy toàn bộ token `` `camelCase` `` trong `LESSON`/`CHALK`/`HANDOUT` đối chiếu danh sách khoá có thật: 15 tham chiếu hợp lệ, **1 tham chiếu ma** (`detectionEquity` → `wholeClassVote`, đúng ra `classVote`), còn 4 token là trường dữ liệu/API (`errorTag`, `loiViet`, `localStorage`, `speechSynthesis`) không phải quy định | sửa `wholeClassVote` → `classVote` (39 file + docs) + khoá toàn-cục mới trong validator: mọi `` `camelCase` `` bọc trong dấu chấm ngược phải khớp một khoá đã xuất, ngoại trừ đúng bốn tên dữ liệu/API; P86–P87 chứng minh khoá đỏ khi đứa vào tên ma |
 
 ## Vì sao chọn những con số đang dùng
 
@@ -607,6 +616,13 @@ thành "tăng X% điểm".
   hành vi khác, chưa có một tiết nào đếm xem cô phải bấm cộng tay bao nhiêu lần trước khi nên bỏ kênh camera.
   Dữ liệu này nằm gọn trong mục "Báo cáo máy" đã mở từ vòng 8: in thêm vài dòng "số lần cộng tay/thấy tay" là
   đủ, không cần camera ghi hình hay lưu danh tính.
+- **Danh sách trắng `errorTag`/`loiViet`/`localStorage`/`speechSynthesis` là danh sách tay.** Khoá tham chiếu
+  chéo của vòng 19 chỉ trừ đúng bốn token đó vì chúng là trường dữ liệu và API trình duyệt, không phải quy
+  định. Một vòng sau thêm quy định mới mà bọc tên một hàm/API khác trong dấu chấm ngược thì validator sẽ đỏ
+  báo "quy định ma" dù không sai — lúc đó phải cân nhắc tách cơ chế khỏi cách viết: hoặc đánh dấu tham chiếu
+  quy định bằng một cú pháp riêng (`→`ruleName`←`), hoặc để khoá chỉ bắt tên *khớp khuôn quy định* mà không có
+  trong danh sách. Cách hiện tại đơn giản và an toàn cho 44 quy định, nhưng cần người sau biết nó là nợ kỹ
+  thuật có chủ đích chứ không phải thiếu sót.
 
 ## Muốn đóng góp thì sửa ở đâu
 

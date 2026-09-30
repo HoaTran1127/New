@@ -186,6 +186,26 @@ const HANDOUT_RULES = [
 ];
 const LESSON_FAMILY_RULES = [...CHALK_RULES, ...LESSON_RULES, ...HANDOUT_RULES].map(([n]) => n);
 
+// Tính tự nhất quán của bộ quy định: khi một quy định dẫn chứng một quy định khác bằng `tênQuYĐịnh`,
+// cái tên đó phải có thật. detectionEquity (vòng 18) từng viết `wholeClassVote` trong khi quy định
+// đếm ngón tay thật tên là classVote — mô hình sẽ copy nguyên cái tên ma vào cả 39 giáo án.
+// Bộ từ khoá không-phải-quy-định cho phép: tên trường dữ liệu và API trình duyệt được bọc trong
+// dấu chấm ngược, không phải tên quy định.
+const RULE_KEYS = new Set([...Object.keys(CHALK), ...Object.keys(LESSON), ...Object.keys(HANDOUT)]);
+const NON_RULE_TOKENS = new Set(['errorTag', 'loiViet', 'localStorage', 'speechSynthesis']);
+const RULE_REF = /^[a-z][a-zA-Z0-9]*[A-Z][a-zA-Z0-9]*$/; // camelCase thuần, không dấu chấm/gạch
+function checkRuleRefs(label, text) {
+  for (const m of String(text).matchAll(/`([A-Za-z_][A-Za-z0-9_]*)`/g)) {
+    const ref = m[1];
+    if (!RULE_REF.test(ref)) continue;
+    if (RULE_KEYS.has(ref) || NON_RULE_TOKENS.has(ref)) continue;
+    bad(`${label}: tham chiếu tới quy định \`${ref}\` không có thật trong bộ (tên phải khớp một khoá đã xuất).`);
+  }
+}
+for (const [k, v] of Object.entries(LESSON)) checkRuleRefs(`LESSON.${k}`, v);
+for (const [k, v] of Object.entries(CHALK)) checkRuleRefs(`CHALK.${k}`, v);
+for (const [k, v] of Object.entries(HANDOUT)) checkRuleRefs(`HANDOUT.${k}`, v);
+
 for (const g of GAMES) {
   const rel = PATH_OF.get(g.id);
   if (!rel) { bad(`${g.id}: không có đường dẫn prompt trong catalog.`); continue; }
