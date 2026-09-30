@@ -1,4 +1,4 @@
-# Giáo án AR trên bảng phấn — nguồn cộng đồng và bài học sau 7 vòng
+# Giáo án AR trên bảng phấn — nguồn cộng đồng và bài học sau 8 vòng
 
 Tài liệu này để **người khác tham khảo và nối tiếp**, không phải mô tả tính năng. Phần tính năng nằm ở
 [`prompts/giao-an/README.md`](../prompts/giao-an/README.md); ở đây chỉ ghi: cái gì đã đo được, cái gì đã
@@ -14,7 +14,7 @@ thay đổi vì số liệu, và nên đọc gì trước khi sửa tiếp.
    `tools/validate.mjs` so bằng `includes()`, nên lời văn và mắt kiểm không bao giờ lệch nhau.
 3. **Chốt chặn hai chiều.** Cơ chế game lọt vào giáo án và quy định giáo án lọt sang game đều làm build đỏ.
    Thêm một quy định mới là tự động thêm một khoá bị cấm ở phía bên kia (`LESSON_FAMILY_RULES`).
-4. **Probe đột biến là đơn vị kiểm thử thật.** 42 phép, mỗi phép phá đúng một thứ và đòi đúng thông báo.
+4. **Probe đột biến là đơn vị kiểm thử thật.** 50 phép, mỗi phép phá đúng một thứ và đòi đúng thông báo.
    Không có probe thì một quy định chỉ là câu văn đẹp.
 5. **Tách công cụ giảng bài khỏi game.** Cùng một kiến thức, hai động cơ đối lập: game cần hồi hộp,
    tiết giảng cần giáo viên cầm lái. Nhét tim/điểm/combo vào bảng phấn làm em lên bảng sợ sai hơn là muốn hiểu.
@@ -30,6 +30,7 @@ thay đổi vì số liệu, và nên đọc gì trước khi sửa tiếp.
 | 5 | dashboard chỉ ghép `games + legacy`, giáo án nằm im trong thư mục | tab "Giáo án giảng bài", 136 card |
 | 6 | 0/39 trả lời cả lớp không cần webcam · 0/39 nhắc quyền riêng tư khi quay cả lớp | `classBoard`, `privacy` |
 | 7 | 0/39 nhịp nói-with-you · 0/39 đoán trước khi thao tác · 0/39 mẫu che dần · 0/39 vé kết thúc tiết | `pairShare`, `predict`, `fadedExample`, `exitTicket` |
+| 8 | 0/39 phòng không có máy chiếu · 0/39 trần RAM/số model/camera_low · 0/39 phát hiện năng lực trình duyệt | `noProjector`, `oldHardware`, `browserCompat` |
 
 ## Vì sao chọn những con số đang dùng
 
@@ -44,6 +45,13 @@ thay đổi vì số liệu, và nên đọc gì trước khi sửa tiếp.
 - **Màn chờ CDN tối đa 8 giây, nghỉ bắt buộc 90 giây, đóng băng nét khi mất tay > 500 ms, `maxNumHands: 2`,
   trần `localStorage` 200 KB** — các ngưỡng này do dự án tự chọn cho thiết bị lớp học phổ thông ở Việt Nam
   và có thể cần chỉnh theo máy thật; xem mục "Việc còn mở".
+- **Trần của `oldHardware` (640×480 → 320×240, dưới 15 FPS trong 3 giây thì tắt nhận diện tay, ≤ 2000 nét
+  một trang, MỘT instance HandLandmarker)** — chọn theo cấu hình laptop văn phòng cũ phổ biến (2 nhân, 4 GB
+  RAM) chứ **không phải** số đo trên thiết bị thật. Con số 15 FPS là ngưỡng "chậm rõ với mắt khi viết nét";
+  ngưỡng thật của trẻ 9–10 tuổi viết phấn bằng camera thì chưa ai đo ở đây.
+- **≥ 44 px cho nút chạm và ≥ 55% khung hình cho bảng ở chế độ không màn chiếu** — 44 px theo khuyến nghị
+  vùng chạm thông dụng của giao diện cảm ứng; 55% là mức dự án tự chọn để trên laptop 13 inch vẫn còn chỗ
+  cho dải điều khiển. Hai con số này khác nhau về bản chất: một cái là chuẩn ngành, một cái là phỏng đoán.
 
 ## Nguồn đọc cho từng cụm quy định
 
@@ -77,6 +85,14 @@ thay đổi vì số liệu, và nên đọc gì trước khi sửa tiếp.
 
 **Nhận diện tay trên thiết bị lớp học**
 - [MediaPipe Hands: On-device Real-time Hand Tracking — arXiv 2006.10214](https://arxiv.org/abs/2006.10214)
+- [On-Device, Real-Time Hand Tracking with MediaPipe — Google Research](https://research.google/blog/on-device-real-time-hand-tracking-with-mediapipe/)
+
+**Máy thật trong lớp học: không máy chiếu, máy cũ, trình duyệt khác nhau**
+- [Secure contexts — MDN](https://developer.mozilla.org/en-US/docs/Web/Security/Defenses/Secure_Contexts) — `getUserMedia` chỉ chạy trên HTTPS hoặc `localhost`; mở file giáo án bằng `file://` hay HTTP thì camera mất mà không có lỗi nào của model cả, nên `browserCompat` phải thử đúng ba đường mở.
+- [MediaDevices: getUserMedia() — MDN](https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia) — các lỗi `NotAllowedError`, `NotFoundError`, `NotReadableError` là tên tiếng Anh; quy định yêu cầu dịch ra tiếng Việt kèm cách xử lý.
+- [Browser detection using the user agent string — MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Browser_detection_using_the_user_agent) — cơ sở cho "không khai phiên bản trình duyệt, chỉ kiểm năng lực rồi tự lùi về chuột".
+- [Exploring the issue of digital divide in teaching and learning (BYOD classrooms) — Queen's University Belfast](https://pure.qub.ac.uk/files/187871215/BYOD_Classrooms_Digital_Divide_Issues_Revision_4.pdf)
+- [Education Equity in Crisis: The Digital Divide — The Education Trust](https://west.edtrust.org/resource/education-equity-in-crisis-the-digital-divide/) — thiết bị trong lớp không đồng đều là chuyện hệ thống, không phải ngoại lệ, nên chế độ không màn chiếu và "Chạy nhẹ" là đường dạy chính chứ không phải phần cứu hộ.
 
 Lưu ý cách dùng danh mục này: các trang trên là **nguồn để hiểu vì sao chọn kỹ thuật**, không phải nơi trích
 số liệu hiệu quả. Dự án này chưa chạy thử nghiệm lớp học nào, nên không con số nào ở trên được nhân lên
@@ -91,17 +107,23 @@ thành "tăng X% điểm".
 - **Bộ giáo án Tiếng Anh** — hiện mới phủ Toán 4–5 (39/39 file là Toán).
 - **Đo thực địa một tiết 35 phút**: thời gian thật từng chặng, số lượt lên bảng, số vé còn vướng — những gì
   `exitTicket` và dòng tổng kết thu được chính là dữ liệu cho vòng sau.
+- **Chưa có số đo về chính cái máy.** Trần 15 FPS, cỡ nút 44 px, 55% khung hình và ba mức thiết bị ở
+  `noProjector` đều là phỏng đoán theo cấu hình văn phòng phổ biến. Dự án chưa chạy ở một lớp thật nào,
+  nên chưa biết tỉ lệ phòng không có máy chiếu và chưa biết laptop trường thường có bao nhiêu RAM.
+- **Nút "Báo cáo máy" chưa có nơi nhận.** Quy định chỉ chép ra bốn dòng để cô dán sang máy khác có mạng;
+  vẫn thiếu một kênh (mail, form, issue mẫu) để những dòng đó quay về được với người bảo trì bộ giáo án.
+  Không có kênh này thì "chạy được trên máy nào" mãi mãi là phỏng đoán.
 
 ## Muốn đóng góp thì sửa ở đâu
 
 ```text
 tools/lib/chalk.mjs     10 quy định bảng phấn và vật thật      → sinh vào mục 4 của giáo án
-tools/lib/lesson.mjs    20 quy định chế độ giảng bài           → sinh vào mục 0, 2, 3, 5, 6, 7, 9
+tools/lib/lesson.mjs    23 quy định chế độ giảng bài           → sinh vào mục 0, 2, 3, 5, 6, 7, 8, 9
 tools/lib/handout.mjs   3 quy định từ bảng ra vở               → sinh vào mục 9
 tools/data/props.mjs    vật thật + sơ đồ theo 38 cụm
 tools/data/lessons.mjs  tên bài, câu khởi động, dòng ghi nhớ
 tools/build-lessons.mjs ghép thành 39 file prompts/giao-an/
-tools/validate.mjs      33 khoá của họ giáo án + chốt chặn ngược + 12 mục của khung
+tools/validate.mjs      36 khoá của họ giáo án + chốt chặn ngược + 12 mục của khung
 ```
 
 Quy trình một vòng nâng cấp: đo bằng `grep` trên `prompts/giao-an/GA*.md` → viết quy định có con số vào

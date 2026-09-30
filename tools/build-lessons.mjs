@@ -97,7 +97,7 @@ Không dùng Tailwind Play CDN, không file .css/.js/.json/ảnh/mp3 ngoài. Ch�
 ${jsonBlock(EXAMPLES[L.cluster], cl.tags, notes)}
 
 4. BẢNG PHẤN VÀ VẬT THẬT — MƯỜI QUY ĐỊNH BẮT BUỘC
-- CỠ BẢNG Ở CÔNG CỤ GIẢNG BÀI: mặc định dùng mức BẢNG TO, bảng phấn chiếm >= 70% màn chiếu; mức bảng chữ L <= 40% khung hình trong quy định bên dưới chỉ áp cho bản game học sinh tự chơi. Bảng phải nằm gọn trong vùng không bị thân người che và mép trên theo đúng trần đã quy định.
+- CỠ BẢNG Ở CÔNG CỤ GIẢNG BÀI: mặc định dùng mức BẢNG TO, bảng phấn chiếm >= 70% màn chiếu; mức bảng chữ L <= 40% khung hình trong quy định bên dưới chỉ áp cho bản game học sinh tự chơi. Trần 70% chỉ nới xuống >= 55% ở "Chế độ không màn chiếu" (mục 8), không phải ở bản mặc định. Bảng phải nằm gọn trong vùng không bị thân người che và mép trên theo đúng trần đã quy định.
 - ${CHALK.board}
 - ${CHALK.chalkWrite}
 - ${CHALK.concretize}
@@ -142,6 +142,7 @@ ${AR_RENDER}
 
 8. TIẾP CẬN, AN TOÀN VÀ HIỆU NĂNG
 - ${LESSON.inclusion}
+- ${LESSON.noProjector}
 - ${ACCESS.contrast}
 - ${ACCESS.notColorOnly}
 - ${ACCESS.caption}
@@ -150,6 +151,8 @@ ${AR_RENDER}
 - Ở công cụ giảng bài không có hit-stop và không có mascot, nên chế độ Giảm hiệu ứng chỉ còn việc tắt particle, tắt speed lines và bỏ mọi chuyển động trang trí; chữ viết phấn, vật thật và sơ đồ vẫn hiện đầy đủ.
 - ${RULES.autoPause} Ở công cụ giảng bài, tự Pause KHÔNG được làm mất nội dung đang có trên bảng: quay lại thì bảng còn nguyên như lúc rời đi.
 - ${RULES.perf} Riêng khi đang viết phấn trên bảng thì ưu tiên nhận diện bàn tay mỗi khung hình và giảm particle, vì độ trễ nét viết quan trọng hơn hiệu ứng.
+- ${LESSON.oldHardware}
+- ${LESSON.browserCompat}
 - ${RULES.audio}
 - ${RULES.safety} Ở tiết giảng bài, nhắc thêm một dòng: "em lên bảng đứng chếch sang một bên, không đứng chắn màn chiếu".
 - KHÔNG upload ảnh/video từ camera; chỉ dùng landmark trong bộ nhớ; không thu thập dữ liệu cá nhân của học sinh, kể cả tên trong hàng đợi lên bảng (tên chỉ nằm trong bộ nhớ của phiên đó).
@@ -239,7 +242,7 @@ ${byLop[5].map(row).join('\n')}
 - Thêm cụm kiến thức mới: sửa \`tools/data/clusters.mjs\`, \`tools/data/props.mjs\` (đủ 5 trường) và \`tools/data/lessons.mjs\` (đủ 3 trường), rồi chạy \`node tools/build.mjs\`.
 - Đổi quy định bảng phấn: \`tools/lib/chalk.mjs\` (10 quy định).
 - Đổi quy định từ bảng ra vở: \`tools/lib/handout.mjs\` (3 quy định).
-- Đổi quy định chế độ giảng bài: \`tools/lib/lesson.mjs\` (20 quy định).
+- Đổi quy định chế độ giảng bài: \`tools/lib/lesson.mjs\` (23 quy định).
 - \`node tools/validate.mjs\` sẽ chặn nếu thiếu quy định nào, nếu vật thật thiếu trường, hoặc nếu cơ chế game lọt vào giáo án.
 `;
 }

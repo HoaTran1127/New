@@ -152,6 +152,9 @@ const LESSON_RULES = [
   [LESSON.predict, 'thiếu quy định đoán trước khi thao tác vật thật'],
   [LESSON.fadedExample, 'thiếu quy định làm mẫu rồi che dần từng bước'],
   [LESSON.exitTicket, 'thiếu vé kết thúc tiết 2 phút cuối'],
+  [LESSON.noProjector, 'thiếu quy định dạy khi phòng không có máy chiếu'],
+  [LESSON.oldHardware, 'thiếu trần tài nguyên đo được cho máy cũ'],
+  [LESSON.browserCompat, 'thiếu quy định phát hiện năng lực trình duyệt thay vì khai phiên bản'],
 ];
 // Từ bảng ra vở: một tiết giảng chỉ thật sự xong khi các em làm được bài trên giấy.
 const HANDOUT_RULES = [
