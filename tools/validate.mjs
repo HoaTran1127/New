@@ -27,7 +27,8 @@ import { LESSON } from './lib/lesson.mjs';
 import { CURRICULUM, CURRICULUM_SHORT } from './lib/curriculum.mjs';
 import { SPORT } from './lib/sport.mjs';
 import { FAMILY } from './lib/family.mjs';
-import { STANDARDS, STANDARD_KEYS, MACH_TEN } from './data/standards.mjs';
+import { PACE } from './lib/pacing.mjs';
+import { STANDARDS, STANDARD_KEYS, MACH_TEN, SCHOOL_YEAR, hocKiCua } from './data/standards.mjs';
 import { SPORTS, SPORT_KEYS } from './data/sports.mjs';
 import { IDENTITIES } from './data/identities.mjs';
 
@@ -68,6 +69,7 @@ const MASTER_LIB = [
   ['6.2', 'verify.mjs'], ['6.3', 'light.mjs'], ['8.1', 'feel.mjs'], ['8.2', 'hype.mjs'], ['8.3', 'anticipation.mjs'], ['8.4', 'celebrate.mjs'],
   ['9.1', 'access.mjs'], ['11.', 'acceptance.mjs'], ['8.5', 'identity.mjs'], ['8.6', 'rhythm.mjs'],
   ['7.2', 'queue.mjs'], ['4.6', 'lesson.mjs'], ['4.7', 'curriculum.mjs'], ['4.8', 'sport.mjs'], ['4.9', 'family.mjs'],
+  ['4.10', 'pacing.mjs'],
 ];
 
 const rows = readCatalog(path.join(ROOT, 'catalogs', 'GAME_CATALOG.csv'));
@@ -223,6 +225,7 @@ const FULL_LAYERS = [
   ['chuẩn kiến thức SGK', 'curriculum.mjs', 'CURRICULUM', CURRICULUM],
   ['chất thể thao', 'sport.mjs', 'SPORT', SPORT],
   ['gia đình', 'family.mjs', 'FAMILY', FAMILY],
+  ['tuần học', 'pacing.mjs', 'PACE', PACE],
 ];
 const FULL_RULES = FULL_LAYERS.flatMap(([label, file, objName, obj]) =>
   Object.entries(obj).map(([key, text]) => [text, `thiếu quy định ${label} ${objName}.${key} của tools/lib/${file}`]));
@@ -433,6 +436,52 @@ const FULL_PINS = [
   ['family.mjs', FAMILY.guard, 'khối "Gửi bố mẹ" có ĐÚNG MỘT lần', 'điều 1 mà hàm phải bắt'],
   ['family.mjs', FAMILY.guard, 'chứ không phải chữ chép sẵn', 'điều 2: bốn dòng phải từ số thật của phiên'],
   ['family.mjs', FAMILY.guard, 'Bản một học sinh, bản không camera và bản tắt tiếng vẫn bắt buộc kiểm đủ bốn điều', 'không bản nào được miễn kiểm'],
+  // Tầng tuần học (vòng 20) MƯỢN toàn bộ con số: khoảng tuần ở cột `tuan`, năm học 35 tuần và các mốc
+  // ở SCHOOL_YEAR. Vì lib nối số bằng biểu thức nên đổi SCHOOL_YEAR là prompt tự đổi theo — pin đơn
+  // chuỗi không thấy gì. Neo số thành chữ đen ngay trong lib: đổi 2 tuần nước rút thành 8, kéo trần
+  // 10 tuần lên 20 hay hạ >= 3/12 xuống >= 1/12 là hỏng pin, không phải hỏng im lặng.
+  ['pacing.mjs', PACE.nhanTuan, 'ĐÚNG MỘT nhãn "Tuần <a>–<b> · Học kì <n>"', 'một nhãn tuần, ở hai màn'],
+  ['pacing.mjs', PACE.nhanTuan, 'NGUYÊN VĂN cột `tuan`', 'khoảng tuần chép từ bảng chuẩn, không tự đặt'],
+  ['pacing.mjs', PACE.nhanTuan, '`tuan[0]` <= 18 là Học kì 1', 'ranh giới Học kì 1/Học kì 2'],
+  ['pacing.mjs', PACE.nhanTuan, 'chữ >= 18px', 'cỡ chữ tối thiểu của nhãn tuần'],
+  ['pacing.mjs', PACE.nhanTuan, 'nằm TRONG khối chữ mà nút "Copy tờ rời" copy được', 'nhãn tuần phải đi được về nhà trên tờ giấy'],
+  ['pacing.mjs', PACE.nhanTuan, 'CẤM tự đặt khoảng tuần khác bảng chuẩn', 'lệnh cấm chế lịch'],
+  ['pacing.mjs', PACE.nhanTuan, 'CẤM in "cả năm" hoặc để trống', 'lệnh cấm hai cách trốn nhãn tuần'],
+  ['pacing.mjs', PACE.nhanTuan, 'CẤM một cụm phủ quá 10 tuần', 'trần bề rộng một khoảng tuần'],
+  ['pacing.mjs', PACE.nhanTuan, '<= 14 từ "theo phân phối chung — cô xác nhận tuần của lớp em"', 'dòng nhắc cô giáo mới là người xác nhận tuần của lớp'],
+  ['pacing.mjs', PACE.hoiMotCau, 'ĐÚNG MỘT LẦN, ở phiên ĐẦU TIÊN', 'một câu hỏi tuần, chỉ ở phiên đầu'],
+  ['pacing.mjs', PACE.hoiMotCau, '1–' + SCHOOL_YEAR.soTuan, 'dải nút tuần đúng bằng năm học trong SCHOOL_YEAR'],
+  ['pacing.mjs', PACE.hoiMotCau, 'localStorage "miti-week"', 'nơi lưu tuần của lớp'],
+  ['pacing.mjs', PACE.hoiMotCau, 'HUD ghi "Tuần: chưa chọn"', 'chưa chọn tuần thì game vẫn chạy'],
+  ['pacing.mjs', PACE.hoiMotCau, 'CẤM chặn nút "Bắt đầu"', 'câu hỏi tuần không được thành rào cản'],
+  ['pacing.mjs', PACE.hoiMotCau, 'CẤM hỏi giữa phiên', 'lệnh cấm ngắt giữa lượt'],
+  ['pacing.mjs', PACE.hoiMotCau, 'CẤM tiện đó hỏi tên học sinh', 'lệnh cấm mượn chỗ hỏi tuần để thu dữ liệu cá nhân'],
+  ['pacing.mjs', PACE.onTheoTuan, '>= 3/12 lượt', 'số lượt ôn theo tuần'],
+  ['pacing.mjs', PACE.onTheoTuan, 'b < tuần đang học', 'tiêu chí "đã qua tuần" của cụm'],
+  ['pacing.mjs', PACE.onTheoTuan, 'trùng được với ba lượt xen mạch của tầng chuẩn kiến thức', 'hai bộ ba dùng chung một ngân sách 12 lượt'],
+  ['pacing.mjs', PACE.onTheoTuan, '"Tuần <t> · em ôn lại <n> cụm đã học"', 'dòng tổng kết bằng số thật'],
+  ['pacing.mjs', PACE.onTheoTuan, 'CẤM chọn làm đề MỚI một cụm chưa tới tuần mở bài', 'lệnh cấm đánh đố trước chương trình'],
+  ['pacing.mjs', PACE.nuocRut, 'Trong ' + SCHOOL_YEAR.nuocRut + ' tuần trước một mốc kiểm tra', 'độ dài vùng nước rút lấy từ SCHOOL_YEAR'],
+  ['pacing.mjs', PACE.nuocRut, 'Còn <n> tuần tới kiểm tra', 'nhãn nước rút trên HUD'],
+  ['pacing.mjs', PACE.nuocRut, 'hai lượt ĐẦU', 'số lượt ưu tiên cụm yếu nhất'],
+  ['pacing.mjs', PACE.nuocRut, 'errorTag yếu nhất của em trong "miti-mastery"', 'nguồn xếp thứ tự ở vùng nước rút'],
+  ['pacing.mjs', PACE.nuocRut, 'CẤM tăng độ khó', 'nước rút không siết độ khó'],
+  ['pacing.mjs', PACE.nuocRut, 'CẤM trừ tim nhiều hơn', 'nước rút không phạt nặng hơn'],
+  ['pacing.mjs', PACE.nuocRut, 'CẤM biến 12 lượt thành đề thi thử có đồng hồ', 'nước rút không biến game thành kiểm tra'],
+  ['pacing.mjs', PACE.nuocRut, 'CẤM kéo dài phiên quá trần 10 phút', 'nước rút không vượt trần của tầng tiết học'],
+  ['pacing.mjs', PACE.nuocRut, 'CẤM bỏ khởi động và hạ nhiệt', 'nước rút không cắt phần thể dục'],
+  ['pacing.mjs', PACE.tongOn, 'Từ tuần ' + SCHOOL_YEAR.tongOnTu, 'tuần bắt đầu tổng ôn lấy từ SCHOOL_YEAR'],
+  ['pacing.mjs', PACE.tongOn, '>= 6/12 lượt', 'số lượt ôn ở chế độ tổng ôn'],
+  ['pacing.mjs', PACE.tongOn, 'CẤM giới thiệu cụm mới', 'tổng ôn không mở bài mới'],
+  ['pacing.mjs', PACE.tongOn, '"Cả năm có <k> cụm, em vững <m> cụm"', 'dòng tổng kết tổng ôn bằng số thật'],
+  ['pacing.mjs', PACE.tongOn, 'CẤM bịa', 'lệnh cấm bịa số ở dòng tổng ôn'],
+  ['pacing.mjs', PACE.guard, 'verifyPacing()', 'hàm kiểm tầng tuần học lúc nạp'],
+  ['pacing.mjs', PACE.guard, 'kiểm đúng bốn điều', 'số điều verifyPacing() phải kiểm'],
+  ['pacing.mjs', PACE.guard, 'nằm trong 1–' + SCHOOL_YEAR.soTuan, 'điều 1: khoảng tuần phải trong năm học'],
+  ['pacing.mjs', PACE.guard, 'chạy ĐÚNG MỘT lần ở phiên đầu', 'điều 2 mà hàm phải bắt'],
+  ['pacing.mjs', PACE.guard, '`tuan[1]` nhỏ hơn tuần đó', 'điều 3: tiêu chí cụm đã qua tuần'],
+  ['pacing.mjs', PACE.guard, 'không đổi luật chơi, không đổi trần tải trọng của tầng thể dục', 'điều 4: nước rút và tổng ôn chỉ đổi thứ tự'],
+  ['pacing.mjs', PACE.guard, 'Bản không camera, bản một học sinh và bản tắt tiếng vẫn bắt buộc kiểm đủ bốn điều', 'không bản nào được miễn kiểm'],
 ];
 for (const [file, text, needle, label] of FULL_PINS) {
   if (!text.includes(needle)) bad(`tools/lib/${file} không còn nêu "${needle}" (${label}) — con số nghiệm thu phải sửa cùng tài liệu và bảng kiểm, không đổi âm thầm trong lib.`);
@@ -458,6 +507,7 @@ const SHORT_PINS = {
   CURRICULUM_SHORT: ['<= 18 ký tự', 'Yêu cầu cần đạt', 'nguyên văn', 'Copy tờ rời', '<= 9/12 lượt', '>= 3 lượt thuộc mạch khác', 'Dễ nhầm', '<= 16 từ', 'Mẹo nhớ', '<= 12 từ', 'động tác 3 giây', 'verifyStandard()'],
   SPORT_SHORT: ['tên môn thể thao <= 4 từ', 'động tác đặc trưng của môn <= 6 từ', 'hiệu lệnh <= 4 từ', 'truyền tay sau 3 lượt', 'rơi gậy không trừ tim', 'chạm khuỷu 3 giây', 'lời hay <= 6 từ', 'ba mốc', 'cả đội', 'miti-sport', 'cấm xếp hạng cá nhân', 'duỗi riêng của môn 15 giây', 'hạ nhiệt 45–60 giây', 'verifySport()'],
   FAMILY_SHORT: ['khối "Gửi bố mẹ" 4 dòng', '<= 20 từ', '>= 20px', '"Copy tờ rời"', 'việc 3 phút ở nhà không màn hình', 'cột `dongTac`', '<= 16 từ', 'cột `meo` <= 12 từ', 'động tác 3 giây', 'không tên bạn khác', 'không xếp hạng', 'không đe dọa', 'verifyFamily()'],
+  PACE_SHORT: ['"Tuần <a>–<b> · Học kì <n>"', 'cột tuan', 'tối đa 10 tuần', 'đúng MỘT lần ở phiên đầu', 'lưu "miti-week"', 'không chặn nút "Bắt đầu"', '>= 3/12 lượt', SCHOOL_YEAR.nuocRut + ' tuần trước mốc kiểm tra', 'cấm đổi luật', 'từ tuần ' + SCHOOL_YEAR.tongOnTu, '>= 6/12 lượt ôn', 'cấm cụm mới', 'verifyPacing()'],
 };
 for (const seg of chainSegments) {
   for (const needle of SHORT_PINS[seg.name] || []) {
@@ -700,6 +750,8 @@ if (!fs.existsSync(VAR_FILE)) {
     if (!b.includes('**Tiết học 45 phút + gắng sức:**')) bad(`biến thể #${i + 1}: thiếu dòng Tiết học 45 phút + gắng sức.`);
     if (!b.includes('**Chuẩn kiến thức SGK:**')) bad(`biến thể #${i + 1}: thiếu dòng Chuẩn kiến thức SGK.`);
     if (!b.includes('**Chất thể thao:**')) bad(`biến thể #${i + 1}: thiếu dòng Chất thể thao.`);
+    if (!b.includes('**Gia đình — tờ gửi bố mẹ:**')) bad(`biến thể #${i + 1}: thiếu dòng Gia đình — tờ gửi bố mẹ.`);
+    if (!b.includes('**Tuần học:**')) bad(`biến thể #${i + 1}: thiếu dòng Tuần học.`);
     // Block biến thể copy riêng được, nên phải mang đúng dữ liệu bản sắc của chính game nó nói tới.
     // split('\n## Prompt ') đã ăn luôn hai chữ "## Prompt", nên dòng đầu block bắt đầu bằng số thứ tự.
     const vid = (b.match(/^\d+ — (\S+) — V\d/) || [])[1];
@@ -723,6 +775,7 @@ if (!fs.existsSync(VAR_FILE)) {
         [`Mạch của cụm ${vgame.cluster} là "${vstd.mach}"`, 'dòng mạch của ĐÚNG cụm — block chỉ liệt kê tám mạch chung chung là không đủ'],
         [vstd.ngan, 'nhãn HUD'], [vstd.yc, 'yêu cầu cần đạt'],
         [vstd.meo, 'mẹo nhớ'], ['"Dễ nhầm: ' + ERROR_NOTES[vgame.cluster].split('; ')[0] + '"', 'bẫy báo trước'],
+        ...(Array.isArray(vstd.tuan) ? [`**Tuần ${vstd.tuan[0]}–${vstd.tuan[1]} · Học kì ${hocKiCua(vstd.tuan[0])}**`, 'nhãn tuần của ĐÚNG cụm'] : []),
       ]) {
         if (!b.includes(needle)) bad(`biến thể #${i + 1} (${vid}): thiếu ${label} của cụm ${vgame.cluster} ("${needle.slice(0, 48)}") — builder phải lấy thẳng tools/data/standards.mjs vào từng block.`);
       }
@@ -1089,6 +1142,49 @@ const FAMILY_DOC_NEEDLES = [
   ['việc người thử thứ 29', 'việc người thử tương ứng ở README', 0, 0, 1, 0],
   ['phụ huynh', 'khảo sát 0/85 mở đầu tầng gia đình', 1, 0, 1, 1],
 ];
+// Tầng tuần học (vòng 20) mượn toàn bộ con số từ dữ liệu, nên tài liệu chuẩn phải giữ đủ cả nhãn tuần
+// lẫn dòng "cô xác nhận" — thiếu một trong hai thì người đọc tài liệu không biết khoảng tuần là giả định
+// hay là thời khóa biểu. Counts đo từ tài liệu thật rồi hạ một bậc làm sàn.
+const PACE_DOC_NEEDLES = [
+  ['NHÃN TUẦN Ở HAI MÀN', 'nhãn bullet đầu của §4.10 ở master', 1, 0, 0, 0],
+  ['HỎI TUẦN ĐÚNG MỘT CÂU', 'nhãn bullet câu hỏi tuần ở master', 1, 0, 0, 0],
+  ['ĐÃ QUA TUẦN', 'nhãn bullet >= 3/12 lượt ôn theo tuần ở master', 1, 0, 0, 0],
+  ['NƯỚC RÚT CHỈ ĐỔI THỨ TỰ', 'nhãn bullet hai tuần nước rút ở master', 1, 0, 0, 0],
+  ['TỪ TUẦN 33 LÀ TỔNG ÔN', 'nhãn bullet chế độ tổng ôn ở master', 1, 0, 0, 0],
+  ['TỰ KIỂM BẰNG `verifyPacing()`', 'nhãn bullet hàm tự kiểm ở master', 1, 0, 0, 0],
+  ['Học kì', 'nhãn Học kì đi kèm khoảng tuần', 4, 4, 3, 3],
+  ['verifyPacing()', 'hàm kiểm tầng tuần học lúc nạp', 2, 3, 3, 2],
+  ['miti-week', 'nơi lưu tuần của lớp', 3, 4, 2, 1],
+  ['>= 3/12 lượt', 'số lượt ôn theo tuần đã qua', 2, 6, 2, 2],
+  ['>= 6/12 lượt', 'số lượt ở chế độ tổng ôn', 1, 2, 1, 1],
+  ['nước rút', 'vùng hai tuần trước mốc kiểm tra', 2, 2, 3, 2],
+  ['tổng ôn', 'chế độ từ tuần 33', 2, 3, 2, 1],
+  ['phân phối chung', 'dòng nói rõ khoảng tuần là phân phối chung, không phải lịch trường', 1, 1, 0, 1],
+  ['cô xác nhận tuần của lớp em', 'cô giáo mới là người chốt tuần thật của lớp', 0, 1, 0, 1],
+  ['>= 18px', 'cỡ chữ tối thiểu của nhãn tuần', 5, 6, 4, 2],
+  ['10 tuần', 'trần bề rộng một khoảng tuần', 1, 3, 1, 1],
+  ['1–35', 'độ dài năm học mà hàng nút tuần phủ hết', 2, 3, 1, 1],
+  ['chặn nút', 'lệnh cấm biến câu hỏi tuần thành rào cản', 3, 5, 2, 1],
+  ['errorTag yếu nhất', 'nguồn xếp thứ tự hai lượt đầu ở vùng nước rút', 1, 1, 1, 1],
+  ['không đổi luật', 'nước rút và tổng ôn chỉ đổi thứ tự câu', 4, 3, 2, 2],
+  ['thời khóa biểu', 'lời nhắc đối chiếu nhãn tuần với lịch thật của lớp', 1, 0, 1, 1],
+  ['cột `tuan`', 'bảng chuẩn là nguồn duy nhất của khoảng tuần', 2, 4, 2, 2],
+  ['SCHOOL_YEAR', 'năm học + mốc kiểm tra mà tầng này neo vào', 3, 2, 1, 1],
+  ['<= 14 từ', 'trần độ dài dòng "theo phân phối chung"', 1, 1, 0, 1],
+  ['đánh đố trước chương trình', 'lệnh cấm lấy cụm chưa học làm đề mới', 1, 0, 1, 1],
+  ['em ôn lại', 'dòng tổng kết đếm cụm đã qua tuần', 1, 1, 1, 1],
+  ['Còn <n> tuần tới kiểm tra', 'nhãn nước rút trên HUD', 1, 1, 0, 0],
+  ['hôm nay tuần 13', 'câu hỏi của một giáo viên cầm 85 thẻ', 1, 0, 0, 1],
+  ['- TUẦN HỌC (nguồn:', 'nhãn khối tuần học trong template', 0, 1, 0, 0],
+  ['Phần tuần học đã điền đủ', 'dòng checklist tuần học trong template', 0, 1, 0, 0],
+  ['máy tự kiểm thứ 39', 'số mục của verifyPacing() trong bảng kiểm', 0, 0, 1, 0],
+  ['57 khoảng tuần', 'validate đối chiếu dữ liệu chứ không chỉ so chữ', 0, 0, 1, 0],
+  ['Sáu quy định "tuần học"', 'heading mục kể chuyện tầng 20 ở README', 0, 0, 1, 0],
+  ['Tầng "tuần học"', 'heading mục kể chuyện tầng 20 ở prompts/README', 0, 0, 0, 1],
+  ['người thử số 30', 'việc người thử tương ứng ở prompts/README', 0, 0, 0, 1],
+  ['việc người thử thứ 30', 'việc người thử tương ứng ở README', 0, 0, 1, 0],
+  ['35 tuần', 'độ dài năm học nêu trong tài liệu', 0, 0, 1, 1],
+];
 // Con số cũ của vòng 6 ("< 8 động tác lớn mỗi phút") là yêu cầu KHÔNG THỂ đạt với phiên 12 lượt / 4–6 phút.
 // Giữ nó trong tài liệu sẽ sinh game luôn báo CHƯA ĐẠT ở mục cường độ, nên phải bị chặn.
 const SUPERSEDED = [
@@ -1113,7 +1209,7 @@ for (const [docSlot, [docName, docText]] of DOC_FILES.entries()) {
   for (const [needle, label] of IDENTITY_DOC_NEEDLES) {
     if (!docText.includes(needle)) bad(`${docName} thiếu con số bản sắc riêng (${label}): không thấy "${needle}".`);
   }
-  for (const [needle, label, ...mins] of [...RHYTHM_DOC_NEEDLES, ...VOICE_DOC_NEEDLES, ...QUEUE_DOC_NEEDLES, ...LESSON_DOC_NEEDLES, ...CURRICULUM_DOC_NEEDLES, ...SPORT_DOC_NEEDLES, ...FAMILY_DOC_NEEDLES]) {
+  for (const [needle, label, ...mins] of [...RHYTHM_DOC_NEEDLES, ...VOICE_DOC_NEEDLES, ...QUEUE_DOC_NEEDLES, ...LESSON_DOC_NEEDLES, ...CURRICULUM_DOC_NEEDLES, ...SPORT_DOC_NEEDLES, ...FAMILY_DOC_NEEDLES, ...PACE_DOC_NEEDLES]) {
     const want = mins[docSlot];
     const got = docText.split(needle).length - 1;
     if (got < want) bad(`${docName} chỉ còn nêu "${needle}" (${label}) ${got} lần, chuẩn hiện hành là ${want} lần — tài liệu chuẩn phải giữ đủ chỗ nêu ở CẢ phần luật lẫn bảng kiểm tự kiểm, không được để một phần mất số.`);
@@ -1206,6 +1302,7 @@ const DOC_LAYERS = [
   ['chuẩn kiến thức SGK', '4.7 CHUẨN KIẾN THỨC', 'Phần chuẩn kiến thức đã điền đủ'],
   ['chất thể thao', '4.8 CHẤT THỂ THAO', 'Phần chất thể thao đã điền đủ'],
   ['gia đình', '4.9 GIA ĐÌNH', 'Phần gia đình đã điền đủ'],
+  ['tuần học', '4.10 TUẦN HỌC', 'Phần tuần học đã điền đủ'],
   ['cảm giác arcade', '8.1 CẢM GIÁC ARCADE', 'Phần arcade đã điền đủ'],
   ['thi đua + cao trào', '8.2 THI ĐUA + CAO TRÀO', 'Phần thi đua + cao trào đã điền đủ'],
   ['ham quay lại', '8.3 HAM QUAY LẠI', 'Phần ham quay lại đã điền đủ'],
@@ -1301,6 +1398,40 @@ for (const k of CLUSTER_KEYS) {
 for (const k of STANDARD_KEYS) if (!CLUSTER_KEYS.includes(k)) bad(`standards.mjs có dòng ${k} không có trong clusters.mjs.`);
 if (STANDARD_KEYS.length !== CLUSTER_KEYS.length) bad(`standards.mjs có ${STANDARD_KEYS.length} dòng nhưng clusters.mjs có ${CLUSTER_KEYS.length} cụm — bảng chuẩn phải phủ đủ.`);
 
+// Vòng 20: khoảng tuần là DỮ LIỆU chứ không phải chữ trong prompt.Lib nối số bằng biểu thức nên đổi
+// SCHOOL_YEAR là 85 prompt đổi theo im lặng — chỉ đối chiếu thẳng bảng chuẩn mới thấy. Kiểm: hình dáng
+// cột tuan, trần 10 tuần, cụm ôn tập nằm cuối năm, phủ kín 35 tuần (mỗi tuần >= 2 game để mở), và bốn
+// con số năm học mà cả tài liệu lẫn quy định đang trích dẫn.
+{
+  const ON_TAP = 'Ôn tập tổng hợp';
+  if (SCHOOL_YEAR.soTuan !== 35) bad(`SCHOOL_YEAR.soTuan = ${SCHOOL_YEAR.soTuan} nhưng tài liệu và hàng nút tuần đang nêu 35 tuần — đổi năm học thì phải sửa cùng PACE, master, template và hai README.`);
+  if (SCHOOL_YEAR.nuocRut !== 2) bad(`SCHOOL_YEAR.nuocRut = ${SCHOOL_YEAR.nuocRut} nhưng quy định nước rút đang nêu HAI tuần — vùng nước rút không được đổi âm thầm trong dữ liệu.`);
+  if (SCHOOL_YEAR.tongOnTu !== 33) bad(`SCHOOL_YEAR.tongOnTu = ${SCHOOL_YEAR.tongOnTu} nhưng quy định tổng ôn đang nêu "từ tuần 33" — mốc tổng ôn phải sửa cùng tài liệu.`);
+  if (SCHOOL_YEAR.hocKi[1][1] !== 18) bad(`SCHOOL_YEAR.hocKi[1] = ${JSON.stringify(SCHOOL_YEAR.hocKi[1])} nhưng quy định nhãn tuần đang chốt Học kì 1 ở tuần 18 — ranh giới hai học kì phải nhất quán với PACE.nhanTuan.`);
+  if (SCHOOL_YEAR.moc.length !== 4) bad(`SCHOOL_YEAR.moc có ${SCHOOL_YEAR.moc.length} mốc, chuẩn là 4 (giữa học kì 1, cuối học kì 1, giữa học kì 2, cuối học kì 2) — nước rút tính theo đúng bốn bài kiểm tra định kì.`);
+  const mocTuan = SCHOOL_YEAR.moc.map((m) => m.tuan);
+  for (let i = 1; i < mocTuan.length; i++) if (mocTuan[i] <= mocTuan[i - 1]) bad(`SCHOOL_YEAR.moc không tăng dần (${mocTuan.join(', ')}) — mốc sau phải xa hơn mốc trước thì "còn <n> tuần tới kiểm tra" mới tính được.`);
+  for (const m of SCHOOL_YEAR.moc) if (m.tuan < 1 || m.tuan > SCHOOL_YEAR.soTuan) bad(`SCHOOL_YEAR.moc "${m.ten}" đặt ở tuần ${m.tuan}, ngoài năm học 1–${SCHOOL_YEAR.soTuan}.`);
+  if (hocKiCua(18) !== 1 || hocKiCua(19) !== 2) bad(`hocKiCua() phải trả Học kì 1 ở tuần 18 và Học kì 2 ở tuần 19 — nhãn "Tuần a–b · Học kì n" in ra từ chính hàm này.`);
+
+  const phanTuan = new Array(SCHOOL_YEAR.soTuan + 1).fill(0);
+  for (const k of CLUSTER_KEYS) {
+    const s = STANDARDS[k];
+    if (!s) continue;
+    const t = s.tuan;
+    if (!Array.isArray(t) || t.length !== 2) { bad(`standards.mjs: cụm ${k} thiếu cột tuan [a, b] — tầng tuần học không có khoảng để in nhãn.`); continue; }
+    const [a, b] = t;
+    if (!Number.isInteger(a) || !Number.isInteger(b)) { bad(`standards.mjs: cụm ${k} có tuan = [${a}, ${b}] không phải số nguyên.`); continue; }
+    if (a < 1 || b > SCHOOL_YEAR.soTuan || a > b) bad(`standards.mjs: cụm ${k} có khoảng tuần ${a}–${b} sai chuẩn — phải nằm trong 1–${SCHOOL_YEAR.soTuan} và a <= b.`);
+    if (b - a + 1 > 10) bad(`standards.mjs: cụm ${k} phủ ${b - a + 1} tuần, quá trần 10 tuần của PACE.nhanTuan — một cụm trải cả học kì thì nhãn tuần không giúp giáo viên chọn game nào.`);
+    if (s.mach === ON_TAP && !(a >= SCHOOL_YEAR.tongOnTu - 3 && b === SCHOOL_YEAR.soTuan)) bad(`standards.mjs: cụm ôn tập tổng hợp ${k} có khoảng ${a}–${b} — cụm "Ôn tập tổng hợp" phải khép ở hết năm (b = ${SCHOOL_YEAR.soTuan}) và mở từ vùng tổng ôn.`);
+    for (let w = a; w <= b; w++) phanTuan[w]++;
+  }
+  for (let w = 1; w <= SCHOOL_YEAR.soTuan; w++) {
+    if (phanTuan[w] < 2) bad(`Tuần ${w} chỉ có ${phanTuan[w]} cụm phủ — mỗi tuần trong năm học phải có ít nhất 2 game để giáo viên mở đúng tuần, nếu không nhãn "Tuần ${w}" là chỗ trống.`);
+  }
+}
+
 // Mỗi prompt game phải mang đúng dữ liệu chuẩn của CỤM của nó, không phải một dòng chung chung.
 for (const g of GAMES) {
   const s = STANDARDS[g.cluster];
@@ -1315,6 +1446,9 @@ for (const g of GAMES) {
     [s.yc, 'yêu cầu cần đạt'], [s.meo, 'mẹo nhớ'],
     ['"Dễ nhầm" báo TRƯỚC', 'dòng báo trước bẫy ở câu đầu tiên'],
     [ERROR_NOTES[g.cluster].split('; ')[0], 'ý lỗi đầu tiên của cụm mà dòng "Dễ nhầm" phải lấy'],
+    // Vòng 20: cùng lý do — prompt nào cũng có chữ "Tuần", nên phải neo đúng khoảng của CLUSTER này,
+    // tính Học kì bằng chính hocKiCua() chứ không gõ tay (xóa `tuan` khỏi builder là 85 prompt mất nhãn).
+    ...(Array.isArray(s.tuan) ? [`Tuần ${s.tuan[0]}–${s.tuan[1]} · Học kì ${hocKiCua(s.tuan[0])}`, 'nhãn tuần của ĐÚNG cụm'] : []),
   ]) {
     if (!t.includes(needle)) bad(`${g.id}: prompt thiếu ${label} của cụm ${g.cluster} ("${needle.slice(0, 48)}") — builder phải lấy thẳng tools/data/standards.mjs.`);
   }
@@ -1342,6 +1476,18 @@ if (!MACHINE_ITEMS.some((s) => s.includes('verifyFamily()') && s.includes('"Gử
   }
 }
 if (!HUMAN_CHECKS.some((s) => /bố mẹ đọc tại chỗ/.test(s) && /3 phút/.test(s))) bad('Bảng việc người thử không còn câu "copy tờ rời đưa cho bố mẹ đọc tại chỗ" — máy đếm được bốn dòng nhưng không biết một người lớn đứng ở cổng trường có đọc nổi tờ đó trong mười giây không.');
+
+// Vòng 20: tầng tuần học mượn toàn bộ con số từ dữ liệu, nên mục bảng kiểm phải nêu lại đủ bốn điều
+// verifyPacing() kiểm — bớt một vế thì game in nhãn tuần bừa vẫn báo ĐẠT. Probe: xóa "không chặn nút
+// 'Bắt đầu'" khỏi mục [39] thì chuỗi trong lib vẫn nguyên, chỉ mục nghiệm thu là cụt.
+if (!MACHINE_ITEMS.some((s) => s.includes('verifyPacing()') && s.includes('miti-week'))) bad('Bảng kiểm máy tự kiểm không còn mục nghiệm thu tầng tuần học (verifyPacing() + "miti-week") — thiếu mục này thì game bỏ hẳn nhãn tuần và câu hỏi tuần mà vẫn báo ĐẠT.');
+{
+  const paceItem = MACHINE_ITEMS.find((s) => s.includes('verifyPacing()'));
+  for (const clause of ['"Tuần <a>–<b> · Học kì <n>"', 'NGUYÊN VĂN cột tuan', '1–35', 'tối đa 10 tuần', '>= 18px', '"Copy tờ rời"', 'ĐÚNG MỘT lần ở phiên đầu', 'không chặn nút "Bắt đầu"', '>= 3/12 lượt', 'tuan[1] nhỏ hơn tuần đó', 'SCHOOL_YEAR', 'không đổi luật chơi', 'không đổi trần tải trọng']) {
+    if (paceItem && !paceItem.includes(clause)) bad(`Mục bảng kiểm "verifyPacing()" không còn nêu "${clause}" — mục nghiệm thu tầng tuần học phải liệt kê đủ bốn điều verifyPacing() kiểm; bớt một vế là game tự đặt khoảng tuần mà vẫn báo ĐẠT.`);
+  }
+}
+if (!HUMAN_CHECKS.some((s) => /thời khóa biểu/.test(s) && /hai lượt đầu/.test(s))) bad('Bảng việc người thử không còn câu đối chiếu nhãn tuần với thời khóa biểu thật của lớp — máy so được chuỗi với cột tuan nhưng không biết lớp có thật đang học tới tuần đó không, và cũng không biết hai lượt nước rút có thật là chỗ em yếu nhất hay không.');
 
 // Vòng 18: bảng môn thể thao là DỮ LIỆU theo MÃ ĐIỀU KHIỂN. GESTURES có 14 mã nên bảng môn phải phủ đủ
 // 14; thiếu mã thì builder throw, nhưng sửa nội dung (đổi tên môn, viết dài động tác, để hai mã trùng
