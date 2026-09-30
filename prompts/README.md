@@ -77,10 +77,10 @@ Bảng phấn và vật thật vẽ phấn (`tools/lib/chalk.mjs`, `tools/data/p
 | Người dùng | Giáo viên trình bày, cả lớp xem | Học sinh tự chơi |
 | Khung prompt | 12 mục (0 → 11) | 9 mục (1 → 9) |
 | Nhịp | Chờ giáo viên bấm "Bước tiếp" | 12 lượt tự tăng độ khó |
-| Quy định riêng | `tools/lib/chalk.mjs` (10) + `tools/lib/lesson.mjs` (16) + `tools/lib/handout.mjs` (3) | `tools/lib/feel.mjs` + `tools/lib/classroom.mjs` |
+| Quy định riêng | `tools/lib/chalk.mjs` (10) + `tools/lib/lesson.mjs` (20) + `tools/lib/handout.mjs` (3) | `tools/lib/feel.mjs` + `tools/lib/classroom.mjs` |
 | Dữ liệu câu hỏi | `LESSON_DATA` ≥ 6 mục | `QUESTION_DATA` ≥ 40/60 mục |
 
-`tools/validate.mjs` chặn cả hai chiều: giáo án thiếu một trong 29 quy định thì báo lỗi, mà cơ chế game (`QUESTION_DATA`, `miti-collection`, hit-stop, combo, mascot, 12 lượt chính, hết 5 tim…) lọt vào giáo án cũng báo lỗi.
+`tools/validate.mjs` chặn cả hai chiều: giáo án thiếu một trong 33 quy định thì báo lỗi, mà cơ chế game (`QUESTION_DATA`, `miti-collection`, hit-stop, combo, mascot, 12 lượt chính, hết 5 tim…) lọt vào giáo án cũng báo lỗi.
 
 ## 🔁 Pipeline của thư viện
 

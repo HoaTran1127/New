@@ -225,7 +225,7 @@ Trình tự này theo khung **Concrete – Representational – Abstract**: lỗ
 - **Chống mỏi tay** (viết phấn giữa không trung là động tác mỏi nhanh nhất của hand tracking): chế độ **chạm-bật viết** để không phải giữ pinch, **nghỉ bắt buộc sau 90 giây** pinch liên tục kèm đếm ngược 5 giây, khay phấn đặt ngang khuỷu tay làm điểm tựa, và **mất landmark quá 500 ms thì nét dở đóng băng tại chỗ** chứ không xoá hay nhảy nét.
 - **Lưu bảng của tiết dạy**: tuần tự hoá nét vẽ + vật + sơ đồ vào `localStorage` khoá `miti-board`, tối đa **200 KB**, có nút Lưu / Mở / In (nền trắng chữ đen). **Tuyệt đối không lưu ảnh hay video camera.**
 
-### 👩‍🏫 Mười sáu quy định chế độ giảng bài (`tools/lib/lesson.mjs`)
+### 👩‍🏫 Hai mươi quy định chế độ giảng bài (`tools/lib/lesson.mjs`)
 
 - **Giáo viên trình bày**: màn chiếu 16:9, bảng chiếm ≥ 70%, chữ phấn **≥ 40 px** (lớn hơn mức 34 px của game) vì người đọc đứng ở cuối phòng; điều khiển trọn bài bằng chuột và bàn phím, camera chỉ bật khi mời em lên bảng.
 - **Không một cơ chế game nào**: không tim, điểm, combo, xếp hạng, đồng hồ gây áp lực, hit-stop, giật màn hình, mascot. Sai thì chỉ có một dòng phấn đỡ bằng chữ.
@@ -242,7 +242,14 @@ Trình tự này theo khung **Concrete – Representational – Abstract**: lỗ
 - **Bảng con cho cả lớp, không cần camera**: cạnh nút "Cả lớp trả lời" luôn có nút "Bảng con" — cô đọc câu hỏi, 35 em viết hoặc vẽ đáp án lên bảng con (hoặc tờ phiếu đã in) rồi giơ lên, cửa sổ mở **tối thiểu 8 giây và chỉ đóng khi cô bấm "Hết giờ"**. Cô nhìn phòng rồi nhập kết quả bằng nút "+1 em" / "+5 em", có "-1" và "Xoá lượt này", ô nhập chặn ở 60 để một cú bấm nhầm không thành cột cao vô lý. Cột kết quả vì thế phản ánh đúng cả lớp chứ không chỉ một phần ba phòng mà webcam quay được; vẫn không tên, không xếp hạng, không tô đỏ phương án sai trước mặt học sinh.
 - **Camera hướng vào 35 em là chuyện phải nói rõ**: mặc định tắt, khi bật thì màn chiếu **chỉ hiện vùng bảng và người đứng trước bảng**, không hiển thị khung hình lớp; có đèn báo đỏ to kèm dòng "đang bật camera" ở cả dải điều khiển của cô lẫn mép màn chiếu để học sinh nhìn lên cũng biết máy đang chạy. Nút "Che camera" tắt hẳn stream chứ không chỉ ẩn khung hình. Không một khung hình, ảnh chụp hay đoạn ghi nào của học sinh được vào `localStorage`, vào bản bảng đã lưu, vào tệp xuất ra hay vào trang in — ảnh in chỉ chứa nét phấn và chữ. Suy luận HandLandmarker chạy tại chỗ trên máy đang chiếu. Trước lần bật camera đầu tiên của tiết hiện đúng ba dòng cho cô, và có chế độ "cả tiết không nhận diện" để dạy trọn vẹn bằng chuột khi một em không muốn bị quay.
 - **Có em không đứng lên bảng được**: hàng đợi luôn có ô "Trả lời tại chỗ" và ô bỏ qua không cần lý do, không dòng chữ nào ghi em nào "không chịu lên bảng", ngồi tại chỗ không bị tính là thiếu tích cực. Em đó vẫn tham gia bằng cách giơ ngón tay cho "Cả lớp trả lời" hoặc nói để cô lặp thao tác hộ; hướng dẫn viết ở số nhiều ("cả lớp mình"), mỗi câu chờ **≥ 5 giây** trước khi bảng gợi ý tiếp.
+Nguồn tham chiếu cho các vòng nâng cấp (CRA, lời giải mẫu, think-pair-share, vé kết thúc tiết, camera trong lớp học) ghi ở [docs/AR_GIANG_DAY_TOAN_NGUON.md](docs/AR_GIANG_DAY_TOAN_NGUON.md).
+
 - **`verifyLessonBank()` chạy lúc nạp và trước khi lưu bảng**: `answer` có trong `choices` đúng một lần, ≥ 6 mục phủ ≥ 3 nhãn lỗi, mọi phương án sai phải mô phỏng một lỗi thật (cấm `3 + 2 = 99`), số trong đề đúng phạm vi SGK. Mục lỗi bị loại kèm `console.warn` tiếng Việt, còn dưới 5 mục hợp lệ thì nút "Cả lớp trả lời" và "Lưu bảng" tự khoá — cảnh báo chỉ hiện ở dải điều khiển của cô, không hiện lên bảng trước 35 em.
+
+- **Nghĩ riêng → nói với bạn → chia trước lớp**: mỗi câu hỏi khó ở bước SƠ ĐỒ và PHÉP TÍNH chạy đủ ba nhịp "Nghĩ 15 giây" → "Nói với bạn 40 giây" → "2 cặp chia trước lớp" (tối đa 3 cặp). Bảng viết **cả câu đúng lẫn câu sai** lên cùng một màn để cả lớp so sánh, không tô đỏ. Có nút "Xong rồi" khoá nhịp sớm và nút "Bỏ qua trao đổi"; em được mời lên bảng sau nhịp ba là em vừa trao đổi — nói với một bạn rồi nói trước lớp nhẹ hơn bị gọi bất ngờ.
+- **Đoán trước rồi mới thao tác**: trước mỗi lần cắt pizza, kéo hai xe, xếp khối, kéo thanh giảm giá, bảng dừng ở ô "Em đoán kết quả là bao nhiêu?", sau thao tác đặt cạnh nhau đúng hai dòng **"ĐOÁN: …" và "THẬT: …"** rồi hỏi "Vì sao em đoán vậy?". Hai dòng khác nhau là **chỗ giảng của cô, không phải chỗ sai của em** — bảng không hiện chữ "sai". Bắt buộc ≥ 2 lần một tiết, và mỗi bước lời giải có nút "Vì sao?" mở đúng một câu tự giải thích.
+- **Làm mẫu rồi che dần từng bước**: lời giải mẫu 3–5 dòng ở bước PHÉP TÍNH **không bị xoá** khi học sinh bắt đầu làm; ba bài luyện sau giảm dần chỗ trống — bài 1 trống đúng 1 bước, bài 2 trống 2 bước, bài 3 tự làm — mỗi bài có nút "Hiện lại mẫu". Chỗ trống phải rơi vào bước học sinh vừa làm bằng tay trên vật thật, không phải dòng ghi đáp số.
+- **Vé kết thúc tiết (2 phút cuối, đúng một câu)**: một câu lấy từ `LESSON_DATA`, ưu tiên câu mang `errorTag` cả lớp vừa mắc nhiều nhất, cộng ô "Em còn vướng chỗ nào" với ba chạm nhanh VẬT THẬT / SƠ ĐỒ / PHÉP TÍNH. In 6 vé trên một trang A4 bằng đúng stylesheet của phiếu bài tập, hoặc hiện 3 dòng để chép vào vở. **Không chấm điểm, không nêu tên**; dòng tổng kết cuối lượt dạy ghi thêm "mấy em còn vướng ở SƠ ĐỒ" để lớp sau mở đúng chỗ đó.
 
 ### 📄 Ba quy định "từ bảng ra vở" (`tools/lib/handout.mjs`)
 
@@ -286,7 +293,7 @@ tools/lib/classroom.mjs      quy định lớp học thật (vùng an toàn cho 
 tools/lib/access.mjs         tiếp cận + an toàn thần kinh (trần nhấp nháy, reduced-motion, không chỉ dùng màu, phụ đề, tương phản, tay thuận)
 tools/lib/verify.mjs         tự kiểm chứng đề + độ khó thích ứng (verifyQuestionBank, nhiễu theo lỗi thật, guard phạm vi, chống mẹo, level thích ứng, sàn chống nản)
 tools/lib/chalk.mjs          bảng phấn + vật thật, 10 quy định — dùng cho BỘ GIÁO ÁN
-tools/lib/lesson.mjs         chế độ giảng bài, 16 quy định — dùng cho BỘ GIÁO ÁN
+tools/lib/lesson.mjs         chế độ giảng bài, 20 quy định — dùng cho BỘ GIÁO ÁN
 tools/lib/handout.mjs        từ bảng ra vở, 3 quy định (phiếu in, đáp án, chép vào vở)
         │
         └─ node tools/build.mjs

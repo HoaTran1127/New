@@ -148,6 +148,10 @@ const LESSON_RULES = [
   [LESSON.inclusion, 'thiếu quy định em trả lời tại chỗ không bị tính là thiếu tích cực'],
   [LESSON.classBoard, 'thiếu quy định bảng con cho cả lớp trả lời không cần camera'],
   [LESSON.privacy, 'thiếu quy định quyền riêng tư khi camera hướng vào cả lớp'],
+  [LESSON.pairShare, 'thiếu nhịp nghĩ riêng - nói với bạn - chia trước lớp'],
+  [LESSON.predict, 'thiếu quy định đoán trước khi thao tác vật thật'],
+  [LESSON.fadedExample, 'thiếu quy định làm mẫu rồi che dần từng bước'],
+  [LESSON.exitTicket, 'thiếu vé kết thúc tiết 2 phút cuối'],
 ];
 // Từ bảng ra vở: một tiết giảng chỉ thật sự xong khi các em làm được bài trên giấy.
 const HANDOUT_RULES = [

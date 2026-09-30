@@ -77,6 +77,7 @@ Không dùng Tailwind Play CDN, không file .css/.js/.json/ảnh/mp3 ngoài. Ch�
 2. MẠCH BÀI GỒM NĂM BƯỚC
 - ${LESSON.flow}
 - ${LESSON.fullPeriod}
+- ${LESSON.predict}
 - BƯỚC 1 · KHỞI ĐỘNG — giáo viên đọc to cho cả lớp, bảng chưa viết gì: "${L.khoi_dong}" Bảng chỉ hiện một vật thật duy nhất liên quan tới câu hỏi đó và một nút "Bắt đầu viết bảng".
 - BƯỚC 2 · VẬT THẬT — vật vẽ phấn trên bảng là ${L.vat}. Một đơn vị đếm được là ${L.don_vi}. Điều khiển bằng ngón tay: ${L.ngon_tay}.
 - BƯỚC 3 · SƠ ĐỒ — học sinh hoặc giáo viên tự tay dựng: ${L.so_do}. Sơ đồ này KHÔNG được hiện sẵn hoàn chỉnh; nó phải được kéo hoặc vẽ ra từng phần.
@@ -86,6 +87,7 @@ Không dùng Tailwind Play CDN, không file .css/.js/.json/ảnh/mp3 ngoài. Ch�
 - ${LESSON.pace}
 
 3. DỮ LIỆU CỦA BÀI (LESSON_DATA)
+- ${LESSON.fadedExample}
 - Khai báo \`const LESSON_DATA = [...]\` ở ĐẦU khối <script>, phần engine đặt phía sau.
 - Mỗi mục theo đúng khuôn: { id, prompt, choices, answer, explanation, errorTag, loiViet }.
 - Tối thiểu 6 mục: 2 mục mẫu cho sẵn bên dưới phải xuất hiện NGUYÊN VĂN, cộng thêm 4 mục nữa cùng cụm kiến thức và cùng độ khó của Toán lớp ${L.lop}. Mỗi mục một đáp án đúng duy nhất kiểm chứng được bằng code.
@@ -110,6 +112,7 @@ ${jsonBlock(EXAMPLES[L.cluster], cl.tags, notes)}
 5. CẢ LỚP THAM GIA
 - ${LESSON.classVote}
 - ${LESSON.classBoard}
+- ${LESSON.pairShare}
 - ${LESSON.handover}
 - ${LESSON.strayHands}
 - ${LESSON.retain}
@@ -156,6 +159,7 @@ ${AR_RENDER}
 - ${HANDOUT.worksheet}
 - ${HANDOUT.answerKey}
 - ${HANDOUT.notebook}
+- ${LESSON.exitTicket}
 
 10. MiTi — CHỮ KÝ BẮT BUỘC TRONG HTML
 - Ô bo góc màu #FFD84D chứa chữ M màu #07111F + chữ MiTi đậm + dấu ✦ nhỏ, inline SVG/CSS, không hotlink ảnh ngoài.
@@ -235,7 +239,7 @@ ${byLop[5].map(row).join('\n')}
 - Thêm cụm kiến thức mới: sửa \`tools/data/clusters.mjs\`, \`tools/data/props.mjs\` (đủ 5 trường) và \`tools/data/lessons.mjs\` (đủ 3 trường), rồi chạy \`node tools/build.mjs\`.
 - Đổi quy định bảng phấn: \`tools/lib/chalk.mjs\` (10 quy định).
 - Đổi quy định từ bảng ra vở: \`tools/lib/handout.mjs\` (3 quy định).
-- Đổi quy định chế độ giảng bài: \`tools/lib/lesson.mjs\` (16 quy định).
+- Đổi quy định chế độ giảng bài: \`tools/lib/lesson.mjs\` (20 quy định).
 - \`node tools/validate.mjs\` sẽ chặn nếu thiếu quy định nào, nếu vật thật thiếu trường, hoặc nếu cơ chế game lọt vào giáo án.
 `;
 }
