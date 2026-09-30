@@ -1072,7 +1072,11 @@ const FAMILY_DOC_NEEDLES = [
   ['mua đồ', 'cấm đòi mua thêm đồ dùng', 1, 1, 1, 1],
   ['Nhà mình làm cùng nhau', 'một trong hai dòng kết của khối', 1, 1, 1, 1],
   ['Khi nào con muốn chơi lại', 'dòng kết còn lại, chỉ được in một trong hai', 1, 1, 1, 1],
-  ['verifyFamily()', 'hàm kiểm tầng gia đình lúc nạp', 2, 3, 2, 2],
+  ['verifyFamily()', 'hàm kiểm tầng gia đình lúc nạp', 2, 4, 2, 2],
+  ['Việc 3 phút ở nhà', 'dòng thứ tư của khối "Gửi bố mẹ"', 2, 4, 1, 0],
+  // Probe 19f: xóa riêng dòng nhãn bullet đầu §4.9 ở master vẫn xanh vì cả bốn dòng mô tả bên dưới còn
+  // nguyên — tài liệu mất tên của quy định mà không mất chữ nào. Neo đúng nhãn in hoa của bullet.
+  ['ĐÚNG MỘT KHỐI "GỬI BỐ MẸ"', 'nhãn bullet đầu của §4.9 ở master', 1, 0, 0, 0],
   ['hỏi nhau MIỆNG', 'việc 3 phút hỏi nhau bằng miệng, không viết', 1, 1, 0, 0],
   ['ĐÚNG MỘT khối', 'lệnh đúng một khối "Gửi bố mẹ" mỗi phiên', 1, 2, 0, 0],
   ['ghi vở', 'cấm biến tờ gửi về thành bài tập ghi vở', 2, 2, 1, 1],
@@ -1325,6 +1329,19 @@ if (!MACHINE_ITEMS.some((s) => s.includes('verifySport()') && s.includes('miti-s
   }
 }
 if (!HUMAN_CHECKS.some((s) => /tập môn gì/.test(s) && /CẢ ĐỘI/.test(s))) bad('Bảng việc người thử không còn câu hỏi "mình đang tập môn gì" — máy kiểm được chuỗi tên môn trên HUD nhưng không biết trẻ có thật sự hình dung mình đang tập một môn thể thao.');
+
+// Vòng 19: tờ gửi bố mẹ phải còn nguyên trong bảng kiểm. Probe 19f: đổi "verifyFamily() đã chạy lúc nạp"
+// thành "Gia đình đã được nhắc đến" trong acceptance.mjs vẫn xanh, vì không kim nào bắt mục [38] phải
+// liệt kê đủ bốn điều — mục nghiệm thu rút thành chữ kê sẵn đúng là cái bug mà cả thư viện này sinh ra
+// để chặn, nên nó không được lọt qua chính bảng kiểm.
+if (!MACHINE_ITEMS.some((s) => s.includes('verifyFamily()') && s.includes('"Gửi bố mẹ"'))) bad('Bảng kiểm máy tự kiểm không còn mục nghiệm thu tầng gia đình (verifyFamily() + khối "Gửi bố mẹ") — thiếu mục này thì game bỏ hẳn tờ gửi về nhà mà vẫn báo ĐẠT.');
+{
+  const famItem = MACHINE_ITEMS.find((s) => s.includes('verifyFamily()'));
+  for (const clause of ['đúng bốn dòng', '<= 20 từ', '>= 20px', '"Copy tờ rời"', 'chưa ghi được', '3 phút', 'dongTac', '<= 16 từ', 'tên bạn khác', 'xếp hạng', 'đe dọa']) {
+    if (famItem && !famItem.includes(clause)) bad(`Mục bảng kiểm "verifyFamily()" không còn nêu "${clause}" — mục nghiệm thu tầng gia đình phải liệt kê đủ bốn điều verifyFamily() kiểm; bớt một vế là game in tờ gửi về rỗng mà vẫn báo ĐẠT.`);
+  }
+}
+if (!HUMAN_CHECKS.some((s) => /bố mẹ đọc tại chỗ/.test(s) && /3 phút/.test(s))) bad('Bảng việc người thử không còn câu "copy tờ rời đưa cho bố mẹ đọc tại chỗ" — máy đếm được bốn dòng nhưng không biết một người lớn đứng ở cổng trường có đọc nổi tờ đó trong mười giây không.');
 
 // Vòng 18: bảng môn thể thao là DỮ LIỆU theo MÃ ĐIỀU KHIỂN. GESTURES có 14 mã nên bảng môn phải phủ đủ
 // 14; thiếu mã thì builder throw, nhưng sửa nội dung (đổi tên môn, viết dài động tác, để hai mã trùng
