@@ -246,6 +246,13 @@ const FULL_PINS = [
   ['queue.mjs', QUEUE.spacing, '>= 1,2 m', 'khoảng cách máy tới em đang chơi'],
   ['queue.mjs', QUEUE.teamScore, '+5 điểm động tác', 'điểm vai chờ vào thanh Cả nhóm'],
   ['queue.mjs', QUEUE.guard, 'verifyQueue()', 'hàm kiểm vai chờ lúc nạp'],
+  // Probe vòng 15d: mấy đột biến viết lại câu "cấm/phủ định" vẫn xanh vì số ở đầu câu còn nguyên —
+  // nghĩa là lật ngược một lệnh cấm trong lib lọt qua. Neo thẳng mệnh đề cấm, không chỉ neo số.
+  ['queue.mjs', QUEUE.roles, 'CẤM để một em làm "người xem"', 'lệnh cấm em đứng xem không có việc'],
+  ['queue.mjs', QUEUE.rotate, 'không trừ tim', 'nút đổi người chơi không phạt giáo viên'],
+  ['queue.mjs', QUEUE.spacing, '20 giây "vào vị trí"', 'thời gian vào vị trí khi đổi người'],
+  ['queue.mjs', QUEUE.teamScore, 'KHÔNG cộng vào "miti-best"', 'điểm vai chờ không vào kỷ lục cá nhân'],
+  ['queue.mjs', QUEUE.guard, 'kiểm đúng bốn điều', 'số điều verifyQueue() phải kiểm'],
 ];
 for (const [file, text, needle, label] of FULL_PINS) {
   if (!text.includes(needle)) bad(`tools/lib/${file} không còn nêu "${needle}" (${label}) — con số nghiệm thu phải sửa cùng tài liệu và bảng kiểm, không đổi âm thầm trong lib.`);
@@ -266,7 +273,7 @@ const SHORT_PINS = {
   CELEBRATE_SHORT: ['40–60 hạt', '200 ms', '0.25', '4 giọng SFX', '0,45×'],
   IDENTITY_SHORT: ['2 từ', '>= 5 chỗ', '60/441', '1 lần/phiên', '6 từ'],
   RHYTHM_SHORT: ['100–116 BPM', '128', '0.18', '30% gain', 'vạch nhịp', 'verifyMusic()'],
-  QUEUE_SHORT: ['8 nhịp', '3 lượt/em', '20 giây', '1 sải tay', '1,2 m', '+5 điểm', 'verifyQueue()'],
+  QUEUE_SHORT: ['8 nhịp', '3 lượt/em', 'trần 20 giây', 'giây 15', '1 sải tay', '1,2 m', '+5 điểm', 'verifyQueue()'],
 };
 for (const seg of chainSegments) {
   for (const needle of SHORT_PINS[seg.name] || []) {
@@ -710,12 +717,16 @@ const VOICE_DOC_NEEDLES = [
 // nên bảng này neo ĐÚNG số lần nêu hiện có — tài liệu có thể thêm chỗ nêu, nhưng xóa một chỗ thì phải sửa bảng kèm lý do.
 const QUEUE_DOC_NEEDLES = [
   ['8 nhịp', 'số nhịp cổ vũ mỗi lần', 9, 9, 8, 3],
-  ['3 lượt', 'số lượt mỗi em trong 12 lượt', 11, 7, 5, 2],
+  ['3 lượt', 'số lượt mỗi em trong 12 lượt', 11, 8, 5, 2],
   ['20 giây', 'trần đứng chờ và vào vị trí', 5, 7, 4, 2],
   ['1 sải tay', 'vòng đứng của mỗi em', 2, 3, 2, 1],
   ['1,2 m', 'máy cách em đang chơi', 2, 3, 2, 1],
   ['+5 điểm', 'điểm vai chờ vào "Cả nhóm"', 6, 7, 3, 1],
   ['verifyQueue()', 'hàm kiểm vai chờ lúc nạp', 4, 4, 4, 2],
+  ['Lượt của em', 'bộ đếm lượt trên HUD', 4, 4, 2, 1],
+  ['vào vị trí', '20 giây vào vị trí khi đổi người', 2, 3, 1, 1],
+  ['giây 15', 'lúc mascot gọi tên em đang chờ', 4, 4, 4, 2],
+  ['bốn điều', 'số điều verifyQueue() kiểm', 2, 1, 1, 1],
 ];
 // Con số cũ của vòng 6 ("< 8 động tác lớn mỗi phút") là yêu cầu KHÔNG THỂ đạt với phiên 12 lượt / 4–6 phút.
 // Giữ nó trong tài liệu sẽ sinh game luôn báo CHƯA ĐẠT ở mục cường độ, nên phải bị chặn.
