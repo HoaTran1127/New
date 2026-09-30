@@ -14,8 +14,8 @@ export const RULES = {
   // Tự dừng khi rời tab.
   autoPause: 'Tự động Tạm dừng khi tab bị ẩn hoặc cửa sổ mất tiêu điểm (document.visibilitychange, window.blur): dừng vòng nhận diện, giữ nguyên điểm và lượt; khi quay lại đếm 3-2-1 rồi mới nhận diện tiếp và reset cooldown + bộ làm mượt để một cú vung tay dở dang không thành nhát chém.',
 
-  // An toàn ánh sáng và không gian.
-  safety: 'Trước khi chơi, một dòng nhắc tiếng Việt: "Dọn vật cản khỏi vùng đứng, giữ cách tường một bước, chỉ chuyển động trong tầm tay"; không có động tác nhảy, xoay người nhanh hay rời khỏi chỗ. Khung hình quá tối hoặc ngược sáng thì gợi ý "Bật đèn lên hoặc quay lưng về phía cửa sổ để camera nhìn rõ em hơn" rồi vẫn cho chơi tiếp.',
+  // An toàn ánh sáng và không gian. Đơn vị khoảng cách là 1 sải tay (đã đo được ở calibration), không phải "một bước".
+  safety: 'Trước khi chơi, một dòng nhắc tiếng Việt: "Dọn vật cản khỏi vùng đứng, giữ cách tường một vòng 1 sải tay, chỉ chuyển động trong tầm tay"; không có động tác nhảy, xoay người nhanh hay rời khỏi chỗ — bản thay thế tại chỗ cho mọi động tác đòi di chuyển nằm ở tầng "chỗ chơi an toàn" (tools/lib/playzone.mjs). Khung hình quá tối hoặc ngược sáng thì gợi ý "Bật đèn lên hoặc quay lưng về phía cửa sổ để camera nhìn rõ em hơn" rồi vẫn cho chơi tiếp.',
 
   // Màn tổng kết ba thẻ ngắn cho trẻ.
   summary: 'Màn tổng kết gồm ba thẻ chữ to đọc xong trong 5 giây: "Làm tốt: ..." (tối đa 2 kỹ năng đúng nhiều nhất), "Cần luyện: ..." (loiViet của nhóm lỗi nhiều nhất), "Động tác lần sau: ..." (một câu nhắc tư thế/cử chỉ). Kèm số câu đúng/sai theo mức độ, không so sánh với bạn khác.',

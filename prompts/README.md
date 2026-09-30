@@ -66,7 +66,7 @@ Bốn biến thể đầu dùng **cùng một hợp đồng AR** như prompt gam
 - `04-english5/` — 15 game Tiếng Anh 5.
 - `01-prompt-…` đến `12-prompt-…` — **12 prompt legacy** đời đầu: giữ nguyên cơ chế game, đã thay MediaPipe Legacy/Tailwind CDN/Tone.js bằng chuẩn hiện hành và gắn nhãn `LEGACY`. Không dùng làm khuôn cho game mới.
 - `VARIANTS_425.md` — 425 biến thể (85 game × 5 kiểu điều khiển), do `tools/build-variants.mjs` sinh.
-- `CHECKLIST_NGHIEP_THU.md` — bảng kiểm cầm tay khi nhận file HTML về: 39 mục máy tự kiểm + 30 việc người thử bấm tay (trong đó 6 mục gắn 📷 chỉ có camera mới kiểm được; bản không camera bỏ 6 mục đó và vẫn phải đạt 33 mục còn lại), do `tools/build-acceptance.mjs` sinh từ `tools/lib/acceptance.mjs`.
+- `CHECKLIST_NGHIEP_THU.md` — bảng kiểm cầm tay khi nhận file HTML về: 40 mục máy tự kiểm + 31 việc người thử bấm tay (trong đó 6 mục gắn 📷 chỉ có camera mới kiểm được; bản không camera bỏ 6 mục đó và vẫn phải đạt 34 mục còn lại), do `tools/build-acceptance.mjs` sinh từ `tools/lib/acceptance.mjs`.
 
 ## ✅ Nghiệm thu một game vừa sinh
 
@@ -270,13 +270,29 @@ Việc người thử số 29 ("copy tờ rời đưa cho bố mẹ đọc tại
 
 Việc người thử số 30 ("đọc nhãn tuần ở màn khởi động rồi đối chiếu với thời khóa biểu thật của lớp — game ghi 'Tuần 22–24 · Học kì 2' có khớp với việc lớp đang học tới đâu không? Hỏi em 'tuần trước lớp mình học bài gì' rồi xem ba lượt ôn có đúng là cái đã học chứ không phải chương năm sau. Xem hai lượt đầu của phiên nước rút: có thật là hai cụm em yếu nhất, hay game chỉ đổi mỗi dòng chữ trên HUD?") là chỗ máy không tự kiểm được: `verifyPacing()` so được chuỗi nhãn với cột `tuan` và đếm được ba lượt đã qua tuần, còn việc nhãn đó có đúng với **lớp thật đang học tới đâu** thì chỉ cô giáo đối chiếu sổ đầu bài mới biết.
 
+## 🧍 Tầng "chỗ chơi an toàn" — `tools/lib/playzone.mjs` (vòng 21)
+
+Đo 85 prompt trước vòng 21: **"dép" 0/85, "giày" 0/85, "chân đất" 0/85, "dẹp chỗ" 0/85, "vùng vung tay" 0/85, "lớp mình chật" 0/85, "em mệt" 0/85** — còn `rules.mjs` thì **85/85** có một dòng an toàn. Dòng đó là: "Dọn vật cản khỏi vùng đứng, giữ cách tường **một bước**, chỉ chuyển động trong tầm tay". Ba defect đo được: (1) **"một bước" là đơn vị không ai đo** — lớp 4 có bước chân 40 cm và 70 cm, trong khi `queue.mjs` (vòng 15) đã chốt giãn cách **"1 sải tay"** và **máy cách >= 1,2 m**; hai tầng nói cùng một khoảng cách bằng hai đơn vị khác nhau; (2) dòng đó **cấm rời khỏi vùng camera** nhưng **không cho gì thay thế** — một lớp 45 em kê bàn ghế sát nhau thì học sinh chỉ có nước đứng sai luật hoặc không chơi; (3) **quền nghỉ của em không có nút**: `lesson.mjs` có bốn mức gắng sức >= 56px nhưng để em nói "em mệt" giữa hiệp thì phải tự tắt máy, và tự tắt thì mất điểm.
+
+| Luật | Con số | Kiểm ở đâu |
+|:---|:---|:---|
+| Thẻ "Dẹp chỗ chơi" nằm **trong** khởi động | chạy trong **60–90 giây** khởi động của `pe.mjs`, **tối đa 20 giây**, đúng **BỐN dòng <= 12 từ** ("Vùng đứng mỗi em: một vòng **1 sải tay** tính từ vai" · "Bàn ghế, cặp, chai nước: ra khỏi vùng vung tay" · "Sàn: khô, không vừa lau, không dây điện ngang" · "Máy: cách em đang chơi **>= 1,2 m**") + nút "Chỗ chơi ổn rồi" **>= 56px** và nút "Bỏ qua"; **cấm** mở thêm màn hình riêng trước nút "Bắt đầu", **cấm** dùng "một bước", **cấm** trừ tim | `verifyPlayzone()` + mục `[40]` |
+| Hàng ba lựa chọn giày dép | "dép quai hậu" · "giày buộc dây" · "**chân đất / dép lê**", lưu localStorage `"miti-foot"`; chọn dép lê ⇒ **0/12 lượt nhấc chân cao** và đổi sang bản cẳng tay–vai tại chỗ, **cấm vĩnh viễn** mọi động tác đứng một chân; **cấm** in "không an toàn" cạnh tên em; tổng kết ghi "Động tác hôm nay: bản tại chỗ (dép lê)" | mục `[40]` |
+| Nút "Lớp mình chật" + trần không gian 90 độ | lưu `"miti-space"` MỘT lần, bản không camera mặc định **BẬT SẴN**; động tác di chuyển thành **TẠI CHỖ** trong 1 sải tay mà vẫn giữ ngưỡng **>= 15% tầm với** để **>= 12 nhịp/phút** và **>= 60%** thời gian vận động của `pe.mjs` **không đổi**; **cấm** trừ điểm, rút số lượt, hạ trần; vật thể AR chỉ vào **hình quạt 90 độ PHÍA TRƯỚC**, **cấm** "lùi lại / né sang trái phải / quay người nhanh" TRONG 12 lượt | mục `[40]` |
+| Bộ động tác chốt MỘT LẦN đầu phiên | danh sách động tác chốt **đúng một lần** trước hiệp 1 và **cấm mở rộng giữa phiên**; "Xem cách chuyển động" liệt kê đúng bộ đó; HUD "Vùng chơi: tại chỗ" / "Vùng chơi: 1 sải tay" **>= 18px**; đổi lựa chọn chỉ hiệu lực ở **phiên kế tiếp** | mục `[40]` |
+| Nút "Em mệt / em đau" là MỘT nút | **đúng một chỗ** ở góc dưới HUD, **>= 56px**, không bao giờ mờ hay bị che; **cấm** biến thành "Tạm dừng", **cấm** mascot nói "cố lên"; một cú bấm ⇒ chơi hết lượt rồi vào thẳng **hạ nhiệt 45–60 giây**, **không trừ tim**, không trừ điểm, không hỏi lý do, không đòi cô xác nhận; ghi `"miti-stop"` {phút, lượt}; tổng kết in "Em xin nghỉ ở phút `<n>` — nghỉ đúng lúc cũng là chơi giỏi" | mục `[40]` |
+
+`verifyPlayzone()` chạy MỘT LẦN lúc nạp và kiểm **đúng bốn điều**; thiếu thì `console.warn` tiếng Việt nêu điều lệch và bảng kiểm ghi CHƯA ĐẠT. **Bản không camera, bản một học sinh và bản tắt tiếng vẫn bắt buộc đủ bốn điều** — bàn ghế không biến mất vì thiếu webcam. Đơn vị khoảng cách của cả thư viện từ vòng 21 là **1 sải tay** và **>= 1,2 m**, không còn "một bước" ở đâu nữa (`validate.mjs` chặn cả hai chiều: thiếu `1 sải tay` trong `PLAYZONE.depCho` lẫn trong `QUEUE.spacing` đều báo lỗi).
+
+Việc người thử số 31 ("quay một vòng dang hai tay ngay tại chỗ em sẽ đứng — bàn ghế, cặp, tường có nằm trong tầm vung không? Chọn 'dép lê' rồi chơi một phiên xem mọi động tác nhấc chân cao có biến mất thật không, hay chỉ đổi mỗi chữ. Bật 'Lớp mình chật' giữa hai phiên rồi đếm nhịp. Bấm 'Em mệt / em đau' ở hiệp 2: game có vào thẳng hạ nhiệt mà không trừ tim, không hỏi lý do, không một lời 'cố lên' nào không?") là chỗ máy không tự kiểm được: code biết bộ động tác đã được lọc và nút đủ lớn, còn **chỗ đó có thật sự trống không** thì chỉ người đứng vào chỗ của em, dang hai tay, mới biết.
+
 ## 🔁 Pipeline của thư viện
 
 85 prompt game **được sinh tự động**, không sửa tay:
 
 ```
 tools/data/games.mjs + clusters.mjs + gestures.mjs + examples.mjs + error-notes.mjs + identities.mjs + standards.mjs + sports.mjs
-tools/lib/ar.mjs · rules.mjs · feel.mjs · classroom.mjs · access.mjs · light.mjs · celebrate.mjs · identity.mjs · rhythm.mjs · queue.mjs · lesson.mjs · curriculum.mjs · sport.mjs · family.mjs · pacing.mjs · verify.mjs · pe.mjs · memory.mjs · hype.mjs · anticipation.mjs · acceptance.mjs
+tools/lib/ar.mjs · rules.mjs · feel.mjs · classroom.mjs · access.mjs · light.mjs · celebrate.mjs · identity.mjs · rhythm.mjs · queue.mjs · lesson.mjs · curriculum.mjs · sport.mjs · family.mjs · pacing.mjs · playzone.mjs · verify.mjs · pe.mjs · memory.mjs · hype.mjs · anticipation.mjs · acceptance.mjs
         └─ node tools/build.mjs ─→ catalogs/GAME_CATALOG.csv · .md · .js + prompts/0X-*/ + index.html + prompts/CHECKLIST_NGHIEP_THU.md
 ```
 

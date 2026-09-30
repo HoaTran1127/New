@@ -412,6 +412,49 @@ cả lớp vừa bước vào tuần kiểm tra. Tầng này cũng không tự �
   `console.warn` tiếng Việt nêu điều lệch và bảng kiểm ghi CHƯA ĐẠT. Bản không camera, bản một học sinh và bản tắt tiếng vẫn
   bắt buộc kiểm đủ bốn điều, vì tuần học không phụ thuộc webcam.
 
+4.11 CHỖ CHƠI AN TOÀN — KHÔNG GIAN THẬT VÀ QUYỀN NGHỈ (bắt buộc — nguồn: `tools/lib/playzone.mjs`, validate chặn nếu thiếu) — phần quyết định một em có được đứng lên vung tay trước máy mà không sợ va bàn, trượt dép hay phải cắn răng chơi nốt
+
+Mục 4.5 đã quy định thân thể (khởi động, biên độ, trần tải trọng, hạ nhiệt) và mục 7.2 đã quy định chỗ đứng của bốn em quanh một máy, nhưng khảo sát 85 prompt trước vòng 21 cho thấy cả phòng học thì trống: "dép" = 0/85, "quai hậu" = 0/85, "giày" = 0/85, "chân đất" = 0/85,
+"sàn trơn" = 0/85, "bàn ghế" = 0/85, "chật" = 0/85, "đứng tại chỗ" = 0/85, "vùng vung tay" = 0/85. Dòng an toàn hiện hành của
+`tools/lib/rules.mjs` thì có ở 85/85 prompt, nhưng chỉ là MỘT câu mơ hồ: nó đo khoảng cách bằng "một bước" trong khi mục 7.2 đã
+đo bằng "1 sải tay" và "máy cách >= 1,2 m"; nó CẤM "rời khỏi chỗ" mà không có bản thay thế tại chỗ cho động tác đã thiết kế
+theo hướng phải né hay lùi; và không có một chỗ nào để một em đang đau xin dừng mà không bị trừ tim hay bị hỏi lý do. Một em
+đau vì va bàn hoặc sợ cô phê thì nghỉ hẳn môn này — tầng này quy định cái giường thật mà trò chơi đứng trên đó.
+
+- THẺ DẸP CHỖ CHƠI NẰM TRONG KHỞI ĐỘNG, KHÔNG PHẢI MỘT MÀN HÌNH MỚI: thẻ "Dẹp chỗ chơi" chạy NGAY TRONG 60–90 GIÂY khởi động
+  (mục 4.5) và tối đa 20 giây, gồm đúng BỐN dòng <= 12 từ với một nút "Chỗ chơi ổn rồi" >= 56px: "Vùng đứng mỗi em: một vòng
+  1 sải tay tính từ vai" · "Bàn ghế, cặp, chai nước: ra khỏi vùng vung tay" · "Sàn: khô, không vừa lau, không dây điện ngang" ·
+  "Máy: cách em đang chơi >= 1,2 m". CẤM mở thêm một màn hình riêng trước khởi động (sẽ vượt trần 8–10 phút của mục 4.6),
+  CẤM dùng "một bước" làm đơn vị khoảng cách vì đã có 1 sải tay đo được, CẤM chặn nút "Bắt đầu", CẤM trừ tim vì chưa dẹp —
+  giáo viên bấm "Bỏ qua" được, màn tổng kết chỉ nhắc một dòng nhẹ.
+- HÀNG BA LỰA CHỌN GIÀY DÉP ĐỔI BỘ ĐỘNG TÁC, KHÔNG PHẠT EM: trên thẻ có một hàng ba lựa chọn "dép quai hậu" · "giày buộc dây" ·
+  "chân đất / dép lê", chọn một lần lưu localStorage "miti-foot" và các phiên sau đọc lại. Chân đất / dép lê thì MỌI động tác
+  nhấc chân cao, bước rời chỗ, khuỵu gối sâu đổi sang bản cẳng tay – vai tại chỗ và 0/12 lượt được là nhấc chân cao; dép quai
+  hậu thì bỏ nhảy đổi chân nhưng vẫn được bước tại chỗ. CẤM từ đầu đến cuối phiên mọi động tác đòi đứng một chân, kể cả khi đã
+  đi giày. CẤM trừ tim, CẤM hỏi lý do, CẤM in chữ "không an toàn" cạnh tên em; tổng kết chỉ ghi "Động tác hôm nay: bản tại chỗ
+  (dép lê)" trong khối "Copy tờ rời".
+- NÚT "LỚP MÌNH CHẬT" VÀ TRẦN KHÔNG GIAN 90 ĐỘ: một nút bật một lần, lưu "miti-space", mọi phiên sau giữ nguyên, CẤM hỏi lại
+  giữa phiên. Bật thì mọi động tác đòi di chuyển chỗ (né sang bên, lùi, tiến, quay người, đi vòng) thành động tác TẠI CHỖ trong
+  vòng 1 sải tay, vẫn giữ biên độ >= 15% tầm với đã calibration để >= 12 nhịp chuyển động mỗi phút và đồng hồ vận động >= 60%
+  không đổi — CẤM trừ điểm, CẤM rút số lượt, CẤM hạ trần cường độ vì lớp chật. Trần không gian: thẻ và vật thể AR chỉ bay vào
+  hình quạt 90 độ PHÍA TRƯỚC mặt em (mục 4.5 đã cấm xoay thân nhanh quá 90 độ), CẤM mọi chỉ dẫn "lùi lại", "né sang trái/phải"
+  trong 12 lượt chơi. Bản không camera mặc định BẬT SẴN nút này.
+- BỘ ĐỘNG TÁC CHỐT MỘT LẦN ĐẦU PHIÊN: sau thẻ dẹp chỗ chơi, engine lọc ngân hàng động tác theo giày dép đã chọn và nút chật,
+  rồi giữ nguyên bộ đó trọn 12 lượt — CẤM mở rộng bộ động tác giữa phiên, vì một em đang với tay giữa hiệp mà bất ngờ phải lùi
+  là cách ngã nhanh nhất. Nút "Xem cách chuyển động" liệt kê đúng bộ đang bật bằng chữ tiếng Việt + hình que, HUD ghi "Vùng
+  chơi: tại chỗ" hoặc "Vùng chơi: 1 sải tay" chữ >= 18px. Đổi lựa chọn chỉ có hiệu lực ở PHIÊN kế tiếp.
+- NÚT EM MỆT / EM ĐAU LÀ MỘT NÚT, KHÔNG PHẢI MỘT LỜI MỜI: hiện ĐÚNG MỘT chỗ ở góc dưới HUD, >= 56px, không bao giờ mờ, không
+  bao giờ bị che, bấm được bằng chuột/chạm ở mọi bản; CẤM biến nó thành nút "Tạm dừng", CẤM mascot bình luận "cố lên". Một cú
+  bấm: lượt đang chạy kết thúc bình thường rồi vào thẳng HẠ NHIỆT 45–60 GIÂY, CẤM trừ tim, CẤM trừ điểm, CẤM hỏi lý do, CẤM đòi
+  cô giáo xác nhận; ghi "miti-stop" {phút, lượt} và tổng kết in "Em xin nghỉ ở phút <n> — nghỉ đúng lúc cũng là chơi giỏi".
+- TỰ KIỂM BẰNG `verifyPlayzone()`: chạy MỘT LẦN lúc nạp và kiểm đúng bốn điều — thẻ "Dẹp chỗ chơi" có thật với đúng bốn dòng
+  <= 12 từ, chạy trong 60–90 giây khởi động và tối đa 20 giây, không thêm màn hình trước nút "Bắt đầu" · ba lựa chọn giày dép
+  và nút "Lớp mình chật" đổi ĐÚNG BỘ ĐỘNG TÁC (0/12 lượt nhấc chân cao khi chân đất / dép lê, không động tác đứng một chân nào,
+  vật thể vào hình quạt 90 độ phía trước) và lưu "miti-foot" + "miti-space" · bộ động tác không đổi giữa phiên · nút "Em mệt /
+  em đau" >= 56px luôn bấm được và một cú bấm vào thẳng hạ nhiệt 45–60 giây tại ranh giới lượt mà không trừ tim, có ghi
+  "miti-stop". Thiếu điều nào thì `console.warn` tiếng Việt nêu đúng phần lệch và bảng kiểm ghi CHƯA ĐẠT. Bản không camera, bản
+  một học sinh và bản tắt tiếng vẫn bắt buộc kiểm đủ bốn điều, vì bàn ghế và quyền nghỉ không phụ thuộc webcam.
+
 ========================
 5. HỌC TẬP DẪN LỐI (LEARNING-FIRST)
 ========================
@@ -812,7 +855,7 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
   Bảng liệt kê TỪNG ràng buộc kèm trạng thái ĐẠT / CHƯA ĐẠT. Trạng thái đó phải do code kiểm thật lúc chạy,
   không phải chữ tĩnh kê sẵn. Một bảng báo "ĐẠT" mà không kiểm gì là lỗi nghiêm trọng nhất của game giáo dục.
   Bảng chỉ người lớn mở được: không trừ tim, không chặn chơi, học sinh không nhìn thấy.
-- 39 MỤC MÁY TỰ KIỂM, mỗi mục một hàm trả true/false:
+- 40 MỤC MÁY TỰ KIỂM, mỗi mục một hàm trả true/false:
   [1] QUESTION_DATA đủ số mục và verifyQuestionBank() ĐÃ chạy trước lượt chơi đầu tiên
   [2] mọi mục đang phát hành có answer nằm trong choices đúng một lần
   [3] 📷 drawImage khung hình webcam đi qua toScreen(lx, ly), không còn phép nhân thô với W/H
@@ -852,14 +895,15 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
   [37] verifySport() đã chạy lúc nạp: tên môn thể thao <= 4 từ lấy từ tools/data/sports.mjs có thật trên HUD và ở đúng hai màn, động tác đặc trưng của môn (<= 6 từ) được mascot làm mẫu 3 giây kèm hiệu lệnh <= 4 từ, nghi thức tinh thần thể thao chạy đúng hai lần (chạm khuỷu 3 giây trước hiệp 1 + lời hay <= 6 từ khi bạn sai, không dòng chế bai), bảng thành tích ba mốc giảm dần cho CẢ ĐỘI lưu "miti-sport" và động tác duỗi riêng của môn 15 giây nằm trong hạ nhiệt 45–60 giây
   [38] verifyFamily() đã chạy lúc nạp: màn tổng kết in ĐÚNG MỘT khối "Gửi bố mẹ" gồm đúng bốn dòng (mỗi dòng <= 20 từ, chữ >= 20px) nằm trong khối "Copy tờ rời" copy được, bốn dòng lấy từ số thật của phiên chứ không phải chữ chép sẵn (thiếu thì in "chưa ghi được", cấm bịa), dòng "Việc 3 phút ở nhà" là một hoạt động không màn hình không ghi vở lấy đúng cột dongTac của môn kèm MỘT đề <= 16 từ đã chơi, và khối không có tên bạn khác, không xếp hạng, không dữ liệu cá nhân, không dòng đe dọa
   [39] verifyPacing() đã chạy lúc nạp: mọi câu mang nhãn "Tuần <a>–<b> · Học kì <n>" khớp NGUYÊN VĂN cột tuan của tools/data/standards.mjs (khoảng nằm trong 1–35, một cụm phủ tối đa 10 tuần) và nhãn đó có thật ở hai màn với chữ >= 18px nằm trong khối "Copy tờ rời" · câu "Lớp mình đang học tuần mấy?" chạy ĐÚNG MỘT lần ở phiên đầu, đọc lại được từ "miti-week" và không chặn nút "Bắt đầu" · khi đã biết tuần của lớp thì >= 3/12 lượt là cụm có tuan[1] nhỏ hơn tuần đó · nhãn nước rút và chế độ tổng ôn đổi đúng theo SCHOOL_YEAR mà không đổi luật chơi, không đổi trần tải trọng
-  Mục gắn 📷 chỉ áp dụng khi có webcam: bản không camera bỏ 6 mục đó và vẫn phải đạt 33 mục còn lại.
+  [40] verifyPlayzone() đã chạy lúc nạp: thẻ "Dẹp chỗ chơi" có thật với đúng bốn dòng <= 12 từ, chạy trong 60–90 giây khởi động và tối đa 20 giây, không thêm màn hình trước nút "Bắt đầu" · ba lựa chọn giày dép lưu "miti-foot" (chân đất / dép lê thì 0/12 lượt nhấc chân cao, không một động tác đứng một chân nào) và nút "Lớp mình chật" lưu "miti-space" đổi động tác di chuyển thành tại chỗ mà vẫn >= 12 nhịp/phút, vật thể AR chỉ vào hình quạt 90 độ phía trước · bộ động tác chốt MỘT LẦN đầu phiên và không mở rộng giữa phiên · nút "Em mệt / em đau" >= 56px luôn bấm được, một cú bấm đưa thẳng vào hạ nhiệt 45–60 giây tại ranh giới lượt, không trừ tim, có ghi "miti-stop"
+  Mục gắn 📷 chỉ áp dụng khi có webcam: bản không camera bỏ 6 mục đó và vẫn phải đạt 34 mục còn lại.
 - XUẤT BẢN VĂN: bảng có nút "Xuất bản văn" sinh một khối chữ tiếng Việt copy được — tên game, bản chuẩn MiTi,
   ngày giờ, kiểu điều khiển đang chạy, số mục ĐẠT / CHƯA ĐẠT, danh sách mục chưa đạt kèm lý do.
   Khối chữ chỉ hiện trên màn hình và vào clipboard máy đó; không gửi lên máy chủ nào, không xin quyền, không để lại dữ liệu.
 - MỤC CHƯA ĐẠT PHẢI GIẢI THÍCH ĐƯỢC: mỗi dòng kèm một câu nguyên nhân kỹ thuật cho người lớn
   (ví dụ "toScreen không được dùng ở drawImage — vật thể đang tính bằng lx * W") và một câu nên sửa thế nào trong prompt.
   Cấm báo "lỗi" rồi im lặng, cấm chữ chung chung kiểu "hệ thống có vấn đề".
-- 30 VIỆC NGƯỜI THỬ PHẢI BẤM TAY (máy không tự kiểm được, làm theo đúng thứ tự, khoảng 15 phút):
+- 31 VIỆC NGƯỜI THỬ PHẢI BẤM TAY (máy không tự kiểm được, làm theo đúng thứ tự, khoảng 15 phút):
   đứng xa tới mức chỉ còn hai bàn tay · giữ im một tư thế 5 giây · che nửa người bằng tay · tắt camera giữa vòng ·
   rút mạng lúc đang tải model · đổi tay thuận sang Trái giữa chừng · bật reduced-motion ở hệ điều hành rồi mở game ·
   cố tình sai 4 câu liên tiếp · mở bằng điện thoại đặt dọc · đưa một học sinh lớp 4 chưa đọc hướng dẫn chơi thử 60 giây ·
@@ -883,6 +927,7 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
   hỏi em đang chơi "mình đang tập môn gì" và "lúc nãy cơ nào được duỗi" — em có gọi ra được tên môn thể thao và động tác duỗi, hay cả buổi với em chỉ là vung tay chọn đáp án? Xem trọn một hiệp: bốn em có thật sự chạm khuỷu trước hiệp 1 và có nói lời hay khi bạn sai không? Đọc bảng thành tích cuối phiên: đó là mốc của CẢ ĐỘI hay đã vô tình thành xếp hạng cá nhân?
   copy tờ rời đưa cho bố mẹ đọc tại chỗ — trong mười giây họ có nói lại được con vừa tập môn gì, mẹo nào và cả nhà cùng làm gì trong 3 phút không? Việc 3 phút đó có buộc ai mở thêm màn hình, ghi vở, chụp ảnh hay mua đồ không? Đọc to tờ gửi về: có tên bạn nào khác, có dòng so sánh hay dọa dẫm nào lọt vào tay người ở nhà không?
   đọc nhãn tuần ở màn khởi động rồi đối chiếu với thời khóa biểu thật của lớp — game ghi "Tuần 22–24 · Học kì 2" có khớp với việc lớp đang học tới đâu, hay bảng tuần chỉ là chữ trang trí? Hỏi em "tuần trước lớp mình học bài gì": em trả lời được thì ba lượt ôn theo tuần đang ôn cái có thật, nếu em chỉ đọc lại chữ trên HUD thì ba lượt đó không ôn gì cả. Xem hai lượt đầu của phiên gần kỳ kiểm tra: đó có thật là chỗ em yếu nhất không, hay game vẫn xếp câu ngẫu nhiên rồi chỉ đổi mỗi dòng chữ "Còn 2 tuần tới kiểm tra"?
+  đứng đúng chỗ em sẽ chơi rồi dang hai tay quay một vòng — có chạm bàn, ghế, cặp hay tường không, sàn có vừa lau chưa? Chọn "chân đất / dép lê" ở thẻ "Dẹp chỗ chơi" rồi chơi trọn một phiên: động tác nhấc chân cao có biến mất thật khỏi 12 lượt hay vẫn hiện ra? Bật "Lớp mình chật" giữa hai phiên: phiên sau có còn đòi em né sang bên hoặc lùi lại không? Cuối cùng bấm nút "Em mệt / em đau" ở hiệp 2 — game có đi thẳng vào hạ nhiệt mà không trừ tim, không hỏi lý do, không có dòng "cố lên" nào không, hay em vẫn phải chơi nốt cho đủ 12 lượt?
   Bảng in kèm từng việc và ô ghi kết quả: `prompts/CHECKLIST_NGHIEP_THU.md`.
 - THIẾU MỤC NÀO THÌ SỬA PROMPT, KHÔNG SỬA TAY FILE HTML: dán lại nguyên văn quy định tương ứng vào cuối prompt rồi sinh lại file.
 
@@ -997,10 +1042,10 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
 [ ] đạo cụ AR neo landmark bằng toScreen(); bản không camera thì đạo cụ đứng yên ở góc HUD dưới chứ không biến mất
 [ ] ba câu thoại đọc bằng speechSynthesis giọng vi-VN, <= 3 câu mỗi phút, câu khi sai là câu đỡ chứ không chế giễu
 [ ] bảng kiểm ẩn mở bằng 7 lần chạm logo MiTi hoặc Ctrl+Alt+K, trạng thái ĐẠT do code kiểm thật lúc chạy
-[ ] cả 39 mục máy tự kiểm đều có hàm kiểm tương ứng, không mục nào là chữ kê sẵn
+[ ] cả 40 mục máy tự kiểm đều có hàm kiểm tương ứng, không mục nào là chữ kê sẵn
 [ ] mục CHƯA ĐẠT kèm nguyên nhân kỹ thuật + cách sửa trong prompt, không có dòng "lỗi hệ thống"
 [ ] nút "Xuất bản văn" copy được khối chữ tiếng Việt, không gửi lên máy chủ nào
-[ ] bản không camera bỏ đúng 6 mục 📷 và vẫn đạt 33 mục còn lại, không bỏ luôn bảng kiểm
+[ ] bản không camera bỏ đúng 6 mục 📷 và vẫn đạt 34 mục còn lại, không bỏ luôn bảng kiểm
 [ ] fallback chuột/chạm/phím chơi trọn vẹn, tự kích hoạt khi camera lỗi
 [ ] QUESTION_DATA có ít nhất 30 mục (Toán) hoặc 60 mục (Tiếng Anh), mỗi mục có đáp án + lời giải + errorTag + loiViet + dang
 [ ] dữ liệu đặt đầu file, code engine đặt sau, không có chỗ nào rút gọn
@@ -1064,7 +1109,7 @@ Sau khi tự kiểm tra, CHỈ xuất ra file HTML hoàn chỉnh, không kèm gi
   toàn bộ quy định phía trên chỉ là lời mong đợi. Bắt game tự kiểm bằng hàm true/false biến lời hứa thành trạng thái đọc được.
 - **Trạng thái phải do code kiểm, không phải chữ kê sẵn**: một bảng tĩnh in sẵn chữ "ĐẠT" còn hại hơn không có bảng,
   vì người lớn tưởng là đã kiểm. Đây là lý do quy định ghi rõ "không phải một danh sách chữ tĩnh".
-- **Tách 39 mục máy / 30 việc người thử**: cái gì máy kiểm được thì đừng đùn cho giáo viên; cái máy không kiểm được
+- **Tách 40 mục máy / 31 việc người thử**: cái gì máy kiểm được thì đừng đùn cho giáo viên; cái máy không kiểm được
   (cháu có hiểu luật chơi mà không đọc hướng dẫn không, rút mạng thì sao) thì đừng giả vờ kiểm. Con số 15 phút là thời lượng
   một tiết thực tế, không phải danh sách dài vô hạn.
 - **Mục chưa đạt phải nói nguyên nhân và cách sửa**: bảng kiểm chỉ báo "lỗi" sẽ bị bỏ qua; kèm câu "thiếu ở dòng nào,

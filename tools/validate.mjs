@@ -28,6 +28,7 @@ import { CURRICULUM, CURRICULUM_SHORT } from './lib/curriculum.mjs';
 import { SPORT } from './lib/sport.mjs';
 import { FAMILY } from './lib/family.mjs';
 import { PACE } from './lib/pacing.mjs';
+import { PLAYZONE } from './lib/playzone.mjs';
 import { STANDARDS, STANDARD_KEYS, MACH_TEN, SCHOOL_YEAR, hocKiCua } from './data/standards.mjs';
 import { SPORTS, SPORT_KEYS } from './data/sports.mjs';
 import { IDENTITIES } from './data/identities.mjs';
@@ -35,7 +36,7 @@ import { IDENTITIES } from './data/identities.mjs';
 const ROOT = path.resolve(import.meta.dirname, '..');
 const errors = [];
 const bad = (msg) => errors.push(msg);
-// Probe 20g: một mục neo phải là CẶP [needle, label]. Nếu spread `...(? [x, y] : [])` ném toạt mảng vào
+// Probe 20g: một mục neo phải là CẶP [needle, label]. Nếu spread `...(? [x, y] : [])` ném thẳng mảng vào
 // danh sách, vòng `for (const [needle, label] of ...)` gắp từng KÝ TỰ của chuỗi làm needle, thế là
 // `t.includes('T')` luôn đúng và kim tưởng rằng đang chạy mà chưa kiểm gì cả (85 prompt mất hẳn nhãn
 // tuần vẫn xanh). capsNeo chặn kiểu đó ngay tại chỗ: thà để validate crash còn hơn báo ĐẠT.
@@ -79,7 +80,7 @@ const MASTER_LIB = [
   ['6.2', 'verify.mjs'], ['6.3', 'light.mjs'], ['8.1', 'feel.mjs'], ['8.2', 'hype.mjs'], ['8.3', 'anticipation.mjs'], ['8.4', 'celebrate.mjs'],
   ['9.1', 'access.mjs'], ['11.', 'acceptance.mjs'], ['8.5', 'identity.mjs'], ['8.6', 'rhythm.mjs'],
   ['7.2', 'queue.mjs'], ['4.6', 'lesson.mjs'], ['4.7', 'curriculum.mjs'], ['4.8', 'sport.mjs'], ['4.9', 'family.mjs'],
-  ['4.10', 'pacing.mjs'],
+  ['4.10', 'pacing.mjs'], ['4.11', 'playzone.mjs'],
 ];
 
 const rows = readCatalog(path.join(ROOT, 'catalogs', 'GAME_CATALOG.csv'));
@@ -236,6 +237,7 @@ const FULL_LAYERS = [
   ['chất thể thao', 'sport.mjs', 'SPORT', SPORT],
   ['gia đình', 'family.mjs', 'FAMILY', FAMILY],
   ['tuần học', 'pacing.mjs', 'PACE', PACE],
+  ['chỗ chơi an toàn', 'playzone.mjs', 'PLAYZONE', PLAYZONE],
 ];
 const FULL_RULES = FULL_LAYERS.flatMap(([label, file, objName, obj]) =>
   Object.entries(obj).map(([key, text]) => [text, `thiếu quy định ${label} ${objName}.${key} của tools/lib/${file}`]));
@@ -492,6 +494,41 @@ const FULL_PINS = [
   ['pacing.mjs', PACE.guard, '`tuan[1]` nhỏ hơn tuần đó', 'điều 3: tiêu chí cụm đã qua tuần'],
   ['pacing.mjs', PACE.guard, 'không đổi luật chơi, không đổi trần tải trọng của tầng thể dục', 'điều 4: nước rút và tổng ôn chỉ đổi thứ tự'],
   ['pacing.mjs', PACE.guard, 'Bản không camera, bản một học sinh và bản tắt tiếng vẫn bắt buộc kiểm đủ bốn điều', 'không bản nào được miễn kiểm'],
+  // Tầng chỗ chơi an toàn (vòng 21): toàn bộ là SỐ và LỆNH CẤM — hạ ngưỡng hay lật lệnh cấm trong lib thì
+  // 85 prompt đổi theo im lặng, nên neo cả đơn vị đo lẫn mệnh đề cấm (kinh nghiệm probe vòng 15d).
+  ['playzone.mjs', PLAYZONE.depCho, 'THẺ "DẸP CHỖ CHƠI"', 'thẻ dẹp chỗ chơi có tên riêng để nghiệm thu'],
+  ['playzone.mjs', PLAYZONE.depCho, 'đúng BỐN dòng <= 12 từ', 'bốn dòng kiểm được, không phải một lời nhắc dài'],
+  ['playzone.mjs', PLAYZONE.depCho, 'CẤM mở thêm một màn hình riêng trước khởi động', 'thẻ không vượt trần 10 phút của tầng tiết học'],
+  ['playzone.mjs', PLAYZONE.depCho, 'một vòng 1 sải tay tính từ vai', 'đơn vị khoảng cách đo được, thay cho "một bước"'],
+  ['playzone.mjs', PLAYZONE.depCho, '>= 1,2 m', 'máy cách em đang chơi, thống nhất với tầng vai chờ'],
+  ['playzone.mjs', PLAYZONE.depCho, 'tối đa 20 giây', 'trần thời gian của thẻ'],
+  ['playzone.mjs', PLAYZONE.depCho, 'CẤM dùng "một bước" làm đơn vị khoảng cách', 'lệnh cấm đơn vị mơ hồ'],
+  ['playzone.mjs', PLAYZONE.depCho, 'CẤM chặn nút "Bắt đầu"', 'dẹp chỗ không thành rào cản'],
+  ['playzone.mjs', PLAYZONE.giayDep, 'MỘT hàng ba lựa chọn giày dép', 'hàng chọn giày dép trên thẻ'],
+  ['playzone.mjs', PLAYZONE.giayDep, '"miti-foot"', 'nơi lưu lựa chọn giày dép'],
+  ['playzone.mjs', PLAYZONE.giayDep, '0/12 lượt được là động tác nhấc chân cao', 'trần lượt nhấc chân khi đi dép lê'],
+  ['playzone.mjs', PLAYZONE.giayDep, 'CẤM từ đầu đến cuối phiên mọi động tác đòi đứng một chân', 'lệnh cấm thăng bằng một chân'],
+  ['playzone.mjs', PLAYZONE.giayDep, 'CẤM in chữ "không an toàn" cạnh tên em', 'không dán nhãn lỗi lên người em'],
+  ['playzone.mjs', PLAYZONE.lopChat, 'Một nút "Lớp mình chật"', 'nút chuyển bản tại chỗ'],
+  ['playzone.mjs', PLAYZONE.lopChat, '"miti-space"', 'nơi lưu lựa chọn chật'],
+  ['playzone.mjs', PLAYZONE.lopChat, '>= 15% tầm với đã calibration', 'biên độ giữ nguyên khi chơi tại chỗ'],
+  ['playzone.mjs', PLAYZONE.lopChat, '>= 12 nhịp chuyển động mỗi phút', 'thước đo cường độ không đổi vì chật'],
+  ['playzone.mjs', PLAYZONE.lopChat, 'CẤM trừ điểm, CẤM rút số lượt', 'chật không bị tính là em kém'],
+  ['playzone.mjs', PLAYZONE.lopChat, 'hình quạt 90 độ PHÍA TRƯỚC', 'trần không gian của vật thể AR'],
+  ['playzone.mjs', PLAYZONE.lopChat, 'mặc định BẬT SẴN nút này', 'bản không camera mặc định tại chỗ'],
+  ['playzone.mjs', PLAYZONE.locDongTac, 'chốt MỘT LẦN đầu phiên', 'bộ động tác không đổi giữa phiên'],
+  ['playzone.mjs', PLAYZONE.locDongTac, 'CẤM mở rộng bộ động tác giữa phiên', 'lệnh cấm làm em bất ngờ bằng động tác cần chỗ hơn'],
+  ['playzone.mjs', PLAYZONE.locDongTac, 'chỉ có hiệu lực ở PHIÊN kế tiếp', 'đổi lựa chọn giữa phiên không cắt ngang động tác đang chạy'],
+  ['playzone.mjs', PLAYZONE.nutMet, 'Nút "Em mệt / em đau" hiện ĐÚNG MỘT chỗ', 'nút xin nghỉ có chỗ duy nhất trên HUD'],
+  ['playzone.mjs', PLAYZONE.nutMet, '>= 56px', 'cỡ nút xin nghỉ bấm được bằng tay trẻ'],
+  ['playzone.mjs', PLAYZONE.nutMet, 'CẤM biến nó thành nút "Tạm dừng"', 'quyền nghỉ không bị lẫn vào tạm dừng'],
+  ['playzone.mjs', PLAYZONE.nutMet, 'CẤM mascot bình luận "cố lên"', 'không thuyết phục em chơi tiếp khi đang đau'],
+  ['playzone.mjs', PLAYZONE.nutMet, 'CẤM đòi cô giáo xác nhận', 'em nghỉ không cần ai cho phép'],
+  ['playzone.mjs', PLAYZONE.nutMet, 'HẠ NHIỆT 45–60 GIÂY', 'nghỉ sớm vẫn đi qua hạ nhiệt'],
+  ['playzone.mjs', PLAYZONE.nutMet, '"miti-stop"', 'bằng chứng phiên dừng sớm'],
+  ['playzone.mjs', PLAYZONE.guard, 'verifyPlayzone()', 'hàm kiểm tầng chỗ chơi lúc nạp'],
+  ['playzone.mjs', PLAYZONE.guard, 'kiểm đúng bốn điều', 'số điều verifyPlayzone() phải kiểm'],
+  ['playzone.mjs', PLAYZONE.guard, 'Bản không camera, bản một học sinh và bản tắt tiếng vẫn bắt buộc kiểm đủ bốn điều', 'không bản nào được miễn kiểm chỗ chơi'],
 ];
 for (const [file, text, needle, label] of FULL_PINS) {
   if (!text.includes(needle)) bad(`tools/lib/${file} không còn nêu "${needle}" (${label}) — con số nghiệm thu phải sửa cùng tài liệu và bảng kiểm, không đổi âm thầm trong lib.`);
@@ -518,6 +555,7 @@ const SHORT_PINS = {
   SPORT_SHORT: ['tên môn thể thao <= 4 từ', 'động tác đặc trưng của môn <= 6 từ', 'hiệu lệnh <= 4 từ', 'truyền tay sau 3 lượt', 'rơi gậy không trừ tim', 'chạm khuỷu 3 giây', 'lời hay <= 6 từ', 'ba mốc', 'cả đội', 'miti-sport', 'cấm xếp hạng cá nhân', 'duỗi riêng của môn 15 giây', 'hạ nhiệt 45–60 giây', 'verifySport()'],
   FAMILY_SHORT: ['khối "Gửi bố mẹ" 4 dòng', '<= 20 từ', '>= 20px', '"Copy tờ rời"', 'việc 3 phút ở nhà không màn hình', 'cột `dongTac`', '<= 16 từ', 'cột `meo` <= 12 từ', 'động tác 3 giây', 'không tên bạn khác', 'không xếp hạng', 'không đe dọa', 'verifyFamily()'],
   PACE_SHORT: ['"Tuần <a>–<b> · Học kì <n>"', 'cột tuan', 'tối đa 10 tuần', 'đúng MỘT lần ở phiên đầu', 'lưu "miti-week"', 'không chặn nút "Bắt đầu"', '>= 3/12 lượt', SCHOOL_YEAR.nuocRut + ' tuần trước mốc kiểm tra', 'cấm đổi luật', 'từ tuần ' + SCHOOL_YEAR.tongOnTu, '>= 6/12 lượt ôn', 'cấm cụm mới', 'verifyPacing()'],
+  PLAYZONE_SHORT: ['"Dẹp chỗ chơi"', '4 dòng <= 12 từ', '60–90 giây', '20 giây', '1 sải tay', '>= 1,2 m', '"miti-foot"', '0/12 lượt nhấc chân cao', 'đứng một chân', '"Lớp mình chật"', '"miti-space"', '>= 12 nhịp/phút', '>= 60%', '90 độ', 'chốt một lần đầu phiên', '"Em mệt / em đau"', '>= 56px', 'hạ nhiệt 45–60 giây', 'không trừ tim', '"miti-stop"', 'verifyPlayzone()'],
 };
 for (const seg of chainSegments) {
   for (const needle of SHORT_PINS[seg.name] || []) {
@@ -1197,10 +1235,53 @@ const PACE_DOC_NEEDLES = [
   ['việc người thử thứ 30', 'việc người thử tương ứng ở README', 0, 0, 1, 0],
   ['35 tuần', 'độ dài năm học nêu trong tài liệu', 0, 0, 1, 1],
 ];
+// Vòng 21: tầng "chỗ chơi an toàn". Các mốc dưới ĐO TỪ tài liệu thật rồi hạ một bậc làm sàn, giống
+// cách PACE_DOC_NEEDLES làm ở vòng 20. Lý do phải có sàn: sáu quy định này sống ở ba chỗ khác nhau
+// (master §4.11, template, hai README) và một lần sửa tay ở chỗ nào cũng làm tầng đó biến mất khỏi
+// chỗ đó mà build vẫn xanh — đúng kiểu hỏng mà vòng 10 (hype.mjs) và vòng 20 đã bị.
+const PLAYZONE_DOC_NEEDLES = [
+  ['THẺ DẸP CHỖ CHƠI NẰM TRONG KHỞI ĐỘNG', 'nhãn bullet thẻ dẹp chỗ chơi ở master', 1, 0, 0, 0],
+  ['HÀNG BA LỰA CHỌN GIÀY DÉP', 'nhãn bullet hàng ba lựa chọn giày dép ở master', 1, 0, 0, 0],
+  ['NÚT "LỚP MÌNH CHẬT"', 'nhãn bullet nút lớp chật + trần 90 độ ở master', 1, 0, 0, 0],
+  ['BỘ ĐỘNG TÁC CHỐT MỘT LẦN ĐẦU PHIÊN', 'nhãn bullet lọc động tác một lần ở master', 1, 0, 0, 0],
+  ['NÚT EM MỆT / EM ĐAU', 'nhãn bullet quyền nghỉ ở master', 1, 0, 0, 0],
+  ['TỰ KIỂM BẰNG `verifyPlayzone()`', 'nhãn bullet hàm tự kiểm ở master', 1, 0, 0, 0],
+  ['[40] verifyPlayzone()', 'mục 40 của bảng kiểm máy tự kiểm trong master', 1, 0, 0, 0],
+  ['Dẹp chỗ chơi', 'tên thẻ dẹp chỗ chơi', 3, 5, 2, 1],
+  ['1 sải tay', 'đơn vị khoảng cách chuẩn của cả thư viện từ vòng 21', 6, 9, 8, 6],
+  ['>= 1,2 m', 'trần khoảng cách giữa máy và em đang chơi', 3, 5, 4, 3],
+  ['miti-foot', 'nơi lưu lựa chọn giày dép', 2, 4, 3, 1],
+  ['miti-space', 'nơi lưu nút "Lớp mình chật"', 2, 4, 3, 1],
+  ['miti-stop', 'nơi lưu bằng chứng em xin nghỉ', 2, 4, 3, 1],
+  ['verifyPlayzone()', 'hàm kiểm tầng chỗ chơi lúc nạp', 1, 3, 3, 1],
+  ['>= 56px', 'cỡ nút tối thiểu của "Chỗ chơi ổn rồi" và "Em mệt / em đau"', 5, 8, 6, 3],
+  ['90 độ', 'hình quạt không gian mà vật thể AR được phép chiếm', 4, 4, 2, 2],
+  ['chân đất / dép lê', 'lựa chọn giày dép kích hoạt bản tại chỗ', 3, 4, 4, 1],
+  ['đứng một chân', 'nhóm động tác bị cấm vĩnh viễn khi đi dép lê', 2, 4, 2, 1],
+  ['nhấc chân cao', 'nhóm động tác đổi thành 0/12 lượt khi đi dép lê', 3, 4, 3, 1],
+  ['60–90 giây', 'khởi động — nơi thẻ dẹp chỗ chơi phải nằm trong đó', 3, 6, 4, 2],
+  ['hạ nhiệt 45–60 giây', 'nút xin nghỉ đưa thẳng vào hạ nhiệt', 4, 8, 3, 2],
+  ['tối đa 20 giây', 'trần thời lượng của thẻ dẹp chỗ chơi', 2, 4, 2, 1],
+  ['vùng vung tay', 'vùng em thật sự va phải nếu chưa dọn', 1, 1, 1, 1],
+  ['dép lê', 'đôi dép phổ biến ở lớp Việt Nam', 4, 5, 5, 3],
+  ['Lớp mình chật', 'lựa chọn khai lớp chật', 2, 4, 3, 1],
+  ['Em mệt / em đau', 'nhãn nút xin nghỉ', 1, 4, 4, 1],
+  ['cố lên', 'dòng mascot bị cấm khi em xin nghỉ', 1, 1, 1, 1],
+  ['>= 12 nhịp/phút', 'trần nhịp phải giữ nguyên ở bản tại chỗ', 1, 2, 3, 1],
+  ['4 dòng <= 12 từ', 'bốn dòng của thẻ dẹp chỗ chơi trong chuỗi tự kiểm', 0, 1, 1, 0],
+  ['- CHỖ CHƠI AN TOÀN (nguồn:', 'nhãn khối chỗ chơi trong template', 0, 1, 0, 0],
+  ['Phần chỗ chơi đã điền đủ', 'dòng checklist chỗ chơi trong template', 0, 1, 0, 0],
+  ['máy tự kiểm thứ 40', 'số mục của verifyPlayzone() trong bảng kiểm', 0, 0, 1, 0],
+  ['việc người thử thứ 31', 'việc người thử tương ứng ở README', 0, 0, 1, 0],
+  ['người thử số 31', 'việc người thử tương ứng ở prompts/README', 0, 0, 0, 1],
+  ['Sáu quy định "chỗ chơi an toàn"', 'heading mục kể chuyện tầng 21 ở README', 0, 0, 1, 0],
+  ['Tầng "chỗ chơi an toàn"', 'heading mục kể chuyện tầng 21 ở prompts/README', 0, 0, 0, 1],
+];
 // Con số cũ của vòng 6 ("< 8 động tác lớn mỗi phút") là yêu cầu KHÔNG THỂ đạt với phiên 12 lượt / 4–6 phút.
 // Giữ nó trong tài liệu sẽ sinh game luôn báo CHƯA ĐẠT ở mục cường độ, nên phải bị chặn.
 const SUPERSEDED = [
   [/>= 8 động tác lớn mỗi phút/, 'còn dùng con số cường độ cũ (>= 8 động tác lớn mỗi phút) — đã thay bằng >= 12 nhịp chuyển động mỗi phút'],
+  [/cách tường một bước/, 'còn dùng "một bước" làm đơn vị khoảng cách an toàn — vòng 21 chuẩn hóa thành "một vòng 1 sải tay" theo tools/lib/playzone.mjs và tools/lib/rules.mjs'],
 ];
 const DOC_FILES = [
   ['prompts/00-master-canvas-prompt.md', master],
@@ -1221,7 +1302,7 @@ for (const [docSlot, [docName, docText]] of DOC_FILES.entries()) {
   for (const [needle, label] of IDENTITY_DOC_NEEDLES) {
     if (!docText.includes(needle)) bad(`${docName} thiếu con số bản sắc riêng (${label}): không thấy "${needle}".`);
   }
-  for (const [needle, label, ...mins] of [...RHYTHM_DOC_NEEDLES, ...VOICE_DOC_NEEDLES, ...QUEUE_DOC_NEEDLES, ...LESSON_DOC_NEEDLES, ...CURRICULUM_DOC_NEEDLES, ...SPORT_DOC_NEEDLES, ...FAMILY_DOC_NEEDLES, ...PACE_DOC_NEEDLES]) {
+  for (const [needle, label, ...mins] of [...RHYTHM_DOC_NEEDLES, ...VOICE_DOC_NEEDLES, ...QUEUE_DOC_NEEDLES, ...LESSON_DOC_NEEDLES, ...CURRICULUM_DOC_NEEDLES, ...SPORT_DOC_NEEDLES, ...FAMILY_DOC_NEEDLES, ...PACE_DOC_NEEDLES, ...PLAYZONE_DOC_NEEDLES]) {
     const want = mins[docSlot];
     const got = docText.split(needle).length - 1;
     if (got < want) bad(`${docName} chỉ còn nêu "${needle}" (${label}) ${got} lần, chuẩn hiện hành là ${want} lần — tài liệu chuẩn phải giữ đủ chỗ nêu ở CẢ phần luật lẫn bảng kiểm tự kiểm, không được để một phần mất số.`);
@@ -1502,6 +1583,20 @@ if (!MACHINE_ITEMS.some((s) => s.includes('verifyPacing()') && s.includes('miti-
   }
 }
 if (!HUMAN_CHECKS.some((s) => /thời khóa biểu/.test(s) && /hai lượt đầu/.test(s))) bad('Bảng việc người thử không còn câu đối chiếu nhãn tuần với thời khóa biểu thật của lớp — máy so được chuỗi với cột tuan nhưng không biết lớp có thật đang học tới tuần đó không, và cũng không biết hai lượt nước rút có thật là chỗ em yếu nhất hay không.');
+
+// Vòng 21: tầng chỗ chơi an toàn nghiệm thu KHÔNG GIAN THẬT và QUYỀN NGHỈ, nên mục bảng kiểm phải nêu lại
+// đủ bốn điều verifyPlayzone() kiểm — thiếu một vế (ví dụ "đứng một chân") thì game bỏ đúng chỗ dễ chấn
+// thương nhất mà vẫn báo ĐẠT.
+if (!MACHINE_ITEMS.some((s) => s.includes('verifyPlayzone()') && s.includes('"miti-stop"'))) bad('Bảng kiểm máy tự kiểm không còn mục nghiệm thu tầng chỗ chơi an toàn (verifyPlayzone() + "miti-stop") — thiếu mục này thì game bỏ hẳn thẻ dẹp chỗ chơi và nút xin nghỉ mà vẫn báo ĐẠT.');
+{
+  const zoneItem = MACHINE_ITEMS.find((s) => s.includes('verifyPlayzone()'));
+  for (const clause of ['"Dẹp chỗ chơi"', 'bốn dòng <= 12 từ', '60–90 giây', '20 giây', '"miti-foot"', '0/12 lượt nhấc chân cao', 'đứng một chân', '"miti-space"', '>= 12 nhịp/phút', '90 độ', 'MỘT LẦN đầu phiên', 'không mở rộng giữa phiên', '"Em mệt / em đau"', '>= 56px', 'hạ nhiệt 45–60 giây', 'không trừ tim']) {
+    if (zoneItem && !zoneItem.includes(clause)) bad(`Mục bảng kiểm "verifyPlayzone()" không còn nêu "${clause}" — mục nghiệm thu tầng chỗ chơi phải liệt kê đủ bốn điều verifyPlayzone() kiểm; bớt một vế là chỗ hỏng đó lọt qua nghiệm thu.`);
+  }
+}
+if (!HUMAN_CHECKS.some((s) => /dép lê/.test(s) && /Em mệt/.test(s))) bad('Bảng việc người thử không còn câu nhìn xuống sàn chỗ em đứng và bấm thử nút "Em mệt / em đau" — máy kiểm được chuỗi nhưng không biết chỗ đó có bàn ghế chắn ngang thật không và em nghỉ có được thật không.');
+// Hai tầng nói về cùng MỘT khoảng cách: nếu một trong hai đổi đơn vị thì prompt sẽ mang hai chuẩn khác nhau.
+if (!PLAYZONE.depCho.includes('1 sải tay') || !QUEUE.spacing.includes('1 sải tay')) bad('PLAYZONE.depCho và QUEUE.spacing phải cùng dùng đơn vị "1 sải tay" — một tầng đổi sang mét hay "bước" là 85 prompt mang hai chuẩn khoảng cách mâu thuẫn nhau.');
 
 // Vòng 18: bảng môn thể thao là DỮ LIỆU theo MÃ ĐIỀU KHIỂN. GESTURES có 14 mã nên bảng môn phải phủ đủ
 // 14; thiếu mã thì builder throw, nhưng sửa nội dung (đổi tên môn, viết dài động tác, để hai mã trùng
