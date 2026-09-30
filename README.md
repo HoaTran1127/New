@@ -47,6 +47,7 @@ Toàn bộ prompt nằm trong file `.md` riêng, mỗi file một game, copy ngu
 | Nhóm | Số lượng | Mở ở đâu |
 |:---|:---:|:---|
 | Prompt game chuẩn (Toán 4 · Toán 5 · Tiếng Anh 4 · Tiếng Anh 5) | **85** | [Dashboard MiTi](https://hoatran1127.github.io/New/) — bấm **Sao chép prompt**, hoặc [catalogs/GAME_CATALOG.md](catalogs/GAME_CATALOG.md) |
+| **Giáo án giảng bài trên bảng phấn** (Toán 4 · Toán 5 — cô trình bày, cả lớp xem) | **39** | [Dashboard MiTi](https://hoatran1127.github.io/New/) — tab **Giáo án giảng bài**, hoặc [prompts/giao-an/README.md](prompts/giao-an/README.md) |
 | Khung master 9 mục để tự tạo prompt mới | 1 | [prompts/00-master-canvas-prompt.md](prompts/00-master-canvas-prompt.md) |
 | Biểu mẫu điền nhanh | 1 | [prompts/templates/game-prompt-template.md](prompts/templates/game-prompt-template.md) |
 | Biến thể điều khiển (Point · Swipe · Drag/Grab · Voice · No Camera) | **425** | [prompts/VARIANTS_425.md](prompts/VARIANTS_425.md) — 85 game × 5 kiểu, sinh tự động |
@@ -192,7 +193,7 @@ Nguồn: `tools/lib/verify.mjs`. Đây là tầng sửa hai lỗi **không ai nh
 
 ## 🧑‍🏫 Bộ giáo án giảng bài — bảng phấn và vật thật (39 giáo án Toán 4–5)
 
-👉 **[Mở bộ giáo án](prompts/giao-an/README.md)** — thư mục `prompts/giao-an/`, sinh bằng `tools/build-lessons.mjs`.
+👉 **[Mở bộ giáo án](prompts/giao-an/README.md)** — thư mục `prompts/giao-an/`, sinh bằng `tools/build-lessons.mjs`. Trên [Dashboard MiTi](https://hoatran1127.github.io/New/) có tab riêng **"Giáo án giảng bài"** để cô lọc theo lớp và bấm copy tại chỗ.
 
 Đây là **CÔNG CỤ GIẢNG BÀI cho giáo viên trình bày trước cả lớp**, tách hẳn khỏi 85 prompt game cho học sinh tự chơi. Bảng phấn và vật thật là của riêng bộ giáo án; 85 prompt game không mang một dòng nào trong đó. Hai bộ đi từ cùng một cụm kiến thức nên cùng một bài được dạy bằng cái pizza rồi luyện bằng chính cái pizza đó, nhưng cơ chế thì **đối lập nhau có chủ đích**:
 
@@ -203,7 +204,7 @@ Nguồn: `tools/lib/verify.mjs`. Đây là tầng sửa hai lỗi **không ai nh
 | Động cơ | Không tim, không điểm, không combo, không xếp hạng | Có tim, điểm, chuỗi combo, thẻ vàng x2, mascot |
 | Bảng phấn | ≥ 70% màn chiếu, **không bao giờ tự lau**, tối đa 8 trang | Bảng chữ L ≤ 40% khung hình, tự lau sau mỗi lượt |
 | Camera | Phụ: dạy trọn vẹn bằng chuột và bàn phím | Chính: khung hình webcam là màn chơi |
-| Nguồn quy định | `tools/lib/chalk.mjs` + `tools/lib/lesson.mjs` | `tools/lib/feel.mjs` + `tools/lib/classroom.mjs` |
+| Nguồn quy định | `tools/lib/chalk.mjs` + `tools/lib/lesson.mjs` + `tools/lib/handout.mjs` | `tools/lib/feel.mjs` + `tools/lib/classroom.mjs` |
 
 ### Mạch bài năm bước, giống nhau ở cả 39 giáo án
 

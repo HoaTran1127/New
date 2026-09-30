@@ -387,7 +387,32 @@ else {
   if (cat.legacy.length !== 12) bad(`Dashboard phải có 12 prompt legacy, hiện có ${cat.legacy.length}.`);
   const ids = new Set(cat.games.map((g) => g.id));
   for (const r of rows) if (!ids.has(r.id)) bad(`Dashboard thiếu game ${r.id} có trong catalog.`);
-  for (const g of cat.games.concat(cat.legacy)) if (!fs.existsSync(path.join(ROOT, g.prompt))) bad(`${g.id}: dashboard trỏ tới file prompt không có thật (${g.prompt}).`);
+  for (const g of cat.games.concat(cat.legacy, cat.lessons || [])) if (!fs.existsSync(path.join(ROOT, g.prompt))) bad(`${g.id}: dashboard trỏ tới file prompt không có thật (${g.prompt}).`);
+
+  // Giáo án phải nổi lên dashboard ngang game: giáo viên mở index.html mà chỉ thấy game thì bộ
+  // prompts/giao-an/ coi như vô hình. Số card lấy thẳng từ LESSON_COUNT nên không thể lệch nhau.
+  if (!Array.isArray(cat.lessons)) bad('Dashboard thiếu mảng lessons — build-dashboard.mjs chưa đưa giáo án lên lưới card.');
+  else {
+    if (cat.lessons.length !== LESSON_COUNT) bad(`Dashboard phải có ${LESSON_COUNT} card giáo án, hiện có ${cat.lessons.length}.`);
+    const lessonIds = new Set();
+    for (const l of cat.lessons) {
+      if (lessonIds.has(l.id)) bad(`Dashboard trùng mã giáo án: ${l.id}`);
+      lessonIds.add(l.id);
+      if (l.kind !== 'lesson') bad(`${l.id}: card giáo án phải có kind "lesson" để tab giáo án lọc đúng.`);
+      if (l.subject !== 'Toán') bad(`${l.id}: card giáo án sai môn (${l.subject}).`);
+      if (!l.name || !l.objective || !l.mission) bad(`${l.id}: card giáo án thiếu tên/mục tiêu/câu khởi động.`);
+      if (!Array.isArray(l.chips) || !l.chips.length) bad(`${l.id}: card giáo án thiếu nhãn quy định.`);
+      if (!/^(4|5)$/.test(String(l.grade))) bad(`${l.id}: card giáo án có lớp không hợp lệ (${l.grade}).`);
+    }
+    const clusters = new Set(cat.lessons.map((l) => l.cluster));
+    if (!Array.isArray(cat.lessonClusters) || cat.lessonClusters.length !== clusters.size) {
+      bad(`Dashboard phải có lessonClusters đúng ${clusters.size} cụm đã có giáo án.`);
+    }
+  }
+  const dashHtml = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
+  for (const needle of ['CAT.lessons', 'data-tab="lesson"', 'lessonPlans', 'Giáo án giảng bài']) {
+    if (!dashHtml.includes(needle)) bad(`index.html thiếu ${needle} — lưới card không còn hiển thị bộ giáo án.`);
+  }
 }
 
 // 6. Demo game: mọi thẻ script/link trỏ file thật và CDN đã pin phiên bản.
@@ -432,4 +457,4 @@ if (errors.length) {
   if (errors.length > 40) console.error('  ... và ' + (errors.length - 40) + ' vấn đề khác.');
   process.exit(1);
 }
-console.log(`Xác minh đạt: ${rows.length} dòng catalog, ${GAMES.length} prompt game, ${VAR_COUNT} prompt biến thể, ${LESSON_COUNT} giáo án giảng bài trên ${PROP_KEYS.length} cụm vật thật, ${CLUSTER_KEYS.length} cụm kiến thức, ${LEGACY.length} prompt legacy, ${cat.games.length + cat.legacy.length} card dashboard.`);
+console.log(`Xác minh đạt: ${rows.length} dòng catalog, ${GAMES.length} prompt game, ${VAR_COUNT} prompt biến thể, ${LESSON_COUNT} giáo án giảng bài trên ${PROP_KEYS.length} cụm vật thật, ${CLUSTER_KEYS.length} cụm kiến thức, ${LEGACY.length} prompt legacy, ${cat.games.length + cat.legacy.length + cat.lessons.length} card dashboard (${cat.games.length} game + ${cat.lessons.length} giáo án + ${cat.legacy.length} legacy).`);

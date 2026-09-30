@@ -195,7 +195,7 @@ function renderIndex(lessons) {
 | Đầu ra | Bảng phấn trên màn chiếu **và** phiếu bài tập + trang đáp án in được | Chỉ là màn chơi trong trình duyệt |
 | Động cơ | Không tim, không điểm, không combo, không xếp hạng | Có tim, điểm, chuỗi combo, thẻ vàng x2, mascot |
 | Bảng phấn | Chiếm >= 70% màn chiếu, không bao giờ tự lau | Bảng chữ L <= 40% khung hình, tự lau sau mỗi lượt |
-| Nguồn quy định | \`tools/lib/chalk.mjs\` + \`tools/lib/lesson.mjs\` | \`tools/lib/feel.mjs\` + \`tools/lib/classroom.mjs\` |
+| Nguồn quy định | \`tools/lib/chalk.mjs\` + \`tools/lib/lesson.mjs\` + \`tools/lib/handout.mjs\` | \`tools/lib/feel.mjs\` + \`tools/lib/classroom.mjs\` |
 
 Bảng phấn và vật thật (\`tools/lib/chalk.mjs\`, \`tools/data/props.mjs\`) là của riêng bộ giáo án — 85 prompt
 game không mang một dòng nào trong đó, và ngược lại. Hai bộ đi từ cùng một cụm kiến thức nên cùng một bài
@@ -203,6 +203,7 @@ game không mang một dòng nào trong đó, và ngược lại. Hai bộ đi t
 
 ## Cách dùng
 
+0. Tìm nhanh theo lớp: mở **Dashboard MiTi** → tab **"Giáo án giảng bài"** (${lessons.length} card), bấm "Sao chép giáo án" là lấy trọn khối prompt.
 1. Mở file giáo án cần dạy, copy nguyên khối \`\`\`text\`\`\`.
 2. Dán vào Google Gemini đã bật chế độ Canvas, gửi.
 3. Gemini sinh ra MỘT file HTML độc lập. Mở file đó bằng trình duyệt, cắm máy chiếu.
