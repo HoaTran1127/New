@@ -21,6 +21,7 @@ import { ANT, ANT_SHORT } from './lib/anticipation.mjs';
 import { LIGHT } from './lib/light.mjs';
 import { CELEBRATE } from './lib/celebrate.mjs';
 import { IDENTITY } from './lib/identity.mjs';
+import { RHYTHM } from './lib/rhythm.mjs';
 import { IDENTITIES } from './data/identities.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
@@ -48,7 +49,7 @@ const CHAIN_SKIP = { prompt: ['AR_SHORT'], variant: ['AR_SHORT', 'MOTION_SHORT',
 const MASTER_LIB = [
   ['2.0', 'ar.mjs'], ['4.5', 'pe.mjs'], ['5.1', 'memory.mjs'], ['6.1', 'classroom.mjs'],
   ['6.2', 'verify.mjs'], ['6.3', 'light.mjs'], ['8.1', 'feel.mjs'], ['8.2', 'hype.mjs'], ['8.3', 'anticipation.mjs'], ['8.4', 'celebrate.mjs'],
-  ['9.1', 'access.mjs'], ['11.', 'acceptance.mjs'], ['8.5', 'identity.mjs'],
+  ['9.1', 'access.mjs'], ['11.', 'acceptance.mjs'], ['8.5', 'identity.mjs'], ['8.6', 'rhythm.mjs'],
 ];
 
 const rows = readCatalog(path.join(ROOT, 'catalogs', 'GAME_CATALOG.csv'));
@@ -198,6 +199,7 @@ const FULL_LAYERS = [
   ['nhẹ đầu', 'light.mjs', 'LIGHT', LIGHT],
   ['khoảnh khắc ăn mừng', 'celebrate.mjs', 'CELEBRATE', CELEBRATE],
   ['bản sắc riêng', 'identity.mjs', 'IDENTITY', IDENTITY],
+  ['nhạc nền theo nhịp', 'rhythm.mjs', 'RHYTHM', RHYTHM],
 ];
 const FULL_RULES = FULL_LAYERS.flatMap(([label, file, objName, obj]) =>
   Object.entries(obj).map(([key, text]) => [text, `thiếu quy định ${label} ${objName}.${key} của tools/lib/${file}`]));
@@ -223,9 +225,23 @@ const FULL_PINS = [
   ['identity.mjs', IDENTITY.signature, '>= 2 giây', 'độ dài khoảnh khắc chữ ký'],
   ['identity.mjs', IDENTITY.lines, '6 từ', 'trần số từ một câu thoại'],
   ['identity.mjs', IDENTITY.guard, 'verifyIdentity()', 'hàm kiểm bản sắc lúc nạp'],
+  ['rhythm.mjs', RHYTHM.beat, '100–116 BPM', 'tempo nhạc nền ở hiệp 1 và 2'],
+  ['rhythm.mjs', RHYTHM.beat, 'gain <= 0.18', 'trần gain của bus nhạc nền'],
+  ['rhythm.mjs', RHYTHM.beat, 'CẤM hotlink file .mp3/.wav/.ogg', 'nhạc tự tổng hợp, đầu ra vẫn một file HTML'],
+  ['rhythm.mjs', RHYTHM.move, 'trần 128 BPM', 'trần BPM để xung hình ảnh theo nhịp không vượt trần nhấp nháy'],
+  ['rhythm.mjs', RHYTHM.duck, '<= 30% gain', 'mức nhạc nền hạ khi speechSynthesis đọc đề'],
+  ['rhythm.mjs', RHYTHM.quiet, 'vạch nhịp', 'nhịp nhìn được khi tắt tiếng'],
+  ['rhythm.mjs', RHYTHM.guard, 'verifyMusic()', 'hàm kiểm nhạc nền lúc nạp'],
 ];
 for (const [file, text, needle, label] of FULL_PINS) {
   if (!text.includes(needle)) bad(`tools/lib/${file} không còn nêu "${needle}" (${label}) — con số nghiệm thu phải sửa cùng tài liệu và bảng kiểm, không đổi âm thầm trong lib.`);
+}
+// Ngân sách giọng viết ở HAI lib: celebrate.mjs giữ phần SFX, rhythm.mjs giữ phần nhạc nền. Một bên
+// đổi số mà bên kia không đổi thì game phải cắt nhạc hoặc bỏ tiếng để vừa trần — pin đơn lib không bắt
+// được vì mỗi lib vẫn tự nhất quán; chỉ so tập hợp số giữa hai lib mới thấy lệch.
+const voiceNums = (t) => [...t.matchAll(/(\d+)\s*giọng/g)].map((m) => m[1]).sort().join(',');
+if (voiceNums(CELEBRATE.sfx) !== voiceNums(RHYTHM.duck)) {
+  bad(`Ngân sách giọng lệch giữa tools/lib/celebrate.mjs (${voiceNums(CELEBRATE.sfx)}) và tools/lib/rhythm.mjs (${voiceNums(RHYTHM.duck)}) — trần giọng SFX, trần giọng nhạc nền và tổng trần phải nêu giống nhau ở cả hai lib.`);
 }
 for (const g of GAMES) {
   const rel = PATH_OF.get(g.id);
@@ -624,6 +640,17 @@ const IDENTITY_DOC_NEEDLES = [
   ['2 từ', 'trần độ dài tên mascot'],
   ['6 từ', 'trần độ dài một câu thoại'],
 ];
+// Vòng 14: nhạc nền chỉ là quy định khi tài liệu nêu được BPM và gain. Probe cùng kiểu vòng 13 — xóa
+// "0.18" khỏi master thì 85 prompt vẫn mang nguyên văn quy định trong lib nên vẫn xanh, mà người sửa
+// master mới là người quyết định các ngưỡng này cho các vòng sau.
+const RHYTHM_DOC_NEEDLES = [
+  ['100–116 BPM', 'tempo nhạc nền hiệp 1–2'],
+  ['128 BPM', 'trần BPM của nhịp nhạc'],
+  ['0.18', 'trần gain bus nhạc nền'],
+  ['30% gain', 'mức nhạc nhường lời đọc đề'],
+  ['verifyMusic()', 'hàm kiểm nhạc nền lúc nạp'],
+  ['vạch nhịp', 'nhịp nhìn được khi tắt tiếng'],
+];
 // Con số cũ của vòng 6 ("< 8 động tác lớn mỗi phút") là yêu cầu KHÔNG THỂ đạt với phiên 12 lượt / 4–6 phút.
 // Giữ nó trong tài liệu sẽ sinh game luôn báo CHƯA ĐẠT ở mục cường độ, nên phải bị chặn.
 const SUPERSEDED = [
@@ -647,6 +674,9 @@ for (const [docName, docText] of DOC_FILES) {
   }
   for (const [needle, label] of IDENTITY_DOC_NEEDLES) {
     if (!docText.includes(needle)) bad(`${docName} thiếu con số bản sắc riêng (${label}): không thấy "${needle}".`);
+  }
+  for (const [needle, label] of RHYTHM_DOC_NEEDLES) {
+    if (!docText.includes(needle)) bad(`${docName} thiếu con số nhạc nền (${label}): không thấy "${needle}".`);
   }
   for (const [re, label] of LIGHT_DOC_REGEX) {
     if (!re.test(docText)) bad(`${docName} không còn nêu ${label} trên cùng một dòng — người viết prompt sẽ quay về hợp đồng điểm cũ.`);
@@ -717,6 +747,7 @@ const DOC_LAYERS = [
   ['nhẹ đầu', '6.3 NHẸ ĐẦU', 'Phần nhẹ đầu đã điền đủ'],
   ['khoảnh khắc ăn mừng + âm thanh', '8.4 KHOẢNH KHẮC ĂN MỪNG', 'Phần ăn mừng + âm thanh đã điền đủ'],
   ['bản sắc riêng của từng game', '8.5 BẢN SẮC RIÊNG', 'Phần bản sắc riêng đã điền đủ'],
+  ['nhạc nền theo nhịp', '8.6 NHẠC NỀN THEO NHỊP', 'Phần nhạc nền đã điền đủ'],
   ['cảm giác arcade', '8.1 CẢM GIÁC ARCADE', 'Phần arcade đã điền đủ'],
   ['thi đua + cao trào', '8.2 THI ĐUA + CAO TRÀO', 'Phần thi đua + cao trào đã điền đủ'],
   ['ham quay lại', '8.3 HAM QUAY LẠI', 'Phần ham quay lại đã điền đủ'],
@@ -765,6 +796,11 @@ if (!HUMAN_CHECKS.some((s) => /tính nhẩm/.test(s))) bad('Bảng việc ngư�
 // vì toàn bộ quy định generic vẫn còn nguyên trong prompt và lib.
 if (!MACHINE_ITEMS.some((s) => s.includes('verifyIdentity()') && s.includes('--miti-1'))) bad('Bảng kiểm máy tự kiểm không còn mục nào nghiệm thu bản sắc riêng (verifyIdentity + --miti-1) — lớp "mỗi game một gương mặt" mất người canh.');
 if (!HUMAN_CHECKS.some((s) => /bộ áo/.test(s))) bad('Bảng việc người thử không còn câu "một game mặc hai bộ áo" — chỗ duy nhất phát hiện 85 game vẫn giống hệt nhau.');
+// Tầng nhạc nền: mục máy kiểm BPM/gain và việc người thử "nhạc có giữ nhịp cho em vận động không" là hai
+// thứ duy nhất bắt được game kê "có nhạc nền" mà thực tế chỉ im lặng rồi phát một tiếng "ting".
+if (!MACHINE_ITEMS.some((s) => s.includes('verifyMusic()') && s.includes('100–128'))) bad('Bảng kiểm máy tự kiểm không còn mục nào nghiệm thu nhạc nền (verifyMusic + trần BPM 100–128) — lớp nhịp mất người canh.');
+if (!MACHINE_ITEMS.some((s) => s.includes('4 giọng SFX') && s.includes('3 giọng'))) bad('Bảng kiểm máy tự kiểm không còn mục nào nghiệm thu ngân sách giọng 4 giọng SFX + 3 giọng nhạc nền — hai lib sẽ lại cãi nhau về trần âm thanh.');
+if (!HUMAN_CHECKS.some((s) => /nhịp/i.test(s) && /Tắt tiếng/.test(s))) bad('Bảng việc người thử không còn câu "tắt tiếng rồi nhịp chuyển động có rớt không" — chỗ duy nhất phát hiện nhạc nền chỉ là tiếng nền vô định.');
 
 if (errors.length) {
   console.error('Xác minh thất bại — ' + errors.length + ' vấn đề:');

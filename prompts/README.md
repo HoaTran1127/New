@@ -66,7 +66,7 @@ Bốn biến thể đầu dùng **cùng một hợp đồng AR** như prompt gam
 - `04-english5/` — 15 game Tiếng Anh 5.
 - `01-prompt-…` đến `12-prompt-…` — **12 prompt legacy** đời đầu: giữ nguyên cơ chế game, đã thay MediaPipe Legacy/Tailwind CDN/Tone.js bằng chuẩn hiện hành và gắn nhãn `LEGACY`. Không dùng làm khuôn cho game mới.
 - `VARIANTS_425.md` — 425 biến thể (85 game × 5 kiểu điều khiển), do `tools/build-variants.mjs` sinh.
-- `CHECKLIST_NGHIEP_THU.md` — bảng kiểm cầm tay khi nhận file HTML về: 32 mục máy tự kiểm + 23 việc người thử bấm tay (trong đó 6 mục gắn 📷 chỉ có camera mới kiểm được; bản không camera bỏ 6 mục đó và vẫn phải đạt 26 mục còn lại), do `tools/build-acceptance.mjs` sinh từ `tools/lib/acceptance.mjs`.
+- `CHECKLIST_NGHIEP_THU.md` — bảng kiểm cầm tay khi nhận file HTML về: 33 mục máy tự kiểm + 24 việc người thử bấm tay (trong đó 6 mục gắn 📷 chỉ có camera mới kiểm được; bản không camera bỏ 6 mục đó và vẫn phải đạt 27 mục còn lại), do `tools/build-acceptance.mjs` sinh từ `tools/lib/acceptance.mjs`.
 
 ## ✅ Nghiệm thu một game vừa sinh
 
@@ -140,7 +140,7 @@ Vòng 11 gỡ gánh tính nhẩm xong, đo lại 85 prompt thì phần ăn mừn
 | Luật | Con số | Kiểm ở đâu |
 |:---|:---|:---|
 | Pháo giấy chỉ ở mốc | đúng **4 sự kiện** (đích chung · PHÁ KỶ LỤC · mở thưởng hiệp 3 · xong mini-trạm), **40–60 hạt** sinh qua `toScreen()`, rơi **1,2–1,8 giây**, trần một đợt/3 giây | mục `[31]` |
-| Hợp đồng âm thanh | `AudioContext` chỉ resume **sau cú bấm "Bắt đầu"**; mỗi SFX **`<= 200 ms`**; master gain **`<= 0.25`**; **`<= 4 giọng`**; nút "Tắt tiếng" lưu `miti-mute` | mục `[30]` |
+| Hợp đồng âm thanh | `AudioContext` chỉ resume **sau cú bấm "Bắt đầu"**; mỗi SFX **`<= 200 ms`**; master gain **`<= 0.25`**; **`<= 4 giọng SFX`** + nhạc nền **`<= 3 giọng`** trên bus riêng (tổng **`<= 7 giọng`**); nút "Tắt tiếng" lưu `miti-mute` | mục `[30]` |
 | Viên đạn thời gian | **0,45×** trong **600 ms**, **chỉ** thẻ vàng + 1,5 giây cuối hiệp 3; không rút thời gian đọc đề | mục `[31]` |
 | Rung có kiểm soát | `navigator.vibrate` **20 / 60 / 100 ms**, luôn bọc `if (navigator.vibrate)`, tắt theo `miti-mute` và reduced-motion | mục `[31]` |
 | Hài hình thể | mascot **đúng một** màn lố mỗi hiệp khi chuỗi đạt 3, **`<= 3 giây`**, không che chữ đề | việc người thử số 22 |
@@ -161,13 +161,28 @@ Vòng 12 xong, đo lại 85 prompt: chỉ **1277/13692 dòng nội dung (9%)** l
 
 Học sinh chỉ nhớ được **một** thứ, nên mỗi game chỉ được có **một** khoảnh khắc chữ ký: đường đua thì đổ vạch đích, bếp thì bùng lửa, hang đá thì nhũ đá ngân. Việc người thử số 23 ("chơi hai game cùng chủ đề liên tiếp rồi gập máy lại — em có gọi ra được tên mascot, màu và khoảnh khắc chữ ký của TỪNG game, hay vẫn là một game mặc hai bộ áo?") là chỗ duy nhất máy không tự kiểm được, và cũng là chỗ duy nhất phát hiện cả thư viện đang là một game.
 
+## 🥁 Nhạc nền theo nhịp: khoảng lặng giữa hai cú chạm phải có một nhịp để em vận động theo
+
+Hợp đồng âm thanh ở mục trên toàn là điều CẤM, nên hệ quả đo được ở 85 prompt trước vòng 14: **"nhạc nền" 0/85, "giai điệu" 0/85, "BPM" 0/85, "theo nhịp" 0/85** — giữa hai thẻ câu hỏi game chỉ im lặng rồi "ting". Trẻ lớp 4–5 bắt nhịp bằng tai: nhịp trống đều khiến em khuỳnh tay đúng nhịp và hết hiệp nhớ mình vừa làm gì. `tools/lib/rhythm.mjs` viết chỗ trống đó thành sáu con số, với ràng buộc cứng là **không file âm thanh ngoài** (đầu ra vẫn là MỘT file HTML):
+
+| Luật | Con số | Kiểm ở đâu |
+|:---|:---|:---|
+| Nhạc có nhịp thật | loop bốn nhịp tự tổng hợp bằng Web Audio, **100–116 BPM** ở hiệp 1–2, bus riêng **gain <= 0.18**, chỉ mở sau cú bấm "Bắt đầu"; hotlink .mp3/.wav/.ogg là lỗi | `verifyMusic()` + mục `[33]` |
+| Nhịp = nhịp vận động | khởi động **8 nhịp/động tác**, trạm nghỉ **8 nhịp**, cú chốt đúng rơi vào **phách mạnh**; **trần 128 BPM** và không đòi đổi tư thế nhanh hơn một lần mỗi nhịp | mục `[33]` + nhịp thẻ của `pe.mjs` |
+| Nhạc nhường lời | bus nhạc hạ còn **<= 30% gain** khi `speechSynthesis` đọc đề, trả lại 300–500 ms; ngân sách **4 giọng SFX + 3 giọng nhạc, tổng <= 7** | mục `[30]` + `[33]` |
+| Nhạc leo theo hiệp | hiệp 2 thêm bass, hiệp 3 thêm trống và **+8 BPM** trong trần 128; mở thưởng = 2,5 giây nhạc leo khớp lúc pháo giấy nổ; không đổi luật, không cộng điểm | mục `[25]` + `[33]` |
+| Nhịp nhìn được | bản tắt tiếng còn **vạch nhịp** theo BPM ở mép dưới HUD (**<= 3 xung/giây**, **<= 25% khung hình**); `prefers-reduced-motion` thì vạch đứng yên, nhạc tắt hẳn, vẫn trọn 12 lượt | mục `[9]` + `[33]` |
+| Nhạc phải tự chứng minh | `verifyMusic()` chạy MỘT LẦN lúc nạp, kiểm năm điều (nguồn Web Audio, BPM 100–128, gain bus <= 0.18, im lặng trước "Bắt đầu", nhường lời đọc) | mục `[33]` |
+
+Việc người thử số 24 ("nghe trọn một hiệp — nhạc có giữ nhịp cho em vận động theo hay chỉ là tiếng nền vô định? Tắt tiếng rồi chơi tiếp, nhịp chuyển động có rớt dưới 12 lần mỗi phút không?") là chỗ máy không tự kiểm được: nhạc thật hay nhạc kê chữ đều phát ra tiếng như nhau, nhưng chỉ nhạc đúng nhịp mới khiến em cử động theo.
+
 ## 🔁 Pipeline của thư viện
 
 85 prompt game **được sinh tự động**, không sửa tay:
 
 ```
 tools/data/games.mjs + clusters.mjs + gestures.mjs + examples.mjs + error-notes.mjs + identities.mjs
-tools/lib/ar.mjs · rules.mjs · feel.mjs · classroom.mjs · access.mjs · light.mjs · celebrate.mjs · identity.mjs · verify.mjs · pe.mjs · memory.mjs · hype.mjs · anticipation.mjs · acceptance.mjs
+tools/lib/ar.mjs · rules.mjs · feel.mjs · classroom.mjs · access.mjs · light.mjs · celebrate.mjs · identity.mjs · rhythm.mjs · verify.mjs · pe.mjs · memory.mjs · hype.mjs · anticipation.mjs · acceptance.mjs
         └─ node tools/build.mjs ─→ catalogs/GAME_CATALOG.csv · .md · .js + prompts/0X-*/ + index.html + prompts/CHECKLIST_NGHIEP_THU.md
 ```
 

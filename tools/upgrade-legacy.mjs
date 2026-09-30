@@ -10,6 +10,7 @@ import { VERIFY } from './lib/verify.mjs';
 import { LIGHT } from './lib/light.mjs';
 import { CELEBRATE } from './lib/celebrate.mjs';
 import { IDENTITY } from './lib/identity.mjs';
+import { RHYTHM } from './lib/rhythm.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 
@@ -60,7 +61,8 @@ const REQUIREMENTS = `YÊU CẦU BẮT BUỘC THEO CHUẨN MiTi (áp dụng cho 
 19. NGHIỆM THU: ${ACCEPT.selfReport} ${ACCEPT.items} ${ACCEPT.printable} ${ACCEPT.failRule} ${ACCEPT.manual}
 20. KHOẢNH KHẮC ĂN MỪNG + HỢP ĐỒNG ÂM THANH: ${CELEBRATE.confetti} ${CELEBRATE.sfx} ${CELEBRATE.slowmo} ${CELEBRATE.haptics} ${CELEBRATE.slapstick} ${CELEBRATE.crowd}
 21. BẢN SẮC RIÊNG CỦA GAME NÀY: ${IDENTITY.mascot} ${IDENTITY.palette} ${IDENTITY.signature} ${IDENTITY.prop} ${IDENTITY.lines} ${IDENTITY.guard}
-22. ĐẦU RA: duy nhất 1 file HTML hoàn chỉnh, CSS nội tuyến trong một khối <style>, không file .css/.js/.json/ảnh/mp3 ngoài, không TODO, không pseudocode, không "...", không phần "bạn tự bổ sung", không lỗi console khi mở trực tiếp bằng trình duyệt.`;
+22. NHẠC NỀN THEO NHỊP: ${RHYTHM.beat} ${RHYTHM.move} ${RHYTHM.duck} ${RHYTHM.crescendo} ${RHYTHM.quiet} ${RHYTHM.guard}
+23. ĐẦU RA: duy nhất 1 file HTML hoàn chỉnh, CSS nội tuyến trong một khối <style>, không file .css/.js/.json/ảnh/mp3 ngoài, không TODO, không pseudocode, không "...", không phần "bạn tự bổ sung", không lỗi console khi mở trực tiếp bằng trình duyệt.`;
 
 const bannerOf = (l) =>
   `> **LEGACY (LEG-${l.id.slice(4)})** — prompt đời đầu, giữ nguyên cơ chế game nhưng đã thay MediaPipe Legacy/Tailwind/Tone.js bằng chuẩn hiện hành. Bản chuẩn để làm game mới: \`prompts/00-master-canvas-prompt.md\`; 85 prompt đặc thù nằm trong \`catalogs/GAME_CATALOG.csv\`.\n`;

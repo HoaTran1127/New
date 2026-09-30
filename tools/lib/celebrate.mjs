@@ -16,7 +16,7 @@ export const CELEBRATE = {
 
   // File Canvas câm hoặc rít là hai lỗi người dùng gặp ngay phút đầu.
   sfx:
-    'Hợp đồng âm thanh để bốn em ngồi cạnh nhau vẫn học được: AudioContext chỉ được resume SAU cú bấm "Bắt đầu" (không có tiếng động nào trước cú bấm đó, kể cả tiếng nền); mỗi SFX dài tối đa 200 ms; master gain <= 0.25 và có nút "Tắt tiếng" lưu lựa chọn trong "miti-mute"; tối đa 4 giọng đồng thời, giọng cũ mờ dần trong 60 ms thay vì cắt khớp. Cấm loop tiếng rít, cấm âm báo lặp mỗi khung hình, cấm âm thanh gây sợ cho câu sai (dùng tiếng "bụp" trầm). Khi tắt tiếng, mọi phản hồi vẫn phải đọc được bằng chữ + hình. Game Tiếng Anh: phần đọc từ bằng \`window.speechSynthesis\` đi qua MỘT hàng đợi duy nhất, không phát đồng thời với SFX để em không nghe lẫn tiếng.',
+    'Hợp đồng âm thanh để bốn em ngồi cạnh nhau vẫn học được: AudioContext chỉ được resume SAU cú bấm "Bắt đầu" (không có tiếng động nào trước cú bấm đó, kể cả tiếng nền); mỗi SFX dài tối đa 200 ms; master gain <= 0.25 và có nút "Tắt tiếng" lưu lựa chọn trong "miti-mute"; tối đa 4 giọng SFX đồng thời — nhạc nền nếu có chạy trên bus riêng với tối đa 3 giọng, tổng không quá 7 giọng đang phát cùng lúc — và giọng cũ mờ dần trong 60 ms thay vì cắt khớp. Cấm loop tiếng rít, cấm âm báo lặp mỗi khung hình, cấm âm thanh gây sợ cho câu sai (dùng tiếng "bụp" trầm). Khi tắt tiếng, mọi phản hồi vẫn phải đọc được bằng chữ + hình. Game Tiếng Anh: phần đọc từ bằng \`window.speechSynthesis\` đi qua MỘT hàng đợi duy nhất, không phát đồng thời với SFX để em không nghe lẫn tiếng.',
 
   // Chậm đúng hai khoảnh khắc là điện ảnh; chậm cả trận là game hỏng.
   slowmo:
@@ -37,4 +37,4 @@ export const CELEBRATE = {
 
 // Dòng rút gọn cho chuỗi tự kiểm của prompt, block biến thể và legacy.
 export const CELEBRATE_SHORT =
-  'pháo giấy 40–60 hạt chỉ ở 4 loại mốc (không nổ mỗi câu đúng) · AudioContext chỉ mở sau cú bấm Bắt đầu, SFX <= 200 ms, gain <= 0.25, <= 4 giọng, có nút tắt tiếng lưu "miti-mute" · slow-mo 0,45× đúng 600 ms cho thẻ vàng và 1,5 giây cuối hiệp 3 · navigator.vibrate 20/60/100 ms bọc if · một màn hài hình thể 3 giây mỗi hiệp · 4 giây "Cả lớp: 3-2-1-CHỐT!" trước hiệp 3';
+  'pháo giấy 40–60 hạt chỉ ở 4 loại mốc (không nổ mỗi câu đúng) · AudioContext chỉ mở sau cú bấm Bắt đầu, SFX <= 200 ms, gain <= 0.25, <= 4 giọng SFX + nhạc nền <= 3 giọng bus riêng, có nút tắt tiếng lưu "miti-mute" · slow-mo 0,45× đúng 600 ms cho thẻ vàng và 1,5 giây cuối hiệp 3 · navigator.vibrate 20/60/100 ms bọc if · một màn hài hình thể 3 giây mỗi hiệp · 4 giây "Cả lớp: 3-2-1-CHỐT!" trước hiệp 3';

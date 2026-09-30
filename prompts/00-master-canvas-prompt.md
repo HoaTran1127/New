@@ -453,7 +453,8 @@ Sáu quy định dưới đây ở nguồn `tools/lib/celebrate.mjs`, mọi con 
   biến mất hẳn. CẤM nổ mỗi câu đúng (câu đúng đã có particle của 8.1); trần một đợt mỗi 3 giây theo mục 9.1;
   Giảm hiệu ứng chuyển pháo thành dải băng tĩnh + chữ "CHÀO!" to dần, không chớp.
 - HỢP ĐỒNG ÂM THANH: AudioContext chỉ resume SAU cú bấm "Bắt đầu" — không một tiếng động nào trước đó, kể cả tiếng nền;
-  mỗi SFX dài tối đa 200 ms; master gain <= 0.25; tối đa 4 giọng đồng thời, giọng cũ mờ dần trong 60 ms thay vì cắt khớp;
+  mỗi SFX dài tối đa 200 ms; master gain <= 0.25; tối đa 4 giọng SFX đồng thời — nhạc nền nếu có chạy trên bus riêng
+  với tối đa 3 giọng, tổng không quá 7 giọng (mục 8.6) — giọng cũ mờ dần trong 60 ms thay vì cắt khớp;
   có nút "Tắt tiếng" lưu trong "miti-mute". Cấm loop rít, cấm âm báo lặp mỗi khung hình, câu sai dùng tiếng "bụp" trầm chứ
   không phải tiếng báo động. Tắt tiếng rồi thì mọi phản hồi vẫn phải đọc được bằng chữ + hình. Game Tiếng Anh:
   `window.speechSynthesis` đi qua MỘT hàng đợi duy nhất, không phát đồng thời với SFX.
@@ -509,6 +510,41 @@ cùng một con mascot vô danh, cùng một màu, cùng một màn pháo — kh
   Trường thiếu thì `console.warn` bằng tiếng Việt, game vẫn chơi nhưng bảng kiểm ghi CHƯA ĐẠT ở mục bản sắc.
 
 ========================
+8.6 NHẠC NỀN THEO NHỊP (nguồn: `tools/lib/rhythm.mjs`, validate chặn nếu thiếu) — phần quyết định em VẬN ĐỘNG THEO tiếng hay chỉ đứng nhìn màn hình
+========================
+
+8.4 đặt trần cho âm thanh, và cả sáu quy định ở đó đều là điều CẤM — cần thiết để file Canvas không hành xác một
+lớp bốn em. Khảo sát 85 prompt trước vòng 14 đếm được "nhạc nền" 0/85, "giai điệu" 0/85, "BPM" 0/85, "theo nhịp"
+0/85: giữa hai thẻ câu hỏi game chỉ im lặng rồi "ting". Trẻ lớp 4–5 bắt nhịp bằng tai — một nhịp trống đều khiến
+em khuỳnh tay đúng nhịp và hết hiệp nhớ mình vừa chơi gì, còn im lặng thì em đứng chờ màn hình. Sáu quy định dưới
+đây ở nguồn `tools/lib/rhythm.mjs`; ràng buộc cứng là không file âm thanh ngoài, đầu ra vẫn phải là MỘT file HTML.
+
+- NHẠC CÓ NHỊP THẬT, TỰ TỔNG HỢP: loop bốn nhịp một ô (kick + bass + hat + một lớp giai điệu) dựng bằng Web Audio
+  API, CẤM hotlink .mp3/.wav/.ogg. Tempo 100–116 BPM ở hiệp 1 và 2, mỗi ô nhịp 2–4 ô lặp liên tục không đổi; chạy
+  trên bus nhạc riêng với gain <= 0.18 và luôn thấp hơn bus SFX; chỉ bắt đầu SAU cú bấm "Bắt đầu", mờ dần 300 ms
+  khi Pause hoặc tab ẩn rồi vào lại khi chơi tiếp. Cấm một tiếng rít lặp nguyên văn, cấm nhạc to hơn tiếng mascot đọc đề.
+- NHỊP NHẠC LÀ NHỊP VẬN ĐỘNG: bốn động tác khởi động đếm 8 nhịp mỗi động tác theo đúng BPM của loop; trạm nghỉ
+  5 giây là mini-trạm đập 8 bong bóng theo đúng 8 nhịp; mỗi cú chốt đúng rơi vào một phách mạnh để em thấy động tác
+  của mình khớp với tiếng. CẤM buộc em đổi tư thế nhanh hơn một lần mỗi nhịp, và trần 128 BPM để xung hình ảnh theo
+  nhịp không vượt trần nhấp nháy 3 lần/giây của 9.1. Lúc đọc đề, HUD hiện vạch nhịp đang chạy — không phải đồng hồ
+  đếm ngược mà mục 6.3 đã cấm.
+- NHẠC NHƯỜNG LỜI: khi `window.speechSynthesis` đọc đề hoặc mascot nói một câu thoại, bus nhạc hạ xuống <= 30% gain
+  trong suốt lúc đọc và trả lại trong 300–500 ms. Ngân sách giọng thống nhất với 8.4: <= 4 giọng SFX + <= 3 giọng nhạc
+  nền, tổng không quá 7 giọng đang phát cùng lúc. Cấm dùng nhạc để báo hiệu đúng/sai — tín hiệu học tập vẫn là SFX
+  và chữ trên HUD.
+- NHẠC LEO THEO HIỆP: hiệp 2 thêm một lớp bass, hiệp 3 thêm trống và nhích tempo +8 BPM (vẫn trong trần 128); 1,5
+  giây cuối hiệp 3 dồn nhịp; nghi thức mở thưởng cuối hiệp là 2,5 giây nhạc leo rồi vỡ òa khớp đúng lúc pháo giấy nổ
+  của 8.4. Nhạc cao trào chỉ đổi không khí: không đổi luật chơi, không cộng điểm, không rút thời gian đọc đề.
+- NHỊP CHO NGƯỜI KHÔNG NGHE: khi "miti-mute" bật, game hiện vạch nhịp đập theo đúng BPM ở mép dưới HUD (mờ dần,
+  không nhấp nháy quá 3 lần mỗi giây, không vượt 25% khung hình) để em vẫn bắt nhịp bằng mắt; máy bật sẵn
+  `prefers-reduced-motion` thì vạch nhịp đứng yên và nhạc nền tắt hẳn, game vẫn chơi trọn 12 lượt. Nút "Tắt tiếng"
+  phải tắt cả nhạc nền chứ không chỉ SFX, và đọc lại được từ "miti-mute" sau khi tải lại trang.
+- TỰ KIỂM BẰNG `verifyMusic()`: chạy MỘT LẦN lúc nạp, kiểm năm điều — loop tổng hợp bằng Web Audio (không có
+  `<audio src>` hay `fetch()` file âm thanh nào), BPM nằm trong 100–128, gain bus nhạc <= 0.18, không giọng nào phát
+  trước cú bấm "Bắt đầu", bus nhạc hạ khi `speechSynthesis` đang đọc. Thiếu một điều thì `console.warn` bằng tiếng
+  Việt, game vẫn chơi, bảng kiểm ghi CHƯA ĐẠT ở mục nhạc nền. Cấm báo "đã có nhạc" khi thực tế chỉ một tiếng "ting" ở câu đầu.
+
+========================
 9. AN TOÀN + RIÊNG TƯ + TIẾP CẬN
 ========================
 - Không quay chạy nhảy; không yêu cầu rời khỏi vùng camera; mọi động tác đều có phiên bản ngồi tại chỗ.
@@ -558,7 +594,7 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
   Bảng liệt kê TỪNG ràng buộc kèm trạng thái ĐẠT / CHƯA ĐẠT. Trạng thái đó phải do code kiểm thật lúc chạy,
   không phải chữ tĩnh kê sẵn. Một bảng báo "ĐẠT" mà không kiểm gì là lỗi nghiêm trọng nhất của game giáo dục.
   Bảng chỉ người lớn mở được: không trừ tim, không chặn chơi, học sinh không nhìn thấy.
-- 32 MỤC MÁY TỰ KIỂM, mỗi mục một hàm trả true/false:
+- 33 MỤC MÁY TỰ KIỂM, mỗi mục một hàm trả true/false:
   [1] QUESTION_DATA đủ số mục và verifyQuestionBank() ĐÃ chạy trước lượt chơi đầu tiên
   [2] mọi mục đang phát hành có answer nằm trong choices đúng một lần
   [3] 📷 drawImage khung hình webcam đi qua toScreen(lx, ly), không còn phép nhân thô với W/H
@@ -588,17 +624,18 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
   [27] màn tổng kết in đúng một dòng "Lần sau em quay lại sẽ có <n> câu đang chờ" với n đếm từ "miti-review", không chuỗi ngày chơi, không dòng "em đã nghỉ X ngày"
   [28] tỉ lệ mục dang: "nhin" >= 60% và mọi mục dang: "tinh" chỉ mang một dấu phép tính với đề không quá 16 từ (đếm trên QUESTION_DATA đang phát hành)
   [29] điểm một lượt tách thành +6 cho động tác và +3 cho đáp án, hiệu ứng nổ tại điểm chạm trước khi máy biết đúng sai, không thẻ câu hỏi nào có đồng hồ đếm ngược
-  [30] AudioContext chỉ resume SAU cú bấm "Bắt đầu" (không một SFX nào phát trước đó), mỗi SFX <= 200 ms, master gain <= 0.25, không quá 4 giọng phát đồng thời, và trạng thái "miti-mute" vẫn đọc được sau khi tải lại trang
+  [30] AudioContext chỉ resume SAU cú bấm "Bắt đầu" (không một SFX hay nốt nhạc nào phát trước đó), mỗi SFX <= 200 ms, master gain <= 0.25, không quá 4 giọng SFX phát đồng thời (nhạc nền đi bus riêng <= 3 giọng, tổng mọi giọng <= 7), và trạng thái "miti-mute" vẫn đọc được sau khi tải lại trang
   [31] pháo giấy nổ đúng bốn loại mốc với 40–60 hạt sinh qua hàm chiếu điểm chạm (không nổ ở câu đúng thường), slow-mo chỉ chạy 600 ms cho thẻ vàng và 1,5 giây cuối hiệp 3, navigator.vibrate luôn nằm trong if (navigator.vibrate)
   [32] verifyIdentity() đã chạy lúc nạp: mascot tên riêng <= 2 từ hiện ở >= 5 chỗ, ba biến --miti-1/--miti-2/--miti-3 có thật trong CSS và khớp IDENTITY_DATA, đúng MỘT khoảnh khắc chữ ký dài >= 2 giây chỉ chạy 1 lần/phiên, một đạo cụ neo landmark, ba câu thoại <= 6 từ
-  Mục gắn 📷 chỉ áp dụng khi có webcam: bản không camera bỏ 6 mục đó và vẫn phải đạt 26 mục còn lại.
+  [33] verifyMusic() đã chạy lúc nạp: loop nhạc nền tổng hợp bằng Web Audio (không có <audio src> hay fetch() file âm thanh ngoài), BPM nằm trong 100–128, gain bus nhạc <= 0.18, bus nhạc hạ xuống <= 30% khi speechSynthesis đang đọc, và bản "miti-mute" có vạch nhịp đập theo BPM thay cho tiếng
+  Mục gắn 📷 chỉ áp dụng khi có webcam: bản không camera bỏ 6 mục đó và vẫn phải đạt 27 mục còn lại.
 - XUẤT BẢN VĂN: bảng có nút "Xuất bản văn" sinh một khối chữ tiếng Việt copy được — tên game, bản chuẩn MiTi,
   ngày giờ, kiểu điều khiển đang chạy, số mục ĐẠT / CHƯA ĐẠT, danh sách mục chưa đạt kèm lý do.
   Khối chữ chỉ hiện trên màn hình và vào clipboard máy đó; không gửi lên máy chủ nào, không xin quyền, không để lại dữ liệu.
 - MỤC CHƯA ĐẠT PHẢI GIẢI THÍCH ĐƯỢC: mỗi dòng kèm một câu nguyên nhân kỹ thuật cho người lớn
   (ví dụ "toScreen không được dùng ở drawImage — vật thể đang tính bằng lx * W") và một câu nên sửa thế nào trong prompt.
   Cấm báo "lỗi" rồi im lặng, cấm chữ chung chung kiểu "hệ thống có vấn đề".
-- 23 VIỆC NGƯỜI THỬ PHẢI BẤM TAY (máy không tự kiểm được, làm theo đúng thứ tự, khoảng 15 phút):
+- 24 VIỆC NGƯỜI THỬ PHẢI BẤM TAY (máy không tự kiểm được, làm theo đúng thứ tự, khoảng 15 phút):
   đứng xa tới mức chỉ còn hai bàn tay · giữ im một tư thế 5 giây · che nửa người bằng tay · tắt camera giữa vòng ·
   rút mạng lúc đang tải model · đổi tay thuận sang Trái giữa chừng · bật reduced-motion ở hệ điều hành rồi mở game ·
   cố tình sai 4 câu liên tiếp · mở bằng điện thoại đặt dọc · đưa một học sinh lớp 4 chưa đọc hướng dẫn chơi thử 60 giây ·
@@ -615,6 +652,7 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
   chơi tới 4 giây "Cả lớp: 3 – 2 – 1 – CHỐT!" trước hiệp 3 — bốn em đứng cạnh máy có thật sự hô theo và cùng làm một động tác mở màn, hay dòng chữ bị đọc lướt như một màn đếm mẫu?
   bật tiếng đầy đủ rồi mở game cho bốn em cùng chơi — SFX có ngắn và dễ chịu hay một tiếng "ting" lặp lại thành chói tai? Bấm "Tắt tiếng" rồi chơi trọn một hiệp: mọi phản hồi còn đọc được bằng chữ và hình không?
   chơi hai game cùng chủ đề liên tiếp rồi gập máy lại — em có gọi ra được tên mascot, màu và khoảnh khắc chữ ký của TỪNG game, hay với em vẫn là một game mặc hai bộ áo?
+  nghe trọn một hiệp — nhạc có giữ nhịp cho em vận động theo (mỗi cú chốt rơi vào một phách mạnh) hay chỉ là tiếng nền vô định? Bấm "Tắt tiếng" rồi chơi tiếp: nhịp chuyển động có rớt dưới 12 lần mỗi phút không?
   Bảng in kèm từng việc và ô ghi kết quả: `prompts/CHECKLIST_NGHIEP_THU.md`.
 - THIẾU MỤC NÀO THÌ SỬA PROMPT, KHÔNG SỬA TAY FILE HTML: dán lại nguyên văn quy định tương ứng vào cuối prompt rồi sinh lại file.
 
@@ -684,8 +722,13 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
 [ ] đáp án đúng không đoán được bằng mẹo hình thức; vị trí đúng phân bố đều 1/3 ± 10%
 [ ] level là bậc thang độ tinh vi (1 nhìn là chọn, 2 loại trừ một nhịp, 3 ước lượng) và mọi lượt vẫn chỉ MỘT thao tác
 [ ] mọi mục có `dang`; mục "tinh" có <= 1 dấu phép tính; >= 60% số mục là "nhin"; đề <= 16 từ và được đọc to
-[ ] AudioContext chỉ resume sau cú bấm "Bắt đầu"; mỗi SFX <= 200 ms; master gain <= 0.25; <= 4 giọng đồng thời; nút "Tắt tiếng" lưu "miti-mute" và game vẫn chơi được khi câm
+[ ] AudioContext chỉ resume sau cú bấm "Bắt đầu"; mỗi SFX <= 200 ms; master gain <= 0.25; <= 4 giọng SFX + nhạc nền <= 3 giọng trên bus riêng (tổng <= 7 giọng); nút "Tắt tiếng" lưu "miti-mute" và game vẫn chơi được khi câm
 [ ] pháo giấy 40–60 hạt chỉ nổ ở 4 loại mốc qua toScreen; slow-mo 0,45× đúng 600 ms cho thẻ vàng + 1,5 giây cuối hiệp 3; navigator.vibrate 20/60/100 ms bọc trong if; mascot có một màn hài 3 giây mỗi hiệp; trước hiệp 3 có 4 giây "Cả lớp: 3 – 2 – 1 – CHỐT!"
+[ ] nhạc nền tự tổng hợp bằng Web Audio (không `<audio src>`, không hotlink .mp3/.wav/.ogg), 100–116 BPM ở hiệp 1–2, bus nhạc riêng gain <= 0.18 và thấp hơn bus SFX
+[ ] nhịp nhạc là nhịp vận động: khởi động 8 nhịp mỗi động tác, trạm nghỉ 8 bong bóng theo 8 nhịp, cú chốt đúng rơi vào phách mạnh; trần 128 BPM và không đòi đổi tư thế nhanh hơn một lần mỗi nhịp
+[ ] bus nhạc hạ xuống <= 30% gain khi speechSynthesis đọc đề hoặc mascot nói, trả lại trong 300–500 ms; nhạc không báo hiệu đúng/sai
+[ ] tắt tiếng còn vạch nhịp đập theo BPM ở mép dưới HUD (<= 3 xung/giây, <= 25% khung hình); reduced-motion thì vạch đứng yên, nhạc tắt hẳn và 12 lượt vẫn chơi trọn
+[ ] verifyMusic() chạy một lần lúc nạp, kiểm năm điều (Web Audio, BPM 100–128, gain <= 0.18, im lặng trước "Bắt đầu", nhường speechSynthesis) và báo CHƯA ĐẠT bằng tiếng Việt khi thiếu
 [ ] 2 câu đúng liên tiếp lên một level, 2 câu sai liên tiếp xuống một level cùng errorTag
 [ ] không cho sai quá 3 câu liên tiếp; câu thứ 4 là level 1 kèm lời giải từng bước, chọn lại đúng không trừ tim lần hai
 [ ] không hiện "level"/sao xếp hạng cho học sinh; phân bố level chỉ ở màn tổng kết cho giáo viên
@@ -697,10 +740,10 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
 [ ] đạo cụ AR neo landmark bằng toScreen(); bản không camera thì đạo cụ đứng yên ở góc HUD dưới chứ không biến mất
 [ ] ba câu thoại đọc bằng speechSynthesis giọng vi-VN, <= 3 câu mỗi phút, câu khi sai là câu đỡ chứ không chế giễu
 [ ] bảng kiểm ẩn mở bằng 7 lần chạm logo MiTi hoặc Ctrl+Alt+K, trạng thái ĐẠT do code kiểm thật lúc chạy
-[ ] cả 32 mục máy tự kiểm đều có hàm kiểm tương ứng, không mục nào là chữ kê sẵn
+[ ] cả 33 mục máy tự kiểm đều có hàm kiểm tương ứng, không mục nào là chữ kê sẵn
 [ ] mục CHƯA ĐẠT kèm nguyên nhân kỹ thuật + cách sửa trong prompt, không có dòng "lỗi hệ thống"
 [ ] nút "Xuất bản văn" copy được khối chữ tiếng Việt, không gửi lên máy chủ nào
-[ ] bản không camera bỏ đúng 6 mục 📷 và vẫn đạt 26 mục còn lại, không bỏ luôn bảng kiểm
+[ ] bản không camera bỏ đúng 6 mục 📷 và vẫn đạt 27 mục còn lại, không bỏ luôn bảng kiểm
 [ ] fallback chuột/chạm/phím chơi trọn vẹn, tự kích hoạt khi camera lỗi
 [ ] QUESTION_DATA có ít nhất 30 mục (Toán) hoặc 60 mục (Tiếng Anh), mỗi mục có đáp án + lời giải + errorTag + loiViet + dang
 [ ] dữ liệu đặt đầu file, code engine đặt sau, không có chỗ nào rút gọn
@@ -764,7 +807,7 @@ Sau khi tự kiểm tra, CHỈ xuất ra file HTML hoàn chỉnh, không kèm gi
   toàn bộ quy định phía trên chỉ là lời mong đợi. Bắt game tự kiểm bằng hàm true/false biến lời hứa thành trạng thái đọc được.
 - **Trạng thái phải do code kiểm, không phải chữ kê sẵn**: một bảng tĩnh in sẵn chữ "ĐẠT" còn hại hơn không có bảng,
   vì người lớn tưởng là đã kiểm. Đây là lý do quy định ghi rõ "không phải một danh sách chữ tĩnh".
-- **Tách 32 mục máy / 23 việc người thử**: cái gì máy kiểm được thì đừng đùn cho giáo viên; cái máy không kiểm được
+- **Tách 33 mục máy / 24 việc người thử**: cái gì máy kiểm được thì đừng đùn cho giáo viên; cái máy không kiểm được
   (cháu có hiểu luật chơi mà không đọc hướng dẫn không, rút mạng thì sao) thì đừng giả vờ kiểm. Con số 15 phút là thời lượng
   một tiết thực tế, không phải danh sách dài vô hạn.
 - **Mục chưa đạt phải nói nguyên nhân và cách sửa**: bảng kiểm chỉ báo "lỗi" sẽ bị bỏ qua; kèm câu "thiếu ở dòng nào,
