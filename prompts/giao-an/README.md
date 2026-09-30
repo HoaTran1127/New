@@ -13,8 +13,9 @@
 | Bảng phấn | Chiếm >= 70% màn chiếu, không bao giờ tự lau | Bảng chữ L <= 40% khung hình, tự lau sau mỗi lượt |
 | Nguồn quy định | `tools/lib/chalk.mjs` + `tools/lib/lesson.mjs` | `tools/lib/feel.mjs` + `tools/lib/classroom.mjs` |
 
-Hai bộ dùng chung một nguồn vật thật (`tools/data/props.mjs`) nên cùng một cụm kiến thức thì vật vẽ phấn
-giống hệt nhau — học sinh gặp lại đúng cái pizza đó khi chuyển từ tiết giảng sang giờ luyện tập.
+Bảng phấn và vật thật (`tools/lib/chalk.mjs`, `tools/data/props.mjs`) là của riêng bộ giáo án — 85 prompt
+game không mang một dòng nào trong đó, và ngược lại. Hai bộ đi từ cùng một cụm kiến thức nên cùng một bài
+được dạy bằng cái pizza rồi luyện bằng chính cái pizza đó.
 
 ## Cách dùng
 
@@ -83,5 +84,5 @@ nối ngược về sơ đồ) → **Luyện tập chung** (3–4 phút, cả l�
 
 - Thêm cụm kiến thức mới: sửa `tools/data/clusters.mjs`, `tools/data/props.mjs` (đủ 5 trường) và `tools/data/lessons.mjs` (đủ 3 trường), rồi chạy `node tools/build.mjs`.
 - Đổi quy định bảng phấn: `tools/lib/chalk.mjs` (10 quy định).
-- Đổi quy định chế độ giảng bài: `tools/lib/lesson.mjs` (8 quy định).
+- Đổi quy định chế độ giảng bài: `tools/lib/lesson.mjs` (11 quy định).
 - `node tools/validate.mjs` sẽ chặn nếu thiếu quy định nào, nếu vật thật thiếu trường, hoặc nếu cơ chế game lọt vào giáo án.

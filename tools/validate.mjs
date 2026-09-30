@@ -139,6 +139,9 @@ const LESSON_RULES = [
   [LESSON.strayHands, 'thiếu quy định bỏ qua bàn tay lạ trong lớp đông'],
   [LESSON.classVote, 'thiếu quy định cả lớp trả lời bằng ngón tay'],
   [LESSON.retain, 'thiếu quy định bảng không bao giờ tự lau'],
+  [LESSON.backRow, 'thiếu quy định chữ đọc được từ dãy cuối lớp'],
+  [LESSON.noNetwork, 'thiếu quy định dạy được khi mất mạng'],
+  [LESSON.verifyData, 'thiếu hàm tự kiểm chứng verifyLessonBank chạy lúc nạp'],
 ];
 const LESSON_FAMILY_RULES = [...CHALK_RULES, ...LESSON_RULES].map(([n]) => n);
 
@@ -276,7 +279,7 @@ if (!fs.existsSync(VAR_FILE)) {
 }
 
 // 4c. Bộ giáo án giảng bài (prompts/giao-an/): tách hẳn khỏi 85 prompt game.
-// Hai bộ dùng chung chalk.mjs và props.mjs nhưng PHẢI khác nhau về cơ chế — giáo án mà lẫn
+// Hai bộ đi từ cùng một cụm kiến thức nhưng PHẢI khác nhau về cơ chế — giáo án mà lẫn
 // tim, điểm, combo hay mascot thì em lên bảng sợ sai hơn là muốn hiểu.
 const LESSON_DIR = path.join(ROOT, 'prompts', 'giao-an');
 let LESSON_COUNT = 0;
@@ -293,7 +296,7 @@ if (!fs.existsSync(LESSON_DIR)) {
     '4. BẢNG PHẤN VÀ VẬT THẬT — MƯỜI QUY ĐỊNH BẮT BUỘC',
     '5. CẢ LỚP THAM GIA',
     '6. NỀN AR, CAMERA VÀ NHẬN DIỆN TAY',
-    '7. CHẾ ĐỘ KHÔNG CAMERA (bắt buộc, đây là chế độ dạy chính ở nhiều lớp)',
+    '7. DẠY KHI KHÔNG CÓ CAMERA VÀ KHÔNG CÓ MẠNG (bắt buộc, đây là chế độ dạy chính ở nhiều lớp)',
     '8. TIẾP CẬN, AN TOÀN VÀ HIỆU NĂNG',
     '9. MiTi — CHỮ KÝ BẮT BUỘC TRONG HTML',
     '10. ĐẦU RA',

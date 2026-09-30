@@ -1,4 +1,4 @@
-// Tám quy định của CÔNG CỤ GIẢNG BÀI: giáo viên trình bày, cả lớp xem.
+// Mười một quy định của CÔNG CỤ GIẢNG BÀI: giáo viên trình bày, cả lớp xem.
 // Đây là tầng tách hẳn khỏi tools/lib/feel.mjs (vận động to + cảm giác arcade của game học sinh).
 // validate.mjs so khớp nguyên văn các chuỗi này, nên đổi ở đây phải chạy lại node tools/build.mjs.
 //
@@ -10,7 +10,17 @@
 //   - nhịp game tự chuyển bước sau vài giây, trong khi giáo viên cần dừng lại giảng đúng chỗ đó;
 //   - HandLandmarker bắt pinch của bất kì em nào ngồi dưới, nên bảng bị vẽ bậy từ xa;
 //   - bảng tự lau sau mỗi lượt, mất luôn phần trình bày giáo viên muốn cả lớp nhìn lại.
-// Vì vậy tám quy định này KHÔNG phải bản sao của feel.mjs mà là bản đối lập có chủ đích.
+// Vì vậy mười một quy định này KHÔNG phải bản sao của feel.mjs mà là bản đối lập có chủ đích.
+//
+// Ba quy định đầu tiên (teacher, noGame, pace) giữ nhịp của tiết học; năm quy định giữa
+// (flow, handover, strayHands, classVote, retain) lo chuyện 35 em cùng xem một bảng; ba quy định
+// cuối (backRow, noNetwork, verifyData) thêm ở vòng 2026-09-30 sau khi đọc lại 39 giáo án đã sinh:
+//   - 2/39 giáo án nhắc tới chuyện ngồi cuối lớp — cỡ chữ được quy định bằng px trên màn hình
+//     của cô giáo, trong khi thứ cần bảo đảm là mắt một em cách màn chiếu 7-8 m;
+//   - 0/39 có bất kì quy định nào về mất mạng — CDN chết thì màn chờ chiếm cả tiết dạy, và
+//     mạng trường ở Việt Nam đứt là chuyện thường;
+//   - 0/39 kiểm chứng LESSON_DATA — cùng lỗ hổng mà verify.mjs vừa bịt cho game, nhưng ở giáo án
+//     thì hậu quả nặng hơn: một mục sai cô đọc trước 35 em, cả lớp học sai theo.
 //
 // Nguồn tham chiếu cho hướng thiết kế (đã kiểm chứng, không bịa số liệu): khung
 // Concrete-Representational-Abstract dùng cho trình tự các bước giảng; nghiên cứu về mỏi tay
@@ -49,8 +59,20 @@ export const LESSON = {
   // Bảng của tiết dạy là bản ghi bài giảng: không thứ gì tự biến mất.
   retain:
     'BẢNG KHÔNG BAO GIỜ TỰ LAU: mọi nét phấn của bước trước còn nguyên khi sang bước sau, và cả năm bước của giáo án cộng lại thành một trang bảng hoàn chỉnh để cuối tiết cả lớp nhìn lại mạch bài. Chỉ giáo viên lau được, bằng nút "Lau", bằng phím E hoặc bằng nắm bàn tay đã gán; em lên bảng chỉ lau được dòng mình vừa viết sai. Khi bảng đầy thì mở MỘT TRANG BẢNG MỚI và giữ trang cũ trong danh sách tối đa 8 trang ở mép dưới, có nút quay lại từng trang và nút "Gộp tất cả trang" để xem cả tiết trên một dải cuộn dọc. Có nút "In bảng" xuất ra bản in nền trắng chữ đen qua Ctrl+P, và trang in phải đọc được mà không cần màu. Nút "Lưu bảng" ghi lại toàn bộ trang vào localStorage theo quy định lưu bảng, để tiết sau giáo viên mở ra dạy tiếp.',
+
+  // Cỡ chữ đúng không phải đo trên laptop của cô giáo mà đo ở dãy bàn cuối lớp.
+  backRow:
+    'CHỮ PHẢI ĐỌC ĐƯỢC TỪ DÃY CUỐI LỚP: chuẩn là mắt một học sinh ngồi cách màn chiếu 7–8 m, không phải laptop của giáo viên. Ngoài mức >= 40 px, mọi chữ phấn còn phải cao >= 5.5% chiều cao khung hình để máy chiếu chỉ đạt 1024×768 vẫn ra cỡ đúng; nhãn trên thẻ đáp án và trên vật thật không nhỏ quá 4% chiều cao khung hình. Một dòng phấn tối đa 12 chữ và bảng tối đa 6 dòng chữ cùng một lúc — nhiều hơn thì tách sang trang bảng khác hoặc thay chữ bằng vật thật. Có nút "Chữ to cho lớp đông" phóng mọi chữ thêm 1.4 lần ngay lập tức mà không vỡ bố cục, và nút "Xem thử từ cuối lớp" phụ một bản thu 25% có phủ mờ nhẹ để cô kiểm ngay trên bàn giáo viên: dòng nào đọc không ra ở bản thu đó thì dòng đó quá nhỏ, phải viết lại to hơn hoặc bỏ đi.',
+
+  // Phòng học Việt Nam mất mạng là chuyện bình thường; bài giảng không được chết theo CDN.
+  noNetwork:
+    'BÀI GIẢNG PHẢI ĐỨNG ĐƯỢC KHI MẤT MẠNG: toàn bộ nội dung chữ, số, vật thật, sơ đồ và lời giải của tiết dạy nằm trong chính file HTML, không gọi thêm bất kì API nào ngoài MediaPipe và font có dự phòng. CDN hỏng hoặc mạng trường chập chờn thì màn chờ chỉ tối đa 8 giây, hết 8 giây là tắt camera và mở bảng phấn dạy bình thường bằng chuột — tuyệt đối không để giáo viên đứng trước cả lớp chờ một thanh tải. Không có trạng thái lỗi nào được khoá nội dung bài giảng. Có nút "Thử lại camera" ở dải điều khiển để bật lại khi mạng về, kèm một dòng tiếng Việt "đang dạy không cần camera" thay vì một lỗi tiếng Anh. Mở file trên máy khác, không mạng, không tài khoản, thì bài giảng vẫn chạy và bảng đã lưu vẫn mở lại được nguyên vẹn; không có dữ liệu nào của lớp gửi đi.',
+
+  // LESSON_DATA là đề bài cô giáo đọc trước 35 em: một mục sai là cả lớp học sai.
+  verifyData:
+    'LESSON_DATA PHẢI TỰ KIỂM CHỨNG LÚC NẠP: viết hàm verifyLessonBank() chạy MỘT LẦN trước khi bảng hiện ra, kiểm từng mục — `answer` phải có trong `choices` và chỉ xuất hiện đúng một lần, hai phương án không được trùng nhau sau khi bỏ khoảng trắng và đổi chữ thường; `prompt`, `explanation`, `errorTag`, `loiViet` phải khác rỗng; `errorTag` phải thuộc đúng danh sách nhãn lỗi đã khai báo ở mục 1; không hai mục nào trùng `prompt`; mảng phải có tối thiểu 6 mục và bao phủ ít nhất 3 nhãn lỗi khác nhau, vì bảng tổng kết nhóm theo lỗi mà chỉ một lỗi thì vô nghĩa. Mọi phương án sai phải mô phỏng đúng MỘT lỗi thật trong danh sách lỗi đó, cấm giá trị ngẫu nhiên vô nghĩa, và phương án đúng không được dài hơn hoặc nổi bật hơn các phương án còn lại. Mọi số trong đề phải nằm trong phạm vi SGK lớp đã cam đoan, không có phép chia cho 0. Mục nào trượt thì LOẠI KHỎI tiết giảng và ghi console.warn bằng tiếng Việt kèm id + lý do; còn dưới 5 mục hợp lệ thì hai nút "Cả lớp trả lời" và "Lưu bảng" tự khoá kèm một dòng chữ cho giáo viên, dòng cảnh báo này chỉ hiện ở dải điều khiển của cô, không hiện lên bảng trước lớp. Chạy lại hàm kiểm một lần nữa ngay trước khi lưu bảng.',
 };
 
 // Dòng rút gọn dùng cho checklist tự kiểm của mỗi giáo án.
 export const LESSON_SHORT =
-  'giáo viên trình bày trên màn chiếu 16:9, bảng chiếm >= 70% màn chiếu, chữ phấn >= 40 px, điều khiển trọn bài bằng chuột và bàn phím, camera chỉ bật khi mời em lên bảng · không tim, không điểm, không combo, không xếp hạng, không đồng hồ gây áp lực, không hit-stop, không giật màn hình · mọi bước chờ giáo viên bấm "Bước tiếp", dựng cảnh >= 600 ms, có phát lại bước tối đa 8 giây không giới hạn lần · năm bước Khởi động - Vật thật - Sơ đồ - Phép tính - Luyện tập chung, tổng 15-20 phút, có thanh tiến trình kéo được · "Mời em lên bảng" chuyển quyền trong 5 giây, hàng đợi 4 em, ghi vị trí cổ tay landmark 0, tối đa 12 lượt một tiết · maxNumHands: 2 và bỏ qua mọi bàn tay có gốc ngoài vùng bảng cộng 10% đệm, nhiều tay trong bảng thì tạm khoá và hỏi giáo viên · "Cả lớp trả lời" đếm ngón tay trong 5 giây, ghi rõ camera thấy N em, có nút cộng tay, sai quá 1/3 thì gợi ý giảng lại bước SƠ ĐỒ · bảng không bao giờ tự lau, tối đa 8 trang, có nút in nền trắng chữ đen';
+  'giáo viên trình bày trên màn chiếu 16:9, bảng chiếm >= 70% màn chiếu, chữ phấn >= 40 px, điều khiển trọn bài bằng chuột và bàn phím, camera chỉ bật khi mời em lên bảng · không tim, không điểm, không combo, không xếp hạng, không đồng hồ gây áp lực, không hit-stop, không giật màn hình · mọi bước chờ giáo viên bấm "Bước tiếp", dựng cảnh >= 600 ms, có phát lại bước tối đa 8 giây không giới hạn lần · năm bước Khởi động - Vật thật - Sơ đồ - Phép tính - Luyện tập chung, tổng 15-20 phút, có thanh tiến trình kéo được · "Mời em lên bảng" chuyển quyền trong 5 giây, hàng đợi 4 em, ghi vị trí cổ tay landmark 0, tối đa 12 lượt một tiết · maxNumHands: 2 và bỏ qua mọi bàn tay có gốc ngoài vùng bảng cộng 10% đệm, nhiều tay trong bảng thì tạm khoá và hỏi giáo viên · "Cả lớp trả lời" đếm ngón tay trong 5 giây, ghi rõ camera thấy N em, có nút cộng tay, sai quá 1/3 thì gợi ý giảng lại bước SƠ ĐỒ · bảng không bao giờ tự lau, tối đa 8 trang, có nút in nền trắng chữ đen · chữ >= 5.5% chiều cao khung hình, tối đa 12 chữ một dòng và 6 dòng một lúc, có nút "Chữ to cho lớp đông" 1.4 lần và "Xem thử từ cuối lớp" thu 25% · mất mạng thì màn chờ tối đa 8 giây rồi dạy tiếp bằng chuột, không lỗi nào khoá bài giảng, không dữ liệu nào gửi đi · verifyLessonBank() chạy lúc nạp và trước khi lưu: đáp án có trong choices đúng một lần, ≥ 6 mục phủ ≥ 3 nhãn lỗi, phương án nhiễu là một lỗi thật, mục lỗi bị loại và chỉ báo cho cô giáo';

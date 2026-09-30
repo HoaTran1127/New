@@ -64,6 +64,7 @@ Không dùng Tailwind Play CDN, không file .css/.js/.json/ảnh/mp3 ngoài. Ch�
 - Người cầm lái là GIÁO VIÊN. Học sinh ngồi dưới xem màn chiếu, và được mời lên bảng theo lượt.
 - ${LESSON.noGame}
 - ${LESSON.teacher}
+- ${LESSON.backRow}
 
 1. MỤC TIÊU VÀ ĐỒ DÙNG
 - Mục tiêu của tiết dạy: ${L.muc_tieu}.
@@ -87,6 +88,7 @@ Không dùng Tailwind Play CDN, không file .css/.js/.json/ảnh/mp3 ngoài. Ch�
 - Mỗi mục theo đúng khuôn: { id, prompt, choices, answer, explanation, errorTag, loiViet }.
 - Tối thiểu 6 mục: 2 mục mẫu cho sẵn bên dưới phải xuất hiện NGUYÊN VĂN, cộng thêm 4 mục nữa cùng cụm kiến thức và cùng độ khó của Toán lớp ${L.lop}. Mỗi mục một đáp án đúng duy nhất kiểm chứng được bằng code.
 - errorTag là mã máy của lỗi, lấy đúng một trong các nhãn: ${cl.tags.join(', ')}. loiViet là cụm tiếng Việt có dấu in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 1 và là thứ hiển thị cho giáo viên.
+- ${LESSON.verifyData}
 - Hai mục mẫu phải chép nguyên văn:
 ${jsonBlock(EXAMPLES[L.cluster], cl.tags, notes)}
 
@@ -124,7 +126,8 @@ ${AR_RENDER}
 - Camera chỉ bật được trong môi trường an toàn (HTTPS, localhost hoặc mở file trực tiếp). Nếu trình duyệt chặn, báo một dòng tiếng Việt "Muốn dùng camera thì mở file qua HTTPS hoặc bấm nút Bật camera lại" rồi dạy tiếp bằng chuột và bàn phím, không để giáo viên kẹt ở màn lỗi tiếng Anh.
 - Nếu CDN hoặc model không tải được: hiện thông báo tiếng Việt rồi chạy tiếp ở chế độ không camera, tiết dạy vẫn đủ 100% nội dung.
 
-7. CHẾ ĐỘ KHÔNG CAMERA (bắt buộc, đây là chế độ dạy chính ở nhiều lớp)
+7. DẠY KHI KHÔNG CÓ CAMERA VÀ KHÔNG CÓ MẠNG (bắt buộc, đây là chế độ dạy chính ở nhiều lớp)
+- ${LESSON.noNetwork}
 - Chuột và bàn phím thay được MỌI thao tác tay: giữ chuột trái hoặc rê ngón tay trên màn hình cảm ứng là viết phấn, phím E là giẻ lau, phím cách là sang bước, mũi tên trái là lùi bước, R là phát lại bước, S là lưu bảng, P là in bảng.
 - Kéo thả vật thật và thẻ đáp án bằng chuột; chấm ngón tay thay bằng một cú chạm.
 - Có nhãn "Chế độ không dùng camera" ở góc màn chiếu và nút Bật camera riêng, không cần tải lại trang.
@@ -184,8 +187,9 @@ function renderIndex(lessons) {
 | Bảng phấn | Chiếm >= 70% màn chiếu, không bao giờ tự lau | Bảng chữ L <= 40% khung hình, tự lau sau mỗi lượt |
 | Nguồn quy định | \`tools/lib/chalk.mjs\` + \`tools/lib/lesson.mjs\` | \`tools/lib/feel.mjs\` + \`tools/lib/classroom.mjs\` |
 
-Hai bộ dùng chung một nguồn vật thật (\`tools/data/props.mjs\`) nên cùng một cụm kiến thức thì vật vẽ phấn
-giống hệt nhau — học sinh gặp lại đúng cái pizza đó khi chuyển từ tiết giảng sang giờ luyện tập.
+Bảng phấn và vật thật (\`tools/lib/chalk.mjs\`, \`tools/data/props.mjs\`) là của riêng bộ giáo án — 85 prompt
+game không mang một dòng nào trong đó, và ngược lại. Hai bộ đi từ cùng một cụm kiến thức nên cùng một bài
+được dạy bằng cái pizza rồi luyện bằng chính cái pizza đó.
 
 ## Cách dùng
 
@@ -217,7 +221,7 @@ ${byLop[5].map(row).join('\n')}
 
 - Thêm cụm kiến thức mới: sửa \`tools/data/clusters.mjs\`, \`tools/data/props.mjs\` (đủ 5 trường) và \`tools/data/lessons.mjs\` (đủ 3 trường), rồi chạy \`node tools/build.mjs\`.
 - Đổi quy định bảng phấn: \`tools/lib/chalk.mjs\` (10 quy định).
-- Đổi quy định chế độ giảng bài: \`tools/lib/lesson.mjs\` (8 quy định).
+- Đổi quy định chế độ giảng bài: \`tools/lib/lesson.mjs\` (11 quy định).
 - \`node tools/validate.mjs\` sẽ chặn nếu thiếu quy định nào, nếu vật thật thiếu trường, hoặc nếu cơ chế game lọt vào giáo án.
 `;
 }

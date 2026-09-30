@@ -194,7 +194,7 @@ Nguồn: `tools/lib/verify.mjs`. Đây là tầng sửa hai lỗi **không ai nh
 
 👉 **[Mở bộ giáo án](prompts/giao-an/README.md)** — thư mục `prompts/giao-an/`, sinh bằng `tools/build-lessons.mjs`.
 
-Đây là **CÔNG CỤ GIẢNG BÀI cho giáo viên trình bày trước cả lớp**, tách hẳn khỏi 85 prompt game cho học sinh tự chơi. Hai bộ dùng chung một nguồn vật thật nên cùng một cụm kiến thức thì vật vẽ phấn giống hệt nhau — học sinh gặp lại đúng cái pizza đó khi chuyển từ tiết giảng sang giờ luyện tập — nhưng cơ chế thì **đối lập nhau có chủ đích**:
+Đây là **CÔNG CỤ GIẢNG BÀI cho giáo viên trình bày trước cả lớp**, tách hẳn khỏi 85 prompt game cho học sinh tự chơi. Bảng phấn và vật thật là của riêng bộ giáo án; 85 prompt game không mang một dòng nào trong đó. Hai bộ đi từ cùng một cụm kiến thức nên cùng một bài được dạy bằng cái pizza rồi luyện bằng chính cái pizza đó, nhưng cơ chế thì **đối lập nhau có chủ đích**:
 
 | | 🧑‍🏫 Bộ giáo án (39) | 🎮 85 prompt game |
 | --- | --- | --- |
@@ -224,7 +224,7 @@ Trình tự này theo khung **Concrete – Representational – Abstract**: lỗ
 - **Chống mỏi tay** (viết phấn giữa không trung là động tác mỏi nhanh nhất của hand tracking): chế độ **chạm-bật viết** để không phải giữ pinch, **nghỉ bắt buộc sau 90 giây** pinch liên tục kèm đếm ngược 5 giây, khay phấn đặt ngang khuỷu tay làm điểm tựa, và **mất landmark quá 500 ms thì nét dở đóng băng tại chỗ** chứ không xoá hay nhảy nét.
 - **Lưu bảng của tiết dạy**: tuần tự hoá nét vẽ + vật + sơ đồ vào `localStorage` khoá `miti-board`, tối đa **200 KB**, có nút Lưu / Mở / In (nền trắng chữ đen). **Tuyệt đối không lưu ảnh hay video camera.**
 
-### 👩‍🏫 Tám quy định chế độ giảng bài (`tools/lib/lesson.mjs`)
+### 👩‍🏫 Mười một quy định chế độ giảng bài (`tools/lib/lesson.mjs`)
 
 - **Giáo viên trình bày**: màn chiếu 16:9, bảng chiếm ≥ 70%, chữ phấn **≥ 40 px** (lớn hơn mức 34 px của game) vì người đọc đứng ở cuối phòng; điều khiển trọn bài bằng chuột và bàn phím, camera chỉ bật khi mời em lên bảng.
 - **Không một cơ chế game nào**: không tim, điểm, combo, xếp hạng, đồng hồ gây áp lực, hit-stop, giật màn hình, mascot. Sai thì chỉ có một dòng phấn đỡ bằng chữ.
@@ -234,6 +234,9 @@ Trình tự này theo khung **Concrete – Representational – Abstract**: lỗ
 - **Bỏ qua bàn tay lạ trong lớp đông**: `maxNumHands: 2`, mọi bàn tay có gốc cổ tay ngoài vùng bảng + 10% đệm bị bỏ qua hoàn toàn — em ngồi dưới giơ tay phát biểu không vẽ bậy lên bảng được; nhiều tay trong vùng bảng thì tạm khoá và hỏi giáo viên chứ không tự đoán.
 - **Cả lớp trả lời bằng ngón tay**: đếm số bàn tay theo từng đáp án trong 5 giây, ghi rõ "camera thấy N em" và có nút cộng tay cho số em camera không thấy; cột đáp án sai cao hơn 1/3 thì bảng gợi ý giảng lại bước SƠ ĐỒ.
 - **Bảng không bao giờ tự lau**: cả năm bước cộng lại thành một trang bảng hoàn chỉnh để cuối tiết cả lớp nhìn lại mạch bài.
+- **Chữ phải đọc được từ dãy cuối lớp**: chuẩn là mắt một em cách màn chiếu 7–8 m chứ không phải laptop của cô — chữ phấn ≥ 40 px **và** ≥ 5.5% chiều cao khung hình (để máy chiếu 1024×768 vẫn ra cỡ), tối đa 12 chữ một dòng và 6 dòng một lúc, có nút "Chữ to cho lớp đông" ×1.4 và nút "Xem thử từ cuối lớp" thu 25% + mờ để cô tự kiểm ngay tại bàn.
+- **Dạy được khi mất mạng**: mạng trường đứt là chuyện thường, nên CDN chết thì màn chờ chỉ tối đa **8 giây** rồi bảng phấn hiện ra dạy bình thường bằng chuột; không một lỗi tải nào được khoá nội dung; mở file trên máy khác, không mạng, không tài khoản vẫn chạy, và không có dữ liệu nào của lớp gửi đi.
+- **`verifyLessonBank()` chạy lúc nạp và trước khi lưu bảng**: `answer` có trong `choices` đúng một lần, ≥ 6 mục phủ ≥ 3 nhãn lỗi, mọi phương án sai phải mô phỏng một lỗi thật (cấm `3 + 2 = 99`), số trong đề đúng phạm vi SGK. Mục lỗi bị loại kèm `console.warn` tiếng Việt, còn dưới 5 mục hợp lệ thì nút "Cả lớp trả lời" và "Lưu bảng" tự khoá — cảnh báo chỉ hiện ở dải điều khiển của cô, không hiện lên bảng trước 35 em.
 
 ### Vật thật và sơ đồ theo cụm kiến thức (`tools/data/props.mjs`)
 
