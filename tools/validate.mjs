@@ -167,6 +167,9 @@ const LESSON_RULES = [
   [LESSON.timeSlack, 'thiếu kế hoạch cho tiết thừa giờ và tiết cháy giữa bước'],
   [LESSON.groupWork, 'thiếu quy định làm việc theo nhóm 4 em'],
   [LESSON.fastFinishers, 'thiếu đường đi sâu cho em làm xong sớm'],
+  [LESSON.numberFormat, 'thiếu quy định hiển thị và đọc số theo kiểu Việt Nam'],
+  [LESSON.latePupil, 'thiếu đường cho em đến muộn hoặc vắng buổi trước'],
+  [LESSON.repairWork, 'thiếu bước trả bài và chữa bài'],
 ];
 // Từ bảng ra vở: một tiết giảng chỉ thật sự xong khi các em làm được bài trên giấy.
 const HANDOUT_RULES = [
@@ -381,6 +384,16 @@ if (!fs.existsSync(LESSON_DIR)) {
     if (/@mediapipe\/hands|@mediapipe\/camera_utils|cdn\.tailwindcss\.com/.test(t)) bad(`${tag}: còn phụ thuộc bị cấm.`);
     const lines = t.split('\n').length;
     if (lines < 110) bad(`${tag}: giáo án chỉ ${lines} dòng — nội dung bị cắt.`);
+  }
+
+  // verifyData (phủ nhãn lỗi) và repairWork (số hàng trang Chữa bài) lấy trần từ SỐ NHÃN THẬT của cụm,
+  // nên dữ liệu đổi là hai quy định đó phải đổi theo — chặn ở đây chứ không để prompt vô nghiệm.
+  for (const L of lessons) {
+    const cl = cluster(L.cluster);
+    const n = (ERROR_NOTES[L.cluster] || '').split('; ').length;
+    if (n !== cl.tags.length) bad(`${L.id}: cụm ${L.cluster} có ${cl.tags.length} errorTag nhưng ${n} mô tả loiViet.`);
+    if (n > 3) bad(`${L.id}: cụm ${L.cluster} có ${n} nhãn lỗi trong khi verifyData và repairWork chỉ tính trần 3 hàng — phải viết lại hai quy định đó trước khi thêm nhãn.`);
+    if (n < 2) bad(`${L.id}: cụm ${L.cluster} chỉ có ${n} nhãn lỗi — bảng tổng kết và trang chữa bài nhóm theo lỗi sẽ vô nghĩa.`);
   }
 
   // Mỗi cặp (cụm Toán, lớp) trong catalog phải có đúng một giáo án, không sót cụm nào.

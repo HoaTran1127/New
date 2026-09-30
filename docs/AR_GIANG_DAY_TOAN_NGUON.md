@@ -1,4 +1,4 @@
-# Giáo án AR trên bảng phấn — nguồn cộng đồng và bài học sau 12 vòng
+# Giáo án AR trên bảng phấn — nguồn cộng đồng và bài học sau 13 vòng
 
 Tài liệu này để **người khác tham khảo và nối tiếp**, không phải mô tả tính năng. Phần tính năng nằm ở
 [`prompts/giao-an/README.md`](../prompts/giao-an/README.md); ở đây chỉ ghi: cái gì đã đo được, cái gì đã
@@ -7,7 +7,7 @@ thay đổi vì số liệu, và nên đọc gì trước khi sửa tiếp.
 ## Nguyên tắc làm việc đã trả giá mà thành
 
 1. **Đo trước khi thêm quy định.** Mỗi vòng bắt đầu bằng một lệnh `grep` trên đúng 39 file giáo án đã sinh,
-   chứ không bắt đầu bằng ý tưởng. Chín vòng gần nhất đều tìm thấy lỗ 0/39 — nghĩa là nếu ngồi nghĩ thì
+   chứ không bắt đầu bằng ý tưởng. Mười vòng gần nhất đều tìm thấy lỗ 0/39 — nghĩa là nếu ngồi nghĩ thì
    sẽ nghĩ ra thứ đã có sẵn.
 2. **Đo cả chỗ mình tự mâu thuẫn.** Vòng 9 không đi tìm ý mới: nó đọc lại chính các quy định đã có và thấy
    hai quy định cũ đòi cái không thể cùng có — một webcam vừa phải nhìn bàn tay em đứng trước bảng,
@@ -18,13 +18,23 @@ thay đổi vì số liệu, và nên đọc gì trước khi sửa tiếp.
    file như thể nó là số đo của lớp thật, và thành ra mọi tỉ lệ trong giáo án đều vô nghĩa ở lớp 45 em.
    Vòng 12 lại là một phía bị bỏ quên của chính quy định mình đã viết: `fullPeriod` (vòng 4) lo tiết cháy
    sang *dài* — báo "quá giờ" chứ không tự cắt — còn chiều ngược lại, lớp xong trước mười phút hoặc bị cắt
-   giữa bước SƠ ĐỒ, thì 0/39 file có một kế hoạch nào.
+   giữa bước SƠ ĐỒ, thì 0/39 file có một kế hoạch nào. Vòng 13 tìm thấy cả hai kiểu cùng lúc: một phía bị bỏ
+   quên (chuỗi bảng → phiếu → vở đã đi một chiều, 0/39 "trả bài" và 0/39 "chữa bài", nên phiếu in ra rồi
+   không có đường quay lại tay các em) và một mâu thuẫn thật giữa hai thứ cùng nằm trong file: giáo án bắt
+   bảng hiện "0,5" cho đúng cách các em viết, nhưng không một dòng nào quy định **chiều đọc vào** — mà
+   `parseFloat('0,5')` trả về `0` và `Number('1.234,5')` trả `NaN`, tức là một đáp án đúng sẽ bị công cụ
+   báo sai. Lỗi này vô hình với `grep` vì "dấu phẩy" có sẵn trong 4/39 file, chỉ có điều nó nằm ở bài dạy số
+   thập phân chứ không nằm ở quy định hiển thị. Vòng 13 còn thử một cách đo mới: đo trên **dữ liệu** chứ
+   không trên prompt. `verifyData` (viết từ vòng 2) bắt ngân hàng câu hỏi phủ "ít nhất 3 nhãn lỗi", nhưng
+   `node -e` trên 38 cụm cho thấy cụm chẵn-lẻ chỉ khai 2 nhãn — một quy định mà chính giáo án của repo
+   không thể tuân theo, và cách duy nhất để "tuân" là bịa nhãn thứ ba. Loại lỗi này không `grep` nào trên
+   `prompts/giao-an/` thấy được, vì chuỗi sai nằm ở hai file dữ liệu khác nhau.
 3. **Quy định phải có con số.** "Chữ phải to" không kiểm chứng được; "≥ 40 px **và** ≥ 5.5% chiều cao khung
    hình, ≤ 12 chữ một dòng" thì validator bắt được. Mọi quy định trong `tools/lib/*.mjs` là chuỗi nguyên văn,
    `tools/validate.mjs` so bằng `includes()`, nên lời văn và mắt kiểm không bao giờ lệch nhau.
 4. **Chốt chặn hai chiều.** Cơ chế game lọt vào giáo án và quy định giáo án lọt sang game đều làm build đỏ.
    Thêm một quy định mới là tự động thêm một khoá bị cấm ở phía bên kia (`LESSON_FAMILY_RULES`).
-5. **Probe đột biến là đơn vị kiểm thử thật.** 67 phép, mỗi phép phá đúng một thứ và đòi đúng thông báo.
+5. **Probe đột biến là đơn vị kiểm thử thật.** 73 phép, mỗi phép phá đúng một thứ và đòi đúng thông báo.
    Không có probe thì một quy định chỉ là câu văn đẹp.
 6. **Tách công cụ giảng bài khỏi game.** Cùng một kiến thức, hai động cơ đối lập: game cần hồi hộp,
    tiết giảng cần giáo viên cầm lái. Nhét tim/điểm/combo vào bảng phấn làm em lên bảng sợ sai hơn là muốn hiểu.
@@ -45,6 +55,7 @@ thay đổi vì số liệu, và nên đọc gì trước khi sửa tiếp.
 | 10 | 39/39 viết "12 lượt một tiết" và "35 em" nhưng 0/39 biết em nào đã lên · 0/39 cách chạy thử khi chưa có lớp · 0/39 nhắc đồng nghiệp, năm học sau, nhập/xuất giáo án | `boardEquity`, `rehearsal`, `lessonStudy` + mục 10 mới (khung thành 13 mục) |
 | 11 | 39/39 chép "lớp 35 em" và "cách màn chiếu 7–8 m" như số đo lớp thật · 0/39 mất điện giữa tiết · 0/39 nhắc bộ đồ dùng dạy học hoặc đường vật thật bằng giấy | `bigClass`, `powerCut`, `paperProps` + mục 7 đổi tên để gồm cả mất điện |
 | 12 | 0/39 "thừa giờ" · 0/39 "dư giờ" · 0/39 "cháy giáo án" (mới chỉ lo tiết cháy về phía dài) · 0/39 "làm việc theo nhóm" và 0/39 "bốn vai trò" · 0/39 "xong sớm" và 0/39 "làm xong trước" | `timeSlack`, `groupWork`, `fastFinishers` |
+| 13 | 0/39 coi "dấu chấm" là một quy định hiển thị, 0/39 "dấu nhân"/"dấu chia", 0/39 `parseFloat`, 0/39 `toFixed` ("dấu phẩy" chỉ có ở 4/39 bài dạy số thập phân) · 0/39 "đến muộn" và 0/39 "vắng" · 0/39 "trả bài" và 0/39 "chữa bài" · **đo trên dữ liệu**: `verifyData` bắt phủ "≥ 3 nhãn lỗi" nhưng 1/38 cụm (chẵn-lẻ) chỉ khai 2 nhãn — giáo án đó vô nghiệm | `numberFormat`, `latePupil`, `repairWork` + `verifyData` đổi trần thành `min(3, số nhãn của cụm)` + validate chặn `tags`/`loiViet` lệch nhau |
 
 ## Vì sao chọn những con số đang dùng
 
@@ -109,6 +120,36 @@ thay đổi vì số liệu, và nên đọc gì trước khi sửa tiếp.
 - **"Cùng đáp số nhưng khác cách" là bài chọn thêm duy nhất có răng** — đây là ý lấy từ tài liệu "going
   deeper" (đào sâu bằng cách biểu diễn khác, không bằng thêm câu). Số lượng đúng 3 bài, không "thêm 10 câu",
   là quy định tự chọn của dự án để phiếu vẫn in trên một trang A4.
+- **Dấu phẩy thập phân không phải sở thích thẩm mỹ mà là một chỗ sai tính toán được** — ba dòng Node kiểm
+  lại được trước khi viết quy định: `new Intl.NumberFormat('vi-VN').format(0.5)` → `"0,5"`,
+  `format(1234567.89)` → `"1.234.567,89"` (đúng cách SGK và vở viết), trong khi `(0.5).toFixed(1)` → `"0.5"`
+  và `String(0.5)` → `"0.5"`; chiều đọc vào còn hỏng nặng hơn — `parseFloat('0,5')` → `0` và
+  `Number('1.234,5')` → `NaN`. Một công cụ chỉ lo *hiển thị* sẽ in ra "0,5" rồi báo đáp án đúng của em là
+  sai, nên `numberFormat` bắt thêm hàm chuẩn hoá đầu vào và bắt `verifyLessonBank()` kiểm chuỗi hiển thị.
+  W3C ghi rõ dấu phân cách thập phân đổi theo ngôn ngữ và dấu chấm **không** phải mặc định toàn cầu; MDN là
+  nguồn của chính `Intl.NumberFormat`. **Giới hạn chưa đo:** tỉ lệ máy/trình duyệt Việt Nam có sẵn dữ liệu
+  locale `vi-VN` — vì vậy quy định cho phép fallback "đổi đúng một lần dấu chấm thành dấu phẩy" thay vì tin
+  vào locale.
+- **"≤ 1 phút" cho ba dòng bù bài khi em đến muộn, "≤ 3 phút" cho trang "ba việc của bài trước"** — cả hai
+  là trần *thời gian tiết bị gián đoạn*, **do dự án tự chọn**, chưa có nguồn nào đo một em bắt kịp bài mất
+  bao lâu. Cách chọn: 1 phút là lúc cả lớp vẫn nghe cô còn em cầm giấy đọc ba dòng; 3 phút nằm trong nửa dưới
+  của khoảng 3–6 phút một lượt nhóm đã quy định ở vòng 12, tức là em xem trang bù ngay trong lúc lớp LUYỆN
+  TẬP mà cô không phải dừng bước. Điều lấy được từ tài liệu là *nguyên tắc*: phải có một lộ trình ngắn cho
+  em trở lại, không phải một chồng phiếu, và không hỏi lý do vắng trước lớp.
+- **"Số hàng của trang chữa bài ≤ đúng số nhãn lỗi của cụm", "tổng chữa ≤ 4 phút", "dòng 'Em chữa bài ở
+  đây' ≥ 1 cm", "không tô đỏ"** — con số này **đo từ dữ liệu, không chọn trên giấy**: `node -e` trên 38 cụm
+  vật thật cho thấy `cluster(id).tags.length` bằng đúng số mục của `ERROR_NOTES[id]` ở **38/38** cụm, và
+  phân bố là 37 cụm có 3 nhãn + 1 cụm (chẵn-lẻ) có 2 nhãn. Việc đo này còn tìm ra một quy định **vô
+  nghiệm**: `verifyData` từ vòng 2 bắt LESSON_DATA "bao phủ ít nhất 3 nhãn lỗi", nhưng cụm chẵn-lẻ chỉ có
+  2 nhãn, nên giáo án GA4-04 không thể nào qua được kiểm chứng của chính nó — đường duy nhất là bịa nhãn
+  thứ ba ngoài danh sách. Từ vòng 13 trần phủ nhãn viết theo `min(3, số nhãn thật của cụm)`, `repairWork`
+  cũng lấy trần 3 theo cùng phép đo, và `tools/validate.mjs` chặn nếu hai con số lệch nhau hoặc một cụm
+  nào đó vượt 3 nhãn. 4 phút lấy đúng ngân sách một lượt lên bảng của `boardEquity`, và quy định nói rõ
+  không được lấy từ bước VẬT THẬT vì tay các em đã bị cắt ở vòng 11. "≥ 1 cm" to hơn một dòng vở kẻ ngang
+  để em viết chồng lên chứ không viết đè — **con số tự chọn, cô đo bằng thước được, không phải chuẩn in
+  nào**. Hướng "chữa bằng nhận xét, không sửa hộ, không tô đỏ" theo tài liệu marking ở mục nguồn đọc; riêng
+  "công cụ không lưu và không hiện điểm" là **lựa chọn của dự án** cho khớp với cam kết không giữ dữ liệu
+  học sinh, không phải một quy định nào cấm hiển thị điểm.
 
 ## Nguồn đọc cho từng cụm quy định
 
@@ -239,6 +280,28 @@ chỉ vài em nói. `groupWork` vì thế bắt buộc bốn vai trò gắn vớ
 trước khi nhóm chốt — đó là phần "trách nhiệm cá nhân" mà các tài liệu nhóm đều nhắc, chứ không phải sáng kiến
 của dự án này.
 
+**Định dạng số theo ngôn ngữ: vì sao phần thập phân phải là dấu phẩy (đo vòng 13)**
+- [Intl.NumberFormat — JavaScript — MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat) — nguồn của chính API được quy định dùng, và của việc nó in ra theo locale chứ không theo ý người viết code.
+- [Number, currency, and unit formatting — W3C i18n QA](https://w3c.github.io/i18n-drafts/questions/qa-number-format.en.html) — tài liệu này trả lời thẳng câu "dấu chấm hay dấu phẩy là mặc định?": **không có mặc định toàn cầu**, dấu phân cách đổi theo ngôn ngữ/vùng. Căn cứ cho cả mục (1) và (2) của `numberFormat`.
+- [Number formatting — Data visualisation guide, Liên minh Châu Âu](https://data.europa.eu/apps/data-visualisation-guide/number-formatting) — một bảng khác về cùng một việc: cùng một con số, hai cách viết, và cách sai thì người đọc hiểu sai.
+- [Hàng của số thập phân. Đọc, viết số thập phân — VietJack (Toán 5)](https://vietjack.com/toan-5-kn/ly-thuyet-hang-cua-so-thap-phan-doc-viet-so-thap-phan.jsp) và [bản của Loigiaihay](https://loigiaihay.com/ly-thuyet-hang-cua-so-thap-phan-doc-viet-so-thap-phan-c109a14568.html) — cách SGK lớp 5 yêu cầu viết và đọc, tức là thứ mà bảng của công cụ phải khớp. Hai trang này là tài liệu tham khảo phổ thông, không phải văn bản chuẩn của Bộ.
+Phần kiểm chứng được của quy định (không cần tin ai): `Intl.NumberFormat('vi-VN').format(0.5)` → `"0,5"`, `parseFloat('0,5')` → `0`, `Number('1.234,5')` → `NaN`, `(0.5).toFixed(1)` → `"0.5"`.
+
+**Trả bài và chữa bài: sửa bằng nhận xét, không sửa hộ, không tô đỏ (đo vòng 13)**
+- [What does research tell us about effective marking in maths? — Chartered College of Teaching](https://my.chartered.college/research-hub/what-does-research-tell-us-about-effective-marking-in-maths/) — căn cứ trực tiếp cho trang bảng hai cột: nhận xét chỉ ra *cách làm* chứ không chỉ đóng dấu đúng/sai, và học sinh tự sửa phần của mình.
+- [There's More to Math Feedback Than 'Correct' and 'Incorrect' — Edutopia](https://www.edutopia.org/article/theres-more-math-feedback-correct-and-incorrect/) — nguồn của câu "không có dòng 'bài của em … sai'".
+- [Developmental Marking and Feedback Policy — Brighton Academy (PDF)](https://resources.finalsite.net/images/v1601457616/brightonacademiestrustorguk/yijgbys5n9wantrtbnwo/lin-assessment-policy-appendix-1-developmental-marking-and-feedback-policy.pdf) — một chính sách marking cụ thể của trường: mã lỗi thống nhất và học sinh viết câu trả lời lại. `loiViet` lấy cảm hứng từ cách làm này; **danh sách nhãn của mỗi cụm vẫn do `tools/data/error-notes.mjs` cấp (2–3 nhãn), không lấy số từ tài liệu**.
+- [Marking and Feedback: Is Whole Class Feedback the Answer? — British School Voices](https://voices.britishschool.nl/2020-03-05/marking-and-feedback-is-whole-class-feedback-the-answer/) — "whole class feedback" là chữa cả lớp thay vì chấm từng bài, tức là hình dạng của nút "Chữa bài".
+- [Is green the new red? — British Council France](https://www.britishcouncil.fr/blog/green-new-red-how-does-colour-we-use-correct-students%E2%80%99-work-influence-their-perceptions-0) và [Should you switch from red ink to blue ink for marking? — Strategy Education](https://strategyeducation.co.uk/should-you-switch-from-red-ink-to-blue-ink-for-marking/) — hai bài bàn về tác động cảm xúc của mực đỏ. Repo chỉ dùng chúng làm căn cứ *phong cách* (phấn trắng, hai cột đặt cạnh nhau, không tô đỏ), **không trích số liệu** từ chúng; nghiên cứu "Seeing red" trên ScienceDirect đo cảm nhận về người chấm chứ không đo kết quả học.
+- [Spacing and retrieval — Australian Education Research Organisation](https://www.edresearch.edu.au/summaries-explainers/explainers/spacing-retrieval) và [Evidence of the Spacing Effect (PMC8759977)](https://pmc.ncbi.nlm.nih.gov/articles/PMC8759977/) — căn cứ cho việc `repairWork` đặt bước chữa bài ở **tiết tiếp theo** của cùng lớp chứ không ở cuối tiết vừa dạy: để bài "nguội" một chút rồi mới chữa thì nhớ lâu hơn. Hai nguồn nói về nguyên tắc, không có ngưỡng phút nào cho lớp Việt Nam.
+- [Không trả bài kiểm tra cho học sinh, phụ huynh dễ nghi ngờ giáo viên thiên vị — Giáo dục & Thời đại](https://giaoduc.net.vn/khong-tra-bai-kiem-tra-cho-hoc-sinh-phu-huynh-de-nghi-ngo-giao-vien-thien-vi-post227523.gd) — bối cảnh Việt Nam cho câu "phiếu phải quay lại tay các em": ở trường phổ thông Việt Nam việc trả bài là một kỳ vọng của phụ huynh, nên quy định bắt buộc một bản in có giá trị (phiếu của em + trang đáp án của cô) thay vì chỉ lưu trên máy.
+
+**Em trở lại sau giờ vắng: một lộ trình ngắn, không hỏi lý do trước lớp (đo vòng 13)**
+- [Helping Students Return From a Long Absence — Edutopia](https://www.edutopia.org/article/students-returning-extended-absence/)
+- [Seven Ways to Help Students Catch Up After a School Absence — Two Writing Teachers](https://twowritingteachers.org/2022-10-03/seven-ways-to-help-students-catch-up-after-a-school-absence/) — nguồn của ý "ba việc của bài trước" thay vì "chồng phiếu": bắt lại đúng những gì lớp đã làm, không dạy lại cả bài.
+- [How do we help absent students catch up? — Meet Every Learner's Needs](https://meeteverylearnersneeds.substack.com/p/how-do-we-help-absent-students-catch)
+Cả ba đều bàn về vắng dài ngày, nhiều tuần; `latePupil` rút phần dùng được cho một buổi (dựng lại đúng ba bước đã làm từ bài đã lưu, cho xem lúc lớp đang làm bài, không dạy lại từ đầu) và giữ nguyên phần mà chúng cảnh báo: không biến em thành người phải giải thích trước lớp ngay phút vừa tới.
+
 Lưu ý cách dùng danh mục này: các trang trên là **nguồn để hiểu vì sao chọn kỹ thuật**, không phải nơi trích
 số liệu hiệu quả. Dự án này chưa chạy thử nghiệm lớp học nào, nên không con số nào ở trên được nhân lên
 thành "tăng X% điểm".
@@ -284,7 +347,7 @@ thành "tăng X% điểm".
   bốn em" phải ghép hai bàn — công cụ chưa có nút nào hỏi cô về kiểu xếp bàn. `groupWork` đang suy ra số
   bàn từ sĩ số (45 em → 11 bàn) chứ không từ sơ đồ lớp thật.
 - **Hai lượt nhóm có thật sự nhét được vào 12–15 phút LUYỆN TẬP?** Trần "tối đa 2 lượt" là phép chia trên
-  giấy. Chưa có một tiết dạy thật nào để biết thời gian xếp lại vai trò và chốt kết quả consumes bao nhiêu,
+  giấy. Chưa có một tiết dạy thật nào để biết thời gian xếp lại vai trò và chốt kết quả tốn bao nhiêu,
   và cũng chưa biết lượt thứ hai có bị cô giáo bỏ vì cháy giờ hay không.
 - **Kịch bản "Còn 10 phút" có thể cạn câu.** `LESSON_DATA` yêu cầu tối thiểu 6 mục, nên nếu cô đã dùng hết
   trong bốn bước thì không còn "câu chưa dùng" để mở. Hướng sửa đúng là thêm trường chọn thêm (bài đào sâu
@@ -292,17 +355,39 @@ thành "tăng X% điểm".
   — hiện tại quy định chỉ nói *nguyên tắc* của ba bài, chưa có dữ liệu chốt cho từng bài.
 - **Ngưỡng 8 phút / 3 phút của `timeSlack` chưa dựng theo số đo nào** — xem mục "Vì sao chọn những con số
   đang dùng". Muốn có số thật thì phải ghi lại giờ dùng thật của từng chặng trong vài tiết dạy.
+- **Chưa biết bao nhiêu máy có locale `vi-VN`** (đo vòng 13). `Intl.NumberFormat('vi-VN')` chạy được ở mọi
+  trình duyệt hiện nay, nhưng **kết quả** phụ thuộc dữ liệu locale của máy; chưa có laptop trường nào được
+  đo. Đường lui mà `numberFormat` cho phép (đổi đúng một lần dấu chấm thập phân thành dấu phẩy) vì thế vẫn
+  là phỏng đoán chưa thử. Cách làm gọn: mục "Báo cáo máy" (đã mở từ vòng 8) nên in thêm một dòng "số thử:
+  0,5 hay 0.5" — một dòng thôi, không cần camera hay mạng.
+- **Hàm chuẩn hoá số đầu vào chưa có bảng thử.** Quy định mô tả ba bước (bỏ dấu chấm phân cách nghìn, đổi
+  dấu phẩy thành dấu chấm, rồi mới tính) nhưng chưa có danh sách chuỗi bắt buộc đọc đúng. Một bảng vài dòng
+  là đủ để vòng sau nhúng vào `verifyLessonBank()`: `0,5` · `0.5` · `1,25` · `1.234,5` · `17,25 cm` ·
+  `5/8` · `0,500` · `1,05` — và mỗi dòng phải cho ra đúng số đo mà SGK chấp nhận.
+- **Trần 3 nhãn lỗi giờ là số đo, nhưng chưa chắc là số đủ.** `validate.mjs` đã chặn nếu một cụm vượt 3
+  nhãn, nghĩa là muốn dạy thêm lỗi (ví dụ "nhầm 1,25 thành 125" cho số thập phân) thì phải xoá một nhãn cũ
+  hoặc chủ động nâng trần ở CẢ HAI chỗ (`verifyData`, `repairWork`) — vòng sau nên quyết định theo phiếu
+  thật của một lớp chứ không nâng trần trước.
+- **Trang "ba việc của bài trước" của `latePupil` chưa có dữ liệu riêng.** Quy định bắt dựng lại từ bài đã
+  lưu (vật thật · sơ đồ · phép tính của bài trước), và ba trường đó có sẵn, nhưng chưa kiểm tra rằng với
+  cụm hai xe chuyển động (`chuyen-dong-f-d-p`, `chuyen-dong-de`) một trang như vậy vẫn đủ để em bắt kịp —
+  bài đó mạch chính là dải thời gian chứ không phải hình chia phần.
+- **Bước chữa bài chưa có chỗ trong ngân sách 35 phút.** `repairWork` đặt ở tiết tiếp theo với trần 4 phút,
+  còn `pace`/`fullPeriod` không trừ 4 phút đó khỏi chặng nào. Vòng sau phải quyết nó đứng cạnh KHỞI ĐỘNG
+  (cắt 4 phút của Khởi động) hay cạnh LUYỆN TẬP (cắt 4 phút của Luyện tập) — hiện tại prompt để trống, tức
+  là mỗi công cụ sẽ tự chọn một chỗ khác nhau.
 
 ## Muốn đóng góp thì sửa ở đâu
 
 ```text
 tools/lib/chalk.mjs     10 quy định bảng phấn và vật thật      → sinh vào mục 4 của giáo án
-tools/lib/lesson.mjs    35 quy định chế độ giảng bài           → sinh vào mục 0, 1, 2, 3, 5, 6, 7, 8, 9, 10
+tools/lib/lesson.mjs    38 quy định chế độ giảng bài           → sinh vào mục 0, 1, 2, 3, 5, 6, 7, 8, 9, 10
 tools/lib/handout.mjs   3 quy định từ bảng ra vở               → sinh vào mục 9
 tools/data/props.mjs    vật thật + sơ đồ theo 38 cụm
 tools/data/lessons.mjs  tên bài, câu khởi động, dòng ghi nhớ
 tools/build-lessons.mjs ghép thành 39 file prompts/giao-an/
-tools/validate.mjs      48 khoá của họ giáo án + chốt chặn ngược + 13 mục của khung
+tools/validate.mjs      51 khoá của họ giáo án + chốt chặn ngược + 13 mục của khung
+                        + trần số hàng "Chữa bài" đo thẳng từ clusters.mjs/error-notes.mjs                      + trần 3 nhãn lỗi đo thẳng từ error-notes.mjs/clusters.mjs
 ```
 
 Quy trình một vòng nâng cấp: đo bằng `grep` trên `prompts/giao-an/GA*.md` → viết quy định có con số vào
