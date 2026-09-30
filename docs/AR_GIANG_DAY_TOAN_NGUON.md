@@ -1,4 +1,4 @@
-# Giáo án AR trên bảng phấn — nguồn cộng đồng và bài học sau 16 vòng
+# Giáo án AR trên bảng phấn — nguồn cộng đồng và bài học sau 17 vòng
 
 Tài liệu này để **người khác tham khảo và nối tiếp**, không phải mô tả tính năng. Phần tính năng nằm ở
 [`prompts/giao-an/README.md`](../prompts/giao-an/README.md); ở đây chỉ ghi: cái gì đã đo được, cái gì đã
@@ -7,7 +7,7 @@ thay đổi vì số liệu, và nên đọc gì trước khi sửa tiếp.
 ## Nguyên tắc làm việc đã trả giá mà thành
 
 1. **Đo trước khi thêm quy định.** Mỗi vòng bắt đầu bằng một lệnh `grep` trên đúng 39 file giáo án đã sinh,
-   chứ không bắt đầu bằng ý tưởng. Mười ba vòng gần nhất đều tìm thấy lỗ 0/39 — nghĩa là nếu ngồi nghĩ thì
+   chứ không bắt đầu bằng ý tưởng. Mười bốn vòng gần nhất đều tìm thấy lỗ 0/39 — nghĩa là nếu ngồi nghĩ thì
    sẽ nghĩ ra thứ đã có sẵn.
 2. **Đo cả chỗ mình tự mâu thuẫn.** Vòng 9 không đi tìm ý mới: nó đọc lại chính các quy định đã có và thấy
    hai quy định cũ đòi cái không thể cùng có — một webcam vừa phải nhìn bàn tay em đứng trước bảng,
@@ -51,13 +51,21 @@ thay đổi vì số liệu, và nên đọc gì trước khi sửa tiếp.
    định nào hỏi phòng rộng bao nhiêu — `bigClass` (vòng 11) hỏi sĩ số M, còn diện tích thì 0/39. Đem số liệu
    phòng học Việt Nam ra áp (định mức ~1,5 m²/đầu em, phòng 48 m² ~32 em mới đúng chuẩn) thì một lớp 45 em xếp
    vào 48 m² còn ~1,07 m²/đầu em: quy định của vòng 15 mô tả cái mà căn phòng đó không thể làm. `roomFootprint`
-   sinh ra từ chỗ mâu thuẫn tự tạo đó, không phải từ một ý tưởng mới.
+   sinh ra từ chỗ mâu thuẫn tự tạo đó, không phải từ một ý tưởng mới. Vòng 17 không đi tìm ý mới mà đo **tiếp**
+hệ quả của vòng 16: `movementBreak` đặt ngưỡng ngồi liền ≤ 12 phút với giả định nhịp nghỉ còn là nhịp toàn
+thân, nhưng `roomFootprint` vừa rút nhịp đó ở phòng chật (< 1,2 m²/đầu em) xuống còn vươn tay/xoay cổ — đúng
+vào lớp đông và khó giữ trật tự nhất. Hai quy định ghép lại thành một lỗ mà từng quy định riêng không thấy:
+chính lớp cần đổi tư thế nhiều nhất lại nhận nhịp yếu nhất mà vẫn chờ đủ 12 phút. Phép đo còn vạch ra một
+lỗi hình học trong `roomFootprint`: nó đồng nhất "không có lối đi" với "không đứng được", trong khi một em
+đứng thẳng lên rồi ngồi xuống trong chính chỗ ngồi của mình không cần lối đi — chỉ nhịp dang tay, xếp hàng,
+dùng người làm phân số mới cần. `tightRoomFocus` sửa cả hai: giữ nhịp đứng-tại-chỗ, và bù cho biên độ nhỏ
+bằng cách hạ ngưỡng ngồi xuống ≤ 8 phút trong nấc chật.
 3. **Quy định phải có con số.** "Chữ phải to" không kiểm chứng được; "≥ 40 px **và** ≥ 5.5% chiều cao khung
    hình, ≤ 12 chữ một dòng" thì validator bắt được. Mọi quy định trong `tools/lib/*.mjs` là chuỗi nguyên văn,
    `tools/validate.mjs` so bằng `includes()`, nên lời văn và mắt kiểm không bao giờ lệch nhau.
 4. **Chốt chặn hai chiều.** Cơ chế game lọt vào giáo án và quy định giáo án lọt sang game đều làm build đỏ.
    Thêm một quy định mới là tự động thêm một khoá bị cấm ở phía bên kia (`LESSON_FAMILY_RULES`).
-5. **Probe đột biến là đơn vị kiểm thử thật.** 81 phép, mỗi phép phá đúng một thứ và đòi đúng thông báo.
+5. **Probe đột biến là đơn vị kiểm thử thật.** 83 phép, mỗi phép phá đúng một thứ và đòi đúng thông báo.
    Không có probe thì một quy định chỉ là câu văn đẹp.
 6. **Tách công cụ giảng bài khỏi game.** Cùng một kiến thức, hai động cơ đối lập: game cần hồi hộp,
    tiết giảng cần giáo viên cầm lái. Nhét tim/điểm/combo vào bảng phấn làm em lên bảng sợ sai hơn là muốn hiểu.
@@ -81,7 +89,8 @@ thay đổi vì số liệu, và nên đọc gì trước khi sửa tiếp.
 | 13 | 0/39 coi "dấu chấm" là một quy định hiển thị, 0/39 "dấu nhân"/"dấu chia", 0/39 `parseFloat`, 0/39 `toFixed` ("dấu phẩy" chỉ có ở 4/39 bài dạy số thập phân) · 0/39 "đến muộn" và 0/39 "vắng" · 0/39 "trả bài" và 0/39 "chữa bài" · **đo trên dữ liệu**: `verifyData` bắt phủ "≥ 3 nhãn lỗi" nhưng 1/38 cụm (chẵn-lẻ) chỉ khai 2 nhãn — giáo án đó vô nghiệm | `numberFormat`, `latePupil`, `repairWork` + `verifyData` đổi trần thành `min(3, số nhãn của cụm)` + validate chặn `tags`/`loiViet` lệch nhau |
 | 14 | 0/39 "từ khó" · 0/39 "giải nghĩa" · 0/39 "ít chữ hơn" · 0/39 "chỉ vào hình" (giả định mọi em đọc thông thạo tiếng Việt) · 0/39 "không có bảng con" · 0/39 "mặt sau vở" · 0/39 "nắp hộp" (lượt Bảng con giả định mỗi em đã có bảng) · phiếu: 0/39 "cỡ chữ" · 0/39 "in một mặt" | `homeLanguage`, `noSlate` + `HANDOUT.printRun` (họ từ-bảng-ra-vở thành 4 quy định) |
 | 15 | **mâu thuẫn pace × flow**: 0/39 "nghỉ giải lao" · 0/39 "vận động giữa tiết" · 0/39 "đứng dậy" · 0/39 "vươn vai" — năm bước 15–20 phút của `flow` và nhịp chờ của `pace` giả định 35 em ngồi bất động nhìn bảng; từ "giải lao" duy nhất có mặt lại là một câu CẤM trong `latePupil` | `movementBreak` (ngồi liền ≤ 12 phút → nhịp vận động 30–90s vẫn là Toán, nghỉ ngắn 1–3 phút tổng ≤ 3 phút không cắt VẬT THẬT, camera tắt, có phiên bản ngồi cho cả lớp) |
-| 16 | **đo chính hệ quả của quy định vòng 15**: `movementBreak`/`groupWork`/`handover`/`boardEquity` âm thầm đòi khoảng trống trên sàn, trong khi `bigClass` mới hỏi SĨ SỐ chứ chưa hỏi diện tích — 0/39 "chật" · 0/39 "không đủ chỗ" · 0/39 "lối đi" · 0/39 "dịch bàn" · 0/39 "đứng tại chỗ" · 0/39 "chỗ đứng", dù "đứng lên" và "nhóm 4 em" có ở 39/39 file · số thật: định mức VN ~1,5 m²/đầu em, phòng 48 m² chỉ chuẩn ở ~32 em → 45 em/48 m² ~1,07 m² | `roomFootprint` (hỏi m² một lần → m²/đầu em; ≥ 1,8 + lối đi ≥ 60 cm mới cho đứng quay người/xếp hình; < 1,2 chỉ phiên bản ngồi; an toàn: không lách qua bạn, giữ lối thoát, không kê bàn chắn cửa) |
+| 16 | **đo chính hệ quả của quy định vòng 15**: `movementBreak`/`groupWork`/`handover`/`boardEquity` âm thầm đòi khoảng trống trên sàn, trong khi `bigClass` mới hỏi SĨ SỐ chứ chưa hỏi diện tích — 0/39 "chật" · 0/39 "không đủ chỗ" · 0/39 "lối đi" · 0/39 "dịch bàn" · 0/39 "đứng tại chỗ" · 0/39 "chỗ đứng", dù "đứng lên" và "nhóm 4 em" có ở 39/39 file · số thật: định mức VN ~1,5 m²/đầu em, phòng 48 m² chỉ chuẩn ở ~32 em → 45 em/48 m² ~1,07 m² | `roomFootprint` (hỏi m² một lần → m²/đầu em; ≥ 1,8 + lối đi ≥ 60 cm mới cho đứng quay người/xếp hình; < 1,2 bỏ nhịp dịch ngang, giữ đứng-tại-chỗ (vòng 17 hiệu chỉnh); an toàn: không lách qua bạn, giữ lối thoát, không kê bàn chắn cửa) |
+| 17 | **đo tiếp hệ quả của vòng 16**: `movementBreak` giữ ngưỡng ngồi liền ≤ 12 phút với giả định nhịp còn là nhịp toàn thân, nhưng `roomFootprint` vừa rút nhịp đó ở phòng chật (< 1,2 m²/đầu em) xuống còn vươn tay/xoay cổ — chính lớp đông-trật nhất nhận nhịp yếu nhất mà vẫn chờ đủ 12 phút; và `roomFootprint` đồng nhất "không lối đi" với "không đứng được" dù đứng-thẳng-tại-chỗ không cần lối đi | `tightRoomFocus` (nấc chật: giữ nhịp đứng-tại-chỗ 20–60s vẫn là Toán, hạ ngưỡng ngồi liền ≤ 12 → ≤ 8 phút, tổng nghỉ ≤ 4 phút, không cắt VẬT THẬT, camera vẫn tắt; sửa `roomFootprint` để chỉ cắt nhịp dịch ngang/di chuyển) |
 
 ## Vì sao chọn những con số đang dùng
 
@@ -221,11 +230,18 @@ thay đổi vì số liệu, và nên đọc gì trước khi sửa tiếp.
   đạt 1,5 m²/học sinh" và chỉ ra "phòng 48 m² sĩ số ~32 em mới đúng tiêu chuẩn tối thiểu" (⇒ 45 em trong 48 m²
   ≈ 1,07 m²/em); Hà Lan dùng chuẩn **3,5 m²/đầu em** cho phòng tiểu học, đặt trần trên của phổ không gian. Dự
   án **chọn 1,8** làm nấc "được đứng quay người + xếp hình bằng người" vì nó nằm *trên* định mức xây dựng 1,5
-  (chỗ để ngồi ≠ chỗ để đứng dang tay), và **chọn 1,2** làm nấc "chỉ còn phiên bản ngồi" vì dưới 1,2 thì ngay
-  cả ngồi quay người cũng chật — con số 1,07 của lớp 45 em/48 m² rơi đúng vào nấc này, tức là quy định mô tả
-  một tình huống có thật chứ không phải một cột mốc tùy ý. Ngưỡng "lối đi ≥ 60 cm" là **ước lượng tự chọn**
+  (chỗ để ngồi ≠ chỗ để đứng dang tay), và **chọn 1,2** làm nấc "bỏ nhịp dịch ngang/di chuyển, chỉ còn đứng-tại-chỗ" vì dưới 1,2 thì ngay cả dang tay hay lùi ra để xếp hình cũng chật — con số 1,07 của lớp 45 em/48 m² rơi đúng vào nấc này, tức là quy định mô tả một tình huống có thật chứ không phải một cột mốc tùy ý. (Vòng 17 sửa lại mô tả nấc 1,2: phòng chật chỉ cắt các nhịp cần *dịch ngang hoặc đi lại*, vẫn giữ nhịp *đứng thẳng tại chỗ* vì đứng lên trong chính chỗ ngồi không cần lối đi.) Ngưỡng "lối đi ≥ 60 cm" là **ước lượng tự chọn**
   cho bề rộng một em lách qua bàn, chưa có số đo hành lang nào của Bộ; ba nấc trên là cách chia khoảng, không
   phải định mức của một quy chuẩn xây dựng nào, và dự án chưa khảo sát phân bố diện tích phòng học Việt Nam.
+- **Ngưỡng ≤ 8 phút, nhịp 20–60 giây và trần ≤ 4 phút của `tightRoomFocus`** — đây là **ba lựa chọn của dự
+  án**, không nguồn nào quy định số phút cho một nhịp bị rút biên độ. Có hai điểm neo *định hướng*: trang chú
+  ý theo tuổi nêu quy tắc "2–3 phút cho mỗi năm tuổi" (trẻ 9–10 tuổi giữ nhịp cỡ **18–30 phút**), và bản tổng
+  hệ thống 'active school breaks' kết luận vận động vừa–nặng cải thiện chú ý rõ hơn ngồi yên — cả hai chỉ nói
+  *chiều* (nhịp yếu thì nên tới sớm hơn), **không** chỉ ra con số 8. Dự án chọn 8 vì nó nằm dưới cả hai ngưỡng
+  10–25 phút của tài liệu brain-break (vòng 15) lẫn cận dưới 18 phút của quy tắc theo tuổi, lấy cho một nhịp
+  biên-độ-nhỏ; số phút dôi ra được bù vào trần tổng (3 → 4 phút) để không cắt bước VẬT THẬT. Bản tổng hệ thống
+  đó cũng nói rõ "tính không đồng nhất của giao thức ngăn chốt liều chuẩn xác", nên repo cố tình không bịa một
+  con số nào thành "chuẩn khoa học".
 
 ## Nguồn đọc cho từng cụm quy định
 
@@ -401,9 +417,13 @@ Ba dòng sau (`camera TẮT`, "phiên bản ngồi cho cả lớp", "không thi 
 
 **Khoảng trống sàn của phòng học cho nhịp đứng và xếp hình bằng người (đo vòng 16)**
 - [Size of the classroom — Ouders & Onderwijs (Hà Lan)](https://oudersenonderwijs.nl/en/size-of-the-classroom/) — nguồn của con số đối chiếu **"Primary school: 3.5 square meters of floor space per student"**; trang nói rõ đây là **trung bình toàn khuôn viên**, không phải mức tối thiểu cho một phòng lẻ. Dùng để cho thấy ngưỡng 1,8 m²/đầu em của `roomFootprint` nằm thấp hơn nhiều ngay cả so với một mức trung bình toàn trường của nước phát triển, nên không phải yêu cầu xa xỉ. Đây là mốc *so sánh*, không phải nơi lấy ba nấc 1,8/1,2 hay lối đi 60 cm.
-- [Tính định mức GV trung học vùng 3, 45 HS/lớp, nhiều nơi phòng học quá chật choáng — Giáo dục & Thời đại](https://giaoduc.net.vn/tinh-dinh-muc-gv-trung-hoc-vung-3-45-hslop-nhieu-noi-phong-hoc-qua-chat-choi-post245818.gd) — bài trong nước dẫn định mức **"phòng học tập phải đạt 1,5 m²/học sinh"** (bậc trung học) và tự tính ra rằng **"diện tích phòng học 48 m², sĩ số khoảng 32 em/lớp mới đúng tiêu chuẩn tối thiểu"**, trong khi quy mô cho phép tới 45 em; chính chỗ vênh đó làm các hoạt động tương tác không còn chỗ đứng. Là căn cứ *bối cảnh Việt Nam* để `roomFootprint` phải có nấc "chỉ phiên bản ngồi" khi lớp 45 em chỉ còn ~1,07 m²/đầu em. (Số 1,5 m² và phép chia 48 m²/~32 em lấy nguyên văn từ bài; bài áp cho bậc trung học, dự án suy sang tiểu học theo cùng logic diện tích.)
+- [Tính định mức GV trung học vùng 3, 45 HS/lớp, nhiều nơi phòng học quá chật choáng — Giáo dục & Thời đại](https://giaoduc.net.vn/tinh-dinh-muc-gv-trung-hoc-vung-3-45-hslop-nhieu-noi-phong-hoc-qua-chat-choi-post245818.gd) — bài trong nước dẫn định mức **"phòng học tập phải đạt 1,5 m²/học sinh"** (bậc trung học) và tự tính ra rằng **"diện tích phòng học 48 m², sĩ số khoảng 32 em/lớp mới đúng tiêu chuẩn tối thiểu"**, trong khi quy mô cho phép tới 45 em; chính chỗ vênh đó làm các hoạt động tương tác không còn chỗ đứng. Là căn cứ *bối cảnh Việt Nam* để `roomFootprint` phải có nấc "chỉ đứng-tại-chỗ, bỏ nhịp dịch ngang" khi lớp 45 em chỉ còn ~1,07 m²/đầu em. (Số 1,5 m² và phép chia 48 m²/~32 em lấy nguyên văn từ bài; bài áp cho bậc trung học, dự án suy sang tiểu học theo cùng logic diện tích.)
 - Hai nguồn thử mà **không** trích được số: hướng dẫn diện tích của một hãng thiết kế nội thất trường học trả về chỉ mã HTML không có con số, và tài liệu chuẩn Anh (Building Bulletin 103) nằm sau bản PDF không lấy được ở phiên đo. Ghi lại để người sau tìm bản chuẩn xây dựng trường của Việt Nam (QCVN và văn bản định mức của Bộ) thay cho con số nước ngoài.
 - Ba ngưỡng **1,8 / 1,2 m²/đầu em và lối đi ≥ 60 cm** là cách dự án chia ba nấc (đầy đủ / đứng tại chỗ / chỉ ngồi), **không** lấy nguyên văn từ nguồn nào ở trên; hai mốc ngoài (3,5 m² Hà Lan, 1,5 m² định mức VN) chỉ dùng để *neo* hai ranh giới đó vào thực tế, còn 60 cm lối đi là ước lượng theo chiều một người đi nghiêng, chưa phải số đo.
+
+**Vì sao nhịp yếu (phòng chật) phải tới sớm hơn (đo vòng 17)**
+- [Normal Attention Span Expectations By Age — Brain Balance Centers](https://www.brainbalancecenters.com/blog/normal-attention-span-expectations-by-age) — nêu quy tắc kinh nghiệm "2–3 phút cho mỗi năm tuổi", với trẻ **8 tuổi ≈ 16–24 phút**, **10 tuổi ≈ 20–30 phút**; trang tự nói đây là mức nền và phụ thuộc từng trẻ. Dùng làm *điểm neo*: ngưỡng 12 phút (lớp rộng, nhịp toàn thân) và 8 phút (lớp chật, nhịp đứng-tại-chỗ) đều nằm **dưới** cận dưới ~16 phút ấy, tức là cả hai là lựa chọn "cho nghỉ sớm hơn mức phải", không phải giới hạn chú ý. Đây **không** phải nơi lấy con số 8 (số đó dự án tự chọn).
+- [Active School Breaks and Students' Attention: A Systematic Review — PMC8224334](https://pmc.ncbi.nlm.nih.gov/articles/PMC8224334/) — kết luận cùng chiều rằng vận động cường độ vừa–nặng cải thiện chú ý rõ hơn ngồi yên, "một đợt ngắn có thể hiệu quả hơn một đợt dài", và các giao thức thường ngắt những bloc giảng dài. Quan trọng không kém: bản tổng hệ thống **nói rõ tính không đồng nhất của giao thức khiến không chốt được liều chuẩn xác**, nên vòng 17 chỉ mượn *chiều* kết luận (nhịp biên độ nhỏ → bù bằng tần suất) chứ **không** biến 8 phút/20–60 giây/4 phút thành số "khoa học". Ngưỡng của `movementBreak` (vòng 15, từ Understood) vẫn giữ cho lớp rộng; `tightRoomFocus` chỉ hạ nó ở nấc chật của `roomFootprint`.
 
 Lưu ý cách dùng danh mục này: các trang trên là **nguồn để hiểu vì sao chọn kỹ thuật**, không phải nơi trích
 số liệu hiệu quả. Dự án này chưa chạy thử nghiệm lớp học nào, nên không con số nào ở trên được nhân lên
@@ -522,17 +542,34 @@ thành "tăng X% điểm".
   đúng–sai từng em, nhưng chưa cưỡng chế được thứ tự công bố; hướng đóng lỗ hổng này là ép nhịp chỉ dùng câu
   "em đoán/em nghĩ" và đọc đáp án sau khi cả lớp đã ngồi — đã ghi ở mục trên, vòng sau cần biến thành khoá
   trong `validate.mjs` nếu thêm ví dụ câu vào `LESSON_DATA`.
+- **8 phút và 4 phút của `tightRoomFocus` chưa có số đo cho phòng chật.** Không nghiên cứu nào ở phiên đo nối
+  "phòng < 1,2 m²/đầu em" với "trẻ 9–10 tuổi giữ chú ý được đúng bao nhiêu phút khi chỉ vận động tại chỗ"; dự
+  án nội suy từ *chiều* kết luận (nhịp yếu hơn → tới sớm hơn). Muốn có số thật thì phải ghi ở một lớp chật:
+  lớp ngồi được bao lâu trước khi rã khi nhịp chỉ là đứng-tại-chỗ, so với một lớp rộng cùng bài.
+- **Đứng-tại-chỗ có thật sự là một "nhịp nghỉ" về sinh lý không?** Bản tổng hệ thống ghi lợi ích chú ý đến chủ
+  yếu từ vận động vừa–nặng; một nhịp nhón gót/vươn tay 20–60 giây rất có thể không "reset" được như một vòng
+  đi lại. Nếu đo ra đúng là nó yếu thật, hướng sửa đúng không phải hạ ngưỡng mãi xuống (6, 4 phút…) mà là
+  đổi chiến lược: dồn nhịp vào đúng chỗ chuyển tiếp vật thật → sơ đồ để việc đổi hoạt động tự nó cho các em
+  đứng lên, thay vì một nhịp rời.
+- **Nhịp "đứng lên khi số lớn hơn 0,5" có lặp lại lỗi lộ đáp án của vòng 15–16 không.** `tightRoomFocus` nhắc
+  camera tắt và không thi đua, nhưng một câu "đứng nếu đồng ý X > 0,5" vẫn có thể thành phiếu đúng–sai công khai
+  nếu X là một phát biểu kiểm tra. Quy định cần ép mọi nhịp đếm ở phòng chật về dạng "em đoán / em chọn", và
+  chỉ cho công bố đáp án sau khi cả lớp đã ngồi — cùng nguyên tắc đã ghi cho nhịp đứng–ngồi toàn thân.
+- **Ngân sách nghỉ của phòng chật chưa chạy thử trên tiết 35 phút.** Tổng nghỉ ≤ 4 phút (`tightRoomFocus`) so
+  với ≤ 3 phút (`movementBreak`) + ngưỡng ngồi ≤ 8 phút + năm bước 15–20 phút của `pace`: chưa có lần nào xếp
+  lịch thật để biết một tiết chật có nhét đủ nhịp mà **không** phải cắt VẬT THẬT như quy định cấm hay không.
+  Đây là bài kiểm tra bằng đồng hồ bấm, thuộc nhóm "đo thực địa một tiết 35 phút" đã mở từ đầu.
 
 ## Muốn đóng góp thì sửa ở đâu
 
 ```text
 tools/lib/chalk.mjs     10 quy định bảng phấn và vật thật      → sinh vào mục 4 của giáo án
-tools/lib/lesson.mjs    42 quy định chế độ giảng bài           → sinh vào mục 0, 1, 2, 3, 5, 6, 7, 8, 9, 10
+tools/lib/lesson.mjs    43 quy định chế độ giảng bài           → sinh vào mục 0, 1, 2, 3, 5, 6, 7, 8, 9, 10
 tools/lib/handout.mjs   4 quy định từ bảng ra vở               → sinh vào mục 9
 tools/data/props.mjs    vật thật + sơ đồ theo 38 cụm
 tools/data/lessons.mjs  tên bài, câu khởi động, dòng ghi nhớ
 tools/build-lessons.mjs ghép thành 39 file prompts/giao-an/
-tools/validate.mjs      56 khoá của họ giáo án + chốt chặn ngược + 13 mục của khung
+tools/validate.mjs      57 khoá của họ giáo án + chốt chặn ngược + 13 mục của khung
                         + trần số hàng "Chữa bài" đo thẳng từ clusters.mjs/error-notes.mjs
 ```
 
