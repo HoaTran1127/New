@@ -221,6 +221,13 @@ const ANT_RULES = [
   [ANT.collectionGap, 'thiếu chỗ trống gọi tên "? ? ?" trong lưới 6 ô của bộ sưu tập'],
   [ANT.saveCeremony, 'thiếu nghi thức lưu phiên 3 giây "Đã lưu: ..."'],
 ];
+// Vòng 21: nhãn khối ở đầu mỗi tầng là thứ người dán prompt nhìn thấy trước tiên. Probe 21: xóa hẳn
+// dòng header "CHỖ CHƠI AN TOÀN (vòng 21: ...)" khỏi build-prompts.mjs thì sáu quy định vẫn còn nguyên
+// trong prompt nên build xanh — nhưng người đọc không còn biết sáu dòng đó đến từ lib nào và vì sao tồn
+// tại, tức là lần sửa sau sẽ xóa luôn cả lib. Kiểm nhãn riêng, không chỉ kiểm nội dung.
+const ZONE_RULES = [
+  ['- CHỖ CHƠI AN TOÀN (', 'thiếu khối "CHỖ CHƠI AN TOÀN" nêu nguồn tools/lib/playzone.mjs — sáu quy định chỗ chơi không còn nhãn để người viết prompt đối chiếu'],
+];
 // Các tầng "phải có MỌI luật, nguyên văn, ở MỌI nơi": bộ kiểm lấy thẳng Object.entries(lib) thay vì
 // gõ tay danh sách. Probe vòng 11 cho thấy danh sách gõ tay là lỗ hổng thật — xóa ${LIGHT.visualShare}
 // khỏi build-prompts.mjs hoặc xóa ${LIGHT.oneThought} khỏi upgrade-legacy.mjs thì 85 prompt và 12 legacy
@@ -529,6 +536,26 @@ const FULL_PINS = [
   ['playzone.mjs', PLAYZONE.guard, 'verifyPlayzone()', 'hàm kiểm tầng chỗ chơi lúc nạp'],
   ['playzone.mjs', PLAYZONE.guard, 'kiểm đúng bốn điều', 'số điều verifyPlayzone() phải kiểm'],
   ['playzone.mjs', PLAYZONE.guard, 'Bản không camera, bản một học sinh và bản tắt tiếng vẫn bắt buộc kiểm đủ bốn điều', 'không bản nào được miễn kiểm chỗ chơi'],
+  // Probe 21: mười lăm con số và lệnh cấm dưới đây bị sửa ngay trong lib mà build vẫn xanh, vì pin cũ
+  // chỉ neo tên thẻ và kích thước nút. Mỗi dòng là một chỗ hỏng thật: thẻ 5 giây thì em chưa kịp dọn
+  // chỗ đã vào hiệp; nút 16px thì tay trẻ bấm trúng "Chỗ chơi ổn rồi" thay vì "Em mệt"; ">= 20%" thì
+  // bản tại chỗ rớt dưới trần cường độ của tầng thể dục mà không ai báo.
+  ['playzone.mjs', PLAYZONE.depCho, 'NGAY TRONG 60–90 GIÂY khởi động', 'thẻ dẹp chỗ nằm TRONG khởi động, không phải một màn riêng 5 giây'],
+  ['playzone.mjs', PLAYZONE.depCho, '"Chỗ chơi ổn rồi" >= 56px', 'cỡ nút xác nhận chỗ chơi'],
+  ['playzone.mjs', PLAYZONE.depCho, 'CẤM trừ tim vì chưa dẹp', 'dẹp chỗ không thành điều kiện phạt'],
+  ['playzone.mjs', PLAYZONE.depCho, 'một nút "Bỏ qua"', 'giáo viên có đường bỏ qua, thẻ không chặn phiên'],
+  ['playzone.mjs', PLAYZONE.giayDep, '"Động tác hôm nay: bản tại chỗ (dép lê)"', 'dòng tổng kết nói rõ bản động tác nào đã chơi'],
+  ['playzone.mjs', PLAYZONE.lopChat, 'đồng hồ vận động >= 60%', 'trần vận động không hạ vì lớp chật'],
+  ['playzone.mjs', PLAYZONE.lopChat, 'CẤM mọi chỉ dẫn "lùi lại"', 'không đòi em lùi khỏi vùng đã khai giữa 12 lượt'],
+  ['playzone.mjs', PLAYZONE.locDongTac, 'HUD ghi "Vùng chơi: tại chỗ"', 'HUD phải nói em đang ở bản vùng chơi nào'],
+  ['playzone.mjs', PLAYZONE.locDongTac, '"Vùng chơi: 1 sải tay" ở chữ >= 18px', 'cỡ chữ của nhãn vùng chơi'],
+  ['playzone.mjs', PLAYZONE.nutMet, 'không bao giờ mờ, không bao giờ bị che', 'nút xin nghỉ luôn bấm được'],
+  ['playzone.mjs', PLAYZONE.nutMet, 'CẤM trừ tim, CẤM trừ điểm, CẤM hỏi lý do', 'nghỉ sớm không phải một lỗi'],
+  ['playzone.mjs', PLAYZONE.nutMet, '"Em xin nghỉ ở phút <n> — nghỉ đúng lúc cũng là chơi giỏi"', 'dòng tổng kết tôn trọng cú bấm nghỉ'],
+  ['playzone.mjs', PLAYZONE.guard, '0/12 lượt nhấc chân cao khi chân đất / dép lê', 'điều 2 của verifyPlayzone() phải nêu con số 0/12'],
+  ['playzone.mjs', PLAYZONE.guard, 'bộ động tác không đổi giữa phiên', 'điều 3 của verifyPlayzone()'],
+  ['playzone.mjs', PLAYZONE.guard, '`console.warn` tiếng Việt nêu đúng phần lệch', 'thiếu điều nào phải nói rõ điều đó, không im lặng'],
+  ['rules.mjs', RULES.safety, 'giữ cách tường một vòng 1 sải tay', 'dòng an toàn 85/85 prompt phải dùng đơn vị sải tay của vòng 21, không quay lại "một bước"'],
 ];
 for (const [file, text, needle, label] of FULL_PINS) {
   if (!text.includes(needle)) bad(`tools/lib/${file} không còn nêu "${needle}" (${label}) — con số nghiệm thu phải sửa cùng tài liệu và bảng kiểm, không đổi âm thầm trong lib.`);
@@ -589,6 +616,7 @@ for (const g of GAMES) {
   for (const [needle, msg] of HYPE_RULES) if (!t.includes(needle)) bad(`${g.id}: ${msg}.`);
   for (const [needle, msg] of ANT_RULES) if (!t.includes(needle)) bad(`${g.id}: ${msg}.`);
   for (const [needle, msg] of FULL_RULES) if (!t.includes(needle)) bad(`${g.id}: ${msg}.`);
+  for (const [needle, msg] of ZONE_RULES) if (!t.includes(needle)) bad(`${g.id}: ${msg}.`);
   // Chuỗi tự kiểm phải mang đủ mọi tầng: thêm lib mới mà quên nối vào dòng này thì người dán
   // prompt không còn cách nào biết game thiếu quy định.
   const chainLine = (t.match(/^- Tự kiểm tra trước khi xuất:.*$/m) || [''])[0];
@@ -800,6 +828,8 @@ if (!fs.existsSync(VAR_FILE)) {
     if (!b.includes('**Chất thể thao:**')) bad(`biến thể #${i + 1}: thiếu dòng Chất thể thao.`);
     if (!b.includes('**Gia đình — tờ gửi bố mẹ:**')) bad(`biến thể #${i + 1}: thiếu dòng Gia đình — tờ gửi bố mẹ.`);
     if (!b.includes('**Tuần học:**')) bad(`biến thể #${i + 1}: thiếu dòng Tuần học.`);
+    if (!b.includes('**Chỗ chơi an toàn:**')) bad(`biến thể #${i + 1}: thiếu dòng Chỗ chơi an toàn — người copy riêng một block biến thể ra dùng sẽ không còn biết chỗ đứng của em phải dọn thế nào và xin nghỉ bằng nút nào.`);
+    if (!b.includes('bản tại chỗ nằm gọn trong vòng 1 sải tay')) bad(`biến thể #${i + 1}: thiếu câu bắt bản tại chỗ của động tác đặc trưng khi bật "Lớp mình chật" — block copy được mà vẫn đòi em lùi ra khỏi vùng đã khai.`);
     // Block biến thể copy riêng được, nên phải mang đúng dữ liệu bản sắc của chính game nó nói tới.
     // split('\n## Prompt ') đã ăn luôn hai chữ "## Prompt", nên dòng đầu block bắt đầu bằng số thứ tự.
     const vid = (b.match(/^\d+ — (\S+) — V\d/) || [])[1];
@@ -1276,6 +1306,10 @@ const PLAYZONE_DOC_NEEDLES = [
   ['người thử số 31', 'việc người thử tương ứng ở prompts/README', 0, 0, 0, 1],
   ['Sáu quy định "chỗ chơi an toàn"', 'heading mục kể chuyện tầng 21 ở README', 0, 0, 1, 0],
   ['Tầng "chỗ chơi an toàn"', 'heading mục kể chuyện tầng 21 ở prompts/README', 0, 0, 0, 1],
+  // Probe vòng 21: prompts/README trỏ từng quy định của tầng này về đúng một dòng bảng kiểm bằng
+  // "mục `[40]`". Viết trỏ thành "mục `[39]`" thì người đọc mở nhầm dòng của tầng tuần học mà
+  // các needle chữ ở trên vẫn xanh hết.
+  ['mục `[40]`', 'con trỏ từ prompts/README về đúng dòng bảng kiểm của verifyPlayzone()', 0, 0, 0, 5],
 ];
 // Con số cũ của vòng 6 ("< 8 động tác lớn mỗi phút") là yêu cầu KHÔNG THỂ đạt với phiên 12 lượt / 4–6 phút.
 // Giữ nó trong tài liệu sẽ sinh game luôn báo CHƯA ĐẠT ở mục cường độ, nên phải bị chặn.
@@ -1322,6 +1356,11 @@ const COUNT_PATTERNS = [
   // Probe vòng 16: template ghi "Mục máy tự kiểm (35 mục," — số nằm trong ngoặc nên các pattern ở trên
   // không bắt; đổi về "(34 mục," vẫn xanh.
   [/Mục máy tự kiểm \(([0-9]+) mục/g, MACHINE_ITEMS.length, 'số mục máy tự kiểm trong §9 của template'],
+  // Probe vòng 21: README nói về bảng kiểm bằng "dòng", không phải "mục" ("đếm đủ 40 dòng máy tự kiểm +
+  // 31 dòng người thử"). Các pattern ở trên chỉ bắt chữ "mục"/"việc" nên đổi "40 dòng" thành "39 dòng"
+  // vẫn xanh — tài liệu sẽ describes một bảng kiểm không còn tồn tại.
+  [/([0-9]+) dòng máy tự kiểm/g, MACHINE_ITEMS.length, 'số dòng máy tự kiểm trong bảng kiểm'],
+  [/([0-9]+) dòng người thử/g, HUMAN_CHECKS.length, 'số dòng người thử trong bảng kiểm'],
 ];
 for (const [docName, docText] of DOC_FILES) {
   for (const [re, want, label] of COUNT_PATTERNS) {
@@ -1590,11 +1629,23 @@ if (!HUMAN_CHECKS.some((s) => /thời khóa biểu/.test(s) && /hai lượt đ�
 if (!MACHINE_ITEMS.some((s) => s.includes('verifyPlayzone()') && s.includes('"miti-stop"'))) bad('Bảng kiểm máy tự kiểm không còn mục nghiệm thu tầng chỗ chơi an toàn (verifyPlayzone() + "miti-stop") — thiếu mục này thì game bỏ hẳn thẻ dẹp chỗ chơi và nút xin nghỉ mà vẫn báo ĐẠT.');
 {
   const zoneItem = MACHINE_ITEMS.find((s) => s.includes('verifyPlayzone()'));
-  for (const clause of ['"Dẹp chỗ chơi"', 'bốn dòng <= 12 từ', '60–90 giây', '20 giây', '"miti-foot"', '0/12 lượt nhấc chân cao', 'đứng một chân', '"miti-space"', '>= 12 nhịp/phút', '90 độ', 'MỘT LẦN đầu phiên', 'không mở rộng giữa phiên', '"Em mệt / em đau"', '>= 56px', 'hạ nhiệt 45–60 giây', 'không trừ tim']) {
+  // "không thêm màn hình trước nút 'Bắt đầu'" và "không một động tác đứng một chân nào" phải nguyên văn:
+  // probe vòng 21 xóa hai vế đó khỏi mục bảng kiểm thì build vẫn xanh, vì clause "20 giây" và
+  // "đứng một chân" vẫn còn ở các vế khác của cùng dòng.
+  for (const clause of ['"Dẹp chỗ chơi"', 'bốn dòng <= 12 từ', '60–90 giây', '20 giây', 'không thêm màn hình trước nút "Bắt đầu"', '"miti-foot"', '0/12 lượt nhấc chân cao', 'không một động tác đứng một chân nào', '"miti-space"', '>= 12 nhịp/phút', '90 độ', 'MỘT LẦN đầu phiên', 'không mở rộng giữa phiên', '"Em mệt / em đau"', '>= 56px', 'hạ nhiệt 45–60 giây', 'không trừ tim', '"miti-stop"']) {
     if (zoneItem && !zoneItem.includes(clause)) bad(`Mục bảng kiểm "verifyPlayzone()" không còn nêu "${clause}" — mục nghiệm thu tầng chỗ chơi phải liệt kê đủ bốn điều verifyPlayzone() kiểm; bớt một vế là chỗ hỏng đó lọt qua nghiệm thu.`);
   }
 }
 if (!HUMAN_CHECKS.some((s) => /dép lê/.test(s) && /Em mệt/.test(s))) bad('Bảng việc người thử không còn câu nhìn xuống sàn chỗ em đứng và bấm thử nút "Em mệt / em đau" — máy kiểm được chuỗi nhưng không biết chỗ đó có bàn ghế chắn ngang thật không và em nghỉ có được thật không.');
+{
+  // Việc người thử 31 là chỗ DUY NHẤT bốn điều verifyPlayzone() được dịch thành hành động thật. Probe
+  // vòng 21: xóa hỏi "nhấc chân cao có biến mất thật không" thì mục máy vẫn nguyên, build vẫn xanh,
+  // nhưng người thử không còn phát hiện game chỉ đổi mỗi chữ trên HUD.
+  const zoneCheck = HUMAN_CHECKS.find((s) => s.includes('đứng đúng chỗ em sẽ chơi'));
+  for (const clause of ['dang hai tay', 'chạm bàn', 'vừa lau', '"chân đất / dép lê"', '"Dẹp chỗ chơi"', 'nhấc chân cao', '12 lượt', '"Lớp mình chật"', 'né sang bên', 'bấm nút "Em mệt / em đau"', 'hạ nhiệt', 'không trừ tim', 'không hỏi lý do', '"cố lên"']) {
+    if (zoneCheck && !zoneCheck.includes(clause)) bad(`Việc người thử "đứng đúng chỗ em sẽ chơi" không còn nêu "${clause}" — người thử phải đi hết cả bốn điều của verifyPlayzone() bằng tay; thiếu một vế thì lỗi thật ở đúng chỗ đó không ai nhìn thấy.`);
+  }
+}
 // Hai tầng nói về cùng MỘT khoảng cách: nếu một trong hai đổi đơn vị thì prompt sẽ mang hai chuẩn khác nhau.
 if (!PLAYZONE.depCho.includes('1 sải tay') || !QUEUE.spacing.includes('1 sải tay')) bad('PLAYZONE.depCho và QUEUE.spacing phải cùng dùng đơn vị "1 sải tay" — một tầng đổi sang mét hay "bước" là 85 prompt mang hai chuẩn khoảng cách mâu thuẫn nhau.');
 
