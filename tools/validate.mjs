@@ -25,7 +25,9 @@ import { RHYTHM } from './lib/rhythm.mjs';
 import { QUEUE } from './lib/queue.mjs';
 import { LESSON } from './lib/lesson.mjs';
 import { CURRICULUM, CURRICULUM_SHORT } from './lib/curriculum.mjs';
+import { SPORT } from './lib/sport.mjs';
 import { STANDARDS, STANDARD_KEYS, MACH_TEN } from './data/standards.mjs';
+import { SPORTS, SPORT_KEYS } from './data/sports.mjs';
 import { IDENTITIES } from './data/identities.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
@@ -54,7 +56,7 @@ const MASTER_LIB = [
   ['2.0', 'ar.mjs'], ['4.5', 'pe.mjs'], ['5.1', 'memory.mjs'], ['6.1', 'classroom.mjs'],
   ['6.2', 'verify.mjs'], ['6.3', 'light.mjs'], ['8.1', 'feel.mjs'], ['8.2', 'hype.mjs'], ['8.3', 'anticipation.mjs'], ['8.4', 'celebrate.mjs'],
   ['9.1', 'access.mjs'], ['11.', 'acceptance.mjs'], ['8.5', 'identity.mjs'], ['8.6', 'rhythm.mjs'],
-  ['7.2', 'queue.mjs'], ['4.6', 'lesson.mjs'], ['4.7', 'curriculum.mjs'],
+  ['7.2', 'queue.mjs'], ['4.6', 'lesson.mjs'], ['4.7', 'curriculum.mjs'], ['4.8', 'sport.mjs'],
 ];
 
 const rows = readCatalog(path.join(ROOT, 'catalogs', 'GAME_CATALOG.csv'));
@@ -208,6 +210,7 @@ const FULL_LAYERS = [
   ['vai chờ có vận động', 'queue.mjs', 'QUEUE', QUEUE],
   ['tiết học 45 phút + gắng sức', 'lesson.mjs', 'LESSON', LESSON],
   ['chuẩn kiến thức SGK', 'curriculum.mjs', 'CURRICULUM', CURRICULUM],
+  ['chất thể thao', 'sport.mjs', 'SPORT', SPORT],
 ];
 const FULL_RULES = FULL_LAYERS.flatMap(([label, file, objName, obj]) =>
   Object.entries(obj).map(([key, text]) => [text, `thiếu quy định ${label} ${objName}.${key} của tools/lib/${file}`]));
@@ -313,6 +316,53 @@ const FULL_PINS = [
   ['curriculum.mjs', CURRICULUM.guard, 'verifyStandard()', 'hàm kiểm chuẩn kiến thức lúc nạp'],
   ['curriculum.mjs', CURRICULUM.guard, 'kiểm đúng bốn điều', 'số điều verifyStandard() phải kiểm'],
   ['curriculum.mjs', CURRICULUM.guard, 'vẫn bắt buộc kiểm đủ bốn điều', 'bản một em và bản không camera không được miễn kiểm'],
+  // Tầng chất thể thao (vòng 18): tên môn, liều động tác và trần hạ nhiệt là những con số duy nhất nối
+  // "game vung tay" với một giờ giáo dục thể chất, nên neo cả số lẫn mệnh đề CẤM (kinh nghiệm probe 15d/16).
+  ['sport.mjs', SPORT.monDanh, 'tools/data/sports.mjs', 'bảng môn thể thao là nguồn duy nhất, không để mô hình tự đặt môn'],
+  ['sport.mjs', SPORT.monDanh, '<= 4 từ', 'trần độ dài tên môn trên HUD'],
+  ['sport.mjs', SPORT.monDanh, '>= 18px', 'cỡ chữ tối thiểu tên môn'],
+  ['sport.mjs', SPORT.monDanh, 'Hôm nay ta tập môn', 'dòng tên môn ở màn khởi động'],
+  ['sport.mjs', SPORT.monDanh, 'Môn thi đấu hôm nay', 'dòng tên môn ở màn tổng kết'],
+  ['sport.mjs', SPORT.monDanh, 'Copy tờ rời', 'tên môn phải nằm trong khối giáo viên copy được'],
+  ['sport.mjs', SPORT.monDanh, 'CẤM thay tên môn bằng mô tả động tác chung chung', 'lệnh cấm "vung tay chọn đáp án" thay cho tên môn'],
+  ['sport.mjs', SPORT.monDanh, 'CẤM đổi môn giữa chừng trong một phiên', 'lệnh cấm đổi môn — một phiên một môn'],
+  ['sport.mjs', SPORT.dongTacChinh, '<= 6 từ', 'trần độ dài động tác đặc trưng'],
+  ['sport.mjs', SPORT.dongTacChinh, '<= 4 từ', 'trần độ dài hiệu lệnh của môn'],
+  ['sport.mjs', SPORT.dongTacChinh, '>= 50% tầm với', 'biên độ động tác vẫn theo chuẩn vận động to'],
+  ['sport.mjs', SPORT.dongTacChinh, 'Em đã <động tác> <n> lần', 'tổng kết đếm số lần tập bằng số thật, không phải điểm'],
+  ['sport.mjs', SPORT.dongTacChinh, 'cấm nhảy tiếp đất', 'trần tải trọng trong quy định động tác của môn'],
+  ['sport.mjs', SPORT.dongTacChinh, '90 độ', 'trần xoay nhanh của trần tải trọng'],
+  ['sport.mjs', SPORT.dongTacChinh, 'PE.loadCap', 'động tác của môn dẫn chiếu trần tải trọng của tầng thể dục, không tự đặt số mới'],
+  ['sport.mjs', SPORT.tiepSuc, 'đường tiếp sức', '12 lượt là một đường tiếp sức, không phải chuỗi câu hỏi rời rạc'],
+  ['sport.mjs', SPORT.tiepSuc, '<= 0.45', 'trần alpha của gậy tiếp sức ảo'],
+  ['sport.mjs', SPORT.tiepSuc, 'CẤM coi rơi gậy là thua', 'lệnh cấm phạt khi gậy lệch'],
+  ['sport.mjs', SPORT.tiepSuc, 'Không sao, chạy tiếp', 'dòng an ủi duy nhất khi rơi gậy'],
+  ['sport.mjs', SPORT.tiepSuc, 'không trừ tim, không trừ điểm', 'rơi gậy không bị phạt điểm'],
+  ['sport.mjs', SPORT.tiepSuc, 'CẤM dựng thêm bảng đích thứ hai', 'vạch đích tiếp sức dùng lại thanh đích chung của tầng thi đua'],
+  ['sport.mjs', SPORT.tinhThan, 'đúng hai lần một phiên', 'số lần nghi thức tinh thần thể thao'],
+  ['sport.mjs', SPORT.tinhThan, 'lời hay <= 6 từ', 'trần độ dài lời hay khi bạn sai'],
+  ['sport.mjs', SPORT.tinhThan, 'CẤM mọi dòng chế bai', 'lệnh cấm chế bai — lỗi lớn nhất của game thi đua'],
+  ['sport.mjs', SPORT.tinhThan, 'lời hay đã nói', 'tổng kết đếm lời hay bằng số thật'],
+  ['sport.mjs', SPORT.tinhThan, 'chưa ghi được', 'cách xử lý dòng thiếu dữ liệu thật, không bịa số'],
+  ['sport.mjs', SPORT.thanhTich, 'ba mốc giảm dần', 'số mốc của bảng thành tích'],
+  ['sport.mjs', SPORT.thanhTich, 'CẢ ĐỘI', 'thành tích tính cho đội, không cho cá nhân'],
+  ['sport.mjs', SPORT.thanhTich, 'x > y > z', 'ba mốc phải giảm dần thật, không phải ba mốc trùng nhau'],
+  ['sport.mjs', SPORT.thanhTich, 'miti-sport', 'nơi lưu huy chương của cả đội'],
+  ['sport.mjs', SPORT.thanhTich, 'Kỳ trước cả đội đạt', 'dòng đọc lại thành tích kỳ trước'],
+  ['sport.mjs', SPORT.thanhTich, 'CẤM xếp hạng cá nhân', 'lệnh cấm bảng xếp hạng bạn trong lớp'],
+  ['sport.mjs', SPORT.thanhTich, 'CẤM biến huy chương thành điều kiện mở khóa nội dung', 'lệnh cấm đổi huy chương lấy nội dung'],
+  ['sport.mjs', SPORT.hoiTinh, 'duỗi riêng của môn', 'động tác duỗi đặc trưng của môn trong hạ nhiệt'],
+  ['sport.mjs', SPORT.hoiTinh, 'PE.coolDown', 'hồi tĩnh dẫn chiếu trần hạ nhiệt của tầng thể dục, không tự đặt cửa sổ mới'],
+  ['sport.mjs', SPORT.hoiTinh, '45–60 giây', 'cửa sổ hạ nhiệt mà động tác duỗi của môn phải nằm trong'],
+  ['sport.mjs', SPORT.hoiTinh, '15 giây', 'thời lượng động tác duỗi của môn, đúng bằng suất một động tác của PE'],
+  ['sport.mjs', SPORT.hoiTinh, 'Cơ em đang duỗi', 'HUD nêu tên cơ đang duỗi'],
+  ['sport.mjs', SPORT.hoiTinh, '>= 20px', 'cỡ chữ HUD hồi tĩnh'],
+  ['sport.mjs', SPORT.hoiTinh, 'CẤM duỗi bật nhịp', 'lệnh cấm duỗi ballistic'],
+  ['sport.mjs', SPORT.hoiTinh, 'CẤM ép em chạm gót tay xuống đất', 'lệnh cấm tư thế ép buộc'],
+  ['sport.mjs', SPORT.hoiTinh, 'HAI động tác duỗi, mỗi động tác 10 giây', 'bản reduced-motion rút gọn nhưng vẫn duỗi'],
+  ['sport.mjs', SPORT.guard, 'verifySport()', 'hàm kiểm chất thể thao lúc nạp'],
+  ['sport.mjs', SPORT.guard, 'kiểm đúng bốn điều', 'số điều verifySport() phải kiểm'],
+  ['sport.mjs', SPORT.guard, 'vẫn bắt buộc kiểm đủ bốn điều', 'bản tắt tiếng, reduced-motion và không camera không được miễn kiểm'],
 ];
 for (const [file, text, needle, label] of FULL_PINS) {
   if (!text.includes(needle)) bad(`tools/lib/${file} không còn nêu "${needle}" (${label}) — con số nghiệm thu phải sửa cùng tài liệu và bảng kiểm, không đổi âm thầm trong lib.`);
@@ -336,6 +386,7 @@ const SHORT_PINS = {
   QUEUE_SHORT: ['8 nhịp', '3 lượt/em', 'trần 20 giây', 'giây 15', '1 sải tay', '1,2 m', '+5 điểm', 'verifyQueue()'],
   LESSON_SHORT: ['8–10 phút', 'phút thứ 10', 'Kế hoạch tiết 45 phút', 'Kết phiên', 'bốn mức gắng sức', '>= 56px', 'miti-effort', '15 giây hồi nhịp', 'Bản tiết học', 'verifyLesson()'],
   CURRICULUM_SHORT: ['<= 18 ký tự', 'Yêu cầu cần đạt', 'nguyên văn', 'Copy tờ rời', '<= 9/12 lượt', '>= 3 lượt thuộc mạch khác', 'Dễ nhầm', '<= 16 từ', 'Mẹo nhớ', '<= 12 từ', 'động tác 3 giây', 'verifyStandard()'],
+  SPORT_SHORT: ['tên môn thể thao <= 4 từ', 'động tác đặc trưng của môn <= 6 từ', 'hiệu lệnh <= 4 từ', 'truyền tay sau 3 lượt', 'rơi gậy không trừ tim', 'chạm khuỷu 3 giây', 'lời hay <= 6 từ', 'ba mốc', 'cả đội', 'miti-sport', 'cấm xếp hạng cá nhân', 'duỗi riêng của môn 15 giây', 'hạ nhiệt 45–60 giây', 'verifySport()'],
 };
 for (const seg of chainSegments) {
   for (const needle of SHORT_PINS[seg.name] || []) {
@@ -575,6 +626,7 @@ if (!fs.existsSync(VAR_FILE)) {
     if (!b.includes('**Vai chờ có vận động:**')) bad(`biến thể #${i + 1}: thiếu dòng Vai chờ có vận động.`);
     if (!b.includes('**Tiết học 45 phút + gắng sức:**')) bad(`biến thể #${i + 1}: thiếu dòng Tiết học 45 phút + gắng sức.`);
     if (!b.includes('**Chuẩn kiến thức SGK:**')) bad(`biến thể #${i + 1}: thiếu dòng Chuẩn kiến thức SGK.`);
+    if (!b.includes('**Chất thể thao:**')) bad(`biến thể #${i + 1}: thiếu dòng Chất thể thao.`);
     // Block biến thể copy riêng được, nên phải mang đúng dữ liệu bản sắc của chính game nó nói tới.
     // split('\n## Prompt ') đã ăn luôn hai chữ "## Prompt", nên dòng đầu block bắt đầu bằng số thứ tự.
     const vid = (b.match(/^\d+ — (\S+) — V\d/) || [])[1];
@@ -600,6 +652,27 @@ if (!fs.existsSync(VAR_FILE)) {
         [vstd.meo, 'mẹo nhớ'], ['"Dễ nhầm: ' + ERROR_NOTES[vgame.cluster].split('; ')[0] + '"', 'bẫy báo trước'],
       ]) {
         if (!b.includes(needle)) bad(`biến thể #${i + 1} (${vid}): thiếu ${label} của cụm ${vgame.cluster} ("${needle.slice(0, 48)}") — builder phải lấy thẳng tools/data/standards.mjs vào từng block.`);
+      }
+    }
+    // Block biến thể copy riêng được nên còn phải mang đúng MÔN của chính kiểu điều khiển nó dùng:
+    // V1–V4 có mã điều khiển riêng, V5 không có nên mượn môn của game. Bảng đối chiếu dưới là bản sao
+    // có chủ đích của VARIANTS trong build-variants.mjs — đổi kiểu điều khiển cho một biến thể mà quên
+    // sửa đây thì block vẫn còn đủ chữ "chất thể thao" nhưng sai tên môn, và chính check này bắt.
+    const vm = b.match(/^\d+ — (\S+) — (V\d)/);
+    const vcode = vm && vm[2];
+    const vGesture = { V1: 'POINT', V2: 'SWIPE', V3: 'DRAG', V4: 'VOICE', V5: null }[vcode];
+    const vsp = vgame && SPORTS[vGesture || (vgame.gestures || [])[0]];
+    if (!vcode || !vsp) {
+      bad(`biến thể #${i + 1} (${vid || 'không đọc được id'}): không tra được môn thể thao cho kiểu điều khiển ${vcode || 'lệch nhãn'} — bảng VARIANTS của builder và validate đã lệch nhau.`);
+    } else {
+      for (const [needle, label] of [
+        [`Môn của block ${vcode} này là "${vsp.mon}"`, 'tên môn của ĐÚNG kiểu điều khiển — block liệt kê quy định thể thao chung chung là không đủ'],
+        [`động tác đặc trưng "${vsp.dongTac}"`, 'động tác đặc trưng của môn'],
+        [`hiệu lệnh mở đầu "${vsp.hieuLenh}"`, 'hiệu lệnh của môn'],
+        [`lời hay khi bạn sai "${vsp.loiHay}"`, 'lời hay của môn khi bạn sai'],
+        [`động tác duỗi cơ cuối buổi "${vsp.duoiCo}"`, 'động tác duỗi cơ riêng của môn'],
+      ]) {
+        if (!b.includes(needle)) bad(`biến thể #${i + 1} (${vid}): thiếu ${label} của môn "${vsp.mon}" ("${needle.slice(0, 48)}") — builder phải lấy thẳng tools/data/sports.mjs vào từng block.`);
       }
     }
     // Chuỗi tự kiểm của biến thể cũng phải mang đủ mọi tầng, cùng registry như prompt.
@@ -854,6 +927,33 @@ const CURRICULUM_DOC_NEEDLES = [
   ['người thử số 27', 'việc người thử tương ứng ở prompts/README', 0, 0, 0, 1],
   ['việc người thử thứ 27', 'việc người thử tương ứng ở README', 0, 0, 1, 0],
 ];
+// Tầng chất thể thao (vòng 18): tên môn, liều động tác của môn, nghi thức chơi đẹp, thành tích cả đội
+// và động tác duỗi của môn là năm con số nối "một cú vung tay chọn đáp án" với một giờ thể dục có tên.
+// Cùng nguyên tắc ba bảng trên — neo ĐÚNG số lần nêu hiện có ở bốn tài liệu.
+const SPORT_DOC_NEEDLES = [
+  ['môn thể thao', 'tên môn thật thay cho mô tả động tác chung', 6, 5, 4, 3],
+  ['<= 4 từ', 'trần độ dài tên môn trên HUD', 6, 8, 5, 2],
+  ['Hôm nay ta tập môn', 'dòng tên môn ở màn khởi động', 2, 2, 1, 1],
+  ['Môn thi đấu hôm nay', 'dòng tên môn ở màn tổng kết', 2, 2, 1, 1],
+  ['<= 6 từ', 'trần độ dài động tác đặc trưng', 9, 12, 6, 3],
+  ['hiệu lệnh', 'khẩu lệnh của mascot trước lượt đầu', 4, 5, 3, 1],
+  ['tiếp sức', '12 lượt là một đường tiếp sức', 2, 4, 2, 1],
+  ['Không sao, chạy tiếp', 'dòng duy nhất khi rơi gậy, không trừ tim', 2, 2, 1, 1],
+  ['chạm khuỷu', 'nghi thức trước hiệp 1', 4, 4, 2, 2],
+  ['chế bai', 'lệnh cấm mọi dòng mỉa bạn sai', 3, 3, 2, 1],
+  ['Tinh thần thể thao', 'dòng tổng kết đếm lời hay', 1, 1, 2, 2],
+  ['ba mốc', 'Vàng/Bạc/Đồng cho cả đội', 4, 5, 3, 1],
+  ['miti-sport', 'nơi lưu huy chương của đội', 3, 4, 2, 1],
+  ['xếp hạng cá nhân', 'lệnh cấm so hạng giữa các em', 3, 3, 2, 2],
+  ['duỗi', 'động tác duỗi riêng của môn trong hạ nhiệt', 18, 12, 12, 7],
+  ['Cơ em đang duỗi', 'HUD hồi tĩnh nêu tên cơ', 2, 2, 1, 1],
+  ['verifySport()', 'hàm kiểm chất thể thao lúc nạp', 3, 4, 3, 3],
+  ['máy tự kiểm thứ 37', 'số mục của verifySport() trong bảng kiểm', 0, 0, 1, 0],
+  ['Sáu quy định "chất thể thao"', 'heading mục kể chuyện tầng 18 ở README', 0, 0, 1, 0],
+  ['Tầng "chất thể thao"', 'heading mục kể chuyện tầng 18 ở prompts/README', 0, 0, 0, 1],
+  ['người thử số 28', 'việc người thử tương ứng ở prompts/README', 0, 0, 0, 1],
+  ['việc người thử thứ 28', 'việc người thử tương ứng ở README', 0, 0, 1, 0],
+];
 // Con số cũ của vòng 6 ("< 8 động tác lớn mỗi phút") là yêu cầu KHÔNG THỂ đạt với phiên 12 lượt / 4–6 phút.
 // Giữ nó trong tài liệu sẽ sinh game luôn báo CHƯA ĐẠT ở mục cường độ, nên phải bị chặn.
 const SUPERSEDED = [
@@ -878,7 +978,7 @@ for (const [docSlot, [docName, docText]] of DOC_FILES.entries()) {
   for (const [needle, label] of IDENTITY_DOC_NEEDLES) {
     if (!docText.includes(needle)) bad(`${docName} thiếu con số bản sắc riêng (${label}): không thấy "${needle}".`);
   }
-  for (const [needle, label, ...mins] of [...RHYTHM_DOC_NEEDLES, ...VOICE_DOC_NEEDLES, ...QUEUE_DOC_NEEDLES, ...LESSON_DOC_NEEDLES, ...CURRICULUM_DOC_NEEDLES]) {
+  for (const [needle, label, ...mins] of [...RHYTHM_DOC_NEEDLES, ...VOICE_DOC_NEEDLES, ...QUEUE_DOC_NEEDLES, ...LESSON_DOC_NEEDLES, ...CURRICULUM_DOC_NEEDLES, ...SPORT_DOC_NEEDLES]) {
     const want = mins[docSlot];
     const got = docText.split(needle).length - 1;
     if (got < want) bad(`${docName} chỉ còn nêu "${needle}" (${label}) ${got} lần, chuẩn hiện hành là ${want} lần — tài liệu chuẩn phải giữ đủ chỗ nêu ở CẢ phần luật lẫn bảng kiểm tự kiểm, không được để một phần mất số.`);
@@ -969,6 +1069,7 @@ const DOC_LAYERS = [
   ['vai chờ có vận động', '7.2 BỐN EM MỘT MÁY', 'Phần vai chờ đã điền đủ'],
   ['tiết học 45 phút + gắng sức', '4.6 TIẾT HỌC 45 PHÚT', 'Phần tiết học đã điền đủ'],
   ['chuẩn kiến thức SGK', '4.7 CHUẨN KIẾN THỨC', 'Phần chuẩn kiến thức đã điền đủ'],
+  ['chất thể thao', '4.8 CHẤT THỂ THAO', 'Phần chất thể thao đã điền đủ'],
   ['cảm giác arcade', '8.1 CẢM GIÁC ARCADE', 'Phần arcade đã điền đủ'],
   ['thi đua + cao trào', '8.2 THI ĐUA + CAO TRÀO', 'Phần thi đua + cao trào đã điền đủ'],
   ['ham quay lại', '8.3 HAM QUAY LẠI', 'Phần ham quay lại đã điền đủ'],
@@ -1080,6 +1181,63 @@ for (const g of GAMES) {
     [ERROR_NOTES[g.cluster].split('; ')[0], 'ý lỗi đầu tiên của cụm mà dòng "Dễ nhầm" phải lấy'],
   ]) {
     if (!t.includes(needle)) bad(`${g.id}: prompt thiếu ${label} của cụm ${g.cluster} ("${needle.slice(0, 48)}") — builder phải lấy thẳng tools/data/standards.mjs.`);
+  }
+}
+
+// Vòng 18: chất thể thao phải còn nguyên trong bảng kiểm, không rút thành "có tên môn".
+if (!MACHINE_ITEMS.some((s) => s.includes('verifySport()') && s.includes('miti-sport'))) bad('Bảng kiểm máy tự kiểm không còn mục nghiệm thu chất thể thao (verifySport() + "miti-sport") — thiếu mục này thì game bỏ hẳn tên môn và thành tích cả đội mà vẫn báo ĐẠT.');
+{
+  const sportItem = MACHINE_ITEMS.find((s) => s.includes('verifySport()'));
+  for (const clause of ['<= 4 từ', '3 giây', 'hiệu lệnh <= 4 từ', 'hai lần', 'chạm khuỷu 3 giây', 'lời hay <= 6 từ', 'ba mốc', 'CẢ ĐỘI', '15 giây', '45–60 giây']) {
+    if (sportItem && !sportItem.includes(clause)) bad(`Mục bảng kiểm "verifySport()" không còn nêu "${clause}" — mục nghiệm thu chất thể thao phải liệt kê đủ bốn điều verifySport() kiểm, thiếu một vế là game báo ĐẠT mà không kiểm.`);
+  }
+}
+if (!HUMAN_CHECKS.some((s) => /tập môn gì/.test(s) && /CẢ ĐỘI/.test(s))) bad('Bảng việc người thử không còn câu hỏi "mình đang tập môn gì" — máy kiểm được chuỗi tên môn trên HUD nhưng không biết trẻ có thật sự hình dung mình đang tập một môn thể thao.');
+
+// Vòng 18: bảng môn thể thao là DỮ LIỆU theo MÃ ĐIỀU KHIỂN. GESTURES có 14 mã nên bảng môn phải phủ đủ
+// 14; thiếu mã thì builder throw, nhưng sửa nội dung (đổi tên môn, viết dài động tác, để hai mã trùng
+// một môn) thì không tầng nào bắt — nên đối chiếu thẳng ở đây.
+{
+  const codes = Object.keys(GESTURES);
+  for (const c of codes) if (!SPORT_KEYS.includes(c)) bad(`GESTURES có mã ${c} nhưng sports.mjs chưa có dòng môn thể thao — bổ sung mon/dongTac/hieuLenh/loiHay/duoiCo.`);
+  for (const k of SPORT_KEYS) if (!GESTURES[k]) bad(`sports.mjs có dòng ${k} không có trong GESTURES — bảng môn gắn theo mã điều khiển, không được tự thêm mã.`);
+  if (SPORT_KEYS.length !== codes.length) bad(`sports.mjs có ${SPORT_KEYS.length} dòng nhưng GESTURES có ${codes.length} mã điều khiển — bảng môn phải phủ đủ.`);
+  const TU_CAP = { mon: 4, dongTac: 6, hieuLenh: 4, loiHay: 6, duoiCo: 6 };
+  const seenMon = new Map();
+  for (const k of SPORT_KEYS) {
+    const s = SPORTS[k];
+    for (const f of ['mon', 'dongTac', 'hieuLenh', 'loiHay', 'duoiCo']) {
+      if (!s[f] || !String(s[f]).trim()) { bad(`sports.mjs.${k}: thiếu trường ${f}.`); continue; }
+      const w = soTu(s[f]);
+      if (w > TU_CAP[f]) bad(`sports.mjs.${k}.${f} = "${s[f]}" dài ${w} từ, trần ${TU_CAP[f]} từ — tên môn và động tác phải ngắn để còn nằm vừa góc HUD và mascot đọc xong trong một hơi.`);
+    }
+    if (seenMon.has(s.mon)) bad(`sports.mjs: ${seenMon.get(s.mon)} và ${k} cùng mang môn "${s.mon}" — mỗi mã điều khiển một môn riêng, hai kiểu điều khiển tập trùng một môn thì trẻ không phân biệt được mình đang làm gì.`);
+    else seenMon.set(s.mon, k);
+    if (/[\u3400-\u9fff\u3040-\u30ff]/.test(JSON.stringify(s))) bad(`sports.mjs.${k}: lẫn ký tự CJK.`);
+  }
+  // Con số dùng CHUNG với tầng thể dục: động tác duỗi của môn nằm TRONG cửa sổ hạ nhiệt và trần tải
+  // trọng của môn dẫn chiếu đúng số của PE. Hai lib tự nhất quán nên pin đơn lib không bắt được lệch.
+  if (!SPORT.hoiTinh.includes('45–60 giây') || !PE.coolDown.includes('45–60')) bad('Cửa sổ hạ nhiệt lệch giữa tools/lib/sport.mjs và tools/lib/pe.mjs — động tác duỗi của môn sẽ rơi khỏi khoảng PE đã quy định.');
+  if (!SPORT.hoiTinh.includes('15 giây') || !PE.coolDown.includes('15 giây')) bad('Thời lượng một động tác duỗi không còn là 15 giây ở cả sport.mjs lẫn pe.mjs — tầng thể thao phải dùng đúng suất thời lượng PE đã chia.');
+  for (const num of ['90 độ', '15 giây']) if (!SPORT.dongTacChinh.includes(num) || !PE.loadCap.includes(num)) bad(`Trần tải trọng "${num}" lệch giữa sport.mjs và pe.mjs — một trong hai lib đã đổi số còn lib kia thì không.`);
+}
+
+// Mỗi prompt game phải mang đúng MÔN của chính mã điều khiển mình, không phải danh sách môn chung.
+for (const g of GAMES) {
+  const s = SPORTS[g.gestures[0]];
+  if (!s) continue;
+  const rel = PATH_OF.get(g.id);
+  if (!rel || !fs.existsSync(path.join(ROOT, rel))) continue;
+  const t = fs.readFileSync(path.join(ROOT, rel), 'utf8');
+  for (const [needle, label] of [
+    // Tên môn đứng một mình thì yếu: quy định monDanh đã nêu ví dụ trong mọi prompt. Neo liền mã điều
+    // khiển + tên môn + động tác, để block khác môn bị đổi vẫn bị bắt.
+    [`(mã điều khiển ${g.gestures[0]}, không tự đổi môn trong một phiên): **${s.mon}** — động tác đặc trưng "${s.dongTac}"`, 'dòng môn + động tác của ĐÚNG mã điều khiển'],
+    [`hiệu lệnh mở đầu "${s.hieuLenh}"`, 'hiệu lệnh của môn'],
+    [`lời hay khi bạn sai "${s.loiHay}"`, 'lời hay của môn khi bạn sai'],
+    [`động tác duỗi cơ cuối buổi "${s.duoiCo}"`, 'động tác duỗi riêng của môn'],
+  ]) {
+    if (!t.includes(needle)) bad(`${g.id}: prompt thiếu ${label} của môn ${s.mon} ("${needle.slice(0, 48)}") — builder phải lấy thẳng tools/data/sports.mjs theo mã ${g.gestures[0]}.`);
   }
 }
 

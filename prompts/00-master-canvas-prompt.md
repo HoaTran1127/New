@@ -303,6 +303,46 @@ xuất hiện SAU khi em sai. Sáu quy định dưới đây lấy dữ liệu t
   `console.warn` tiếng Việt nêu cụm hoặc lượt nào lệch và bảng kiểm ghi CHƯA ĐẠT. Bản một học sinh và bản không camera vẫn
   bắt buộc kiểm đủ bốn điều trên.
 
+4.8 CHẤT THỂ THAO (bắt buộc — nguồn: `tools/lib/sport.mjs` + `tools/data/sports.mjs`, validate chặn nếu thiếu) — phần quyết định một cú vung tay có phải một môn thể thao hay không
+
+Tầng thể dục (mục 4.5) quản lý LIỀU vận động, tầng tiết học (mục 4.6) quản lý THỜI LƯỢNG và ĐỘ MỆT — nhưng không mục nào nói
+động tác em vừa làm là động tác của MÔN nào. Khảo sát 85 prompt trước vòng 18: "môn thể thao" = 0/85, "đồng đội" = 0/85, "tinh
+thần thể thao" = 0/85, "bảng thành tích" = 0/85, "duỗi cơ" = 0/85, "khẩu hiệu" = 0/85. Hệ quả đo được: game webcam lớp 4 chỉ còn
+là "vung tay chọn đáp án" — trẻ không hình dung mình đang tập một môn thể thao, còn giáo viên thì không có thành tích của cả đội
+để tuyên dương. Sáu quy định dưới đây lấy dữ liệu từ `tools/data/sports.mjs` (14 mã điều khiển × 5 cột: `mon` · `dongTac` ·
+`hieuLenh` · `loiHay` · `duoiCo`), prompt không được tự đặt tên môn.
+
+- MỖI GAME MỘT MÔN THỂ THAO CÓ TÊN: tên môn của mã điều khiển chính (cột `mon`, <= 4 từ) hiện ở HUD góc trên phải (chữ >= 18px,
+  nền đặc, không nhấp nháy) suốt phiên, kèm "Hôm nay ta tập môn ..." ở màn khởi động và "Môn thi đấu hôm nay: ..." ở màn tổng
+  kết, nằm trong khối mà nút "Copy tờ rời" copy được. CẤM thay tên môn bằng mô tả động tác chung chung kiểu "vung tay chọn đáp
+  án"; CẤM đổi môn giữa chừng trong một phiên.
+- ĐỘNG TÁC CỦA MỌI LƯỢT LÀ ĐỘNG TÁC CỦA MÔN: động tác đặc trưng (cột `dongTac`, <= 6 từ) — giương tay chỉ đích của Bắn cung, kéo
+  dây của Kéo co, bắt bóng lên rổ của Bóng rổ — mascot làm mẫu 3 giây ở đầu mỗi hiệp và hô hiệu lệnh của môn (cột `hieuLenh`,
+  <= 4 từ) bằng `speechSynthesis` để cả nhóm hô lại trước lượt đầu tiên. Biên độ vẫn >= 50% tầm với và vẫn tuân nguyên văn trần
+  tải trọng mục 4.5 (cấm nhảy tiếp đất, cấm xoay nhanh quá 90 độ, cấm giữ tay trên cao quá 15 giây). Tổng kết đếm "Em đã
+  <động tác> <n> lần" bằng số thật, không phải số điểm.
+- 12 LƯỢT LÀ MỘT ĐƯỜNG TIẾP SỨC: gậy tiếp sức ảo neo landmark bàn tay (alpha <= 0.45) nằm trong tay em đang chơi và truyền tay
+  ngay khi em đó hết 3 lượt, truyền xong mới tới lượt kế, không cắt giữa lượt. CẤM coi rơi gậy là thua: gậy lệch chỉ hiện đúng
+  một dòng "Không sao, chạy tiếp", không trừ tim, không trừ điểm. Mỗi hiệp khép bằng đúng một thanh đích chung của mục 8.2, nhãn
+  đọc là "Đội mình: <x>/<mốc>" — CẤM dựng thêm bảng đích thứ hai.
+- TINH THẦN THỂ THAO CHẠY ĐÚNG HAI LẦN MỘT PHIÊN: (1) trước hiệp 1, bốn em quay vào nhau chạm khuỷu hoặc bắt tay 3 giây, mascot
+  hô "Chơi đẹp!"; (2) khi một em trả lời sai, em ở vai cổ vũ nói một lời hay <= 6 từ lấy từ cột `loiHay` của môn, hiện trên HUD
+  4 giây kèm phụ đề chữ. CẤM mọi dòng chế bai ("Ôi sai rồi", "Dễ thế cũng sai", "Thua rồi") — sai là lúc cần lời hay nhất. Tổng
+  kết in "Tinh thần thể thao: <n> lời hay đã nói", thiếu số thì in "chưa ghi được".
+- BẢNG THÀNH TÍCH BA MỐC CHO CẢ ĐỘI, KHÔNG XẾP HẠNG CÁ NHÂN: ba mốc giảm dần Vàng >= <x>, Bạc >= <y>, Đồng >= <z> (x > y > z, đặt
+  theo đúng 12 lượt của phiên) và đội nhận MỘT màu huy chương kèm số động tác thật; lưu localStorage "miti-sport" và đọc lại ở
+  phiên sau bằng "Kỳ trước cả đội đạt <màu> — <n> động tác". CẤM xếp hạng cá nhân, CẤM so bảng thành tích giữa các máy hoặc giữa
+  các nhóm, CẤM biến huy chương thành điều kiện mở khóa nội dung.
+- HỒI TỈNH BẰNG ĐỘNG TÁC DUỖI CỦA CHÍNH MÔN: trong hạ nhiệt 45–60 giây của mục 4.5, động tác duỗi giữa là động tác duỗi riêng của
+  môn (cột `duoiCo`, 15 giây — đúng suất thời lượng `tools/lib/pe.mjs` đã chia cho một động tác), hai động tác hai bên giữ nguyên
+  "duỗi tay ngang ngực" và "kéo vai ra sau 10 nhịp". HUD "Cơ em đang duỗi: <tên>" (chữ >= 20px, không nhấp nháy) đổi theo động tác
+  và mascot đọc tên cơ. CẤM duỗi bật nhịp (ballistic), CẤM ép em chạm gót tay xuống đất; `prefers-reduced-motion` rút còn HAI
+  động tác duỗi, mỗi động tác 10 giây, vẫn nằm trong cửa sổ hạ nhiệt.
+- TỰ KIỂM BẰNG `verifySport()`: chạy MỘT LẦN lúc nạp và kiểm đúng bốn điều — tên môn có thật trên HUD và ở đúng hai màn · động tác
+  của môn được mascot làm mẫu 3 giây kèm hiệu lệnh · nghi thức tinh thần thể thao chạy đủ hai lần · bảng thành tích ba mốc và động
+  tác duỗi của môn nằm trong hạ nhiệt. Thiếu điều nào thì `console.warn` tiếng Việt nêu điều nào lệch và bảng kiểm ghi CHƯA ĐẠT.
+  Bản tắt tiếng, bản reduced-motion và bản không camera vẫn bắt buộc kiểm đủ bốn điều trên.
+
 ========================
 5. HỌC TẬP DẪN LỐI (LEARNING-FIRST)
 ========================
@@ -703,7 +743,7 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
   Bảng liệt kê TỪNG ràng buộc kèm trạng thái ĐẠT / CHƯA ĐẠT. Trạng thái đó phải do code kiểm thật lúc chạy,
   không phải chữ tĩnh kê sẵn. Một bảng báo "ĐẠT" mà không kiểm gì là lỗi nghiêm trọng nhất của game giáo dục.
   Bảng chỉ người lớn mở được: không trừ tim, không chặn chơi, học sinh không nhìn thấy.
-- 36 MỤC MÁY TỰ KIỂM, mỗi mục một hàm trả true/false:
+- 37 MỤC MÁY TỰ KIỂM, mỗi mục một hàm trả true/false:
   [1] QUESTION_DATA đủ số mục và verifyQuestionBank() ĐÃ chạy trước lượt chơi đầu tiên
   [2] mọi mục đang phát hành có answer nằm trong choices đúng một lần
   [3] 📷 drawImage khung hình webcam đi qua toScreen(lx, ly), không còn phép nhân thô với W/H
@@ -740,14 +780,15 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
   [34] verifyQueue() đã chạy lúc nạp: ba vai chờ (cổ vũ đủ 8 nhịp · trọng tài giơ thẻ "Động tác to / nhỏ" · thư ký đọc lại đề và đáp án) có nhãn tên trên HUD, đồng hồ chờ chạy riêng và gọi đúng tên em đang chờ ở giây 15, bộ đếm "Lượt của em <n>/3" đổi vai đúng sau 3 lượt trong 12 lượt, và +5 điểm của vai chờ chỉ vào thanh "Cả nhóm" chứ không vào "miti-best"
   [35] verifyLesson() đã chạy lúc nạp: đồng hồ phiên "Còn <n> phút" có thật và phiên tự khép ở phút thứ 10 tại RANH GIỚI lượt, bốn mức gắng sức "dễ quá / vừa / mệt / kiệt" hiện cuối mỗi hiệp và đọc lại được từ localStorage "miti-effort", 15 giây "hồi nhịp" hít 4 nhịp – thở ra 6 nhịp chạy xong trước khi hiệp sau bắt đầu, và khối "Bản tiết học" in đủ bốn dòng lấy từ số thật
   [36] verifyStandard() đã chạy lúc nạp: mọi câu mang nhãn mạch nằm trong tám mạch của tools/data/standards.mjs và HUD có thật (nhãn <= 18 ký tự, >= 18px), dòng "Yêu cầu cần đạt:" xuất hiện ở đúng hai màn và khớp NGUYÊN VĂN bảng chuẩn, mạch chính <= 9/12 lượt kèm >= 3 lượt thuộc mạch khác và tổng kết in "Hôm nay em chạm <n> mạch", mỗi cụm có "Dễ nhầm" ở câu đầu (<= 16 từ) và "Mẹo nhớ" <= 12 từ kèm động tác 3 giây
-  Mục gắn 📷 chỉ áp dụng khi có webcam: bản không camera bỏ 6 mục đó và vẫn phải đạt 30 mục còn lại.
+  [37] verifySport() đã chạy lúc nạp: tên môn thể thao <= 4 từ lấy từ tools/data/sports.mjs có thật trên HUD và ở đúng hai màn, động tác đặc trưng của môn (<= 6 từ) được mascot làm mẫu 3 giây kèm hiệu lệnh <= 4 từ, nghi thức tinh thần thể thao chạy đúng hai lần (chạm khuỷu 3 giây trước hiệp 1 + lời hay <= 6 từ khi bạn sai, không dòng chế bai), bảng thành tích ba mốc giảm dần cho CẢ ĐỘI lưu "miti-sport" và động tác duỗi riêng của môn 15 giây nằm trong hạ nhiệt 45–60 giây
+  Mục gắn 📷 chỉ áp dụng khi có webcam: bản không camera bỏ 6 mục đó và vẫn phải đạt 31 mục còn lại.
 - XUẤT BẢN VĂN: bảng có nút "Xuất bản văn" sinh một khối chữ tiếng Việt copy được — tên game, bản chuẩn MiTi,
   ngày giờ, kiểu điều khiển đang chạy, số mục ĐẠT / CHƯA ĐẠT, danh sách mục chưa đạt kèm lý do.
   Khối chữ chỉ hiện trên màn hình và vào clipboard máy đó; không gửi lên máy chủ nào, không xin quyền, không để lại dữ liệu.
 - MỤC CHƯA ĐẠT PHẢI GIẢI THÍCH ĐƯỢC: mỗi dòng kèm một câu nguyên nhân kỹ thuật cho người lớn
   (ví dụ "toScreen không được dùng ở drawImage — vật thể đang tính bằng lx * W") và một câu nên sửa thế nào trong prompt.
   Cấm báo "lỗi" rồi im lặng, cấm chữ chung chung kiểu "hệ thống có vấn đề".
-- 27 VIỆC NGƯỜI THỬ PHẢI BẤM TAY (máy không tự kiểm được, làm theo đúng thứ tự, khoảng 15 phút):
+- 28 VIỆC NGƯỜI THỬ PHẢI BẤM TAY (máy không tự kiểm được, làm theo đúng thứ tự, khoảng 15 phút):
   đứng xa tới mức chỉ còn hai bàn tay · giữ im một tư thế 5 giây · che nửa người bằng tay · tắt camera giữa vòng ·
   rút mạng lúc đang tải model · đổi tay thuận sang Trái giữa chừng · bật reduced-motion ở hệ điều hành rồi mở game ·
   cố tình sai 4 câu liên tiếp · mở bằng điện thoại đặt dọc · đưa một học sinh lớp 4 chưa đọc hướng dẫn chơi thử 60 giây ·
@@ -768,6 +809,7 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
   cho bốn em đứng quanh một máy chơi trọn một hiệp — ba em chưa tới lượt có thật sự vận động (vỗ đủ 8 nhịp, giơ thẻ, đọc lại đề và đáp án) hay vẫn đứng xem? Đứng im 20 giây tới lượt: mascot có gọi đúng tên em đang chờ và ra một động tác 5 giây không?
   bấm giờ thật khi nhóm đầu cầm máy — phiên có tự khép ở phút thứ 10 ngay tại ranh giới lượt (không cắt giữa một em đang chơi) và dòng "Kế hoạch tiết 45 phút" in ra có đủ chỗ cho bốn nhóm không? Hỏi em cuối mỗi hiệp "dễ quá / vừa / mệt / kiệt": tới hiệp 3 mức có tăng thật hay em toàn chọn "dễ quá"?
   đọc to dòng "Yêu cầu cần đạt:" ở màn tổng kết và đối chiếu với sách giáo khoa của lớp — dòng đó có đúng yêu cầu của cụm này không, hay chỉ là một câu chung chung ai cũng viết được? Hỏi em đang chơi "câu vừa rồi thuộc mạch nào" và "mẹo nhớ là gì": em trả lời được thì nhãn mạch và mẹo đã vào đầu, nếu em chỉ đọc lại chữ trên HUD thì hai dòng đó đang trang trí.
+  hỏi em đang chơi "mình đang tập môn gì" và "lúc nãy cơ nào được duỗi" — em có gọi ra được tên môn thể thao và động tác duỗi, hay cả buổi với em chỉ là vung tay chọn đáp án? Xem trọn một hiệp: bốn em có thật sự chạm khuỷu trước hiệp 1 và có nói lời hay khi bạn sai không? Đọc bảng thành tích cuối phiên: đó là mốc của CẢ ĐỘI hay đã vô tình thành xếp hạng cá nhân?
   Bảng in kèm từng việc và ô ghi kết quả: `prompts/CHECKLIST_NGHIEP_THU.md`.
 - THIẾU MỤC NÀO THÌ SỬA PROMPT, KHÔNG SỬA TAY FILE HTML: dán lại nguyên văn quy định tương ứng vào cuối prompt rồi sinh lại file.
 
@@ -800,6 +842,14 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
 [ ] câu đầu mỗi cụm hiện "Dễ nhầm: <một lỗi>" <= 16 từ BÁO TRƯỚC khi em bấm, tắt sau 6 giây, không che đề; các lượt sau không lặp lại
 [ ] mỗi cụm có đúng một "Mẹo nhớ" <= 12 từ, mascot đọc to kèm một động tác 3 giây làm mẫu; động tác không phải điều kiện cộng điểm
 [ ] verifyStandard() chạy MỘT LẦN lúc nạp, kiểm đúng bốn điều của chuẩn kiến thức; bản một học sinh và bản không camera vẫn bắt buộc đủ bốn điều
+[ ] game mang đúng MỘT môn thể thao của mã điều khiển mình (cột `mon` trong tools/data/sports.mjs, <= 4 từ), tên môn hiện ở HUD góc trên phải chữ >= 18px suốt phiên và đổi thì phải đổi cả phiên; CẤM mô tả chung chung, CẤM đổi môn giữa phiên
+[ ] màn khởi động in "Hôm nay ta tập môn ..." và màn tổng kết in "Môn thi đấu hôm nay: ...", cả hai nằm trong khối "Copy tờ rời"
+[ ] động tác của mọi lượt là động tác đặc trưng của môn (<= 6 từ), mascot làm mẫu 3 giây đầu mỗi hiệp và hô hiệu lệnh <= 4 từ để cả nhóm hô lại; tổng kết đếm "Em đã <động tác> <n> lần" bằng số thật
+[ ] 12 lượt chơi là một đường tiếp sức: gậy ảo neo landmark bàn tay alpha <= 0.45, truyền tay sau 3 lượt; rơi gậy chỉ hiện "Không sao, chạy tiếp" và không trừ tim, không trừ điểm
+[ ] nghi thức tinh thần thể thao chạy ĐÚNG hai lần một phiên: bốn em chạm khuỷu 3 giây trước hiệp 1 + lời hay <= 6 từ của vai cổ vũ khi bạn sai (hiện 4 giây kèm phụ đề); CẤM mọi dòng chế bai
+[ ] bảng thành tích có ba mốc giảm dần cho CẢ ĐỘI và MỘT màu huy chương lưu "miti-sport", đọc lại bằng "Kỳ trước cả đội đạt <màu> — <n> động tác"; CẤM xếp hạng cá nhân, CẤM so giữa các máy, CẤM đổi huy chương lấy nội dung
+[ ] động tác duỗi giữa của hạ nhiệt 45–60 giây là động tác duỗi riêng của môn (cột `duoiCo`, 15 giây) với HUD "Cơ em đang duỗi: <tên>" chữ >= 20px; CẤM duỗi bật nhịp, CẤM ép chạm gót tay, reduced-motion còn HAI động tác × 10 giây
+[ ] verifySport() chạy MỘT LẦN lúc nạp, kiểm đúng bốn điều của chất thể thao; bản tắt tiếng, bản reduced-motion và bản không camera vẫn bắt buộc đủ bốn điều
 [ ] errorTag sửa đúng 2 lần được xếp ôn vào +1/+3/+7 ngày trong "miti-review", ôn vững thì giãn +21 ngày
 [ ] 3 giây đầu vào gameplay là một cú "ồ" bằng vật thể AR, không phải màn chữ
 [ ] "miti-best" lưu đúng ba số, HUD hiệp 2 hiện "Kỷ lục: <n> · Em đang: <m>" và PHÁ KỶ LỤC chỉ nổ một lần
@@ -874,10 +924,10 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
 [ ] đạo cụ AR neo landmark bằng toScreen(); bản không camera thì đạo cụ đứng yên ở góc HUD dưới chứ không biến mất
 [ ] ba câu thoại đọc bằng speechSynthesis giọng vi-VN, <= 3 câu mỗi phút, câu khi sai là câu đỡ chứ không chế giễu
 [ ] bảng kiểm ẩn mở bằng 7 lần chạm logo MiTi hoặc Ctrl+Alt+K, trạng thái ĐẠT do code kiểm thật lúc chạy
-[ ] cả 36 mục máy tự kiểm đều có hàm kiểm tương ứng, không mục nào là chữ kê sẵn
+[ ] cả 37 mục máy tự kiểm đều có hàm kiểm tương ứng, không mục nào là chữ kê sẵn
 [ ] mục CHƯA ĐẠT kèm nguyên nhân kỹ thuật + cách sửa trong prompt, không có dòng "lỗi hệ thống"
 [ ] nút "Xuất bản văn" copy được khối chữ tiếng Việt, không gửi lên máy chủ nào
-[ ] bản không camera bỏ đúng 6 mục 📷 và vẫn đạt 30 mục còn lại, không bỏ luôn bảng kiểm
+[ ] bản không camera bỏ đúng 6 mục 📷 và vẫn đạt 31 mục còn lại, không bỏ luôn bảng kiểm
 [ ] fallback chuột/chạm/phím chơi trọn vẹn, tự kích hoạt khi camera lỗi
 [ ] QUESTION_DATA có ít nhất 30 mục (Toán) hoặc 60 mục (Tiếng Anh), mỗi mục có đáp án + lời giải + errorTag + loiViet + dang
 [ ] dữ liệu đặt đầu file, code engine đặt sau, không có chỗ nào rút gọn
@@ -941,7 +991,7 @@ Sau khi tự kiểm tra, CHỈ xuất ra file HTML hoàn chỉnh, không kèm gi
   toàn bộ quy định phía trên chỉ là lời mong đợi. Bắt game tự kiểm bằng hàm true/false biến lời hứa thành trạng thái đọc được.
 - **Trạng thái phải do code kiểm, không phải chữ kê sẵn**: một bảng tĩnh in sẵn chữ "ĐẠT" còn hại hơn không có bảng,
   vì người lớn tưởng là đã kiểm. Đây là lý do quy định ghi rõ "không phải một danh sách chữ tĩnh".
-- **Tách 36 mục máy / 27 việc người thử**: cái gì máy kiểm được thì đừng đùn cho giáo viên; cái máy không kiểm được
+- **Tách 37 mục máy / 28 việc người thử**: cái gì máy kiểm được thì đừng đùn cho giáo viên; cái máy không kiểm được
   (cháu có hiểu luật chơi mà không đọc hướng dẫn không, rút mạng thì sao) thì đừng giả vờ kiểm. Con số 15 phút là thời lượng
   một tiết thực tế, không phải danh sách dài vô hạn.
 - **Mục chưa đạt phải nói nguyên nhân và cách sửa**: bảng kiểm chỉ báo "lỗi" sẽ bị bỏ qua; kèm câu "thiếu ở dòng nào,

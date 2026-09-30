@@ -66,7 +66,7 @@ Bốn biến thể đầu dùng **cùng một hợp đồng AR** như prompt gam
 - `04-english5/` — 15 game Tiếng Anh 5.
 - `01-prompt-…` đến `12-prompt-…` — **12 prompt legacy** đời đầu: giữ nguyên cơ chế game, đã thay MediaPipe Legacy/Tailwind CDN/Tone.js bằng chuẩn hiện hành và gắn nhãn `LEGACY`. Không dùng làm khuôn cho game mới.
 - `VARIANTS_425.md` — 425 biến thể (85 game × 5 kiểu điều khiển), do `tools/build-variants.mjs` sinh.
-- `CHECKLIST_NGHIEP_THU.md` — bảng kiểm cầm tay khi nhận file HTML về: 36 mục máy tự kiểm + 27 việc người thử bấm tay (trong đó 6 mục gắn 📷 chỉ có camera mới kiểm được; bản không camera bỏ 6 mục đó và vẫn phải đạt 30 mục còn lại), do `tools/build-acceptance.mjs` sinh từ `tools/lib/acceptance.mjs`.
+- `CHECKLIST_NGHIEP_THU.md` — bảng kiểm cầm tay khi nhận file HTML về: 37 mục máy tự kiểm + 28 việc người thử bấm tay (trong đó 6 mục gắn 📷 chỉ có camera mới kiểm được; bản không camera bỏ 6 mục đó và vẫn phải đạt 31 mục còn lại), do `tools/build-acceptance.mjs` sinh từ `tools/lib/acceptance.mjs`.
 
 ## ✅ Nghiệm thu một game vừa sinh
 
@@ -221,13 +221,30 @@ Việc người thử số 26 ("bấm giờ thật khi nhóm đầu cầm máy �
 
 Việc người thử số 27 ("đọc to dòng "Yêu cầu cần đạt:" ở màn tổng kết và đối chiếu với sách giáo khoa của lớp — có đúng yêu cầu cần đạt của mạch đó không? Hỏi em đang chơi "câu vừa rồi thuộc mạch nào" và "mẹo nhớ là gì"") là chỗ máy không tự kiểm được: `verifyStandard()` so được từng chữ với bảng chuẩn, còn việc một câu có thật nằm trong yêu cầu cần đạt của lớp thì phải có giáo viên cầm sách đối chiếu.
 
+## 🏅 Tầng "chất thể thao" — `tools/lib/sport.mjs` + `tools/data/sports.mjs` (vòng 18)
+
+Đo 85 prompt trước vòng 18: **"môn thể thao" 0/85, "đồng đội" 0/85, "tinh thần thể thao" 0/85, "bảng thành tích" 0/85, "duỗi cơ" 0/85, "khẩu hiệu" 0/85**. `pe.mjs` đã quản lý LIỀU vận động, `lesson.mjs` đã quản lý THỜI LƯỢNG và ĐỘ MỆT, `curriculum.mjs` đã gắn nhãn mạch cho từng câu — nhưng **không tầng nào nói động tác em vừa làm là động tác của môn thể thao nào**. Hệ quả đo được: game chỉ còn là "vung tay chọn đáp án", trẻ không gọi ra được mình đang tập môn gì, hạ nhiệt 45–60 giây không có động tác duỗi cụ thể, và giáo viên không có thành tích của cả đội để tuyên dương. Dữ liệu môn gắn theo **mã điều khiển** (14 dòng × 5 cột) nên 85 game không phải viết tay 85 lần.
+
+| Luật | Con số | Kiểm ở đâu |
+|:---|:---|:---|
+| Một môn thể thao có tên | cột `mon` **<= 4 từ** theo mã điều khiển của game, HUD góc trên phải **>= 18px** suốt phiên; "Hôm nay ta tập môn …" ở khởi động, "Môn thi đấu hôm nay: …" ở tổng kết, nằm trong khối "Copy tờ rời"; **cấm mô tả chung chung, cấm đổi môn giữa phiên** | `verifySport()` + mục `[37]` |
+| Động tác đặc trưng của môn | cột `dongTac` **<= 6 từ**, mascot làm mẫu **3 giây** đầu mỗi hiệp, hiệu lệnh cột `hieuLenh` **<= 4 từ** đọc bằng `speechSynthesis`; biên độ **>= 50% tầm với** và theo trần tải trọng `pe.mjs`; tổng kết đếm "Em đã `<động tác>` `<n>` lần" | mục `[37]` |
+| Đường tiếp sức | gậy ảo neo landmark bàn tay alpha **<= 0.45**, **truyền tay sau 3 lượt**; rơi gậy chỉ hiện "Không sao, chạy tiếp", **không trừ tim, không trừ điểm**; một thanh đích chung "Đội mình: `<x>`/`<mốc>`" | mục `[37]` |
+| Tinh thần thể thao | **đúng hai lần một phiên**: chạm khuỷu **3 giây** trước hiệp 1 + **lời hay <= 6 từ** (cột `loiHay`) hiện **4 giây** khi bạn sai; **cấm mọi dòng chế bai**; tổng kết in "Tinh thần thể thao: `<n>` lời hay đã nói" | mục `[37]` |
+| Bảng thành tích của đội | **ba mốc giảm dần** Vàng/Bạc/Đồng (x > y > z) cho **CẢ ĐỘI**, một màu huy chương lưu `"miti-sport"`, đọc lại bằng "Kỳ trước cả đội đạt `<màu>` — `<n>` động tác"; **cấm xếp hạng cá nhân, cấm so giữa các máy, cấm đổi huy chương lấy nội dung** | mục `[37]` |
+| Hồi tĩnh có tên cơ | động tác duỗi giữa của hạ nhiệt **45–60 giây** là cột `duoiCo` của môn, **15 giây**; HUD "Cơ em đang duỗi: `<tên>`" **>= 20px**; **cấm duỗi bật nhịp, cấm ép chạm gót tay**; reduced-motion còn **HAI** động tác × 10 giây | mục `[37]` |
+
+`verifySport()` chạy MỘT LẦN lúc nạp và kiểm **đúng bốn điều**; bản tắt tiếng, bản reduced-motion và bản **không camera vẫn bắt buộc kiểm đủ bốn điều** — tên môn, lời hay và bảng thành tích là chuyện của lớp học, không phụ thuộc webcam.
+
+Việc người thử số 28 ("hỏi em đang chơi 'mình đang tập môn gì' và 'lúc nãy cơ nào được duỗi' — em có gọi ra được tên môn và động tác duỗi, hay cả buổi chỉ là vung tay chọn đáp án? Xem bốn em có chạm khuỷu và nói lời hay khi bạn sai không; đọc bảng thành tích: đó là mốc của CẢ ĐỘI hay đã thành xếp hạng cá nhân?") là chỗ máy không tự kiểm được: `verifySport()` thấy chuỗi tên môn trên HUD, còn việc trẻ có thật sự hình dung mình đang tập thể dục thể thao thì phải có người đứng hỏi.
+
 ## 🔁 Pipeline của thư viện
 
 85 prompt game **được sinh tự động**, không sửa tay:
 
 ```
-tools/data/games.mjs + clusters.mjs + gestures.mjs + examples.mjs + error-notes.mjs + identities.mjs + standards.mjs
-tools/lib/ar.mjs · rules.mjs · feel.mjs · classroom.mjs · access.mjs · light.mjs · celebrate.mjs · identity.mjs · rhythm.mjs · queue.mjs · lesson.mjs · curriculum.mjs · verify.mjs · pe.mjs · memory.mjs · hype.mjs · anticipation.mjs · acceptance.mjs
+tools/data/games.mjs + clusters.mjs + gestures.mjs + examples.mjs + error-notes.mjs + identities.mjs + standards.mjs + sports.mjs
+tools/lib/ar.mjs · rules.mjs · feel.mjs · classroom.mjs · access.mjs · light.mjs · celebrate.mjs · identity.mjs · rhythm.mjs · queue.mjs · lesson.mjs · curriculum.mjs · sport.mjs · verify.mjs · pe.mjs · memory.mjs · hype.mjs · anticipation.mjs · acceptance.mjs
         └─ node tools/build.mjs ─→ catalogs/GAME_CATALOG.csv · .md · .js + prompts/0X-*/ + index.html + prompts/CHECKLIST_NGHIEP_THU.md
 ```
 
