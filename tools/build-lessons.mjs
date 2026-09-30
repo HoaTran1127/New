@@ -109,6 +109,7 @@ ${jsonBlock(EXAMPLES[L.cluster], cl.tags, notes)}
 
 5. CẢ LỚP THAM GIA
 - ${LESSON.classVote}
+- ${LESSON.classBoard}
 - ${LESSON.handover}
 - ${LESSON.strayHands}
 - ${LESSON.retain}
@@ -121,6 +122,7 @@ ${AR_RENDER}
   model: ${TASKS_VISION.hand} (HandLandmarker) và ${TASKS_VISION.pose} (PoseLandmarker, chỉ dùng để đặt mép trên của bảng theo landmark vai)
 - Cấu hình camera: getUserMedia({ video: { facingMode: "user", width: { ideal: 1280 }, height: { ideal: 720 }, frameRate: { ideal: 30 } }). Ưu tiên khung 16:9 vì đầu ra là màn chiếu; nếu camera cho tỉ lệ khác thì crop về vùng vẽ cố định, không để giãn hình làm sai tọa độ. Lật gương ngang khi hiển thị và khi tính tọa độ.
 - Chỉ xin quyền camera SAU khi giáo viên bấm "Bật camera" hoặc "Mời em lên bảng". Trạng thái bằng tiếng Việt: Đang tải → Xin quyền camera → Camera sẵn sàng → Đang nhận diện → Lỗi (kèm nút Thử lại).
+- ${LESSON.privacy}
 - ${CLASSROOM.framing}
 - ${CLASSROOM.safeZone}
 - Ở công cụ giảng bài thì dải trên cùng đặt thanh tiến trình năm bước và hai cột biên đặt dải điều khiển cùng khay vật thật; vì không có điểm, tim hay mascot nên toàn bộ chỗ đó dành cho nút bấm và nhãn bước.
@@ -233,7 +235,7 @@ ${byLop[5].map(row).join('\n')}
 - Thêm cụm kiến thức mới: sửa \`tools/data/clusters.mjs\`, \`tools/data/props.mjs\` (đủ 5 trường) và \`tools/data/lessons.mjs\` (đủ 3 trường), rồi chạy \`node tools/build.mjs\`.
 - Đổi quy định bảng phấn: \`tools/lib/chalk.mjs\` (10 quy định).
 - Đổi quy định từ bảng ra vở: \`tools/lib/handout.mjs\` (3 quy định).
-- Đổi quy định chế độ giảng bài: \`tools/lib/lesson.mjs\` (14 quy định).
+- Đổi quy định chế độ giảng bài: \`tools/lib/lesson.mjs\` (16 quy định).
 - \`node tools/validate.mjs\` sẽ chặn nếu thiếu quy định nào, nếu vật thật thiếu trường, hoặc nếu cơ chế game lọt vào giáo án.
 `;
 }

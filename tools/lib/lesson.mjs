@@ -1,4 +1,4 @@
-// Mười bốn quy định của CÔNG CỤ GIẢNG BÀI: giáo viên trình bày, cả lớp xem.
+// Mười sáu quy định của CÔNG CỤ GIẢNG BÀI: giáo viên trình bày, cả lớp xem.
 // Đây là tầng tách hẳn khỏi tools/lib/feel.mjs (vận động to + cảm giác arcade của game học sinh).
 // validate.mjs so khớp nguyên văn các chuỗi này, nên đổi ở đây phải chạy lại node tools/build.mjs.
 //
@@ -10,7 +10,7 @@
 //   - nhịp game tự chuyển bước sau vài giây, trong khi giáo viên cần dừng lại giảng đúng chỗ đó;
 //   - HandLandmarker bắt pinch của bất kì em nào ngồi dưới, nên bảng bị vẽ bậy từ xa;
 //   - bảng tự lau sau mỗi lượt, mất luôn phần trình bày giáo viên muốn cả lớp nhìn lại.
-// Vì vậy mười một quy định này KHÔNG phải bản sao của feel.mjs mà là bản đối lập có chủ đích.
+// Vì vậy mười sáu quy định này KHÔNG phải bản sao của feel.mjs mà là bản đối lập có chủ đích.
 //
 // Ba quy định đầu tiên (teacher, noGame, pace) giữ nhịp của tiết học; năm quy định giữa
 // (flow, handover, strayHands, classVote, retain) lo chuyện 35 em cùng xem một bảng; ba quy định
@@ -21,6 +21,11 @@
 //     mạng trường ở Việt Nam đứt là chuyện thường;
 //   - 0/39 kiểm chứng LESSON_DATA — cùng lỗ hổng mà verify.mjs vừa bịt cho game, nhưng ở giáo án
 //     thì hậu quả nặng hơn: một mục sai cô đọc trước 35 em, cả lớp học sai theo.
+// Vòng 6 đọc lại 39 giáo án, thấy hai lỗ về chính cái camera:
+//   - 0/39 có đường trả lời cả lớp KHÔNG cần webcam, dù bảng con là đồ có thật trong mọi lớp;
+//     kết quả đếm tay vì thế chỉ đại diện cho một phần ba phòng mà bảng vẫn vẽ thành cột cao;
+//   - 0/39 nhắc tới quyền riêng tư của 35 em bị quay: không đèn báo, không cách tắt hẳn stream,
+//     không dòng nào nói hình ảnh học sinh có đi vào bộ nhớ trình duyệt hay trang in không.
 //
 // Nguồn tham chiếu cho hướng thiết kế (đã kiểm chứng, không bịa số liệu): khung
 // Concrete-Representational-Abstract dùng cho trình tự các bước giảng; nghiên cứu về mỏi tay
@@ -82,8 +87,16 @@ export const LESSON = {
 
   inclusion:
     "CÓ EM KHÔNG ĐỨNG LÊN BẢNG ĐƯỢC: lên bảng là một lựa chọn, không phải hình thức kiểm tra. Hàng đợi \"Mời em lên bảng\" luôn có một ô \"Trả lời tại chỗ\" và một ô để giáo viên bỏ qua mà không cần nói lý do; không dòng chữ nào và không bảng tổng kết nào ghi em nào \"không chịu lên bảng\", ngồi tại chỗ không bị tính là thiếu tích cực. Em trả lời tại chỗ vẫn tham gia bằng hai cách: giơ ngón tay cho nút \"Cả lớp trả lời\" (camera chỉ đếm tay, không gọi tên), hoặc nói to và giáo viên lặp lại thao tác hộ trên bảng bằng chuột. Mọi hướng dẫn trên màn chiếu viết ở số nhiều (\"cả lớp mình\"), không viết \"em nào sai rồi\", và mỗi câu hỏi đều có ít nhất 5 giây chờ trước khi bảng gợi ý tiếp.",
+
+  // Cả lớp trả lời mà không cần chĩa camera vào 35 em: bảng con là đồ có thật trong mọi lớp.
+  classBoard:
+    "TRẢ LỜI CẢ LỚP BẰNG BẢNG CON, KHÔNG CẦN CAMERA: ngay cạnh nút \"Cả lớp trả lời\" luôn có nút \"Bảng con\", vì một webcam lớp chỉ quay được một phần ba phòng còn bảng con thì em nào cũng có. Bấm vào thì bảng hiện câu hỏi và các phương án đánh số, cả lớp viết hoặc vẽ đáp án lên bảng con (hoặc tờ phiếu đã in nếu lớp không có bảng con) rồi giơ lên; cửa sổ mở tối thiểu 8 giây và chỉ đóng khi giáo viên bấm \"Hết giờ\", không có đồng hồ tự chạy. Giáo viên nhìn phòng rồi nhập kết quả cho từng phương án bằng nút \"+1 em\" và \"+5 em\", có nút \"-1\" để sửa và \"Xoá lượt này\"; cột kết quả hiển thị đúng số em cả lớp chứ không chỉ số em camera thấy, và dòng chữ trên bảng ghi \"cô đếm tay, không phải máy đếm\". Kết quả vẫn KHÔNG nêu tên, KHÔNG xếp hạng, KHÔNG tô đỏ phương án sai trước mặt học sinh — chỉ dải điều khiển của cô đổi gợi ý giảng lại khi cột sai vượt 1/3. Lớp chuẩn 35 em nên ô nhập chặn ở 60 để một lần bấm nhầm không thành cột cao vô lý.",
+
+  // Camera hướng vào 35 trẻ em là chuyện khác camera một học sinh ngồi trước laptop: phải nói rõ và tắt được.
+  privacy:
+    "CAMERA VÀ QUYỀN RIÊNG TƯ CỦA CẢ LỚP: camera mặc định TẮT và chỉ bật khi giáo viên bấm \"Mời em lên bảng\" hoặc \"Cả lớp trả lời\". Khi bật, màn chiếu chỉ hiện vùng bảng và người đứng trước bảng, tuyệt đối không hiển thị khung hình lớp học; có ĐÈN BÁO ĐỎ to kèm dòng \"đang bật camera\" ở cả dải điều khiển của cô và mép màn chiếu, để học sinh nhìn lên cũng biết máy đang chạy. Nút \"Che camera\" tắt hẳn luồng video chứ không chỉ ẩn khung hình. Không một khung hình, ảnh chụp hay đoạn ghi nào của học sinh được đưa vào localStorage, vào bản bảng đã lưu, vào tệp xuất ra hay vào trang in — ảnh in chỉ chứa nét phấn và chữ. Mọi suy luận HandLandmarker chạy tại chỗ trên máy đang chiếu, không request nào mang dữ liệu khung hình ra ngoài. Trước lần bật camera đầu tiên của một tiết, hiện đúng ba dòng cho cô: camera chỉ dùng để nhận diện thao tác tay tại chỗ, không lưu hình ảnh, và không tự gửi đi đâu — cô thông báo với phụ huynh thế nào là quyết định của cô, phần mềm không chụp, không đăng và không đòi đồng ý thay cô. Có chế độ \"cả tiết không nhận diện\" để dạy trọn vẹn bằng chuột khi một em không muốn bị quay.",
 };
 
 // Dòng rút gọn dùng cho checklist tự kiểm của mỗi giáo án.
 export const LESSON_SHORT =
-  'giáo viên trình bày trên màn chiếu 16:9, bảng chiếm >= 70% màn chiếu, chữ phấn >= 40 px, điều khiển trọn bài bằng chuột và bàn phím, camera chỉ bật khi mời em lên bảng · không tim, không điểm, không combo, không xếp hạng, không đồng hồ gây áp lực, không hit-stop, không giật màn hình · mọi bước chờ giáo viên bấm "Bước tiếp", dựng cảnh >= 600 ms, có phát lại bước tối đa 8 giây không giới hạn lần · năm bước Khởi động - Vật thật - Sơ đồ - Phép tính - Luyện tập chung, tổng 15-20 phút, có thanh tiến trình kéo được · "Mời em lên bảng" chuyển quyền trong 5 giây, hàng đợi 4 em, ghi vị trí cổ tay landmark 0, tối đa 12 lượt một tiết · maxNumHands: 2 và bỏ qua mọi bàn tay có gốc ngoài vùng bảng cộng 10% đệm, nhiều tay trong bảng thì tạm khoá và hỏi giáo viên · "Cả lớp trả lời" đếm ngón tay trong 5 giây, ghi rõ camera thấy N em, có nút cộng tay, sai quá 1/3 thì gợi ý giảng lại bước SƠ ĐỒ · bảng không bao giờ tự lau, tối đa 8 trang, có nút in nền trắng chữ đen · chữ >= 5.5% chiều cao khung hình, tối đa 12 chữ một dòng và 6 dòng một lúc, có nút "Chữ to cho lớp đông" 1.4 lần và "Xem thử từ cuối lớp" thu 25% · mất mạng thì màn chờ tối đa 8 giây rồi dạy tiếp bằng chuột, không lỗi nào khoá bài giảng, không dữ liệu nào gửi đi · verifyLessonBank() chạy lúc nạp và trước khi lưu: đáp án có trong choices đúng một lần, ≥ 6 mục phủ ≥ 3 nhãn lỗi, phương án nhiễu là một lỗi thật, mục lỗi bị loại và chỉ báo cho cô giáo · tiết 35 phút chia ba chặng BÀI MỚI - LUYỆN TẬP - VẬN DỤNG, có nút "Lớp chỉ có 20 phút" · một giáo án dạy 4-5 lớp: bảng lưu theo lớp "4A · 8h10 · 42 nét", "Bắt đầu lượt mới cho lớp sau" không xoá bản cũ và dọn sạch tên học sinh · có ô "Trả lời tại chỗ", không em nào bị ghi là không chịu lên bảng, mỗi câu chờ >= 5 giây';
+  'giáo viên trình bày trên màn chiếu 16:9, bảng chiếm >= 70% màn chiếu, chữ phấn >= 40 px, điều khiển trọn bài bằng chuột và bàn phím, camera chỉ bật khi mời em lên bảng · không tim, không điểm, không combo, không xếp hạng, không đồng hồ gây áp lực, không hit-stop, không giật màn hình · mọi bước chờ giáo viên bấm "Bước tiếp", dựng cảnh >= 600 ms, có phát lại bước tối đa 8 giây không giới hạn lần · năm bước Khởi động - Vật thật - Sơ đồ - Phép tính - Luyện tập chung, tổng 15-20 phút, có thanh tiến trình kéo được · "Mời em lên bảng" chuyển quyền trong 5 giây, hàng đợi 4 em, ghi vị trí cổ tay landmark 0, tối đa 12 lượt một tiết · maxNumHands: 2 và bỏ qua mọi bàn tay có gốc ngoài vùng bảng cộng 10% đệm, nhiều tay trong bảng thì tạm khoá và hỏi giáo viên · "Cả lớp trả lời" đếm ngón tay trong 5 giây, ghi rõ camera thấy N em, có nút cộng tay, sai quá 1/3 thì gợi ý giảng lại bước SƠ ĐỒ · bảng không bao giờ tự lau, tối đa 8 trang, có nút in nền trắng chữ đen · chữ >= 5.5% chiều cao khung hình, tối đa 12 chữ một dòng và 6 dòng một lúc, có nút "Chữ to cho lớp đông" 1.4 lần và "Xem thử từ cuối lớp" thu 25% · mất mạng thì màn chờ tối đa 8 giây rồi dạy tiếp bằng chuột, không lỗi nào khoá bài giảng, không dữ liệu nào gửi đi · verifyLessonBank() chạy lúc nạp và trước khi lưu: đáp án có trong choices đúng một lần, ≥ 6 mục phủ ≥ 3 nhãn lỗi, phương án nhiễu là một lỗi thật, mục lỗi bị loại và chỉ báo cho cô giáo · tiết 35 phút chia ba chặng BÀI MỚI - LUYỆN TẬP - VẬN DỤNG, có nút "Lớp chỉ có 20 phút" · một giáo án dạy 4-5 lớp: bảng lưu theo lớp "4A · 8h10 · 42 nét", "Bắt đầu lượt mới cho lớp sau" không xoá bản cũ và dọn sạch tên học sinh · có ô "Trả lời tại chỗ", không em nào bị ghi là không chịu lên bảng, mỗi câu chờ >= 5 giây · "Bảng con" cho cả lớp giơ đáp án không cần webcam, cửa sổ >= 8 giây không tự đóng, cô nhập kết quả bằng +1/+5 và chặn ở 60 em, không tên không xếp hạng · camera mặc định tắt, màn chiếu chỉ hiện vùng bảng, đèn báo đỏ khi đang bật, nút "Che camera" tắt hẳn stream, không khung hình nào của học sinh vào localStorage/tệp xuất/trang in, có chế độ cả tiết không nhận diện';

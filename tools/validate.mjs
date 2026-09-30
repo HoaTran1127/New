@@ -146,6 +146,8 @@ const LESSON_RULES = [
   [LESSON.fullPeriod, 'thiếu quy định chia đủ 35 phút của một tiết học'],
   [LESSON.multiClass, 'thiếu quy định một giáo án dạy nhiều lớp trong buổi'],
   [LESSON.inclusion, 'thiếu quy định em trả lời tại chỗ không bị tính là thiếu tích cực'],
+  [LESSON.classBoard, 'thiếu quy định bảng con cho cả lớp trả lời không cần camera'],
+  [LESSON.privacy, 'thiếu quy định quyền riêng tư khi camera hướng vào cả lớp'],
 ];
 // Từ bảng ra vở: một tiết giảng chỉ thật sự xong khi các em làm được bài trên giấy.
 const HANDOUT_RULES = [
