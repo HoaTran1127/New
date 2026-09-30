@@ -45,7 +45,7 @@ NGUYÊN TẮC GỐC: khung hình webcam chính là màn chơi, không phải ả
 Trò chơi phải trông như thực tế tăng cường: vật thể ảo nằm trong không gian thật, bám vào người thật,
 có chiều sâu, và học sinh thao tác bằng cơ thể trong khung hình đó.
 
-2.0 Hợp đồng render AR (sai một chi tiết là mất chất thực tế ảo)
+2.0 Hợp đồng render AR (sai một chi tiết là mất chất thực tế ảo — nguồn: `tools/lib/ar.mjs`, validate chặn nếu thiếu)
 - Camera là MÀN CHƠI, không phải ảnh minh hoạ đặt cạnh màn chơi. Vật thể ảo phải nằm trong không gian thật,
   bám đúng vào người thật, có chiều sâu, và học sinh thao tác bằng cơ thể trong khung hình đó.
 - CÁCH GỐC (ưu tiên, ít lệch nhất): vẽ thẳng khung hình camera vào canvas ở mỗi vòng lặp.
@@ -283,7 +283,7 @@ kiến thức quay về tay giáo viên. Sáu quy định dưới đây biến c
 - Thưởng dạng BỘ SƯU TẬP: mỗi màn thắng thả ra 1 thẻ nhân vật/huy hiệu, lưu localStorage (key "miti-collection"),
   có màn "Sưu tập của em". Không thưởng ngẫu nhiên vô nghĩa, không cần server, không leaderboard.
 
-6.1 HỒ SƠ TIẾN BỘ XUYÊN PHIÊN (mỗi lần chơi phải kế thừa lần trước, không bắt đầu lại từ số 0)
+6.1 HỒ SƠ TIẾN BỘ XUYÊN PHIÊN (nguồn: `tools/lib/classroom.mjs`, validate chặn nếu thiếu — mỗi lần chơi phải kế thừa lần trước, không bắt đầu lại từ số 0)
 - Lưu vào localStorage key "miti-mastery" một bản ghi nhỏ theo từng cụm kiến thức: số lần gặp, số lần đúng,
   errorTag sai nhiều nhất, số lần đúng liên tiếp, ngày chơi gần nhất. KHÔNG lưu ảnh, video hay dữ liệu cá nhân.
 - Khi mở game, đọc hồ sơ trước rồi xếp câu theo ưu tiên: errorTag em sai nhiều nhất lên trước (lặp lại cách quãng),
@@ -294,7 +294,7 @@ kiến thức quay về tay giáo viên. Sáu quy định dưới đây biến c
   từ hồ sơ trống, game vẫn chạy trọn vẹn — không báo lỗi, không chặn vào vòng chơi.
 
 ========================
-6.2 TỰ KIỂM CHỨNG NGÂN HÀNG CÂU HỎI (game không được âm thầm dạy sai)
+6.2 TỰ KIỂM CHỨNG NGÂN HÀNG CÂU HỎI (nguồn: `tools/lib/verify.mjs`, validate chặn nếu thiếu — game không được âm thầm dạy sai)
 ========================
 Nguồn: `tools/lib/verify.mjs` (khối `VERIFY`), validate chặn nếu thiếu. Một mô hình sinh 40–60 mục chắc chắn
 vài mục lỗi; nếu chỉ viết "mỗi mục một đáp án đúng duy nhất" thì không gì đảm bảo. Engine phải tự kiểm đề của chính nó:
@@ -346,7 +346,7 @@ vài mục lỗi; nếu chỉ viết "mỗi mục một đáp án đúng duy nh�
   lời giải phải đọc được trọn vẹn.
 - Game Tiếng Anh: dùng window.speechSynthesis đọc từ/câu bằng giọng en-US hoặc en-GB, có nút phát lại.
 
-8.1 CẢM GIÁC ARCADE (juice) — phần quyết định trẻ thấy "vui" hay "làm bài tập có nền camera"
+8.1 CẢM GIÁC ARCADE (juice — nguồn: `tools/lib/feel.mjs`, validate chặn nếu thiếu) — phần quyết định trẻ thấy "vui" hay "làm bài tập có nền camera"
 - Hit-stop: khi chốt đúng, đóng băng mọi vật thể 70–90 ms, giật màn hình 4–6 px theo hướng động tác,
   thẻ đáp án lún còn 0.85 rồi nảy về 1.0 (squash & stretch). Người chơi phải NHÌN THẤY lực của cú chạm.
 - Combo nhìn + nghe được: "x2, x3, x4…" hiện to dần kèm vệt neon nối từ tay tới vật; cao độ âm thanh đúng nhảy bậc
@@ -360,7 +360,7 @@ vài mục lỗi; nếu chỉ viết "mỗi mục một đáp án đúng duy nh�
 - Mọi juice chạy trong ngân sách particle của mục 4.1 và tôn trọng nút "Giảm hiệu ứng chuyển động";
   khi hit-stop thì không tụt FPS (dùng freeze frame, không dùng sleep).
 
-8.2 THI ĐUA + CAO TRÀO — phần quyết định trẻ có CHỜ ĐỢI được chơi lần nữa
+8.2 THI ĐUA + CAO TRÀO (nguồn: `tools/lib/hype.mjs`, validate chặn nếu thiếu) — phần quyết định trẻ có CHỜ ĐỢI được chơi lần nữa
 
 Juice ở 8.1 làm mỗi cú chạm đã mắt, nhưng một game cú chạm đẹp vẫn nhàm sau phút thứ hai nếu không có
 gì để chờ: không mốc để phá, không hiệp căng hơn, không khoảnh khắc mở thưởng. Sáu quy định dưới đây ở
@@ -389,7 +389,7 @@ xếp hạng bạn ngồi cạnh (đây là lý do mục 7 cấm leaderboard và
   mỗi lượt đúng của bất kỳ em nào trên máy; chạm mốc thì cả màn ăn mừng 3 giây và mở một thẻ CHUNG. Cột chỉ hiện tổng số câu đúng,
   không hiện điểm từng em cạnh nhau, không tên, không hạng nhất — đích chung, không phải bảng xếp hạng.
 
-8.3 HAM QUAY LẠI — phần quyết định trẻ có BẤM Chơi lại vào ngày hôm sau
+8.3 HAM QUAY LẠI (nguồn: `tools/lib/anticipation.mjs`, validate chặn nếu thiếu) — phần quyết định trẻ có BẤM Chơi lại vào ngày hôm sau
 
 8.1 làm cú chạm đã mắt, 8.2 làm một phiên chơi có cao trào; cả hai đều khép lại khi màn tổng kết hiện ra. Khảo sát
 85 prompt: "hẹn gặp lại / ngày mai" = 0, "khiên / bảo vệ chuỗi" = 0, "phần thưởng để dành" = 0, "ô chưa mở trong bộ sưu tập" = 0,
@@ -457,7 +457,7 @@ thứ đang chờ mình. Nguồn `tools/lib/anticipation.mjs`. Cấm tuyệt đ�
 - Không đổi tên thương hiệu, không xóa logo khi vào gameplay, khi replay hoặc ở chế độ fallback.
 
 ========================
-11. NGHIỆM THU (game phải tự chứng minh nó đạt chuẩn)
+11. NGHIỆM THU (game phải tự chứng minh nó đạt chuẩn — nguồn: `tools/lib/acceptance.mjs`, validate chặn nếu thiếu)
 ========================
 Bối cảnh: người dùng dán prompt này vào Gemini Canvas, nhận về một file HTML dài vài nghìn dòng.
 Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là lời mong đợi — không ai biết file có toScreen thật không.

@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { pathToFileURL } from 'url';
 import { GAMES } from './data/games.mjs';
 import { LEGACY } from './data/legacy.mjs';
 import { GESTURES } from './data/gestures.mjs';
@@ -21,6 +22,30 @@ import { ANT, ANT_SHORT } from './lib/anticipation.mjs';
 const ROOT = path.resolve(import.meta.dirname, '..');
 const errors = [];
 const bad = (msg) => errors.push(msg);
+
+// 1a. Đăng ký tầng quy định, đọc thẳng từ tools/lib thay vì gõ tay danh sách.
+// Vòng 10 chuẩn hoá: ba vụ lệch đã xảy ra thật — hype.mjs bị quên trong danh sách pipeline của
+// prompts/README, chuỗi tự kiểm rơi đoạn, và heading master thiếu tên lib. Tất cả đều lọt vì
+// danh sách cũ viết tay nên không ai cập nhật khi thêm lib mới.
+const LIB_DIR = path.join(ROOT, 'tools/lib');
+const LIB_UTIL = ['csv.mjs'];
+const layerLibs = fs.readdirSync(LIB_DIR).filter((f) => f.endsWith('.mjs') && !LIB_UTIL.includes(f)).sort();
+const chainSegments = [];
+for (const f of layerLibs) {
+  const mod = await import(pathToFileURL(path.join(LIB_DIR, f)).href);
+  for (const [name, value] of Object.entries(mod)) {
+    if (name.endsWith('_SHORT') && typeof value === 'string') chainSegments.push({ lib: f, name, text: value });
+  }
+}
+// AR_SHORT nằm ở dòng "Nền AR" riêng của biến thể, MOTION/CLASSROOM chỉ áp dụng cho kiểu có nhận diện
+// cơ thể — nên ba đoạn này không bắt buộc có mặt trong mọi dòng tự kiểm.
+const CHAIN_SKIP = { prompt: ['AR_SHORT'], variant: ['AR_SHORT', 'MOTION_SHORT', 'CLASSROOM_SHORT'] };
+// Tên lib phải xuất hiện trong heading của tầng tương ứng trong master, để người sửa master biết sửa file nào.
+const MASTER_LIB = [
+  ['2.0', 'ar.mjs'], ['4.5', 'pe.mjs'], ['5.1', 'memory.mjs'], ['6.1', 'classroom.mjs'],
+  ['6.2', 'verify.mjs'], ['8.1', 'feel.mjs'], ['8.2', 'hype.mjs'], ['8.3', 'anticipation.mjs'],
+  ['9.1', 'access.mjs'], ['11.', 'acceptance.mjs'],
+];
 
 const rows = readCatalog(path.join(ROOT, 'catalogs', 'GAME_CATALOG.csv'));
 
@@ -179,8 +204,14 @@ for (const g of GAMES) {
   for (const [needle, msg] of RET_RULES) if (!t.includes(needle)) bad(`${g.id}: ${msg}.`);
   for (const [needle, msg] of HYPE_RULES) if (!t.includes(needle)) bad(`${g.id}: ${msg}.`);
   for (const [needle, msg] of ANT_RULES) if (!t.includes(needle)) bad(`${g.id}: ${msg}.`);
-  if (!t.includes(HYPE_SHORT)) bad(`${g.id}: chuỗi tự kiểm ở phần ĐẦU RA thiếu phần thi đua + cao trào.`);
-  if (!t.includes(ANT_SHORT)) bad(`${g.id}: chuỗi tự kiểm ở phần ĐẦU RA thiếu phần ham quay lại.`);
+  // Chuỗi tự kiểm phải mang đủ mọi tầng: thêm lib mới mà quên nối vào dòng này thì người dán
+  // prompt không còn cách nào biết game thiếu quy định.
+  const chainLine = (t.match(/^- Tự kiểm tra trước khi xuất:.*$/m) || [''])[0];
+  if (!chainLine) bad(`${g.id}: phần ĐẦU RA thiếu dòng "Tự kiểm tra trước khi xuất:".`);
+  for (const seg of chainSegments) {
+    if (CHAIN_SKIP.prompt.includes(seg.name)) continue;
+    if (!chainLine.includes(seg.text)) bad(`${g.id}: dòng "Tự kiểm tra trước khi xuất" thiếu đoạn ${seg.name} của tools/lib/${seg.lib}.`);
+  }
   // Bố cục phải nhét khởi động vào TRƯỚC 12 lượt và hạ nhiệt vào TRƯỚC màn tổng kết, không phải để ngoài luồng.
   if (!t.includes('KHỞI ĐỘNG 60–90 giây → 10 giây "Em còn nhớ không?" → 12 lượt chính')) bad(`${g.id}: bố cục thiếu khởi động rồi thiếu câu "Em còn nhớ không?" ngay trước 12 lượt chính.`);
   if (!t.includes('HẠ NHIỆT 45–60 giây → Kết quả')) bad(`${g.id}: bố cục thiếu bước hạ nhiệt ngay trước màn Kết quả.`);
@@ -309,10 +340,15 @@ if (!fs.existsSync(VAR_FILE)) {
     for (const needle of RET_NEEDLES) if (!b.includes(needle)) bad(`biến thể #${i + 1}: thiếu quy tắc nhớ bài "${needle.slice(0, 30)}...".`);
     if (!b.includes('**Thi đua + cao trào:**')) bad(`biến thể #${i + 1}: thiếu dòng Thi đua + cao trào.`);
     for (const needle of HYPE_NEEDLES) if (!b.includes(needle)) bad(`biến thể #${i + 1}: thiếu quy tắc hào hứng "${needle.slice(0, 30)}...".`);
-    if (!b.includes(HYPE_SHORT)) bad(`biến thể #${i + 1}: dòng tự kiểm thiếu phần thi đua + cao trào.`);
     if (!b.includes('**Ham quay lại:**')) bad(`biến thể #${i + 1}: thiếu dòng Ham quay lại.`);
     for (const needle of ANT_NEEDLES) if (!b.includes(needle)) bad(`biến thể #${i + 1}: thiếu quy tắc chờ đợi "${needle.slice(0, 30)}...".`);
-    if (!b.includes(ANT_SHORT)) bad(`biến thể #${i + 1}: dòng tự kiểm thiếu phần ham quay lại.`);
+    // Chuỗi tự kiểm của biến thể cũng phải mang đủ mọi tầng, cùng registry như prompt.
+    const vChain = (b.match(/^\*\*Xuất file:\*\*.*$/m) || [''])[0];
+    if (!vChain) bad(`biến thể #${i + 1}: thiếu dòng "**Xuất file:**" chứa chuỗi tự kiểm.`);
+    for (const seg of chainSegments) {
+      if (CHAIN_SKIP.variant.includes(seg.name)) continue;
+      if (!vChain.includes(seg.text)) bad(`biến thể #${i + 1}: chuỗi tự kiểm thiếu đoạn ${seg.name} của tools/lib/${seg.lib}.`);
+    }
     for (const needle of PE_NEEDLES) if (!b.includes(needle)) bad(`biến thể #${i + 1}: thiếu quy tắc thể dục "${needle.slice(0, 30)}...".`);
     const tracksBody = /\*\*Nền AR:\*\*/.test(b) && !b.includes('V4 — VOICE');
     if (tracksBody) {
@@ -474,7 +510,20 @@ for (const [docName, docText] of DOC_FILES) {
     if (!re.test(docText)) bad(`${docName} không còn nêu ${label} — tài liệu phải ghi con số hiện hành của bảng kiểm để người viết prompt đối chiếu.`);
   }
 }
-// Số mục của khung master phải khớp số heading cấp 1 thật trong file, để không ai quảng cáo "khung 10 mục" cho một file 13 mục.
+// 7h. Registry tầng quy định: thêm lib mà quên ghi vào tài liệu thì lib đó vô hình với người sửa.
+// Vòng 10 bắt buộc: heading master phải nêu tên lib nguồn, và cả hai README phải liệt kê lib trong
+// khối pipeline. Probe trước đây phát hiện hype.mjs bị thiếu trong danh sách pipeline của prompts/README
+// mà không có check nào báo — vì toàn bộ danh sách này viết tay.
+for (const [heading, libFile] of MASTER_LIB) {
+  const line = (master.match(new RegExp('^' + heading.replace('.', '\\.') + '.*$', 'm')) || [''])[0];
+  if (!line) bad(`Master prompt thiếu heading "${heading} ..." (nơi nêu tools/lib/${libFile}).`);
+  else if (!line.includes(libFile)) bad(`Mục "${heading}" của master không nêu tools/lib/${libFile} — người sửa quy định không biết phải mở file nào.`);
+}
+for (const libFile of layerLibs) {
+  for (const [docName, docText] of DOC_FILES.filter(([n]) => n === 'README.md' || n === 'prompts/README.md')) {
+    if (!docText.includes(libFile)) bad(`${docName} không nêu tools/lib/${libFile} — lib mới phải được thêm vào khối pipeline của tài liệu hướng dẫn.`);
+  }
+}
 const masterSections = (master.match(/^[0-9]+\. [A-ZÀ-Ỹ]/gm) || []).length;
 for (const [docName, docText] of DOC_FILES.filter(([n]) => n !== 'prompts/00-master-canvas-prompt.md')) {
   if (!new RegExp(`khung( chuẩn| master)? ${masterSections} mục`, 'i').test(docText)) {
