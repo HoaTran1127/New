@@ -296,11 +296,11 @@ kiến thức quay về tay giáo viên. Sáu quy định dưới đây biến c
 ========================
 6.2 TỰ KIỂM CHỨNG NGÂN HÀNG CÂU HỎI (nguồn: `tools/lib/verify.mjs`, validate chặn nếu thiếu — game không được âm thầm dạy sai)
 ========================
-Nguồn: `tools/lib/verify.mjs` (khối `VERIFY`), validate chặn nếu thiếu. Một mô hình sinh 40–60 mục chắc chắn
+Nguồn: `tools/lib/verify.mjs` (khối `VERIFY`), validate chặn nếu thiếu. Một mô hình sinh 30–60 mục chắc chắn
 vài mục lỗi; nếu chỉ viết "mỗi mục một đáp án đúng duy nhất" thì không gì đảm bảo. Engine phải tự kiểm đề của chính nó:
 - `verifyQuestionBank()` chạy MỘT LẦN trước vòng chơi đầu tiên: `answer` có trong `choices` và chỉ xuất hiện đúng một lần;
   `explanation` / `errorTag` / `loiViet` khác rỗng; `errorTag` thuộc đúng danh sách đã khai báo; không hai mục trùng `prompt`;
-  `level` chỉ nhận 1/2/3 và mỗi level chiếm tối thiểu 1/4 số mục. Mục trượt bị LOẠI KHỎI vòng chơi + `console.warn` nêu id và lý do.
+  `level` chỉ nhận 1/2/3 và mỗi level chiếm tối thiểu 1/4 số mục; `dang` chỉ nhận "nhin"/"tinh", mục "tinh" có tối đa một dấu phép tính, đề không quá 16 từ. Mục trượt bị LOẠI KHỎI vòng chơi + `console.warn` nêu id và lý do.
 - Mỗi phương án nhiễu phải sai theo MỘT LỖI THẬT trong danh sách lỗi. Thử từng nhiễu: "nói theo cách hiểu hợp lý nào
   thì phương án này đúng?" — nếu có thì thay phương án khác. Hai đáp án cùng đúng làm lời giải thành vô nghĩa.
 - Guard phạm vi: số trong phạm vi SGK đã khai báo, không số âm ngoài phạm vi đã học, không chia cho 0, kết quả hữu hạn;
@@ -308,8 +308,32 @@ vài mục lỗi; nếu chỉ viết "mỗi mục một đáp án đúng duy nh�
 - Chống đoán mò bằng CẤU TRÚC (rule 60/40 chỉ chống vung bừa, không chống được mẹo chọn đáp án): đáp án đúng không được
   là số lớn nhất/nhỏ nhất ở quá 20% số mục, không được là phương án dài nhất ở quá 20%, không lặp nguyên văn cụm từ hiếm
   trong đề; vị trí đúng phân bố đều mỗi chỗ 1/3 số mục ± 10%, đếm được bằng chính hàm seed đã dùng để xáo.
-- Level khớp số bước thật: 1 = một phép tính một bước, 2 = hai bước, 3 = ba bước trở lên hoặc hai lần đổi đơn vị.
-  Không dán nhãn level 3 cho phép một bước chỉ để đủ chỉ tiêu 1/4 mỗi level.
+- Level là bậc thang độ TINH VI của nhịp nhìn, không phải số phép tính: 1 = nhìn là chọn; 2 = nhìn kỹ một nhịp rồi loại trừ;
+  3 = ước lượng trong khoảng hoặc so hai mốc — mọi level vẫn chỉ MỘT thao tác. Muốn khó hơn thì kéo hai phương án lại gần nhau,
+  không phải ghép thêm phép tính (cả 6 luật "nhẹ đầu" ở mục 6.3 bên dưới).
+
+========================
+6.3 NHẸ ĐẦU — TOÁN HÌNH DUNG THAY VÌ TÍNH NẶNG (nguồn: `tools/lib/light.mjs`, validate chặn nếu thiếu) — phần quyết định trẻ đang CHƠI hay đang làm kiểm tra
+========================
+Nguồn: `tools/lib/light.mjs` (khối `LIGHT`), validate chặn nếu thiếu. Chín vòng cộng quy định đã đẩy cả 85 prompt
+về phía "đưa bài toán rồi tính toán thi đấu": hợp đồng sinh đề buộc level 2 hai bước, level 3 ba bước trở lên,
+điểm +10 chỉ gắn vào đáp án đúng, và không một con số nào trần độ dài đề (trung bình 10,4 từ nhưng có câu tới 21 từ).
+Trẻ cắm đầu tính nhẩm thì mascot, combo, bài thể dục và thế giới AR phía sau chỉ còn là phông nền của một bài kiểm tra.
+Lớp này chuyển gánh nặng từ **đầu tính** sang **mắt nhìn và người vận động**, và gắn nó vào con số kiểm được bằng code.
+- **Một lượt một thao tác tư duy**: mục `dang: "tinh"` chỉ có tối đa MỘT dấu phép tính nằm giữa hai khoảng trắng (+ − × :),
+  `verifyQuestionBank()` đếm và loại mục hai dấu. Kỹ năng cần nhiều bước thì engine dựng sẵn các bước trước — cột dọc đã viết
+  một dòng, sơ đồ đã chia ô, đơn vị đã đổi — trẻ chỉ làm bước cuối.
+- **>= 60% số mục là `dang: "nhin"`**: nhìn–chỉ–chọn (so độ dài, nhận dạng hình, ước lượng, đếm ô, đọc biểu đồ / tia số / đồng hồ,
+  ghép hình). Dưới ngưỡng thì bảng kiểm ghi CHƯA ĐẠT kèm tỉ lệ thật: ngân hàng đó quá nặng tính nhẩm.
+- **Đề <= 16 từ, một mệnh đề**, cấm "sau đó / rồi / biết rằng"; mỗi lượt đọc to đề bằng `speechSynthesis` kèm nút "Nghe lại đề".
+- **Thưởng đến từ động tác**: một lượt tối đa +9, trong đó +6 cho ĐỘNG TÁC (đi hết >= 50% tầm với, chạm một vùng đích hợp lệ)
+  và +3 cho đáp án đúng; chuỗi / thẻ vàng / hiệp 3 nhân trên tổng đó. Particle và hit-stop nổ tại điểm chạm TRƯỚC khi máy biết
+  đúng hay sai. Không cộng điểm cho tốc độ đọc đề hay tốc độ tính.
+- **Không đồng hồ nào đuổi theo câu hỏi**: thẻ nằm im tới khi em chốt; đếm ngược chỉ ở khởi động, hạ nhiệt, trạm nghỉ,
+  mở thưởng và mini-trạm vận động. Đứng im 15 giây thì mascot làm mẫu + đọc lại đề, không trừ tim, không tự sang câu.
+- **Trạm nghỉ 5 giây là một mini-trạm chơi** không hỏi bài (đập 3 bong bóng, giữ thăng bằng, lắc vai theo nhịp): không trừ tim,
+  không tính vào 12 lượt, không đổi level, hoàn thành thì +5 điểm động tác. Đây là chỗ trẻ được hét lên.
+
 
 ========================
 7. GIAO DIỆN
@@ -466,7 +490,7 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
   Bảng liệt kê TỪNG ràng buộc kèm trạng thái ĐẠT / CHƯA ĐẠT. Trạng thái đó phải do code kiểm thật lúc chạy,
   không phải chữ tĩnh kê sẵn. Một bảng báo "ĐẠT" mà không kiểm gì là lỗi nghiêm trọng nhất của game giáo dục.
   Bảng chỉ người lớn mở được: không trừ tim, không chặn chơi, học sinh không nhìn thấy.
-- 27 MỤC MÁY TỰ KIỂM, mỗi mục một hàm trả true/false:
+- 29 MỤC MÁY TỰ KIỂM, mỗi mục một hàm trả true/false:
   [1] QUESTION_DATA đủ số mục và verifyQuestionBank() ĐÃ chạy trước lượt chơi đầu tiên
   [2] mọi mục đang phát hành có answer nằm trong choices đúng một lần
   [3] 📷 drawImage khung hình webcam đi qua toScreen(lx, ly), không còn phép nhân thô với W/H
@@ -494,14 +518,16 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
   [25] nghi thức mở thưởng cuối hiệp dài 2,5 giây, luôn có phần thưởng, không đổi level thích ứng, mở ngay khi reduced-motion
   [26] "miti-tokens" giữ được khiên chuỗi và quyền chọn câu sang phiên sau (tối đa 2); khiên vỡ vẫn trừ 1 tim, vẫn hiện lời giải, câu đó vẫn vào hàng đợi luyện lại
   [27] màn tổng kết in đúng một dòng "Lần sau em quay lại sẽ có <n> câu đang chờ" với n đếm từ "miti-review", không chuỗi ngày chơi, không dòng "em đã nghỉ X ngày"
-  Mục gắn 📷 chỉ áp dụng khi có webcam: bản không camera bỏ 6 mục đó và vẫn phải đạt 21 mục còn lại.
+  [28] tỉ lệ mục dang: "nhin" >= 60% và mọi mục dang: "tinh" chỉ mang một dấu phép tính với đề không quá 16 từ (đếm trên QUESTION_DATA đang phát hành)
+  [29] điểm một lượt tách thành +6 cho động tác và +3 cho đáp án, hiệu ứng nổ tại điểm chạm trước khi máy biết đúng sai, không thẻ câu hỏi nào có đồng hồ đếm ngược
+  Mục gắn 📷 chỉ áp dụng khi có webcam: bản không camera bỏ 6 mục đó và vẫn phải đạt 23 mục còn lại.
 - XUẤT BẢN VĂN: bảng có nút "Xuất bản văn" sinh một khối chữ tiếng Việt copy được — tên game, bản chuẩn MiTi,
   ngày giờ, kiểu điều khiển đang chạy, số mục ĐẠT / CHƯA ĐẠT, danh sách mục chưa đạt kèm lý do.
   Khối chữ chỉ hiện trên màn hình và vào clipboard máy đó; không gửi lên máy chủ nào, không xin quyền, không để lại dữ liệu.
 - MỤC CHƯA ĐẠT PHẢI GIẢI THÍCH ĐƯỢC: mỗi dòng kèm một câu nguyên nhân kỹ thuật cho người lớn
   (ví dụ "toScreen không được dùng ở drawImage — vật thể đang tính bằng lx * W") và một câu nên sửa thế nào trong prompt.
   Cấm báo "lỗi" rồi im lặng, cấm chữ chung chung kiểu "hệ thống có vấn đề".
-- 19 VIỆC NGƯỜI THỬ PHẢI BẤM TAY (máy không tự kiểm được, làm theo đúng thứ tự, khoảng 15 phút):
+- 20 VIỆC NGƯỜI THỬ PHẢI BẤM TAY (máy không tự kiểm được, làm theo đúng thứ tự, khoảng 15 phút):
   đứng xa tới mức chỉ còn hai bàn tay · giữ im một tư thế 5 giây · che nửa người bằng tay · tắt camera giữa vòng ·
   rút mạng lúc đang tải model · đổi tay thuận sang Trái giữa chừng · bật reduced-motion ở hệ điều hành rồi mở game ·
   cố tình sai 4 câu liên tiếp · mở bằng điện thoại đặt dọc · đưa một học sinh lớp 4 chưa đọc hướng dẫn chơi thử 60 giây ·
@@ -514,6 +540,7 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
   chơi đến hiệp 3 — em có nhận ra hiệp này căng hơn thật (điểm nhân đôi, thẻ vàng thêm) mà câu hỏi không khó hơn không?
   để dành tới phiên sau rồi chơi tiếp — khiên chuỗi có còn trong "miti-tokens" và có dùng được thật không (làm sai một câu: chuỗi giữ mà tim vẫn giảm, lời giải vẫn hiện)?
   đọc dòng "Chương tiếp theo" và bấm "Xem trước" ở màn tổng kết — em có hỏi khi nào được chơi chương đó, hay dòng chữ bị đọc như quảng cáo?
+  chơi liền 5 lượt đầu — em có phải nhíu mắt tính nhẩm không hay đang nhìn–chỉ–chọn rồi với tay? Nghe đề một lần có hiểu phải làm gì không?
   Bảng in kèm từng việc và ô ghi kết quả: `prompts/CHECKLIST_NGHIEP_THU.md`.
 - THIẾU MỤC NÀO THÌ SỬA PROMPT, KHÔNG SỬA TAY FILE HTML: dán lại nguyên văn quy định tương ứng vào cuối prompt rồi sinh lại file.
 
@@ -581,17 +608,18 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
 [ ] mỗi phương án nhiễu sai theo một lỗi thật trong danh sách lỗi, không có phương án tình cờ đúng
 [ ] mọi số và từ nằm trong phạm vi SGK đã khai báo; không chia cho 0, không kết quả vô hạn
 [ ] đáp án đúng không đoán được bằng mẹo hình thức; vị trí đúng phân bố đều 1/3 ± 10%
-[ ] level khớp số bước thật (1 = một bước, 2 = hai bước, 3 = ba bước trở lên)
+[ ] level là bậc thang độ tinh vi (1 nhìn là chọn, 2 loại trừ một nhịp, 3 ước lượng) và mọi lượt vẫn chỉ MỘT thao tác
+[ ] mọi mục có `dang`; mục "tinh" có <= 1 dấu phép tính; >= 60% số mục là "nhin"; đề <= 16 từ và được đọc to
 [ ] 2 câu đúng liên tiếp lên một level, 2 câu sai liên tiếp xuống một level cùng errorTag
 [ ] không cho sai quá 3 câu liên tiếp; câu thứ 4 là level 1 kèm lời giải từng bước, chọn lại đúng không trừ tim lần hai
 [ ] không hiện "level"/sao xếp hạng cho học sinh; phân bố level chỉ ở màn tổng kết cho giáo viên
 [ ] bảng kiểm ẩn mở bằng 7 lần chạm logo MiTi hoặc Ctrl+Alt+K, trạng thái ĐẠT do code kiểm thật lúc chạy
-[ ] cả 27 mục máy tự kiểm đều có hàm kiểm tương ứng, không mục nào là chữ kê sẵn
+[ ] cả 29 mục máy tự kiểm đều có hàm kiểm tương ứng, không mục nào là chữ kê sẵn
 [ ] mục CHƯA ĐẠT kèm nguyên nhân kỹ thuật + cách sửa trong prompt, không có dòng "lỗi hệ thống"
 [ ] nút "Xuất bản văn" copy được khối chữ tiếng Việt, không gửi lên máy chủ nào
-[ ] bản không camera bỏ đúng 6 mục 📷 và vẫn đạt 21 mục còn lại, không bỏ luôn bảng kiểm
+[ ] bản không camera bỏ đúng 6 mục 📷 và vẫn đạt 23 mục còn lại, không bỏ luôn bảng kiểm
 [ ] fallback chuột/chạm/phím chơi trọn vẹn, tự kích hoạt khi camera lỗi
-[ ] QUESTION_DATA có ít nhất 40 mục (Toán) hoặc 60 mục (Tiếng Anh), mỗi mục có đáp án + lời giải + errorTag + loiViet
+[ ] QUESTION_DATA có ít nhất 30 mục (Toán) hoặc 60 mục (Tiếng Anh), mỗi mục có đáp án + lời giải + errorTag + loiViet + dang
 [ ] dữ liệu đặt đầu file, code engine đặt sau, không có chỗ nào rút gọn
 [ ] câu sai được đưa vào hàng đợi luyện lại, tổng kết nhóm theo errorTag
 [ ] có chữ ký MiTi ở Bắt đầu / HUD / Kết quả
@@ -653,7 +681,7 @@ Sau khi tự kiểm tra, CHỈ xuất ra file HTML hoàn chỉnh, không kèm gi
   toàn bộ quy định phía trên chỉ là lời mong đợi. Bắt game tự kiểm bằng hàm true/false biến lời hứa thành trạng thái đọc được.
 - **Trạng thái phải do code kiểm, không phải chữ kê sẵn**: một bảng tĩnh in sẵn chữ "ĐẠT" còn hại hơn không có bảng,
   vì người lớn tưởng là đã kiểm. Đây là lý do quy định ghi rõ "không phải một danh sách chữ tĩnh".
-- **Tách 27 mục máy / 19 việc người thử**: cái gì máy kiểm được thì đừng đùn cho giáo viên; cái máy không kiểm được
+- **Tách 29 mục máy / 20 việc người thử**: cái gì máy kiểm được thì đừng đùn cho giáo viên; cái máy không kiểm được
   (cháu có hiểu luật chơi mà không đọc hướng dẫn không, rút mạng thì sao) thì đừng giả vờ kiểm. Con số 15 phút là thời lượng
   một tiết thực tế, không phải danh sách dài vô hạn.
 - **Mục chưa đạt phải nói nguyên nhân và cách sửa**: bảng kiểm chỉ báo "lỗi" sẽ bị bỏ qua; kèm câu "thiếu ở dòng nào,

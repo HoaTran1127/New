@@ -66,7 +66,7 @@ Bốn biến thể đầu dùng **cùng một hợp đồng AR** như prompt gam
 - `04-english5/` — 15 game Tiếng Anh 5.
 - `01-prompt-…` đến `12-prompt-…` — **12 prompt legacy** đời đầu: giữ nguyên cơ chế game, đã thay MediaPipe Legacy/Tailwind CDN/Tone.js bằng chuẩn hiện hành và gắn nhãn `LEGACY`. Không dùng làm khuôn cho game mới.
 - `VARIANTS_425.md` — 425 biến thể (85 game × 5 kiểu điều khiển), do `tools/build-variants.mjs` sinh.
-- `CHECKLIST_NGHIEP_THU.md` — bảng kiểm cầm tay khi nhận file HTML về: 27 mục máy tự kiểm + 19 việc người thử bấm tay (trong đó 6 mục gắn 📷 chỉ có camera mới kiểm được; bản không camera bỏ 6 mục đó và vẫn phải đạt 21 mục còn lại), do `tools/build-acceptance.mjs` sinh từ `tools/lib/acceptance.mjs`.
+- `CHECKLIST_NGHIEP_THU.md` — bảng kiểm cầm tay khi nhận file HTML về: 29 mục máy tự kiểm + 20 việc người thử bấm tay (trong đó 6 mục gắn 📷 chỉ có camera mới kiểm được; bản không camera bỏ 6 mục đó và vẫn phải đạt 23 mục còn lại), do `tools/build-acceptance.mjs` sinh từ `tools/lib/acceptance.mjs`.
 
 ## ✅ Nghiệm thu một game vừa sinh
 
@@ -116,7 +116,22 @@ Thi đua là với chính em hoặc với một đích chung, không bao giờ l
 
 Ba biến thể độc hại của mấy cơ chế này bị cấm ngay trong quy định: **không chuỗi ngày chơi** (streak), **không xin quyền thông báo**, **không "sống lại" kiểu xóa hình phạt sư phạm** — và nghỉ chơi không bị phạt. Dòng hẹn quay lại chỉ đếm những câu đến hạn ôn, không bao giờ nhắc em đã nghỉ bao lâu ngày.
 
-👉 Hai mục `[26] [27]` của `CHECKLIST_NGHIEP_THU.md` kiểm đúng hai con số này.
+👉 Hai mục `[26] [27]` của `CHECKLIST_NGHIEP_THU.md` kiểm đúng hai con số này. Hai mục `[28] [29]` thuộc tầng "nhẹ đầu" bên dưới.
+
+## 🪶 Nhẹ đầu: Toán phải là hình dung, không phải tính nhẩm
+
+Chín vòng cộng quy định đã kéo 85 prompt lệch sang "đưa bài toán rồi tính toán thi đấu": đề buộc **level 2 hai bước, level 3 ba bước trở lên**, điểm `+10` chỉ gắn vào đáp án đúng, và không luật nào trần độ dài đề. `tools/lib/light.mjs` đặt lại ba con số, đều kiểm bằng code:
+
+| Luật | Con số | Kiểm ở đâu |
+|:---|:---|:---|
+| Một lượt một thao tác tư duy | mục `dang: "tinh"` có **`<= 1`** dấu phép tính (`+ − × :` nằm giữa hai khoảng trắng); bước trước engine dựng sẵn | `verifyQuestionBank()` + mục `[28]` |
+| Thiểu số trực quan | **`>= 60%`** số mục đang phát hành là `dang: "nhin"` (nhìn–chỉ–chọn, ước lượng, đọc biểu đồ / tia số / sơ đồ) | `verifyQuestionBank()` + mục `[28]` |
+| Đề ngắn, đọc được bằng tai | **`<= 16 từ`**, một mệnh đề, cấm "sau đó / rồi"; đọc to mỗi lượt bằng `speechSynthesis` + nút "Nghe lại đề" | `verifyQuestionBank()` + mục `[28]` |
+| Thưởng từ động tác | **+6 động tác / +3 đáp án** cho một lượt (tối đa +9); không điểm nào cho tốc độ đọc hay tốc độ tính | mục `[29]` |
+| Không áp lực thời gian | thẻ câu hỏi **không đồng hồ đếm ngược**; đứng im 15 giây → mascot làm mẫu, không trừ tim | mục `[29]` |
+| Trạm nghỉ là trạm chơi | 5 giây giữa hai hiệp = mini-trạm vận động **không hỏi bài**, +5 điểm động tác | nhịp hiệp của `feel.mjs` |
+
+Số mục tối thiểu môn Toán rút từ **40 xuống 30** (Tiếng Anh giữ 60 vì là từ vựng, không phải phép tính); 114 câu mẫu hiện có **78 câu `nhin` = 68%**. Level không còn nghĩa "mấy phép tính" mà là độ tinh vi của nhịp nhìn: 1 = nhìn là chọn, 2 = nhìn kỹ rồi loại trừ, 3 = ước lượng — vẫn đúng MỘT thao tác.
 
 ## 🔁 Pipeline của thư viện
 
@@ -124,7 +139,7 @@ Ba biến thể độc hại của mấy cơ chế này bị cấm ngay trong qu
 
 ```
 tools/data/games.mjs + clusters.mjs + gestures.mjs + examples.mjs + error-notes.mjs
-tools/lib/ar.mjs · rules.mjs · feel.mjs · classroom.mjs · access.mjs · verify.mjs · pe.mjs · memory.mjs · hype.mjs · anticipation.mjs · acceptance.mjs
+tools/lib/ar.mjs · rules.mjs · feel.mjs · classroom.mjs · access.mjs · light.mjs · verify.mjs · pe.mjs · memory.mjs · hype.mjs · anticipation.mjs · acceptance.mjs
         └─ node tools/build.mjs ─→ catalogs/GAME_CATALOG.csv · .md · .js + prompts/0X-*/ + index.html + prompts/CHECKLIST_NGHIEP_THU.md
 ```
 

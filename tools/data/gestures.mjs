@@ -163,6 +163,6 @@ export const GESTURES = {
 
 // Khối dữ liệu chuẩn theo môn
 export const BANK = {
-  Toán: { so: 40, luu_y: 'Đáp án phải tính lại được bằng số học trong code, không so khớp chuỗi tự do; mỗi phương án nhiễu là một kết quả thật của lỗi đã nêu, không phải số ngẫu nhiên.' },
+  Toán: { so: 30, luu_y: 'Mục \`dang: "tinh"\` phải tính lại được bằng ĐÚNG MỘT phép số học trong code, mục \`dang: "nhin"\` kiểm bằng số học hoặc số đo hình học, không so khớp chuỗi tự do; mỗi phương án nhiễu là một kết quả thật của lỗi đã nêu, không phải số ngẫu nhiên.' },
   'Tiếng Anh': { so: 60, luu_y: 'Mỗi mục có từ hoặc câu tiếng Anh, gợi nghĩa tiếng Việt, phiên âm khi phù hợp, và audio bằng window.speechSynthesis; đáp án là chuỗi cố định.' },
 };

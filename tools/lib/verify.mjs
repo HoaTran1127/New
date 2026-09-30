@@ -10,7 +10,7 @@
 export const VERIFY = {
   // Engine phải tự kiểm đề của nó ngay khi nạp, không chờ người lớn đọc lại 60 mục.
   selfCheck:
-    'Tự kiểm chứng khi nạp: viết hàm verifyQuestionBank() chạy MỘT LẦN trước vòng chơi đầu tiên và kiểm từng mục — answer phải có trong choices và chỉ xuất hiện đúng một lần (không có hai phương án trùng chữ); explanation, errorTag, loiViet phải khác rỗng; errorTag phải thuộc đúng danh sách đã khai báo; không hai mục nào trùng prompt (so sau khi bỏ khoảng thường và chữ thường); level chỉ nhận 1, 2 hoặc 3 và mỗi level phải chiếm tối thiểu 1/4 số mục. Mục nào trượt thì LOẠI KHỎI vòng chơi (không hiển thị) và ghi console.warn kèm id + lý do bằng tiếng Việt; số mục còn lại dưới ngưỡng thì hiện một dòng cảnh báo ở màn chỉ giáo viên thấy, không hiện cho học sinh.',
+    'Tự kiểm chứng khi nạp: viết hàm verifyQuestionBank() chạy MỘT LẦN trước vòng chơi đầu tiên và kiểm từng mục — answer phải có trong choices và chỉ xuất hiện đúng một lần (không có hai phương án trùng chữ); explanation, errorTag, loiViet phải khác rỗng; errorTag phải thuộc đúng danh sách đã khai báo; không hai mục nào trùng prompt (so sau khi bỏ khoảng thường và chữ thường); level chỉ nhận 1, 2 hoặc 3 và mỗi level phải chiếm tối thiểu 1/4 số mục; dang chỉ nhận "nhin" hoặc "tinh", mục "tinh" có tối đa MỘT dấu phép tính nằm giữa hai khoảng trắng (+ − × :) trong prompt và mọi prompt không quá 16 từ. Mục nào trượt thì LOẠI KHỎI vòng chơi (không hiển thị) và ghi console.warn kèm id + lý do bằng tiếng Việt; số mục còn lại dưới ngưỡng thì hiện một dòng cảnh báo ở màn chỉ giáo viên thấy, không hiện cho học sinh.',
 
   // Phương án nhiễu phải sai theo MỘT LỖI THẬT, không được tình cờ đúng.
   distractorValid:
@@ -24,9 +24,9 @@ export const VERIFY = {
   noGuessable:
     'Chống đoán mò bằng cấu trúc: đáp án đúng không được là số lớn nhất hoặc nhỏ nhất trong các phương án ở quá 20% số mục, không được là phương án dài nhất ở quá 20%, và không được lặp lại nguyên văn một cụm từ hiếm xuất hiện trong đề bài (trẻ học được mẹo "chọn cái giống câu hỏi"). Vị trí đáp án đúng phải phân bố đều: mỗi vị trí xuất hiện trong 1/3 số mục ± 10%, kiểm bằng chính hàm seed đã dùng để xáo — đây là con số đếm được bằng code, không phải cảm giác.',
 
-  // Nhãn level phải phản ánh số bước thật, không phải số trang trí.
+  // Nhãn level phải phản ánh độ tinh vi của nhịp nhìn, không phải số phép tính.
   difficultySteps:
-    'Level phải khớp số bước thật: level 1 giải được trong MỘT phép tính một bước; level 2 cần HAI bước (ví dụ đổi đơn vị rồi mới tính, hoặc tìm thành phần chưa biết); level 3 cần BA bước trở lên hoặc hai lần đổi đơn vị. Không được dán nhãn level 3 cho một phép tính một bước chỉ để đủ số mục mỗi level; nếu không nghĩ ra bước thứ ba thì để level 2.',
+    'Level là bậc thang độ tinh vi, không phải số phép tính: level 1 = nhìn là chọn được ngay (đọc một giá trị, nhận dạng một hình, so hai vật lệch rõ); level 2 = nhìn kỹ một nhịp rồi loại trừ (so với mốc, phân biệt hai phương án gần giống, đọc vạch trung gian, đổi đúng MỘT lần đơn vị); level 3 = phải ước lượng trong khoảng hoặc so hai mốc với nhau, vẫn chỉ MỘT thao tác và không bao giờ quá MỘT phép tính. Không được dán nhãn level 3 cho câu nhìn là thấy đáp án chỉ để đủ số mục mỗi level; cũng CẤM làm câu khó hơn bằng cách ghép thêm phép tính — muốn khó hơn thì kéo hai phương án nhiễu lại gần nhau, nâng số trong phạm vi SGK, hoặc bắt em ước lượng thay vì đọc thẳng kết quả.',
 };
 
 export const ADAPT = {
@@ -45,6 +45,6 @@ export const ADAPT = {
 
 // Dòng rút gọn cho checklist tự kiểm và block biến thể.
 export const VERIFY_SHORT =
-  'verifyQuestionBank() chạy lúc nạp và loại mục lỗi · mọi phương án nhiễu sai theo một lỗi thật · số và từ trong phạm vi SGK đã khai báo · đáp án đúng không đoán được bằng mẹo hình thức, vị trí phân bố đều 1/3 ± 10% · level khớp số bước thật';
+  'verifyQuestionBank() chạy lúc nạp và loại mục lỗi · mọi phương án nhiễu sai theo một lỗi thật · số và từ trong phạm vi SGK đã khai báo · đáp án đúng không đoán được bằng mẹo hình thức, vị trí phân bố đều 1/3 ± 10% · level là bậc thang độ tinh vi, cấm khó lên bằng cách thêm phép tính';
 export const ADAPT_SHORT =
   '2 đúng lên level / 2 sai xuống level cùng errorTag · không cho sai quá 3 câu liên tiếp, câu 4 là level 1 kèm lời giải từng bước · level ẩn với học sinh, chỉ hiện ở tổng kết cho giáo viên';

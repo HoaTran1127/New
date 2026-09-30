@@ -18,6 +18,7 @@ import { PE, PE_NO_CAMERA } from './lib/pe.mjs';
 import { RETENTION } from './lib/memory.mjs';
 import { HYPE, HYPE_SHORT } from './lib/hype.mjs';
 import { ANT, ANT_SHORT } from './lib/anticipation.mjs';
+import { LIGHT } from './lib/light.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const errors = [];
@@ -43,7 +44,7 @@ const CHAIN_SKIP = { prompt: ['AR_SHORT'], variant: ['AR_SHORT', 'MOTION_SHORT',
 // Tên lib phải xuất hiện trong heading của tầng tương ứng trong master, để người sửa master biết sửa file nào.
 const MASTER_LIB = [
   ['2.0', 'ar.mjs'], ['4.5', 'pe.mjs'], ['5.1', 'memory.mjs'], ['6.1', 'classroom.mjs'],
-  ['6.2', 'verify.mjs'], ['8.1', 'feel.mjs'], ['8.2', 'hype.mjs'], ['8.3', 'anticipation.mjs'],
+  ['6.2', 'verify.mjs'], ['6.3', 'light.mjs'], ['8.1', 'feel.mjs'], ['8.2', 'hype.mjs'], ['8.3', 'anticipation.mjs'],
   ['9.1', 'access.mjs'], ['11.', 'acceptance.mjs'],
 ];
 
@@ -185,6 +186,23 @@ const ANT_RULES = [
   [ANT.collectionGap, 'thiếu chỗ trống gọi tên "? ? ?" trong lưới 6 ô của bộ sưu tập'],
   [ANT.saveCeremony, 'thiếu nghi thức lưu phiên 3 giây "Đã lưu: ..."'],
 ];
+// Nhẹ đầu: bộ kiểm lấy thẳng Object.entries(LIGHT) thay vì gõ tay danh sách. Probe vòng 11 cho thấy
+// danh sách gõ tay là lỗ hổng thật — xóa ${LIGHT.visualShare} khỏi build-prompts.mjs hoặc xóa
+// ${LIGHT.oneThought} khỏi upgrade-legacy.mjs thì 85 prompt và 12 legacy vẫn xanh, vì chuỗi bị xóa
+// không còn ở đâu để mà tìm. Thêm luật thứ 7 vào lib thì mọi prompt/biến thể/legacy phải mang nó ngay.
+const LIGHT_RULES = Object.entries(LIGHT).map(([key, text]) => [text, `thiếu quy định nhẹ đầu LIGHT.${key} của tools/lib/light.mjs`]);
+// Con số của tầng nhẹ đầu phải NEO trong lib. Hạ ngưỡng ngay trong tools/lib/light.mjs thì prompt,
+// biến thể, legacy và bảng kiểm cùng đổi theo một cách tự nhất quán, nên kiểm chữ không bắt được;
+// chỉ có so với con số chuẩn mới chặn được kiểu "60% -> 30%" sửa âm thầm.
+const LIGHT_PINS = [
+  [LIGHT.visualShare, '>= 60%', 'tỉ lệ mục dang:"nhin" tối thiểu'],
+  [LIGHT.shortPrompt, '16 từ', 'trần số từ của đề'],
+  [LIGHT.motionScores, '+6 cho ĐỘNG TÁC', 'điểm động tác trong một lượt'],
+  [LIGHT.motionScores, '+3 cho ĐÁP ÁN ĐÚNG', 'điểm đáp án trong một lượt'],
+];
+for (const [text, needle, label] of LIGHT_PINS) {
+  if (!text.includes(needle)) bad(`tools/lib/light.mjs không còn nêu "${needle}" (${label}) — con số nghiệm thu phải sửa cùng tài liệu và bảng kiểm, không đổi âm thầm trong lib.`);
+}
 for (const g of GAMES) {
   const rel = PATH_OF.get(g.id);
   if (!rel) { bad(`${g.id}: không có đường dẫn prompt trong catalog.`); continue; }
@@ -204,6 +222,7 @@ for (const g of GAMES) {
   for (const [needle, msg] of RET_RULES) if (!t.includes(needle)) bad(`${g.id}: ${msg}.`);
   for (const [needle, msg] of HYPE_RULES) if (!t.includes(needle)) bad(`${g.id}: ${msg}.`);
   for (const [needle, msg] of ANT_RULES) if (!t.includes(needle)) bad(`${g.id}: ${msg}.`);
+  for (const [needle, msg] of LIGHT_RULES) if (!t.includes(needle)) bad(`${g.id}: ${msg}.`);
   // Chuỗi tự kiểm phải mang đủ mọi tầng: thêm lib mới mà quên nối vào dòng này thì người dán
   // prompt không còn cách nào biết game thiếu quy định.
   const chainLine = (t.match(/^- Tự kiểm tra trước khi xuất:.*$/m) || [''])[0];
@@ -259,6 +278,7 @@ for (const l of LEGACY) {
   for (const [needle, msg] of RET_RULES) if (!t.includes(needle)) bad(`${l.id}: ${msg}.`);
   for (const [needle, msg] of HYPE_RULES) if (!t.includes(needle)) bad(`${l.id}: ${msg}.`);
   for (const [needle, msg] of ANT_RULES) if (!t.includes(needle)) bad(`${l.id}: ${msg}.`);
+  for (const [needle, msg] of LIGHT_RULES) if (!t.includes(needle)) bad(`${l.id}: ${msg}.`);
   for (const [re, msg] of AR_RULES.filter(([, m]) => m !== 'thiếu mô tả AR của cử chỉ chính')) {
     if (!re.test(t)) bad(`${l.id}: ${msg}.`);
   }
@@ -342,6 +362,8 @@ if (!fs.existsSync(VAR_FILE)) {
     for (const needle of HYPE_NEEDLES) if (!b.includes(needle)) bad(`biến thể #${i + 1}: thiếu quy tắc hào hứng "${needle.slice(0, 30)}...".`);
     if (!b.includes('**Ham quay lại:**')) bad(`biến thể #${i + 1}: thiếu dòng Ham quay lại.`);
     for (const needle of ANT_NEEDLES) if (!b.includes(needle)) bad(`biến thể #${i + 1}: thiếu quy tắc chờ đợi "${needle.slice(0, 30)}...".`);
+    if (!b.includes('**Nhẹ đầu')) bad(`biến thể #${i + 1}: thiếu dòng Nhẹ đầu.`);
+    for (const [needle, msg] of LIGHT_RULES) if (!b.includes(needle)) bad(`biến thể #${i + 1}: ${msg}.`);
     // Chuỗi tự kiểm của biến thể cũng phải mang đủ mọi tầng, cùng registry như prompt.
     const vChain = (b.match(/^\*\*Xuất file:\*\*.*$/m) || [''])[0];
     if (!vChain) bad(`biến thể #${i + 1}: thiếu dòng "**Xuất file:**" chứa chuỗi tự kiểm.`);
@@ -473,6 +495,19 @@ const PE_DOC_NEEDLES = [
   ['Đã lưu', 'nghi thức lưu phiên'],
   ['Còn 1 câu nữa tới mốc', 'dòng báo sắp chạm mốc'],
 ];
+// Ba con số quyết định của tầng nhẹ đầu phải hiện ra trong mọi tài liệu hướng dẫn. Probe vòng 11:
+// tài liệu bị sửa lại thành hợp đồng điểm cũ thì validate vẫn xanh, vì bộ kiểm chỉ đếm số mục bảng
+// kiểm — mà tài liệu mới là thứ người viết prompt làm theo khi sinh game.
+const LIGHT_DOC_NEEDLES = [
+  ['>= 60%', 'tỉ lệ đề nhìn tối thiểu'],
+  ['16 từ', 'trần số từ của đề'],
+  ['dang', 'khóa dang:"nhin"/"tinh" trong QUESTION_DATA'],
+];
+// +6 động tác và +3 đáp án phải đọc được trên cùng một dòng: hai con số rời rạc không đủ để người
+// viết prompt hiểu động tác mới là phần thưởng chính.
+const LIGHT_DOC_REGEX = [
+  [/\+6[^\n]{0,220}\+3/, 'điểm một lượt tách +6 động tác / +3 đáp án'],
+];
 // Con số cũ của vòng 6 ("< 8 động tác lớn mỗi phút") là yêu cầu KHÔNG THỂ đạt với phiên 12 lượt / 4–6 phút.
 // Giữ nó trong tài liệu sẽ sinh game luôn báo CHƯA ĐẠT ở mục cường độ, nên phải bị chặn.
 const SUPERSEDED = [
@@ -487,6 +522,12 @@ const DOC_FILES = [
 for (const [docName, docText] of DOC_FILES) {
   for (const [needle, label] of PE_DOC_NEEDLES) {
     if (!docText.includes(needle)) bad(`${docName} thiếu quy định (${label}): không thấy "${needle}".`);
+  }
+  for (const [needle, label] of LIGHT_DOC_NEEDLES) {
+    if (!docText.includes(needle)) bad(`${docName} thiếu con số nhẹ đầu (${label}): không thấy "${needle}".`);
+  }
+  for (const [re, label] of LIGHT_DOC_REGEX) {
+    if (!re.test(docText)) bad(`${docName} không còn nêu ${label} trên cùng một dòng — người viết prompt sẽ quay về hợp đồng điểm cũ.`);
   }
   for (const [re, msg] of SUPERSEDED) if (re.test(docText)) bad(`${docName}: ${msg}.`);
 }
@@ -542,6 +583,7 @@ const DOC_LAYERS = [
   ['nhớ bài có lịch', '5.1 NHỚ BÀI CÓ LỊCH', 'Phần nhớ bài đã điền đủ'],
   ['hồ sơ tiến bộ + lớp học', '6.1 HỒ SƠ TIẾN BỘ XUYÊN PHIÊN', 'Phần lớp học đã điền đủ'],
   ['tự kiểm chứng đề', '6.2 TỰ KIỂM CHỨNG NGÂN HÀNG CÂU HỎI', 'Phần kiểm chứng đề đã điền đủ'],
+  ['nhẹ đầu', '6.3 NHẸ ĐẦU', 'Phần nhẹ đầu đã điền đủ'],
   ['cảm giác arcade', '8.1 CẢM GIÁC ARCADE', 'Phần arcade đã điền đủ'],
   ['thi đua + cao trào', '8.2 THI ĐUA + CAO TRÀO', 'Phần thi đua + cao trào đã điền đủ'],
   ['ham quay lại', '8.3 HAM QUAY LẠI', 'Phần ham quay lại đã điền đủ'],
@@ -551,6 +593,38 @@ for (const [label, heading, bullet] of DOC_LAYERS) {
   if (!master.includes(heading)) bad(`Master prompt thiếu mục "${heading}" (${label}) — quy định có trong lib nhưng khung hướng dẫn mất mục thì người viết prompt theo master sẽ không thấy.`);
   if (!tpl.includes(bullet)) bad(`Template thiếu dòng checklist "${bullet}" (${label}) — người viết prompt không bị nhắc phải điền tầng này.`);
 }
+
+// 7i. Tầng NHẸ ĐẦU kiểm bằng dữ liệu thật, không chỉ bằng chữ trong prompt: câu mẫu của chính repo
+// phải gương mẫu — nếu một câu mẫu dài 21 từ hay mang hai phép tính thì mô hình sẽ bám theo nó mà bỏ
+// qua quy định, và cả 85 prompt đều lệch hướng như vòng 10 đã phát hiện.
+const LIGHT_WORDS = (t) => t.replace(/[«»".,?!;:]/g, ' ').trim().split(/\s+/).filter(Boolean).length;
+const LIGHT_OPS = /\s[+−\-×:]\s/g;
+{
+  let nhin = 0, total = 0;
+  for (const [k, rows] of Object.entries(EXAMPLES)) {
+    rows.forEach((r, i) => {
+      total++;
+      if (r.dang !== 'nhin' && r.dang !== 'tinh') { bad(`${k}|${i}: thiếu khóa dang hợp lệ ("nhin"/"tinh") trong câu mẫu.`); return; }
+      if (r.dang === 'nhin') nhin++;
+      const w = LIGHT_WORDS(r.prompt);
+      if (w > 16) bad(`${k}|${i}: câu mẫu dài ${w} từ, vượt trần 16 từ của tầng nhẹ đầu — đề phải viết lại.`);
+      if (r.dang === 'tinh') {
+        const n = (r.prompt.match(LIGHT_OPS) || []).length;
+        if (n > 1) bad(`${k}|${i}: mục dang:"tinh" mang ${n} dấu phép tính, chuẩn là tối đa MỘT — hoặc engine dựng sẵn bước trước, hoặc đổi sang "nhin".`);
+      }
+    });
+  }
+  if (nhin / total < 0.6) bad(`Câu mẫu chỉ có ${nhin}/${total} mục dang:"nhin" (${Math.round((nhin / total) * 100)}%), dưới chuẩn 60% — few-shot sẽ dạy mô hình sinh toàn câu tính.`);
+  for (const r of rows) {
+    const t = fs.readFileSync(path.join(ROOT, r.prompt), 'utf8');
+    if (!t.includes('errorTag, loiViet, dang }')) bad(`${r.id}: khuôn QUESTION_DATA chưa có khóa dang — tầng nhẹ đầu bị mất khi sinh prompt.`);
+  }
+}
+// Bảng kiểm nghiệm thu của lớp nhẹ đầu không được biến mất âm thầm: xóa một mục khỏi MACHINE_ITEMS thì
+// CHECKLIST_NGHIEP_THU.md được sinh lại khớp y nguyên, nên phải bắt buộc nội dung mục chứ không đếm số.
+if (!MACHINE_ITEMS.some((s) => s.includes('dang: "nhin"') && s.includes('>= 60%'))) bad('Bảng kiểm máy tự kiểm không còn mục nào nghiệm thu tỉ lệ đề nhìn >= 60% — lớp nhẹ đầu mất người canh.');
+if (!MACHINE_ITEMS.some((s) => s.includes('+6') && s.includes('+3'))) bad('Bảng kiểm máy tự kiểm không còn mục nào nghiệm thu điểm +6 động tác / +3 đáp án của một lượt.');
+if (!HUMAN_CHECKS.some((s) => /tính nhẩm/.test(s))) bad('Bảng việc người thử không còn câu hỏi "em có phải nhíu mắt tính nhẩm không" — chỗ duy nhất phát hiện game nặng đầu mà số liệu vẫn xanh.');
 
 if (errors.length) {
   console.error('Xác minh thất bại — ' + errors.length + ' vấn đề:');
