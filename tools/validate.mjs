@@ -595,7 +595,8 @@ if (!fs.existsSync(VAR_FILE)) {
     const vstd = vgame && STANDARDS[vgame.cluster];
     if (vstd) {
       for (const [needle, label] of [
-        [vstd.mach, 'mạch kiến thức'], [vstd.ngan, 'nhãn HUD'], [vstd.yc, 'yêu cầu cần đạt'],
+        [`Mạch của cụm ${vgame.cluster} là "${vstd.mach}"`, 'dòng mạch của ĐÚNG cụm — block chỉ liệt kê tám mạch chung chung là không đủ'],
+        [vstd.ngan, 'nhãn HUD'], [vstd.yc, 'yêu cầu cần đạt'],
         [vstd.meo, 'mẹo nhớ'], ['"Dễ nhầm: ' + ERROR_NOTES[vgame.cluster].split('; ')[0] + '"', 'bẫy báo trước'],
       ]) {
         if (!b.includes(needle)) bad(`biến thể #${i + 1} (${vid}): thiếu ${label} của cụm ${vgame.cluster} ("${needle.slice(0, 48)}") — builder phải lấy thẳng tools/data/standards.mjs vào từng block.`);
@@ -1071,7 +1072,10 @@ for (const g of GAMES) {
   if (!rel || !fs.existsSync(path.join(ROOT, rel))) continue;
   const t = fs.readFileSync(path.join(ROOT, rel), 'utf8');
   for (const [needle, label] of [
-    [s.mach, 'mạch kiến thức'], [s.ngan, 'nhãn HUD'], [s.yc, 'yêu cầu cần đạt'], [s.meo, 'mẹo nhớ'],
+    // Tên mạch đứng MỘT MÌNH thì yếu: chính quy định machNhan đã liệt kê sẵn tám tên mạch trong mọi
+    // prompt, nên block nào cũng "có" tên mạch. Neo cả cụm mach + nhãn HUD in liền nhau.
+    [`**${s.mach}** — nhãn ngắn trên HUD: "${s.ngan}"`, 'dòng mạch + nhãn HUD của ĐÚNG cụm'],
+    [s.yc, 'yêu cầu cần đạt'], [s.meo, 'mẹo nhớ'],
     ['"Dễ nhầm" báo TRƯỚC', 'dòng báo trước bẫy ở câu đầu tiên'],
     [ERROR_NOTES[g.cluster].split('; ')[0], 'ý lỗi đầu tiên của cụm mà dòng "Dễ nhầm" phải lấy'],
   ]) {
