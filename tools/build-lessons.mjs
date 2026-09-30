@@ -118,6 +118,7 @@ ${jsonBlock(EXAMPLES[L.cluster], cl.tags, notes)}
 - ${LESSON.classBoard}
 - ${LESSON.noSlate}
 - ${LESSON.homeLanguage}
+- ${LESSON.movementBreak}
 - ${LESSON.pairShare}
 - ${LESSON.groupWork}
 - ${LESSON.handover}

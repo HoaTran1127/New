@@ -1,4 +1,4 @@
-# Giáo án AR trên bảng phấn — nguồn cộng đồng và bài học sau 14 vòng
+# Giáo án AR trên bảng phấn — nguồn cộng đồng và bài học sau 15 vòng
 
 Tài liệu này để **người khác tham khảo và nối tiếp**, không phải mô tả tính năng. Phần tính năng nằm ở
 [`prompts/giao-an/README.md`](../prompts/giao-an/README.md); ở đây chỉ ghi: cái gì đã đo được, cái gì đã
@@ -7,7 +7,7 @@ thay đổi vì số liệu, và nên đọc gì trước khi sửa tiếp.
 ## Nguyên tắc làm việc đã trả giá mà thành
 
 1. **Đo trước khi thêm quy định.** Mỗi vòng bắt đầu bằng một lệnh `grep` trên đúng 39 file giáo án đã sinh,
-   chứ không bắt đầu bằng ý tưởng. Mười một vòng gần nhất đều tìm thấy lỗ 0/39 — nghĩa là nếu ngồi nghĩ thì
+   chứ không bắt đầu bằng ý tưởng. Mười hai vòng gần nhất đều tìm thấy lỗ 0/39 — nghĩa là nếu ngồi nghĩ thì
    sẽ nghĩ ra thứ đã có sẵn.
 2. **Đo cả chỗ mình tự mâu thuẫn.** Vòng 9 không đi tìm ý mới: nó đọc lại chính các quy định đã có và thấy
    hai quy định cũ đòi cái không thể cùng có — một webcam vừa phải nhìn bàn tay em đứng trước bảng,
@@ -40,12 +40,19 @@ thay đổi vì số liệu, và nên đọc gì trước khi sửa tiếp.
    Cả ba con số ≥ 15 × 20 cm / 8 → 6 → 4 và ≤ 8 chữ là ngưỡng **do dự án chọn**; riêng mức in ≥ 12 pt lấy từ
    một hướng dẫn đọc được thật (Dyslexia Scotland: "at least 12pt") và nguyên tắc "change the language, not
    the math" của Edutopia đứng sau quy định "Ít chữ hơn", cả hai ghi rõ ở phần "Vì sao chọn những con số đang dùng".
+   Vòng 15 lại là một mâu thuẫn kiểu vòng 9 nằm ngay trong các quy định cũ: `flow` nhét năm bước vào 15–20 phút
+   và `pace` bắt MỌI bước chờ giáo viên bấm, còn `handover`/`classVote`/`predict` bắt cả lớp trả lời bằng ngón
+   tay và bảng con — tất cả đều giả định các em **ngồi bất động nhìn bảng 15–20 phút liên tục**. Needle "nghỉ
+   giải lao"/"vận động giữa tiết"/"đứng dậy" = 0/39; từ "giải lao" duy nhất có mặt lại nằm trong `latePupil`
+   với nghĩa CẤM ("không phải đợi giải lao"). Repo đã cite "gorilla arm" cho mỏi tay ở chalk nhưng chưa bao
+   giờ cite chú ý trẻ nhỏ cho việc ngồi yên — nên `movementBreak` được viết để hai quy định cũ không còn vô
+   tình đòi điều bất khả thi với trẻ 8–10 tuổi.
 3. **Quy định phải có con số.** "Chữ phải to" không kiểm chứng được; "≥ 40 px **và** ≥ 5.5% chiều cao khung
    hình, ≤ 12 chữ một dòng" thì validator bắt được. Mọi quy định trong `tools/lib/*.mjs` là chuỗi nguyên văn,
    `tools/validate.mjs` so bằng `includes()`, nên lời văn và mắt kiểm không bao giờ lệch nhau.
 4. **Chốt chặn hai chiều.** Cơ chế game lọt vào giáo án và quy định giáo án lọt sang game đều làm build đỏ.
    Thêm một quy định mới là tự động thêm một khoá bị cấm ở phía bên kia (`LESSON_FAMILY_RULES`).
-5. **Probe đột biến là đơn vị kiểm thử thật.** 77 phép, mỗi phép phá đúng một thứ và đòi đúng thông báo.
+5. **Probe đột biến là đơn vị kiểm thử thật.** 79 phép, mỗi phép phá đúng một thứ và đòi đúng thông báo.
    Không có probe thì một quy định chỉ là câu văn đẹp.
 6. **Tách công cụ giảng bài khỏi game.** Cùng một kiến thức, hai động cơ đối lập: game cần hồi hộp,
    tiết giảng cần giáo viên cầm lái. Nhét tim/điểm/combo vào bảng phấn làm em lên bảng sợ sai hơn là muốn hiểu.
@@ -68,6 +75,7 @@ thay đổi vì số liệu, và nên đọc gì trước khi sửa tiếp.
 | 12 | 0/39 "thừa giờ" · 0/39 "dư giờ" · 0/39 "cháy giáo án" (mới chỉ lo tiết cháy về phía dài) · 0/39 "làm việc theo nhóm" và 0/39 "bốn vai trò" · 0/39 "xong sớm" và 0/39 "làm xong trước" | `timeSlack`, `groupWork`, `fastFinishers` |
 | 13 | 0/39 coi "dấu chấm" là một quy định hiển thị, 0/39 "dấu nhân"/"dấu chia", 0/39 `parseFloat`, 0/39 `toFixed` ("dấu phẩy" chỉ có ở 4/39 bài dạy số thập phân) · 0/39 "đến muộn" và 0/39 "vắng" · 0/39 "trả bài" và 0/39 "chữa bài" · **đo trên dữ liệu**: `verifyData` bắt phủ "≥ 3 nhãn lỗi" nhưng 1/38 cụm (chẵn-lẻ) chỉ khai 2 nhãn — giáo án đó vô nghiệm | `numberFormat`, `latePupil`, `repairWork` + `verifyData` đổi trần thành `min(3, số nhãn của cụm)` + validate chặn `tags`/`loiViet` lệch nhau |
 | 14 | 0/39 "từ khó" · 0/39 "giải nghĩa" · 0/39 "ít chữ hơn" · 0/39 "chỉ vào hình" (giả định mọi em đọc thông thạo tiếng Việt) · 0/39 "không có bảng con" · 0/39 "mặt sau vở" · 0/39 "nắp hộp" (lượt Bảng con giả định mỗi em đã có bảng) · phiếu: 0/39 "cỡ chữ" · 0/39 "in một mặt" | `homeLanguage`, `noSlate` + `HANDOUT.printRun` (họ từ-bảng-ra-vở thành 4 quy định) |
+| 15 | **mâu thuẫn pace × flow**: 0/39 "nghỉ giải lao" · 0/39 "vận động giữa tiết" · 0/39 "đứng dậy" · 0/39 "vươn vai" — năm bước 15–20 phút của `flow` và nhịp chờ của `pace` giả định 35 em ngồi bất động nhìn bảng; từ "giải lao" duy nhất có mặt lại là một câu CẤM trong `latePupil` | `movementBreak` (ngồi liền ≤ 12 phút → nhịp vận động 30–90s vẫn là Toán, nghỉ ngắn 1–3 phút tổng ≤ 3 phút không cắt VẬT THẬT, camera tắt, có phiên bản ngồi cho cả lớp) |
 
 ## Vì sao chọn những con số đang dùng
 
@@ -191,6 +199,17 @@ thay đổi vì số liệu, và nên đọc gì trước khi sửa tiếp.
   là "nhiều hơn một xấp 20 tờ một chút" để gợi ý cắt bớt — không phải định mức giấy nào của trường. Quy tắc
   "phân biệt bằng hoa văn chứ không bằng màu" lấy từ thực tế máy in một màu và bản phô-tô nhiều lần làm mờ màu
   thành xám, đây là suy luận kỹ thuật chứ không trích một chuẩn in nào.
+- **Ngồi liền ≤ 12 phút thì phải có một nhịp đổi tư thế, nhịp đó 30–90 giây, nghỉ ngắn trọn 1–3 phút và TỔNG
+  nghỉ ≤ 3 phút một tiết** — khoảng "10–25 phút làm việc tập trung rồi nghỉ" và độ dài "một đến năm phút"
+  là hai con số CÓ NGUỒN: Understood (brain breaks) ghi xếp nghỉ "after 10 to 25 minutes of intensive work"
+  và mỗi nhịp "one to five minutes"; bài Brain Breaks trên PMC đo trên học sinh **lớp 3–5** với nhịp "3–5 min".
+  Dự án chọn **12 phút** (về phía thấp của dải 10–25) vì BÀI MỚI của `flow` đã chiếm 15–20 phút — nếu chọn
+  20 thì cả chặng bài mới trôi qua mà không một lần nhắc. Nhịp 30–90 giây và trần tổng 3 phút là **do dự án
+  chọn** để một tiết 35 phút không bị nghỉ ăn mất hơn ~8% quỹ thời gian; quy định nói rõ phần nghỉ lấy từ
+  VẬN DỤNG hoặc `timeSlack`, **không cắt bước VẬT THẬT** (tay các em đã bị cắt ở vòng 11). Ý "đứng = đồng ý
+  một phát biểu, dùng người làm hình" lấy từ *nguyên tắc* embodied của CRA (tầng concrete là cơ thể/vật thật),
+  **không** có nguồn nào quy định số giây hay số lần. Camera tắt trong nhịp vận động là **suy luận bắt buộc**
+  từ `privacy` + `cameraGeometry` đã có, không phải một số liệu mới.
 
 ## Nguồn đọc cho từng cụm quy định
 
@@ -358,6 +377,12 @@ Cả ba đều bàn về vắng dài ngày, nhiều tuần; `latePupil` rút ph�
 - [Accessible design for print — Ministry of Social Development (New Zealand)](https://msd.govt.nz/about-msd-and-our-work/work-programmes/accessibility/accessibility-guide/design-for-print.html) — cùng hướng dẫn về khoảng trắng và tương phản khi in một màu, củng hộ thêm cho quy tắc "phân biệt bằng hoa văn chứ không bằng màu".
 - [Font Legibility for Students who are Blind or Visually Impaired — Teaching Visually Impaired](https://www.teachingvisuallyimpaired.com/font-legibility.html) — mở ra **không lấy được nội dung** ở phiên đo này nên **không** trích số từ trang; ghi lại để người sau thử lại. Số tờ ("45 em → 23 tờ") và bậc 8 → 6 → 4 vẫn là phép chia và lựa chọn của dự án, không có nguồn in ấn nào đằng sau.
 
+**Nhịp vận động giữa tiết cho chú ý tiểu học (đo vòng 15)**
+- [Brain breaks: An evidence-based behavior strategy — Understood](https://www.understood.org/en/articles/evidence-based-behavior-strategy-brain-breaks) — nguồn của dải **"sau 10–25 phút làm việc tập trung"** và độ dài mỗi nhịp **"one to five minutes"**; hai con số này đứng trực tiếp sau ngưỡng 12 phút và nhịp 1–3 phút của `movementBreak`.
+- [Implementation of Brain Breaks® in the Classroom and Effects on Attention — PMC6025620](https://pmc.ncbi.nlm.nih.gov/articles/PMC6025620/) — đo trên học sinh **lớp 3–5** với nhịp "3–5 phút", ghi nhận cải thiện chú ý và hành vi vào việc; là căn cứ rằng đối tượng của repo (lớp 4–5) nằm đúng mẫu được nghiên cứu, và **không** là nơi lấy số giây 30–90 hay trần tổng 3 phút (hai số đó dự án tự chọn).
+- [The Effect of the Brain Breaks Physical Activity Program — MDPI Behavioral Sciences 2026](https://www.mdpi.com/2076-328X/16/5/804) và [A short-medium time point evaluation of active breaks — ScienceDirect](https://www.sciencedirect.com/science/article/pii/S1755296625000341) — hai nghiên cứu cùng chiều về interval vận động ngắn; dùng làm bằng chứng *rằng cần nhịp*, không dùng để trích "tăng X% điểm".
+Ba dòng sau (`camera TẮT`, "phiên bản ngồi cho cả lớp", "không thi ai đứng nhanh") không lấy từ tài liệu brain-break nào: dòng đầu là **hệ quả bắt buộc** của `privacy` + `cameraGeometry` đã có, hai dòng sau là **áp dụng nguyên tắc** `physicalAccess` (không chỉ mặt em khuyết tật) và `noGame` (không thi đua) sang tình huống đứng–ngồi.
+
 Lưu ý cách dùng danh mục này: các trang trên là **nguồn để hiểu vì sao chọn kỹ thuật**, không phải nơi trích
 số liệu hiệu quả. Dự án này chưa chạy thử nghiệm lớp học nào, nên không con số nào ở trên được nhân lên
 thành "tăng X% điểm".
@@ -449,17 +474,29 @@ thành "tăng X% điểm".
 - **Cỡ chữ 12 pt là mức sàn chứ không phải mức tối ưu.** Nguồn Dyslexia Scotland chỉ nói "at least 12pt"; phiếu
   in hai mặt cho hai em rồi cắt đôi thì mỗi em chỉ còn một phần tư trang, chưa chắc bốn câu 12 pt nhét nổi.
   Cần in thử một phiếu thật để biết số câu tối đa trên nửa trang ở 12 pt, rồi mới chốt bậc 8 → 6 → 4.
+- **Nhịp 30–90 giây và trần tổng 3 phút của `movementBreak` chưa dựng theo số đo lớp thật.** Dải "10–25 phút"
+  và "1–5 phút" là của tài liệu nước ngoài đo trên lớp 3–5 phương Tây; ngưỡng 12 phút và trần 3 phút ở đây là
+  dự án nội suy cho một tiết Việt Nam 35 phút. Muốn có số thật thì phải ghi lại: lớp ngồi được bao lâu trước
+  khi rã, một nhịp đổi tư thế thật mất bao nhiêu giây, và cô có phải cắt bước nào vì nghỉ quá dài không.
+- **Chưa biết bao nhiêu em trong một lớp không đứng được.** `movementBreak` đưa ra phiên bản ngồi cho cả lớp
+  (đúng hướng `physicalAccess`: không chỉ mặt một em), nhưng repo chưa có khảo sát tỉ lệ em đi lại khó khăn ở
+  một lớp tiểu học Việt Nam. Con số "một webcam không theo nổi 35 em dịch chuyển" là suy luận hình học, chưa
+  phải phép đo.
+- **"Đứng = đồng ý một phát biểu" có vô tình lộ em yếu không?** Quy định đã cấm dùng đứng–ngồi để lộ đúng–sai,
+  nhưng một câu hỏi "phát biểu nào đúng" vẫn biến nhịp vận động thành phiếu công khai. Vòng sau nên chỉ cho
+  phép kiểu câu "em đoán/em nghĩ" ở nhịp này, và cân nhắc để cô đọc đáp án SAU khi cả lớp ngồi xuống để không
+  so sánh được ai đứng sớm.
 
 ## Muốn đóng góp thì sửa ở đâu
 
 ```text
 tools/lib/chalk.mjs     10 quy định bảng phấn và vật thật      → sinh vào mục 4 của giáo án
-tools/lib/lesson.mjs    40 quy định chế độ giảng bài           → sinh vào mục 0, 1, 2, 3, 5, 6, 7, 8, 9, 10
+tools/lib/lesson.mjs    41 quy định chế độ giảng bài           → sinh vào mục 0, 1, 2, 3, 5, 6, 7, 8, 9, 10
 tools/lib/handout.mjs   4 quy định từ bảng ra vở               → sinh vào mục 9
 tools/data/props.mjs    vật thật + sơ đồ theo 38 cụm
 tools/data/lessons.mjs  tên bài, câu khởi động, dòng ghi nhớ
 tools/build-lessons.mjs ghép thành 39 file prompts/giao-an/
-tools/validate.mjs      54 khoá của họ giáo án + chốt chặn ngược + 13 mục của khung
+tools/validate.mjs      55 khoá của họ giáo án + chốt chặn ngược + 13 mục của khung
                         + trần số hàng "Chữa bài" đo thẳng từ clusters.mjs/error-notes.mjs
 ```
 
