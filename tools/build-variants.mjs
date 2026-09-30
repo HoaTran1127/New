@@ -18,6 +18,8 @@ import { HYPE, HYPE_SHORT } from './lib/hype.mjs';
 import { ANT, ANT_SHORT } from './lib/anticipation.mjs';
 import { LIGHT, LIGHT_SHORT } from './lib/light.mjs';
 import { CELEBRATE, CELEBRATE_SHORT } from './lib/celebrate.mjs';
+import { IDENTITY, IDENTITY_SHORT } from './lib/identity.mjs';
+import { identity } from './data/identities.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const OUT = path.join(ROOT, 'prompts', 'VARIANTS_425.md');
@@ -57,6 +59,8 @@ function controlBlock(v, g) {
 function block(n, row, g, v) {
   const cl = cluster(g.cluster);
   const bank = BANK[row.mon];
+  const it = identity(g.id);
+  if (!it) throw new Error(`Thiếu bản sắc cho game ${g.id} — bổ sung tools/data/identities.mjs.`);
   const gradeTxt = row.mon === 'Toán' ? `Toán lớp ${row.lop}` : `Tiếng Anh lớp ${row.lop}`;
   const english = row.mon === 'Tiếng Anh';
   const voice = v.code === 'V4';
@@ -67,7 +71,7 @@ function block(n, row, g, v) {
   const calib = camera && !voice ? RULES.calibration : 'Biến thể này không đọc chuyển động tay nên không cần calibration; vẫn phải có một màn hướng dẫn ngắn, không tutorial dài.';
   // Biến thể VOICE chỉ có một micro nên không có chế độ hai người chơi: lấy 3 vế đầu của chuỗi rút gọn.
   const voiceShort = CLASSROOM_SHORT.split(' · ').slice(0, 3).join(' · ');
-  const qCheck = ' · ' + LIGHT_SHORT + ' · ' + CELEBRATE_SHORT + ' · ' + PE_SHORT + ' · ' + RETENTION_SHORT + ' · ' + HYPE_SHORT + ' · ' + ANT_SHORT + ' · ' + VERIFY_SHORT + ' · ' + ADAPT_SHORT + ' · ' + ACCEPT_SHORT;
+  const qCheck = ' · ' + LIGHT_SHORT + ' · ' + CELEBRATE_SHORT + ' · ' + IDENTITY_SHORT + ' · ' + PE_SHORT + ' · ' + RETENTION_SHORT + ' · ' + HYPE_SHORT + ' · ' + ANT_SHORT + ' · ' + VERIFY_SHORT + ' · ' + ADAPT_SHORT + ' · ' + ACCEPT_SHORT;
   // Dòng nghiệm thu cho mọi block: game phải tự chứng minh nó đạt, người thử không phải đọc code.
   const accept = ACCEPT.selfReport + ' ' + ACCEPT.printable + ' ' + ACCEPT.failRule + (camera ? '' : ' ' + ACCEPT.noCamera);
   const selfCheck = voice
@@ -93,6 +97,7 @@ function block(n, row, g, v) {
 **Mục tiêu học tập:** ${cl.noi_dung}.
 **Nhiệm vụ của học sinh mỗi lượt:** ${g.mission}
 **Bối cảnh:** ${g.setting}
+**Bản sắc riêng của game này:** \`const IDENTITY_DATA\` đặt ở ĐẦU khối <script> với đúng năm giá trị — mascot **${it.mascot}** (${it.tinhCach}) · \`--miti-1: ${it.palette[0]}\`, \`--miti-2: ${it.palette[1]}\`, \`--miti-3: ${it.palette[2]}\` · khoảnh khắc chữ ký "${it.signature}" · đạo cụ AR neo người chơi "${it.prop}" · ba câu thoại: khen "${it.lines[0]}", đỡ khi sai "${it.lines[1]}", hô mở đầu "${it.lines[2]}".
 **Định dạng đầu ra:** DUY NHẤT 1 file HTML hoàn chỉnh (HTML + CSS nội tuyến trong một khối <style> + JavaScript), không file .css/.js/.json/ảnh/mp3 ngoài, không Tailwind Play CDN, không Tone.js.
 
 ${camera ? `**Nền AR:** ${AR_SHORT}
@@ -114,6 +119,7 @@ ${controlBlock(v, g)}` : controlBlock(v, g)}
 **Cảm giác arcade:** ${FEEL.hitStop} ${FEEL.combo} ${FEEL.cheer} ${FEEL.bonus} ${FEEL.fx} ${camera ? FEEL.mascot : 'Mascot của game đứng ở góc HUD, nhảy lên khi đúng và gật đầu khi sai — phản ứng theo kết quả chứ không theo chuyển động.'}
 **Hồ sơ tiến bộ:** ${CLASSROOM.mastery}
 **Khoảnh khắc ăn mừng:** ${CELEBRATE.confetti} ${CELEBRATE.sfx} ${CELEBRATE.slowmo} ${CELEBRATE.haptics} ${CELEBRATE.slapstick} ${CELEBRATE.crowd}
+**Bản sắc riêng của game:** ${IDENTITY.mascot} ${IDENTITY.palette} ${IDENTITY.signature} ${IDENTITY.prop} ${IDENTITY.lines} ${IDENTITY.guard}
 **Tiếp cận + an toàn thần kinh:** ${ACCESS.flash} ${ACCESS.reducedMotion} ${ACCESS.notColorOnly} ${ACCESS.caption} ${ACCESS.contrast}
 ${camera && !voice ? `**Chế độ lớp:** ${CLASSROOM.twoPlayer}\n**Tay thuận:** ${ACCESS.handedness}\n` : ''}**Giao diện:** đề bài >= 28px trên desktop và >= 20px trên điện thoại, tương phản chữ >= 4.5:1, responsive cả dọc lẫn ngang; HUD có nhiệm vụ + điểm + chuỗi đúng + tiến độ + trạng thái camera; có Pause, Replay, Giảm hiệu ứng chuyển động${camera ? ' và Tắt camera' : ''}; không leaderboard, không quảng cáo. ${RULES.perf}
 **An toàn + riêng tư + tiếng Việt:** ${RULES.safety} Mỗi động tác đều có phiên bản ngồi tại chỗ; không quay chạy nhảy, không rời vùng camera. Không upload ảnh/video từ camera, chỉ giữ landmark trong bộ nhớ, tiến độ lưu localStorage máy đó. Toàn bộ UI, tên nút, hướng dẫn, thông báo và lời giải bằng TIẾNG VIỆT (chỉ học liệu ${subjectNote}); không để lộ thuật ngữ kỹ thuật confidence / cooldown / fallback cho học sinh.
@@ -154,6 +160,7 @@ let out = `# 🎯 425 PROMPT BIẾN THỂ — MiTi (85 game × 5 kiểu điều 
 - **Tiếp cận:** không hiệu ứng nào nhấp nháy quá 3 lần/giây, \`prefers-reduced-motion\` được đọc lúc khởi động và bật sẵn chế độ Giảm hiệu ứng (không giảm nội dung học), đúng/sai phân biệt bằng >= 2 kênh ngoài màu, mọi âm thanh có bản chữ, tương phản chữ >= 4.5:1, có chọn tay thuận lúc calibration (trừ biến thể VOICE và NO-CAMERA).
 - **Nhẹ đầu:** một lượt chỉ MỘT thao tác tư duy (đề \`tinh\` tối đa một dấu phép tính), >= 60% mục là \`dang: "nhin"\` nhìn–chỉ–chọn, đề <= 16 từ và được đọc to bằng speechSynthesis; điểm một lượt là +6 động tác / +3 đáp án, hiệu ứng nổ tại điểm chạm trước khi biết đúng sai; không có đồng hồ đếm ngược nào trên câu hỏi và trạm nghỉ 5 giây giữa hiệp là một mini-trạm chơi không hỏi bài.
 - **Khoảnh khắc ăn mừng:** pháo giấy 40–60 hạt chỉ nổ ở 4 loại mốc (đích chung, PHÁ KỶ LỤC, mở thưởng hiệp 3, xong mini-trạm nghỉ) chứ không nổ mỗi câu đúng; AudioContext chỉ mở sau cú bấm Bắt đầu, mỗi SFX <= 200 ms, master gain <= 0.25, <= 4 giọng đồng thời, có nút "Tắt tiếng" lưu \`miti-mute\`; slow-mo 0,45× đúng 600 ms cho thẻ vàng và 1,5 giây cuối hiệp 3; \`navigator.vibrate\` 20/60/100 ms bọc trong \`if (navigator.vibrate)\`; mascot có một màn hài hình thể 3 giây mỗi hiệp khi chuỗi đạt 3; trước hiệp 3 là 4 giây "Cả lớp: 3 – 2 – 1 – CHỐT!" để bốn em cùng hô và cùng làm một động tác mở màn.
+- **Bản sắc riêng:** mỗi game có mascot tên riêng <= 2 từ xuất hiện >= 5 chỗ, bộ ba màu \`--miti-1/2/3\` riêng (hai game cùng cụm kiến thức phải cách nhau >= 60/441 RGB ở \`--miti-1\`), đúng MỘT khoảnh khắc chữ ký 1 lần/phiên dài >= 2 giây không đổi luật, MỘT đạo cụ AR neo vào landmark của em, và ba câu thoại riêng <= 6 từ đọc bằng speechSynthesis; tất cả khai trong \`IDENTITY_DATA\` ở đầu khối <script> và \`verifyIdentity()\` kiểm lúc nạp — 85 game không được trùng tên, trùng màu hay trùng chữ ký.
 - **Đề phải tự kiểm được:** engine chạy \`verifyQuestionBank()\` một lần lúc nạp và loại mọi mục lỗi (đáp án không có trong choices, hai phương án trùng nhau, level lệch với số bước, số vượt phạm vi SGK); vị trí đáp án đúng phân bố đều 1/3 ± 10%.
 - **Độ khó theo năng lực:** 2 câu đúng liên tiếp thì lên một level, 2 câu sai liên tiếp thì xuống một level cùng \`errorTag\`; không em nào được phép sai quá 3 câu liên tiếp; level ẩn với học sinh và chỉ hiện ở tổng kết cho giáo viên.
 - **Nhớ bài có lịch:** câu đã sửa đúng 2 lần được xếp ôn lại vào +1, +3, +7 ngày (nhớ vững thì giãn +21) trong localStorage \`miti-review\`; phiên có >= 3 lượt xen cụm khác và >= 1 lượt ôn đến hạn; 10 giây "Em còn nhớ không?" trước lượt 1; "Vì sao đúng?" ở 4/12 lượt; quên thì không trừ tim, tổng kết chia "vẫn nhớ / cần ôn lại" kèm tờ rời copy cho giáo viên.

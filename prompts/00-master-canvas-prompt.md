@@ -474,6 +474,41 @@ Sáu quy định dưới đây ở nguồn `tools/lib/celebrate.mjs`, mọi con 
   xin lớp ầm lên — mọi mục khác vẫn chịu trần âm lượng của hợp đồng âm thanh.
 
 ========================
+8.5 BẢN SẮC RIÊNG CỦA TỪNG GAME (nguồn: `tools/lib/identity.mjs`, validate chặn nếu thiếu) — phần quyết định em có nói được "con chơi game Bống" chứ không phải "con chơi game số"
+========================
+
+8.1–8.4 làm mọi game giống nhau theo một chuẩn tốt; đo 85 prompt thì chuẩn đó có giá nhưng bản sắc thì không:
+chỉ 1277/13692 dòng nội dung (9%) là riêng của từng game — trung bình 15 dòng riêng trên 161 dòng, còn mascot
+có tên riêng 0/85, bảng màu riêng 0/85, khoảnh khắc cao trào riêng 0/85. Một lớp mở hai game liên tiếp sẽ thấy
+cùng một con mascot vô danh, cùng một màu, cùng một màn pháo — không có gì để nhớ và để đòi chơi lại. Sáu quy
+định dưới đây không thêm luật chơi; nó buộc mỗi game chứng minh mình khác 84 game kia bằng thứ đếm được.
+
+- MASCOT CÓ TÊN, TỐI ĐA 2 TỪ: tên riêng lấy từ bối cảnh của chính game (nhà máy, đường đua, bếp, chợ, hang đá)
+  và xuất hiện ở >= 5 chỗ: lời chào màn Bắt đầu, nhãn cạnh nhân vật trên HUD, mỗi câu thoại, tên mini-trạm nghỉ,
+  màn tổng kết. CẤM gọi chung "bạn MiTi" hay "trợ lý" ở mọi nơi — MiTi là thương hiệu, mascot là nhân vật của
+  riêng game này; một tên dùng cho 85 game thì coi như không có tên.
+- BẢNG BA MÀU RIÊNG: khai một lần trong `:root` — `--miti-1` cho vật thể AR chính, `--miti-2` cho particle và viền
+  hit, `--miti-3` cho điểm nhấn HUD (thẻ vàng, thanh đích chung). 85 bộ ba phải khác nhau và hai game cùng cụm
+  kiến thức phải có `--miti-1` cách nhau >= 60/441 theo khoảng cách RGB. Chữ vẫn chịu tương phản >= 4.5:1 của 9.1;
+  màu riêng không được làm chữ khó đọc.
+- MỘT KHOẢNH KHẮC CHỮ KÝ: đúng MỘT hiệu ứng cao trào không có ở 84 game còn lại, 1 lần/phiên (thêm tối đa 1 lần ở
+  nghi thức mở thưởng hiệp 3), dài >= 2 giây, không đổi luật chơi, không cộng điểm, không che đề bài, không nhấp
+  nháy quá 3 lần/giây. Nó phải bật ra từ cơ chế của chính game — đường đua đổ vạch đích, bếp bùng lửa, hang đá ngân
+  nhũ — chứ không phải một màn pháo chung chung.
+- MỘT ĐẠO CỤ AR NEO VÀO NGƯỜI CHƠI: cờ đích sau vai, chiếc rổ trước ngực, ống nhòm trước mắt, thanh cân ngang thắt
+  lưng — vẽ bằng `toScreen()` + một điểm neo khớp xương, đổi hình theo `--miti-1`, phản ứng theo chuỗi đúng / vỡ
+  chuỗi / tới mốc. Bản không camera thì đạo cụ đứng yên ở góc HUD dưới chứ không biến mất; Giảm hiệu ứng bỏ đung
+  đưa, giữ nguyên hình. Cấm đạo cụ che mặt, che chữ đề hoặc che vùng tay đang chấm điểm.
+- BA CÂU THOẠI RIÊNG, MỖI CÂU <= 6 TỪ: một câu khen khi chốt đúng, một câu đỡ khi trả lời sai (không chế giễu), một
+  câu hô mở đầu trước hiệp 1, đọc bằng `window.speechSynthesis` giọng vi-VN. Không câu nào lặp nguyên văn ở game
+  khác, không một câu khen dùng cho 85 game, không quá 3 câu thoại mỗi phút (theo hợp đồng âm thanh 8.4); câu khen
+  và câu đỡ vẫn hiện bằng chữ để bản tắt tiếng vẫn đọc được.
+- TỰ KIỂM BẰNG `verifyIdentity()`: năm thành phần (tên mascot, bộ ba màu, chữ ký, đạo cụ, ba câu thoại) khai trong
+  `const IDENTITY_DATA` đặt ở ĐẦU khối `<script>` trước engine; hàm chạy MỘT LẦN lúc nạp kiểm tên <= 2 từ, ba mã hex
+  đúng dạng `#RRGGBB`, mỗi câu thoại <= 6 từ, đúng một chữ ký, đúng một đạo cụ có điểm neo, không trường nào rỗng.
+  Trường thiếu thì `console.warn` bằng tiếng Việt, game vẫn chơi nhưng bảng kiểm ghi CHƯA ĐẠT ở mục bản sắc.
+
+========================
 9. AN TOÀN + RIÊNG TƯ + TIẾP CẬN
 ========================
 - Không quay chạy nhảy; không yêu cầu rời khỏi vùng camera; mọi động tác đều có phiên bản ngồi tại chỗ.
@@ -523,7 +558,7 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
   Bảng liệt kê TỪNG ràng buộc kèm trạng thái ĐẠT / CHƯA ĐẠT. Trạng thái đó phải do code kiểm thật lúc chạy,
   không phải chữ tĩnh kê sẵn. Một bảng báo "ĐẠT" mà không kiểm gì là lỗi nghiêm trọng nhất của game giáo dục.
   Bảng chỉ người lớn mở được: không trừ tim, không chặn chơi, học sinh không nhìn thấy.
-- 31 MỤC MÁY TỰ KIỂM, mỗi mục một hàm trả true/false:
+- 32 MỤC MÁY TỰ KIỂM, mỗi mục một hàm trả true/false:
   [1] QUESTION_DATA đủ số mục và verifyQuestionBank() ĐÃ chạy trước lượt chơi đầu tiên
   [2] mọi mục đang phát hành có answer nằm trong choices đúng một lần
   [3] 📷 drawImage khung hình webcam đi qua toScreen(lx, ly), không còn phép nhân thô với W/H
@@ -555,14 +590,15 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
   [29] điểm một lượt tách thành +6 cho động tác và +3 cho đáp án, hiệu ứng nổ tại điểm chạm trước khi máy biết đúng sai, không thẻ câu hỏi nào có đồng hồ đếm ngược
   [30] AudioContext chỉ resume SAU cú bấm "Bắt đầu" (không một SFX nào phát trước đó), mỗi SFX <= 200 ms, master gain <= 0.25, không quá 4 giọng phát đồng thời, và trạng thái "miti-mute" vẫn đọc được sau khi tải lại trang
   [31] pháo giấy nổ đúng bốn loại mốc với 40–60 hạt sinh qua hàm chiếu điểm chạm (không nổ ở câu đúng thường), slow-mo chỉ chạy 600 ms cho thẻ vàng và 1,5 giây cuối hiệp 3, navigator.vibrate luôn nằm trong if (navigator.vibrate)
-  Mục gắn 📷 chỉ áp dụng khi có webcam: bản không camera bỏ 6 mục đó và vẫn phải đạt 25 mục còn lại.
+  [32] verifyIdentity() đã chạy lúc nạp: mascot tên riêng <= 2 từ hiện ở >= 5 chỗ, ba biến --miti-1/--miti-2/--miti-3 có thật trong CSS và khớp IDENTITY_DATA, đúng MỘT khoảnh khắc chữ ký dài >= 2 giây chỉ chạy 1 lần/phiên, một đạo cụ neo landmark, ba câu thoại <= 6 từ
+  Mục gắn 📷 chỉ áp dụng khi có webcam: bản không camera bỏ 6 mục đó và vẫn phải đạt 26 mục còn lại.
 - XUẤT BẢN VĂN: bảng có nút "Xuất bản văn" sinh một khối chữ tiếng Việt copy được — tên game, bản chuẩn MiTi,
   ngày giờ, kiểu điều khiển đang chạy, số mục ĐẠT / CHƯA ĐẠT, danh sách mục chưa đạt kèm lý do.
   Khối chữ chỉ hiện trên màn hình và vào clipboard máy đó; không gửi lên máy chủ nào, không xin quyền, không để lại dữ liệu.
 - MỤC CHƯA ĐẠT PHẢI GIẢI THÍCH ĐƯỢC: mỗi dòng kèm một câu nguyên nhân kỹ thuật cho người lớn
   (ví dụ "toScreen không được dùng ở drawImage — vật thể đang tính bằng lx * W") và một câu nên sửa thế nào trong prompt.
   Cấm báo "lỗi" rồi im lặng, cấm chữ chung chung kiểu "hệ thống có vấn đề".
-- 22 VIỆC NGƯỜI THỬ PHẢI BẤM TAY (máy không tự kiểm được, làm theo đúng thứ tự, khoảng 15 phút):
+- 23 VIỆC NGƯỜI THỬ PHẢI BẤM TAY (máy không tự kiểm được, làm theo đúng thứ tự, khoảng 15 phút):
   đứng xa tới mức chỉ còn hai bàn tay · giữ im một tư thế 5 giây · che nửa người bằng tay · tắt camera giữa vòng ·
   rút mạng lúc đang tải model · đổi tay thuận sang Trái giữa chừng · bật reduced-motion ở hệ điều hành rồi mở game ·
   cố tình sai 4 câu liên tiếp · mở bằng điện thoại đặt dọc · đưa một học sinh lớp 4 chưa đọc hướng dẫn chơi thử 60 giây ·
@@ -578,6 +614,7 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
   chơi liền 5 lượt đầu — em có phải nhíu mắt tính nhẩm không hay đang nhìn–chỉ–chọn rồi với tay? Nghe đề một lần có hiểu phải làm gì không?
   chơi tới 4 giây "Cả lớp: 3 – 2 – 1 – CHỐT!" trước hiệp 3 — bốn em đứng cạnh máy có thật sự hô theo và cùng làm một động tác mở màn, hay dòng chữ bị đọc lướt như một màn đếm mẫu?
   bật tiếng đầy đủ rồi mở game cho bốn em cùng chơi — SFX có ngắn và dễ chịu hay một tiếng "ting" lặp lại thành chói tai? Bấm "Tắt tiếng" rồi chơi trọn một hiệp: mọi phản hồi còn đọc được bằng chữ và hình không?
+  chơi hai game cùng chủ đề liên tiếp rồi gập máy lại — em có gọi ra được tên mascot, màu và khoảnh khắc chữ ký của TỪNG game, hay với em vẫn là một game mặc hai bộ áo?
   Bảng in kèm từng việc và ô ghi kết quả: `prompts/CHECKLIST_NGHIEP_THU.md`.
 - THIẾU MỤC NÀO THÌ SỬA PROMPT, KHÔNG SỬA TAY FILE HTML: dán lại nguyên văn quy định tương ứng vào cuối prompt rồi sinh lại file.
 
@@ -652,11 +689,18 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
 [ ] 2 câu đúng liên tiếp lên một level, 2 câu sai liên tiếp xuống một level cùng errorTag
 [ ] không cho sai quá 3 câu liên tiếp; câu thứ 4 là level 1 kèm lời giải từng bước, chọn lại đúng không trừ tim lần hai
 [ ] không hiện "level"/sao xếp hạng cho học sinh; phân bố level chỉ ở màn tổng kết cho giáo viên
+[ ] IDENTITY_DATA đặt ĐẦU khối <script> với đủ năm giá trị: mascot <= 2 từ, ba mã hex đúng dạng #RRGGBB, ba câu thoại <= 6 từ, đúng MỘT khoảnh khắc chữ ký, đúng MỘT đạo cụ có điểm neo landmark
+[ ] verifyIdentity() chạy một lần lúc nạp và báo lỗi tiếng Việt nêu đúng trường lệch; không chép nguyên bản sắc của game khác cho qua luật
+[ ] --miti-1/--miti-2/--miti-3 dùng thật trong CSS (vật thể AR / particle + viền hit / điểm nhấn HUD), không khai rồi bỏ
+[ ] tên mascot xuất hiện ở >= 5 chỗ (lời chào màn Bắt đầu, nhãn cạnh nhân vật trên HUD, mỗi câu thoại, tên mini-trạm nghỉ, màn tổng kết); không gọi chung "bạn MiTi" hay "trợ lý"
+[ ] khoảnh khắc chữ ký chạy 1 lần/phiên (tối đa thêm 1 lần ở nghi thức mở thưởng hiệp 3), dài >= 2 giây, không đổi luật, không cộng điểm, không che đề bài
+[ ] đạo cụ AR neo landmark bằng toScreen(); bản không camera thì đạo cụ đứng yên ở góc HUD dưới chứ không biến mất
+[ ] ba câu thoại đọc bằng speechSynthesis giọng vi-VN, <= 3 câu mỗi phút, câu khi sai là câu đỡ chứ không chế giễu
 [ ] bảng kiểm ẩn mở bằng 7 lần chạm logo MiTi hoặc Ctrl+Alt+K, trạng thái ĐẠT do code kiểm thật lúc chạy
-[ ] cả 31 mục máy tự kiểm đều có hàm kiểm tương ứng, không mục nào là chữ kê sẵn
+[ ] cả 32 mục máy tự kiểm đều có hàm kiểm tương ứng, không mục nào là chữ kê sẵn
 [ ] mục CHƯA ĐẠT kèm nguyên nhân kỹ thuật + cách sửa trong prompt, không có dòng "lỗi hệ thống"
 [ ] nút "Xuất bản văn" copy được khối chữ tiếng Việt, không gửi lên máy chủ nào
-[ ] bản không camera bỏ đúng 6 mục 📷 và vẫn đạt 25 mục còn lại, không bỏ luôn bảng kiểm
+[ ] bản không camera bỏ đúng 6 mục 📷 và vẫn đạt 26 mục còn lại, không bỏ luôn bảng kiểm
 [ ] fallback chuột/chạm/phím chơi trọn vẹn, tự kích hoạt khi camera lỗi
 [ ] QUESTION_DATA có ít nhất 30 mục (Toán) hoặc 60 mục (Tiếng Anh), mỗi mục có đáp án + lời giải + errorTag + loiViet + dang
 [ ] dữ liệu đặt đầu file, code engine đặt sau, không có chỗ nào rút gọn
@@ -720,7 +764,7 @@ Sau khi tự kiểm tra, CHỈ xuất ra file HTML hoàn chỉnh, không kèm gi
   toàn bộ quy định phía trên chỉ là lời mong đợi. Bắt game tự kiểm bằng hàm true/false biến lời hứa thành trạng thái đọc được.
 - **Trạng thái phải do code kiểm, không phải chữ kê sẵn**: một bảng tĩnh in sẵn chữ "ĐẠT" còn hại hơn không có bảng,
   vì người lớn tưởng là đã kiểm. Đây là lý do quy định ghi rõ "không phải một danh sách chữ tĩnh".
-- **Tách 31 mục máy / 22 việc người thử**: cái gì máy kiểm được thì đừng đùn cho giáo viên; cái máy không kiểm được
+- **Tách 32 mục máy / 23 việc người thử**: cái gì máy kiểm được thì đừng đùn cho giáo viên; cái máy không kiểm được
   (cháu có hiểu luật chơi mà không đọc hướng dẫn không, rút mạng thì sao) thì đừng giả vờ kiểm. Con số 15 phút là thời lượng
   một tiết thực tế, không phải danh sách dài vô hạn.
 - **Mục chưa đạt phải nói nguyên nhân và cách sửa**: bảng kiểm chỉ báo "lỗi" sẽ bị bỏ qua; kèm câu "thiếu ở dòng nào,

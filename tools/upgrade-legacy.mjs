@@ -9,6 +9,7 @@ import { ANT } from './lib/anticipation.mjs';
 import { VERIFY } from './lib/verify.mjs';
 import { LIGHT } from './lib/light.mjs';
 import { CELEBRATE } from './lib/celebrate.mjs';
+import { IDENTITY } from './lib/identity.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 
@@ -58,7 +59,8 @@ const REQUIREMENTS = `YÊU CẦU BẮT BUỘC THEO CHUẨN MiTi (áp dụng cho 
 18. CHỮ KÝ MiTi (bắt buộc trong HTML): ô bo góc màu #FFD84D chứa chữ M màu #07111F + chữ MiTi đậm + dấu ✦ nhỏ, inline SVG/CSS, không hotlink ảnh ngoài; xuất hiện ở màn Bắt đầu, HUD khi chơi và màn Kết quả; chân trang hoặc màn kết quả có dòng "MiTi • Học bằng chuyển động"; không xóa hoặc đổi tên thương hiệu khi replay hay ở chế độ không camera.
 19. NGHIỆM THU: ${ACCEPT.selfReport} ${ACCEPT.items} ${ACCEPT.printable} ${ACCEPT.failRule} ${ACCEPT.manual}
 20. KHOẢNH KHẮC ĂN MỪNG + HỢP ĐỒNG ÂM THANH: ${CELEBRATE.confetti} ${CELEBRATE.sfx} ${CELEBRATE.slowmo} ${CELEBRATE.haptics} ${CELEBRATE.slapstick} ${CELEBRATE.crowd}
-21. ĐẦU RA: duy nhất 1 file HTML hoàn chỉnh, CSS nội tuyến trong một khối <style>, không file .css/.js/.json/ảnh/mp3 ngoài, không TODO, không pseudocode, không "...", không phần "bạn tự bổ sung", không lỗi console khi mở trực tiếp bằng trình duyệt.`;
+21. BẢN SẮC RIÊNG CỦA GAME NÀY: ${IDENTITY.mascot} ${IDENTITY.palette} ${IDENTITY.signature} ${IDENTITY.prop} ${IDENTITY.lines} ${IDENTITY.guard}
+22. ĐẦU RA: duy nhất 1 file HTML hoàn chỉnh, CSS nội tuyến trong một khối <style>, không file .css/.js/.json/ảnh/mp3 ngoài, không TODO, không pseudocode, không "...", không phần "bạn tự bổ sung", không lỗi console khi mở trực tiếp bằng trình duyệt.`;
 
 const bannerOf = (l) =>
   `> **LEGACY (LEG-${l.id.slice(4)})** — prompt đời đầu, giữ nguyên cơ chế game nhưng đã thay MediaPipe Legacy/Tailwind/Tone.js bằng chuẩn hiện hành. Bản chuẩn để làm game mới: \`prompts/00-master-canvas-prompt.md\`; 85 prompt đặc thù nằm trong \`catalogs/GAME_CATALOG.csv\`.\n`;

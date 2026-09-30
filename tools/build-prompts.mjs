@@ -19,6 +19,8 @@ import { HYPE, HYPE_SHORT } from './lib/hype.mjs';
 import { ANT, ANT_SHORT } from './lib/anticipation.mjs';
 import { LIGHT, LIGHT_SHORT } from './lib/light.mjs';
 import { CELEBRATE, CELEBRATE_SHORT } from './lib/celebrate.mjs';
+import { IDENTITY, IDENTITY_SHORT } from './lib/identity.mjs';
+import { identity } from './data/identities.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 
@@ -65,6 +67,8 @@ function render(c) {
   const g = c.game;
   const cl = cluster(g.cluster);
   const ex = EXAMPLES[g.cluster];
+  const it = identity(g.id);
+  if (!it) throw new Error(`Thiếu bản sắc cho game ${g.id} — bổ sung tools/data/identities.mjs.`);
   const bank = BANK[c.subject];
   const gradeTxt = c.subject === 'Toán' ? `Toán lớp ${c.grade}` : `Tiếng Anh lớp ${c.grade}`;
   const english = c.subject === 'Tiếng Anh';
@@ -88,6 +92,18 @@ Không dùng Tailwind Play CDN, không file .css/.js/.json/ảnh/mp3 ngoài. Ch�
 
 2. THẾ GIỚI AR VÀ VÒNG CHƠI
 - Bối cảnh: ${g.setting}
+- Bản sắc riêng của game này — \`const IDENTITY_DATA\` đặt ở ĐẦU khối <script>, dùng đúng năm giá trị sau, không thay bằng generic và không chép của game khác:
+  - Mascot: **${it.mascot}** — ${it.tinhCach}
+  - Bảng màu: \`--miti-1: ${it.palette[0]}\` cho vật thể AR chính, \`--miti-2: ${it.palette[1]}\` cho particle và viền hit, \`--miti-3: ${it.palette[2]}\` cho điểm nhấn HUD
+  - Khoảnh khắc chữ ký: ${it.signature}
+  - Đạo cụ AR neo vào người chơi: ${it.prop}
+  - Ba câu thoại: khen "${it.lines[0]}" · đỡ khi sai "${it.lines[1]}" · hô mở đầu "${it.lines[2]}"
+- ${IDENTITY.mascot}
+- ${IDENTITY.palette}
+- ${IDENTITY.signature}
+- ${IDENTITY.prop}
+- ${IDENTITY.lines}
+- ${IDENTITY.guard}
 - Không gian chơi: học sinh đứng trước camera và mọi vật thể xuất hiện NGAY TRONG khung hình thật của các em (đi vào từ phía sau, tiến về phía người chơi), không nằm trong một bảng game tách rời.
 - Cơ chế chính: ${GESTURES[g.gestures[0]].vi}. Nhiệm vụ hiển thị bằng một dòng chữ to trên HUD, không cần đọc hướng dẫn.
 - ${MOTION.amplitude}
@@ -228,7 +244,7 @@ ${english ? `- ${RULES.listening}\n` : ''}${english ? `- ${RULES.listening}\n- D
 10. ĐẦU RA
 - Chỉ xuất toàn bộ file HTML hoàn chỉnh, không kèm giải thích dài.
 - Không TODO, không pseudocode, không "...", không "// code tương tự ở trên", không phần "bạn tự bổ sung".
-- Tự kiểm tra trước khi xuất: camera xin sau nút Bắt đầu · có loading/error/định vị · 640×480 và lật gương · nền AR là khung hình camera với lớp phủ tối không vượt 0.45 · mọi tọa độ đi qua toScreen, không còn phép nhân thô với W/H · vật thể có z và bóng dưới chân · có ít nhất một vật ảo neo vào landmark cơ thể · gesture fire theo lượt chuyển + cooldown + confidence · không tính hover là đã chọn · calibration đo tầm tay và đặt ngưỡng theo đơn vị vừa đo · ${MOTION_SHORT} · ${PE_SHORT} · ${RETENTION_SHORT} · ${FEEL_SHORT} · ${HYPE_SHORT} · ${ANT_SHORT} · ${CLASSROOM_SHORT} · ${ACCESS_SHORT} · ${VERIFY_SHORT} · ${ADAPT_SHORT} · ${LIGHT_SHORT} · ${CELEBRATE_SHORT} · ${ACCEPT_SHORT} · tab ẩn hoặc mất tiêu điểm là tự Pause, quay lại đếm 3-2-1 · nhận diện 1 lần mỗi 2–3 khung hình, particle có pool, tự giảm chi tiết khi FPS tụt · tổng kết ba thẻ "Làm tốt / Cần luyện / Động tác lần sau" · ${GESTURES[g.gestures[0]].vi.toLowerCase()} hoạt động đúng cơ chế · fallback chuột/chạm chơi trọn vẹn · QUESTION_DATA đủ ${bank.so} mục, mỗi mục có answer + explanation + loiViet · câu sai vào hàng đợi luyện lại · tổng kết theo nhóm lỗi · bộ sưu tập lưu localStorage · chữ ký MiTi ở ba màn · file chạy độc lập không lỗi console.
+- Tự kiểm tra trước khi xuất: camera xin sau nút Bắt đầu · có loading/error/định vị · 640×480 và lật gương · nền AR là khung hình camera với lớp phủ tối không vượt 0.45 · mọi tọa độ đi qua toScreen, không còn phép nhân thô với W/H · vật thể có z và bóng dưới chân · có ít nhất một vật ảo neo vào landmark cơ thể · gesture fire theo lượt chuyển + cooldown + confidence · không tính hover là đã chọn · calibration đo tầm tay và đặt ngưỡng theo đơn vị vừa đo · ${MOTION_SHORT} · ${PE_SHORT} · ${RETENTION_SHORT} · ${FEEL_SHORT} · ${HYPE_SHORT} · ${ANT_SHORT} · ${CLASSROOM_SHORT} · ${ACCESS_SHORT} · ${VERIFY_SHORT} · ${ADAPT_SHORT} · ${LIGHT_SHORT} · ${CELEBRATE_SHORT} · ${IDENTITY_SHORT} · ${ACCEPT_SHORT} · tab ẩn hoặc mất tiêu điểm là tự Pause, quay lại đếm 3-2-1 · nhận diện 1 lần mỗi 2–3 khung hình, particle có pool, tự giảm chi tiết khi FPS tụt · tổng kết ba thẻ "Làm tốt / Cần luyện / Động tác lần sau" · ${GESTURES[g.gestures[0]].vi.toLowerCase()} hoạt động đúng cơ chế · fallback chuột/chạm chơi trọn vẹn · QUESTION_DATA đủ ${bank.so} mục, mỗi mục có answer + explanation + loiViet · câu sai vào hàng đợi luyện lại · tổng kết theo nhóm lỗi · bộ sưu tập lưu localStorage · chữ ký MiTi ở ba màn · file chạy độc lập không lỗi console.
 \`\`\`
 
 ## Ghi chú cho người tạo prompt (không gửi Gemini)

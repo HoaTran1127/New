@@ -39,6 +39,7 @@ export const MACHINE_ITEMS = [
   'điểm một lượt tách thành +6 cho động tác và +3 cho đáp án, hiệu ứng nổ tại điểm chạm trước khi máy biết đúng sai, và không thẻ câu hỏi nào có đồng hồ đếm ngược',
   'AudioContext chỉ resume SAU cú bấm "Bắt đầu" (không một SFX nào phát trước cú bấm đó), mỗi SFX <= 200 ms, master gain <= 0.25, không quá 4 giọng phát đồng thời, và trạng thái "miti-mute" vẫn đọc được sau khi tải lại trang',
   'pháo giấy nổ đúng bốn loại mốc với 40–60 hạt sinh qua hàm chiếu điểm chạm (không nổ ở câu đúng thường), slow-mo chỉ chạy 600 ms cho thẻ vàng và 1,5 giây cuối hiệp 3, và navigator.vibrate luôn nằm trong if (navigator.vibrate)',
+  'verifyIdentity() đã chạy lúc nạp: mascot tên riêng <= 2 từ hiện ở >= 5 chỗ, ba biến --miti-1/--miti-2/--miti-3 có thật trong CSS và khớp IDENTITY_DATA, đúng MỘT khoảnh khắc chữ ký dài >= 2 giây chỉ chạy 1 lần/phiên, một đạo cụ neo landmark, ba câu thoại <= 6 từ',
 ];
 
 // Những việc con người phải bấm tay — máy không tự kiểm được, nguồn cho ACCEPT.manual và bảng in.
@@ -65,6 +66,7 @@ export const HUMAN_CHECKS = [
   'chơi liền 5 lượt đầu — em có phải nhíu mắt tính nhẩm không hay đang nhìn–chỉ–chọn rồi với tay? Nghe đề một lần có hiểu phải làm gì không?',
   'chơi tới 4 giây "Cả lớp: 3 – 2 – 1 – CHỐT!" trước hiệp 3 — bốn em đứng cạnh máy có thật sự hô theo và cùng làm một động tác mở màn, hay dòng chữ bị đọc lướt như một màn đếm mẫu?',
   'bật tiếng đầy đủ rồi mở game cho bốn em cùng chơi — SFX có ngắn và dễ chịu hay một tiếng "ting" lặp lại thành chói tai? Bấm "Tắt tiếng" rồi chơi trọn một hiệp: mọi phản hồi (đúng/sai/mốc) còn đọc được bằng chữ và hình không?',
+  'chơi hai game cùng chủ đề liên tiếp rồi gập máy lại — em có gọi ra được tên mascot, màu và khoảnh khắc chữ ký của TỪNG game, hay với em vẫn là một game mặc hai bộ áo?',
 ];
 
 // Những mục máy chỉ kiểm được khi có webcam: bản không camera bỏ qua chúng, các mục còn lại vẫn phải đạt.

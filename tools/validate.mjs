@@ -20,6 +20,8 @@ import { HYPE, HYPE_SHORT } from './lib/hype.mjs';
 import { ANT, ANT_SHORT } from './lib/anticipation.mjs';
 import { LIGHT } from './lib/light.mjs';
 import { CELEBRATE } from './lib/celebrate.mjs';
+import { IDENTITY } from './lib/identity.mjs';
+import { IDENTITIES } from './data/identities.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const errors = [];
@@ -46,7 +48,7 @@ const CHAIN_SKIP = { prompt: ['AR_SHORT'], variant: ['AR_SHORT', 'MOTION_SHORT',
 const MASTER_LIB = [
   ['2.0', 'ar.mjs'], ['4.5', 'pe.mjs'], ['5.1', 'memory.mjs'], ['6.1', 'classroom.mjs'],
   ['6.2', 'verify.mjs'], ['6.3', 'light.mjs'], ['8.1', 'feel.mjs'], ['8.2', 'hype.mjs'], ['8.3', 'anticipation.mjs'], ['8.4', 'celebrate.mjs'],
-  ['9.1', 'access.mjs'], ['11.', 'acceptance.mjs'],
+  ['9.1', 'access.mjs'], ['11.', 'acceptance.mjs'], ['8.5', 'identity.mjs'],
 ];
 
 const rows = readCatalog(path.join(ROOT, 'catalogs', 'GAME_CATALOG.csv'));
@@ -195,6 +197,7 @@ const ANT_RULES = [
 const FULL_LAYERS = [
   ['nhẹ đầu', 'light.mjs', 'LIGHT', LIGHT],
   ['khoảnh khắc ăn mừng', 'celebrate.mjs', 'CELEBRATE', CELEBRATE],
+  ['bản sắc riêng', 'identity.mjs', 'IDENTITY', IDENTITY],
 ];
 const FULL_RULES = FULL_LAYERS.flatMap(([label, file, objName, obj]) =>
   Object.entries(obj).map(([key, text]) => [text, `thiếu quy định ${label} ${objName}.${key} của tools/lib/${file}`]));
@@ -212,6 +215,12 @@ const FULL_PINS = [
   ['celebrate.mjs', CELEBRATE.slowmo, '0,45×', 'tốc độ thẻ khi slow-mo'],
   ['celebrate.mjs', CELEBRATE.haptics, 'navigator.vibrate(20)', 'cú rung khi chốt đúng'],
   ['celebrate.mjs', CELEBRATE.haptics, 'if (navigator.vibrate)', 'bọc điều kiện để máy không hỗ trợ vẫn chạy'],
+  ['identity.mjs', IDENTITY.mascot, '>= 5 chỗ', 'số chỗ mascot tên riêng phải xuất hiện'],
+  ['identity.mjs', IDENTITY.palette, '60/441', 'khoảng cách màu tối thiểu giữa hai game cùng cụm'],
+  ['identity.mjs', IDENTITY.signature, '1 lần/phiên', 'số lần khoảnh khắc chữ ký diễn ra'],
+  ['identity.mjs', IDENTITY.signature, '>= 2 giây', 'độ dài khoảnh khắc chữ ký'],
+  ['identity.mjs', IDENTITY.lines, '6 từ', 'trần số từ một câu thoại'],
+  ['identity.mjs', IDENTITY.guard, 'verifyIdentity()', 'hàm kiểm bản sắc lúc nạp'],
 ];
 for (const [file, text, needle, label] of FULL_PINS) {
   if (!text.includes(needle)) bad(`tools/lib/${file} không còn nêu "${needle}" (${label}) — con số nghiệm thu phải sửa cùng tài liệu và bảng kiểm, không đổi âm thầm trong lib.`);
@@ -259,6 +268,61 @@ for (const g of GAMES) {
   if (!/loiViet/.test(t)) bad(`${g.id}: QUESTION_DATA chưa có trường loiViet.`);
   const lines = t.split('\n').length;
   if (lines < 85) bad(`${g.id}: prompt chỉ ${lines} dòng — nội dung bị cắt.`);
+}
+
+// 2b. Bản sắc riêng: mỗi game phải mang ĐÚNG dữ liệu của chính nó, không mang dữ liệu chung.
+// Prompt chỉ cần chứa sáu quy định generic là qua FULL_RULES; check này bắt từng file chứa tên mascot,
+// ba mã hex, chữ ký và ba câu thoại của đúng id game — builder gắn nhầm bản sắc của game bên cạnh sẽ bị bắt.
+{
+  const hexOf = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
+  const rgbDist = (a, b) => Math.round(Math.hypot(...hexOf(a).map((v, i) => v - hexOf(b)[i])));
+  const ID_WORDS = (t) => t.replace(/[«»".,?!;:]/g, ' ').trim().split(/\s+/).filter(Boolean).length;
+  const byCluster = new Map();
+  for (const g of GAMES) {
+    const it = IDENTITIES[g.id];
+    if (!it) { bad(`${g.id}: tools/data/identities.mjs chưa có bản sắc.`); continue; }
+    (byCluster.get(g.cluster) || byCluster.set(g.cluster, []).get(g.cluster)).push(g);
+    if (ID_WORDS(it.mascot) > 2) bad(`${g.id}: mascot "${it.mascot}" dài ${ID_WORDS(it.mascot)} từ, chuẩn là tối đa 2 từ.`);
+    if (it.lines.length !== 3) bad(`${g.id}: phải có đúng 3 câu thoại (khen / đỡ sai / hô mở đầu), hiện có ${it.lines.length}.`);
+    it.lines.forEach((l, i) => { const w = ID_WORDS(l); if (w > 6) bad(`${g.id}: câu thoại ${i + 1} "${l}" dài ${w} từ, vượt trần 6 từ.`); });
+    if (it.palette.length !== 3 || it.palette.some((h) => !/^#[0-9A-Fa-f]{6}$/.test(h))) bad(`${g.id}: bộ ba màu phải là đúng 3 mã #RRGGBB (${it.palette.join(' ')}).`);
+    if (!it.signature || !it.prop || !it.tinhCach) bad(`${g.id}: thiếu chữ ký, đạo cụ hoặc tính cách trong bản sắc.`);
+    const t = fs.readFileSync(path.join(ROOT, PATH_OF.get(g.id)), 'utf8');
+    if (!t.includes('**' + it.mascot + '**')) bad(`${g.id}: prompt không nêu mascot "${it.mascot}" của chính nó.`);
+    for (const h of it.palette) if (!t.includes(h)) bad(`${g.id}: prompt thiếu mã màu riêng ${h} của chính nó.`);
+    if (!t.includes(it.signature)) bad(`${g.id}: prompt thiếu khoảnh khắc chữ ký của chính nó.`);
+    for (const l of it.lines) if (!t.includes('"' + l + '"')) bad(`${g.id}: prompt thiếu câu thoại "${l}" của chính nó.`);
+    if (!t.includes('IDENTITY_DATA') || !t.includes('verifyIdentity()')) bad(`${g.id}: prompt chưa yêu cầu IDENTITY_DATA + verifyIdentity().`);
+  }
+  for (const [id] of Object.entries(IDENTITIES)) if (!GAMES.some((g) => g.id === id)) bad(`identities.mjs có id lạ ${id} không có trong games.mjs.`);
+  const seenName = new Map(), seenSig = new Map(), seenLine = new Map(), seenPal = new Map();
+  for (const g of GAMES) {
+    const it = IDENTITIES[g.id];
+    if (!it) continue;
+    for (const [map, key, label] of [[seenName, it.mascot, 'tên mascot'], [seenSig, it.signature, 'chữ ký'], [seenPal, it.palette.join(','), 'bộ ba màu']]) {
+      if (map.has(key)) bad(`${g.id} và ${map.get(key)} trùng ${label} — 85 game phải khác nhau thật, không phải cùng một game mặc 85 bộ áo.`);
+      else map.set(key, g.id);
+    }
+    for (const l of it.lines) {
+      if (seenLine.has(l)) bad(`${g.id} và ${seenLine.get(l)} trùng câu thoại "${l}" — mỗi game ba câu thoại riêng.`);
+      else seenLine.set(l, g.id);
+    }
+  }
+  for (const [cl, list] of byCluster) {
+    for (let i = 0; i < list.length; i++) for (let j = i + 1; j < list.length; j++) {
+      const d = rgbDist(IDENTITIES[list[i].id].palette[0], IDENTITIES[list[j].id].palette[0]);
+      if (d < 60) bad(`Cùng cụm ${cl}: ${list[i].id} và ${list[j].id} có --miti-1 chỉ cách ${d}/441 RGB, chuẩn là >= 60 để mở hai game cạnh nhau vẫn nhận ra hai thế giới.`);
+    }
+  }
+}
+// 425 biến thể cũng phải mang đủ sáu quy định bản sắc — check "b" ở đầu file dựng sẵn block của TỪNG game
+// từ đúng dữ liệu trong identities.mjs, nếu builder đánh mất một dòng thì chỗ này bắt.
+{
+  const vt = fs.readFileSync(path.join(ROOT, 'prompts', 'VARIANTS_425.md'), 'utf8');
+  for (const [key, text] of Object.entries(IDENTITY)) {
+    if (!vt.includes(text)) bad(`425 biến thể thiếu quy định bản sắc IDENTITY.${key} của tools/lib/identity.mjs.`);
+  }
+  if (!vt.includes('- **Bản sắc riêng:**')) bad('Phần Quy ước chung của VARIANTS_425.md thiếu dòng Bản sắc riêng.');
 }
 
 // 3. Độ phủ dữ liệu: mọi cụm dùng phải có giải thích, mẫu và nhãn lỗi.
@@ -378,6 +442,19 @@ if (!fs.existsSync(VAR_FILE)) {
     for (const needle of ANT_NEEDLES) if (!b.includes(needle)) bad(`biến thể #${i + 1}: thiếu quy tắc chờ đợi "${needle.slice(0, 30)}...".`);
     if (!b.includes('**Nhẹ đầu')) bad(`biến thể #${i + 1}: thiếu dòng Nhẹ đầu.`);
     if (!b.includes('**Khoảnh khắc ăn mừng:**')) bad(`biến thể #${i + 1}: thiếu dòng Khoảnh khắc ăn mừng.`);
+    if (!b.includes('**Bản sắc riêng của game:**')) bad(`biến thể #${i + 1}: thiếu dòng Bản sắc riêng của game.`);
+    // Block biến thể copy riêng được, nên phải mang đúng dữ liệu bản sắc của chính game nó nói tới.
+    // split('\n## Prompt ') đã ăn luôn hai chữ "## Prompt", nên dòng đầu block bắt đầu bằng số thứ tự.
+    const vid = (b.match(/^\d+ — (\S+) — V\d/) || [])[1];
+    const vit = vid && IDENTITIES[vid];
+    if (!vit) bad(`biến thể #${i + 1}: không tra được bản sắc game cho block (${vid || 'không đọc được id'}).`);
+    else {
+      if (!b.includes('**Bản sắc riêng của game này:**')) bad(`biến thể #${i + 1} (${vid}): thiếu dòng dữ liệu bản sắc của chính game.`);
+      if (!b.includes('**' + vit.mascot + '**')) bad(`biến thể #${i + 1} (${vid}): thiếu mascot "${vit.mascot}" của chính game.`);
+      for (const h of vit.palette) if (!b.includes(h)) bad(`biến thể #${i + 1} (${vid}): thiếu mã màu riêng ${h}.`);
+      if (!b.includes(vit.signature)) bad(`biến thể #${i + 1} (${vid}): thiếu khoảnh khắc chữ ký của chính game.`);
+      if (!b.includes('IDENTITY_DATA') || !b.includes('verifyIdentity()')) bad(`biến thể #${i + 1} (${vid}): thiếu IDENTITY_DATA + verifyIdentity().`);
+    }
     for (const [needle, msg] of FULL_RULES) if (!b.includes(needle)) bad(`biến thể #${i + 1}: ${msg}.`);
     // Chuỗi tự kiểm của biến thể cũng phải mang đủ mọi tầng, cùng registry như prompt.
     const vChain = (b.match(/^\*\*Xuất file:\*\*.*$/m) || [''])[0];
@@ -534,6 +611,17 @@ const CELEBRATE_DOC_NEEDLES = [
   ['navigator.vibrate', 'rung có kiểm soát trên điện thoại'],
   ['3 – 2 – 1 – CHỐT', '4 giây cả lớp hô cùng trước hiệp 3'],
 ];
+// Tầng bản sắc chỉ có tác dụng khi tài liệu hướng dẫn nói rõ con số: tên <= 2 từ, ba mã màu riêng,
+// một chữ ký 1 lần/phiên, khoảng cách RGB. Probe vòng 13: xóa "60/441" khỏi master thì validate vẫn xanh
+// vì sáu quy định generic vẫn còn ở 85 prompt — mà người sửa master mới là người quyết định thresholds.
+const IDENTITY_DOC_NEEDLES = [
+  ['--miti-1', 'bảng màu riêng ba mã hex của game'],
+  ['60/441', 'khoảng cách màu tối thiểu giữa hai game cùng cụm'],
+  ['verifyIdentity()', 'hàm kiểm bản sắc lúc nạp'],
+  ['khoảnh khắc chữ ký', 'một cao trào riêng của mỗi game'],
+  ['2 từ', 'trần độ dài tên mascot'],
+  ['6 từ', 'trần độ dài một câu thoại'],
+];
 // Con số cũ của vòng 6 ("< 8 động tác lớn mỗi phút") là yêu cầu KHÔNG THỂ đạt với phiên 12 lượt / 4–6 phút.
 // Giữ nó trong tài liệu sẽ sinh game luôn báo CHƯA ĐẠT ở mục cường độ, nên phải bị chặn.
 const SUPERSEDED = [
@@ -554,6 +642,9 @@ for (const [docName, docText] of DOC_FILES) {
   }
   for (const [needle, label] of CELEBRATE_DOC_NEEDLES) {
     if (!docText.includes(needle)) bad(`${docName} thiếu con số ăn mừng/âm thanh (${label}): không thấy "${needle}".`);
+  }
+  for (const [needle, label] of IDENTITY_DOC_NEEDLES) {
+    if (!docText.includes(needle)) bad(`${docName} thiếu con số bản sắc riêng (${label}): không thấy "${needle}".`);
   }
   for (const [re, label] of LIGHT_DOC_REGEX) {
     if (!re.test(docText)) bad(`${docName} không còn nêu ${label} trên cùng một dòng — người viết prompt sẽ quay về hợp đồng điểm cũ.`);
@@ -614,6 +705,7 @@ const DOC_LAYERS = [
   ['tự kiểm chứng đề', '6.2 TỰ KIỂM CHỨNG NGÂN HÀNG CÂU HỎI', 'Phần kiểm chứng đề đã điền đủ'],
   ['nhẹ đầu', '6.3 NHẸ ĐẦU', 'Phần nhẹ đầu đã điền đủ'],
   ['khoảnh khắc ăn mừng + âm thanh', '8.4 KHOẢNH KHẮC ĂN MỪNG', 'Phần ăn mừng + âm thanh đã điền đủ'],
+  ['bản sắc riêng của từng game', '8.5 BẢN SẮC RIÊNG', 'Phần bản sắc riêng đã điền đủ'],
   ['cảm giác arcade', '8.1 CẢM GIÁC ARCADE', 'Phần arcade đã điền đủ'],
   ['thi đua + cao trào', '8.2 THI ĐUA + CAO TRÀO', 'Phần thi đua + cao trào đã điền đủ'],
   ['ham quay lại', '8.3 HAM QUAY LẠI', 'Phần ham quay lại đã điền đủ'],
@@ -658,6 +750,10 @@ if (!MACHINE_ITEMS.some((s) => s.includes('resume') && s.includes('"Bắt đầu
 if (!MACHINE_ITEMS.some((s) => s.includes('miti-mute') && s.includes('200 ms'))) bad('Bảng kiểm máy tự kiểm không còn mục nào nghiệm thu trần SFX 200 ms + nút tắt tiếng "miti-mute" — lớp âm thanh mất người canh.');
 if (!MACHINE_ITEMS.some((s) => s.includes('40–60 hạt'))) bad('Bảng kiểm máy tự kiểm không còn mục nào nghiệm thu pháo giấy theo mốc — đúng chỗ trẻ hét lên.');
 if (!HUMAN_CHECKS.some((s) => /tính nhẩm/.test(s))) bad('Bảng việc người thử không còn câu hỏi "em có phải nhíu mắt tính nhẩm không" — chỗ duy nhất phát hiện game nặng đầu mà số liệu vẫn xanh.');
+// Tầng bản sắc: xóa hai mục nghiệm thu này thì 85 game quay về một game mặc 85 bộ áo mà không check nào báo,
+// vì toàn bộ quy định generic vẫn còn nguyên trong prompt và lib.
+if (!MACHINE_ITEMS.some((s) => s.includes('verifyIdentity()') && s.includes('--miti-1'))) bad('Bảng kiểm máy tự kiểm không còn mục nào nghiệm thu bản sắc riêng (verifyIdentity + --miti-1) — lớp "mỗi game một gương mặt" mất người canh.');
+if (!HUMAN_CHECKS.some((s) => /bộ áo/.test(s))) bad('Bảng việc người thử không còn câu "một game mặc hai bộ áo" — chỗ duy nhất phát hiện 85 game vẫn giống hệt nhau.');
 
 if (errors.length) {
   console.error('Xác minh thất bại — ' + errors.length + ' vấn đề:');

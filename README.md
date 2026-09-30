@@ -37,7 +37,7 @@ Bấm copy toàn bộ prompt.       Nhấn Enter để AI tạo game.         ng
 > * *Mẹo:* Nếu trên giao diện Gemini chưa thấy nút Canvas, bạn chỉ cần gõ thêm chữ `Mở Canvas và tạo game:` ở đầu prompt.
 
 > [!TIP]
-> **Bước thứ tư (khuyên làm, khoảng 15 phút):** game mở ra rồi **bấm 7 lần vào logo MiTi** (hoặc `Ctrl+Alt+K`) để mở bảng kiểm nghiệm thu — 31 mục máy tự kiểm bằng code thật, rồi bấm "Xuất bản văn" để copy biên bản. Đối chiếu tiếp với 22 việc người thử trong `prompts/CHECKLIST_NGHIEP_THU.md` trước khi đưa game vào tiết học. Mục nào CHƯA ĐẠT thì dán lại nguyên văn quy định đó vào prompt và sinh lại file, không sửa tay HTML.
+> **Bước thứ tư (khuyên làm, khoảng 15 phút):** game mở ra rồi **bấm 7 lần vào logo MiTi** (hoặc `Ctrl+Alt+K`) để mở bảng kiểm nghiệm thu — 32 mục máy tự kiểm bằng code thật, rồi bấm "Xuất bản văn" để copy biên bản. Đối chiếu tiếp với 23 việc người thử trong `prompts/CHECKLIST_NGHIEP_THU.md` trước khi đưa game vào tiết học. Mục nào CHƯA ĐẠT thì dán lại nguyên văn quy định đó vào prompt và sinh lại file, không sửa tay HTML.
 
 ---
 
@@ -50,7 +50,7 @@ Toàn bộ prompt nằm trong file `.md` riêng, mỗi file một game, copy ngu
 | Prompt game chuẩn (Toán 4 · Toán 5 · Tiếng Anh 4 · Tiếng Anh 5) | **85** | [Dashboard MiTi](https://hoatran1127.github.io/New/) — bấm **Sao chép prompt**, hoặc [catalogs/GAME_CATALOG.md](catalogs/GAME_CATALOG.md) |
 | Khung master 13 mục (0 → 12) để tự tạo prompt mới | 1 | [prompts/00-master-canvas-prompt.md](prompts/00-master-canvas-prompt.md) |
 | Biểu mẫu điền nhanh | 1 | [prompts/templates/game-prompt-template.md](prompts/templates/game-prompt-template.md) |
-| Bảng kiểm nghiệm thu cầm tay (31 mục máy tự kiểm + 22 việc người thử) | 1 | [prompts/CHECKLIST_NGHIEP_THU.md](prompts/CHECKLIST_NGHIEP_THU.md) |
+| Bảng kiểm nghiệm thu cầm tay (32 mục máy tự kiểm + 23 việc người thử) | 1 | [prompts/CHECKLIST_NGHIEP_THU.md](prompts/CHECKLIST_NGHIEP_THU.md) |
 | Biến thể điều khiển (Point · Swipe · Drag/Grab · Voice · No Camera) | **425** | [prompts/VARIANTS_425.md](prompts/VARIANTS_425.md) — 85 game × 5 kiểu, sinh tự động |
 | Prompt legacy đời đầu (cơ chế arcade, đã nâng cấp lên chuẩn hiện hành) | **12** | Bảng mở rộng dưới đây |
 
@@ -292,21 +292,38 @@ Ba mục `[26] [27]` của bảng kiểm máy tự kiểm và hai việc ngườ
 
 ---
 
+### 🎭 Bản sắc riêng: 85 game không còn là một game mặc 85 bộ áo
+
+Nguồn: `tools/lib/identity.mjs` + `tools/data/identities.mjs`, `validate.mjs` so nguyên văn sáu chuỗi quy định **và** kiểm dữ liệu 85 dòng. Đo 85 prompt sau vòng 12: chỉ **1277/13692 dòng nội dung (9%)** là riêng của từng game — trung bình 15 dòng riêng trên 161 dòng. Những thứ tạo nên "đây là game nào" thì trống tuyệt đối: mascot có tên riêng **0/85**, bảng màu riêng **0/85**, khoảnh khắc cao trào riêng **0/85**, đạo cụ riêng **0/85**. Học sinh lớp 4 mở hai game liên tiếp thấy cùng một con mascot không tên, cùng một màu, cùng một màn pháo — nên không nhớ mình vừa chơi game nào và không có lý do quay lại game đó.
+
+| Thành phần | Ràng buộc đếm được | Vì sao |
+| :-- | :-- | :-- |
+| **Mascot** | tên riêng tối đa **2 từ**, xuất hiện `>= 5 chỗ` (lời chào · nhãn HUD · mỗi câu thoại · tên mini-trạm nghỉ · màn tổng kết); cấm gọi chung "bạn MiTi"/"trợ lý" | không tên thì không có nhân vật; không nhân vật thì game không có ai để nhớ |
+| **Bảng màu** | ba hex trong `:root`: `--miti-1` vật thể AR, `--miti-2` particle + viền hit, `--miti-3` điểm nhấn HUD; 85 bộ ba khác nhau, hai game **cùng cụm** phải cách nhau `>= 60/441` RGB ở `--miti-1` | mở hai game cùng chủ đề cạnh nhau phải thấy ngay là hai thế giới khác nhau |
+| **Khoảnh khắc chữ ký** | **một** hiệu ứng cao trào không có ở 84 game còn lại, `1 lần/phiên` (thêm tối đa 1 lần ở mở thưởng hiệp 3), `>= 2 giây`, không đổi luật, không cộng điểm, không che đề | đây là thứ em kể lại ngày hôm sau — phải bật ra từ cơ chế của chính game |
+| **Đạo cụ AR** | một đạo cụ neo landmark (cổ tay/vai/đầu/hông/lưng) bằng `toScreen()`, đổi hình theo `--miti-1`, phản ứng theo kết quả; bản không camera thì đứng yên ở góc HUD, **không biến mất** | vật ảo dính vào người chơi là bằng chứng game đang nhìn thấy em |
+| **Ba câu thoại** | mỗi câu tối đa **6 từ**, đọc bằng `speechSynthesis` giọng vi-VN: khen khi đúng · đỡ khi sai (không chế giễu) · hô mở đầu trước hiệp 1; không lặp nguyên văn ở game khác, `<= 3 câu/phút` | em nghe thấy giọng của riêng game mình; vẫn hiện chữ cho bản tắt tiếng |
+| **Tự kiểm tra** | `const IDENTITY_DATA` đặt ĐẦU khối `<script>`, `verifyIdentity()` chạy một lần lúc nạp: tên `<= 2 từ`, ba hex đúng `#RRGGBB`, mỗi thoại `<= 6 từ`, đúng MỘT khoảnh khắc, đúng MỘT đạo cụ có điểm neo, không trường rỗng | chặn kiểu chép nguyên khối bản sắc của game bên cạnh cho qua luật |
+
+`validate.mjs` còn kiểm **tính duy nhất thật**: tên mascot, mỗi câu thoại, bộ ba màu, khoảnh khắc chữ ký không được trùng giữa 85 game; khoảng cách RGB của `--miti-1` trong cùng cụm `>= 60/441`; và **từng file** phải mang đúng bản sắc của chính game nó mô tả (prompt `L4-03` phải chứa mascot/hex/thoại của `L4-03`, không phải của game khác).
+
+---
+
 ### ✅ Nghiệm thu: game tự chứng minh nó đạt chuẩn
 
 Nguồn: `tools/lib/acceptance.mjs`. Đây là tầng sửa chỗ **gãy nhất của quy trình "chỉ viết prompt"**: bạn dán prompt vào Gemini Canvas, nhận về một file HTML dài vài nghìn dòng, và không có cách nào biết nó có `toScreen` thật không, `verifyQuestionBank()` có chạy không, hay mô hình đã lặng lẽ bỏ ba quy định ở giữa file. Không có nghiệm thu thì toàn bộ quy định ở các mục trên chỉ là lời mong đợi.
 
-**31 mục máy tự kiểm** (`ACCEPT.items`) — mỗi mục một hàm trả `true/false`, kiểm lúc chạy chứ không kê chữ sẵn:
+**32 mục máy tự kiểm** (`ACCEPT.items`) — mỗi mục một hàm trả `true/false`, kiểm lúc chạy chứ không kê chữ sẵn:
 
 - Bảng kiểm ẩn trong game, mở bằng **7 lần bấm vào logo MiTi** hoặc `Ctrl+Alt+K`; bảng tĩnh in chữ "ĐẠT" mà không kiểm gì bị coi là lỗi nghiêm trọng nhất.
-- Đủ `QUESTION_DATA` + `verifyQuestionBank()` đã chạy · `answer` có trong `choices` đúng một lần · `drawImage` webcam đi qua `toScreen(lx, ly)` · alpha lớp phủ `<= 0.45` · có vật neo landmark · giữ tư thế 2 giây không spam cú chốt · tab ẩn tự Pause + đếm 3-2-1 · 3 hiệp + trạm nghỉ · `prefers-reduced-motion` có hiệu lực · bộ đếm flash `<= 3 lần/giây` · tương phản tính từ màu thật · tay thuận được áp dụng · localStorage `miti-collection` + `miti-mastery` · thích ứng level chạy thật · không tải URL bị cấm · chữ ký MiTi ba màn · **khởi động 60–90 giây đã chạy trước hiệp 1 và hạ nhiệt 45–60 giây đã chạy trước màn tổng kết** · **nhịp thẻ đúng chuẩn + `>= 12` nhịp chuyển động mỗi phút** · **📷 đồng hồ thời gian vận động `>= 60%`** · **lịch ôn `+1/+3/+7` đọc lại được từ `miti-review`** · **`>= 3/12` lượt xen cụm khác và `>= 1` lượt ôn đến hạn** · **10 giây "Em còn nhớ không?" trước lượt 1, sai không trừ tim** · **`miti-tokens` giữ khiên chuỗi sang phiên sau, tối đa 2, vỡ khiên vẫn trừ 1 tim và vẫn hiện lời giải** · **dòng "Lần sau em quay lại sẽ có <n> câu đang chờ" đếm từ `miti-review`, không chuỗi ngày chơi** · **tỉ lệ `dang: "nhin"` `>= 60%` và mọi mục `tinh` chỉ một dấu phép tính với đề `<= 16 từ`** · **+6 động tác / +3 đáp án, hiệu ứng nổ tại điểm chạm trước khi biết đúng sai, không thẻ câu hỏi nào có đồng hồ đếm ngược** · **AudioContext chỉ mở sau cú bấm "Bắt đầu", mỗi SFX `<= 200 ms`, master gain `<= 0.25`, `<= 4 giọng` đồng thời, `miti-mute` đọc lại được sau khi tải lại trang** · **pháo giấy 40–60 hạt chỉ nổ ở 4 loại mốc, slow-mo 0,45× đúng 600 ms, `navigator.vibrate` luôn nằm trong `if (navigator.vibrate)`**.
-- **6 mục gắn 📷** chỉ áp dụng khi có camera; bản không camera bỏ 6 mục đó và vẫn phải đạt **25 mục còn lại**.
+- Đủ `QUESTION_DATA` + `verifyQuestionBank()` đã chạy · `answer` có trong `choices` đúng một lần · `drawImage` webcam đi qua `toScreen(lx, ly)` · alpha lớp phủ `<= 0.45` · có vật neo landmark · giữ tư thế 2 giây không spam cú chốt · tab ẩn tự Pause + đếm 3-2-1 · 3 hiệp + trạm nghỉ · `prefers-reduced-motion` có hiệu lực · bộ đếm flash `<= 3 lần/giây` · tương phản tính từ màu thật · tay thuận được áp dụng · localStorage `miti-collection` + `miti-mastery` · thích ứng level chạy thật · không tải URL bị cấm · chữ ký MiTi ba màn · **khởi động 60–90 giây đã chạy trước hiệp 1 và hạ nhiệt 45–60 giây đã chạy trước màn tổng kết** · **nhịp thẻ đúng chuẩn + `>= 12` nhịp chuyển động mỗi phút** · **📷 đồng hồ thời gian vận động `>= 60%`** · **lịch ôn `+1/+3/+7` đọc lại được từ `miti-review`** · **`>= 3/12` lượt xen cụm khác và `>= 1` lượt ôn đến hạn** · **10 giây "Em còn nhớ không?" trước lượt 1, sai không trừ tim** · **`miti-tokens` giữ khiên chuỗi sang phiên sau, tối đa 2, vỡ khiên vẫn trừ 1 tim và vẫn hiện lời giải** · **dòng "Lần sau em quay lại sẽ có <n> câu đang chờ" đếm từ `miti-review`, không chuỗi ngày chơi** · **tỉ lệ `dang: "nhin"` `>= 60%` và mọi mục `tinh` chỉ một dấu phép tính với đề `<= 16 từ`** · **+6 động tác / +3 đáp án, hiệu ứng nổ tại điểm chạm trước khi biết đúng sai, không thẻ câu hỏi nào có đồng hồ đếm ngược** · **AudioContext chỉ mở sau cú bấm "Bắt đầu", mỗi SFX `<= 200 ms`, master gain `<= 0.25`, `<= 4 giọng` đồng thời, `miti-mute` đọc lại được sau khi tải lại trang** · **pháo giấy 40–60 hạt chỉ nổ ở 4 loại mốc, slow-mo 0,45× đúng 600 ms, `navigator.vibrate` luôn nằm trong `if (navigator.vibrate)`** · **`verifyIdentity()` đã chạy lúc nạp: mascot tên riêng `<= 2 từ` hiện ở `>= 5 chỗ`, ba biến `--miti-1/--miti-2/--miti-3` có thật trong CSS và khớp `IDENTITY_DATA`, đúng MỘT khoảnh khắc chữ ký `>= 2 giây` chạy 1 lần/phiên, một đạo cụ neo landmark, ba câu thoại `<= 6 từ`**.
+- **6 mục gắn 📷** chỉ áp dụng khi có camera; bản không camera bỏ 6 mục đó và vẫn phải đạt **26 mục còn lại**.
 
-**22 việc người thử phải bấm tay** (`ACCEPT.manual`, khoảng 15 phút, có ô ghi kết quả): đứng xa tới mức chỉ còn hai bàn tay · giữ im một tư thế 5 giây · lấy tay che nửa người · tắt camera giữa vòng chơi · rút mạng lúc đang tải model · đổi tay thuận sang Trái · bật reduced-motion ở hệ điều hành rồi mở game · cố tình sai 4 câu liên tiếp · mở bằng điện thoại đặt dọc · đưa một học sinh lớp 4 chưa đọc hướng dẫn chơi thử 60 giây · **chơi trọn một phiên rồi đứng lại 30 giây xem em có thở nhanh hơn và người ấm lên rõ rệt không** · **làm động tác cúi thấp ở lượt cuối rồi đứng thẳng lên nhanh xem có choáng váng hay mất thăng bằng không** · **chơi hai phiên cách nhau một ngày xem phiên sau có mở bằng đúng câu hôm trước không** · **cố tình trả lời sai một câu từng đúng hai lần xem game có giữ lời "quên thì không phạt" hay vẫn trừ tim** · **đóng tab giữa phiên rồi hôm sau mở lại: khiên chuỗi còn trong `miti-tokens` và dùng được thật không (làm sai một câu — chuỗi vẫn giữ mà tim vẫn giảm, lời giải vẫn hiện)** · **đọc dòng "Chương tiếp theo" ở màn tổng kết và bấm "Xem trước": em có tự hỏi khi nào được chơi chương đó, hay dòng chữ bị đọc như quảng cáo** · **chơi liền 5 lượt đầu: em có phải nhíu mắt tính nhẩm không hay đang nhìn–chỉ–chọn rồi với tay, và nghe đề một lần có hiểu phải làm gì không** · **chơi tới 4 giây "Cả lớp: 3 – 2 – 1 – CHỐT!" trước hiệp 3: bốn em cạnh máy có thật sự hô theo và cùng làm một động tác mở màn không** · **bật tiếng đầy đủ cho bốn em cùng chơi rồi bấm "Tắt tiếng" chơi trọn một hiệp: SFX có chói tai không và mọi phản hồi còn đọc được bằng chữ + hình không**.
+**23 việc người thử phải bấm tay** (`ACCEPT.manual`, khoảng 15 phút, có ô ghi kết quả): đứng xa tới mức chỉ còn hai bàn tay · giữ im một tư thế 5 giây · lấy tay che nửa người · tắt camera giữa vòng chơi · rút mạng lúc đang tải model · đổi tay thuận sang Trái · bật reduced-motion ở hệ điều hành rồi mở game · cố tình sai 4 câu liên tiếp · mở bằng điện thoại đặt dọc · đưa một học sinh lớp 4 chưa đọc hướng dẫn chơi thử 60 giây · **chơi trọn một phiên rồi đứng lại 30 giây xem em có thở nhanh hơn và người ấm lên rõ rệt không** · **làm động tác cúi thấp ở lượt cuối rồi đứng thẳng lên nhanh xem có choáng váng hay mất thăng bằng không** · **chơi hai phiên cách nhau một ngày xem phiên sau có mở bằng đúng câu hôm trước không** · **cố tình trả lời sai một câu từng đúng hai lần xem game có giữ lời "quên thì không phạt" hay vẫn trừ tim** · **đóng tab giữa phiên rồi hôm sau mở lại: khiên chuỗi còn trong `miti-tokens` và dùng được thật không (làm sai một câu — chuỗi vẫn giữ mà tim vẫn giảm, lời giải vẫn hiện)** · **đọc dòng "Chương tiếp theo" ở màn tổng kết và bấm "Xem trước": em có tự hỏi khi nào được chơi chương đó, hay dòng chữ bị đọc như quảng cáo** · **chơi liền 5 lượt đầu: em có phải nhíu mắt tính nhẩm không hay đang nhìn–chỉ–chọn rồi với tay, và nghe đề một lần có hiểu phải làm gì không** · **chơi tới 4 giây "Cả lớp: 3 – 2 – 1 – CHỐT!" trước hiệp 3: bốn em cạnh máy có thật sự hô theo và cùng làm một động tác mở màn không** · **bật tiếng đầy đủ cho bốn em cùng chơi rồi bấm "Tắt tiếng" chơi trọn một hiệp: SFX có chói tai không và mọi phản hồi còn đọc được bằng chữ + hình không** · **chơi hai game cùng chủ đề liên tiếp rồi gập máy lại: em có gọi ra được tên mascot, màu và khoảnh khắc chữ ký của TỪNG game, hay với em vẫn là một game mặc hai bộ áo**.
 
 - **Xuất bản văn**: một nút sinh khối chữ tiếng Việt copy được (tên game, ngày giờ, kiểu điều khiển, số ĐẠT/CHƯA ĐẠT, lý do từng mục chưa đạt) — chỉ hiện trên màn hình và vào clipboard máy đó, **không gửi lên máy chủ nào**.
 - **Mục CHƯA ĐẠT phải kèm nguyên nhân + cách sửa**, cấm báo "lỗi" rồi im lặng. Thiếu mục nào thì dán lại nguyên văn quy định đó vào prompt rồi sinh lại file — không sửa tay file HTML.
-- Bảng in sẵn để cầm tay khi vào lớp: **`prompts/CHECKLIST_NGHIEP_THU.md`** (do `tools/build-acceptance.mjs` sinh, `validate.mjs` đếm 29 dòng máy + 20 dòng người thử).
+- Bảng in sẵn để cầm tay khi vào lớp: **`prompts/CHECKLIST_NGHIEP_THU.md`** (do `tools/build-acceptance.mjs` sinh, `validate.mjs` đếm 32 dòng máy + 23 dòng người thử).
 
 ---
 
@@ -318,6 +335,7 @@ tools/data/clusters.mjs      57 cụm kiến thức + nội dung + giải thích
 tools/data/gestures.mjs      mã điều khiển: landmark, hình học chốt, ngưỡng, bien_do, fallback + trường `ar`
 tools/data/examples.mjs      câu mẫu few-shot cho từng cụm
 tools/data/error-notes.mjs   nhãn lỗi tiếng Việt (errorTag + loiViet)
+tools/data/identities.mjs    85 dòng bản sắc riêng: mascot, tính cách, ba câu thoại, ba mã hex, khoảnh khắc chữ ký, đạo cụ AR
 tools/lib/ar.mjs             hợp đồng AR (cover-fit, toScreen, alpha, z, neo landmark) — dùng chung mọi chỗ
 tools/lib/rules.mjs          quy định lớp học (60/40, calibration, Pause, FPS, an toàn, tổng kết 3 thẻ)
 tools/lib/feel.mjs           quy định vận động to + cảm giác arcade (biên độ, mép khung, trạm nghỉ, hit-stop, combo)
@@ -330,7 +348,8 @@ tools/lib/memory.mjs          nhớ bài có lịch (ôn +1/+3/+7 ngày, xen c�
 tools/lib/hype.mjs         thi đua + cao trào (cú "ồ" 3 giây đầu, miti-best + PHÁ KỶ LỤC, vệt ghost, hiệp quyết định, mở thưởng, đích chung không xếp hạng)
 tools/lib/anticipation.mjs  ham quay lại (sắp chạm mốc, khiên chuỗi miti-tokens, chương còn dở, hẹn câu đang chờ, ô "? ? ?", nghi thức lưu phiên — không chuỗi ngày, không thông báo)
 tools/lib/pe.mjs              thể dục có cấu trúc (khởi động 60–90 giây · nhịp thẻ · >= 12 nhịp chuyển động/phút · đồng hồ vận động >= 60% · hạ nhiệt · nhắc nước · trần tải trọng)
-tools/lib/acceptance.mjs     nghiệm thu (31 mục máy tự kiểm + 22 việc người thử, xuất bản văn, nguyên nhân khi chưa đạt)
+tools/lib/identity.mjs       bản sắc riêng từng game (mascot <= 2 từ ở >= 5 chỗ, bảng ba màu --miti-1/2/3 cách nhau >= 60/441 RGB trong cùng cụm, một khoảnh khắc chữ ký 1 lần/phiên, một đạo cụ AR neo landmark, ba câu thoại <= 6 từ, verifyIdentity())
+tools/lib/acceptance.mjs     nghiệm thu (32 mục máy tự kiểm + 23 việc người thử, xuất bản văn, nguyên nhân khi chưa đạt)
 tools/build-acceptance.mjs   sinh prompts/CHECKLIST_NGHIEP_THU.md từ lib trên
         │
         └─ node tools/build.mjs

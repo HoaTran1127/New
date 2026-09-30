@@ -66,7 +66,7 @@ Bốn biến thể đầu dùng **cùng một hợp đồng AR** như prompt gam
 - `04-english5/` — 15 game Tiếng Anh 5.
 - `01-prompt-…` đến `12-prompt-…` — **12 prompt legacy** đời đầu: giữ nguyên cơ chế game, đã thay MediaPipe Legacy/Tailwind CDN/Tone.js bằng chuẩn hiện hành và gắn nhãn `LEGACY`. Không dùng làm khuôn cho game mới.
 - `VARIANTS_425.md` — 425 biến thể (85 game × 5 kiểu điều khiển), do `tools/build-variants.mjs` sinh.
-- `CHECKLIST_NGHIEP_THU.md` — bảng kiểm cầm tay khi nhận file HTML về: 31 mục máy tự kiểm + 22 việc người thử bấm tay (trong đó 6 mục gắn 📷 chỉ có camera mới kiểm được; bản không camera bỏ 6 mục đó và vẫn phải đạt 25 mục còn lại), do `tools/build-acceptance.mjs` sinh từ `tools/lib/acceptance.mjs`.
+- `CHECKLIST_NGHIEP_THU.md` — bảng kiểm cầm tay khi nhận file HTML về: 32 mục máy tự kiểm + 23 việc người thử bấm tay (trong đó 6 mục gắn 📷 chỉ có camera mới kiểm được; bản không camera bỏ 6 mục đó và vẫn phải đạt 26 mục còn lại), do `tools/build-acceptance.mjs` sinh từ `tools/lib/acceptance.mjs`.
 
 ## ✅ Nghiệm thu một game vừa sinh
 
@@ -146,13 +146,28 @@ Vòng 11 gỡ gánh tính nhẩm xong, đo lại 85 prompt thì phần ăn mừn
 | Hài hình thể | mascot **đúng một** màn lố mỗi hiệp khi chuỗi đạt 3, **`<= 3 giây`**, không che chữ đề | việc người thử số 22 |
 | Cho cả lớp hô cùng | **4 giây** "Cả lớp: 3 – 2 – 1 – CHỐT!" trước hiệp 3, chữ đếm **`>= 60px`**, không tính điểm, không trừ tim | việc người thử số 21 |
 
+## 🎭 Bản sắc riêng: mỗi game một gương mặt, không phải 85 bộ áo của cùng một game
+
+Vòng 12 xong, đo lại 85 prompt: chỉ **1277/13692 dòng nội dung (9%)** là riêng của từng game — trung bình 15 dòng riêng trên 161 dòng. Phần tạo nên "đây là game nào" trống tuyệt đối: **mascot có tên riêng 0/85, bảng màu riêng 0/85, khoảnh khắc cao trào riêng 0/85, đạo cụ riêng 0/85**. Hai game liên tiếp hiện ra cùng một con mascot không tên, cùng màu, cùng màn pháo, nên trẻ không nhớ mình vừa chơi game nào và chẳng có lý do quay lại game đó. `tools/lib/identity.mjs` biến "khác nhau" thành năm con số, còn `tools/data/identities.mjs` soạn sẵn **85 dòng** (mascot · tính cách · ba câu thoại · ba mã hex · khoảnh khắc chữ ký · đạo cụ AR) để prompt nào cũng mang đúng bản sắc của chính game nó mô tả:
+
+| Luật | Con số | Kiểm ở đâu |
+|:---|:---|:---|
+| Mascot có tên | **`<= 2 từ`**, lấy từ bối cảnh của game, xuất hiện **`>= 5 chỗ`** (lời chào · nhãn HUD · mỗi câu thoại · tên mini-trạm nghỉ · tổng kết); cấm gọi chung "bạn MiTi"/"trợ lý" | `verifyIdentity()` + mục `[32]` |
+| Bảng ba màu riêng | `--miti-1` vật thể AR · `--miti-2` particle + viền hit · `--miti-3` điểm nhấn HUD; 85 bộ ba khác nhau, hai game **cùng cụm** cách nhau **`>= 60/441` RGB** ở `--miti-1` | `validate.mjs` (dữ liệu) + mục `[32]` |
+| Một khoảnh khắc chữ ký | **đúng MỘT** hiệu ứng không có ở 84 game còn lại, **`1 lần/phiên`** (thêm tối đa 1 lần ở mở thưởng hiệp 3), **`>= 2 giây`**, không đổi luật, không cộng điểm, không che đề | mục `[32]` |
+| Một đạo cụ AR neo người | landmark cổ tay/vai/đầu/hông/lưng qua `toScreen()`, đổi theo `--miti-1`, phản ứng theo kết quả; bản không camera thì đứng yên ở góc HUD chứ **không biến mất** | mục `[5]` + `[32]` |
+| Ba câu thoại riêng | mỗi câu **`<= 6 từ`**, đọc bằng `speechSynthesis` vi-VN: khen khi đúng · đỡ khi sai (không chế giễu) · hô mở đầu trước hiệp 1; không trùng nguyên văn ở game khác, **`<= 3 câu/phút`** | `verifyIdentity()` + mục `[32]` |
+| Không chép của nhau | `const IDENTITY_DATA` đặt ĐẦU khối `<script>`; `verifyIdentity()` chạy một lần lúc nạp, trường thiếu thì `console.warn` tiếng Việt và bảng kiểm ghi CHƯA ĐẠT | mục `[32]` |
+
+Học sinh chỉ nhớ được **một** thứ, nên mỗi game chỉ được có **một** khoảnh khắc chữ ký: đường đua thì đổ vạch đích, bếp thì bùng lửa, hang đá thì nhũ đá ngân. Việc người thử số 23 ("chơi hai game cùng chủ đề liên tiếp rồi gập máy lại — em có gọi ra được tên mascot, màu và khoảnh khắc chữ ký của TỪNG game, hay vẫn là một game mặc hai bộ áo?") là chỗ duy nhất máy không tự kiểm được, và cũng là chỗ duy nhất phát hiện cả thư viện đang là một game.
+
 ## 🔁 Pipeline của thư viện
 
 85 prompt game **được sinh tự động**, không sửa tay:
 
 ```
-tools/data/games.mjs + clusters.mjs + gestures.mjs + examples.mjs + error-notes.mjs
-tools/lib/ar.mjs · rules.mjs · feel.mjs · classroom.mjs · access.mjs · light.mjs · celebrate.mjs · verify.mjs · pe.mjs · memory.mjs · hype.mjs · anticipation.mjs · acceptance.mjs
+tools/data/games.mjs + clusters.mjs + gestures.mjs + examples.mjs + error-notes.mjs + identities.mjs
+tools/lib/ar.mjs · rules.mjs · feel.mjs · classroom.mjs · access.mjs · light.mjs · celebrate.mjs · identity.mjs · verify.mjs · pe.mjs · memory.mjs · hype.mjs · anticipation.mjs · acceptance.mjs
         └─ node tools/build.mjs ─→ catalogs/GAME_CATALOG.csv · .md · .js + prompts/0X-*/ + index.html + prompts/CHECKLIST_NGHIEP_THU.md
 ```
 
