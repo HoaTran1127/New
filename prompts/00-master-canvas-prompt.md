@@ -267,6 +267,42 @@ quy định dưới đây biến một phiên thành một hoạt động thể 
   `console.warn` tiếng Việt nêu đúng phần lệch và bảng kiểm ghi CHƯA ĐẠT kèm câu nên sửa gì trong prompt. Bản không camera vẫn
   bắt buộc đủ bốn điều, vì đồng hồ phiên và gắng sức không phụ thuộc camera.
 
+4.7 CHUẨN KIẾN THỨC SGK (bắt buộc — nguồn: `tools/lib/curriculum.mjs` + `tools/data/standards.mjs`, validate chặn nếu thiếu) — phần quyết định một câu hỏi thuộc mạch nào và lớp cần đạt tới đâu
+
+Tầng nhẹ đầu (mục 6) chặn đề quá nặng, tầng tự kiểm chứng đề (mục 5.5) chặn số hoặc từ ngoài phạm vi SGK — nhưng cả hai
+chỉ nói "trong phạm vi", không câu nào nói nó thuộc MẠCH nào và yêu cầu cần đạt là gì. Khảo sát 85 prompt trước vòng 17:
+"mạch kiến thức" = 0/85, "yêu cầu cần đạt" = 0/85, "chuẩn kiến thức" = 0/85, "mẹo nhớ" = 0/85, "Dễ nhầm" = 0/85. Hai hệ
+quả thật ở lớp: giáo viên cầm tờ rời không đối chiếu được game với yêu cầu của lớp (vì dòng "mục tiêu" do mô hình tự viết
+lại mỗi game một kiểu), và học sinh sập đúng cái bẫy mà sách đã ghi nhận ba mươi năm thì game coi như một errorTag vô danh
+xuất hiện SAU khi em sai. Sáu quy định dưới đây lấy dữ liệu từ `tools/data/standards.mjs` (57 cụm × 4 cột), prompt không
+được tự viết lại.
+
+- NHÃN MẠCH TRÊN HUD, CHỈ TÁM MẠCH: mỗi câu mang đúng một nhãn mạch — Toán 4 mạch "Số và phép tính" · "Hình học và đo
+  lường" · "Giải toán có lời văn" · "Một số yếu tố thống kê và xác suất"; Tiếng Anh 3 mạch "Đọc và viết" · "Nghe và nói" ·
+  "Kiến thức ngôn ngữ"; hai môn chung mạch "Ôn tập tổng hợp". HUD góc trên trái hiện nhãn ngắn (cột `ngan`, <= 18 ký tự,
+  chữ >= 18px, nền đặc, không nhấp nháy) đổi theo câu đang hỏi. CẤM tự đặt tên mạch ngoài bảng chuẩn, CẤM HUD không có
+  nhãn mạch.
+- DÒNG "YÊU CẦU CẦN ĐẠT" NGUYÊN VĂN Ở HAI MÀN: màn khởi động (3 giây đầu, TRƯỚC cú "ồ") và màn tổng kết mỗi nơi in đúng một
+  dòng "Yêu cầu cần đạt: ..." lấy NGUYÊN VĂN từ `tools/data/standards.mjs` — không viết lại, không tóm tắt, không đổi số,
+  chữ >= 20px, không che vùng chơi. Dòng ở màn tổng kết nằm trong khối mà nút "Copy tờ rời" copy được. Đây là dòng duy nhất
+  để giáo viên đối chiếu game với sách mà không phải mở lại prompt.
+- MẠCH CHÍNH <= 9/12 LƯỢT, >= 3 LƯỢT THUỘC MẠCH KHÁC: trong 12 lượt chính phải có >= 3 lượt thuộc mạch KHÁC mạch chính (tính
+  cả lượt xen cụm của mục 5.7 nếu cụm đó khác mạch); câu khác mạch vẫn phải là cụm có thật trong bảng chuẩn của đúng môn và
+  đúng lớp, cấm bịa chủ đề ngoài chương trình. Tổng kết in "Hôm nay em chạm <n> mạch: <tên ngắn 1>, <tên ngắn 2>" đúng bằng
+  số mạch thật đã hỏi. Một game "Phân số" mà 12/12 lượt đều là phân số sẽ khiến em thuộc lòng một thao tác, không phải Toán.
+- "DỄ NHẦM" BÁO TRƯỚC CÂU ĐẦU TIÊN CỦA CỤM: hiện một dòng "Dễ nhầm: <một lỗi>" lấy đúng một ý trong bảng lỗi của cụm, <= 16
+  từ, chữ >= 20px, tự tắt sau 6 giây hoặc khi em chạm, không che đề. Đây là BÁO TRƯỚC trước khi học sinh bấm đáp án, khác
+  hẳn chữ đỡ sau khi sai ở mục 3; các lượt sau của cùng cụm không lặp lại dòng này.
+- "MẸO NHỚ" <= 12 TỪ KÈM MỘT ĐỘNG TÁC 3 GIÂY: mỗi cụm có đúng một mẹo nhớ trong bảng chuẩn, bật ở cú trả lời ĐÚNG của câu đầu
+  cụm và ngay sau câu sai mang errorTag của cụm đó, mascot đọc to bằng `speechSynthesis`. Mỗi mẹo gắn MỘT động tác 3 giây
+  mascot làm mẫu tại chỗ (dậm chân, đưa tay sang ngang, quay cổ tay) để em nhớ bằng cơ thể; động tác là hưởng ứng, KHÔNG phải
+  điều kiện cộng điểm. Dòng mẹo nằm trong khối "Copy tờ rời".
+- TỰ KIỂM BẰNG `verifyStandard()`: chạy MỘT LẦN lúc nạp và kiểm đúng bốn điều — mọi câu có nhãn mạch nằm trong bảng chuẩn và
+  HUD có thật · dòng "Yêu cầu cần đạt:" xuất hiện ở đúng hai màn và khớp nguyên văn bảng chuẩn · mạch chính <= 9/12 lượt kèm
+  >= 3 lượt khác mạch · mỗi cụm có "Dễ nhầm" ở câu đầu và "Mẹo nhớ" <= 12 từ kèm động tác 3 giây. Thiếu điều nào thì
+  `console.warn` tiếng Việt nêu cụm hoặc lượt nào lệch và bảng kiểm ghi CHƯA ĐẠT. Bản một học sinh và bản không camera vẫn
+  bắt buộc kiểm đủ bốn điều trên.
+
 ========================
 5. HỌC TẬP DẪN LỐI (LEARNING-FIRST)
 ========================
@@ -667,7 +703,7 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
   Bảng liệt kê TỪNG ràng buộc kèm trạng thái ĐẠT / CHƯA ĐẠT. Trạng thái đó phải do code kiểm thật lúc chạy,
   không phải chữ tĩnh kê sẵn. Một bảng báo "ĐẠT" mà không kiểm gì là lỗi nghiêm trọng nhất của game giáo dục.
   Bảng chỉ người lớn mở được: không trừ tim, không chặn chơi, học sinh không nhìn thấy.
-- 35 MỤC MÁY TỰ KIỂM, mỗi mục một hàm trả true/false:
+- 36 MỤC MÁY TỰ KIỂM, mỗi mục một hàm trả true/false:
   [1] QUESTION_DATA đủ số mục và verifyQuestionBank() ĐÃ chạy trước lượt chơi đầu tiên
   [2] mọi mục đang phát hành có answer nằm trong choices đúng một lần
   [3] 📷 drawImage khung hình webcam đi qua toScreen(lx, ly), không còn phép nhân thô với W/H
@@ -703,14 +739,15 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
   [33] verifyMusic() đã chạy lúc nạp: loop nhạc nền tổng hợp bằng Web Audio (không có <audio src> hay fetch() file âm thanh ngoài), BPM nằm trong 100–128, gain bus nhạc <= 0.18, bus nhạc hạ xuống <= 30% khi speechSynthesis đang đọc, và bản "miti-mute" có vạch nhịp đập theo BPM thay cho tiếng
   [34] verifyQueue() đã chạy lúc nạp: ba vai chờ (cổ vũ đủ 8 nhịp · trọng tài giơ thẻ "Động tác to / nhỏ" · thư ký đọc lại đề và đáp án) có nhãn tên trên HUD, đồng hồ chờ chạy riêng và gọi đúng tên em đang chờ ở giây 15, bộ đếm "Lượt của em <n>/3" đổi vai đúng sau 3 lượt trong 12 lượt, và +5 điểm của vai chờ chỉ vào thanh "Cả nhóm" chứ không vào "miti-best"
   [35] verifyLesson() đã chạy lúc nạp: đồng hồ phiên "Còn <n> phút" có thật và phiên tự khép ở phút thứ 10 tại RANH GIỚI lượt, bốn mức gắng sức "dễ quá / vừa / mệt / kiệt" hiện cuối mỗi hiệp và đọc lại được từ localStorage "miti-effort", 15 giây "hồi nhịp" hít 4 nhịp – thở ra 6 nhịp chạy xong trước khi hiệp sau bắt đầu, và khối "Bản tiết học" in đủ bốn dòng lấy từ số thật
-  Mục gắn 📷 chỉ áp dụng khi có webcam: bản không camera bỏ 6 mục đó và vẫn phải đạt 29 mục còn lại.
+  [36] verifyStandard() đã chạy lúc nạp: mọi câu mang nhãn mạch nằm trong tám mạch của tools/data/standards.mjs và HUD có thật (nhãn <= 18 ký tự, >= 18px), dòng "Yêu cầu cần đạt:" xuất hiện ở đúng hai màn và khớp NGUYÊN VĂN bảng chuẩn, mạch chính <= 9/12 lượt kèm >= 3 lượt thuộc mạch khác và tổng kết in "Hôm nay em chạm <n> mạch", mỗi cụm có "Dễ nhầm" ở câu đầu (<= 16 từ) và "Mẹo nhớ" <= 12 từ kèm động tác 3 giây
+  Mục gắn 📷 chỉ áp dụng khi có webcam: bản không camera bỏ 6 mục đó và vẫn phải đạt 30 mục còn lại.
 - XUẤT BẢN VĂN: bảng có nút "Xuất bản văn" sinh một khối chữ tiếng Việt copy được — tên game, bản chuẩn MiTi,
   ngày giờ, kiểu điều khiển đang chạy, số mục ĐẠT / CHƯA ĐẠT, danh sách mục chưa đạt kèm lý do.
   Khối chữ chỉ hiện trên màn hình và vào clipboard máy đó; không gửi lên máy chủ nào, không xin quyền, không để lại dữ liệu.
 - MỤC CHƯA ĐẠT PHẢI GIẢI THÍCH ĐƯỢC: mỗi dòng kèm một câu nguyên nhân kỹ thuật cho người lớn
   (ví dụ "toScreen không được dùng ở drawImage — vật thể đang tính bằng lx * W") và một câu nên sửa thế nào trong prompt.
   Cấm báo "lỗi" rồi im lặng, cấm chữ chung chung kiểu "hệ thống có vấn đề".
-- 26 VIỆC NGƯỜI THỬ PHẢI BẤM TAY (máy không tự kiểm được, làm theo đúng thứ tự, khoảng 15 phút):
+- 27 VIỆC NGƯỜI THỬ PHẢI BẤM TAY (máy không tự kiểm được, làm theo đúng thứ tự, khoảng 15 phút):
   đứng xa tới mức chỉ còn hai bàn tay · giữ im một tư thế 5 giây · che nửa người bằng tay · tắt camera giữa vòng ·
   rút mạng lúc đang tải model · đổi tay thuận sang Trái giữa chừng · bật reduced-motion ở hệ điều hành rồi mở game ·
   cố tình sai 4 câu liên tiếp · mở bằng điện thoại đặt dọc · đưa một học sinh lớp 4 chưa đọc hướng dẫn chơi thử 60 giây ·
@@ -730,6 +767,7 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
   nghe trọn một hiệp — nhạc có giữ nhịp cho em vận động theo (mỗi cú chốt rơi vào một phách mạnh) hay chỉ là tiếng nền vô định? Bấm "Tắt tiếng" rồi chơi tiếp: nhịp chuyển động có rớt dưới 12 lần mỗi phút không?
   cho bốn em đứng quanh một máy chơi trọn một hiệp — ba em chưa tới lượt có thật sự vận động (vỗ đủ 8 nhịp, giơ thẻ, đọc lại đề và đáp án) hay vẫn đứng xem? Đứng im 20 giây tới lượt: mascot có gọi đúng tên em đang chờ và ra một động tác 5 giây không?
   bấm giờ thật khi nhóm đầu cầm máy — phiên có tự khép ở phút thứ 10 ngay tại ranh giới lượt (không cắt giữa một em đang chơi) và dòng "Kế hoạch tiết 45 phút" in ra có đủ chỗ cho bốn nhóm không? Hỏi em cuối mỗi hiệp "dễ quá / vừa / mệt / kiệt": tới hiệp 3 mức có tăng thật hay em toàn chọn "dễ quá"?
+  đọc to dòng "Yêu cầu cần đạt:" ở màn tổng kết và đối chiếu với sách giáo khoa của lớp — dòng đó có đúng yêu cầu của cụm này không, hay chỉ là một câu chung chung ai cũng viết được? Hỏi em đang chơi "câu vừa rồi thuộc mạch nào" và "mẹo nhớ là gì": em trả lời được thì nhãn mạch và mẹo đã vào đầu, nếu em chỉ đọc lại chữ trên HUD thì hai dòng đó đang trang trí.
   Bảng in kèm từng việc và ô ghi kết quả: `prompts/CHECKLIST_NGHIEP_THU.md`.
 - THIẾU MỤC NÀO THÌ SỬA PROMPT, KHÔNG SỬA TAY FILE HTML: dán lại nguyên văn quy định tương ứng vào cuối prompt rồi sinh lại file.
 
@@ -755,6 +793,13 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
 [ ] giữa các hiệp có 15 giây "hồi nhịp" hít vào 4 nhịp – thở ra 6 nhịp theo vạch nhịp trước khi hiệp sau bắt đầu; reduced-motion rút còn 10 giây đếm chữ, vẫn đủ 12 lượt
 [ ] khối "Bản tiết học" in đủ bốn dòng lấy từ số thật trong khối nút "Copy tờ rời" copy được; thiếu dữ liệu thì in "chưa ghi được", cấm bịa số
 [ ] verifyLesson() chạy MỘT LẦN lúc nạp, kiểm đúng bốn điều của tiết học và bản không camera vẫn bắt buộc đủ bốn điều
+[ ] mỗi câu mang một nhãn mạch trong tám mạch của tools/data/standards.mjs, HUD hiện nhãn <= 18 ký tự cỡ chữ >= 18px và đổi theo câu
+[ ] dòng "Yêu cầu cần đạt:" in NGUYÊN VĂN ở màn khởi động và màn tổng kết, không viết lại không tóm tắt, dòng tổng kết nằm trong khối "Copy tờ rời"
+[ ] mạch chính <= 9/12 lượt và >= 3 lượt thuộc mạch khác; câu khác mạch vẫn là cụm có thật trong bảng chuẩn của đúng môn đúng lớp
+[ ] tổng kết in "Hôm nay em chạm <n> mạch: ..." đúng bằng số mạch thật đã hỏi, không đếm mạch đã ghi sẵn trong prompt
+[ ] câu đầu mỗi cụm hiện "Dễ nhầm: <một lỗi>" <= 16 từ BÁO TRƯỚC khi em bấm, tắt sau 6 giây, không che đề; các lượt sau không lặp lại
+[ ] mỗi cụm có đúng một "Mẹo nhớ" <= 12 từ, mascot đọc to kèm một động tác 3 giây làm mẫu; động tác không phải điều kiện cộng điểm
+[ ] verifyStandard() chạy MỘT LẦN lúc nạp, kiểm đúng bốn điều của chuẩn kiến thức; bản một học sinh và bản không camera vẫn bắt buộc đủ bốn điều
 [ ] errorTag sửa đúng 2 lần được xếp ôn vào +1/+3/+7 ngày trong "miti-review", ôn vững thì giãn +21 ngày
 [ ] 3 giây đầu vào gameplay là một cú "ồ" bằng vật thể AR, không phải màn chữ
 [ ] "miti-best" lưu đúng ba số, HUD hiệp 2 hiện "Kỷ lục: <n> · Em đang: <m>" và PHÁ KỶ LỤC chỉ nổ một lần
@@ -829,10 +874,10 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
 [ ] đạo cụ AR neo landmark bằng toScreen(); bản không camera thì đạo cụ đứng yên ở góc HUD dưới chứ không biến mất
 [ ] ba câu thoại đọc bằng speechSynthesis giọng vi-VN, <= 3 câu mỗi phút, câu khi sai là câu đỡ chứ không chế giễu
 [ ] bảng kiểm ẩn mở bằng 7 lần chạm logo MiTi hoặc Ctrl+Alt+K, trạng thái ĐẠT do code kiểm thật lúc chạy
-[ ] cả 35 mục máy tự kiểm đều có hàm kiểm tương ứng, không mục nào là chữ kê sẵn
+[ ] cả 36 mục máy tự kiểm đều có hàm kiểm tương ứng, không mục nào là chữ kê sẵn
 [ ] mục CHƯA ĐẠT kèm nguyên nhân kỹ thuật + cách sửa trong prompt, không có dòng "lỗi hệ thống"
 [ ] nút "Xuất bản văn" copy được khối chữ tiếng Việt, không gửi lên máy chủ nào
-[ ] bản không camera bỏ đúng 6 mục 📷 và vẫn đạt 29 mục còn lại, không bỏ luôn bảng kiểm
+[ ] bản không camera bỏ đúng 6 mục 📷 và vẫn đạt 30 mục còn lại, không bỏ luôn bảng kiểm
 [ ] fallback chuột/chạm/phím chơi trọn vẹn, tự kích hoạt khi camera lỗi
 [ ] QUESTION_DATA có ít nhất 30 mục (Toán) hoặc 60 mục (Tiếng Anh), mỗi mục có đáp án + lời giải + errorTag + loiViet + dang
 [ ] dữ liệu đặt đầu file, code engine đặt sau, không có chỗ nào rút gọn
@@ -896,7 +941,7 @@ Sau khi tự kiểm tra, CHỈ xuất ra file HTML hoàn chỉnh, không kèm gi
   toàn bộ quy định phía trên chỉ là lời mong đợi. Bắt game tự kiểm bằng hàm true/false biến lời hứa thành trạng thái đọc được.
 - **Trạng thái phải do code kiểm, không phải chữ kê sẵn**: một bảng tĩnh in sẵn chữ "ĐẠT" còn hại hơn không có bảng,
   vì người lớn tưởng là đã kiểm. Đây là lý do quy định ghi rõ "không phải một danh sách chữ tĩnh".
-- **Tách 35 mục máy / 26 việc người thử**: cái gì máy kiểm được thì đừng đùn cho giáo viên; cái máy không kiểm được
+- **Tách 36 mục máy / 27 việc người thử**: cái gì máy kiểm được thì đừng đùn cho giáo viên; cái máy không kiểm được
   (cháu có hiểu luật chơi mà không đọc hướng dẫn không, rút mạng thì sao) thì đừng giả vờ kiểm. Con số 15 phút là thời lượng
   một tiết thực tế, không phải danh sách dài vô hạn.
 - **Mục chưa đạt phải nói nguyên nhân và cách sửa**: bảng kiểm chỉ báo "lỗi" sẽ bị bỏ qua; kèm câu "thiếu ở dòng nào,

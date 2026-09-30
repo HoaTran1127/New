@@ -24,6 +24,8 @@ import { IDENTITY } from './lib/identity.mjs';
 import { RHYTHM } from './lib/rhythm.mjs';
 import { QUEUE } from './lib/queue.mjs';
 import { LESSON } from './lib/lesson.mjs';
+import { CURRICULUM, CURRICULUM_SHORT } from './lib/curriculum.mjs';
+import { STANDARDS, STANDARD_KEYS, MACH_TEN } from './data/standards.mjs';
 import { IDENTITIES } from './data/identities.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
@@ -52,7 +54,7 @@ const MASTER_LIB = [
   ['2.0', 'ar.mjs'], ['4.5', 'pe.mjs'], ['5.1', 'memory.mjs'], ['6.1', 'classroom.mjs'],
   ['6.2', 'verify.mjs'], ['6.3', 'light.mjs'], ['8.1', 'feel.mjs'], ['8.2', 'hype.mjs'], ['8.3', 'anticipation.mjs'], ['8.4', 'celebrate.mjs'],
   ['9.1', 'access.mjs'], ['11.', 'acceptance.mjs'], ['8.5', 'identity.mjs'], ['8.6', 'rhythm.mjs'],
-  ['7.2', 'queue.mjs'], ['4.6', 'lesson.mjs'],
+  ['7.2', 'queue.mjs'], ['4.6', 'lesson.mjs'], ['4.7', 'curriculum.mjs'],
 ];
 
 const rows = readCatalog(path.join(ROOT, 'catalogs', 'GAME_CATALOG.csv'));
@@ -205,6 +207,7 @@ const FULL_LAYERS = [
   ['nhạc nền theo nhịp', 'rhythm.mjs', 'RHYTHM', RHYTHM],
   ['vai chờ có vận động', 'queue.mjs', 'QUEUE', QUEUE],
   ['tiết học 45 phút + gắng sức', 'lesson.mjs', 'LESSON', LESSON],
+  ['chuẩn kiến thức SGK', 'curriculum.mjs', 'CURRICULUM', CURRICULUM],
 ];
 const FULL_RULES = FULL_LAYERS.flatMap(([label, file, objName, obj]) =>
   Object.entries(obj).map(([key, text]) => [text, `thiếu quy định ${label} ${objName}.${key} của tools/lib/${file}`]));
@@ -283,6 +286,31 @@ const FULL_PINS = [
   // "Bản không camera" còn nguyên — phải neo chính mệnh đề BẮT BUỘC.
   ['lesson.mjs', LESSON.guard, 'vẫn bắt buộc đủ bốn điều', 'bản không camera không được miễn kiểm'],
   ['lesson.mjs', LESSON.guard, 'phút thứ 10', 'điểm tự khép mà verifyLesson() phải kiểm'],
+  ['curriculum.mjs', CURRICULUM.machNhan, 'tools/data/standards.mjs', 'bảng chuẩn là nguồn duy nhất của nhãn mạch'],
+  ['curriculum.mjs', CURRICULUM.machNhan, 'tám mạch', 'tổng số mạch kiến thức — neo cả mệnh đề cấm mạch thứ chín'],
+  ['curriculum.mjs', CURRICULUM.machNhan, 'cấm thêm mạch thứ chín', 'bảng mạch là đóng, không để mô hình tự mở rộng'],
+  ['curriculum.mjs', CURRICULUM.machNhan, 'Toán 4 mạch', 'số mạch Toán'],
+  ['curriculum.mjs', CURRICULUM.machNhan, 'Tiếng Anh 3 mạch', 'số mạch Tiếng Anh'],
+  ['curriculum.mjs', CURRICULUM.machNhan, '<= 18 ký tự', 'trần độ dài nhãn HUD'],
+  ['curriculum.mjs', CURRICULUM.machNhan, '>= 18px', 'cỡ chữ tối thiểu nhãn mạch'],
+  ['curriculum.mjs', CURRICULUM.machNhan, 'CẤM tự đặt tên mạch', 'lệnh cấm tự bịa mạch — neo cả mệnh đề, không chỉ bốn chữ "tự đặt"'],
+  ['curriculum.mjs', CURRICULUM.ycDong, 'NGUYÊN VĂN', 'yêu cầu cần đạt phải copy, không viết lại'],
+  ['curriculum.mjs', CURRICULUM.ycDong, 'đúng một dòng', 'số dòng yêu cầu ở mỗi màn'],
+  ['curriculum.mjs', CURRICULUM.ycDong, '>= 20px', 'cỡ chữ dòng yêu cầu cần đạt'],
+  ['curriculum.mjs', CURRICULUM.ycDong, 'Copy tờ rời', 'dòng yêu cầu phải nằm trong khối copy được'],
+  ['curriculum.mjs', CURRICULUM.machTron, '9/12', 'trần lượt của mạch chính'],
+  ['curriculum.mjs', CURRICULUM.machTron, '>= 3 lượt thuộc mạch', 'số lượt phủ mạch khác'],
+  ['curriculum.mjs', CURRICULUM.machTron, 'cấm bịa chủ đề ngoài chương trình', 'lệnh cấm câu khác mạch lạc khỏi SGK'],
+  ['curriculum.mjs', CURRICULUM.bayTruoc, 'Câu ĐẦU TIÊN', 'vị trí dòng Dễ nhầm'],
+  ['curriculum.mjs', CURRICULUM.bayTruoc, 'BÁO TRƯỚC', 'báo trước khi bấm, khác chữ đỡ sau khi sai'],
+  ['curriculum.mjs', CURRICULUM.bayTruoc, '6 giây', 'trần thời gian hiện dòng Dễ nhầm'],
+  ['curriculum.mjs', CURRICULUM.bayTruoc, '<= 16 từ', 'trần độ dài dòng Dễ nhầm'],
+  ['curriculum.mjs', CURRICULUM.meoDongTac, '<= 12 từ', 'trần độ dài mẹo nhớ'],
+  ['curriculum.mjs', CURRICULUM.meoDongTac, 'động tác 3 giây', 'mẹo nhớ phải kèm động tác'],
+  ['curriculum.mjs', CURRICULUM.meoDongTac, 'không phải điều kiện cộng điểm', 'động tác mẹo không biến thành thi đua'],
+  ['curriculum.mjs', CURRICULUM.guard, 'verifyStandard()', 'hàm kiểm chuẩn kiến thức lúc nạp'],
+  ['curriculum.mjs', CURRICULUM.guard, 'kiểm đúng bốn điều', 'số điều verifyStandard() phải kiểm'],
+  ['curriculum.mjs', CURRICULUM.guard, 'vẫn bắt buộc kiểm đủ bốn điều', 'bản một em và bản không camera không được miễn kiểm'],
 ];
 for (const [file, text, needle, label] of FULL_PINS) {
   if (!text.includes(needle)) bad(`tools/lib/${file} không còn nêu "${needle}" (${label}) — con số nghiệm thu phải sửa cùng tài liệu và bảng kiểm, không đổi âm thầm trong lib.`);
@@ -305,6 +333,7 @@ const SHORT_PINS = {
   RHYTHM_SHORT: ['100–116 BPM', '128', '0.18', '30% gain', 'vạch nhịp', 'verifyMusic()'],
   QUEUE_SHORT: ['8 nhịp', '3 lượt/em', 'trần 20 giây', 'giây 15', '1 sải tay', '1,2 m', '+5 điểm', 'verifyQueue()'],
   LESSON_SHORT: ['8–10 phút', 'phút thứ 10', 'Kế hoạch tiết 45 phút', 'Kết phiên', 'bốn mức gắng sức', '>= 56px', 'miti-effort', '15 giây hồi nhịp', 'Bản tiết học', 'verifyLesson()'],
+  CURRICULUM_SHORT: ['<= 18 ký tự', 'Yêu cầu cần đạt', 'nguyên văn', 'Copy tờ rời', '<= 9/12 lượt', '>= 3 lượt thuộc mạch khác', 'Dễ nhầm', '<= 16 từ', 'Mẹo nhớ', '<= 12 từ', 'động tác 3 giây', 'verifyStandard()'],
 };
 for (const seg of chainSegments) {
   for (const needle of SHORT_PINS[seg.name] || []) {
@@ -494,6 +523,7 @@ if (!fs.existsSync(VAR_FILE)) {
   if (!vtext.includes('- **Nhạc nền theo nhịp:**')) bad('Phần Quy ước chung của VARIANTS_425.md thiếu dòng Nhạc nền theo nhịp.');
   if (!vtext.includes('- **Vai chờ có vận động:**')) bad('Phần Quy ước chung của VARIANTS_425.md thiếu dòng Vai chờ có vận động — người copy một block biến thể ra dùng không còn biết ba em chưa tới lượt phải làm gì.');
   if (!vtext.includes('- **Tiết học 45 phút + gắng sức:**')) bad('Phần Quy ước chung của VARIANTS_425.md thiếu dòng Tiết học 45 phút + gắng sức — biến thể copy riêng được mà không còn trần thời lượng lẫn thang gắng sức.');
+  if (!vtext.includes('- **Chuẩn kiến thức SGK:**')) bad('Phần Quy ước chung của VARIANTS_425.md thiếu dòng Chuẩn kiến thức SGK — biến thể copy riêng được mà không còn nhãn mạch lẫn dòng yêu cầu cần đạt.');
   if (!vtext.includes('- **Nghiệm thu:**')) bad('Phần Quy ước chung của VARIANTS_425.md thiếu dòng Nghiệm thu.');
   if (!vtext.includes('prompts/CHECKLIST_NGHIEP_THU.md')) bad('Phần Quy ước chung của VARIANTS_425.md không trỏ tới bảng kiểm in sẵn.');
   VAR_COUNT = blocks.length;
@@ -542,6 +572,7 @@ if (!fs.existsSync(VAR_FILE)) {
     if (!b.includes('**Nhạc nền theo nhịp:**')) bad(`biến thể #${i + 1}: thiếu dòng Nhạc nền theo nhịp.`);
     if (!b.includes('**Vai chờ có vận động:**')) bad(`biến thể #${i + 1}: thiếu dòng Vai chờ có vận động.`);
     if (!b.includes('**Tiết học 45 phút + gắng sức:**')) bad(`biến thể #${i + 1}: thiếu dòng Tiết học 45 phút + gắng sức.`);
+    if (!b.includes('**Chuẩn kiến thức SGK:**')) bad(`biến thể #${i + 1}: thiếu dòng Chuẩn kiến thức SGK.`);
     // Block biến thể copy riêng được, nên phải mang đúng dữ liệu bản sắc của chính game nó nói tới.
     // split('\n## Prompt ') đã ăn luôn hai chữ "## Prompt", nên dòng đầu block bắt đầu bằng số thứ tự.
     const vid = (b.match(/^\d+ — (\S+) — V\d/) || [])[1];
@@ -784,6 +815,27 @@ const LESSON_DOC_NEEDLES = [
   // mục nào trong bảng kiểmứng với tầng này — probe vòng 16: viết lại thành "mục cuối bảng" vẫn xanh.
   ['máy tự kiểm thứ 35', 'số mục của verifyLesson() trong bảng kiểm', 0, 0, 1, 0],
 ];
+// Tầng chuẩn kiến thức SGK (vòng 17): tám mạch + yêu cầu cần đạt + bẫy báo trước + mẹo nhớ là bốn con số
+// nối một câu hỏi trong game với đúng một dòng trong Chương trình GDPT 2018.
+// Cùng nguyên tắc với hai bảng trên — neo ĐÚNG số lần nêu hiện có ở bốn tài liệu: thêm chỗ nêu thì vô hại,
+// xóa một chỗ (kể cả xóa trọn mục 4.7 của master hay block CHUẨN KIẾN THỨC của template) là build đỏ.
+const CURRICULUM_DOC_NEEDLES = [
+  ['tám mạch', 'tổng số mạch kiến thức — neo cả mệnh đề cấm mạch thứ chín', 2, 3, 4, 1],
+  ['Yêu cầu cần đạt', 'dòng chuẩn in ở hai màn', 5, 5, 4, 2],
+  ['NGUYÊN VĂN', 'cấm viết lại dòng yêu cầu cần đạt', 4, 3, 2, 1],
+  ['<= 18 ký tự', 'trần dài nhãn mạch trên HUD', 3, 4, 4, 1],
+  ['18px', 'cỡ chữ nhãn mạch tối thiểu', 3, 3, 2, 1],
+  ['9/12', 'trần số lượt mà một mạch được chiếm', 4, 5, 4, 1],
+  ['3 lượt thuộc mạch khác', 'số lượt xen mạch tối thiểu', 2, 4, 2, 1],
+  ['Dễ nhầm', 'bẫy báo trước ở câu đầu tiên của cụm', 5, 6, 4, 2],
+  ['Mẹo nhớ', 'mẹo nhớ kèm động tác', 3, 5, 3, 1],
+  ['<= 12 từ', 'trần dài mẹo nhớ', 3, 5, 3, 1],
+  ['động tác 3 giây', 'mẹo nhớ phải gắn một động tác', 4, 5, 3, 1],
+  ['verifyStandard()', 'hàm kiểm chuẩn kiến thức lúc nạp', 3, 4, 3, 3],
+  ['máy tự kiểm thứ 36', 'số mục của verifyStandard() trong bảng kiểm', 0, 0, 1, 0],
+  ['người thử số 27', 'việc người thử tương ứng ở prompts/README', 0, 0, 0, 1],
+  ['việc người thử thứ 27', 'việc người thử tương ứng ở README', 0, 0, 1, 0],
+];
 // Con số cũ của vòng 6 ("< 8 động tác lớn mỗi phút") là yêu cầu KHÔNG THỂ đạt với phiên 12 lượt / 4–6 phút.
 // Giữ nó trong tài liệu sẽ sinh game luôn báo CHƯA ĐẠT ở mục cường độ, nên phải bị chặn.
 const SUPERSEDED = [
@@ -808,7 +860,7 @@ for (const [docSlot, [docName, docText]] of DOC_FILES.entries()) {
   for (const [needle, label] of IDENTITY_DOC_NEEDLES) {
     if (!docText.includes(needle)) bad(`${docName} thiếu con số bản sắc riêng (${label}): không thấy "${needle}".`);
   }
-  for (const [needle, label, ...mins] of [...RHYTHM_DOC_NEEDLES, ...VOICE_DOC_NEEDLES, ...QUEUE_DOC_NEEDLES, ...LESSON_DOC_NEEDLES]) {
+  for (const [needle, label, ...mins] of [...RHYTHM_DOC_NEEDLES, ...VOICE_DOC_NEEDLES, ...QUEUE_DOC_NEEDLES, ...LESSON_DOC_NEEDLES, ...CURRICULUM_DOC_NEEDLES]) {
     const want = mins[docSlot];
     const got = docText.split(needle).length - 1;
     if (got < want) bad(`${docName} chỉ còn nêu "${needle}" (${label}) ${got} lần, chuẩn hiện hành là ${want} lần — tài liệu chuẩn phải giữ đủ chỗ nêu ở CẢ phần luật lẫn bảng kiểm tự kiểm, không được để một phần mất số.`);
@@ -898,6 +950,7 @@ const DOC_LAYERS = [
   ['nhạc nền theo nhịp', '8.6 NHẠC NỀN THEO NHỊP', 'Phần nhạc nền đã điền đủ'],
   ['vai chờ có vận động', '7.2 BỐN EM MỘT MÁY', 'Phần vai chờ đã điền đủ'],
   ['tiết học 45 phút + gắng sức', '4.6 TIẾT HỌC 45 PHÚT', 'Phần tiết học đã điền đủ'],
+  ['chuẩn kiến thức SGK', '4.7 CHUẨN KIẾN THỨC', 'Phần chuẩn kiến thức đã điền đủ'],
   ['cảm giác arcade', '8.1 CẢM GIÁC ARCADE', 'Phần arcade đã điền đủ'],
   ['thi đua + cao trào', '8.2 THI ĐUA + CAO TRÀO', 'Phần thi đua + cao trào đã điền đủ'],
   ['ham quay lại', '8.3 HAM QUAY LẠI', 'Phần ham quay lại đã điền đủ'],
@@ -967,6 +1020,45 @@ if (!MACHINE_ITEMS.some((s) => s.includes('verifyLesson()') && s.includes('miti-
   }
 }
 if (!HUMAN_CHECKS.some((s) => /phút thứ 10/.test(s) && /45 phút/.test(s))) bad('Bảng việc người thử không còn câu bấm giờ thật cho phiên 8–10 phút — máy không tự kiểm được việc bốn nhóm có kịp chơi trong một tiết 45 phút.');
+
+// Vòng 17: chuẩn kiến thức SGK phải còn nguyên trong bảng kiểm, không rút thành "có nhãn mạch".
+if (!MACHINE_ITEMS.some((s) => s.includes('verifyStandard()') && s.includes('Yêu cầu cần đạt'))) bad('Bảng kiểm máy tự kiểm không còn mục nghiệm thu chuẩn kiến thức (verifyStandard() + "Yêu cầu cần đạt") — thiếu mục này thì game in sai yêu cầu của lớp mà vẫn báo ĐẠT.');
+{
+  const stdItem = MACHINE_ITEMS.find((s) => s.includes('verifyStandard()'));
+  for (const clause of ['18 ký tự', 'NGUYÊN VĂN', '9/12', '3 lượt thuộc mạch khác', 'Dễ nhầm', '12 từ']) {
+    if (stdItem && !stdItem.includes(clause)) bad(`Mục bảng kiểm "verifyStandard()" không còn nêu "${clause}" — mục nghiệm thu chuẩn kiến thức phải liệt kê đủ bốn điều verifyStandard() kiểm.`);
+  }
+}
+if (!HUMAN_CHECKS.some((s) => /Yêu cầu cần đạt/.test(s) && /mạch nào/.test(s))) bad('Bảng việc người thử không còn câu đối chiếu "Yêu cầu cần đạt" với sách giáo khoa — máy so được chuỗi nguyên văn nhưng không biết chuỗi đó có đúng chuẩn lớp học thật không.');
+
+// Vòng 17: bảng chuẩn kiến thức là DỮ LIỆU, không phải chữ trong prompt. Thiếu một dòng
+// standards.mjs thì build-prompts throw, nhưng sửa nội dung (thu ngắn mẹo, đổi mạch, viết lại
+// yêu cầu cần đạt) thì không tầng nào bắt — nên đối chiếu thẳng 57 cụm với bảng chuẩn ở đây.
+const soTu = (s) => s.trim().split(/\s+/).length;
+for (const k of CLUSTER_KEYS) {
+  const s = STANDARDS[k];
+  if (!s) { bad(`clusters.mjs có cụm ${k} nhưng standards.mjs chưa có dòng chuẩn — thêm mach/ngan/yc/meo.`); continue; }
+  if (!MACH_TEN.includes(s.mach)) bad(`standards.mjs: cụm ${k} gán mạch "${s.mach}" ngoài tám mạch của MACH.`);
+  if (s.ngan.length > 18) bad(`standards.mjs: cụm ${k} có nhãn HUD "${s.ngan}" dài ${s.ngan.length} ký tự — trần là 18 ký tự để vừa góc HUD.`);
+  if (soTu(s.meo) > 12) bad(`standards.mjs: cụm ${k} có mẹo nhớ ${soTu(s.meo)} từ — trần 12 từ, dài hơn thì em không nhớ nổi mà mascot cũng không đọc kịp một hơi.`);
+  if (s.yc.length < 40) bad(`standards.mjs: cụm ${k} có yêu cầu cần đạt chỉ ${s.yc.length} ký tự — dòng này in ra tờ rời, cụt quá thì giáo viên không đối chiếu được.`);
+}
+for (const k of STANDARD_KEYS) if (!CLUSTER_KEYS.includes(k)) bad(`standards.mjs có dòng ${k} không có trong clusters.mjs.`);
+if (STANDARD_KEYS.length !== CLUSTER_KEYS.length) bad(`standards.mjs có ${STANDARD_KEYS.length} dòng nhưng clusters.mjs có ${CLUSTER_KEYS.length} cụm — bảng chuẩn phải phủ đủ.`);
+
+// Mỗi prompt game phải mang đúng dữ liệu chuẩn của CỤM của nó, không phải một dòng chung chung.
+for (const g of GAMES) {
+  const s = STANDARDS[g.cluster];
+  if (!s) continue;
+  const rel = PATH_OF.get(g.id);
+  if (!rel || !fs.existsSync(path.join(ROOT, rel))) continue;
+  const t = fs.readFileSync(path.join(ROOT, rel), 'utf8');
+  for (const [needle, label] of [
+    [s.mach, 'mạch kiến thức'], [s.ngan, 'nhãn HUD'], [s.yc, 'yêu cầu cần đạt'], [s.meo, 'mẹo nhớ'],
+  ]) {
+    if (!t.includes(needle)) bad(`${g.id}: prompt thiếu ${label} của cụm ${g.cluster} ("${needle.slice(0, 48)}") — builder phải lấy thẳng tools/data/standards.mjs.`);
+  }
+}
 
 if (errors.length) {
   console.error('Xác minh thất bại — ' + errors.length + ' vấn đề:');

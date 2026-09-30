@@ -66,7 +66,7 @@ Bốn biến thể đầu dùng **cùng một hợp đồng AR** như prompt gam
 - `04-english5/` — 15 game Tiếng Anh 5.
 - `01-prompt-…` đến `12-prompt-…` — **12 prompt legacy** đời đầu: giữ nguyên cơ chế game, đã thay MediaPipe Legacy/Tailwind CDN/Tone.js bằng chuẩn hiện hành và gắn nhãn `LEGACY`. Không dùng làm khuôn cho game mới.
 - `VARIANTS_425.md` — 425 biến thể (85 game × 5 kiểu điều khiển), do `tools/build-variants.mjs` sinh.
-- `CHECKLIST_NGHIEP_THU.md` — bảng kiểm cầm tay khi nhận file HTML về: 35 mục máy tự kiểm + 26 việc người thử bấm tay (trong đó 6 mục gắn 📷 chỉ có camera mới kiểm được; bản không camera bỏ 6 mục đó và vẫn phải đạt 29 mục còn lại), do `tools/build-acceptance.mjs` sinh từ `tools/lib/acceptance.mjs`.
+- `CHECKLIST_NGHIEP_THU.md` — bảng kiểm cầm tay khi nhận file HTML về: 36 mục máy tự kiểm + 27 việc người thử bấm tay (trong đó 6 mục gắn 📷 chỉ có camera mới kiểm được; bản không camera bỏ 6 mục đó và vẫn phải đạt 30 mục còn lại), do `tools/build-acceptance.mjs` sinh từ `tools/lib/acceptance.mjs`.
 
 ## ✅ Nghiệm thu một game vừa sinh
 
@@ -206,13 +206,28 @@ Việc người thử số 25 ("cho bốn em đứng quanh một máy chơi tr�
 
 Việc người thử số 26 ("bấm giờ thật khi nhóm đầu cầm máy — phiên có tự khép ở phút thứ 10 ngay tại ranh giới lượt và dòng "Kế hoạch tiết 45 phút" có đủ chỗ cho bốn nhóm không? Cuối mỗi hiệp hỏi em mức gắng sức: tới hiệp 3 có tăng thật không?") là chỗ máy không tự kiểm được: game có đồng hồ thì máy kiểm được, còn việc một tiết học thật có chia đủ bốn nhóm và em có mệt thật thì phải có người đứng nhìn.
 
+## 📘 Tầng "chuẩn kiến thức SGK" — `tools/lib/curriculum.mjs` + `tools/data/standards.mjs` (vòng 17)
+
+Đo 85 prompt trước vòng 17: **"mạch kiến thức" 0/85, "yêu cầu cần đạt" 0/85, "chuẩn kiến thức" 0/85, "mẹo nhớ" 0/85, "Dễ nhầm" 0/85**. `light.mjs` chặn đề quá nặng, `verify.mjs` chặn số ngoài phạm vi SGK, nhưng **không tầng nào nói đề đó thuộc mạch nào của Chương trình GDPT 2018 và lớp cần đạt tới đâu**. Hai hệ quả đo được ở lớp: giáo viên không có dòng nào để đối chiếu tờ rời với yêu cầu của lớp, và học sinh sai lặp đúng một cái bẫy đã biết mà game không báo trước.
+
+| Luật | Con số | Kiểm ở đâu |
+|:---|:---|:---|
+| Nhãn mạch trên HUD | **đúng một** nhãn mỗi câu, chỉ **tám mạch** (Toán 4 mạch "Số và phép tính" · "Hình học và đo lường" · "Giải toán có lời văn" · "Một số yếu tố thống kê và xác suất"; Tiếng Anh "Đọc và viết" · "Nghe và nói" · "Kiến thức ngôn ngữ"; chung "Ôn tập tổng hợp"), **cấm thêm mạch thứ chín**; nhãn ngắn **<= 18 ký tự**, chữ **>= 18px**, nền đặc, không nhấp nháy, đổi theo câu | `verifyStandard()` + mục `[36]` |
+| Dòng "Yêu cầu cần đạt:" | in **NGUYÊN VĂN** cột `yc` ở **đúng hai màn** (khởi động + tổng kết), **>= 20px**, nằm trong khối "Copy tờ rời" copy được; **không viết lại, không tóm tắt** | mục `[36]` |
+| Xen mạch | mạch chính **<= 9/12 lượt**, **>= 3 lượt thuộc mạch khác**, tổng kết in "Hôm nay em chạm `<n>` mạch" | mục `[36]` |
+| Bẫy báo trước | **"Dễ nhầm: …"** ở **câu ĐẦU TIÊN** mỗi cụm, **<= 16 từ**, lấy từ nhãn lỗi thật của cụm; **không phải điều kiện cộng điểm** | mục `[36]` |
+| Mẹo nhớ | **<= 12 từ** kèm **một động tác 3 giây** | mục `[36]` |
+| Chuẩn phải tự chứng minh | `verifyStandard()` chạy MỘT LẦN lúc nạp, kiểm **đúng bốn điều**; bản không camera **vẫn bắt buộc kiểm đủ bốn điều** vì mạch kiến thức không phụ thuộc camera | mục `[36]` |
+
+Việc người thử số 27 ("đọc to dòng "Yêu cầu cần đạt:" ở màn tổng kết và đối chiếu với sách giáo khoa của lớp — có đúng yêu cầu cần đạt của mạch đó không? Hỏi em đang chơi "câu vừa rồi thuộc mạch nào" và "mẹo nhớ là gì"") là chỗ máy không tự kiểm được: `verifyStandard()` so được từng chữ với bảng chuẩn, còn việc một câu có thật nằm trong yêu cầu cần đạt của lớp thì phải có giáo viên cầm sách đối chiếu.
+
 ## 🔁 Pipeline của thư viện
 
 85 prompt game **được sinh tự động**, không sửa tay:
 
 ```
-tools/data/games.mjs + clusters.mjs + gestures.mjs + examples.mjs + error-notes.mjs + identities.mjs
-tools/lib/ar.mjs · rules.mjs · feel.mjs · classroom.mjs · access.mjs · light.mjs · celebrate.mjs · identity.mjs · rhythm.mjs · queue.mjs · lesson.mjs · verify.mjs · pe.mjs · memory.mjs · hype.mjs · anticipation.mjs · acceptance.mjs
+tools/data/games.mjs + clusters.mjs + gestures.mjs + examples.mjs + error-notes.mjs + identities.mjs + standards.mjs
+tools/lib/ar.mjs · rules.mjs · feel.mjs · classroom.mjs · access.mjs · light.mjs · celebrate.mjs · identity.mjs · rhythm.mjs · queue.mjs · lesson.mjs · curriculum.mjs · verify.mjs · pe.mjs · memory.mjs · hype.mjs · anticipation.mjs · acceptance.mjs
         └─ node tools/build.mjs ─→ catalogs/GAME_CATALOG.csv · .md · .js + prompts/0X-*/ + index.html + prompts/CHECKLIST_NGHIEP_THU.md
 ```
 

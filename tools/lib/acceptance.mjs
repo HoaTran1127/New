@@ -43,6 +43,7 @@ export const MACHINE_ITEMS = [
   'verifyMusic() đã chạy lúc nạp: loop nhạc nền tổng hợp bằng Web Audio (không có <audio src> hay fetch() file âm thanh ngoài), BPM nằm trong 100–128, gain bus nhạc <= 0.18, bus nhạc hạ xuống <= 30% khi speechSynthesis đang đọc, và bản "miti-mute" có vạch nhịp đập theo BPM thay cho tiếng',
   'verifyQueue() đã chạy lúc nạp: ba vai chờ (cổ vũ đủ 8 nhịp · trọng tài giơ thẻ "Động tác to / nhỏ" · thư ký đọc lại đề và đáp án) có nhãn tên trên HUD, đồng hồ chờ chạy riêng và gọi đúng tên em đang chờ ở giây 15, bộ đếm "Lượt của em <n>/3" đổi vai đúng sau 3 lượt trong 12 lượt, và +5 điểm của vai chờ chỉ vào thanh "Cả nhóm" chứ không vào "miti-best"',
   'verifyLesson() đã chạy lúc nạp: đồng hồ phiên "Còn <n> phút" có thật và phiên tự khép ở phút thứ 10 tại RANH GIỚI lượt (không cắt giữa lượt, thẻ câu hỏi vẫn không có đồng hồ đếm ngược), bốn mức gắng sức "dễ quá / vừa / mệt / kiệt" hiện cuối mỗi hiệp và đọc lại được từ localStorage "miti-effort", 15 giây "hồi nhịp" hít 4 nhịp – thở ra 6 nhịp chạy xong trước khi hiệp sau bắt đầu, và khối "Bản tiết học" in đủ bốn dòng lấy từ số thật',
+  'verifyStandard() đã chạy lúc nạp: mọi câu mang nhãn mạch nằm trong tám mạch của tools/data/standards.mjs và HUD có thật (nhãn <= 18 ký tự, >= 18px), dòng "Yêu cầu cần đạt:" xuất hiện ở đúng hai màn và khớp NGUYÊN VĂN bảng chuẩn (không viết lại, không tóm tắt), mạch chính <= 9/12 lượt kèm >= 3 lượt thuộc mạch khác và tổng kết in "Hôm nay em chạm <n> mạch", mỗi cụm có "Dễ nhầm" ở câu đầu (<= 16 từ) và "Mẹo nhớ" <= 12 từ kèm động tác 3 giây',
 ];
 
 // Những việc con người phải bấm tay — máy không tự kiểm được, nguồn cho ACCEPT.manual và bảng in.
@@ -73,6 +74,7 @@ export const HUMAN_CHECKS = [
   'nghe trọn một hiệp — nhạc có giữ nhịp cho em vận động theo (mỗi cú chốt rơi vào một phách mạnh) hay chỉ là tiếng nền vô định? Bấm "Tắt tiếng" rồi chơi tiếp: nhịp chuyển động có rớt dưới 12 lần mỗi phút không?',
   'cho bốn em đứng quanh một máy chơi trọn một hiệp — ba em chưa tới lượt có thật sự vận động (vỗ đủ 8 nhịp, giơ thẻ, đọc lại đề và đáp án) hay vẫn đứng xem? Đứng im 20 giây tới lượt: mascot có gọi đúng tên em đang chờ và ra một động tác 5 giây không?',
   'bấm giờ thật khi nhóm đầu cầm máy — phiên có tự khép ở phút thứ 10 ngay tại ranh giới lượt (không cắt giữa một em đang chơi) và dòng "Kế hoạch tiết 45 phút" in ra có đủ chỗ cho bốn nhóm không? Hỏi em cuối mỗi hiệp "dễ quá / vừa / mệt / kiệt": tới hiệp 3 mức có tăng thật hay em toàn chọn "dễ quá"?',
+  'đọc to dòng "Yêu cầu cần đạt:" ở màn tổng kết và đối chiếu với sách giáo khoa của lớp — dòng đó có đúng yêu cầu của cụm này không, hay chỉ là một câu chung chung ai cũng viết được? Hỏi em đang chơi "câu vừa rồi thuộc mạch nào" và "mẹo nhớ là gì": em trả lời được thì nhãn mạch và mẹo đã vào đầu, nếu em chỉ đọc lại chữ trên HUD thì hai dòng đó đang trang trí.',
 ];
 
 // Những mục máy chỉ kiểm được khi có webcam: bản không camera bỏ qua chúng, các mục còn lại vẫn phải đạt.

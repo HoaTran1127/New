@@ -22,6 +22,8 @@ import { IDENTITY, IDENTITY_SHORT } from './lib/identity.mjs';
 import { RHYTHM, RHYTHM_SHORT } from './lib/rhythm.mjs';
 import { QUEUE, QUEUE_SHORT } from './lib/queue.mjs';
 import { LESSON, LESSON_SHORT } from './lib/lesson.mjs';
+import { CURRICULUM, CURRICULUM_SHORT } from './lib/curriculum.mjs';
+import { standard } from './data/standards.mjs';
 import { identity } from './data/identities.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
@@ -61,6 +63,7 @@ function controlBlock(v, g) {
 
 function block(n, row, g, v) {
   const cl = cluster(g.cluster);
+  const st = standard(g.cluster);
   const bank = BANK[row.mon];
   const it = identity(g.id);
   if (!it) throw new Error(`Thiếu bản sắc cho game ${g.id} — bổ sung tools/data/identities.mjs.`);
@@ -74,7 +77,7 @@ function block(n, row, g, v) {
   const calib = camera && !voice ? RULES.calibration : 'Biến thể này không đọc chuyển động tay nên không cần calibration; vẫn phải có một màn hướng dẫn ngắn, không tutorial dài.';
   // Biến thể VOICE chỉ có một micro nên không có chế độ hai người chơi: lấy 3 vế đầu của chuỗi rút gọn.
   const voiceShort = CLASSROOM_SHORT.split(' · ').slice(0, 3).join(' · ');
-  const qCheck = ' · ' + LIGHT_SHORT + ' · ' + CELEBRATE_SHORT + ' · ' + IDENTITY_SHORT + ' · ' + RHYTHM_SHORT + ' · ' + QUEUE_SHORT + ' · ' + LESSON_SHORT + ' · ' + PE_SHORT + ' · ' + RETENTION_SHORT + ' · ' + HYPE_SHORT + ' · ' + ANT_SHORT + ' · ' + VERIFY_SHORT + ' · ' + ADAPT_SHORT + ' · ' + ACCEPT_SHORT;
+  const qCheck = ' · ' + LIGHT_SHORT + ' · ' + CELEBRATE_SHORT + ' · ' + IDENTITY_SHORT + ' · ' + RHYTHM_SHORT + ' · ' + QUEUE_SHORT + ' · ' + LESSON_SHORT + ' · ' + CURRICULUM_SHORT + ' · ' + PE_SHORT + ' · ' + RETENTION_SHORT + ' · ' + HYPE_SHORT + ' · ' + ANT_SHORT + ' · ' + VERIFY_SHORT + ' · ' + ADAPT_SHORT + ' · ' + ACCEPT_SHORT;
   // Dòng nghiệm thu cho mọi block: game phải tự chứng minh nó đạt, người thử không phải đọc code.
   const accept = ACCEPT.selfReport + ' ' + ACCEPT.printable + ' ' + ACCEPT.failRule + (camera ? '' : ' ' + ACCEPT.noCamera);
   const selfCheck = voice
@@ -126,6 +129,7 @@ ${controlBlock(v, g)}` : controlBlock(v, g)}
 **Nhạc nền theo nhịp:** ${RHYTHM.beat} ${RHYTHM.move} ${RHYTHM.duck} ${RHYTHM.crescendo} ${RHYTHM.quiet} ${RHYTHM.guard}
 **Vai chờ có vận động:** ${QUEUE.roles} ${QUEUE.rotate} ${QUEUE.waitCap} ${QUEUE.spacing} ${QUEUE.teamScore} ${QUEUE.guard}
 **Tiết học 45 phút + gắng sức:** ${LESSON.sessionCap} ${LESSON.rotationFit} ${LESSON.rpe} ${LESSON.recovery} ${LESSON.lessonSheet} ${LESSON.guard}
+**Chuẩn kiến thức SGK:** ${CURRICULUM.machNhan} ${CURRICULUM.ycDong} ${CURRICULUM.machTron} ${CURRICULUM.bayTruoc} ${CURRICULUM.meoDongTac} ${CURRICULUM.guard} Mạch của cụm ${g.cluster} là "${st.mach}" với nhãn HUD "${st.ngan}"; dòng "Yêu cầu cần đạt: ${st.yc}" in nguyên văn ở hai màn; mẹo nhớ "${st.meo}" kèm một động tác 3 giây; "Dễ nhầm: ${ERROR_NOTES[g.cluster].split('; ')[0]}" báo trước câu đầu cụm.
 **Tiếp cận + an toàn thần kinh:** ${ACCESS.flash} ${ACCESS.reducedMotion} ${ACCESS.notColorOnly} ${ACCESS.caption} ${ACCESS.contrast}
 ${camera && !voice ? `**Chế độ lớp:** ${CLASSROOM.twoPlayer}\n**Tay thuận:** ${ACCESS.handedness}\n` : ''}**Giao diện:** đề bài >= 28px trên desktop và >= 20px trên điện thoại, tương phản chữ >= 4.5:1, responsive cả dọc lẫn ngang; HUD có nhiệm vụ + điểm + chuỗi đúng + tiến độ + trạng thái camera; có Pause, Replay, Giảm hiệu ứng chuyển động${camera ? ' và Tắt camera' : ''}; không leaderboard, không quảng cáo. ${RULES.perf}
 **An toàn + riêng tư + tiếng Việt:** ${RULES.safety} Mỗi động tác đều có phiên bản ngồi tại chỗ; không quay chạy nhảy, không rời vùng camera. Không upload ảnh/video từ camera, chỉ giữ landmark trong bộ nhớ, tiến độ lưu localStorage máy đó. Toàn bộ UI, tên nút, hướng dẫn, thông báo và lời giải bằng TIẾNG VIỆT (chỉ học liệu ${subjectNote}); không để lộ thuật ngữ kỹ thuật confidence / cooldown / fallback cho học sinh.
@@ -170,6 +174,7 @@ let out = `# 🎯 425 PROMPT BIẾN THỂ — MiTi (85 game × 5 kiểu điều 
 - **Nhạc nền theo nhịp:** một loop tự tổng hợp bằng Web Audio (cấm \`<audio src>\` và cấm hotlink .mp3/.wav), 100–116 BPM ở hiệp 1–2 và +8 BPM ở hiệp 3 trong trần 128, bus nhạc riêng gain <= 0.18 và thấp hơn bus SFX; nhạc chỉ vào sau cú bấm "Bắt đầu", mờ dần 300 ms khi Pause hoặc tab ẩn; nhịp nhạc là nhịp vận động (khởi động 8 nhịp mỗi động tác, trạm nghỉ 8 nhịp, cú chốt rơi vào phách mạnh); \`speechSynthesis\` đọc đề thì nhạc hạ còn <= 30% gain rồi trả lại trong 300–500 ms; hiệp 2 thêm bass, hiệp 3 thêm trống, mở thưởng 2,5 giây nhạc leo rồi vỡ òa khớp pháo; \`miti-mute\` thì thay bằng vạch nhịp đập theo BPM ở mép dưới HUD (<= 3 xung/giây), \`prefers-reduced-motion\` thì nhạc tắt hẳn và vạch nhịp đứng yên; \`verifyMusic()\` kiểm năm điều này một lần lúc nạp.
 - **Vai chờ có vận động:** một máy bốn em thì một em cầm máy, ba em còn lại có vai thật và có tên trên HUD — "Cổ vũ" giữ đủ 8 nhịp vỗ tay hoặc dậm chân theo vạch nhịp, "Trọng tài" giơ thẻ "Động tác to / nhỏ" ngay sau cú chốt của bạn, "Thư ký" đọc to lại đề và đáp án cùng \`speechSynthesis\`; 12 lượt chia đều 3 lượt/em với HUD "Lượt của em <n>/3" và nút "Đổi người chơi" không trừ tim; trần 20 giây đứng chờ (giây 15 mascot gọi đúng tên em chờ kèm một động tác 5 giây); mỗi em đứng trong một vòng 1 sải tay, máy cách em đang chơi >= 1,2 m, đổi người có 20 giây "vào vị trí" đếm 3-2-1 theo nhịp nhạc và không thẻ nào rơi; +5 điểm vai chờ chỉ vào thanh "Cả nhóm", không vào \`miti-best\`; \`verifyQueue()\` kiểm bốn điều này một lần lúc nạp.
 - **Tiết học 45 phút + gắng sức:** một phiên 8–10 phút có đồng hồ "Còn <n> phút" trên HUD (chữ >= 20px, không nhấp nháy) và tự khép ở phút thứ 10 tại ranh giới lượt, không cắt giữa lượt, từng thẻ câu hỏi vẫn không có đồng hồ đếm ngược; màn tổng kết in "Kế hoạch tiết 45 phút: <n> phiên × <n> phút + <n> phút đổi nhóm + 5 phút chốt tờ rời" từ số thật, có nút "Kết phiên" không trừ tim; cuối mỗi hiệp em tự báo gắng sức trên bốn mức "dễ quá / vừa / mệt / kiệt" bằng hàng nút >= 56px, lưu \`miti-effort\`; giữa các hiệp có 15 giây "hồi nhịp" hít vào 4 nhịp – thở ra 6 nhịp theo vạch nhịp; khối "Bản tiết học" bốn dòng nằm trong vùng nút "Copy tờ rời" copy được, thiếu số thật thì ghi "chưa ghi được"; \`verifyLesson()\` kiểm bốn điều này một lần lúc nạp.
+- **Chuẩn kiến thức SGK:** mỗi câu mang một nhãn mạch trong bảng chuẩn (Toán: "Số và phép tính" · "Hình học và đo lường" · "Giải toán có lời văn" · "Một số yếu tố thống kê và xác suất"; Tiếng Anh: "Đọc và viết" · "Nghe và nói" · "Kiến thức ngôn ngữ"; "Ôn tập tổng hợp" cho cả hai môn) và HUD hiện nhãn ngắn <= 18 ký tự, chữ >= 18px; màn khởi động và màn tổng kết mỗi nơi in đúng một dòng "Yêu cầu cần đạt: ..." lấy NGUYÊN VĂN từ \`tools/data/standards.mjs\`, không viết lại, không tóm tắt, dòng ở tổng kết nằm trong khối nút "Copy tờ rời" copy được; mạch chính của game chiếm tối đa 9/12 lượt và phải có >= 3 lượt thuộc mạch khác, tổng kết in "Hôm nay em chạm <n> mạch: ..."; câu đầu tiên của mỗi cụm hiện "Dễ nhầm: <một lỗi>" <= 16 từ BÁO TRƯỚC khi em bấm, tắt sau 6 giây, không che đề; mỗi cụm có đúng một "Mẹo nhớ" <= 12 từ bật ở cú đúng đầu cụm và sau câu sai cùng errorTag, mascot đọc to kèm một động tác 3 giây làm mẫu tại chỗ; \`verifyStandard()\` kiểm bốn điều này một lần lúc nạp.
 - **Đề phải tự kiểm được:** engine chạy \`verifyQuestionBank()\` một lần lúc nạp và loại mọi mục lỗi (đáp án không có trong choices, hai phương án trùng nhau, level lệch với số bước, số vượt phạm vi SGK); vị trí đáp án đúng phân bố đều 1/3 ± 10%.
 - **Độ khó theo năng lực:** 2 câu đúng liên tiếp thì lên một level, 2 câu sai liên tiếp thì xuống một level cùng \`errorTag\`; không em nào được phép sai quá 3 câu liên tiếp; level ẩn với học sinh và chỉ hiện ở tổng kết cho giáo viên.
 - **Nhớ bài có lịch:** câu đã sửa đúng 2 lần được xếp ôn lại vào +1, +3, +7 ngày (nhớ vững thì giãn +21) trong localStorage \`miti-review\`; phiên có >= 3 lượt xen cụm khác và >= 1 lượt ôn đến hạn; 10 giây "Em còn nhớ không?" trước lượt 1; "Vì sao đúng?" ở 4/12 lượt; quên thì không trừ tim, tổng kết chia "vẫn nhớ / cần ôn lại" kèm tờ rời copy cho giáo viên.
