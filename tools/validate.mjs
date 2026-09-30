@@ -294,6 +294,7 @@ const FULL_PINS = [
   ['curriculum.mjs', CURRICULUM.machNhan, '<= 18 ký tự', 'trần độ dài nhãn HUD'],
   ['curriculum.mjs', CURRICULUM.machNhan, '>= 18px', 'cỡ chữ tối thiểu nhãn mạch'],
   ['curriculum.mjs', CURRICULUM.machNhan, 'CẤM tự đặt tên mạch', 'lệnh cấm tự bịa mạch — neo cả mệnh đề, không chỉ bốn chữ "tự đặt"'],
+  ['curriculum.mjs', CURRICULUM.machNhan, 'CẤM HUD không có nhãn mạch.', 'HUD bắt buộc có nhãn mạch — lệnh cấm thứ hai, không được ẩn khi hẹp chỗ'],
   ['curriculum.mjs', CURRICULUM.ycDong, 'NGUYÊN VĂN', 'yêu cầu cần đạt phải copy, không viết lại'],
   ['curriculum.mjs', CURRICULUM.ycDong, 'đúng một dòng', 'số dòng yêu cầu ở mỗi màn'],
   ['curriculum.mjs', CURRICULUM.ycDong, '>= 20px', 'cỡ chữ dòng yêu cầu cần đạt'],
@@ -301,6 +302,7 @@ const FULL_PINS = [
   ['curriculum.mjs', CURRICULUM.machTron, '9/12', 'trần lượt của mạch chính'],
   ['curriculum.mjs', CURRICULUM.machTron, '>= 3 lượt thuộc mạch', 'số lượt phủ mạch khác'],
   ['curriculum.mjs', CURRICULUM.machTron, 'cấm bịa chủ đề ngoài chương trình', 'lệnh cấm câu khác mạch lạc khỏi SGK'],
+  ['curriculum.mjs', CURRICULUM.machTron, 'Hôm nay em chạm <n> mạch', 'dòng tổng kết đếm đúng số mạch thật đã hỏi — bằng chứng duy nhất rằng tiết có xen mạch'],
   ['curriculum.mjs', CURRICULUM.bayTruoc, 'Câu ĐẦU TIÊN', 'vị trí dòng Dễ nhầm'],
   ['curriculum.mjs', CURRICULUM.bayTruoc, 'BÁO TRƯỚC', 'báo trước khi bấm, khác chữ đỡ sau khi sai'],
   ['curriculum.mjs', CURRICULUM.bayTruoc, '6 giây', 'trần thời gian hiện dòng Dễ nhầm'],
@@ -586,6 +588,19 @@ if (!fs.existsSync(VAR_FILE)) {
       if (!b.includes('IDENTITY_DATA') || !b.includes('verifyIdentity()')) bad(`biến thể #${i + 1} (${vid}): thiếu IDENTITY_DATA + verifyIdentity().`);
     }
     for (const [needle, msg] of FULL_RULES) if (!b.includes(needle)) bad(`biến thể #${i + 1}: ${msg}.`);
+    // Block biến thể copy riêng được, nên phải mang đủ dữ liệu chuẩn của đúng game nó nói tới —
+    // probe vòng 17: builder thay "Mạch của cụm X là Y" bằng một câu chung chung thì prompt game vẫn còn
+    // đủ nhưng 425 block biến thể mất hết mạch, yêu cầu cần đạt và bẫy, mà validate trước đó vẫn xanh.
+    const vgame = vid && GAMES.find((g) => g.id === vid);
+    const vstd = vgame && STANDARDS[vgame.cluster];
+    if (vstd) {
+      for (const [needle, label] of [
+        [vstd.mach, 'mạch kiến thức'], [vstd.ngan, 'nhãn HUD'], [vstd.yc, 'yêu cầu cần đạt'],
+        [vstd.meo, 'mẹo nhớ'], ['"Dễ nhầm: ' + ERROR_NOTES[vgame.cluster].split('; ')[0] + '"', 'bẫy báo trước'],
+      ]) {
+        if (!b.includes(needle)) bad(`biến thể #${i + 1} (${vid}): thiếu ${label} của cụm ${vgame.cluster} ("${needle.slice(0, 48)}") — builder phải lấy thẳng tools/data/standards.mjs vào từng block.`);
+      }
+    }
     // Chuỗi tự kiểm của biến thể cũng phải mang đủ mọi tầng, cùng registry như prompt.
     const vChain = (b.match(/^\*\*Xuất file:\*\*.*$/m) || [''])[0];
     if (!vChain) bad(`biến thể #${i + 1}: thiếu dòng "**Xuất file:**" chứa chuỗi tự kiểm.`);
@@ -833,6 +848,8 @@ const CURRICULUM_DOC_NEEDLES = [
   ['động tác 3 giây', 'mẹo nhớ phải gắn một động tác', 4, 5, 3, 1],
   ['verifyStandard()', 'hàm kiểm chuẩn kiến thức lúc nạp', 3, 4, 3, 3],
   ['máy tự kiểm thứ 36', 'số mục của verifyStandard() trong bảng kiểm', 0, 0, 1, 0],
+  ['Sáu quy định "chuẩn kiến thức SGK"', 'heading mục kể chuyện tầng 17 ở README', 0, 0, 1, 0],
+  ['Tầng "chuẩn kiến thức SGK"', 'heading mục kể chuyện tầng 17 ở prompts/README', 0, 0, 0, 1],
   ['người thử số 27', 'việc người thử tương ứng ở prompts/README', 0, 0, 0, 1],
   ['việc người thử thứ 27', 'việc người thử tương ứng ở README', 0, 0, 1, 0],
 ];
@@ -1055,6 +1072,8 @@ for (const g of GAMES) {
   const t = fs.readFileSync(path.join(ROOT, rel), 'utf8');
   for (const [needle, label] of [
     [s.mach, 'mạch kiến thức'], [s.ngan, 'nhãn HUD'], [s.yc, 'yêu cầu cần đạt'], [s.meo, 'mẹo nhớ'],
+    ['"Dễ nhầm" báo TRƯỚC', 'dòng báo trước bẫy ở câu đầu tiên'],
+    [ERROR_NOTES[g.cluster].split('; ')[0], 'ý lỗi đầu tiên của cụm mà dòng "Dễ nhầm" phải lấy'],
   ]) {
     if (!t.includes(needle)) bad(`${g.id}: prompt thiếu ${label} của cụm ${g.cluster} ("${needle.slice(0, 48)}") — builder phải lấy thẳng tools/data/standards.mjs.`);
   }
