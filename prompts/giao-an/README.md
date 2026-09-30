@@ -1,6 +1,6 @@
 # Bộ giáo án bảng phấn — công cụ giảng bài cho giáo viên
 
-> 39 giáo án Toán lớp 4–5, mỗi bài một file prompt độc lập dán vào **Google Gemini (bật chế độ Canvas)**.
+> 40 giáo án Toán lớp 4–5, mỗi bài một file prompt độc lập dán vào **Google Gemini (bật chế độ Canvas)**.
 > Sinh tự động bằng `node tools/build-lessons.mjs` — **không sửa tay** các file trong thư mục này.
 
 ## Đây là gì, và khác gì với 85 prompt game
@@ -16,7 +16,8 @@
 | Nguồn quy định | `tools/lib/chalk.mjs` + `tools/lib/lesson.mjs` + `tools/lib/verify.mjs` + `AR_LESSON` trong `tools/lib/ar.mjs` | `tools/lib/feel.mjs` + `tools/lib/classroom.mjs` + `AR_RENDER` trong `tools/lib/ar.mjs` |
 
 Hai bộ dùng chung một nguồn vật thật (`tools/data/props.mjs`) nên cùng một cụm kiến thức thì vật vẽ phấn
-giống hệt nhau — học sinh gặp lại đúng cái pizza đó khi chuyển từ tiết giảng sang giờ luyện tập.
+giống hệt nhau — học sinh gặp lại đúng cái pizza đó khi chuyển từ tiết giảng sang giờ luyện tập. Ngoại lệ
+là 1 chủ đề mới chỉ có giáo án (`hinh-tron`), một phía chưa có gì để gặp lại.
 
 ## Quy định hình học chỉ in vào bài có hình học
 
@@ -40,7 +41,7 @@ phải ghi đúng số quy định của chính bài đó.
 
 ## Mỗi giáo án gồm năm bước
 
-Cấu trúc này giống nhau ở cả 39 bài để giáo viên thuộc được mạch:
+Cấu trúc này giống nhau ở cả 40 bài để giáo viên thuộc được mạch:
 **Khởi động** (2–3 phút, hỏi gắn với vật thật, chưa viết gì) → **Vật thật** (4–5 phút, thao tác tay)
 → **Sơ đồ** (3–4 phút, học sinh tự dựng biểu diễn bán cụ thể) → **Phép tính** (3–4 phút, mỗi con số
 nối ngược về sơ đồ) → **Luyện tập chung** (3–4 phút, cả lớp biểu quyết theo nhãn A–D).
@@ -87,6 +88,24 @@ cụm sinh ra cho game sẽ mang theo tiếng của game. Vòng 5 đo được h
   Cách sửa: bảng tra `tools/data/error-tags.mjs` cho 21 nhãn dùng chung, và `danhSachNhanLoi()` khai báo
   đủ cả nhãn của cụm lẫn nhãn mà hai mục mẫu thật sự dùng.
 
+## Giáo án không khớp 1-1 với game nữa
+
+`prompts/giao-an/` sinh ra từ catalog game: mỗi cặp (cụm Toán, lớp) có game là có một giáo án. Điều đó đúng
+cho 39 bài, nhưng chưa đúng với phần còn lại của sách giáo khoa: một chủ đề cô
+phải dạy trên lớp thì phải có bài giảng, kể cả khi thư viện chưa viết game nào cho nó. Hai cơ chế trong
+`tools/data/lessons.mjs` mở đường đó, và validator chỉ cho đi đúng hai đường này:
+
+- **`CHU_DE_CHI_CO_GIAO_AN`** — khai báo tường minh cặp (cụm, lớp) chỉ có giáo án. 1 bài đang dùng: `hinh-tron` lớp 5.
+  Cụm vẫn phải đủ bộ như mọi cụm (`clusters.mjs` + `props.mjs` 5 trường + `examples.mjs` ≥ 2 câu +
+  `error-notes.mjs` đúng 3 mô tả + ba trường viết tay), chỉ mảng game là trống. Đầu file giáo án thay dòng
+  "Bản game của cùng cụm" bằng một câu nói thẳng là chưa có, để cô không đi tìm file không tồn tại và mô
+  hình không tự bịa thêm màn chơi. Giáo án có game mà không khai báo ở đây bị chặn; khai báo mà catalog
+  thật ra đã có game cặp đó cũng bị chặn.
+- **`giao_an.theo_lop`** — cùng một cụm dạy ở hai lớp thì lời giảng phải khác nhau. `cong-tru` là một:
+  mục tiêu trong catalog cho cả hai lớp chỉ ghi một dòng, nên lớp 4 giữ "cộng trừ có nhớ và có mượn, nhìn
+  bằng bó que", còn lớp 5 (game T5-01 tính theo thứ tự ưu tiên) đọc "giá trị biểu thức: tính trước, tính sau".
+  Lớp phủ này chỉ đổi cách nói theo đúng vế kiến thức đã có trong `noi_dung` của cụm, không thêm phạm vi mới.
+
 ## Toán lớp 4 (29 giáo án)
 
 | Mã | Bài giảng | Cụm kiến thức | Game cùng cụm |
@@ -121,11 +140,11 @@ cụm sinh ra cho game sẽ mang theo tiếng của game. Vòng 5 đo được h
 | `GA4-28` | [Ôn tập cuối lớp 4 trên bốn trạm vật thật](GA4-28-on-tap-toan-4.md) | `on-tap-toan-4` | L4-31, L4-32, L4-35 |
 | `GA4-29` | [Tổng hợp chương: chọn đúng công thức trước khi tính](GA4-29-boss-cong-thu.md) | `boss-cong-thu` | L4-40 |
 
-## Toán lớp 5 (10 giáo án)
+## Toán lớp 5 (11 giáo án)
 
 | Mã | Bài giảng | Cụm kiến thức | Game cùng cụm |
 | --- | --- | --- | --- |
-| `GA5-01` | [Cộng trừ có nhớ và có mượn, nhìn bằng bó que](GA5-01-cong-tru.md) | `cong-tru` | T5-01 |
+| `GA5-01` | [Giá trị biểu thức: tính trước, tính sau](GA5-01-cong-tru.md) | `cong-tru` | T5-01 |
 | `GA5-02` | [Số thập phân sinh ra từ lưới 100 ô](GA5-02-thap-phan-khai-niem.md) | `thap-phan-khai-niem` | T5-02, T5-11 |
 | `GA5-03` | [Ba dạng viết của cùng một giá trị](GA5-03-chuyen-dong-f-d-p.md) | `chuyen-dong-f-d-p` | T5-03 |
 | `GA5-04` | [Tỉ số phần trăm và bài toán giảm giá](GA5-04-phan-tram.md) | `phan-tram` | T5-04, T5-12 |
@@ -135,10 +154,12 @@ cụm sinh ra cho game sẽ mang theo tiếng của game. Vòng 5 đo được h
 | `GA5-08` | [Chu vi, diện tích, thể tích: chọn đúng công thức](GA5-08-hinh-hoc-on-tap.md) | `hinh-hoc-on-tap` | T5-08 |
 | `GA5-09` | [So sánh số thập phân theo cột dấu phẩy](GA5-09-thap-phan-can-bang.md) | `thap-phan-can-bang` | T5-09 |
 | `GA5-10` | [Ôn tập cuối lớp 5: chọn chiến lược trước khi tính](GA5-10-on-tap-toan-5.md) | `on-tap-toan-5` | T5-10, T5-15 |
+| `GA5-11` | [Chu vi và diện tích hình tròn: một vòng lăn và tám quạt ghép](GA5-11-hinh-tron.md) | `hinh-tron` | *(chưa có game cùng cụm)* |
 
 ## Muốn thêm hoặc sửa giáo án
 
-- Thêm cụm kiến thức mới: sửa `tools/data/clusters.mjs`, `tools/data/props.mjs` (đủ 5 trường) và `tools/data/lessons.mjs` (đủ 3 trường), rồi chạy `node tools/build.mjs`.
+- Thêm cụm kiến thức mới: sửa `tools/data/clusters.mjs`, `tools/data/props.mjs` (đủ 5 trường), `tools/data/examples.mjs` (ít nhất 2 câu), `tools/data/error-notes.mjs` (đúng 3 mô tả, ứng nghiệm 3 nhãn `tags`) và `tools/data/lessons.mjs` (đủ 3 trường), rồi chạy `node tools/build.mjs`. Nếu chủ đề chưa có game nào, khai thêm `{ cluster, lop }` vào `CHU_DE_CHI_CO_GIAO_AN` trong `tools/data/lessons.mjs` — thiếu khai báo thì validator báo giáo án "lọt vào không qua quy trình".
+- Cùng một cụm dạy hai lớp mà lời giảng cần khác nhau: thêm `giao_an.theo_lop` trong `tools/data/lessons.mjs` với khóa `'4'` hoặc `'5'`; lớp phủ chỉ được phép chứa ba trường viết tay và bảy trường lời, validator so nguồn từng trường nên không thể im lặng bỏ qua.
 - Đổi quy định bảng phấn: `tools/lib/chalk.mjs` (10 quy định chung + 2 quy định hình học nối theo cụm, danh sách ở `SOLID_CLUSTERS` / `BODY_CLUSTERS`).
 - Đổi quy định chế độ giảng bài: `tools/lib/lesson.mjs` (13 quy định).
 - Đổi quy định tự kiểm đề: `tools/lib/verify.mjs` (dùng chung với 85 prompt game).

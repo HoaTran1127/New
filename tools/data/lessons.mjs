@@ -66,6 +66,19 @@ const L = {
     ten: 'Cộng trừ có nhớ và có mượn, nhìn bằng bó que',
     khoi_dong: 'Có 3 bó chục và 2 que lẻ. Muốn bớt đi 5 que thì làm thế nào khi số que lẻ không đủ để bớt?',
     chot: 'Thiếu ở một hàng thì mượn một bó của hàng bên trái và bó đó tách thành đúng 10 que; nhớ và mượn phải ghi lại chứ không tính nhẩm rồi quên.',
+    // Cùng một cụm nhưng hai lớp dạy hai chuyện: lớp 4 học đặt tính và nhớ/mượn, lớp 5 (T5-01 Nhiệm Vụ
+    // Phép Tính) mở đầu năm bằng giá trị biểu thức và thứ tự thực hiện phép tính. Lời giảng phân nhánh
+    // theo lớp; cụm `cong-tru` trong clusters.mjs vẫn phủ cả hai vì nó ghi đủ vế "giá trị biểu thức".
+    giao_an: {
+      theo_lop: {
+        5: {
+          ten: 'Giá trị biểu thức: tính trước, tính sau',
+          khoi_dong: 'Trong biểu thức 24 + 6 × 3, làm phép tính nào trước để cả lớp không tranh nhau hai đáp số?',
+          chot: 'Không có ngoặc thì nhân chia trước, cộng trừ sau; có ngoặc thì làm trong ngoặc trước; đặt tính dọc vẫn phải đúng hàng và đúng chỗ mượn.',
+          muc_tieu: 'tính giá trị biểu thức có đến hai phép tính và có ngoặc, đặt tính dọc đúng hàng với số có đến 6 chữ số',
+        },
+      },
+    },
   },
   'nhan': {
     ten: 'Phép nhân là cộng lặp lại, nhìn bằng mảng chấm',
@@ -151,6 +164,12 @@ const L = {
     ten: 'Diện tích hình thoi bằng hai đường chéo',
     khoi_dong: 'Bốn tam giác của một hình thoi xếp lại với nhau thì thành hình gì?',
     chot: 'Hai đường chéo của hình thoi vuông góc và cắt nhau tại trung điểm mỗi đường; ghép bốn tam giác thành hình chữ nhật nên diện tích là tích hai đường chéo chia 2.',
+  },
+  // Chủ đề SGK lớp 5 chưa có game nào trong catalog, nên giáo án này đứng một mình (CHU_DE_CHI_CO_GIAO_AN).
+  'hinh-tron': {
+    ten: 'Chu vi và diện tích hình tròn: một vòng lăn và tám quạt ghép',
+    khoi_dong: 'Cho cái bánh xe này lăn đúng một vòng trên sàn. Vết sơn trên vành vẽ được một đoạn dài bao nhiêu, và đoạn đó liên quan gì tới cái bánh xe?',
+    chot: 'Chu vi hình tròn bằng đường kính nhân 3.14; cắt hình tròn thành nhiều quạt bằng nhau rồi ghép xen kẽ thành hình gần chữ nhật, nên diện tích bằng bán kính nhân bán kính nhân 3.14.',
   },
   'on-tap-toan-4': {
     ten: 'Ôn tập cuối lớp 4 trên bốn trạm vật thật',
@@ -247,6 +266,20 @@ export const OVERRIDE_FIELDS = ['muc_tieu', 'giai_thich', 'vat', 'don_vi', 'ngon
 export const OVERRIDE_LIST_FIELDS = ['loi_viet'];
 export const hasOverride = (clusterKey) => Boolean(L[clusterKey] && L[clusterKey].giao_an);
 
+// Chủ đề SGK thật sự có trong chương trình Toán 4–5 nhưng thư viện 85 prompt game chưa có game nào.
+// Giáo án KHÔNG được khớp 1-1 với game nữa: cô dạy chủ đề này trên lớp thì phải có bài giảng, dù
+// sau tiết chưa có game cho em tự luyện. Mỗi mục là một cặp (cụm, lớp); dữ liệu của cụm vẫn phải
+// đủ bộ như mọi cụm khác (clusters.mjs + props.mjs + examples.mjs + error-notes.mjs + ba trường
+// viết tay ở file này), chỉ phần "game cùng cụm" là được phép trống.
+export const CHU_DE_CHI_CO_GIAO_AN = [
+  { cluster: 'hinh-tron', lop: '5' },
+];
+
+// Dòng thay cho "Bản game của cùng cụm kiến thức này" ở bài chưa có game. Builder in ra, validator
+// đòi đúng chuỗi này — viết ở đây để hai bên không tự bịa một câu khác nhau.
+export const CHUA_CO_GAME_CUM =
+  'Chủ đề này **chưa có bản game cùng cụm** trong thư viện prompt game — sau tiết, giáo viên tự ra đề luyện trên giấy hoặc trên bảng, KHÔNG bịa thêm màn chơi vào bài giảng.';
+
 // Danh sách lỗi in ở mục 1 của giáo án: lời override nếu cụm có, nếu không thì nguyên văn
 // ERROR_NOTES. Builder và validator đi qua đúng một cửa này nên không thể lệch nhau.
 export const notesCuaGiaoAn = (L) => L.loi_viet || ERROR_NOTES[L.cluster].split('; ');
@@ -267,6 +300,13 @@ export function buildLessons(rows, { cluster, prop, EXAMPLES, GAMES }) {
     if (!grouped.has(key)) grouped.set(key, { cluster: g.cluster, lop: r.lop, games: [] });
     grouped.get(key).games.push({ id: g.id, name: g.name });
   }
+  // Chủ đề SGK chưa có game: giáo án vẫn phải tồn tại, chỉ thiếu phần "game cùng cụm để luyện sau tiết".
+  for (const them of CHU_DE_CHI_CO_GIAO_AN) {
+    const key = `${them.cluster}|${them.lop}`;
+    if (grouped.has(key)) throw new Error(`CHU_DE_CHI_CO_GIAO_AN: cặp ${key} đã có game trong catalog, không cần khai báo thêm.`);
+    if (!['4', '5'].includes(String(them.lop))) throw new Error(`CHU_DE_CHI_CO_GIAO_AN: lớp "${them.lop}" không hợp lệ (chỉ 4 hoặc 5).`);
+    grouped.set(key, { cluster: them.cluster, lop: String(them.lop), games: [] });
+  }
 
   const out = [];
   const seq = { 4: 0, 5: 0 };
@@ -280,12 +320,25 @@ export function buildLessons(rows, { cluster, prop, EXAMPLES, GAMES }) {
     if (!ex || ex.length < 2) throw new Error(`Cụm ${item.cluster} không có đủ 2 câu mẫu để làm phần luyện tập cả lớp.`);
     seq[item.lop] += 1;
     const ov = extra.giao_an || {};
-    for (const f of Object.keys(ov)) {
-      if (!OVERRIDE_FIELDS.includes(f) && !OVERRIDE_LIST_FIELDS.includes(f)) {
+    // theo_lop: cùng một cụm nhưng hai lớp dạy hai nội dung khác nhau (cong-tru lớp 4 là số tự nhiên,
+    // lớp 5 là số thập phân), nên lời của giáo án phải phân nhánh theo lớp chứ không dùng chung.
+    const theoLop = ov.theo_lop || {};
+    for (const lopK of Object.keys(theoLop)) {
+      if (!['4', '5'].includes(String(lopK))) throw new Error(`Giáo án ${item.cluster}: theo_lop chứa lớp "${lopK}" không hợp lệ.`);
+      for (const f of Object.keys(theoLop[lopK])) {
+        if (!OVERRIDE_FIELDS.includes(f) && !OVERRIDE_LIST_FIELDS.includes(f) && !LESSON_FIELDS.includes(f)) {
+          throw new Error(`Giáo án ${item.cluster} lớp ${lopK}: "${f}" không phải trường được phép ghi đè theo lớp.`);
+        }
+      }
+    }
+    const ovHop = { ...ov, ...(theoLop[item.lop] || {}) };
+    delete ovHop.theo_lop;
+    for (const f of Object.keys(ovHop)) {
+      if (!OVERRIDE_FIELDS.includes(f) && !OVERRIDE_LIST_FIELDS.includes(f) && !LESSON_FIELDS.includes(f)) {
         throw new Error(`Giáo án ${item.cluster}: "${f}" không phải trường được phép override.`);
       }
       if (OVERRIDE_LIST_FIELDS.includes(f)) {
-        const arr = ov[f];
+        const arr = ovHop[f];
         if (!Array.isArray(arr)) throw new Error(`Giáo án ${item.cluster}: override ${f} phải là mảng.`);
         if (arr.length !== cl.tags.length) {
           throw new Error(`Giáo án ${item.cluster}: ${f} có ${arr.length} mô tả nhưng cụm khai ${cl.tags.length} nhãn errorTag.`);
@@ -296,28 +349,33 @@ export function buildLessons(rows, { cluster, prop, EXAMPLES, GAMES }) {
         }
         continue;
       }
-      const v = String(ov[f]).trim();
+      const v = String(ovHop[f]).trim();
       if (!v) throw new Error(`Giáo án ${item.cluster}: trường override ${f} rỗng.`);
-      // Khuôn render đã nối dấu chấm sẵn sau mỗi trường, nên lời override không được chấm ở cuối.
-      if (/[.;,]$/.test(v)) throw new Error(`Giáo án ${item.cluster}: override ${f} thừa dấu câu ở cuối ("${v.slice(-12)}") — khuôn in sẽ nối thêm dấu chấm, thành hai dấu.`);
+      // Bảy trường lời in kèm dấu chấm nối sẵn trong khuôn; ba trường viết tay thì nằm trong ngoặc kép.
+      if (OVERRIDE_FIELDS.includes(f) && /[.;,]$/.test(v)) {
+        throw new Error(`Giáo án ${item.cluster}: override ${f} thừa dấu câu ở cuối ("${v.slice(-12)}") — khuôn in sẽ nối thêm dấu chấm, thành hai dấu.`);
+      }
     }
     out.push({
       id: `GA${item.lop}-${String(seq[item.lop]).padStart(2, '0')}`,
       slug: item.cluster,
       lop: item.lop,
       cluster: item.cluster,
-      ten: extra.ten,
-      khoi_dong: extra.khoi_dong,
-      chot: extra.chot,
-      muc_tieu: ov.muc_tieu || cl.noi_dung.charAt(0).toUpperCase() + cl.noi_dung.slice(1),
-      giai_thich: ov.giai_thich || cl.giai_thich,
+      // chỉ_co_giao_an: bài SGK chưa có game nào cùng cụm, nên giáo án không có phần "game để luyện
+      // sau tiết" và validator không đòi cặp này phải xuất hiện trong catalog.
+      chi_co_giao_an: item.games.length === 0,
+      ten: ovHop.ten || extra.ten,
+      khoi_dong: ovHop.khoi_dong || extra.khoi_dong,
+      chot: ovHop.chot || extra.chot,
+      muc_tieu: ovHop.muc_tieu || cl.noi_dung.charAt(0).toUpperCase() + cl.noi_dung.slice(1),
+      giai_thich: ovHop.giai_thich || cl.giai_thich,
       loi: cl.tags,
-      loi_viet: ov.loi_viet || null,
-      vat: ov.vat || p.vat,
-      don_vi: ov.don_vi || p.don_vi,
-      ngon_tay: ov.ngon_tay || p.ngon_tay,
-      so_do: ov.so_do || p.so_do,
-      doc: ov.doc || p.doc,
+      loi_viet: ovHop.loi_viet || null,
+      vat: ovHop.vat || p.vat,
+      don_vi: ovHop.don_vi || p.don_vi,
+      ngon_tay: ovHop.ngon_tay || p.ngon_tay,
+      so_do: ovHop.so_do || p.so_do,
+      doc: ovHop.doc || p.doc,
       luyen_tap: ex,
       games: item.games,
     });

@@ -210,6 +210,14 @@ export const PROPS = {
     doc: 'hình chữ nhật ghép được có chiều dài bằng một đường chéo và chiều rộng bằng nửa đường chéo kia, viết tích hai đường chéo chia 2',
     so_do: 'bốn tam giác của hình thoi xếp lại thành một hình chữ nhật trên lưới ô vuông, hai đường chéo ghi nhãn rồi dóng sang chiều dài và chiều rộng của hình chữ nhật mới',
   },
+  // Hình tròn chưa có game nào dùng; khối props này chỉ giáo án giảng bài cần (CHU_DE_CHI_CO_GIAO_AN).
+  'hinh-tron': {
+    vat: 'hình tròn vẽ phấn có tâm, một bán kính nét đứt và một điểm sơn trên vành; lăn được một vòng trên thước dây, cắt được thành tám quạt bằng nhau',
+    don_vi: 'một quạt bằng một phần tám hình tròn',
+    ngon_tay: 'chấm vào điểm sơn trên vành rồi quay quanh tâm cho vòng tròn lăn dọc thước dây; giữ hai đầu bán kính kéo dãn để thấy đường kính dài gấp đôi; kéo tám quạt xếp xen kẽ thành hình gần chữ nhật',
+    doc: 'một vòng lăn đọc được độ dài trên thước dây: chu vi bằng đường kính nhân 3.14; hình ghép gần chữ nhật có cạnh dài bằng nửa chu vi và cạnh ngắn bằng bán kính, nên diện tích bằng bán kính nhân bán kính nhân 3.14',
+    so_do: 'tám quạt của hình tròn xếp xen kẽ thành một hình gần chữ nhật trên lưới ô vuông, ghi nhãn "nửa chu vi" cho cạnh dài và "bán kính" cho cạnh ngắn rồi dóng hai nhãn sang hai cạnh của hình chữ nhật',
+  },
   'on-tap-toan-4': {
     vat: 'bốn trạm vật thật đặt ở bốn góc bảng, mỗi trạm một mạch kiến thức lớp 4',
     don_vi: 'một vật thật của trạm đang mở: que tính, ô vuông, thanh phân số hoặc dụng cụ đo',

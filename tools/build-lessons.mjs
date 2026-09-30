@@ -5,7 +5,7 @@ import { cluster } from './data/clusters.mjs';
 import { EXAMPLES } from './data/examples.mjs';
 import { danhSachNhanLoi, noteChoLoi } from './data/error-tags.mjs';
 import { PROP_KEYS, prop } from './data/props.mjs';
-import { buildLessons, notesCuaGiaoAn } from './data/lessons.mjs';
+import { buildLessons, notesCuaGiaoAn, CHUA_CO_GAME_CUM, CHU_DE_CHI_CO_GIAO_AN } from './data/lessons.mjs';
 import { readCatalog } from './lib/csv.mjs';
 import { AR_LESSON, TASKS_VISION } from './lib/ar.mjs';
 import { RULES } from './lib/rules.mjs';
@@ -49,6 +49,11 @@ const gameLinks = (games, lop) =>
     })
     .join(' · ');
 
+// Dòng "Bản game..." ở đầu giáo án: bài thường nối sang game cùng cụm, bài lesson-only thì phải nói
+// rõ là chưa có, để người đọc không đi tìm một file không tồn tại.
+const banGameLine = (L) =>
+  L.games.length ? `> Bản game của cùng cụm kiến thức này: ${gameLinks(L.games, L.lop)}` : `> ${CHUA_CO_GAME_CUM}`;
+
 // Hai quy định hình học chỉ in vào bài có hình học — xem SOLID_CLUSTERS / BODY_CLUSTERS trong chalk.mjs.
 const them = (c) => (SOLID_CLUSTERS.includes(c) ? 1 : 0) + (BODY_CLUSTERS.includes(c) ? 1 : 0);
 
@@ -72,7 +77,7 @@ function render(L) {
 > GIÁO ÁN GIẢNG BÀI · Toán lớp ${L.lop} · Cụm kiến thức: \`${L.cluster}\`
 > Prompt độc lập: copy nguyên khối \`text\` bên dưới dán vào **Google Gemini (bật chế độ Canvas)**. Không cần repo này.
 > ⚠️ Đây là **CÔNG CỤ GIẢNG BÀI cho giáo viên trình bày trước cả lớp**, KHÔNG phải game cho học sinh chơi.
-> Bản game của cùng cụm kiến thức này: ${gameLinks(L.games, L.lop)}
+${banGameLine(L)}
 
 \`\`\`text
 Tạo CÔNG CỤ GIẢNG BÀI web "${L.ten.toUpperCase()}" cho giáo viên dạy môn Toán lớp ${L.lop} ở Việt Nam, trình bày trước cả lớp qua màn chiếu.
@@ -180,14 +185,14 @@ ${AR_LESSON}
 - Cụm kiến thức: \`${L.cluster}\` · Lớp ${L.lop} · Vật thật và sơ đồ lấy từ \`tools/data/props.mjs\`.
 - Muốn đổi nội dung bài giảng: sửa \`tools/data/lessons.mjs\` (tên bài, câu khởi động, dòng ghi nhớ) rồi chạy \`node tools/build-lessons.mjs\`, không sửa tay file này.
 - Muốn đổi quy định: sửa \`tools/lib/chalk.mjs\` (bảng phấn) hoặc \`tools/lib/lesson.mjs\` (chế độ giảng bài).
-- Game cùng cụm để học sinh luyện sau tiết: ${L.games.map((g) => g.id).join(', ')}.
+- ${L.games.length ? `Game cùng cụm để học sinh luyện sau tiết: ${L.games.map((g) => g.id).join(', ')}.` : 'Bài này chưa có game cùng cụm trong catalog. Muốn nối game vào thì viết prompt game trước, thêm dòng vào GAME_CATALOG.csv, rồi bỏ khai báo tương ứng trong \`CHU_DE_CHI_CO_GIAO_AN\` của \`tools/data/lessons.mjs\` và build lại.'}
 `;
 }
 
 function renderIndex(lessons) {
   const byLop = { 4: lessons.filter((l) => l.lop === '4'), 5: lessons.filter((l) => l.lop === '5') };
   const row = (l) =>
-    `| \`${l.id}\` | [${l.ten}](${l.id}-${l.slug}.md) | \`${l.cluster}\` | ${l.games.map((g) => g.id).join(', ')} |`;
+    `| \`${l.id}\` | [${l.ten}](${l.id}-${l.slug}.md) | \`${l.cluster}\` | ${l.games.length ? l.games.map((g) => g.id).join(', ') : '*(chưa có game cùng cụm)*'} |`;
 
   return `# Bộ giáo án bảng phấn — công cụ giảng bài cho giáo viên
 
@@ -207,7 +212,8 @@ function renderIndex(lessons) {
 | Nguồn quy định | \`tools/lib/chalk.mjs\` + \`tools/lib/lesson.mjs\` + \`tools/lib/verify.mjs\` + \`AR_LESSON\` trong \`tools/lib/ar.mjs\` | \`tools/lib/feel.mjs\` + \`tools/lib/classroom.mjs\` + \`AR_RENDER\` trong \`tools/lib/ar.mjs\` |
 
 Hai bộ dùng chung một nguồn vật thật (\`tools/data/props.mjs\`) nên cùng một cụm kiến thức thì vật vẽ phấn
-giống hệt nhau — học sinh gặp lại đúng cái pizza đó khi chuyển từ tiết giảng sang giờ luyện tập.
+giống hệt nhau — học sinh gặp lại đúng cái pizza đó khi chuyển từ tiết giảng sang giờ luyện tập. Ngoại lệ
+là ${CHU_DE_CHI_CO_GIAO_AN.length} chủ đề mới chỉ có giáo án (\`${CHU_DE_CHI_CO_GIAO_AN.map((t) => t.cluster).join('`, `')}\`), một phía chưa có gì để gặp lại.
 
 ## Quy định hình học chỉ in vào bài có hình học
 
@@ -278,6 +284,24 @@ cụm sinh ra cho game sẽ mang theo tiếng của game. Vòng 5 đo được h
   Cách sửa: bảng tra \`tools/data/error-tags.mjs\` cho 21 nhãn dùng chung, và \`danhSachNhanLoi()\` khai báo
   đủ cả nhãn của cụm lẫn nhãn mà hai mục mẫu thật sự dùng.
 
+## Giáo án không khớp 1-1 với game nữa
+
+\`prompts/giao-an/\` sinh ra từ catalog game: mỗi cặp (cụm Toán, lớp) có game là có một giáo án. Điều đó đúng
+cho ${lessons.length - CHU_DE_CHI_CO_GIAO_AN.length} bài, nhưng chưa đúng với phần còn lại của sách giáo khoa: một chủ đề cô
+phải dạy trên lớp thì phải có bài giảng, kể cả khi thư viện chưa viết game nào cho nó. Hai cơ chế trong
+\`tools/data/lessons.mjs\` mở đường đó, và validator chỉ cho đi đúng hai đường này:
+
+- **\`CHU_DE_CHI_CO_GIAO_AN\`** — khai báo tường minh cặp (cụm, lớp) chỉ có giáo án. ${CHU_DE_CHI_CO_GIAO_AN.length} bài đang dùng: ${CHU_DE_CHI_CO_GIAO_AN.map((t) => `\`${t.cluster}\` lớp ${t.lop}`).join(', ')}.
+  Cụm vẫn phải đủ bộ như mọi cụm (\`clusters.mjs\` + \`props.mjs\` 5 trường + \`examples.mjs\` ≥ 2 câu +
+  \`error-notes.mjs\` đúng 3 mô tả + ba trường viết tay), chỉ mảng game là trống. Đầu file giáo án thay dòng
+  "Bản game của cùng cụm" bằng một câu nói thẳng là chưa có, để cô không đi tìm file không tồn tại và mô
+  hình không tự bịa thêm màn chơi. Giáo án có game mà không khai báo ở đây bị chặn; khai báo mà catalog
+  thật ra đã có game cặp đó cũng bị chặn.
+- **\`giao_an.theo_lop\`** — cùng một cụm dạy ở hai lớp thì lời giảng phải khác nhau. \`cong-tru\` là một:
+  mục tiêu trong catalog cho cả hai lớp chỉ ghi một dòng, nên lớp 4 giữ "cộng trừ có nhớ và có mượn, nhìn
+  bằng bó que", còn lớp 5 (game T5-01 tính theo thứ tự ưu tiên) đọc "giá trị biểu thức: tính trước, tính sau".
+  Lớp phủ này chỉ đổi cách nói theo đúng vế kiến thức đã có trong \`noi_dung\` của cụm, không thêm phạm vi mới.
+
 ## Toán lớp 4 (${byLop[4].length} giáo án)
 
 | Mã | Bài giảng | Cụm kiến thức | Game cùng cụm |
@@ -292,7 +316,8 @@ ${byLop[5].map(row).join('\n')}
 
 ## Muốn thêm hoặc sửa giáo án
 
-- Thêm cụm kiến thức mới: sửa \`tools/data/clusters.mjs\`, \`tools/data/props.mjs\` (đủ 5 trường) và \`tools/data/lessons.mjs\` (đủ 3 trường), rồi chạy \`node tools/build.mjs\`.
+- Thêm cụm kiến thức mới: sửa \`tools/data/clusters.mjs\`, \`tools/data/props.mjs\` (đủ 5 trường), \`tools/data/examples.mjs\` (ít nhất 2 câu), \`tools/data/error-notes.mjs\` (đúng 3 mô tả, ứng nghiệm 3 nhãn \`tags\`) và \`tools/data/lessons.mjs\` (đủ 3 trường), rồi chạy \`node tools/build.mjs\`. Nếu chủ đề chưa có game nào, khai thêm \`{ cluster, lop }\` vào \`CHU_DE_CHI_CO_GIAO_AN\` trong \`tools/data/lessons.mjs\` — thiếu khai báo thì validator báo giáo án "lọt vào không qua quy trình".
+- Cùng một cụm dạy hai lớp mà lời giảng cần khác nhau: thêm \`giao_an.theo_lop\` trong \`tools/data/lessons.mjs\` với khóa \`'4'\` hoặc \`'5'\`; lớp phủ chỉ được phép chứa ba trường viết tay và bảy trường lời, validator so nguồn từng trường nên không thể im lặng bỏ qua.
 - Đổi quy định bảng phấn: \`tools/lib/chalk.mjs\` (10 quy định chung + 2 quy định hình học nối theo cụm, danh sách ở \`SOLID_CLUSTERS\` / \`BODY_CLUSTERS\`).
 - Đổi quy định chế độ giảng bài: \`tools/lib/lesson.mjs\` (13 quy định).
 - Đổi quy định tự kiểm đề: \`tools/lib/verify.mjs\` (dùng chung với 85 prompt game).

@@ -16,7 +16,7 @@ import { CHALK, CHALK_SHORT, SOLID_CLUSTERS, BODY_CLUSTERS, SO_QUY_DINH, SO_TU_C
 import { LESSON, LESSON_SHORT, HO_TRO, LESSON_BAN_WORDS } from './lib/lesson.mjs';
 import { AR_LESSON } from './lib/ar.mjs';
 import { PROP_KEYS, prop } from './data/props.mjs';
-import { buildLessons, LESSON_EXTRA, LESSON_EXTRA_KEYS, LESSON_FIELDS, OVERRIDE_FIELDS, notesCuaGiaoAn } from './data/lessons.mjs';
+import { buildLessons, LESSON_EXTRA, LESSON_EXTRA_KEYS, LESSON_FIELDS, OVERRIDE_FIELDS, notesCuaGiaoAn, CHU_DE_CHI_CO_GIAO_AN, CHUA_CO_GAME_CUM } from './data/lessons.mjs';
 import { danhSachNhanLoi, noteChoLoi, ERROR_TAGS, ERROR_TAG_KEYS } from './data/error-tags.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
@@ -382,7 +382,9 @@ if (!fs.existsSync(LESSON_DIR)) {
     // án được phép ghi đè lời qua khối `giao_an`. Kiểm cả nguồn gốc: đúng lời override hay nguyên văn data.
     const p = prop(L.cluster);
     const cl = cluster(L.cluster);
-    const ov = LESSON_EXTRA[L.cluster]?.giao_an || {};
+    const ovBase = LESSON_EXTRA[L.cluster]?.giao_an || {};
+    // theo_lop là lớp phủ thứ hai: cùng cụm nhưng lớp 4 và lớp 5 dạy hai nội dung khác nhau.
+    const ov = { ...ovBase, ...(ovBase.theo_lop?.[L.lop] || {}) };
     const nguonGoc = {
       muc_tieu: cl.noi_dung.charAt(0).toUpperCase() + cl.noi_dung.slice(1),
       giai_thich: cl.giai_thich,
@@ -399,7 +401,13 @@ if (!fs.existsSync(LESSON_DIR)) {
       }
       if (!t.includes(nguon)) bad(`${tag}: giáo án thiếu nội dung ${f} của cụm ${L.cluster}.`);
     }
-    for (const f of LESSON_FIELDS) if (!t.includes(L[f])) bad(`${tag}: giáo án thiếu nội dung ${f} từ tools/data/lessons.mjs.`);
+    // Ba trường viết tay cũng đi qua cùng một cửa override, nên phải kiểm nguồn y như bảy trường kia.
+    const extra = LESSON_EXTRA[L.cluster];
+    for (const f of LESSON_FIELDS) {
+      const nguon = ov[f] || extra[f];
+      if (L[f] !== nguon) bad(`${tag}: trường ${f} không khớp nguồn duy nhất (khối giao_an của cụm ${L.cluster}, hoặc ba trường viết tay trong tools/data/lessons.mjs).`);
+      if (!t.includes(L[f])) bad(`${tag}: giáo án thiếu nội dung ${f} từ tools/data/lessons.mjs.`);
+    }
     // Câu mẫu nằm trong file dưới dạng JSON.stringify nên phải so theo đúng dạng đã escape dấu nháy.
     for (const ex of EXAMPLES[L.cluster]) if (!t.includes(JSON.stringify(ex.prompt)) || !t.includes(JSON.stringify(ex.answer))) bad(`${tag}: thiếu câu luyện tập mẫu của cụm ${L.cluster}.`);
     for (const s of [CHALK_SHORT, LESSON_SHORT, VERIFY_SHORT, ACCESS_SHORT]) if (!t.includes(s)) bad(`${tag}: checklist tự kiểm thiếu một dòng rút gọn (${s.slice(0, 30)}...).`);
@@ -467,12 +475,23 @@ if (!fs.existsSync(LESSON_DIR)) {
     if (g) mathPairs.add(`${g.cluster}|${r.lop}`);
   }
   for (const k of mathPairs) if (!clusterPairs.has(k)) bad(`Cặp kiến thức Toán ${k} chưa có giáo án trong prompts/giao-an/.`);
-  for (const k of clusterPairs) if (!mathPairs.has(k)) bad(`Giáo án ${k} không có game Toán nào trong catalog tương ứng.`);
-  // props.mjs phải phủ đúng các cụm Toán đang có, không thừa không thiếu.
-  const mathClusters = new Set([...mathPairs].map((k) => k.split('|')[0]));
+  // Chiều ngược lại được phép lệch, nhưng chỉ theo một đường đã khai báo: cặp (cụm, lớp) không có
+  // game Toán chỉ hợp lệ khi nó nằm trong CHU_DE_CHI_CO_GIAO_AN. Khai báo mà thực tế lại có game
+  // thì builder đã chặn; còn có giáo án mà không khai báo nghĩa là cụm mới lọt vào không qua quy trình.
+  const lessonOnly = new Set(CHU_DE_CHI_CO_GIAO_AN.map((them) => `${them.cluster}|${them.lop}`));
+  for (const k of lessonOnly) if (!clusterPairs.has(k)) bad(`CHU_DE_CHI_CO_GIAO_AN khai báo cặp ${k} nhưng không có giáo án nào trong prompts/giao-an/.`);
+  for (const k of clusterPairs) if (!mathPairs.has(k) && !lessonOnly.has(k)) bad(`Giáo án ${k} không có game Toán nào trong catalog, và cũng không được khai báo trong CHU_DE_CHI_CO_GIAO_AN của tools/data/lessons.mjs.`);
+  for (const L of lessons) {
+    if (L.chi_co_giao_an !== lessonOnly.has(`${L.cluster}|${L.lop}`)) bad(`${L.id}: cờ chi_co_giao_an không khớp CHU_DE_CHI_CO_GIAO_AN (cụm ${L.cluster} lớp ${L.lop}).`);
+    if (!L.chi_co_giao_an) continue;
+    const noi = fs.readFileSync(path.join(ROOT, `prompts/giao-an/${L.id}-${L.slug}.md`), 'utf8');
+    if (!noi.includes(CHUA_CO_GAME_CUM)) bad(`${L.id}: bài chỉ có giáo án mà đầu file không ghi rõ chưa có bản game cùng cụm.`);
+  }
+  // props.mjs phải phủ đúng các cụm Toán đang có (game + chủ đề chỉ có giáo án), không thừa không thiếu.
+  const mathClusters = new Set([...mathPairs, ...lessonOnly].map((k) => k.split('|')[0]));
   if (mathClusters.size !== PROP_KEYS.length) bad(`props.mjs phải phủ đúng ${mathClusters.size} cụm Toán, hiện có ${PROP_KEYS.length} cụm.`);
-  for (const k of PROP_KEYS) if (!mathClusters.has(k)) bad(`props.mjs thừa cụm không có game Toán nào dùng: ${k}.`);
-  for (const k of LESSON_EXTRA_KEYS) if (!mathClusters.has(k)) bad(`lessons.mjs thừa cụm không có game Toán nào dùng: ${k}.`);
+  for (const k of PROP_KEYS) if (!mathClusters.has(k)) bad(`props.mjs thừa cụm không có giáo án Toán nào dùng: ${k}.`);
+  for (const k of LESSON_EXTRA_KEYS) if (!mathClusters.has(k)) bad(`lessons.mjs thừa cụm không có giáo án Toán nào dùng: ${k}.`);
 }
 
 // 5. Dashboard: dữ liệu sinh ra khớp catalog.

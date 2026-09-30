@@ -110,6 +110,10 @@ export const EXAMPLES = {
     { prompt: 'Hình thoi có hai đường chéo 6 cm và 8 cm. Diện tích?', choices: ['24 cm²', '48 cm²', '14 cm²'], answer: '24 cm²', explanation: 'S = (6 × 8) : 2 = 24 cm². Quên chia 2 là lỗi phổ biến.', errorTag: 'quen-chia-2-tich-hai-duong-cheo' },
     { prompt: 'Hình thoi có cạnh 5 cm. Chu vi?', choices: ['20 cm', '25 cm', '10 cm'], answer: '20 cm', explanation: 'Bốn cạnh bằng nhau nên P = 5 × 4 = 20 cm.', errorTag: 'doi-deu-dai-hai-chenh' },
   ],
+  'hinh-tron': [
+    { prompt: 'Hình tròn có bán kính 5 cm. Chu vi là bao nhiêu? (lấy π ≈ 3.14)', choices: ['31.4 cm', '15.7 cm', '314 cm'], answer: '31.4 cm', explanation: 'C = 5 × 2 × 3.14 = 31.4 cm. Lấy 5 × 3.14 là quên nhân đôi bán kính thành đường kính.', errorTag: 'quen_nhan_2_khi_tinh_tu_bankinh' },
+    { prompt: 'Hình tròn có đường kính 10 cm. Diện tích là bao nhiêu? (lấy π ≈ 3.14)', choices: ['314 cm²', '78.5 cm²', '31.4 cm²'], answer: '314 cm²', explanation: 'Bán kính = 10 : 2 = 5 cm, rồi S = 5 × 5 × 3.14 = 314 cm².', errorTag: 'nham_duong_kinh_thanh_bankinh' },
+  ],
   'on-tap-toan-4': [
     { prompt: 'Số gồm 4 triệu, 0 trăm nghìn, 7 nghìn, 5 chục?', choices: ['4 007 050', '4 070 050', '4 700 500'], answer: '4 007 050', explanation: 'Viết đủ cả ba lớp, hàng nào thiếu thì ghi 0.', errorTag: 'thieu_hang_trong' },
     { prompt: 'Tính nhanh: 25 × 9 × 4.', choices: ['900', '360', '225'], answer: '900', explanation: 'Đổi chỗ 25 × 4 = 100 rồi × 9 = 900 (tính chất giao hoán).', errorTag: 'nhan_sai_thu_tu_thuc_hien' },

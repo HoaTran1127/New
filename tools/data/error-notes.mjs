@@ -27,6 +27,7 @@ export const ERROR_NOTES = {
   'ti-le-ban-do': 'đo độ dài trên bản đồ sai; quên đổi cm sang m hoặc km; nhân nhầm hệ số tỉ lệ',
   'hinh-binh-hanh': 'dùng cạnh bên làm chiều cao; lẫn chu vi với diện tích; không đổi đơn vị hai đại lượng',
   'hinh-thoi': 'nhầm đường chéo thành cạnh; quên chia 2 khi nhân hai đường chéo; đơn vị diện tích sai',
+  'hinh-tron': 'lấy nhầm đường kính làm bán kính khi tính diện tích; quên nhân đôi bán kính thành đường kính trước khi nhân 3.14 khi tính chu vi; ghi đơn vị độ dài cho diện tích (cm thay vì cm²)',
   'on-tap-toan-4': 'nhầm loại phép tính khi ôn; quên rút gọn kết quả; đọc đề bỏ sót điều kiện',
   'thap-phan-khai-niem': 'gán sai giá trị hàng phần mười và phần trăm; đọc thiếu chữ số 0 sau dấu phẩy; thêm số 0 làm đổi giá trị',
   'chuyen-dong-f-d-p': 'nhầm tỉ lệ 10, 100, 1000 khi chuyển dạng; thiếu dấu phẩy thập phân; ghép nhầm cặp không cùng giá trị',

@@ -139,6 +139,13 @@ const C = {
     noi_dung: 'đặc điểm hình thoi; hai đường chéo vuông góc; diện tích tích hai đường chéo chia 2',
     giai_thich: 'nối hai đường chéo rồi tô 4 tam giác ghép thành hình chữ nhật',
   },
+  // Hình tròn lớp 5: mạch kiến thức chưa có game nào trong catalog 85 prompt, chỉ có giáo án giảng bài
+  // (khai ở CHU_DE_CHI_CO_GIAO_AN trong tools/data/lessons.mjs).
+  'hinh-tron': {
+    tags: ['nham_duong_kinh_thanh_bankinh', 'quen_nhan_2_khi_tinh_tu_bankinh', 'tron_don_vi_do_dai_va_dien_tich'],
+    noi_dung: 'đặc điểm hình tròn: tâm, bán kính, đường kính; chu vi hình tròn; diện tích hình tròn (lấy π ≈ 3.14)',
+    giai_thich: 'lăn một vòng tròn trên thước dây để đọc chu vi, cắt hình tròn thành tám quạt ghép xen kẽ thành hình gần chữ nhật để đọc diện tích',
+  },
   'on-tap-toan-4': {
     tags: ['trộn_loai_phep_tinh', 'quen_rut_gon_ket_qua', 'doc_de_thieu_dieu_kien'],
     noi_dung: 'ôn tổng hợp số tự nhiên, bốn phép tính, phân số, hình học và đo lường lớp 4',
