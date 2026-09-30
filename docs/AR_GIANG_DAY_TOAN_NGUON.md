@@ -1,4 +1,4 @@
-# Giáo án AR trên bảng phấn — nguồn cộng đồng và bài học sau 19 vòng
+# Giáo án AR trên bảng phấn — nguồn cộng đồng và bài học sau 20 vòng
 
 Tài liệu này để **người khác tham khảo và nối tiếp**, không phải mô tả tính năng. Phần tính năng nằm ở
 [`prompts/giao-an/README.md`](../prompts/giao-an/README.md); ở đây chỉ ghi: cái gì đã đo được, cái gì đã
@@ -83,13 +83,24 @@ quy định đếm ngón tay thật tên là `classVote` — một con trỏ ma 
 nguồn). Vòng 19 sửa lại thành `classVote` và thêm một khoá **toàn-cục** vào validator: mọi tham chiếu chéo
 phải khớp một khoá đã xuất, trừ đúng bốn tên được phép vì chúng là trường dữ liệu/API trình duyệt
 (`errorTag`, `loiViet`, `localStorage`, `speechSynthesis`), cùng hai phép đột biến chứng minh khoá đó đỏ khi
-đứa vào một cái tên ma.
+đứa vào một cái tên ma. Vòng 20 đào tiếp đúng kiểu mâu thuẫn dây chuyền đó, nhưng giữa NHIỀU quy định với nhau:
+`sáu` quy định (`boardEquity`, `classBoard`, `classVote`, `verifyData`, `oldHardware`, `timeSlack` + `roomFootprint`)
+cùng hứa một thông tin "chỉ hiện ở dải điều khiển của cô, không hiện lên màn chiếu". Ghép lại, chúng mặc định
+một máy tính có HAI tín hiệu xuất riêng — trong khi cắm HDMI vào máy chiếu thì mặc định thường là SOI GƯƠNG
+(một màn hình nhân bản), và tài liệu của chính PowerPoint cho thấy ngay cả phần mềm trình chiếu chuyên dụng
+cũng phải CHỦ ĐỘNG đổi 'display topology' sang Extend mới xem được ghi chú riêng; một file HTML trong trình
+duyệt thì không có API nào làm việc đó. Đo trên 39 giáo án: "hai màn hình", "màn hình riêng", "màn hình mở rộng",
+"trình chiếu" đều **0/39** — không quy định nào bảo đảm cái mà sáu quy định kia mặc định. Hậu quả nặng nhất:
+nếu cứ soi gương thì bộ đếm "em nào chưa lên" của `boardEquity` hiện nguyên trước 35 em, bêu đúng những em rụt
+rè mà `privacy`/`inclusion` đã cấm bêu. `privateView` bịt lỗ đó bằng đúng cách `powerCut` hỏi cắm-điện-hay-pin: hỏi
+một dòng "CHUNG MÀN hay MÀN RIÊNG" với mặc định an toàn CHUNG MÀN, khi CHUNG MÀN thì rút mọi dòng riêng khỏi
+màn hình và chuyển sang giữ-phím-để-xem, khi MÀN RIÊNG thì `window.open` cửa sổ chiếu chỉ-bảng.
 3. **Quy định phải có con số.** "Chữ phải to" không kiểm chứng được; "≥ 40 px **và** ≥ 5.5% chiều cao khung
    hình, ≤ 12 chữ một dòng" thì validator bắt được. Mọi quy định trong `tools/lib/*.mjs` là chuỗi nguyên văn,
    `tools/validate.mjs` so bằng `includes()`, nên lời văn và mắt kiểm không bao giờ lệch nhau.
 4. **Chốt chặn hai chiều.** Cơ chế game lọt vào giáo án và quy định giáo án lọt sang game đều làm build đỏ.
    Thêm một quy định mới là tự động thêm một khoá bị cấm ở phía bên kia (`LESSON_FAMILY_RULES`).
-5. **Probe đột biến là đơn vị kiểm thử thật.** 87 phép, mỗi phép phá đúng một thứ và đòi đúng thông báo.
+5. **Probe đột biến là đơn vị kiểm thử thật.** 89 phép, mỗi phép phá đúng một thứ và đòi đúng thông báo.
    Không có probe thì một quy định chỉ là câu văn đẹp.
 6. **Tách công cụ giảng bài khỏi game.** Cùng một kiến thức, hai động cơ đối lập: game cần hồi hộp,
    tiết giảng cần giáo viên cầm lái. Nhét tim/điểm/combo vào bảng phấn làm em lên bảng sợ sai hơn là muốn hiểu.
@@ -117,6 +128,7 @@ phải khớp một khoá đã xuất, trừ đúng bốn tên được phép v�
 | 17 | **đo tiếp hệ quả của vòng 16**: `movementBreak` giữ ngưỡng ngồi liền ≤ 12 phút với giả định nhịp còn là nhịp toàn thân, nhưng `roomFootprint` vừa rút nhịp đó ở phòng chật (< 1,2 m²/đầu em) xuống còn vươn tay/xoay cổ — chính lớp đông-trật nhất nhận nhịp yếu nhất mà vẫn chờ đủ 12 phút; và `roomFootprint` đồng nhất "không lối đi" với "không đứng được" dù đứng-thẳng-tại-chỗ không cần lối đi | `tightRoomFocus` (nấc chật: giữ nhịp đứng-tại-chỗ 20–60s vẫn là Toán, hạ ngưỡng ngồi liền ≤ 12 → ≤ 8 phút, tổng nghỉ ≤ 4 phút, không cắt VẬT THẬT, camera vẫn tắt; sửa `roomFootprint` để chỉ cắt nhịp dịch ngang/di chuyển) |
 | 18 | **đo giả định im lặng trong modality cảm biến trung tâm**: mọi vòng phản hồi chạy trên HandLandmarker và coi "nhận ra một bàn tay" là chính xác như nhau với mọi em — đo: "HandLandmarker" 39/39 và "camera thấy" 39/39, nhưng "tone da" 0/39 · "da sẫm" 0/39 · "bàn tay nhỏ" 0/39 · "găng tay" 0/39 · "ướt" 0/39 · "không thấy tay" 0/39 · "bỏ sót" 2/39; nguồn: tài liệu nhận diện tư thế tay (bàn tay da sẫm underrepresented trong dữ liệu huấn luyện) + Gender Shades (khuôn mặt, 0,8%→34,7%, chỉ dùng làm bằng chứng *chiều*) | `detectionEquity` ("camera thấy N" = cận dưới số TAY máy nhận ra, không phải số EM đã trả lời; mọi đáp án camera có nút cộng tay +1/+5 cùng lượt; một bước tự kiểm độ phủ lúc chạy thử → hay lọt thì chuyển mặc định bảng-con-nhập-tay; KHÔNG phân loại/chấm/lưu màu da, không xếp em hay bị lọt; ngưỡng "thường xuyên lọt" là dự án chọn). Kèm sửa lỗi đọc của validator: đưa kiểm tra "giáo án bị cắt" lên ĐẦU vòng lặp để không bị nhấn chìm dưới cửa sổ in 40 lỗi |
 | 19 | **đo độ tin cậy của chính bộ quy định**: mô hình copy nguyên mọi tham chiếu chéo `` `tênQuyDinh` `` vào cả 39 giáo án, nên một cái tên sai nhân bản 39 lần — quét máy toàn bộ token `` `camelCase` `` trong `LESSON`/`CHALK`/`HANDOUT` đối chiếu danh sách khoá có thật: 15 tham chiếu hợp lệ, **1 tham chiếu ma** (`detectionEquity` → `wholeClassVote`, đúng ra `classVote`), còn 4 token là trường dữ liệu/API (`errorTag`, `loiViet`, `localStorage`, `speechSynthesis`) không phải quy định | sửa `wholeClassVote` → `classVote` (39 file + docs) + khoá toàn-cục mới trong validator: mọi `` `camelCase` `` bọc trong dấu chấm ngược phải khớp một khoá đã xuất, ngoại trừ đúng bốn tên dữ liệu/API; P86–P87 chứng minh khoá đỏ khi đứa vào tên ma |
+| 20 | **đo mâu thuẫn dây chuyền giữa NHIỀU quy định**: sáu quy định (`boardEquity`, `classBoard`, `classVote`, `verifyData`, `oldHardware`, `timeSlack` + `roomFootprint`) cùng hứa "chỉ hiện ở dải điều khiển của cô, không hiện lên màn chiếu" — mặc định một máy hai tín hiệu xuất riêng, nhưng cắm HDMI mặc định thường là SOI GƯƠNG; đo: "hai màn hình" · "màn hình riêng" · "màn hình mở rộng" · "trình chiếu" đều **0/39**; nguồn: Microsoft PowerPoint (muốn xem ghi chú riêng phải **chủ động** đổi topology sang Extend — nói về chiều kiến trúc, không phải số liệu HTML) | `privateView` (hỏi một dòng "CHUNG MÀN / MÀN RIÊNG", mặc định an toàn CHUNG MÀN, không đoán — như `powerCut` hỏi cắm điện/pin; khi CHUNG MÀN rút mọi dòng riêng khỏi màn hình thường trực + giữ-phím-để-xem ẩn ≤ 0,3 s; khi MÀN RIÊNG `window.open` cửa sổ chiếu chỉ-bảng-không-dải-điều-khiển, chặn thì tự lùi về CHUNG MÀN; không in tên/dãy-ghế thường trực, "Kiểm tra riêng tư" trong chạy thử soi đúng màn máy chiếu đang phát; mốc 0,3 s + mặc định CHUNG MÀN là dự án chọn) |
 
 ## Vì sao chọn những con số đang dùng
 
@@ -278,6 +290,13 @@ phải khớp một khoá đã xuất, trừ đúng bốn tên được phép v�
   sẫm" — thay vào đó ra một ngưỡng HÀNH VI cho cô (bao nhiêu lần phải cứu bằng nút cộng tay thì đổi kênh), vì
   thứ đo được trong một lớp thật là "máy có theo kịp mắt cô không", không phải độ chính xác thống kê của mô
   hình. Ngưỡng 2 và 3 nhịp chọn thấp để một em liên tục bị lọt không phải chịu nhiều nhịp bị ghi sai.
+- **Mặc định an toàn "CHUNG MÀN" và mốc ẩn ≤ 0,3 giây của `privateView`** — vòng 20 không có số liệu ngoại
+  vi nào về tỉ lệ lớp soi gương, nên hai con số đều là **lựa chọn của dự án**: mặc định CHUNG MÀN vì đó là giả
+  định ĐÚ khi chưa biết (một file HTML không đọc được topology, thà giả định thứ an toàn hơn cho học sinh);
+  0,3 giây là mốc "nhanh hơn một cái chớp mắt của cả lớp" để giữ-phím-để-xem không bao giờ để lộ dòng riêng
+  khi cô buông tay giữa lúc 35 em đang nhìn. Cách hỏi một dòng không đoán cũng mô phỏng đúng `powerCut`
+  ("máy đang cắm điện hay chạy pin?") — cùng nguyên tắc: không có API tin cậy thì hỏi người dùng một câu tiếng
+  Việt, không đoán.
 
 ## Nguồn đọc cho từng cụm quy định
 
@@ -466,6 +485,7 @@ Ba dòng sau (`camera TẮT`, "phiên bản ngồi cho cả lớp", "không thi 
 - [Study finds gender and skin-type bias in commercial AI systems (Gender Shades) — MIT News](https://news.mit.edu/2018/study-finds-gender-skin-type-bias-artificial-intelligence-systems-0212) và [buolamwini18a (PMLR v81)](https://proceedings.mlr.press/v81/buolamwini18a/buolamwini18a.pdf) — bằng chứng kinh điển rằng cùng hệ thị giác thương mại, sai lệch có thể từ "0.8 percent for light-skinned men" lên "34.7 percent for dark-skinned women". **Trung thực về phạm vi: đây là nhận dạng KHUÔN MẶT, không phải bàn tay**; chỉ dùng để cho thấy rủi ro lệch theo màu da là có thật và lớn trong thị giác máy, **không** biến 0,8%/34,7% thành con số cho HandLandmarker.
 - Nguồn thử mà **không** định lượng được cho MediaPipe ở phiên đo: một bản đánh giá ["Quantifying Similarities Between MediaPipe and a Known ..." — PMC11683656](https://pmc.ncbi.nlm.nih.gov/articles/PMC11683656/) so MediaPipe với hệ chuẩn nhưng không cho chênh lệch theo màu da; ghi lại để vòng sau nếu có benchmark HandLandmarker theo complexion thì thay ngưỡng hành vi bằng số thật.
 - Toàn bộ **ngưỡng của `detectionEquity`** (2 em phải cộng tay bằng tay trong một nhịp, 3 nhịp liên tiếp máy thấy thấp hơn mắt cô) là **lựa chọn của dự án**, không nguồn nào quy định; các nguồn trên chỉ dựng *hướng* rủi ro, không quy mô hoá cho bàn tay.
+- [Present on multiple monitors (and view speaker notes privately) — Microsoft Support](https://support.microsoft.com/en-us/powerpoint/present-on-multiple-monitors-and-view-speaker-notes-privately) — nguồn cho `privateView` (vòng 20): tài liệu xác nhận muốn xem ghi chú riêng thì phần mềm phải **chủ động** chuyển "display topology" sang **Extend** ("PowerPoint automatically changes your display settings ... to Extend"). Đây là bằng chứng *cho chiều ngược lại* với giả định im lặng của sáu quy định cũ: nếu ngay PowerPoint chuyên dụng còn phải tự bật hai-màn thì một trang HTML (không có API đổi topology của hệ điều hành) càng không thể mặc định cô đã ở MÀN RIÊNG. Trung thực về phạm vi: nguồn nói về PowerPoint, không phải về HTML/`window.open`; dự án chỉ lấy *nguyên tắc kiến trúc* (xem riêng ⇔ cần Extend), không trích thành số liệu.
 
 Lưu ý cách dùng danh mục này: các trang trên là **nguồn để hiểu vì sao chọn kỹ thuật**, không phải nơi trích
 số liệu hiệu quả. Dự án này chưa chạy thử nghiệm lớp học nào, nên không con số nào ở trên được nhân lên
@@ -616,24 +636,36 @@ thành "tăng X% điểm".
   hành vi khác, chưa có một tiết nào đếm xem cô phải bấm cộng tay bao nhiêu lần trước khi nên bỏ kênh camera.
   Dữ liệu này nằm gọn trong mục "Báo cáo máy" đã mở từ vòng 8: in thêm vài dòng "số lần cộng tay/thấy tay" là
   đủ, không cần camera ghi hình hay lưu danh tính.
+- **`window.open` hai cửa sổ chưa chạy thử trên máy chiếu thật.** `privateView` (vòng 20) hứa khi chọn MÀN
+  RIÊNG thì tách cửa sổ chiếu chỉ-bảng, nhưng chưa có lần nào cắm một máy chiếu thật để biết: trình duyệt
+  trường có chặn popup không (dính `noAdmin`), kéo cửa sổ sang màn thứ hai có giữ đúng 16:9 không, và khi rút
+  cáp HDMI giữa tiết thì cửa sổ chiếu chết kiểu gì. Nếu popup bị chặn phổ biến thì đường MÀN RIÊNG gần như vô
+  dụng và toàn bộ rơi về nhánh CHUNG MÀN giữ-phím-để-xem — kiểm tra thực địa này nằm cùng nhóm "chạy trên máy
+  thật" đã mở từ vòng 8.
+- **Không đọc được topology thật, nên mặc định có thể sai một cách vô hình.** `powerCut` hỏi cắm-điện/pin vì
+  `getBattery` tồn tại (dù không phổ biến); còn chế độ SOI/MỞ RỘNG thì **không** có API web nào đọc được, nên
+  `privateView` buộc phải tin câu trả lời của cô. Nếu cô bấm MÀN RIÊNG nhưng Windows vẫn đang Duplicate thì
+  dòng riêng vẫn lộ mà công cụ không hay biết. Nút "Kiểm tra riêng tư" chỉ là bản soi của CHÍNH cửa sổ đang
+  mở, không phải bằng chứng máy chiếu thấy gì — vòng sau nên nghĩ cách để cô xác nhận chéo (ví dụ một hình
+  chỉ hiện trên cửa sổ chiếu, cô quay xuống hỏi "cả lớp thấy hình gì").
 - **Danh sách trắng `errorTag`/`loiViet`/`localStorage`/`speechSynthesis` là danh sách tay.** Khoá tham chiếu
   chéo của vòng 19 chỉ trừ đúng bốn token đó vì chúng là trường dữ liệu và API trình duyệt, không phải quy
   định. Một vòng sau thêm quy định mới mà bọc tên một hàm/API khác trong dấu chấm ngược thì validator sẽ đỏ
   báo "quy định ma" dù không sai — lúc đó phải cân nhắc tách cơ chế khỏi cách viết: hoặc đánh dấu tham chiếu
   quy định bằng một cú pháp riêng (`→`ruleName`←`), hoặc để khoá chỉ bắt tên *khớp khuôn quy định* mà không có
-  trong danh sách. Cách hiện tại đơn giản và an toàn cho 44 quy định, nhưng cần người sau biết nó là nợ kỹ
+  trong danh sách. Cách hiện tại đơn giản và an toàn cho 45 quy định, nhưng cần người sau biết nó là nợ kỹ
   thuật có chủ đích chứ không phải thiếu sót.
 
 ## Muốn đóng góp thì sửa ở đâu
 
 ```text
 tools/lib/chalk.mjs     10 quy định bảng phấn và vật thật      → sinh vào mục 4 của giáo án
-tools/lib/lesson.mjs    44 quy định chế độ giảng bài           → sinh vào mục 0, 1, 2, 3, 5, 6, 7, 8, 9, 10
+tools/lib/lesson.mjs    45 quy định chế độ giảng bài           → sinh vào mục 0, 1, 2, 3, 5, 6, 7, 8, 9, 10
 tools/lib/handout.mjs   4 quy định từ bảng ra vở               → sinh vào mục 9
 tools/data/props.mjs    vật thật + sơ đồ theo 38 cụm
 tools/data/lessons.mjs  tên bài, câu khởi động, dòng ghi nhớ
 tools/build-lessons.mjs ghép thành 39 file prompts/giao-an/
-tools/validate.mjs      58 khoá của họ giáo án + chốt chặn ngược + 13 mục của khung
+tools/validate.mjs      59 khoá của họ giáo án + chốt chặn ngược + 13 mục của khung
                         + trần số hàng "Chữa bài" đo thẳng từ clusters.mjs/error-notes.mjs
 ```
 

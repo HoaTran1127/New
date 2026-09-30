@@ -176,6 +176,7 @@ const LESSON_RULES = [
   [LESSON.roomFootprint, 'thiếu quy định khoảng trống sàn của phòng học cho nhịp đứng và nhóm'],
   [LESSON.tightRoomFocus, 'thiếu quy định hạ ngưỡng ngồi và bù tần suất cho nhịp đứng-tại-chỗ khi phòng chật'],
   [LESSON.detectionEquity, 'thiếu quy định không đổi "máy không thấy tay" thành "em không trả lời"'],
+  [LESSON.privateView, 'thiếu quy định dải điều khiển riêng của cô chỉ thật khi máy chiếu không soi gương'],
 ];
 // Từ bảng ra vở: một tiết giảng chỉ thật sự xong khi các em làm được bài trên giấy.
 const HANDOUT_RULES = [
