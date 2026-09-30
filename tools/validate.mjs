@@ -231,6 +231,9 @@ const FULL_PINS = [
   ['rhythm.mjs', RHYTHM.move, 'trần 128 BPM', 'trần BPM để xung hình ảnh theo nhịp không vượt trần nhấp nháy'],
   ['rhythm.mjs', RHYTHM.duck, '<= 30% gain', 'mức nhạc nền hạ khi speechSynthesis đọc đề'],
   ['rhythm.mjs', RHYTHM.quiet, 'vạch nhịp', 'nhịp nhìn được khi tắt tiếng'],
+  // Probe vòng 14: thay "vạch nhịp đập theo đúng BPM" bằng "một dòng chữ đang tắt tiếng" thì pin dưới
+  // vẫn xanh vì mệnh đề reduced-motion phía sau còn hai chữ "vạch nhịp". Neo cả cơ chế, không neo từ.
+  ['rhythm.mjs', RHYTHM.quiet, 'vạch nhịp đập theo đúng BPM', 'cơ chế nhịp nhìn được khi tắt tiếng'],
   ['rhythm.mjs', RHYTHM.guard, 'verifyMusic()', 'hàm kiểm nhạc nền lúc nạp'],
 ];
 for (const [file, text, needle, label] of FULL_PINS) {
@@ -242,6 +245,28 @@ for (const [file, text, needle, label] of FULL_PINS) {
 const voiceNums = (t) => [...t.matchAll(/(\d+)\s*giọng/g)].map((m) => m[1]).sort().join(',');
 if (voiceNums(CELEBRATE.sfx) !== voiceNums(RHYTHM.duck)) {
   bad(`Ngân sách giọng lệch giữa tools/lib/celebrate.mjs (${voiceNums(CELEBRATE.sfx)}) và tools/lib/rhythm.mjs (${voiceNums(RHYTHM.duck)}) — trần giọng SFX, trần giọng nhạc nền và tổng trần phải nêu giống nhau ở cả hai lib.`);
+}
+// Chuỗi tự kiểm ("Tự kiểm tra trước khi xuất") là chỗ duy nhất người dán prompt nhìn thấy khi đối
+// chiếu nhanh, nên nó phải giữ lại con số của tầng chứ không được rút thành mô tả chung. Probe vòng 14:
+// xóa "· verifyMusic() kiểm lúc nạp" khỏi RHYTHM_SHORT thì build vẫn xanh — chuỗi ngắn tự nó nhất quán,
+// chỉ so với danh sách con số khóa ở đây mới phát hiện nó bị cụt.
+const SHORT_PINS = {
+  LIGHT_SHORT: ['>= 60%', '16 từ', '+6 động tác', '+3 đáp án'],
+  CELEBRATE_SHORT: ['40–60 hạt', '200 ms', '0.25', '4 giọng SFX', '0,45×'],
+  IDENTITY_SHORT: ['2 từ', '>= 5 chỗ', '60/441', '1 lần/phiên', '6 từ'],
+  RHYTHM_SHORT: ['100–116 BPM', '128', '0.18', '30% gain', 'vạch nhịp', 'verifyMusic()'],
+};
+for (const seg of chainSegments) {
+  for (const needle of SHORT_PINS[seg.name] || []) {
+    if (!seg.text.includes(needle)) bad(`tools/lib/${seg.lib}: chuỗi ${seg.name} không còn nêu "${needle}" — rút gọn chuỗi tự kiểm mất con số thì người dán prompt không còn gì để đối chiếu khi game thiếu quy định.`);
+  }
+}
+// Số mục nghiệm thu cũng là con số của chuỗi: lấy thẳng từ lib, không gõ tay.
+for (const seg of chainSegments) {
+  if (seg.name !== 'ACCEPT_SHORT') continue;
+  if (!seg.text.includes(`${MACHINE_ITEMS.length} mục máy tự kiểm`) || !seg.text.includes(`${HUMAN_CHECKS.length} việc người thử`)) {
+    bad(`tools/lib/${seg.lib}: chuỗi ACCEPT_SHORT không còn nêu "${MACHINE_ITEMS.length} mục máy tự kiểm" hoặc "${HUMAN_CHECKS.length} việc người thử" — bảng kiểm thay số mà chuỗi vẫn số cũ.`);
+  }
 }
 for (const g of GAMES) {
   const rel = PATH_OF.get(g.id);
@@ -643,13 +668,26 @@ const IDENTITY_DOC_NEEDLES = [
 // Vòng 14: nhạc nền chỉ là quy định khi tài liệu nêu được BPM và gain. Probe cùng kiểu vòng 13 — xóa
 // "0.18" khỏi master thì 85 prompt vẫn mang nguyên văn quy định trong lib nên vẫn xanh, mà người sửa
 // master mới là người quyết định các ngưỡng này cho các vòng sau.
+// Probe vòng 14c còn chỉ ra một lỗ nữa: ĐẾM TỒN TẠI không đủ. Xóa "100–116 BPM" khỏi §8.6 của template
+// thì hai chỗ khác vẫn còn số đó nên build vẫn xanh, dù chính §8.6 là nơi định nghĩa luật. Vì vậy mỗi
+// con số ở hai tài liệu chuẩn (master, template) phải còn ĐÚNG SỐ LẦN NÊU hiện tại; hai README là tài
+// liệu kể chuyện nên chỉ cần nêu một lần. Thêm chỗ nêu là vô hại; xóa một chỗ nêu thì phải sửa bảng này
+// kèm lý do, đúng kiểu "số nghiệm thu đổi thì tài liệu đổi cùng" mà các vòng trước đã áp dụng.
+// [needle, label, master, template, README, prompts/README]
 const RHYTHM_DOC_NEEDLES = [
-  ['100–116 BPM', 'tempo nhạc nền hiệp 1–2'],
-  ['128 BPM', 'trần BPM của nhịp nhạc'],
-  ['0.18', 'trần gain bus nhạc nền'],
-  ['30% gain', 'mức nhạc nhường lời đọc đề'],
-  ['verifyMusic()', 'hàm kiểm nhạc nền lúc nạp'],
-  ['vạch nhịp', 'nhịp nhìn được khi tắt tiếng'],
+  ['100–116 BPM', 'tempo nhạc nền hiệp 1–2', 2, 3, 1, 1],
+  ['128 BPM', 'trần BPM của nhịp nhạc', 2, 3, 1, 1],
+  ['0.18', 'trần gain bus nhạc nền', 6, 5, 1, 1],
+  ['30% gain', 'mức nhạc nhường lời đọc đề', 2, 3, 1, 1],
+  ['verifyMusic()', 'hàm kiểm nhạc nền lúc nạp', 3, 4, 1, 1],
+  ['vạch nhịp', 'nhịp nhìn được khi tắt tiếng', 5, 5, 1, 1],
+];
+// Ngân sách giọng 4 + 3 <= 7 phải đọc được nguyên vẹn ở §8.4 (nơi đặt luật) lẫn bảng kiểm. Probe vòng
+// 14c: thu §8.4 về "tối đa 4 giọng đồng thời" thì mỗi con số vẫn còn ở mục khác nên lọt.
+const VOICE_DOC_NEEDLES = [
+  ['4 giọng SFX', 'trần giọng SFX đồng thời', 4, 4, 1, 1],
+  ['3 giọng', 'trần giọng nhạc nền trên bus riêng', 4, 4, 1, 1],
+  ['7 giọng', 'tổng trần mọi giọng đang phát', 3, 4, 1, 1],
 ];
 // Con số cũ của vòng 6 ("< 8 động tác lớn mỗi phút") là yêu cầu KHÔNG THỂ đạt với phiên 12 lượt / 4–6 phút.
 // Giữ nó trong tài liệu sẽ sinh game luôn báo CHƯA ĐẠT ở mục cường độ, nên phải bị chặn.
@@ -662,7 +700,7 @@ const DOC_FILES = [
   ['README.md', fs.readFileSync(path.join(ROOT, 'README.md'), 'utf8')],
   ['prompts/README.md', fs.readFileSync(path.join(ROOT, 'prompts', 'README.md'), 'utf8')],
 ];
-for (const [docName, docText] of DOC_FILES) {
+for (const [docSlot, [docName, docText]] of DOC_FILES.entries()) {
   for (const [needle, label] of PE_DOC_NEEDLES) {
     if (!docText.includes(needle)) bad(`${docName} thiếu quy định (${label}): không thấy "${needle}".`);
   }
@@ -675,8 +713,10 @@ for (const [docName, docText] of DOC_FILES) {
   for (const [needle, label] of IDENTITY_DOC_NEEDLES) {
     if (!docText.includes(needle)) bad(`${docName} thiếu con số bản sắc riêng (${label}): không thấy "${needle}".`);
   }
-  for (const [needle, label] of RHYTHM_DOC_NEEDLES) {
-    if (!docText.includes(needle)) bad(`${docName} thiếu con số nhạc nền (${label}): không thấy "${needle}".`);
+  for (const [needle, label, ...mins] of [...RHYTHM_DOC_NEEDLES, ...VOICE_DOC_NEEDLES]) {
+    const want = mins[docSlot];
+    const got = docText.split(needle).length - 1;
+    if (got < want) bad(`${docName} chỉ còn nêu "${needle}" (${label}) ${got} lần, chuẩn hiện hành là ${want} lần — tài liệu chuẩn phải giữ đủ chỗ nêu ở CẢ phần luật lẫn bảng kiểm tự kiểm, không được để một phần mất số.`);
   }
   for (const [re, label] of LIGHT_DOC_REGEX) {
     if (!re.test(docText)) bad(`${docName} không còn nêu ${label} trên cùng một dòng — người viết prompt sẽ quay về hợp đồng điểm cũ.`);
@@ -721,9 +761,19 @@ for (const [heading, libFile] of MASTER_LIB) {
   if (!line) bad(`Master prompt thiếu heading "${heading} ..." (nơi nêu tools/lib/${libFile}).`);
   else if (!line.includes(libFile)) bad(`Mục "${heading}" của master không nêu tools/lib/${libFile} — người sửa quy định không biết phải mở file nào.`);
 }
+// Mỗi lib phải nằm trong KHỐI PIPELINE (đoạn code liệt kê `node tools/build.mjs`) của cả hai README,
+// không chỉ "được nhắc đến đâu đó trong file". Probe vòng 14c: xóa dòng `tools/lib/rhythm.mjs ...` khỏi
+// khối pipeline của README thì vẫn xanh, vì tên lib còn xuất hiện ở heading của mục kể chuyện — người
+// đọc khối pipeline lại không biết file đó tồn tại để sửa.
+const pipelineBlock = (docText) => {
+  const blocks = [...docText.matchAll(/^```[a-z]*\n([\s\S]*?)^```/gm)].map((m) => m[1]);
+  return blocks.filter((b) => b.includes('node tools/build.mjs')).join('\n');
+};
 for (const libFile of layerLibs) {
   for (const [docName, docText] of DOC_FILES.filter(([n]) => n === 'README.md' || n === 'prompts/README.md')) {
-    if (!docText.includes(libFile)) bad(`${docName} không nêu tools/lib/${libFile} — lib mới phải được thêm vào khối pipeline của tài liệu hướng dẫn.`);
+    const block = pipelineBlock(docText);
+    if (!block) bad(`${docName} không còn khối pipeline nào có \`node tools/build.mjs\` — không nơi nào để đối chiếu lib.`);
+    else if (!block.includes(libFile)) bad(`${docName}: tools/lib/${libFile} không nằm trong khối pipeline — lib mới phải được liệt kê ở khối đó, không chỉ được nhắc ở một mục kể chuyện.`);
   }
 }
 const masterSections = (master.match(/^[0-9]+\. [A-ZÀ-Ỹ]/gm) || []).length;
