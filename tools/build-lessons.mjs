@@ -76,6 +76,7 @@ Không dùng Tailwind Play CDN, không file .css/.js/.json/ảnh/mp3 ngoài. Ch�
 
 2. MẠCH BÀI GỒM NĂM BƯỚC
 - ${LESSON.flow}
+- ${LESSON.fullPeriod}
 - BƯỚC 1 · KHỞI ĐỘNG — giáo viên đọc to cho cả lớp, bảng chưa viết gì: "${L.khoi_dong}" Bảng chỉ hiện một vật thật duy nhất liên quan tới câu hỏi đó và một nút "Bắt đầu viết bảng".
 - BƯỚC 2 · VẬT THẬT — vật vẽ phấn trên bảng là ${L.vat}. Một đơn vị đếm được là ${L.don_vi}. Điều khiển bằng ngón tay: ${L.ngon_tay}.
 - BƯỚC 3 · SƠ ĐỒ — học sinh hoặc giáo viên tự tay dựng: ${L.so_do}. Sơ đồ này KHÔNG được hiện sẵn hoàn chỉnh; nó phải được kéo hoặc vẽ ra từng phần.
@@ -111,6 +112,7 @@ ${jsonBlock(EXAMPLES[L.cluster], cl.tags, notes)}
 - ${LESSON.handover}
 - ${LESSON.strayHands}
 - ${LESSON.retain}
+- ${LESSON.multiClass}
 
 6. NỀN AR, CAMERA VÀ NHẬN DIỆN TAY
 ${AR_RENDER}
@@ -134,6 +136,7 @@ ${AR_RENDER}
 - Có nhãn "Chế độ không dùng camera" ở góc màn chiếu và nút Bật camera riêng, không cần tải lại trang.
 
 8. TIẾP CẬN, AN TOÀN VÀ HIỆU NĂNG
+- ${LESSON.inclusion}
 - ${ACCESS.contrast}
 - ${ACCESS.notColorOnly}
 - ${ACCESS.caption}
@@ -229,7 +232,7 @@ ${byLop[5].map(row).join('\n')}
 - Thêm cụm kiến thức mới: sửa \`tools/data/clusters.mjs\`, \`tools/data/props.mjs\` (đủ 5 trường) và \`tools/data/lessons.mjs\` (đủ 3 trường), rồi chạy \`node tools/build.mjs\`.
 - Đổi quy định bảng phấn: \`tools/lib/chalk.mjs\` (10 quy định).
 - Đổi quy định từ bảng ra vở: \`tools/lib/handout.mjs\` (3 quy định).
-- Đổi quy định chế độ giảng bài: \`tools/lib/lesson.mjs\` (11 quy định).
+- Đổi quy định chế độ giảng bài: \`tools/lib/lesson.mjs\` (14 quy định).
 - \`node tools/validate.mjs\` sẽ chặn nếu thiếu quy định nào, nếu vật thật thiếu trường, hoặc nếu cơ chế game lọt vào giáo án.
 `;
 }

@@ -86,5 +86,5 @@ nối ngược về sơ đồ) → **Luyện tập chung** (3–4 phút, cả l�
 - Thêm cụm kiến thức mới: sửa `tools/data/clusters.mjs`, `tools/data/props.mjs` (đủ 5 trường) và `tools/data/lessons.mjs` (đủ 3 trường), rồi chạy `node tools/build.mjs`.
 - Đổi quy định bảng phấn: `tools/lib/chalk.mjs` (10 quy định).
 - Đổi quy định từ bảng ra vở: `tools/lib/handout.mjs` (3 quy định).
-- Đổi quy định chế độ giảng bài: `tools/lib/lesson.mjs` (11 quy định).
+- Đổi quy định chế độ giảng bài: `tools/lib/lesson.mjs` (14 quy định).
 - `node tools/validate.mjs` sẽ chặn nếu thiếu quy định nào, nếu vật thật thiếu trường, hoặc nếu cơ chế game lọt vào giáo án.
