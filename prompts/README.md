@@ -66,7 +66,7 @@ Bốn biến thể đầu dùng **cùng một hợp đồng AR** như prompt gam
 - `04-english5/` — 15 game Tiếng Anh 5.
 - `01-prompt-…` đến `12-prompt-…` — **12 prompt legacy** đời đầu: giữ nguyên cơ chế game, đã thay MediaPipe Legacy/Tailwind CDN/Tone.js bằng chuẩn hiện hành và gắn nhãn `LEGACY`. Không dùng làm khuôn cho game mới.
 - `VARIANTS_425.md` — 425 biến thể (85 game × 5 kiểu điều khiển), do `tools/build-variants.mjs` sinh.
-- `CHECKLIST_NGHIEP_THU.md` — bảng kiểm cầm tay khi nhận file HTML về: 29 mục máy tự kiểm + 20 việc người thử bấm tay (trong đó 6 mục gắn 📷 chỉ có camera mới kiểm được; bản không camera bỏ 6 mục đó và vẫn phải đạt 23 mục còn lại), do `tools/build-acceptance.mjs` sinh từ `tools/lib/acceptance.mjs`.
+- `CHECKLIST_NGHIEP_THU.md` — bảng kiểm cầm tay khi nhận file HTML về: 31 mục máy tự kiểm + 22 việc người thử bấm tay (trong đó 6 mục gắn 📷 chỉ có camera mới kiểm được; bản không camera bỏ 6 mục đó và vẫn phải đạt 25 mục còn lại), do `tools/build-acceptance.mjs` sinh từ `tools/lib/acceptance.mjs`.
 
 ## ✅ Nghiệm thu một game vừa sinh
 
@@ -116,7 +116,7 @@ Thi đua là với chính em hoặc với một đích chung, không bao giờ l
 
 Ba biến thể độc hại của mấy cơ chế này bị cấm ngay trong quy định: **không chuỗi ngày chơi** (streak), **không xin quyền thông báo**, **không "sống lại" kiểu xóa hình phạt sư phạm** — và nghỉ chơi không bị phạt. Dòng hẹn quay lại chỉ đếm những câu đến hạn ôn, không bao giờ nhắc em đã nghỉ bao lâu ngày.
 
-👉 Hai mục `[26] [27]` của `CHECKLIST_NGHIEP_THU.md` kiểm đúng hai con số này. Hai mục `[28] [29]` thuộc tầng "nhẹ đầu" bên dưới.
+👉 Hai mục `[26] [27]` của `CHECKLIST_NGHIEP_THU.md` kiểm đúng hai con số này. Hai mục `[28] [29]` thuộc tầng "nhẹ đầu" bên dưới, `[30] [31]` thuộc tầng "khoảnh khắc ăn mừng".
 
 ## 🪶 Nhẹ đầu: Toán phải là hình dung, không phải tính nhẩm
 
@@ -133,13 +133,26 @@ Chín vòng cộng quy định đã kéo 85 prompt lệch sang "đưa bài toán
 
 Số mục tối thiểu môn Toán rút từ **40 xuống 30** (Tiếng Anh giữ 60 vì là từ vựng, không phải phép tính); 114 câu mẫu hiện có **78 câu `nhin` = 68%**. Level không còn nghĩa "mấy phép tính" mà là độ tinh vi của nhịp nhìn: 1 = nhìn là chọn, 2 = nhìn kỹ rồi loại trừ, 3 = ước lượng — vẫn đúng MỘT thao tác.
 
+## 🎉 Khoảnh khắc ăn mừng: chỗ trẻ hét lên, và âm thanh chịu nổi một lớp bốn em
+
+Vòng 11 gỡ gánh tính nhẩm xong, đo lại 85 prompt thì phần ăn mừng vẫn trống: **pháo giấy 0/85, slow-motion 0/85, trần độ dài SFX 0/85, "không phát tiếng trước cú bấm đầu" 0/85, rung 0/85**. Tới mốc mà chỉ một con số đổi màu thì mốc không có giá trị; và hai lỗi file Canvas gặp ngay phút đầu — game câm vì `AudioContext` chưa resume, hoặc một tiếng "ting" lặp 60 lần mỗi phút — đều nằm ở chỗ trống này. `tools/lib/celebrate.mjs` viết nó thành sáu con số:
+
+| Luật | Con số | Kiểm ở đâu |
+|:---|:---|:---|
+| Pháo giấy chỉ ở mốc | đúng **4 sự kiện** (đích chung · PHÁ KỶ LỤC · mở thưởng hiệp 3 · xong mini-trạm), **40–60 hạt** sinh qua `toScreen()`, rơi **1,2–1,8 giây**, trần một đợt/3 giây | mục `[31]` |
+| Hợp đồng âm thanh | `AudioContext` chỉ resume **sau cú bấm "Bắt đầu"**; mỗi SFX **`<= 200 ms`**; master gain **`<= 0.25`**; **`<= 4 giọng`**; nút "Tắt tiếng" lưu `miti-mute` | mục `[30]` |
+| Viên đạn thời gian | **0,45×** trong **600 ms**, **chỉ** thẻ vàng + 1,5 giây cuối hiệp 3; không rút thời gian đọc đề | mục `[31]` |
+| Rung có kiểm soát | `navigator.vibrate` **20 / 60 / 100 ms**, luôn bọc `if (navigator.vibrate)`, tắt theo `miti-mute` và reduced-motion | mục `[31]` |
+| Hài hình thể | mascot **đúng một** màn lố mỗi hiệp khi chuỗi đạt 3, **`<= 3 giây`**, không che chữ đề | việc người thử số 22 |
+| Cho cả lớp hô cùng | **4 giây** "Cả lớp: 3 – 2 – 1 – CHỐT!" trước hiệp 3, chữ đếm **`>= 60px`**, không tính điểm, không trừ tim | việc người thử số 21 |
+
 ## 🔁 Pipeline của thư viện
 
 85 prompt game **được sinh tự động**, không sửa tay:
 
 ```
 tools/data/games.mjs + clusters.mjs + gestures.mjs + examples.mjs + error-notes.mjs
-tools/lib/ar.mjs · rules.mjs · feel.mjs · classroom.mjs · access.mjs · light.mjs · verify.mjs · pe.mjs · memory.mjs · hype.mjs · anticipation.mjs · acceptance.mjs
+tools/lib/ar.mjs · rules.mjs · feel.mjs · classroom.mjs · access.mjs · light.mjs · celebrate.mjs · verify.mjs · pe.mjs · memory.mjs · hype.mjs · anticipation.mjs · acceptance.mjs
         └─ node tools/build.mjs ─→ catalogs/GAME_CATALOG.csv · .md · .js + prompts/0X-*/ + index.html + prompts/CHECKLIST_NGHIEP_THU.md
 ```
 

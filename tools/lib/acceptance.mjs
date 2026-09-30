@@ -6,7 +6,7 @@
 // verifyQuestionBank có chạy không, hay mô hình đã lặng lẽ bỏ bớt ba quy định ở giữa file.
 // Không có nghiệm thu thì 40 quy định chỉ là 40 lời mong đợi.
 
-// 29 thứ máy kiểm được — nguồn cho ACCEPT.items và cho từng dòng của prompts/CHECKLIST_NGHIEP_THU.md.
+// 31 thứ máy kiểm được — nguồn cho ACCEPT.items và cho từng dòng của prompts/CHECKLIST_NGHIEP_THU.md.
 export const MACHINE_ITEMS = [
   'QUESTION_DATA đủ số mục yêu cầu và verifyQuestionBank() ĐÃ chạy trước lượt chơi đầu tiên',
   'mọi mục đang phát hành có answer nằm trong choices đúng một lần',
@@ -37,6 +37,8 @@ export const MACHINE_ITEMS = [
   'màn tổng kết in đúng một dòng "Lần sau em quay lại sẽ có <n> câu đang chờ" với n đếm từ "miti-review" (mục đến hạn trong 7 ngày tới, trần 4), không có chuỗi ngày chơi và không dòng nào nhắc em đã nghỉ bao lâu',
   'tỉ lệ mục dang: "nhin" >= 60% và mọi mục dang: "tinh" chỉ mang một dấu phép tính với đề không quá 16 từ (đếm trên QUESTION_DATA đang phát hành)',
   'điểm một lượt tách thành +6 cho động tác và +3 cho đáp án, hiệu ứng nổ tại điểm chạm trước khi máy biết đúng sai, và không thẻ câu hỏi nào có đồng hồ đếm ngược',
+  'AudioContext chỉ resume SAU cú bấm "Bắt đầu" (không một SFX nào phát trước cú bấm đó), mỗi SFX <= 200 ms, master gain <= 0.25, không quá 4 giọng phát đồng thời, và trạng thái "miti-mute" vẫn đọc được sau khi tải lại trang',
+  'pháo giấy nổ đúng bốn loại mốc với 40–60 hạt sinh qua hàm chiếu điểm chạm (không nổ ở câu đúng thường), slow-mo chỉ chạy 600 ms cho thẻ vàng và 1,5 giây cuối hiệp 3, và navigator.vibrate luôn nằm trong if (navigator.vibrate)',
 ];
 
 // Những việc con người phải bấm tay — máy không tự kiểm được, nguồn cho ACCEPT.manual và bảng in.
@@ -61,6 +63,8 @@ export const HUMAN_CHECKS = [
   'để dành tới phiên sau rồi chơi tiếp — khiên chuỗi có còn trong "miti-tokens" và có dùng được thật không (làm sai một câu: chuỗi giữ mà tim vẫn giảm, lời giải vẫn hiện)?',
   'đọc dòng "Chương tiếp theo" và bấm "Xem trước" ở màn tổng kết — em có hỏi khi nào được chơi chương đó, hay dòng chữ bị đọc như quảng cáo?',
   'chơi liền 5 lượt đầu — em có phải nhíu mắt tính nhẩm không hay đang nhìn–chỉ–chọn rồi với tay? Nghe đề một lần có hiểu phải làm gì không?',
+  'chơi tới 4 giây "Cả lớp: 3 – 2 – 1 – CHỐT!" trước hiệp 3 — bốn em đứng cạnh máy có thật sự hô theo và cùng làm một động tác mở màn, hay dòng chữ bị đọc lướt như một màn đếm mẫu?',
+  'bật tiếng đầy đủ rồi mở game cho bốn em cùng chơi — SFX có ngắn và dễ chịu hay một tiếng "ting" lặp lại thành chói tai? Bấm "Tắt tiếng" rồi chơi trọn một hiệp: mọi phản hồi (đúng/sai/mốc) còn đọc được bằng chữ và hình không?',
 ];
 
 // Những mục máy chỉ kiểm được khi có webcam: bản không camera bỏ qua chúng, các mục còn lại vẫn phải đạt.
