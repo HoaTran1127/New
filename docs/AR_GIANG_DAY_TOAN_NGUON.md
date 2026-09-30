@@ -1,4 +1,4 @@
-# Giáo án AR trên bảng phấn — nguồn cộng đồng và bài học sau 23 vòng
+# Giáo án AR trên bảng phấn — nguồn cộng đồng và bài học sau 24 vòng
 
 Tài liệu này để **người khác tham khảo và nối tiếp**, không phải mô tả tính năng. Phần tính năng nằm ở
 [`prompts/giao-an/README.md`](../prompts/giao-an/README.md); ở đây chỉ ghi: cái gì đã đo được, cái gì đã
@@ -131,12 +131,33 @@ CHUNG MÀN, không hỏi, không `window.open`**, chỉ giữ cơ chế giữ-ph
 đang nhìn…" để nó đúng cả với ti vi một màn. Cùng kiểu khoá bắt-cặp như vòng 22: validator đỏ nếu `privateView`
 còn `window.open` mà thiếu một trong hai vế (nhắc `noProjector`, hoặc lệnh "MẶC NHIÊN coi là CHUNG MÀN") — P95
 cắt vế đầu, P96 cắt vế sau, cả hai phải đỏ.
+Vòng 24 đổi góc đo: không đo tiền đề giữa hai quy định, mà đo **hệ quả của việc TÁI DÙNG một quy định**
+trái họ. Khung "TIẾP CẬN, AN TOÀN" của mỗi giáo án dán `ACCESS.flash` và `ACCESS.reducedMotion` — hai quy
+định tiếp cận **viết cho game**, nên mang theo "viền **HUD theo combo**", "**mất máu**", "**hit-stop**
+xuống ~30 ms", "**mascot** chỉ đổi biểu cảm", "**particle** và **speed lines**", "số **lượt, điểm**".
+Ngay cùng file, `LESSON.noGame` cấm đúng những thứ ấy ("không combo", "không hit-stop", "không mascot ăn
+mừng"). Vì sao build vẫn xanh suốt 23 vòng? Chốt chống-rò `GAME_ONLY` so nguyên văn **cả chuỗi** của
+`FEEL.*`/`MOTION.*`, còn hai quy định ACCESS nằm ở danh sách `ACCESS_RULES` bắt buộc **CÓ** mặt trong giáo
+án — không chốt nào nhìn thấy vốn từ arcade vào bằng cửa sau. Đo trên 39 giáo án (needle điều khiển:
+chính chuỗi `noGame` phải có mặt **2×/prompt**): "mất máu" **2×**, "combo" **4×**, "hit-stop" **4×**,
+"mascot" **6×**, "particle" **8×**, "speed lines" **3×**, "vệt neon" **1×**, "số lượt, điểm" **1×**. Vòng
+24 THÊM quy định #48 `motionSafety` (khác vòng 22/23 chỉ sửa): giữ nguyên hai quan tâm thật — trần nhấp
+nháy ≤ 3 lần/giây, không chớp phủ toàn màn, vùng nhấp nháy ≤ 25% khung, mỗi thao tác chỉ fade một lần rồi
+nằm yên; tự đọc `prefers-reduced-motion`/`prefers-contrast` một lần, reduce thì bật sẵn "Giảm hiệu ứng"
+**nhưng giữ đủ 100% năm bước, bảng, vật thật, sơ đồ, phiếu**, lưu `localStorage` không hỏi lại — chỉ bằng
+từ của lớp (tham chiếu `flow`/`pace`/`noGame` thật). `build-lessons.mjs` nạp nó **thay** hai dòng ACCESS;
+validator tách `LESSON_ACCESS_RULES` (bỏ flash/reducedMotion) cho giáo án, game vẫn giữ nguyên bộ; và thêm
+chốt **cấp cụm từ** `GAME_LEAK` để dán nhầm ACCESS.flash/reducedMotion vào giáo án là build đỏ — P97 mất
+`motionSafety`, P98 để nó lọt sang game, P99 dán ngược ACCESS.flash vào giáo án. **Chưa kịp sửa trong một
+vòng:** `ACCESS.caption` ("mascot nói", "combo, mất máu, thắng màn") và khối `AR_RENDER` ("speed lines",
+"sát mặt người chơi", "nhịp game nhanh") vẫn còn nguyên trong cả 39 giáo án — đo lại sau vòng 24:
+"mất máu" **39/39**, "speed lines" **39/39**; đó là việc của vòng 25.
 3. **Quy định phải có con số.** "Chữ phải to" không kiểm chứng được; "≥ 40 px **và** ≥ 5.5% chiều cao khung
    hình, ≤ 12 chữ một dòng" thì validator bắt được. Mọi quy định trong `tools/lib/*.mjs` là chuỗi nguyên văn,
    `tools/validate.mjs` so bằng `includes()`, nên lời văn và mắt kiểm không bao giờ lệch nhau.
 4. **Chốt chặn hai chiều.** Cơ chế game lọt vào giáo án và quy định giáo án lọt sang game đều làm build đỏ.
    Thêm một quy định mới là tự động thêm một khoá bị cấm ở phía bên kia (`LESSON_FAMILY_RULES`).
-5. **Probe đột biến là đơn vị kiểm thử thật.** 96 phép, mỗi phép phá đúng một thứ và đòi đúng thông báo.
+5. **Probe đột biến là đơn vị kiểm thử thật.** 99 phép, mỗi phép phá đúng một thứ và đòi đúng thông báo.
    Không có probe thì một quy định chỉ là câu văn đẹp.
 6. **Tách công cụ giảng bài khỏi game.** Cùng một kiến thức, hai động cơ đối lập: game cần hồi hộp,
    tiết giảng cần giáo viên cầm lái. Nhét tim/điểm/combo vào bảng phấn làm em lên bảng sợ sai hơn là muốn hiểu.
@@ -168,6 +189,7 @@ cắt vế đầu, P96 cắt vế sau, cả hai phải đỏ.
 | 21 | **đo mâu thuẫn bằng chính PHÉP CỘNG trên các con số của bốn quy định**: `fullPeriod` cho VẬN DỤNG 3–5′ · `exitTicket` giữ 2′ CUỐI của nó làm vé · `movementBreak` tổng nghỉ ≤ 3′ "lấy từ VẬN DỤNG hoặc `timeSlack` dôi" · `tightRoomFocus` nâng nghỉ lên ≤ 4′ khi chật → nghỉ(4) + vé(2) = **6 > 5** = trần VẬN DỤNG, và tiết đúng 35′ thì `timeSlack` dôi = 0 nên nguồn hai cũng cạn; đo: "ngân sách nghỉ" · "co ngắn nhịp nghỉ" · "bỏ nhịp nghỉ" · "ưu tiên lấy từ" đều **0/39**; nguồn: Understood.org (brain-break là chiến lược hành vi có bằng chứng, xếp 1–5 phút sau mỗi 10–25 phút tập trung — khớp đầu dưới mà `movementBreak` đã cite) | `breakReserve` (dòng nghỉ **có thật** trên thanh tiến trình `flow` — nấc thường 2′, chật 3′ — số dự án chọn để phép cộng trong 35′ đóng lại; rút đúng thứ tự timeSlack-dôi → VẬN DỤNG trên 2′ vé (không xuống dưới 2′) → LUYỆN TẬP 12→10, **tuyệt đối không** rút VẬT THẬT hay vé; khi "Còn < 3 phút"/"quá giờ"/cô bấm "Còn 2 phút" thì nhịp **tự CO còn 15 giây** (ba hơi thở + vươn tay, vẫn Toán, camera tắt); một nút "Bỏ nhịp nghỉ tiết này", bộ đếm "nghỉ đã dùng/còn lại" ở dải của cô; thêm một bước chạy thử mô phỏng "Còn 2 phút") |
 | 22 | **đo TIỀN ĐỀ của chính các lệnh "thêm một bước"**: `rehearsal` định nghĩa "Chạy thử 5 phút" là "không cần camera · đúng năm bước · đã thử 5/5 · ĐÚNG MỘT danh sách 10 việc · một trang A4", nhưng `detectionEquity` (v18) + `privateView` (v20) + `breakReserve` (v21) mỗi cái dặn "thêm đúng MỘT bước/việc" vào đúng nút ấy, và bước của `detectionEquity` **cần camera BẬT** ("đưa bàn tay vào trước camera") — hai chỉ thị loại trừ nhau; đo: "không cần camera" **39/39** *và* "vào trước camera" **39/39** (chung sống), còn "nhành" · "tuỳ chọn" · "bật camera cho riêng" · "5/5 bước · nâng cao" đều **0/39** | `rehearsalBudget` (chia BA NHÀNH: A không-camera mặc định đúng 5 bước (chạy được khi máy không camera, đúng `oldHardware`/`noAdmin`); B có-camera cho bước độ phủ của `detectionEquity` — bật chủ động + xin phép một dòng + tắt hẳn khi ra (đèn đỏ theo `privacy`/`cameraGeometry`); C nâng-cao-tuỳ-chọn cho "Kiểm tra riêng tư" và mô phỏng "Còn 2 phút". Phong ngân sách: "5 phút" chỉ tính Nhành A (B/C +≤ 2′, dự án chọn), phiếu 10 việc CỐ ĐỊNH không phình. **Khoá bắt-cặp** mới trong validator: đỏ nếu `detectionEquity` còn "vào trước camera" mà mất tham chiếu `rehearsalBudget` — P94 chứng minh) |
 | 23 | **đo TIỀN ĐỀ của hai quy định cách nhau 12 vòng**: `noProjector` (v8) biến "không có máy chiếu" thành chế độ hạng nhất ("MỘT màn hình duy nhất cho cô + học sinh nhìn gần", hoặc in ra), nhưng `privateView` (v20) dựng cả lời hứa "chỉ cô thấy" quanh cái máy chiếu — hỏi "Máy chiếu CHUNG MÀN hay MÀN RIÊNG?" và chữa bằng `window.open` cửa sổ thứ hai "kéo sang máy chiếu"; đo: `privateView` nhắc "máy chiếu" **5 lần**, đối chiếu `noProjector` = **false**, cụm hoà giải ("Ép CHUNG MÀN" · "màn cả lớp đang nhìn") = **0/39** — giao của chúng (cả 45 em vây một màn, rủi ro lộ cao nhất, không có màn hai để kéo đi) chưa từng định nghĩa | SỬA `privateView` (không thêm quy định 48): mệnh đề (0) phân nhánh `noProjector` → ở "Chế độ không màn chiếu" thì **mặc nhiên CHUNG MÀN, không hỏi, không `window.open`**, chỉ giữ-phím-để-xem; đổi câu hỏi thành "Màn mà cả lớp đang nhìn…" (đúng cả với ti vi một màn). **Khoá bắt-cặp** mới: đỏ nếu `privateView` còn `window.open` mà thiếu nhắc `noProjector` HOẶC thiếu "MẶC NHIÊN coi là CHUNG MÀN" — P95 cắt vế đầu, P96 cắt vế sau |
+| 24 | **đo HỆ QUẢ CỦA VIỆC TÁI DÙNG một quy định trái họ**: khung "TIẾP CẬN" của mỗi giáo án dán `ACCESS.flash` + `ACCESS.reducedMotion` — hai quy định **viết cho game** nên chứa "viền HUD theo combo", "mất máu", "hit-stop xuống ~30 ms", "mascot chỉ đổi biểu cảm", "particle và speed lines", "số lượt, điểm" — trong khi `LESSON.noGame` cùng file cấm đúng chúng. Build xanh 23 vòng vì `GAME_ONLY` chỉ so nguyên văn chuỗi `FEEL.*`, còn ACCESS thì bị `ACCESS_RULES` bắt buộc CÓ mặt; đo trên 39 giáo án (needle điều khiển `noGame` **2×/prompt**): mất máu **2×**, combo **4×**, hit-stop **4×**, mascot **6×**, particle **8×**, speed lines **3×**, vệt neon **1×**, "số lượt, điểm" **1×** | THÊM quy định #48 `motionSafety` (khác v22/23 chỉ sửa): cùng hai quan tâm bằng TỪ CỦA LỚP — trần nhấp nháy ≤ 3 lần/giây, không chớp phủ toàn màn, vùng nhấp nháy ≤ 25% khung, mỗi thao tác chỉ fade một lần rồi nằm yên; tự đọc `prefers-reduced-motion`/`prefers-contrast` một lúc khởi động, reduce thì bật sẵn "Giảm hiệu ứng" **nhưng giữ đủ 100% năm bước · bảng · vật thật · sơ đồ · phiếu**, lưu `localStorage` không hỏi lại (tham chiếu `flow`/`pace`/`noGame` thật). `build-lessons` nạp nó THAY hai dòng ACCESS; validator tách `LESSON_ACCESS_RULES` (bỏ flash/reducedMotion) cho giáo án, game giữ nguyên; thêm chốt **cấp cụm từ** `GAME_LEAK` — P97 mất `motionSafety`, P98 lọt sang game, P99 dán ngược `ACCESS.flash` vào giáo án. *Chưa sửa cùng vòng: `ACCESS.caption` (mất máu/mascot/combo/thắng màn) và `AR_RENDER` (speed lines/người chơi/nhịp game) còn **39/39** → việc của vòng 25* |
 
 ## Vì sao chọn những con số đang dùng
 
@@ -354,6 +376,13 @@ cắt vế đầu, P96 cắt vế sau, cả hai phải đỏ.
   đủ nhỏ để cả ba nhành vẫn gọi là "một lượt chạy thử buổi tối" chứ thành một buổi tập huấn. Không nguồn ngoài
   nào quy định con số này; nó chỉ khoá để chữ "5 phút" của `rehearsal` không bị ba phép cộng âm thầm làm thành
   nói khoác.
+- **"≤ 3 lần/giây", "vùng nhấp nháy ≤ 25% khung" và "fade rồi nằm yên" của `motionSafety`** — vòng 24 **không
+  bịa ngưỡng mới**: hai con số ≤ 3 lần/giây và ≤ 25% lấy NGUYÊN VĂN từ `ACCESS.flash` (hai trần an toàn thần
+  kinh mà họ game đã chốt từ vòng tiếp cận), chỉ là lần này phát biểu bằng ví dụ của lớp ("một dòng phấn mới,
+  một mảnh vật thật tách ra") thay vì ví dụ của game ("HUD theo combo", "flash khi mất máu"). Trần ≥ 600 ms cho
+  mỗi chuyển động dựng cảnh kế thừa thẳng `pace`, không đặt số mới. Vòng 24 là vòng NỘI BỘ (đo bằng grep trên
+  chính 39 giáo án, needle điều khiển là sự hiện diện của `noGame`), **không có trích dẫn ngoài** — mâu thuẫn
+  nằm ở việc tái-dùng quy định chứ không ở bằng chứng nào thiếu.
 
 ## Nguồn đọc cho từng cụm quy định
 
@@ -723,7 +752,7 @@ thành "tăng X% điểm".
   định. Một vòng sau thêm quy định mới mà bọc tên một hàm/API khác trong dấu chấm ngược thì validator sẽ đỏ
   báo "quy định ma" dù không sai — lúc đó phải cân nhắc tách cơ chế khỏi cách viết: hoặc đánh dấu tham chiếu
   quy định bằng một cú pháp riêng (`→`ruleName`←`), hoặc để khoá chỉ bắt tên *khớp khuôn quy định* mà không có
-  trong danh sách. Cách hiện tại đơn giản và an toàn cho 47 quy định, nhưng cần người sau biết nó là nợ kỹ
+  trong danh sách. Cách hiện tại đơn giản và an toàn cho 48 quy định, nhưng cần người sau biết nó là nợ kỹ
   thuật có chủ đích chứ không phải thiếu sót.
 - **Hai "khoá bắt-cặp" (vòng 22, 23) là mã tay, không phải một cơ chế tổng quát.** `validate.mjs` giờ có đúng
   HAI kiểm tra dạng "nếu quy định A còn cụm X thì buộc phải nhắc quy định B" (detectionEquity→rehearsalBudget,
@@ -731,17 +760,31 @@ thành "tăng X% điểm".
   khó thấy, nhưng mỗi cái viết cho ĐÚNG MỘT cặp tên-hàm-cụ-thể. Thêm quy định mới có cùng dạng rủi ro thì PHẢI
   viết thêm một `if` nữa — chưa có bảng khai báo cặp nào để mở rộng. Nếu sau này có ≥ 3 cặp, nên trừu tượng hoá
   thành một danh sách `[[quyDinh, dieuKien, phaiChua]]` và lặp, thay vì nối tiếp vài `if` cứng.
+- **`GAME_LEAK` (vòng 24) đã đi theo hướng danh-sách-khai-báo mà bullet trên ao ước, nhưng còn CHỈN TAY mức.**
+  Nó là một mảng needle (`['vệt neon','HUD theo combo','mascot chỉ đổi biểu cảm','hit-stop xuống','số lượt, điểm']`)
+  lặp qua mọi giáo án — đúng kiểu "danh sách để mở rộng" thay vì `if` cứng. Cái còn thủ công là CHỌN needle:
+  mỗi cụm phải đặc-trưng-cho-quy-định-game mà KHÔNG trùng phủ định của `noGame` ("không hit-stop") và không
+  chạm quy định dùng-chúng hợp lệ (`perf` nói "đường tốc độ", `autoPause` nói "điểm và lượt"). Chọn sai là
+  build đỏ oan. nên thêm một needle phải chạy `grep` trên cả 39 giáo án trước.
+- **Vòng 24 mới vá MỘT trong BA nguồn rò từ vựng arcade vào giáo án.** Còn hai nguồn chưa đụng: `ACCESS.caption`
+  (mang "mascot nói", "combo, mất máu và thắng màn") và khối `AR_RENDER` dán nguyên bản hợp đồng AR của game
+  (mang "speed lines", "sát mặt người chơi", "nhịp game nhanh lên"). Đo lại sau vòng 24: "mất máu" **39/39**,
+  "speed lines" **39/39** — nghĩa là mỗi giáo án vẫn đang dạy bằng ngôn ngữ của một thứ nó tuyên bố không phải.
+  Vá đúng cách không phải xoá từ: `caption` cần bản "từ lớp học" như `motionSafety` (âm báo → chữ, không mascot),
+  còn `AR_RENDER` phải TÁCH phần dùng chung hợp lệ (nền webcam, `toScreen`, neo cơ thể, phủ rgba) khỏi phần
+  arcade (spawn/va chạm/speed lines/"màn chơi"), rồi cho giáo án chỉ nạp phần trước. Đây là việc của vòng 25,
+  có needle điều khiển sẵn: "mất máu 39/39" và "speed lines 39/39" phải tụt về **0/39**.
 
 ## Muốn đóng góp thì sửa ở đâu
 
 ```text
 tools/lib/chalk.mjs     10 quy định bảng phấn và vật thật      → sinh vào mục 4 của giáo án
-tools/lib/lesson.mjs    47 quy định chế độ giảng bài           → sinh vào mục 0, 1, 2, 3, 5, 6, 7, 8, 9, 10
+tools/lib/lesson.mjs    48 quy định chế độ giảng bài           → sinh vào mục 0, 1, 2, 3, 5, 6, 7, 8, 9, 10
 tools/lib/handout.mjs   4 quy định từ bảng ra vở               → sinh vào mục 9
 tools/data/props.mjs    vật thật + sơ đồ theo 38 cụm
 tools/data/lessons.mjs  tên bài, câu khởi động, dòng ghi nhớ
 tools/build-lessons.mjs ghép thành 39 file prompts/giao-an/
-tools/validate.mjs      61 khoá của họ giáo án + chốt chặn ngược + 13 mục của khung
+tools/validate.mjs      62 khoá của họ giáo án + chốt chặn ngược + chốt cấp cụm từ GAME_LEAK + 13 mục của khung
                         + trần số hàng "Chữa bài" đo thẳng từ clusters.mjs/error-notes.mjs
 ```
 

@@ -166,9 +166,7 @@ ${AR_RENDER}
 - ${ACCESS.contrast}
 - ${ACCESS.notColorOnly}
 - ${ACCESS.caption}
-- ${ACCESS.flash}
-- ${ACCESS.reducedMotion}
-- Ở công cụ giảng bài không có hit-stop và không có mascot, nên chế độ Giảm hiệu ứng chỉ còn việc tắt particle, tắt speed lines và bỏ mọi chuyển động trang trí; chữ viết phấn, vật thật và sơ đồ vẫn hiện đầy đủ.
+- ${LESSON.motionSafety}
 - ${RULES.autoPause} Ở công cụ giảng bài, tự Pause KHÔNG được làm mất nội dung đang có trên bảng: quay lại thì bảng còn nguyên như lúc rời đi.
 - ${RULES.perf} Riêng khi đang viết phấn trên bảng thì ưu tiên nhận diện bàn tay mỗi khung hình và giảm particle, vì độ trễ nét viết quan trọng hơn hiệu ứng.
 - ${LESSON.oldHardware}

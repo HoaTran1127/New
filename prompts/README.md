@@ -80,7 +80,7 @@ Bảng phấn và vật thật vẽ phấn (`tools/lib/chalk.mjs`, `tools/data/p
 | Quy định riêng | `tools/lib/chalk.mjs` (10) + `tools/lib/lesson.mjs` (38) + `tools/lib/handout.mjs` (3) | `tools/lib/feel.mjs` + `tools/lib/classroom.mjs` |
 | Dữ liệu câu hỏi | `LESSON_DATA` ≥ 6 mục | `QUESTION_DATA` ≥ 40/60 mục |
 
-`tools/validate.mjs` chặn cả hai chiều: giáo án thiếu một trong 61 quy định thì báo lỗi, mà cơ chế game (`QUESTION_DATA`, `miti-collection`, hit-stop, combo, mascot, 12 lượt chính, hết 5 tim…) lọt vào giáo án cũng báo lỗi.
+`tools/validate.mjs` chặn cả hai chiều: giáo án thiếu một trong 62 quy định thì báo lỗi, mà cơ chế game (`QUESTION_DATA`, `miti-collection`, hit-stop, combo, mascot, 12 lượt chính, hết 5 tim…) lọt vào giáo án cũng báo lỗi. Từ vòng 24 có thêm chốt **cấp cụm từ** (`GAME_LEAK`): hai quy định tiếp cận vốn viết cho game (`ACCESS.flash`, `ACCESS.reducedMotion`) mang theo "vệt neon", "HUD theo combo", "mascot chỉ đổi biểu cảm", "hit-stop xuống", "số lượt, điểm" — dán nhầm chúng vào giáo án là build đỏ ngay, vì `GAME_ONLY` chỉ so nguyên văn chuỗi `FEEL.*` nên trước đây bỏ lọt đường rò này.
 
 ## 🔁 Pipeline của thư viện
 
