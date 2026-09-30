@@ -37,7 +37,7 @@ Bấm copy toàn bộ prompt.       Nhấn Enter để AI tạo game.         ng
 > * *Mẹo:* Nếu trên giao diện Gemini chưa thấy nút Canvas, bạn chỉ cần gõ thêm chữ `Mở Canvas và tạo game:` ở đầu prompt.
 
 > [!TIP]
-> **Bước thứ tư (khuyên làm, khoảng 15 phút):** game mở ra rồi **bấm 7 lần vào logo MiTi** (hoặc `Ctrl+Alt+K`) để mở bảng kiểm nghiệm thu — 25 mục máy tự kiểm bằng code thật, rồi bấm "Xuất bản văn" để copy biên bản. Đối chiếu tiếp với 17 việc người thử trong `prompts/CHECKLIST_NGHIEP_THU.md` trước khi đưa game vào tiết học. Mục nào CHƯA ĐẠT thì dán lại nguyên văn quy định đó vào prompt và sinh lại file, không sửa tay HTML.
+> **Bước thứ tư (khuyên làm, khoảng 15 phút):** game mở ra rồi **bấm 7 lần vào logo MiTi** (hoặc `Ctrl+Alt+K`) để mở bảng kiểm nghiệm thu — 27 mục máy tự kiểm bằng code thật, rồi bấm "Xuất bản văn" để copy biên bản. Đối chiếu tiếp với 19 việc người thử trong `prompts/CHECKLIST_NGHIEP_THU.md` trước khi đưa game vào tiết học. Mục nào CHƯA ĐẠT thì dán lại nguyên văn quy định đó vào prompt và sinh lại file, không sửa tay HTML.
 
 ---
 
@@ -50,7 +50,7 @@ Toàn bộ prompt nằm trong file `.md` riêng, mỗi file một game, copy ngu
 | Prompt game chuẩn (Toán 4 · Toán 5 · Tiếng Anh 4 · Tiếng Anh 5) | **85** | [Dashboard MiTi](https://hoatran1127.github.io/New/) — bấm **Sao chép prompt**, hoặc [catalogs/GAME_CATALOG.md](catalogs/GAME_CATALOG.md) |
 | Khung master 13 mục (0 → 12) để tự tạo prompt mới | 1 | [prompts/00-master-canvas-prompt.md](prompts/00-master-canvas-prompt.md) |
 | Biểu mẫu điền nhanh | 1 | [prompts/templates/game-prompt-template.md](prompts/templates/game-prompt-template.md) |
-| Bảng kiểm nghiệm thu cầm tay (25 mục máy tự kiểm + 17 việc người thử) | 26 | [prompts/CHECKLIST_NGHIEP_THU.md](prompts/CHECKLIST_NGHIEP_THU.md) |
+| Bảng kiểm nghiệm thu cầm tay (27 mục máy tự kiểm + 19 việc người thử) | 1 | [prompts/CHECKLIST_NGHIEP_THU.md](prompts/CHECKLIST_NGHIEP_THU.md) |
 | Biến thể điều khiển (Point · Swipe · Drag/Grab · Voice · No Camera) | **425** | [prompts/VARIANTS_425.md](prompts/VARIANTS_425.md) — 85 game × 5 kiểu, sinh tự động |
 | Prompt legacy đời đầu (cơ chế arcade, đã nâng cấp lên chuẩn hiện hành) | **12** | Bảng mở rộng dưới đây |
 
@@ -243,21 +243,38 @@ Ba mục `[23] [24] [25]` của bảng kiểm máy tự kiểm chính là ba con
 
 ---
 
+### 🪝 Sáu quy định "ham quay lại"
+
+Nguồn: `tools/lib/anticipation.mjs`, `validate.mjs` so nguyên văn từng chuỗi. Vòng 8 cho em thứ để thi đua **trong** một phiên; khảo sát 85 prompt cho vòng 9 thấy từ vựng về **chờ đợi giữa hai phiên** vẫn bằng 0: "chương tiếp theo" = 0, "còn <n> câu nữa" = 0, "đang chờ" = 0, "để dành" = 0, "missing/danger" = 0. Một game kết thúc trọn vẹn mà không còn gì dở dang thì em đóng tab, và không có lý do gì để mở lại. Sáu quy định này tạo sự dở dang **lành mạnh** — cố tình tránh ba biến thể độc hại hay gặp: chuỗi ngày chơi (streak), quyền gửi thông báo, và "sống lại" xóa mất hình phạt sư phạm.
+
+| Quy định | Con số bắt buộc | Vì sao phải viết thành số |
+|:---|:---|:---|
+| **Sắp chạm mốc** | 1,5 giây trước lượt kế: "Còn 1 câu nữa tới mốc <m>" với mốc 10/20/30 câu đúng và lượt đó nhân đôi điểm; đích nhóm thì "Cả nhóm còn <k> câu tới mốc <m>" | gần-mà-chưa (near miss) là lý do người ta bấm lại câu tiếp theo; mốc cố định 10/20/30 kiểm được, mốc "sắp tới" mơ hồ thì không |
+| **Khiên chuỗi để dành** | `miti-tokens` giữ { khiên, quyền chọn câu, ngày }, tối đa **2**; khiên chỉ giữ chuỗi đúng, **vẫn trừ 1 tim, vẫn dừng 2 giây hiện lời giải, câu sai vẫn vào hàng đợi luyện lại**; hết 5 tim vẫn thua như cũ | để dành quyền lực sang phiên sau tạo lý do mở lại mà không phá vỡ Quy tắc chống may rủi; nếu khiên chặn cả lời giải thì nó thành gadget cheating |
+| **Chương còn dở** | màn tổng kết hiện "Chương tiếp theo: <tên chương>" + nút "Xem trước" chiếu đúng 6 giây; **cấm** đe dọa kiểu "không chơi lại là mất hết" | vòng lặp mở (open loop) thôi thúc quay lại; đe dọa mất tiến trình thì ngược lại, em sợ và bỏ |
+| **Hẹn câu đang chờ** | một dòng duy nhất "Lần sau em quay lại sẽ có <n> câu đang chờ", `<n>` đếm từ `miti-review` (mục đến hạn trong 7 ngày tới, trần 4); `<n> = 0` thì nói "Chưa có câu nào chờ em" | biến lịch ôn — thứ vốn vô hình — thành lời hẹn cụ thể; đếm được bằng code, không phải câu trang trí |
+| **Chỗ trống gọi tên** | lưới bộ sưu tập 6 ô, ô chưa mở hiện `? ? ?`; một dòng "Bộ <chủ đề> còn thiếu <k> thẻ" | ô trống vô danh thì quên, ô có hình mờ + số thẻ còn thiếu thì thành thứ cần lấp; không so sánh bộ của em này với em khác |
+| **Nghi thức lưu phiên** | 3 giây "Đã lưu: <điểm cao nhất>, chuỗi dài nhất <x>, <k> thẻ mới" trước màn tổng kết; localStorage bị chặn thì "Máy này không giữ được tiến trình"; reduced-motion rút còn 1 giây | em phải thấy rõ công sức của mình được giữ — nếu không, phiên chơi sau cảm giác như bắt đầu lại từ đầu |
+
+Ba mục `[26] [27]` của bảng kiểm máy tự kiểm và hai việc người thử tương ứng (để dành khiên sang phiên sau · đọc dòng "Chương tiếp theo") kiểm đúng các con số này. **Không** có chuỗi ngày chơi, **không** xin quyền thông báo, **nghỉ chơi không bị phạt** — nghỉ là quyền, và phần thưởng quay lại luôn đến từ những gì em đã làm được.
+
+---
+
 ### ✅ Nghiệm thu: game tự chứng minh nó đạt chuẩn
 
-Nguồn: `tools/lib/acceptance.mjs`. Đây là tầng sửa chỗ **gãy nhất của quy trình "chỉ viết prompt"**: bạn dán prompt vào Gemini Canvas, nhận về một file HTML dài vài nghìn dòng, và không có cách nào biết nó có `toScreen` thật không, `verifyQuestionBank()` có chạy không, hay mô hình đã lặng lẽ bỏ ba quy định ở giữa file. Không có nghiệm thu thì bốn mươi quy định phía trên chỉ là bốn mươi lời mong đợi.
+Nguồn: `tools/lib/acceptance.mjs`. Đây là tầng sửa chỗ **gãy nhất của quy trình "chỉ viết prompt"**: bạn dán prompt vào Gemini Canvas, nhận về một file HTML dài vài nghìn dòng, và không có cách nào biết nó có `toScreen` thật không, `verifyQuestionBank()` có chạy không, hay mô hình đã lặng lẽ bỏ ba quy định ở giữa file. Không có nghiệm thu thì toàn bộ quy định ở các mục trên chỉ là lời mong đợi.
 
-**25 mục máy tự kiểm** (`ACCEPT.items`) — mỗi mục một hàm trả `true/false`, kiểm lúc chạy chứ không kê chữ sẵn:
+**27 mục máy tự kiểm** (`ACCEPT.items`) — mỗi mục một hàm trả `true/false`, kiểm lúc chạy chứ không kê chữ sẵn:
 
 - Bảng kiểm ẩn trong game, mở bằng **7 lần bấm vào logo MiTi** hoặc `Ctrl+Alt+K`; bảng tĩnh in chữ "ĐẠT" mà không kiểm gì bị coi là lỗi nghiêm trọng nhất.
-- Đủ `QUESTION_DATA` + `verifyQuestionBank()` đã chạy · `answer` có trong `choices` đúng một lần · `drawImage` webcam đi qua `toScreen(lx, ly)` · alpha lớp phủ `<= 0.45` · có vật neo landmark · giữ tư thế 2 giây không spam cú chốt · tab ẩn tự Pause + đếm 3-2-1 · 3 hiệp + trạm nghỉ · `prefers-reduced-motion` có hiệu lực · bộ đếm flash `<= 3 lần/giây` · tương phản tính từ màu thật · tay thuận được áp dụng · localStorage `miti-collection` + `miti-mastery` · thích ứng level chạy thật · không tải URL bị cấm · chữ ký MiTi ba màn · **khởi động 60–90 giây đã chạy trước hiệp 1 và hạ nhiệt 45–60 giây đã chạy trước màn tổng kết** · **nhịp thẻ đúng chuẩn + `>= 12` nhịp chuyển động mỗi phút** · **📷 đồng hồ thời gian vận động `>= 60%`** · **lịch ôn `+1/+3/+7` đọc lại được từ `miti-review`** · **`>= 3/12` lượt xen cụm khác và `>= 1` lượt ôn đến hạn** · **10 giây "Em còn nhớ không?" trước lượt 1, sai không trừ tim**.
-- **6 mục gắn 📷** chỉ áp dụng khi có camera; bản không camera bỏ 6 mục đó và vẫn phải đạt **19 mục còn lại**.
+- Đủ `QUESTION_DATA` + `verifyQuestionBank()` đã chạy · `answer` có trong `choices` đúng một lần · `drawImage` webcam đi qua `toScreen(lx, ly)` · alpha lớp phủ `<= 0.45` · có vật neo landmark · giữ tư thế 2 giây không spam cú chốt · tab ẩn tự Pause + đếm 3-2-1 · 3 hiệp + trạm nghỉ · `prefers-reduced-motion` có hiệu lực · bộ đếm flash `<= 3 lần/giây` · tương phản tính từ màu thật · tay thuận được áp dụng · localStorage `miti-collection` + `miti-mastery` · thích ứng level chạy thật · không tải URL bị cấm · chữ ký MiTi ba màn · **khởi động 60–90 giây đã chạy trước hiệp 1 và hạ nhiệt 45–60 giây đã chạy trước màn tổng kết** · **nhịp thẻ đúng chuẩn + `>= 12` nhịp chuyển động mỗi phút** · **📷 đồng hồ thời gian vận động `>= 60%`** · **lịch ôn `+1/+3/+7` đọc lại được từ `miti-review`** · **`>= 3/12` lượt xen cụm khác và `>= 1` lượt ôn đến hạn** · **10 giây "Em còn nhớ không?" trước lượt 1, sai không trừ tim** · **`miti-tokens` giữ khiên chuỗi sang phiên sau, tối đa 2, vỡ khiên vẫn trừ 1 tim và vẫn hiện lời giải** · **dòng "Lần sau em quay lại sẽ có <n> câu đang chờ" đếm từ `miti-review`, không chuỗi ngày chơi**.
+- **6 mục gắn 📷** chỉ áp dụng khi có camera; bản không camera bỏ 6 mục đó và vẫn phải đạt **21 mục còn lại**.
 
-**17 việc người thử phải bấm tay** (`ACCEPT.manual`, khoảng 15 phút, có ô ghi kết quả): đứng xa tới mức chỉ còn hai bàn tay · giữ im một tư thế 5 giây · lấy tay che nửa người · tắt camera giữa vòng chơi · rút mạng lúc đang tải model · đổi tay thuận sang Trái · bật reduced-motion ở hệ điều hành rồi mở game · cố tình sai 4 câu liên tiếp · mở bằng điện thoại đặt dọc · đưa một học sinh lớp 4 chưa đọc hướng dẫn chơi thử 60 giây · **chơi trọn một phiên rồi đứng lại 30 giây xem em có thở nhanh hơn và người ấm lên rõ rệt không** · **làm động tác cúi thấp ở lượt cuối rồi đứng thẳng lên nhanh xem có choáng váng hay mất thăng bằng không** · **chơi hai phiên cách nhau một ngày xem phiên sau có mở bằng đúng câu hôm trước không** · **cố tình trả lời sai một câu từng đúng hai lần xem game có giữ lời "quên thì không phạt" hay vẫn trừ tim**.
+**19 việc người thử phải bấm tay** (`ACCEPT.manual`, khoảng 15 phút, có ô ghi kết quả): đứng xa tới mức chỉ còn hai bàn tay · giữ im một tư thế 5 giây · lấy tay che nửa người · tắt camera giữa vòng chơi · rút mạng lúc đang tải model · đổi tay thuận sang Trái · bật reduced-motion ở hệ điều hành rồi mở game · cố tình sai 4 câu liên tiếp · mở bằng điện thoại đặt dọc · đưa một học sinh lớp 4 chưa đọc hướng dẫn chơi thử 60 giây · **chơi trọn một phiên rồi đứng lại 30 giây xem em có thở nhanh hơn và người ấm lên rõ rệt không** · **làm động tác cúi thấp ở lượt cuối rồi đứng thẳng lên nhanh xem có choáng váng hay mất thăng bằng không** · **chơi hai phiên cách nhau một ngày xem phiên sau có mở bằng đúng câu hôm trước không** · **cố tình trả lời sai một câu từng đúng hai lần xem game có giữ lời "quên thì không phạt" hay vẫn trừ tim** · **đóng tab giữa phiên rồi hôm sau mở lại: khiên chuỗi còn trong `miti-tokens` và dùng được thật không (làm sai một câu — chuỗi vẫn giữ mà tim vẫn giảm, lời giải vẫn hiện)** · **đọc dòng "Chương tiếp theo" ở màn tổng kết và bấm "Xem trước": em có tự hỏi khi nào được chơi chương đó, hay dòng chữ bị đọc như quảng cáo**.
 
 - **Xuất bản văn**: một nút sinh khối chữ tiếng Việt copy được (tên game, ngày giờ, kiểu điều khiển, số ĐẠT/CHƯA ĐẠT, lý do từng mục chưa đạt) — chỉ hiện trên màn hình và vào clipboard máy đó, **không gửi lên máy chủ nào**.
 - **Mục CHƯA ĐẠT phải kèm nguyên nhân + cách sửa**, cấm báo "lỗi" rồi im lặng. Thiếu mục nào thì dán lại nguyên văn quy định đó vào prompt rồi sinh lại file — không sửa tay file HTML.
-- Bảng in sẵn để cầm tay khi vào lớp: **`prompts/CHECKLIST_NGHIEP_THU.md`** (do `tools/build-acceptance.mjs` sinh, `validate.mjs` đếm 25 dòng máy + 17 dòng người thử).
+- Bảng in sẵn để cầm tay khi vào lớp: **`prompts/CHECKLIST_NGHIEP_THU.md`** (do `tools/build-acceptance.mjs` sinh, `validate.mjs` đếm 27 dòng máy + 19 dòng người thử).
 
 ---
 
@@ -277,8 +294,9 @@ tools/lib/access.mjs         tiếp cận + an toàn thần kinh (trần nhấp 
 tools/lib/verify.mjs         tự kiểm chứng đề + độ khó thích ứng (verifyQuestionBank, nhiễu theo lỗi thật, guard phạm vi, chống mẹo, level thích ứng, sàn chống nản)
 tools/lib/memory.mjs          nhớ bài có lịch (ôn +1/+3/+7 ngày, xen cụm, câu mở màn, vì sao đúng, quên không phạt, tờ rời giáo viên)
 tools/lib/hype.mjs         thi đua + cao trào (cú "ồ" 3 giây đầu, miti-best + PHÁ KỶ LỤC, vệt ghost, hiệp quyết định, mở thưởng, đích chung không xếp hạng)
+tools/lib/anticipation.mjs  ham quay lại (sắp chạm mốc, khiên chuỗi miti-tokens, chương còn dở, hẹn câu đang chờ, ô "? ? ?", nghi thức lưu phiên — không chuỗi ngày, không thông báo)
 tools/lib/pe.mjs              thể dục có cấu trúc (khởi động 60–90 giây · nhịp thẻ · >= 12 nhịp chuyển động/phút · đồng hồ vận động >= 60% · hạ nhiệt · nhắc nước · trần tải trọng)
-tools/lib/acceptance.mjs     nghiệm thu (25 mục máy tự kiểm + 17 việc người thử, xuất bản văn, nguyên nhân khi chưa đạt)
+tools/lib/acceptance.mjs     nghiệm thu (27 mục máy tự kiểm + 19 việc người thử, xuất bản văn, nguyên nhân khi chưa đạt)
 tools/build-acceptance.mjs   sinh prompts/CHECKLIST_NGHIEP_THU.md từ lib trên
         │
         └─ node tools/build.mjs

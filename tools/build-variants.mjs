@@ -15,6 +15,7 @@ import { ACCEPT, ACCEPT_SHORT, MACHINE_ITEMS, HUMAN_CHECKS, CAMERA_ONLY } from '
 import { PE, PE_SHORT, PE_NO_CAMERA } from './lib/pe.mjs';
 import { RETENTION, RETENTION_SHORT } from './lib/memory.mjs';
 import { HYPE, HYPE_SHORT } from './lib/hype.mjs';
+import { ANT, ANT_SHORT } from './lib/anticipation.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const OUT = path.join(ROOT, 'prompts', 'VARIANTS_425.md');
@@ -64,7 +65,7 @@ function block(n, row, g, v) {
   const calib = camera && !voice ? RULES.calibration : 'Biến thể này không đọc chuyển động tay nên không cần calibration; vẫn phải có một màn hướng dẫn ngắn, không tutorial dài.';
   // Biến thể VOICE chỉ có một micro nên không có chế độ hai người chơi: lấy 3 vế đầu của chuỗi rút gọn.
   const voiceShort = CLASSROOM_SHORT.split(' · ').slice(0, 3).join(' · ');
-  const qCheck = ' · ' + PE_SHORT + ' · ' + RETENTION_SHORT + ' · ' + HYPE_SHORT + ' · ' + VERIFY_SHORT + ' · ' + ADAPT_SHORT + ' · ' + ACCEPT_SHORT;
+  const qCheck = ' · ' + PE_SHORT + ' · ' + RETENTION_SHORT + ' · ' + HYPE_SHORT + ' · ' + ANT_SHORT + ' · ' + VERIFY_SHORT + ' · ' + ADAPT_SHORT + ' · ' + ACCEPT_SHORT;
   // Dòng nghiệm thu cho mọi block: game phải tự chứng minh nó đạt, người thử không phải đọc code.
   const accept = ACCEPT.selfReport + ' ' + ACCEPT.printable + ' ' + ACCEPT.failRule + (camera ? '' : ' ' + ACCEPT.noCamera);
   const selfCheck = voice
@@ -81,6 +82,7 @@ function block(n, row, g, v) {
     ? `${PE.warmUp} ${PE.pace} ${PE.activeShare} ${PE.coolDown} ${PE.water} ${PE.loadCap}`
     : `${PE.warmUp} ${PE.pace} ${PE.coolDown} ${PE.water} ${PE.loadCap} ${PE_NO_CAMERA}`;
   const hype = `${HYPE.hook} ${HYPE.personalBest} ${HYPE.ghost} ${HYPE.climax} ${HYPE.reveal} ${HYPE.sharedGoal}`;
+  const ant = `${ANT.nearMiss} ${ANT.carryToken} ${ANT.openLoop} ${ANT.comeback} ${ANT.collectionGap} ${ANT.saveCeremony}`;
   const memory = `${RETENTION.spacedQueue} ${RETENTION.interleave} ${RETENTION.recallPrimer} ${RETENTION.explainBack} ${RETENTION.forgettingGuard} ${RETENTION.teacherNote}`;
 
   return `## Prompt ${String(n).padStart(3, '0')} — ${row.id} — ${v.code} — ${v.label}
@@ -102,6 +104,7 @@ ${controlBlock(v, g)}` : controlBlock(v, g)}
 **Thể dục có cấu trúc:** ${pe}
 **Nhớ bài có lịch:** ${memory}
 **Thi đua + cao trào:** ${hype}
+**Ham quay lại:** ${ant}
 **Tự kiểm chứng đề:** ${VERIFY.selfCheck} ${VERIFY.distractorValid} ${VERIFY.rangeGuard} ${VERIFY.noGuessable} ${VERIFY.difficultySteps}
 **Ngân hàng dữ liệu:** \`const QUESTION_DATA = [...]\` đặt ở ĐẦU khối <script>, engine đặt phía sau; tối thiểu ${bank.so} mục chia 3 mức độ theo khuôn { id, level, prompt, choices, answer, explanation, errorTag, loiViet }; mỗi mục một đáp án đúng duy nhất kiểm chứng được bằng code; ${bank.luu_y} errorTag lấy đúng một trong: ${cl.tags.join(', ')}; loiViet là cụm tiếng Việt có dấu lấy nguyên văn từ danh sách lỗi: ${ERROR_NOTES[g.cluster]}. Xáo trộn vị trí đáp án có seed theo lượt.
 **Phản hồi học tập:** đúng thì phản hồi tích cực ngay kèm một dòng ghi nhớ; sai thì DỪNG 2 giây, ${cl.giai_thich}, chỉ rõ bước hoặc chữ số hoặc từ cần sửa, không hiệu ứng nào che lời giải; câu sai xếp vào CUỐI vòng để luyện lại. ${RULES.summary}${english ? ` ${RULES.listening} ${RULES.speechSynthesis}` : ''}
@@ -141,6 +144,7 @@ let out = `# 🎯 425 PROMPT BIẾN THỂ — MiTi (85 game × 5 kiểu điều 
 - Camera/micro chỉ xin sau nút BẮT ĐẦU; luôn có chế độ không camera chơi trọn game; không upload ảnh/video camera.
 - **Vận động + arcade:** mỗi lượt là một động tác to (>= 50% tầm với), vùng đích nằm sát mép khung, 3 hiệp kèm trạm nghỉ 5 giây; cú chạm có hit-stop, combo và chữ khen bật lên trong khung hình.
 - **Thi đua + cao trào:** cú "ồ" 3 giây đầu khi vào gameplay · "miti-best" + sự kiện "PHÁ KỶ LỤC!" khi thật sự vượt mốc của chính em · vệt ghost alpha <= 0.35 chạy theo lượt tốt nhất phiên trước · hiệp 3 "HIỆP QUYẾT ĐỊNH" nhân đôi điểm (vẫn 4 lượt + trạm nghỉ 5 giây) · nghi thức mở thưởng 2,5 giây cuối hiệp, luôn có quà, không đổi level thích ứng · đích chung "Cả nhóm: <x>/<mốc 40>" và không bao giờ là bảng xếp hạng bạn.
+- **Ham quay lại:** dòng "Còn 1 câu nữa tới mốc <m>" khi em cách mốc 10/20/30 đúng một câu · "khiên chuỗi" trong localStorage \`miti-tokens\` (tối đa 2, chỉ giữ chuỗi — vẫn trừ tim, vẫn hiện lời giải, vẫn vào hàng đợi luyện lại) · màn tổng kết hé "Chương tiếp theo" theo đúng errorTag em còn yếu + nút "Xem trước" 6 giây · hẹn "Lần sau em quay lại sẽ có <n> câu đang chờ" đếm từ \`miti-review\` · lưới bộ sưu tập 6 ô, ô chưa mở là "? ? ?" kèm "còn thiếu <k> thẻ" · nghi thức lưu phiên 3 giây "Đã lưu: ...". Không chuỗi ngày, không quyền thông báo, nghỉ chơi không bị phạt.
 - **Thể dục có cấu trúc:** khởi động 60–90 giây trước hiệp 1 (không tính điểm), thẻ bay vào 3,0–4,5 giây và ở lại <= 8 giây, >= 12 nhịp chuyển động mỗi phút, đồng hồ vận động >= 60% thời lượng phiên, hạ nhiệt 45–60 giây trước màn tổng kết, nhắc uống nước đúng một lần, và trần tải trọng (cấm nhảy tiếp đất, xoay nhanh quá 90 độ, giữ tay trên cao quá 15 giây).
 - **Lớp học thật:** chữ và HUD không đè lên thân học sinh, cơ chế chọn theo mức camera đang thấy, hồ sơ tiến bộ "miti-mastery" xếp câu theo lỗi yếu nhất, có chế độ hai học sinh trong một khung hình (trừ biến thể VOICE).
 - **Tiếp cận:** không hiệu ứng nào nhấp nháy quá 3 lần/giây, \`prefers-reduced-motion\` được đọc lúc khởi động và bật sẵn chế độ Giảm hiệu ứng (không giảm nội dung học), đúng/sai phân biệt bằng >= 2 kênh ngoài màu, mọi âm thanh có bản chữ, tương phản chữ >= 4.5:1, có chọn tay thuận lúc calibration (trừ biến thể VOICE và NO-CAMERA).

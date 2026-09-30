@@ -33,6 +33,8 @@ export const MACHINE_ITEMS = [
   'HUD có dòng "Kỷ lục: <n> · Em đang: <m>" và sự kiện PHÁ KỶ LỤC chỉ nổ khi điểm thật vượt mốc đã lưu trong "miti-best"',
   'hiệp 3 chạy "HIỆP QUYẾT ĐỊNH" (điểm nhân đôi, thêm 1 thẻ vàng) nhưng vẫn đúng 4 lượt và trạm nghỉ 5 giây',
   'nghi thức mở thưởng cuối mỗi hiệp dài 2,5 giây, luôn có phần thưởng, không đổi level thích ứng và mở ngay khi reduced-motion',
+  '"miti-tokens" giữ được khiên chuỗi và quyền chọn câu sang phiên sau (tối đa 2); khiên vỡ khi dùng, chuỗi đúng không bị cắt nhưng vẫn trừ 1 tim, vẫn hiện lời giải và câu đó vẫn vào hàng đợi luyện lại',
+  'màn tổng kết in đúng một dòng "Lần sau em quay lại sẽ có <n> câu đang chờ" với n đếm từ "miti-review" (mục đến hạn trong 7 ngày tới, trần 4), không có chuỗi ngày chơi và không dòng nào nhắc em đã nghỉ bao lâu',
 ];
 
 // Những việc con người phải bấm tay — máy không tự kiểm được, nguồn cho ACCEPT.manual và bảng in.
@@ -54,6 +56,8 @@ export const HUMAN_CHECKS = [
   'vừa bấm BẮT ĐẦU được 3 giây — em có cảm giác đây là game thật (một cú "ồ") hay chỉ là màn chữ?',
   'chơi hai phiên liên tiếp — phiên sau có hiện đúng "Kỷ lục: <n>" của phiên trước và vệt ghost chạy theo đúng lượt tốt nhất không?',
   'chơi đến hiệp 3 — em có nhận ra hiệp này căng hơn thật (điểm nhân đôi, thẻ vàng thêm) mà câu hỏi không khó hơn không?',
+  'để dành tới phiên sau rồi chơi tiếp — khiên chuỗi có còn trong "miti-tokens" và có dùng được thật không (làm sai một câu: chuỗi giữ mà tim vẫn giảm, lời giải vẫn hiện)?',
+  'đọc dòng "Chương tiếp theo" và bấm "Xem trước" ở màn tổng kết — em có hỏi khi nào được chơi chương đó, hay dòng chữ bị đọc như quảng cáo?',
 ];
 
 // Những mục máy chỉ kiểm được khi có webcam: bản không camera bỏ qua chúng, các mục còn lại vẫn phải đạt.

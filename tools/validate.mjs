@@ -16,6 +16,7 @@ import { ACCEPT, MACHINE_ITEMS, HUMAN_CHECKS, CAMERA_ONLY, OFFLINE_ITEMS } from 
 import { PE, PE_NO_CAMERA } from './lib/pe.mjs';
 import { RETENTION } from './lib/memory.mjs';
 import { HYPE, HYPE_SHORT } from './lib/hype.mjs';
+import { ANT, ANT_SHORT } from './lib/anticipation.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const errors = [];
@@ -150,6 +151,15 @@ const HYPE_RULES = [
   [HYPE.reveal, 'thiếu nghi thức mở thưởng 2,5 giây cuối mỗi hiệp'],
   [HYPE.sharedGoal, 'thiếu đích chung "Cả nhóm: <x>/<mốc>", không xếp hạng bạn'],
 ];
+// Ham quay lại: cảm giác "sắp chạm mốc" và "có thứ đang chờ mình" là hai lý do trẻ bấm Chơi lại.
+const ANT_RULES = [
+  [ANT.nearMiss, 'thiếu dòng báo "Còn 1 câu nữa tới mốc <m>" (10/20/30 câu đúng)'],
+  [ANT.carryToken, 'thiếu khiên chuỗi để dành trong "miti-tokens" (tối đa 2, vẫn trừ tim)'],
+  [ANT.openLoop, 'thiếu dòng "Chương tiếp theo" hé mở ở màn tổng kết'],
+  [ANT.comeback, 'thiếu hẹn "Lần sau em quay lại sẽ có <n> câu đang chờ" từ "miti-review"'],
+  [ANT.collectionGap, 'thiếu chỗ trống gọi tên "? ? ?" trong lưới 6 ô của bộ sưu tập'],
+  [ANT.saveCeremony, 'thiếu nghi thức lưu phiên 3 giây "Đã lưu: ..."'],
+];
 for (const g of GAMES) {
   const rel = PATH_OF.get(g.id);
   if (!rel) { bad(`${g.id}: không có đường dẫn prompt trong catalog.`); continue; }
@@ -168,7 +178,9 @@ for (const g of GAMES) {
   for (const [needle, msg] of PE_RULES) if (!t.includes(needle)) bad(`${g.id}: ${msg}.`);
   for (const [needle, msg] of RET_RULES) if (!t.includes(needle)) bad(`${g.id}: ${msg}.`);
   for (const [needle, msg] of HYPE_RULES) if (!t.includes(needle)) bad(`${g.id}: ${msg}.`);
+  for (const [needle, msg] of ANT_RULES) if (!t.includes(needle)) bad(`${g.id}: ${msg}.`);
   if (!t.includes(HYPE_SHORT)) bad(`${g.id}: chuỗi tự kiểm ở phần ĐẦU RA thiếu phần thi đua + cao trào.`);
+  if (!t.includes(ANT_SHORT)) bad(`${g.id}: chuỗi tự kiểm ở phần ĐẦU RA thiếu phần ham quay lại.`);
   // Bố cục phải nhét khởi động vào TRƯỚC 12 lượt và hạ nhiệt vào TRƯỚC màn tổng kết, không phải để ngoài luồng.
   if (!t.includes('KHỞI ĐỘNG 60–90 giây → 10 giây "Em còn nhớ không?" → 12 lượt chính')) bad(`${g.id}: bố cục thiếu khởi động rồi thiếu câu "Em còn nhớ không?" ngay trước 12 lượt chính.`);
   if (!t.includes('HẠ NHIỆT 45–60 giây → Kết quả')) bad(`${g.id}: bố cục thiếu bước hạ nhiệt ngay trước màn Kết quả.`);
@@ -215,6 +227,7 @@ for (const l of LEGACY) {
   for (const [needle, msg] of PE_RULES) if (!t.includes(needle)) bad(`${l.id}: ${msg}.`);
   for (const [needle, msg] of RET_RULES) if (!t.includes(needle)) bad(`${l.id}: ${msg}.`);
   for (const [needle, msg] of HYPE_RULES) if (!t.includes(needle)) bad(`${l.id}: ${msg}.`);
+  for (const [needle, msg] of ANT_RULES) if (!t.includes(needle)) bad(`${l.id}: ${msg}.`);
   for (const [re, msg] of AR_RULES.filter(([, m]) => m !== 'thiếu mô tả AR của cử chỉ chính')) {
     if (!re.test(t)) bad(`${l.id}: ${msg}.`);
   }
@@ -255,6 +268,7 @@ if (!fs.existsSync(VAR_FILE)) {
   });
   if (arBlocks !== 340) bad(`VARIANTS_425.md phải có 340 block nền AR (85 × 4 biến thể camera), hiện có ${arBlocks}.`);
   if (!vtext.includes('- **Thi đua + cao trào:**')) bad('Phần Quy ước chung của VARIANTS_425.md thiếu dòng Thi đua + cao trào.');
+  if (!vtext.includes('- **Ham quay lại:**')) bad('Phần Quy ước chung của VARIANTS_425.md thiếu dòng Ham quay lại.');
   if (!vtext.includes('- **Nghiệm thu:**')) bad('Phần Quy ước chung của VARIANTS_425.md thiếu dòng Nghiệm thu.');
   if (!vtext.includes('prompts/CHECKLIST_NGHIEP_THU.md')) bad('Phần Quy ước chung của VARIANTS_425.md không trỏ tới bảng kiểm in sẵn.');
   VAR_COUNT = blocks.length;
@@ -271,6 +285,7 @@ if (!fs.existsSync(VAR_FILE)) {
   // Nhớ bài phải đi theo từng block: người dùng copy một block thì lịch ôn không được biến mất.
   const RET_NEEDLES = [RETENTION.spacedQueue, RETENTION.interleave, RETENTION.recallPrimer, RETENTION.explainBack, RETENTION.forgettingGuard, RETENTION.teacherNote];
   const HYPE_NEEDLES = [HYPE.hook, HYPE.personalBest, HYPE.ghost, HYPE.climax, HYPE.reveal, HYPE.sharedGoal];
+  const ANT_NEEDLES = [ANT.nearMiss, ANT.carryToken, ANT.openLoop, ANT.comeback, ANT.collectionGap, ANT.saveCeremony];
   blocks.forEach((b, i) => {
     for (const needle of CLASS_NEEDLES) if (!b.includes(needle)) bad(`biến thể #${i + 1}: thiếu quy định "${needle.slice(0, 32)}...".`);
     const calibNeedle = b.includes('V5 — NO-CAMERA') || b.includes('V4 — VOICE') ? 'không cần calibration' : RULES.calibration;
@@ -295,6 +310,9 @@ if (!fs.existsSync(VAR_FILE)) {
     if (!b.includes('**Thi đua + cao trào:**')) bad(`biến thể #${i + 1}: thiếu dòng Thi đua + cao trào.`);
     for (const needle of HYPE_NEEDLES) if (!b.includes(needle)) bad(`biến thể #${i + 1}: thiếu quy tắc hào hứng "${needle.slice(0, 30)}...".`);
     if (!b.includes(HYPE_SHORT)) bad(`biến thể #${i + 1}: dòng tự kiểm thiếu phần thi đua + cao trào.`);
+    if (!b.includes('**Ham quay lại:**')) bad(`biến thể #${i + 1}: thiếu dòng Ham quay lại.`);
+    for (const needle of ANT_NEEDLES) if (!b.includes(needle)) bad(`biến thể #${i + 1}: thiếu quy tắc chờ đợi "${needle.slice(0, 30)}...".`);
+    if (!b.includes(ANT_SHORT)) bad(`biến thể #${i + 1}: dòng tự kiểm thiếu phần ham quay lại.`);
     for (const needle of PE_NEEDLES) if (!b.includes(needle)) bad(`biến thể #${i + 1}: thiếu quy tắc thể dục "${needle.slice(0, 30)}...".`);
     const tracksBody = /\*\*Nền AR:\*\*/.test(b) && !b.includes('V4 — VOICE');
     if (tracksBody) {
@@ -412,6 +430,12 @@ const PE_DOC_NEEDLES = [
   ['mở thưởng', 'nghi thức mở thưởng cuối hiệp'],
   ['Cả nhóm', 'đích chung của nhóm, không xếp hạng'],
   ['ghost', 'vệt ghost của phiên trước'],
+  ['miti-tokens', 'khiên chuỗi để dành trong miti-tokens'],
+  ['Chương tiếp theo', 'màn tổng kết hé chương tiếp theo'],
+  ['câu đang chờ', 'hẹn lần sau bằng số câu đến hạn'],
+  ['? ? ?', 'chỗ trống chưa mở trong bộ sưu tập'],
+  ['Đã lưu', 'nghi thức lưu phiên'],
+  ['Còn 1 câu nữa tới mốc', 'dòng báo sắp chạm mốc'],
 ];
 // Con số cũ của vòng 6 ("< 8 động tác lớn mỗi phút") là yêu cầu KHÔNG THỂ đạt với phiên 12 lượt / 4–6 phút.
 // Giữ nó trong tài liệu sẽ sinh game luôn báo CHƯA ĐẠT ở mục cường độ, nên phải bị chặn.
@@ -444,6 +468,11 @@ for (const [docName, docText] of DOC_FILES) {
       if (Number(m[1]) !== want) bad(`${docName} ghi "${m[0]}" (${label}) nhưng lib hiện có ${want} — chạy lại build hoặc sửa tài liệu.`);
     }
   }
+  // COUNT_PATTERNS chỉ chặn số SAI; xóa hẳn con số thì vẫn xanh (probe D8 vòng 9). Tài liệu hướng dẫn
+  // mà không nêu số mục thì người viết prompt không biết bảng kiểm dài bao nhiêu để đối chiếu.
+  for (const [re, label] of [[/([0-9]+) mục máy tự kiểm/i, 'số mục máy tự kiểm'], [/([0-9]+) việc người thử/i, 'số việc người thử'], [/([0-9]+) mục còn lại/i, 'số mục bản không camera còn phải đạt']]) {
+    if (!re.test(docText)) bad(`${docName} không còn nêu ${label} — tài liệu phải ghi con số hiện hành của bảng kiểm để người viết prompt đối chiếu.`);
+  }
 }
 // Số mục của khung master phải khớp số heading cấp 1 thật trong file, để không ai quảng cáo "khung 10 mục" cho một file 13 mục.
 const masterSections = (master.match(/^[0-9]+\. [A-ZÀ-Ỹ]/gm) || []).length;
@@ -451,6 +480,27 @@ for (const [docName, docText] of DOC_FILES.filter(([n]) => n !== 'prompts/00-mas
   if (!new RegExp(`khung( chuẩn| master)? ${masterSections} mục`, 'i').test(docText)) {
     bad(`${docName} phải ghi "khung ${masterSections} mục" khớp số mục thật của master prompt (file hiện có ${masterSections} heading cấp 1).`);
   }
+}
+
+// 7g. Mỗi tầng quy định phải còn cả heading trong master lẫn dòng checklist trong template.
+// Probe vòng 9: xóa heading "8.3 HAM QUAY LẠI" hoặc xóa dòng "Phần ham quay lại đã điền đủ" thì
+// validate vẫn xanh, vì sáu chuỗi quy định vẫn còn ở mục khác của file — nghĩa là tài liệu hướng
+// dẫn có thể mất trọn một mục mà không ai báo.
+const DOC_LAYERS = [
+  ['vận động to', '4.3 BIÊN ĐỘ VẬN ĐỘNG', 'Phần vận động đã điền đủ'],
+  ['độ khó thích ứng', '4.4 ĐỘ KHÓ THÍCH ỨNG', 'Phần thích ứng đã điền đủ'],
+  ['thể dục có cấu trúc', '4.5 THỂ DỤC CÓ CẤU TRÚC', 'Phần thể dục có cấu trúc đã điền đủ'],
+  ['nhớ bài có lịch', '5.1 NHỚ BÀI CÓ LỊCH', 'Phần nhớ bài đã điền đủ'],
+  ['hồ sơ tiến bộ + lớp học', '6.1 HỒ SƠ TIẾN BỘ XUYÊN PHIÊN', 'Phần lớp học đã điền đủ'],
+  ['tự kiểm chứng đề', '6.2 TỰ KIỂM CHỨNG NGÂN HÀNG CÂU HỎI', 'Phần kiểm chứng đề đã điền đủ'],
+  ['cảm giác arcade', '8.1 CẢM GIÁC ARCADE', 'Phần arcade đã điền đủ'],
+  ['thi đua + cao trào', '8.2 THI ĐUA + CAO TRÀO', 'Phần thi đua + cao trào đã điền đủ'],
+  ['ham quay lại', '8.3 HAM QUAY LẠI', 'Phần ham quay lại đã điền đủ'],
+  ['tiếp cận + an toàn thần kinh', '9.1 TIẾP CẬN + AN TOÀN THẦN KINH', 'Phần tiếp cận đã điền đủ'],
+];
+for (const [label, heading, bullet] of DOC_LAYERS) {
+  if (!master.includes(heading)) bad(`Master prompt thiếu mục "${heading}" (${label}) — quy định có trong lib nhưng khung hướng dẫn mất mục thì người viết prompt theo master sẽ không thấy.`);
+  if (!tpl.includes(bullet)) bad(`Template thiếu dòng checklist "${bullet}" (${label}) — người viết prompt không bị nhắc phải điền tầng này.`);
 }
 
 if (errors.length) {

@@ -389,6 +389,33 @@ xếp hạng bạn ngồi cạnh (đây là lý do mục 7 cấm leaderboard và
   mỗi lượt đúng của bất kỳ em nào trên máy; chạm mốc thì cả màn ăn mừng 3 giây và mở một thẻ CHUNG. Cột chỉ hiện tổng số câu đúng,
   không hiện điểm từng em cạnh nhau, không tên, không hạng nhất — đích chung, không phải bảng xếp hạng.
 
+8.3 HAM QUAY LẠI — phần quyết định trẻ có BẤM Chơi lại vào ngày hôm sau
+
+8.1 làm cú chạm đã mắt, 8.2 làm một phiên chơi có cao trào; cả hai đều khép lại khi màn tổng kết hiện ra. Khảo sát
+85 prompt: "hẹn gặp lại / ngày mai" = 0, "khiên / bảo vệ chuỗi" = 0, "phần thưởng để dành" = 0, "ô chưa mở trong bộ sưu tập" = 0,
+"nghi thức lưu tiến trình" = 0. Trẻ lớp 4–5 quay lại vì hai thứ rất cụ thể: cảm giác mình SẮP chạm một mốc, và cảm giác có
+thứ đang chờ mình. Nguồn `tools/lib/anticipation.mjs`. Cấm tuyệt đối: chuỗi ngày chơi, quyền thông báo, và mọi hình phạt cho việc nghỉ.
+
+- BÁO SẮP TỚI MỐC: còn đúng 1 câu nữa là chạm mốc 10 / 20 / 30 câu đúng của phiên thì HUD hiện dòng "Còn 1 câu nữa tới mốc <m>
+  — lượt kế nhân đôi điểm" trong 1,5 giây rồi tự ẩn; cột đích chung ghi "Cả nhóm còn <k> câu tới mốc <m>" chứ không phải một
+  thanh tiến độ im lặng. Mọi số đếm từ câu đúng thật, không hứa thưởng ảo, không chớp quá 3 lần mỗi giây.
+- KHIÊN CHUỖI ĐỂ DÀNH ("miti-tokens"): mỗi chuỗi đúng 5 câu phát 1 khiên, tích tối đa 2, lưu chỉ { khien, quyen_chon, ngay }.
+  Sai khi còn khiên: khiên vỡ, chuỗi ĐÚNG không bị cắt nhưng vẫn trừ 1 tim, vẫn dừng 2 giây hiện lời giải, vẫn vào hàng đợi
+  luyện lại và vẫn tính vào sàn chống nản. Quyền "chọn câu dễ hơn một bậc" của nghi thức mở thưởng cũng để dành sang phiên sau.
+  Khiên là phần thưởng, không phải mạng thứ hai — hết 5 tim vẫn thua như cũ.
+- KẾT THÚC HÉ MỞ: màn tổng kết hiện đúng MỘT dòng "Chương tiếp theo: <tên chương>" nối vào kết quả phiên này (thí dụ "Chương 3 mở
+  khi em sửa xong 2 lỗi: <loiViet>, <loiViet>") kèm nút "Xem trước" chiếu 6 giây một vật thể AR của chương sau, không cho chơi, không
+  tính điểm. Cấm đe dọa "không chơi lại là mất hết".
+- HẸN LẦN SAU BẰNG SỐ CÂU THẬT: một dòng "Lần sau em quay lại sẽ có <n> câu đang chờ", <n> đếm từ "miti-review" (mục đến hạn trong
+  7 ngày tới, trần 4). <n> = 0 thì "Chưa có câu nào chờ em — chơi thêm game khác để dành thẻ". Không xin quyền thông báo, không gửi
+  đi đâu, không đếm chuỗi ngày, không hiện "em đã nghỉ X ngày".
+- CHỖ TRỐNG GỌI TÊN: màn "Sưu tập của em" vẽ lưới 6 ô mỗi bộ chủ đề; ô chưa mở hiện khung nét đứt và "? ? ?" (không để đoán hình),
+  kèm đúng một dòng "Bộ <chủ đề> còn thiếu <k> thẻ — thắng hiệp 3 ở các game cùng chủ đề để đủ bộ". <k> tính từ "miti-collection"
+  của chính máy này, không so bộ sưu tập giữa các em.
+- NGHI THỨC LƯU PHIÊN: bấm "Kết thúc" thì mascot cất thành tích trong 3 giây và hiện "Đã lưu: <điểm cao nhất>, chuỗi dài nhất <x>,
+  <k> thẻ mới"; nút "Tắt máy" chỉ sáng sau dòng đó. localStorage bị chặn thì mascot nói "Máy này không giữ được tiến trình, em chơi
+  tiếp từ đầu nhé" và mọi dòng kỷ lục ẩn hẳn, không hiện số 0. Giảm hiệu ứng rút còn 1 giây bằng chữ, không bỏ bước lưu.
+
 ========================
 9. AN TOÀN + RIÊNG TƯ + TIẾP CẬN
 ========================
@@ -433,13 +460,13 @@ xếp hạng bạn ngồi cạnh (đây là lý do mục 7 cấm leaderboard và
 11. NGHIỆM THU (game phải tự chứng minh nó đạt chuẩn)
 ========================
 Bối cảnh: người dùng dán prompt này vào Gemini Canvas, nhận về một file HTML dài vài nghìn dòng.
-Không có cách nghiệm thu thì 40 quy định phía trên chỉ là 40 lời mong đợi — không ai biết file có toScreen thật không.
+Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là lời mong đợi — không ai biết file có toScreen thật không.
 
 - BẢNG KIỂM TỰ ĐỘNG: game có một bảng ẩn, mở bằng cách bấm 7 lần vào logo MiTi hoặc tổ hợp Ctrl+Alt+K.
   Bảng liệt kê TỪNG ràng buộc kèm trạng thái ĐẠT / CHƯA ĐẠT. Trạng thái đó phải do code kiểm thật lúc chạy,
   không phải chữ tĩnh kê sẵn. Một bảng báo "ĐẠT" mà không kiểm gì là lỗi nghiêm trọng nhất của game giáo dục.
   Bảng chỉ người lớn mở được: không trừ tim, không chặn chơi, học sinh không nhìn thấy.
-- 25 MỤC MÁY TỰ KIỂM, mỗi mục một hàm trả true/false:
+- 27 MỤC MÁY TỰ KIỂM, mỗi mục một hàm trả true/false:
   [1] QUESTION_DATA đủ số mục và verifyQuestionBank() ĐÃ chạy trước lượt chơi đầu tiên
   [2] mọi mục đang phát hành có answer nằm trong choices đúng một lần
   [3] 📷 drawImage khung hình webcam đi qua toScreen(lx, ly), không còn phép nhân thô với W/H
@@ -465,14 +492,16 @@ Không có cách nghiệm thu thì 40 quy định phía trên chỉ là 40 lời
   [23] HUD có dòng "Kỷ lục: <n> · Em đang: <m>" và PHÁ KỶ LỤC chỉ nổ khi điểm thật vượt mốc trong "miti-best"
   [24] hiệp 3 chạy "HIỆP QUYẾT ĐỊNH" (nhân đôi điểm, thêm 1 thẻ vàng) nhưng vẫn đúng 4 lượt + trạm nghỉ 5 giây
   [25] nghi thức mở thưởng cuối hiệp dài 2,5 giây, luôn có phần thưởng, không đổi level thích ứng, mở ngay khi reduced-motion
-  Mục gắn 📷 chỉ áp dụng khi có webcam: bản không camera bỏ 6 mục đó và vẫn phải đạt 19 mục còn lại.
+  [26] "miti-tokens" giữ được khiên chuỗi và quyền chọn câu sang phiên sau (tối đa 2); khiên vỡ vẫn trừ 1 tim, vẫn hiện lời giải, câu đó vẫn vào hàng đợi luyện lại
+  [27] màn tổng kết in đúng một dòng "Lần sau em quay lại sẽ có <n> câu đang chờ" với n đếm từ "miti-review", không chuỗi ngày chơi, không dòng "em đã nghỉ X ngày"
+  Mục gắn 📷 chỉ áp dụng khi có webcam: bản không camera bỏ 6 mục đó và vẫn phải đạt 21 mục còn lại.
 - XUẤT BẢN VĂN: bảng có nút "Xuất bản văn" sinh một khối chữ tiếng Việt copy được — tên game, bản chuẩn MiTi,
   ngày giờ, kiểu điều khiển đang chạy, số mục ĐẠT / CHƯA ĐẠT, danh sách mục chưa đạt kèm lý do.
   Khối chữ chỉ hiện trên màn hình và vào clipboard máy đó; không gửi lên máy chủ nào, không xin quyền, không để lại dữ liệu.
 - MỤC CHƯA ĐẠT PHẢI GIẢI THÍCH ĐƯỢC: mỗi dòng kèm một câu nguyên nhân kỹ thuật cho người lớn
   (ví dụ "toScreen không được dùng ở drawImage — vật thể đang tính bằng lx * W") và một câu nên sửa thế nào trong prompt.
   Cấm báo "lỗi" rồi im lặng, cấm chữ chung chung kiểu "hệ thống có vấn đề".
-- 17 VIỆC NGƯỜI THỬ PHẢI BẤM TAY (máy không tự kiểm được, làm theo đúng thứ tự, khoảng 15 phút):
+- 19 VIỆC NGƯỜI THỬ PHẢI BẤM TAY (máy không tự kiểm được, làm theo đúng thứ tự, khoảng 15 phút):
   đứng xa tới mức chỉ còn hai bàn tay · giữ im một tư thế 5 giây · che nửa người bằng tay · tắt camera giữa vòng ·
   rút mạng lúc đang tải model · đổi tay thuận sang Trái giữa chừng · bật reduced-motion ở hệ điều hành rồi mở game ·
   cố tình sai 4 câu liên tiếp · mở bằng điện thoại đặt dọc · đưa một học sinh lớp 4 chưa đọc hướng dẫn chơi thử 60 giây ·
@@ -483,6 +512,8 @@ Không có cách nghiệm thu thì 40 quy định phía trên chỉ là 40 lời
   vừa bấm BẮT ĐẦU được 3 giây — em có cảm giác đây là game thật (một cú "ồ") hay chỉ là màn chữ?
   chơi hai phiên liên tiếp — phiên sau có hiện đúng "Kỷ lục: <n>" của phiên trước và vệt ghost chạy theo đúng lượt tốt nhất không?
   chơi đến hiệp 3 — em có nhận ra hiệp này căng hơn thật (điểm nhân đôi, thẻ vàng thêm) mà câu hỏi không khó hơn không?
+  để dành tới phiên sau rồi chơi tiếp — khiên chuỗi có còn trong "miti-tokens" và có dùng được thật không (làm sai một câu: chuỗi giữ mà tim vẫn giảm, lời giải vẫn hiện)?
+  đọc dòng "Chương tiếp theo" và bấm "Xem trước" ở màn tổng kết — em có hỏi khi nào được chơi chương đó, hay dòng chữ bị đọc như quảng cáo?
   Bảng in kèm từng việc và ô ghi kết quả: `prompts/CHECKLIST_NGHIEP_THU.md`.
 - THIẾU MỤC NÀO THÌ SỬA PROMPT, KHÔNG SỬA TAY FILE HTML: dán lại nguyên văn quy định tương ứng vào cuối prompt rồi sinh lại file.
 
@@ -509,6 +540,12 @@ Không có cách nghiệm thu thì 40 quy định phía trên chỉ là 40 lời
 [ ] hiệp 3 "HIỆP QUYẾT ĐỊNH" nhân đôi điểm nhưng vẫn 4 lượt + trạm nghỉ 5 giây, level không đổi theo hiệp
 [ ] mở thưởng cuối hiệp 2,5 giây, luôn có quà, không đổi level thích ứng, reduced-motion thì mở ngay
 [ ] cột "Cả nhóm: <x>/<mốc>" chỉ hiện tổng câu đúng, không điểm từng em cạnh nhau, không tên, không hạng nhất
+[ ] còn 1 câu tới mốc 10/20/30 thì HUD bật dòng "Còn 1 câu nữa tới mốc <m>" 1,5 giây; đích chung hiện "Cả nhóm còn <k> câu tới mốc"
+[ ] "miti-tokens" tích được tối đa 2 khiên chuỗi và giữ sang phiên sau; khiên vỡ vẫn trừ 1 tim, vẫn hiện lời giải, vẫn luyện lại câu sai
+[ ] màn tổng kết có đúng một dòng "Chương tiếp theo" theo errorTag em còn yếu + nút "Xem trước" 6 giây, không đe dọa "không chơi là mất"
+[ ] dòng "Lần sau em quay lại sẽ có <n> câu đang chờ" đếm từ "miti-review"; không chuỗi ngày chơi, không dòng "em đã nghỉ X ngày"
+[ ] bộ sưu tập là lưới 6 ô, ô chưa mở là nét đứt "? ? ?" kèm "còn thiếu <k> thẻ", không so với bộ của bạn
+[ ] bấm "Kết thúc" có nghi thức lưu phiên 3 giây "Đã lưu: ..." trước khi nút "Tắt máy" sáng; localStorage bị chặn thì ẩn mọi dòng kỷ lục
 [ ] phiên có >= 3 lượt xen cụm khác và >= 1 lượt là câu đến hạn ôn; phiên đầu trên máy thì bỏ qua lịch mà không báo lỗi
 [ ] 10 giây "Em còn nhớ không?" chạy trước lượt 1; sai ở đó không trừ tim, không cắt chuỗi, chỉ đưa vào lượt 3
 [ ] "Vì sao đúng?" xuất hiện ở đúng 4/12 lượt, không tính vào 12 lượt, không rút thời gian đọc đề
@@ -549,10 +586,10 @@ Không có cách nghiệm thu thì 40 quy định phía trên chỉ là 40 lời
 [ ] không cho sai quá 3 câu liên tiếp; câu thứ 4 là level 1 kèm lời giải từng bước, chọn lại đúng không trừ tim lần hai
 [ ] không hiện "level"/sao xếp hạng cho học sinh; phân bố level chỉ ở màn tổng kết cho giáo viên
 [ ] bảng kiểm ẩn mở bằng 7 lần chạm logo MiTi hoặc Ctrl+Alt+K, trạng thái ĐẠT do code kiểm thật lúc chạy
-[ ] cả 25 mục máy tự kiểm đều có hàm kiểm tương ứng, không mục nào là chữ kê sẵn
+[ ] cả 27 mục máy tự kiểm đều có hàm kiểm tương ứng, không mục nào là chữ kê sẵn
 [ ] mục CHƯA ĐẠT kèm nguyên nhân kỹ thuật + cách sửa trong prompt, không có dòng "lỗi hệ thống"
 [ ] nút "Xuất bản văn" copy được khối chữ tiếng Việt, không gửi lên máy chủ nào
-[ ] bản không camera bỏ đúng 6 mục 📷 và vẫn đạt 19 mục còn lại, không bỏ luôn bảng kiểm
+[ ] bản không camera bỏ đúng 6 mục 📷 và vẫn đạt 21 mục còn lại, không bỏ luôn bảng kiểm
 [ ] fallback chuột/chạm/phím chơi trọn vẹn, tự kích hoạt khi camera lỗi
 [ ] QUESTION_DATA có ít nhất 40 mục (Toán) hoặc 60 mục (Tiếng Anh), mỗi mục có đáp án + lời giải + errorTag + loiViet
 [ ] dữ liệu đặt đầu file, code engine đặt sau, không có chỗ nào rút gọn
@@ -613,10 +650,10 @@ Sau khi tự kiểm tra, CHỈ xuất ra file HTML hoàn chỉnh, không kèm gi
   và học sinh nhanh chóng phát hiện rằng vung tay bừa vẫn thắng.
 - **Bảng kiểm nghiệm thu nằm TRONG game**: quy trình của thư viện này là "chỉ viết prompt", file HTML do Gemini Canvas sinh ra
   và không ai đọc hết vài nghìn dòng để xem `toScreen` có thật được dùng ở `drawImage` hay không. Không có nghiệm thu thì
-  bốn mươi quy định phía trên chỉ là bốn mươi lời mong đợi. Bắt game tự kiểm bằng hàm true/false biến lời hứa thành trạng thái đọc được.
+  toàn bộ quy định phía trên chỉ là lời mong đợi. Bắt game tự kiểm bằng hàm true/false biến lời hứa thành trạng thái đọc được.
 - **Trạng thái phải do code kiểm, không phải chữ kê sẵn**: một bảng tĩnh in sẵn chữ "ĐẠT" còn hại hơn không có bảng,
   vì người lớn tưởng là đã kiểm. Đây là lý do quy định ghi rõ "không phải một danh sách chữ tĩnh".
-- **Tách 25 mục máy / 17 việc người thử**: cái gì máy kiểm được thì đừng đùn cho giáo viên; cái máy không kiểm được
+- **Tách 27 mục máy / 19 việc người thử**: cái gì máy kiểm được thì đừng đùn cho giáo viên; cái máy không kiểm được
   (cháu có hiểu luật chơi mà không đọc hướng dẫn không, rút mạng thì sao) thì đừng giả vờ kiểm. Con số 15 phút là thời lượng
   một tiết thực tế, không phải danh sách dài vô hạn.
 - **Mục chưa đạt phải nói nguyên nhân và cách sửa**: bảng kiểm chỉ báo "lỗi" sẽ bị bỏ qua; kèm câu "thiếu ở dòng nào,
@@ -661,3 +698,17 @@ Sau khi tự kiểm tra, CHỈ xuất ra file HTML hoàn chỉnh, không kèm gi
 - **Đích chung thay bảng xếp hạng**: cột "Cả nhóm: <x>/<mốc>" cho cả lớp một lý do để cổ vũ nhau mà vẫn giữ nguyên tắc
   "không xếp hạng, không leaderboard" — mốc 40 câu đúng (người lớn chỉnh 20–60) là mức cho một nhóm nhỏ đổi máy nhau,
   không phải cuộc đua giữa các cá nhân.
+- **"Sắp tới" mạnh hơn "đã xa"**: một đứa trẻ cách mốc 10 câu đúng còn đúng 1 câu sẽ bấm lượt tiếp vì một lý do rất khác
+  khi đang ở câu thứ 3. Vì thế dòng "Còn 1 câu nữa tới mốc <m>" phải đếm từ số câu đúng thật, không phải một lời động viên
+  chung chung — nếu không nó thành chữ trang trí mà không em nào tin.
+- **Khiên chuỗi là phần thưởng, không phải mạng thứ hai**: nỗi sợ mất thứ mình đang có là đòn bẩy mạnh nhất ở nhóm tuổi
+  này, nhưng nếu khiên giữ cả tim thì đổ sụp quy tắc 60/40 (vung bừa vẫn thắng) và sàn chống nản. Nên khiên chỉ giữ chuỗi,
+  tim vẫn trừ, lời giải vẫn hiện, câu sai vẫn vào hàng đợi luyện lại, và tối đa 2 khiên.
+- **Dòng "Chương tiếp theo" phải nối vào errorTag thật**: một lời hứa suông kiểu "tuần sau có boss lớn!" chỉ là quảng cáo.
+  Bond vào đúng hai lỗi em còn yếu biến nó thành lời hứa học tập mà chính em đọc được.
+- **Hẹn lần sau bằng số câu, không bằng "chuỗi ngày"**: streak ngày (streak) là cơ chế giữ chân hiệu quả nhất trong app
+  người lớn và cũng độc hại nhất với trẻ — nghỉ một ngày thành mất công, mất công thành bỏ luôn. Ở đây "Lần sau sẽ có
+  <n> câu đang chờ" đếm từ `miti-review`, và nghỉ chơi không có hình phạt nào.
+- **Ô "? ? ?" và nghi thức "Đã lưu" là hai thứ rẻ mà trẻ đọc được ngay**: chỗ trống trong bộ sưu tập tự giải thích mà
+  không cần dòng hướng dẫn nào; còn 3 giây mascot cất thành tích vào túi trả lời đúng câu hỏi trẻ 9 tuổi luôn hỏi khi
+  tắt máy — "ủa vậy mai còn không?".
