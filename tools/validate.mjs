@@ -215,8 +215,10 @@ const FULL_PINS = [
   ['celebrate.mjs', CELEBRATE.slowmo, '0,45×', 'tốc độ thẻ khi slow-mo'],
   ['celebrate.mjs', CELEBRATE.haptics, 'navigator.vibrate(20)', 'cú rung khi chốt đúng'],
   ['celebrate.mjs', CELEBRATE.haptics, 'if (navigator.vibrate)', 'bọc điều kiện để máy không hỗ trợ vẫn chạy'],
+  ['identity.mjs', IDENTITY.mascot, 'tối đa HAI từ', 'trần độ dài tên mascot'],
   ['identity.mjs', IDENTITY.mascot, '>= 5 chỗ', 'số chỗ mascot tên riêng phải xuất hiện'],
   ['identity.mjs', IDENTITY.palette, '60/441', 'khoảng cách màu tối thiểu giữa hai game cùng cụm'],
+  ['identity.mjs', IDENTITY.lines, 'Ba câu thoại riêng', 'số câu thoại riêng của mỗi game'],
   ['identity.mjs', IDENTITY.signature, '1 lần/phiên', 'số lần khoảnh khắc chữ ký diễn ra'],
   ['identity.mjs', IDENTITY.signature, '>= 2 giây', 'độ dài khoảnh khắc chữ ký'],
   ['identity.mjs', IDENTITY.lines, '6 từ', 'trần số từ một câu thoại'],
@@ -670,6 +672,15 @@ for (const [docName, docText] of DOC_FILES) {
   for (const [re, label] of [[/([0-9]+) mục máy tự kiểm/i, 'số mục máy tự kiểm'], [/([0-9]+) việc người thử/i, 'số việc người thử'], [/([0-9]+) mục còn lại/i, 'số mục bản không camera còn phải đạt']]) {
     if (!re.test(docText)) bad(`${docName} không còn nêu ${label} — tài liệu phải ghi con số hiện hành của bảng kiểm để người viết prompt đối chiếu.`);
   }
+}
+// Master liệt kê từng mục máy tự kiểm bằng số [1] [2]... — viết tắt nên không so nguyên văn được, nhưng
+// danh sách phải ĐỦ số lượng và đánh số liên tục. Probe vòng 13: xóa dòng "[32] verifyIdentity()..." khỏi
+// master thì validate vẫn xanh vì mọi dòng còn lại tự nhất quán — khung hướng dẫn mất một mục mà không ai
+// báo, và người dán prompt theo master sẽ không yêu cầu game kiểm tra bản sắc riêng.
+{
+  const items = [...master.matchAll(/^\s+\[(\d+)\] .*$/gm)].map((m) => Number(m[1]));
+  if (items.length !== MACHINE_ITEMS.length) bad(`Master prompt liệt kê ${items.length} mục máy tự kiểm nhưng tools/lib/acceptance.mjs có ${MACHINE_ITEMS.length} — thiếu mục nào thì thêm lại vào §11, không xóa.`);
+  for (let i = 0; i < items.length; i++) if (items[i] !== i + 1) { bad(`Master §11 đánh số mục không liên tục (vị trí ${i + 1} lại là [${items[i]}]).`); break; }
 }
 // 7h. Registry tầng quy định: thêm lib mà quên ghi vào tài liệu thì lib đó vô hình với người sửa.
 // Vòng 10 bắt buộc: heading master phải nêu tên lib nguồn, và cả hai README phải liệt kê lib trong
