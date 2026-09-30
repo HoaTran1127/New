@@ -8,6 +8,8 @@
 
 > 🎯 **North Star:** Vào thư viện ➔ Chọn game yêu thích ➔ **1 Click Copy Prompt** ➔ Dán vào **[Google Gemini](https://gemini.google.com)** ➔ Nhận ngay mã nguồn Game Web AR 1 file HTML hoàn chỉnh, bật camera chơi chuyển động 60 FPS cực mượt!
 
+> 🧑‍🏫 **Giáo viên muốn giảng bài thay vì cho học sinh chơi?** Thư viện có thêm **[39 giáo án bảng phấn](prompts/giao-an/README.md)** cho Toán lớp 4–5: giáo viên trình bày trên màn chiếu, mọi con số thành vật thật vẽ phấn cắt và kéo được bằng ngón tay, không tim không điểm không xếp hạng. Chi tiết ở mục **🧑‍🏫 Bộ giáo án giảng bài** phía dưới.
+
 ---
 
 ## 🚀 Trải Nghiệm Nhanh Trực Tuyến
@@ -188,6 +190,79 @@ Nguồn: `tools/lib/verify.mjs`. Đây là tầng sửa hai lỗi **không ai nh
 
 ---
 
+## 🧑‍🏫 Bộ giáo án giảng bài — bảng phấn và vật thật (39 giáo án Toán 4–5)
+
+👉 **[Mở bộ giáo án](prompts/giao-an/README.md)** — thư mục `prompts/giao-an/`, sinh bằng `tools/build-lessons.mjs`.
+
+Đây là **CÔNG CỤ GIẢNG BÀI cho giáo viên trình bày trước cả lớp**, tách hẳn khỏi 85 prompt game cho học sinh tự chơi. Bảng phấn và vật thật là của riêng bộ giáo án; 85 prompt game không mang một dòng nào trong đó. Hai bộ đi từ cùng một cụm kiến thức nên cùng một bài được dạy bằng cái pizza rồi luyện bằng chính cái pizza đó, nhưng cơ chế thì **đối lập nhau có chủ đích**:
+
+| | 🧑‍🏫 Bộ giáo án (39) | 🎮 85 prompt game |
+| --- | --- | --- |
+| Ai dùng | Giáo viên trình bày, cả lớp xem màn chiếu | Học sinh tự chơi, một máy một hoặc hai em |
+| Nhịp | Chờ giáo viên bấm "Bước tiếp", không tự chuyển | 12 lượt, tăng độ khó ở lượt 5 và lượt 9 |
+| Động cơ | Không tim, không điểm, không combo, không xếp hạng | Có tim, điểm, chuỗi combo, thẻ vàng x2, mascot |
+| Bảng phấn | ≥ 70% màn chiếu, **không bao giờ tự lau**, tối đa 8 trang | Bảng chữ L ≤ 40% khung hình, tự lau sau mỗi lượt |
+| Camera | Phụ: dạy trọn vẹn bằng chuột và bàn phím | Chính: khung hình webcam là màn chơi |
+| Nguồn quy định | `tools/lib/chalk.mjs` + `tools/lib/lesson.mjs` | `tools/lib/feel.mjs` + `tools/lib/classroom.mjs` |
+
+### Mạch bài năm bước, giống nhau ở cả 39 giáo án
+
+**Khởi động** 2–3 phút (hỏi gắn với vật thật, chưa viết gì lên bảng) → **Vật thật** 4–5 phút (thao tác tay trên vật đếm được) → **Sơ đồ** 3–4 phút (học sinh tự tay dựng biểu diễn bán cụ thể) → **Phép tính** 3–4 phút (mỗi con số nối ngược về sơ đồ) → **Luyện tập chung** 3–4 phút (cả lớp biểu quyết bằng ngón tay). Tổng 15–20 phút, có thanh tiến trình giáo viên kéo được để đổi ngân sách theo lớp mình.
+
+Trình tự này theo khung **Concrete – Representational – Abstract**: lỗi kinh điển khi dạy Toán bằng vật thật là nhảy thẳng từ vật sang thuật toán, bỏ qua bước biểu diễn bán cụ thể. Vì vậy mỗi cụm trong `tools/data/props.mjs` có **5 trường** chứ không phải 4 — trường `so_do` là sơ đồ học sinh phải tự dựng, và `validate.mjs` chặn nếu để trống.
+
+### 🖍️ Mười quy định bảng phấn + vật thật (`tools/lib/chalk.mjs`)
+
+- **Bảng phấn ảo**: alpha nền **0.55–0.70** (vẫn thấy lớp học phía sau), nền `#2E4638`, viền gỗ 12–18 px, nét phấn 4–7 px `#F4F1E4` rơi 8–12 hạt bụi mỗi nét. **Mép trên không cao quá landmark vai + 15% chiều cao khung hình** — đứng sát bảng mà phải với quá đầu thì bàn tay bị chính thân người che khỏi camera.
+- **Viết phấn bằng đầu ngón tay**: pinch ngón 4–8 (≤ 0.06 lần khoảng cách 5–17) thì đầu ngón 8 thành đầu phấn; **nắm bàn tay giữ 350–500 ms** là giẻ lau xoá bán kính 110 px; Hoàn tác 20 bước; không camera thì giữ chuột là viết, phím E là lau.
+- **Mọi con số thành vật đếm được**: **7 là bảy quả táo vẽ phấn chứ không phải chữ "7"**; đủ 10 đơn vị gộp một bó; > 50 đơn vị hiện bó 10 + lẻ; nhãn số chỉ hiện **sau khi** đếm xong.
+- **Ba chặng không nhảy cóc**: VẬT THẬT → SƠ ĐỒ → PHÉP TÍNH. Mỗi con số trong phép tính phải có một đường phấn nối ngược về bộ phận của sơ đồ sinh ra nó; số nào không nối được thì bảng gạch chân nét đứt và hỏi lại "số này lấy từ đâu trong sơ đồ?".
+- **Bài toán đố dựng thành cảnh**: đề tối đa **2 dòng chữ**, mỗi danh từ là một hình vẽ phấn trong khay để kéo vào cảnh; ẩn số là ô nét đứt có dấu `?`; thả sai thì cảnh đã dựng **giữ nguyên**.
+- **Phân số chia theo số phần 2–12**: khay 11 thẻ số phần cho mọi mẫu số (đề trong repo có cả 1/3, 1/5, 1/6), vẫn giữ đường tắt ngón tay 2/4/8. Luỹ thừa của 2 thì số nhát bằng `log2` số phần; không phải luỹ thừa thì bảng kẻ đường mốc mờ để quẹt xác nhận. Cùng một giá trị phải hiện được bằng **≥ 2 trong 4 mô hình** {diện tích, băng giấy, tia số, tập hợp}.
+- **Số đo đọc từ dụng cụ có vạch**: đúng đơn vị đề dùng, cầm kéo được bằng ngón tay, có đường phấn nối từ mép vật sang vạch đang đọc.
+- **Lời giải viết từng dòng ≤ 12 từ**, bảng không bao giờ tự viết hết — mỗi dòng hỏi lại một câu; sai thì gạch chéo `#C9564B` và giẻ lau chỉ xoá **đúng dòng đó**.
+- **Chống mỏi tay** (viết phấn giữa không trung là động tác mỏi nhanh nhất của hand tracking): chế độ **chạm-bật viết** để không phải giữ pinch, **nghỉ bắt buộc sau 90 giây** pinch liên tục kèm đếm ngược 5 giây, khay phấn đặt ngang khuỷu tay làm điểm tựa, và **mất landmark quá 500 ms thì nét dở đóng băng tại chỗ** chứ không xoá hay nhảy nét.
+- **Lưu bảng của tiết dạy**: tuần tự hoá nét vẽ + vật + sơ đồ vào `localStorage` khoá `miti-board`, tối đa **200 KB**, có nút Lưu / Mở / In (nền trắng chữ đen). **Tuyệt đối không lưu ảnh hay video camera.**
+
+### 👩‍🏫 Mười một quy định chế độ giảng bài (`tools/lib/lesson.mjs`)
+
+- **Giáo viên trình bày**: màn chiếu 16:9, bảng chiếm ≥ 70%, chữ phấn **≥ 40 px** (lớn hơn mức 34 px của game) vì người đọc đứng ở cuối phòng; điều khiển trọn bài bằng chuột và bàn phím, camera chỉ bật khi mời em lên bảng.
+- **Không một cơ chế game nào**: không tim, điểm, combo, xếp hạng, đồng hồ gây áp lực, hit-stop, giật màn hình, mascot. Sai thì chỉ có một dòng phấn đỡ bằng chữ.
+- **Nhịp do giáo viên quyết định**: dựng cảnh ≥ 600 ms, có nút đổi tốc độ 0.5x/1x/1.5x và **phát lại bước tối đa 8 giây, không giới hạn số lần**.
+- **Năm bước có ngân sách phút** và thanh tiến trình kéo được; hết ngân sách thì báo "quá giờ" chứ không tự cắt bài.
+- **"Mời em lên bảng"**: chuyển quyền trong ≤ 5 giây, hàng đợi 4 em, ghi vị trí cổ tay (landmark 0) của bàn tay được gán, tự trả quyền sau 3 giây không thao tác, tối đa 12 lượt một tiết.
+- **Bỏ qua bàn tay lạ trong lớp đông**: `maxNumHands: 2`, mọi bàn tay có gốc cổ tay ngoài vùng bảng + 10% đệm bị bỏ qua hoàn toàn — em ngồi dưới giơ tay phát biểu không vẽ bậy lên bảng được; nhiều tay trong vùng bảng thì tạm khoá và hỏi giáo viên chứ không tự đoán.
+- **Cả lớp trả lời bằng ngón tay**: đếm số bàn tay theo từng đáp án trong 5 giây, ghi rõ "camera thấy N em" và có nút cộng tay cho số em camera không thấy; cột đáp án sai cao hơn 1/3 thì bảng gợi ý giảng lại bước SƠ ĐỒ.
+- **Bảng không bao giờ tự lau**: cả năm bước cộng lại thành một trang bảng hoàn chỉnh để cuối tiết cả lớp nhìn lại mạch bài.
+- **Chữ phải đọc được từ dãy cuối lớp**: chuẩn là mắt một em cách màn chiếu 7–8 m chứ không phải laptop của cô — chữ phấn ≥ 40 px **và** ≥ 5.5% chiều cao khung hình (để máy chiếu 1024×768 vẫn ra cỡ), tối đa 12 chữ một dòng và 6 dòng một lúc, có nút "Chữ to cho lớp đông" ×1.4 và nút "Xem thử từ cuối lớp" thu 25% + mờ để cô tự kiểm ngay tại bàn.
+- **Dạy được khi mất mạng**: mạng trường đứt là chuyện thường, nên CDN chết thì màn chờ chỉ tối đa **8 giây** rồi bảng phấn hiện ra dạy bình thường bằng chuột; không một lỗi tải nào được khoá nội dung; mở file trên máy khác, không mạng, không tài khoản vẫn chạy, và không có dữ liệu nào của lớp gửi đi.
+- **`verifyLessonBank()` chạy lúc nạp và trước khi lưu bảng**: `answer` có trong `choices` đúng một lần, ≥ 6 mục phủ ≥ 3 nhãn lỗi, mọi phương án sai phải mô phỏng một lỗi thật (cấm `3 + 2 = 99`), số trong đề đúng phạm vi SGK. Mục lỗi bị loại kèm `console.warn` tiếng Việt, còn dưới 5 mục hợp lệ thì nút "Cả lớp trả lời" và "Lưu bảng" tự khoá — cảnh báo chỉ hiện ở dải điều khiển của cô, không hiện lên bảng trước 35 em.
+
+### 📄 Ba quy định "từ bảng ra vở" (`tools/lib/handout.mjs`)
+
+Một tiết giảng chỉ xong khi các em làm được bài trên giấy. Khảo sát 39 giáo án cho thấy **0/39** có bất kì đầu ra nào cho tờ giấy — nút "In bảng" mới là in lại ảnh bảng phấn.
+
+- **Phiếu bài tập A4 sinh từ CHÍNH `LESSON_DATA`** đã được `verifyLessonBank()` kiểm, không phải danh sách câu hỏi thứ hai tự bịa: 6–8 câu theo đúng thứ tự đã giảng, bắt buộc **≥ 2 câu mang cùng một `errorTag`** với lỗi cả lớp hay mắc nhất, mỗi câu chừa khoảng trắng **≥ 3 cm** kèm dòng "Em viết phép tính hoặc sơ đồ ở đây". Chỉ một màu đen, in được khi mất mạng (`window.print()` + stylesheet nội tuyến, `@page` A4 lề 1.5 cm), có dòng "Họ và tên / Lớp" để viết tay và **không bao giờ in tên học sinh**.
+- **Trang đáp án riêng cho cô**: in bằng nút riêng, mỗi dòng ghi đáp án + lời giải ≤ 12 từ + nhãn lỗi `loiViet`; khi "In phiếu bài tập" thì không được sót trang đáp án vào phiếu của học sinh — kể cả chữ màu trắng hay `display:none`.
+- **Khung "Nội dung để chép"** cho lớp không có máy in: đúng **ba dòng** chữ ≥ 40 px — dòng ghi nhớ chốt, một ví dụ đã làm thật trên bảng ở bước PHÉP TÍNH, và một bài về nhà lấy từ `LESSON_DATA` (không tự bịa số ngoài SGK). Copy ra được văn bản thuần có dấu.
+
+### Vật thật và sơ đồ theo cụm kiến thức (`tools/data/props.mjs`)
+
+38 cụm Toán, mỗi cụm đủ 5 trường `vat · don_vi · ngon_tay · so_do · doc`, không để mô hình tự bịa:
+
+| Cụm | Vật thật vẽ phấn | Ngón tay làm gì | Sơ đồ học sinh tự dựng |
+| --- | --- | --- | --- |
+| `phan-so-dau` | pizza tròn + băng giấy chữ nhật | giơ 2/4/8 ngón hoặc pinch thẻ số phần rồi quẹt một đường | ba mô hình cho cùng một phân số: hình tròn tô phần, băng chia khúc, tia số có vạch tại k/N |
+| `chuyen-dong-de` | con đường kẻ phấn với hai xe ở hai đầu | nắm kéo từng xe, mỗi lần kéo tiến đúng số km ghi trên thân xe | đoạn thẳng hai mũi tên ngược chiều, tổng vận tốc ở giữa |
+| `the-tich` | hộp trong suốt + khay khối lập phương 1 cm³ | xếp kín một lớp đáy rồi quẹt một đường để nhân lên một tầng | ba hình cạnh nhau: lớp đáy, một tầng, hộp hoàn chỉnh ghi ba cạnh |
+| `khoi-luong` | cân hai đĩa + quả cân 1 g / 1 kg / 1 tạ / 1 tấn | nắm kéo quả cân bỏ lên đĩa, đĩa nặng hạ 12 độ | chuỗi mũi tên nhân chia 10 nối các ô tấn - tạ - kg - g |
+| `phan-tram` | lưới 100 ô + bảng giá có thanh trượt giảm giá | kéo thanh trượt, lưới tự tô đúng số ô và giá tự tính lại | ba thanh trên cùng một trục: giá ban đầu, phần giảm, phần phải trả |
+| `ti-so-dau-bep` | cái nồi + các bát nguyên liệu xếp quanh | quẹt tăng/giảm số khẩu phần, mọi bát nhân cùng hệ số | bảng một cột cho mỗi nguyên liệu, một hàng cho mỗi số khẩu phần |
+| `hinh-binh-hanh` | hình bình hành có đường cao nét đứt | quẹt dọc đường cao cắt rời mảnh tam giác rồi kéo sang bên kia | hình chữ nhật ghép được trên lưới ô vuông, đáy và đường cao nối sang hai cạnh tương ứng |
+
+
+---
+
 ## 🔁 Pipeline: sửa dữ liệu một chỗ, mọi thứ dựng lại
 
 ```text
@@ -196,21 +271,29 @@ tools/data/clusters.mjs      57 cụm kiến thức + nội dung + giải thích
 tools/data/gestures.mjs      mã điều khiển: landmark, hình học chốt, ngưỡng, bien_do, fallback + trường `ar`
 tools/data/examples.mjs      câu mẫu few-shot cho từng cụm
 tools/data/error-notes.mjs   nhãn lỗi tiếng Việt (errorTag + loiViet)
+tools/data/props.mjs         vật thật vẽ phấn cho 38 cụm Toán (vat · don_vi · ngon_tay · so_do · doc)
+tools/data/lessons.mjs       38 giáo án: tên bài, câu khởi động, dòng ghi nhớ
 tools/lib/ar.mjs             hợp đồng AR (cover-fit, toScreen, alpha, z, neo landmark) — dùng chung mọi chỗ
 tools/lib/rules.mjs          quy định lớp học (60/40, calibration, Pause, FPS, an toàn, tổng kết 3 thẻ)
 tools/lib/feel.mjs           quy định vận động to + cảm giác arcade (biên độ, mép khung, trạm nghỉ, hit-stop, combo)
 tools/lib/classroom.mjs      quy định lớp học thật (vùng an toàn cho chữ, đàm phán camera, miti-mastery, 2 học sinh)
 tools/lib/access.mjs         tiếp cận + an toàn thần kinh (trần nhấp nháy, reduced-motion, không chỉ dùng màu, phụ đề, tương phản, tay thuận)
 tools/lib/verify.mjs         tự kiểm chứng đề + độ khó thích ứng (verifyQuestionBank, nhiễu theo lỗi thật, guard phạm vi, chống mẹo, level thích ứng, sàn chống nản)
+tools/lib/chalk.mjs          bảng phấn + vật thật, 10 quy định — dùng cho BỘ GIÁO ÁN
+tools/lib/lesson.mjs         chế độ giảng bài, 11 quy định — dùng cho BỘ GIÁO ÁN
+tools/lib/handout.mjs        từ bảng ra vở, 3 quy định (phiếu in, đáp án, chép vào vở)
         │
         └─ node tools/build.mjs
              ├─ catalogs/GAME_CATALOG.csv + .md
              ├─ prompts/01-toan4 · 02-toan5 · 03-english4 · 04-english5 (85 file)
              ├─ prompts/VARIANTS_425.md   (85 game × 5 kiểu điều khiển)
              ├─ prompts/01..12 legacy (nâng cấp phụ thuộc, gắn nhãn)
+             ├─ prompts/giao-an/ (39 giáo án + README)  ← tools/build-lessons.mjs
              ├─ catalogs/GAME_CATALOG.js  → index.html vẽ lưới + lọc + copy
              └─ node tools/validate.mjs   → chặn MIXED, thiếu hợp đồng AR, thiếu quy định lớp học,
-                                            425 block biến thể, link gãy, thiếu chữ ký MiTi, rò ${}
+                                            425 block biến thể, link gãy, thiếu chữ ký MiTi, rò ${},
+                                            giáo án thiếu quy định bảng phấn / chế độ giảng bài /
+                                            vật thật thiếu trường, và CƠ CHẾ GAME LỌT SANG GIÁO ÁN
 ```
 
 ```bash
