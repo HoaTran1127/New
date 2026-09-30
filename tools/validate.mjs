@@ -12,7 +12,7 @@ import { MOTION, FEEL } from './lib/feel.mjs';
 import { CLASSROOM } from './lib/classroom.mjs';
 import { ACCESS, ACCESS_SHORT } from './lib/access.mjs';
 import { VERIFY, ADAPT, VERIFY_SHORT } from './lib/verify.mjs';
-import { CHALK, CHALK_SHORT, SOLID_CLUSTERS, BODY_CLUSTERS, SO_QUY_DINH, SO_TU_CHUNG } from './lib/chalk.mjs';
+import { CHALK, CHALK_SHORT_HINH, CHALK_SHORT_THAN, chalkShortFor, SOLID_CLUSTERS, BODY_CLUSTERS, SO_QUY_DINH, SO_TU_CHUNG } from './lib/chalk.mjs';
 import { LESSON, LESSON_SHORT, HO_TRO, LESSON_BAN_WORDS } from './lib/lesson.mjs';
 import { AR_LESSON } from './lib/ar.mjs';
 import { PROP_KEYS, prop } from './data/props.mjs';
@@ -136,6 +136,13 @@ const CHALK_RULES = [
 const CHALK_COND = [
   [CHALK.solid3d, SOLID_CLUSTERS, 'khối 3D', 'thiếu quy định vẽ khối (cạnh khuất nét đứt, xoay khối, mở hộp, xếp lớp đếm tầng)'],
   [CHALK.bodyTool, BODY_CLUSTERS, 'dụng cụ thân người', 'thiếu quy định dùng thân người làm thước góc và ê-ke (đỉnh là vai 11/12, hai tia qua khuỷu 13/14)'],
+];
+// Vế rút gọn trong checklist tự kiểm (mục 10) phải đi theo đúng hai danh sách trên, cùng chiều
+// với mục 4. Trước vòng 7 hai vế này nằm thường trực trong CHALK_SHORT nên bài phân số cũng bị
+// yêu cầu "xoay khối", học sinh kiểm nhau bằng một việc không tồn tại trong tiết.
+const CHALK_COND_SHORT = [
+  [CHALK_SHORT_HINH, SOLID_CLUSTERS, 'vế khối 3D của checklist'],
+  [CHALK_SHORT_THAN, BODY_CLUSTERS, 'vế thân người làm thước góc của checklist'],
 ];
 const LESSON_RULES = [
   [LESSON.teacher, 'thiếu chế độ giáo viên trình bày trên màn chiếu'],
@@ -374,6 +381,10 @@ if (!fs.existsSync(LESSON_DIR)) {
       if (list.includes(L.cluster)) { if (!t.includes(needle)) bad(`${tag}: ${thieu}.`); }
       else if (t.includes(needle)) bad(`${tag}: quy định "${nhan}" lọt vào bài không có hình học khối/góc (${L.cluster}).`);
     }
+    for (const [needle, list, nhan] of CHALK_COND_SHORT) {
+      if (list.includes(L.cluster)) { if (!t.includes(needle)) bad(`${tag}: checklist tự kiểm (mục 10) thiếu ${nhan} trong khi mục 4 đã bắt làm việc đó.`); }
+      else if (t.includes(needle)) bad(`${tag}: ${nhan} lọt vào bài không có hình học khối/góc (${L.cluster}) — học sinh sẽ tự kiểm một việc tiết này không có.`);
+    }
     for (const [needle, msg] of ACCESS_RULES) if (!t.includes(needle)) bad(`${tag}: ${msg}.`);
     if (!t.includes(CLASSROOM.safeZone)) bad(`${tag}: thiếu vùng an toàn cho chữ trên màn chiếu.`);
     if (!t.includes(CLASSROOM.framing)) bad(`${tag}: thiếu đàm phán theo mức camera đang thấy.`);
@@ -410,7 +421,7 @@ if (!fs.existsSync(LESSON_DIR)) {
     }
     // Câu mẫu nằm trong file dưới dạng JSON.stringify nên phải so theo đúng dạng đã escape dấu nháy.
     for (const ex of EXAMPLES[L.cluster]) if (!t.includes(JSON.stringify(ex.prompt)) || !t.includes(JSON.stringify(ex.answer))) bad(`${tag}: thiếu câu luyện tập mẫu của cụm ${L.cluster}.`);
-    for (const s of [CHALK_SHORT, LESSON_SHORT, VERIFY_SHORT, ACCESS_SHORT]) if (!t.includes(s)) bad(`${tag}: checklist tự kiểm thiếu một dòng rút gọn (${s.slice(0, 30)}...).`);
+    for (const s of [chalkShortFor(L.cluster), LESSON_SHORT, VERIFY_SHORT, ACCESS_SHORT]) if (!t.includes(s)) bad(`${tag}: checklist tự kiểm thiếu một dòng rút gọn (${s.slice(0, 30)}...).`);
     for (const needle of ['LESSON_DATA', '#FFD84D', 'MiTi • Giảng bài bằng vật thật', 'tasks-vision@1.0.1', 'Không dùng Tailwind Play CDN']) {
       if (!t.includes(needle)) bad(`${tag}: giáo án thiếu ${needle}.`);
     }

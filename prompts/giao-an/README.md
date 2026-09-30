@@ -32,6 +32,12 @@ Mục 4 của giáo án có 11 quy định luôn đúng với mọi bài, cộng
 bài không thuộc danh sách mà vẫn mang theo thì báo "lọt vào bài không có hình học", và tiêu đề mục 4
 phải ghi đúng số quy định của chính bài đó.
 
+Vế rút gọn của hai quy định này trong checklist tự kiểm (mục 10) cũng đi qua cùng hai danh sách, nhờ
+`chalkShortFor(c)` trong `tools/lib/chalk.mjs` — builder in ra và bộ kiểm đòi cùng một chuỗi nên không
+thể xảy ra chuyện mục 4 bắt xoay khối mà checklist lại không có dòng đó cho học sinh tự kiểm. Trước
+vòng 7 hai vế này nằm thường trực trong `CHALK_SHORT`, thành thử 44 bài đều mang theo
+"xoay khối", kể cả bài chia số và phân số không có khối nào.
+
 ## Cách dùng
 
 1. Mở file giáo án cần dạy, copy nguyên khối ```text```.

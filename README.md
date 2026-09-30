@@ -221,8 +221,9 @@ Trình tự này theo khung **Concrete – Representational – Abstract**: lỗ
 - **Bài toán đố dựng thành cảnh**: đề tối đa **2 dòng chữ**, mỗi danh từ là một hình vẽ phấn trong khay để kéo vào cảnh; ẩn số là ô nét đứt có dấu `?`; thả sai thì cảnh đã dựng **giữ nguyên**.
 - **Phân số chia theo số phần 2–12**: khay 11 thẻ số phần cho mọi mẫu số (đề trong repo có cả 1/3, 1/5, 1/6), vẫn giữ đường tắt ngón tay 2/4/8. Luỹ thừa của 2 thì số nhát bằng `log2` số phần; không phải luỹ thừa thì bảng kẻ đường mốc mờ để quẹt xác nhận. Cùng một giá trị phải hiện được bằng **≥ 2 trong 4 mô hình** {diện tích, băng giấy, tia số, tập hợp}.
 - **Số đo đọc từ dụng cụ có vạch**: đúng đơn vị đề dùng, cầm kéo được bằng ngón tay, có đường phấn nối từ mép vật sang vạch đang đọc.
-- **Khối 3D** — *chỉ in vào bài có khối* (`the-tich`, `hinh-hoc-on-tap`): cạnh khuất **nét đứt 3 px alpha 0.55**, mặt quay về người xem đậm hơn mặt bên 20%, nắm kéo ngang xoay **−90° đến +90° mỗi bước 15°**, nút "mở hộp" trải **đúng 6 mặt** lưới khai triển trong animation ≥ 800 ms với 12 cặp khớp, xếp lớp thì **đếm từng tầng** ("lớp 1: 12 khối · tầng 2/3"). 0/39 giáo án trước vòng 3 nói về cạnh khuất, xoay khối hay lưới khai triển.
-- **Thân người là dụng cụ hình học** — *chỉ in vào bài có góc hoặc hai đường* (`goc`, `vuong-goc-song-song`, `hinh-binh-hanh`, `hinh-thoi`, `hinh-hoc-on-tap`): nút "Cả lớp làm bằng tay" lấy **đỉnh góc là một vai (11/12)**, **hai tia đi qua hai khuỷu (13/14)**, khớp 90° ± 8° là góc vuông, < 82° nhọn, > 98° mà < 170° tù, 170–190° bẹt; cung góc + số đo ≥ 34 px tại khớp vai, rồi **xác nhận bằng ê-ke/thước phủ lên ảnh** với vạch khớp sáng 400 ms; hai tay duỗi = hai đường thẳng, song song thì kẻ nét dọc hai cánh tay.
+- **Khối 3D** — *chỉ in vào bài có khối* (`the-tich`, `hinh-hoc-on-tap`, `dien-tich-xq-tp`): cạnh khuất **nét đứt 3 px alpha 0.55**, mặt quay về người xem đậm hơn mặt bên 20%, nắm kéo ngang xoay **−90° đến +90° mỗi bước 15°**, nút "mở hộp" trải **đúng 6 mặt** lưới khai triển trong animation ≥ 800 ms với 12 cặp khớp, xếp lớp thì **đếm từng tầng** ("lớp 1: 12 khối · tầng 2/3"). 0/39 giáo án trước vòng 3 nói về cạnh khuất, xoay khối hay lưới khai triển.
+- **Thân người là dụng cụ hình học** — *chỉ in vào bài có góc hoặc hai đường* (`goc`, `vuong-goc-song-song`, `hinh-binh-hanh`, `hinh-thoi`, `hinh-hoc-on-tap`, `hinh-tam-giac`, `hinh-thang`): nút "Cả lớp làm bằng tay" lấy **đỉnh góc là một vai (11/12)**, **hai tia đi qua hai khuỷu (13/14)**, khớp 90° ± 8° là góc vuông, < 82° nhọn, > 98° mà < 170° tù, 170–190° bẹt; cung góc + số đo ≥ 34 px tại khớp vai, rồi **xác nhận bằng ê-ke/thước phủ lên ảnh** với vạch khớp sáng 400 ms; hai tay duỗi = hai đường thẳng, song song thì kẻ nét dọc hai cánh tay.
+- **Checklist tự kiểm (mục 10) cũng đi theo cụm** (`chalkShortFor(c)`): hai vế rút gọn của khối và thân người chỉ in vào 9 bài có hình học. Trước vòng 7 chúng nằm thường trực trong `CHALK_SHORT` nên cả 44 bài — kể cả `hang-so`, `chia-so`, `phan-so` — đều đòi học sinh "tự kiểm tra cạnh khuất của khối" một việc tiết đó không có; mục 10 mâu thuẫn với số quy định in ở mục 4.
 - **Lời giải viết từng dòng ≤ 12 từ**, bảng không bao giờ tự viết hết — mỗi dòng hỏi lại một câu; sai thì gạch chéo `#C9564B` và giẻ lau chỉ xoá **đúng dòng đó**.
 - **Chống mỏi tay** (viết phấn giữa không trung là động tác mỏi nhanh nhất của hand tracking): chế độ **chạm-bật viết** để không phải giữ pinch, **nghỉ bắt buộc sau 90 giây** pinch liên tục kèm đếm ngược 5 giây, khay phấn đặt ngang khuỷu tay làm điểm tựa, và **mất landmark quá 500 ms thì nét dở đóng băng tại chỗ** chứ không xoá hay nhảy nét.
 - **Lưu bảng của tiết dạy**: tuần tự hoá nét vẽ + vật + sơ đồ vào `localStorage` khoá `miti-board`, tối đa **200 KB**, có nút Lưu / Mở / In (nền trắng chữ đen). **Tuyệt đối không lưu ảnh hay video camera.**
@@ -298,6 +299,27 @@ chặn cả hai chiều nên không thể lệch. Số thập phân viết theo 
 Còn thiếu để viết tiếp: **chia phân số (l4)**, **nhân–chia số thập phân (l5)**, **biểu đồ hình quạt tròn (l5)**.
 
 Nguồn đã kiểm tra vòng 7: [Tài liệu tìm hiểu chương trình môn Toán — ĐHSP Hà Nội](https://dtbdtx.hnue.edu.vn/Portals/0/Tai%20lieu%20tim%20hieu%20chuong%20trinh%20mon%20Toan.pdf) (bảng yêu cầu cần đạt lớp 4–5), [Diện tích tam giác và hình thang Toán 5 — mathx.vn](https://mathx.vn/cung-em-hoc-toan/dien-tich-hinh-tam-giac-hinh-thang-toan-lop-5-tuan-18.html), [Lý thuyết phép chia phân số — Toán 4 Kết nối tri thức](https://vietjack.com/toan-4-kn/ly-thuyet-phep-chia-phan-so.jsp). Ba bộ sách (Cánh Diều, Kết nối tri thức, Chân trời sáng tạo) xếp tuần tự khác nhau nhưng cùng một lớp, nên giáo án bám theo mạch kiến thức chứ không theo số bài.
+
+### 🔍 Vòng 7b: checklist tự kiểm cũng phải theo cụm (`chalkShortFor`)
+
+Vòng 7 nối được quy định hình học ở **mục 4** theo cụm, nhưng **mục 10** (dòng checklist in ở cuối
+prompt để học sinh tự kiểm trước khi xuất) vẫn lấy `CHALK_SHORT` — một chuỗi 12 vế có sẵn hai vế khối
+và hai vế thân người. Hậu quả đo được trước khi sửa: cả 44/44 bài giáo án đòi người đọc kiểm tra
+"cạnh khuất nét đứt" và "vai 11/12 là đỉnh", kể cả `GA4-01-hang-so`, `GA4-12-chia` hay `GA4-19-phan-so-dau`
+là những tiết không có khối nào để xoay. Checklist tự mâu thuẫn với số quy định ở mục 4 của chính bài đó.
+
+Cách sửa ở tầng lời, không đụng dữ liệu: tách `CHALK_SHORT` thành **10 vế luôn đúng** plus
+`CHALK_SHORT_HINH` / `CHALK_SHORT_THAN`, rồi cho builder và validator cùng đi qua một hàm
+`chalkShortFor(c)` đọc đúng `SOLID_CLUSTERS` / `BODY_CLUSTERS` mà mục 4 đang dùng — nên hai mục
+không thể lệch nhau nữa. `tools/validate.mjs` kiểm thêm một bảng `CHALK_COND_SHORT` song song với
+`CHALK_COND`, chặn cả hai chiều.
+
+Kết quả: **9/44** bài mang vế hình học (`the-tich`, `hinh-hoc-on-tap`, `dien-tich-xq-tp` cho khối;
+`goc`, `vuong-goc-song-song`, `hinh-binh-hanh`, `hinh-thoi`, `hinh-tam-giac`, `hinh-thang` cho thân người),
+35 bài còn lại ngắn hơn hai vế. Ba mutation probe: xoá vế khối ở `GA5-05` → báo *"checklist tự kiểm (mục 10)
+thiếu vế khối 3D của checklist trong khi mục 4 đã bắt làm việc đó"*; chèn vế thân người vào `GA4-01` → báo
+*"lọt vào bài không có hình học khối/góc (hang-so)"*; cho builder quay lại `CHALK_SHORT` thường trực →
+validator bắt **10 dòng lỗi** trên đúng 9 bài có hình học. 85 prompt game vẫn không đổi một byte.
 
 ### Vật thật và sơ đồ theo cụm kiến thức (`tools/data/props.mjs`)
 

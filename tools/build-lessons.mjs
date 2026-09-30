@@ -11,7 +11,7 @@ import { AR_LESSON, TASKS_VISION } from './lib/ar.mjs';
 import { RULES } from './lib/rules.mjs';
 import { CLASSROOM } from './lib/classroom.mjs';
 import { ACCESS, ACCESS_SHORT } from './lib/access.mjs';
-import { CHALK, CHALK_SHORT, SOLID_CLUSTERS, BODY_CLUSTERS, SO_QUY_DINH, SO_TU_CHUNG } from './lib/chalk.mjs';
+import { CHALK, chalkShortFor, SOLID_CLUSTERS, BODY_CLUSTERS, SO_QUY_DINH, SO_TU_CHUNG } from './lib/chalk.mjs';
 import { LESSON, LESSON_SHORT, HO_TRO } from './lib/lesson.mjs';
 import { VERIFY, VERIFY_SHORT } from './lib/verify.mjs';
 
@@ -177,7 +177,7 @@ ${AR_LESSON}
 10. ĐẦU RA
 - Chỉ xuất toàn bộ file HTML hoàn chỉnh, không kèm giải thích dài.
 - Không TODO, không pseudocode, không "...", không "// code tương tự ở trên", không phần "bạn tự bổ sung".
-- Tự kiểm tra trước khi xuất: ${LESSON_SHORT} · ${CHALK_SHORT} · ${VERIFY_SHORT} · ${ACCESS_SHORT} · có đủ năm bước và không bước nào tự chuyển khi giáo viên chưa bấm · LESSON_DATA đủ 6 mục với 2 mục mẫu nguyên văn, mỗi mục có \`ho_tro\` và phân bố đúng 2-2-2, đã chạy qua verifyQuestionBank() trước bước 5 · mọi thẻ đáp án mang nhãn in hoa A-D và bảng đối chiếu ngón tay hiện đủ · panel soi tay có bộ xương 21 khớp cho riêng tay đã gán, có trạng thái bốn mức và độ trễ ms đo thật · một điểm bàn tay chỉ có một điểm trên mặt bảng, ngoài tầm thì nét dừng ở mép · bài có khối thì đủ cạnh khuất + xoay + mở hộp, bài có góc hoặc hai đường thì đủ bộ dụng cụ thân người · cỡ chữ đang phát đạt theo dòng tự kiểm ĐẠT / CHƯA ĐẠT · bảng không tự lau ở bất kì bước nào · in được bản nền trắng chữ đen · chữ ký MiTi ở ba chỗ · file chạy độc lập không lỗi console.
+- Tự kiểm tra trước khi xuất: ${LESSON_SHORT} · ${chalkShortFor(L.cluster)} · ${VERIFY_SHORT} · ${ACCESS_SHORT} · có đủ năm bước và không bước nào tự chuyển khi giáo viên chưa bấm · LESSON_DATA đủ 6 mục với 2 mục mẫu nguyên văn, mỗi mục có \`ho_tro\` và phân bố đúng 2-2-2, đã chạy qua verifyQuestionBank() trước bước 5 · mọi thẻ đáp án mang nhãn in hoa A-D và bảng đối chiếu ngón tay hiện đủ · panel soi tay có bộ xương 21 khớp cho riêng tay đã gán, có trạng thái bốn mức và độ trễ ms đo thật · một điểm bàn tay chỉ có một điểm trên mặt bảng, ngoài tầm thì nét dừng ở mép · bài có khối thì đủ cạnh khuất + xoay + mở hộp, bài có góc hoặc hai đường thì đủ bộ dụng cụ thân người · cỡ chữ đang phát đạt theo dòng tự kiểm ĐẠT / CHƯA ĐẠT · bảng không tự lau ở bất kì bước nào · in được bản nền trắng chữ đen · chữ ký MiTi ở ba chỗ · file chạy độc lập không lỗi console.
 \`\`\`
 
 ## Ghi chú cho người tạo prompt (không gửi Gemini)
@@ -227,6 +227,12 @@ Mục 4 của giáo án có 11 quy định luôn đúng với mọi bài, cộng
 \`node tools/validate.mjs\` kiểm cả hai chiều: bài thuộc danh sách mà thiếu thì báo "thiếu quy định",
 bài không thuộc danh sách mà vẫn mang theo thì báo "lọt vào bài không có hình học", và tiêu đề mục 4
 phải ghi đúng số quy định của chính bài đó.
+
+Vế rút gọn của hai quy định này trong checklist tự kiểm (mục 10) cũng đi qua cùng hai danh sách, nhờ
+\`chalkShortFor(c)\` trong \`tools/lib/chalk.mjs\` — builder in ra và bộ kiểm đòi cùng một chuỗi nên không
+thể xảy ra chuyện mục 4 bắt xoay khối mà checklist lại không có dòng đó cho học sinh tự kiểm. Trước
+vòng 7 hai vế này nằm thường trực trong \`CHALK_SHORT\`, thành thử ${lessons.length} bài đều mang theo
+"xoay khối", kể cả bài chia số và phân số không có khối nào.
 
 ## Cách dùng
 
