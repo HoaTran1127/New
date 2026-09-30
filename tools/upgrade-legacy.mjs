@@ -15,6 +15,7 @@ import { QUEUE } from './lib/queue.mjs';
 import { LESSON } from './lib/lesson.mjs';
 import { CURRICULUM } from './lib/curriculum.mjs';
 import { SPORT } from './lib/sport.mjs';
+import { FAMILY } from './lib/family.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 
@@ -70,7 +71,8 @@ const REQUIREMENTS = `YÊU CẦU BẮT BUỘC THEO CHUẨN MiTi (áp dụng cho 
 24. TIẾT HỌC 45 PHÚT + GẮNG SỨC THẬT: ${LESSON.sessionCap} ${LESSON.rotationFit} ${LESSON.rpe} ${LESSON.recovery} ${LESSON.lessonSheet} ${LESSON.guard}
 25. CHUẨN KIẾN THỨC SGK: ${CURRICULUM.machNhan} ${CURRICULUM.ycDong} ${CURRICULUM.machTron} ${CURRICULUM.bayTruoc} ${CURRICULUM.meoDongTac} ${CURRICULUM.guard}
 26. CHẤT THỂ THAO: ${SPORT.monDanh} ${SPORT.dongTacChinh} ${SPORT.tiepSuc} ${SPORT.tinhThan} ${SPORT.thanhTich} ${SPORT.hoiTinh} ${SPORT.guard}
-27. ĐẦU RA: duy nhất 1 file HTML hoàn chỉnh, CSS nội tuyến trong một khối <style>, không file .css/.js/.json/ảnh/mp3 ngoài, không TODO, không pseudocode, không "...", không phần "bạn tự bổ sung", không lỗi console khi mở trực tiếp bằng trình duyệt.`;
+27. GIA ĐÌNH — TỜ GỬI BỐ MẸ: ${FAMILY.guiBoMe} ${FAMILY.baPhut} ${FAMILY.meoNha} ${FAMILY.riengTu} ${FAMILY.khongDoi} ${FAMILY.guard}
+28. ĐẦU RA: duy nhất 1 file HTML hoàn chỉnh, CSS nội tuyến trong một khối <style>, không file .css/.js/.json/ảnh/mp3 ngoài, không TODO, không pseudocode, không "...", không phần "bạn tự bổ sung", không lỗi console khi mở trực tiếp bằng trình duyệt.`;
 
 const bannerOf = (l) =>
   `> **LEGACY (LEG-${l.id.slice(4)})** — prompt đời đầu, giữ nguyên cơ chế game nhưng đã thay MediaPipe Legacy/Tailwind/Tone.js bằng chuẩn hiện hành. Bản chuẩn để làm game mới: \`prompts/00-master-canvas-prompt.md\`; 85 prompt đặc thù nằm trong \`catalogs/GAME_CATALOG.csv\`.\n`;

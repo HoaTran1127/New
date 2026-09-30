@@ -34,6 +34,16 @@ const ROOT = path.resolve(import.meta.dirname, '..');
 const errors = [];
 const bad = (msg) => errors.push(msg);
 
+// Vòng 19: trên Windows một lần sửa file bằng Python đã đổi cả README.md sang CRLF, và khối
+// pipeline bị `pipelineBlock()` trả về rỗng — validate báo 40 lỗi "không còn khối pipeline nào"
+// trong khi nội dung vẫn nguyên. Mọi regex neo đầu dòng (^```, ^## ) đều lek khi còn \r.
+// Chặn ngay ở cửa đọc: mọi text đọc vào validator đều chỉ còn \n.
+const readFileSyncRaw = fs.readFileSync;
+fs.readFileSync = (file, encoding) => {
+  const text = readFileSyncRaw(file, encoding);
+  return typeof text === 'string' ? text.replace(/\r\n/g, '\n') : text;
+};
+
 // 1a. Đăng ký tầng quy định, đọc thẳng từ tools/lib thay vì gõ tay danh sách.
 // Vòng 10 chuẩn hoá: ba vụ lệch đã xảy ra thật — hype.mjs bị quên trong danh sách pipeline của
 // prompts/README, chuỗi tự kiểm rơi đoạn, và heading master thiếu tên lib. Tất cả đều lọt vì
