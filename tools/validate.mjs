@@ -173,6 +173,7 @@ const LESSON_RULES = [
   [LESSON.homeLanguage, 'thiếu quy định tiếng Việt là ngôn ngữ thứ hai và nút "Ít chữ hơn"'],
   [LESSON.noSlate, 'thiếu quy định bảng con là bất kì mặt phẳng nào trong lớp'],
   [LESSON.movementBreak, 'thiếu quy định nhịp vận động gắn với Toán sau khi ngồi liền mạch'],
+  [LESSON.roomFootprint, 'thiếu quy định khoảng trống sàn của phòng học cho nhịp đứng và nhóm'],
 ];
 // Từ bảng ra vở: một tiết giảng chỉ thật sự xong khi các em làm được bài trên giấy.
 const HANDOUT_RULES = [
