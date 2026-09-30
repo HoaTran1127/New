@@ -225,7 +225,7 @@ Trình tự này theo khung **Concrete – Representational – Abstract**: lỗ
 - **Chống mỏi tay** (viết phấn giữa không trung là động tác mỏi nhanh nhất của hand tracking): chế độ **chạm-bật viết** để không phải giữ pinch, **nghỉ bắt buộc sau 90 giây** pinch liên tục kèm đếm ngược 5 giây, khay phấn đặt ngang khuỷu tay làm điểm tựa, và **mất landmark quá 500 ms thì nét dở đóng băng tại chỗ** chứ không xoá hay nhảy nét.
 - **Lưu bảng của tiết dạy**: tuần tự hoá nét vẽ + vật + sơ đồ vào `localStorage` khoá `miti-board`, tối đa **200 KB**, có nút Lưu / Mở / In (nền trắng chữ đen). **Tuyệt đối không lưu ảnh hay video camera.**
 
-### 👩‍🏫 Hai mươi sáu quy định chế độ giảng bài (`tools/lib/lesson.mjs`)
+### 👩‍🏫 Hai mươi chín quy định chế độ giảng bài (`tools/lib/lesson.mjs`)
 
 - **Giáo viên trình bày**: màn chiếu 16:9, bảng chiếm ≥ 70%, chữ phấn **≥ 40 px** (lớn hơn mức 34 px của game) vì người đọc đứng ở cuối phòng; điều khiển trọn bài bằng chuột và bàn phím, camera chỉ bật khi mời em lên bảng.
 - **Không một cơ chế game nào**: không tim, điểm, combo, xếp hạng, đồng hồ gây áp lực, hit-stop, giật màn hình, mascot. Sai thì chỉ có một dòng phấn đỡ bằng chữ.
@@ -258,7 +258,11 @@ Trình tự này theo khung **Concrete – Representational – Abstract**: lỗ
 - **Máy trường không cho cài gì cả**: không một bước nào được đòi cài phần mềm, chạy lệnh, đổi cấu hình bảo mật hay tắt trình diệt virus — nếu xuất hiện thì đó là lỗi của công cụ, báo bằng tiếng Việt và tự lùi về chuột. Ba đường mở theo thứ tự: **link HTTPS** (không cần quyền nào, đường duy nhất bảo đảm bật được camera) → **tệp `.html` chép từ USB** kéo thả vào trình duyệt (chạy trọn vẹn bằng chuột; riêng camera thì phải *đo* chứ không đoán, vì `file://` chặn đọc tệp model nằm cạnh) → máy tính bảng/ti vi có trình duyệt. Có HTTPS thì thử lưu model vào bộ nhớ trình duyệt (kiểm tra `"caches" in window` trước) để tiết sau mất mạng vẫn bật được camera; không cho thì nói rõ, **đừng hứa**.
 - **Có em không giơ được tay**: mỗi câu hỏi có sẵn ba đường trả lời ngay trên màn hình — thẻ đáp án giấy (bạn hoặc cô đưa hộ), một nút dành riêng cho em đó bấm bằng chuột/phím cách/dụng cụ em có, hoặc chỉ tay vào bảng và nói để cô thao tác hộ. Không thao tác nào chỉ tồn tại dưới dạng thao tác tay: mọi cử chỉ có phím tắt in trên nhãn nút. Thêm "Bảng vàng chữ đen" (tương phản cao hơn bảng xanh một bậc), nút "Đọc to" (máy không có giọng tiếng Việt thì nói thẳng, không để em chờ), và ô "đưa bảng tới tận tay em" cho em đi lại khó khăn. Dòng tổng kết cuối lượt **không bao giờ** ghi em nào làm được hay không làm được thao tác nào.
 
-Nguồn tham chiếu cho các vòng nâng cấp (CRA, lời giải mẫu, think-pair-share, vé kết thúc tiết, camera trong lớp học, máy thật trong lớp học, hình học camera và lớp học hoà nhập) ghi ở [docs/AR_GIANG_DAY_TOAN_NGUON.md](docs/AR_GIANG_DAY_TOAN_NGUON.md).
+- **12 lượt lên bảng không chia được cho 35 em — phải đếm, nhưng không được lưu tên**: dải điều khiển của cô có bộ đếm đặt cạnh ô sĩ số, kiểu "đã lên 9/32 · chưa lên 23", **không bao giờ hiện lên màn chiếu**. Nút "Chọn em chưa lên" ưu tiên em chưa vào hàng đợi; một em đã lên 2 lần thì hết quyền ưu tiên ở lượt còn lại. Bộ đếm chỉ sống trong bộ nhớ của phiên dạy đang chạy — tải lại trang là về 0 và bảng nói thẳng "chưa biết em nào đã lên", không được đoán. Ai muốn theo dõi sang tiết sau thì in "phiếu theo dõi lên bảng": lưới A4 theo dãy và số ghế ("dãy 3, ghế 5"), **không in tên**, tick bằng bút.
+- **Cô phải chạy thử lúc ở nhà, không phải lúc 7h sáng trước 35 em**: nút "Chạy thử 5 phút" đi hết năm bước không cần camera không cần lớp rồi in kết quả "đã thử 5/5 bước"; nút "Dạy ngay" bỏ mọi cấu hình (lớp vừa dùng, sĩ số vừa nhập, camera TẮT, chữ cỡ lớp đông) và vào bước KHỞI ĐỘNG trong ≤ 3 giây. Lần đầu mở một giáo án lạ hiện **đúng một** checklist 10 việc chuẩn bị in trên một trang A4, mỗi việc một ô tick. Mọi thông báo trên màn chiếu là một dòng ≤ 90 ký tự, không thuật ngữ kỹ thuật, phím tắt in ngay trên nhãn nút.
+- **Một giáo án đi qua nhiều giáo viên và nhiều năm học**: "Xuất cho đồng nghiệp" chép tệp `.json` gồm `LESSON_DATA`, cấu hình ba chặng, sĩ số và nhãn lỗi — **không chứa tên học sinh**; người nhận bấm "Nhập giáo án", không cài gì thêm. "In phiếu dự giờ" ra một trang A4 với năm bước kèm ngân sách phút và tối đa 8 dòng ghi, chia ba cột ("bước nào cả lớp dừng lâu" · "câu nào nhiều em sai theo nhãn lỗi nào" · "chỗ nào phải giảng lại bằng sơ đồ") — đúng lối sinh hoạt chuyên môn theo nghiên cứu bài học, góp ý dựa vào việc học sinh đã làm. Bản bảng lưu mang nhãn "4A · 2026-09-14 · 32 em"; bản cũ hơn 30 ngày **không tự xoá**, chỉ gợi ý xuất ra tệp khi gần hết trần 200 KB.
+
+Nguồn tham chiếu cho các vòng nâng cấp (CRA, lời giải mẫu, think-pair-share, vé kết thúc tiết, camera trong lớp học, máy thật trong lớp học, hình học camera, lớp học hoà nhập, phân lượt lên bảng và giáo án dùng chung cả tổ) ghi ở [docs/AR_GIANG_DAY_TOAN_NGUON.md](docs/AR_GIANG_DAY_TOAN_NGUON.md).
 
 ### 📄 Ba quy định "từ bảng ra vở" (`tools/lib/handout.mjs`)
 
@@ -302,7 +306,7 @@ tools/lib/classroom.mjs      quy định lớp học thật (vùng an toàn cho 
 tools/lib/access.mjs         tiếp cận + an toàn thần kinh (trần nhấp nháy, reduced-motion, không chỉ dùng màu, phụ đề, tương phản, tay thuận)
 tools/lib/verify.mjs         tự kiểm chứng đề + độ khó thích ứng (verifyQuestionBank, nhiễu theo lỗi thật, guard phạm vi, chống mẹo, level thích ứng, sàn chống nản)
 tools/lib/chalk.mjs          bảng phấn + vật thật, 10 quy định — dùng cho BỘ GIÁO ÁN
-tools/lib/lesson.mjs         chế độ giảng bài, 26 quy định — dùng cho BỘ GIÁO ÁN
+tools/lib/lesson.mjs         chế độ giảng bài, 29 quy định — dùng cho BỘ GIÁO ÁN
 tools/lib/handout.mjs        từ bảng ra vở, 3 quy định (phiếu in, đáp án, chép vào vở)
         │
         └─ node tools/build.mjs

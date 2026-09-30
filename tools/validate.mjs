@@ -158,6 +158,9 @@ const LESSON_RULES = [
   [LESSON.cameraGeometry, 'thiếu quy định một camera chỉ quay được một hướng (soi bảng hoặc quay lớp)'],
   [LESSON.noAdmin, 'thiếu quy định máy trường không có quyền quản trị'],
   [LESSON.physicalAccess, 'thiếu đường trả lời cho em không giơ được tay'],
+  [LESSON.boardEquity, 'thiếu bộ đếm lượt lên bảng cho cả lớp'],
+  [LESSON.rehearsal, 'thiếu chế độ chạy thử không cần lớp và checklist chuẩn bị'],
+  [LESSON.lessonStudy, 'thiếu đường dùng chung giáo án cho tổ chuyên môn'],
 ];
 // Từ bảng ra vở: một tiết giảng chỉ thật sự xong khi các em làm được bài trên giấy.
 const HANDOUT_RULES = [
@@ -321,8 +324,9 @@ if (!fs.existsSync(LESSON_DIR)) {
     '7. DẠY KHI KHÔNG CÓ CAMERA VÀ KHÔNG CÓ MẠNG (bắt buộc, đây là chế độ dạy chính ở nhiều lớp)',
     '8. TIẾP CẬN, AN TOÀN VÀ HIỆU NĂNG',
     '9. TỪ BẢNG RA VỞ — PHIẾU BÀI TẬP, ĐÁP ÁN VÀ NỘI DUNG CHÉP',
-    '10. MiTi — CHỮ KÝ BẮT BUỘC TRONG HTML',
-    '11. ĐẦU RA',
+    '10. TRƯỚC KHI LÊN LỚP VÀ SAU KHI DẠY XONG (ba việc chỉ có cô giáo làm được)',
+    '11. MiTi — CHỮ KÝ BẮT BUỘC TRONG HTML',
+    '12. ĐẦU RA',
   ];
   // Cơ chế chỉ được có ở game. Lọt sang giáo án là sai mục đích của cả nhánh này.
   const GAME_ONLY = [

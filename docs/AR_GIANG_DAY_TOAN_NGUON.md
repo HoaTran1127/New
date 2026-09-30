@@ -1,4 +1,4 @@
-# Giáo án AR trên bảng phấn — nguồn cộng đồng và bài học sau 9 vòng
+# Giáo án AR trên bảng phấn — nguồn cộng đồng và bài học sau 10 vòng
 
 Tài liệu này để **người khác tham khảo và nối tiếp**, không phải mô tả tính năng. Phần tính năng nằm ở
 [`prompts/giao-an/README.md`](../prompts/giao-an/README.md); ở đây chỉ ghi: cái gì đã đo được, cái gì đã
@@ -12,13 +12,14 @@ thay đổi vì số liệu, và nên đọc gì trước khi sửa tiếp.
 2. **Đo cả chỗ mình tự mâu thuẫn.** Vòng 9 không đi tìm ý mới: nó đọc lại chính các quy định đã có và thấy
    hai quy định cũ đòi cái không thể cùng có — một webcam vừa phải nhìn bàn tay em đứng trước bảng,
    vừa phải đếm ngón tay 35 em cuối phòng. Lỗi kiểu này `grep` thường không bắt được, vì mỗi từ khoá đều
-   *có* trong file; phải đọc hai câu cạnh nhau mới thấy.
+   *có* trong file. Vòng 10 cũng là một phép chia bị bỏ sót: "12 lượt một tiết", "hàng đợi 4 em" và
+   "lớp 35 em" đều nằm sẵn trong cùng một file, chỉ có 12 < 35 là chưa ai đem chia cho ai.
 3. **Quy định phải có con số.** "Chữ phải to" không kiểm chứng được; "≥ 40 px **và** ≥ 5.5% chiều cao khung
    hình, ≤ 12 chữ một dòng" thì validator bắt được. Mọi quy định trong `tools/lib/*.mjs` là chuỗi nguyên văn,
    `tools/validate.mjs` so bằng `includes()`, nên lời văn và mắt kiểm không bao giờ lệch nhau.
 4. **Chốt chặn hai chiều.** Cơ chế game lọt vào giáo án và quy định giáo án lọt sang game đều làm build đỏ.
    Thêm một quy định mới là tự động thêm một khoá bị cấm ở phía bên kia (`LESSON_FAMILY_RULES`).
-5. **Probe đột biến là đơn vị kiểm thử thật.** 54 phép, mỗi phép phá đúng một thứ và đòi đúng thông báo.
+5. **Probe đột biến là đơn vị kiểm thử thật.** 58 phép, mỗi phép phá đúng một thứ và đòi đúng thông báo.
    Không có probe thì một quy định chỉ là câu văn đẹp.
 6. **Tách công cụ giảng bài khỏi game.** Cùng một kiến thức, hai động cơ đối lập: game cần hồi hộp,
    tiết giảng cần giáo viên cầm lái. Nhét tim/điểm/combo vào bảng phấn làm em lên bảng sợ sai hơn là muốn hiểu.
@@ -36,6 +37,7 @@ thay đổi vì số liệu, và nên đọc gì trước khi sửa tiếp.
 | 7 | 0/39 nhịp nói-with-you · 0/39 đoán trước khi thao tác · 0/39 mẫu che dần · 0/39 vé kết thúc tiết | `pairShare`, `predict`, `fadedExample`, `exitTicket` |
 | 8 | 0/39 phòng không có máy chiếu · 0/39 trần RAM và số model chạy cùng lúc · 0/39 phát hiện năng lực trình duyệt | `noProjector`, `oldHardware`, `browserCompat` |
 | 9 | 0/39 nói camera quay cái gì (trong khi 39/39 đòi vừa soi bảng vừa đếm tay 35 em) · 0/39 nhắc quyền quản trị và `file://` · 0/39 nhắc em không giơ được tay | `cameraGeometry`, `noAdmin`, `physicalAccess` |
+| 10 | 39/39 viết "12 lượt một tiết" và "35 em" nhưng 0/39 biết em nào đã lên · 0/39 cách chạy thử khi chưa có lớp · 0/39 nhắc đồng nghiệp, năm học sau, nhập/xuất giáo án | `boardEquity`, `rehearsal`, `lessonStudy` + mục 10 mới (khung thành 13 mục) |
 
 ## Vì sao chọn những con số đang dùng
 
@@ -122,6 +124,30 @@ trang đó như thể chúng có số.
 - [Inclusive Teaching: Physical Disability — ADCET (Úc)](https://www.adcet.edu.au/inclusive-teaching/specific-disabilities/physical-disability)
 - [Teaching Students with Physical Disabilities — Accessible Campus (Canada)](https://accessiblecampus.ca/tools-resources/educators-tool-kit/teaching-tips/teaching-students-with-physical-disabilities/)
 
+**Ai được gọi lên bảng: chọn ngẫu nhiên có kiểm soát, không chọn em xung phong mãi**
+- [Does Cold Calling Work? Here's What the Research Says — Edutopia](https://www.edutopia.org/article/does-cold-calling-work-heres-what-the-research-says/)
+- [Constructing a Framework of Random Call Components — PMC (research về gọi tên ngẫu nhiên)](https://pmc.ncbi.nlm.nih.gov/articles/PMC8697661/)
+- [Equity Sticks — EducationCloset / eEducation protocols](https://www.eleducation.org/curriculum/protocols/equity-sticks/)
+- [Engage Every Student with 'Pull a Stick' — DataWorks](https://dataworks-ed.com/blog/2025/06/engage-every-student-with-pull-a-stick/)
+Bốn nguồn này là lý do `boardEquity` tồn tại (phải biết em nào chưa lên), nhưng chúng **không** dẫn đường
+cho chi tiết gây tranh cãi nhất: gọi tên ngẫu nhiên thô (equity sticks) khác với quyền được im lặng. Ở
+đây chọn nửa sau — bộ đếm để cô tự cân đối, không phải quay số trước 35 em, và tuyệt đối không phát tên
+công khai ai chưa lên lần nào.
+
+**Cô tập dượt trước khi lên lớp**
+- [Rehearsing Lessons Together Helps Teachers Build Good Habits — Edutopia](https://www.edutopia.org/article/rehearsing-lessons-together/)
+- [Using role play to strengthen teaching practice — Education Endowment Foundation](https://educationendowmentfoundation.org.uk/news/eef-blog-rehearse-and-repeat)
+- [Rehearsal: Turning practise into action — Evidence to Action (Victoria, Úc)](https://arc.educationapps.vic.gov.au/learning/sites/evidence-to-action/11697)
+Đó là chỗ dựa của nút "Chạy thử 5 phút": dụng cụ dạy học mà chỉ chạy được khi có lớp đứng trước thì
+không ai dám thử lần đầu.
+
+**Giáo án là đồ dùng chung của tổ chuyên môn**
+- [Những tiết dự giờ được chuẩn bị quá kỹ, vậy có nên tiếp tục duy trì? — Giáo dục Việt Nam](https://giaoduc.net.vn/nhung-tiet-du-gio-duoc-chuan-bi-qua-ky-vay-co-nen-tiep-tuc-duy-tri-post240669.gd)
+- [Sinh hoạt chuyên môn theo hướng nghiên cứu bài học — Trường Tiểu học Trường Thạch (Hà Nội)](http://thtruongthachdab.giaoducmelinh.edu.vn/tin-tuc-su-kien/tin-cua-truong/sinh-hoat-chuyen-mon-theo-nghien-cuu-bai-hoc-to-1.html)
+Hai bài này là lý do `lessonStudy` yêu cầu phiếu dự giờ ghi theo **việc học sinh đã làm** (bước nào dừng
+lâu, câu nào sai theo nhãn lỗi nào) thay vì ghi theo cảm giác về tiết dạy — chính là chỗ sinh hoạt
+chuyên môn theo nghiên cứu bài học khác với dự giờ kiểu cũ.
+
 **Máy thật trong lớp học: không máy chiếu, máy cũ, trình duyệt khác nhau**
 - [Secure contexts — MDN](https://developer.mozilla.org/en-US/docs/Web/Security/Defenses/Secure_Contexts) — `getUserMedia` chỉ chạy trên HTTPS hoặc `localhost`; mở file giáo án bằng `file://` hay HTTP thì camera mất mà không có lỗi nào của model cả, nên `browserCompat` phải thử đúng ba đường mở.
 - [MediaDevices: getUserMedia() — MDN](https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia) — các lỗi `NotAllowedError`, `NotFoundError`, `NotReadableError` là tên tiếng Anh; quy định yêu cầu dịch ra tiếng Việt kèm cách xử lý.
@@ -154,17 +180,21 @@ thành "tăng X% điểm".
 - **Chưa biết `file://` có đọc được model ở những trình duyệt nào.** `noAdmin` cố tình không khẳng định mà
   bắt công cụ phải thử và báo kết quả thật — nghĩa là chính repo này cũng chưa có số liệu, và mục "Báo cáo
   máy" ở trên là con đường duy nhất để có.
+- **Theo dõi lượt lên bảng qua nhiều tiết vẫn là phiếu giấy.** `boardEquity` giữ đúng cam kết không lưu tên
+  nên bộ đếm chết theo phiên; cây cầu hiện tại là trang A4 "dãy 3, ghế 5" để cô tick tay. Nếu muốn có lịch
+  sử lâu dài thì phải quyết định một trong hai: hoặc lưu danh định vị trí ngồi (vẫn là dữ liệu học sinh),
+  hoặc chấp nhận không có lịch sử. Đó là quyết định của người dùng cuối, chưa nên tự chốt trong prompt.
 
 ## Muốn đóng góp thì sửa ở đâu
 
 ```text
 tools/lib/chalk.mjs     10 quy định bảng phấn và vật thật      → sinh vào mục 4 của giáo án
-tools/lib/lesson.mjs    26 quy định chế độ giảng bài           → sinh vào mục 0, 2, 3, 5, 6, 7, 8, 9
+tools/lib/lesson.mjs    29 quy định chế độ giảng bài           → sinh vào mục 0, 2, 3, 5, 6, 7, 8, 9, 10
 tools/lib/handout.mjs   3 quy định từ bảng ra vở               → sinh vào mục 9
 tools/data/props.mjs    vật thật + sơ đồ theo 38 cụm
 tools/data/lessons.mjs  tên bài, câu khởi động, dòng ghi nhớ
 tools/build-lessons.mjs ghép thành 39 file prompts/giao-an/
-tools/validate.mjs      39 khoá của họ giáo án + chốt chặn ngược + 12 mục của khung
+tools/validate.mjs      42 khoá của họ giáo án + chốt chặn ngược + 13 mục của khung
 ```
 
 Quy trình một vòng nâng cấp: đo bằng `grep` trên `prompts/giao-an/GA*.md` → viết quy định có con số vào
