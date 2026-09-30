@@ -711,11 +711,11 @@ const VOICE_DOC_NEEDLES = [
 const QUEUE_DOC_NEEDLES = [
   ['8 nhịp', 'số nhịp cổ vũ mỗi lần', 9, 9, 8, 3],
   ['3 lượt', 'số lượt mỗi em trong 12 lượt', 11, 7, 5, 2],
-  ['20 giây', 'trần đứng chờ và vào vị trí', 4, 6, 3, 2],
+  ['20 giây', 'trần đứng chờ và vào vị trí', 5, 7, 4, 2],
   ['1 sải tay', 'vòng đứng của mỗi em', 2, 3, 2, 1],
   ['1,2 m', 'máy cách em đang chơi', 2, 3, 2, 1],
-  ['+5 điểm', 'điểm vai chờ vào "Cả nhóm"', 5, 6, 2, 1],
-  ['verifyQueue()', 'hàm kiểm vai chờ lúc nạp', 3, 3, 3, 2],
+  ['+5 điểm', 'điểm vai chờ vào "Cả nhóm"', 6, 7, 3, 1],
+  ['verifyQueue()', 'hàm kiểm vai chờ lúc nạp', 4, 4, 4, 2],
 ];
 // Con số cũ của vòng 6 ("< 8 động tác lớn mỗi phút") là yêu cầu KHÔNG THỂ đạt với phiên 12 lượt / 4–6 phút.
 // Giữ nó trong tài liệu sẽ sinh game luôn báo CHƯA ĐẠT ở mục cường độ, nên phải bị chặn.
