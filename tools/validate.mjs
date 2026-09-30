@@ -35,6 +35,16 @@ import { IDENTITIES } from './data/identities.mjs';
 const ROOT = path.resolve(import.meta.dirname, '..');
 const errors = [];
 const bad = (msg) => errors.push(msg);
+// Probe 20g: một mục neo phải là CẶP [needle, label]. Nếu spread `...(? [x, y] : [])` ném toạt mảng vào
+// danh sách, vòng `for (const [needle, label] of ...)` gắp từng KÝ TỰ của chuỗi làm needle, thế là
+// `t.includes('T')` luôn đúng và kim tưởng rằng đang chạy mà chưa kiểm gì cả (85 prompt mất hẳn nhãn
+// tuần vẫn xanh). capsNeo chặn kiểu đó ngay tại chỗ: thà để validate crash còn hơn báo ĐẠT.
+const capsNeo = (arr, where) => {
+  for (const p of arr) {
+    if (!Array.isArray(p) || p.length < 2 || typeof p[0] !== 'string' || !p[0]) throw new Error(`${where}: mục neo phải là cặp [needle, label], nhận được ${JSON.stringify(p).slice(0, 70)}`);
+  }
+  return arr;
+};
 
 // Vòng 19: trên Windows một lần sửa file bằng Python đã đổi cả README.md sang CRLF, và khối
 // pipeline bị `pipelineBlock()` trả về rỗng — validate báo 40 lỗi "không còn khối pipeline nào"
@@ -771,12 +781,14 @@ if (!fs.existsSync(VAR_FILE)) {
     const vgame = vid && GAMES.find((g) => g.id === vid);
     const vstd = vgame && STANDARDS[vgame.cluster];
     if (vstd) {
-      for (const [needle, label] of [
+      for (const [needle, label] of capsNeo([
         [`Mạch của cụm ${vgame.cluster} là "${vstd.mach}"`, 'dòng mạch của ĐÚNG cụm — block chỉ liệt kê tám mạch chung chung là không đủ'],
         [vstd.ngan, 'nhãn HUD'], [vstd.yc, 'yêu cầu cần đạt'],
         [vstd.meo, 'mẹo nhớ'], ['"Dễ nhầm: ' + ERROR_NOTES[vgame.cluster].split('; ')[0] + '"', 'bẫy báo trước'],
-        ...(Array.isArray(vstd.tuan) ? [`**Tuần ${vstd.tuan[0]}–${vstd.tuan[1]} · Học kì ${hocKiCua(vstd.tuan[0])}**`, 'nhãn tuần của ĐÚNG cụm'] : []),
-      ]) {
+        // Pair phải nằm trong MỘT mảng nữa: `...([x, y])` ném hai chuỗi vào danh sách, vòng destruct
+        // sẽ gắp từng ký tự và kim trở thành vô hình (đây chính là lỗ probe 20g bắt được).
+        ...(Array.isArray(vstd.tuan) ? [[`**Tuần ${vstd.tuan[0]}–${vstd.tuan[1]} · Học kì ${hocKiCua(vstd.tuan[0])}**`, 'nhãn tuần của ĐÚNG cụm']] : []),
+      ], 'mục neo block biến thể')) {
         if (!b.includes(needle)) bad(`biến thể #${i + 1} (${vid}): thiếu ${label} của cụm ${vgame.cluster} ("${needle.slice(0, 48)}") — builder phải lấy thẳng tools/data/standards.mjs vào từng block.`);
       }
     }
@@ -1439,7 +1451,7 @@ for (const g of GAMES) {
   const rel = PATH_OF.get(g.id);
   if (!rel || !fs.existsSync(path.join(ROOT, rel))) continue;
   const t = fs.readFileSync(path.join(ROOT, rel), 'utf8');
-  for (const [needle, label] of [
+  for (const [needle, label] of capsNeo([
     // Tên mạch đứng MỘT MÌNH thì yếu: chính quy định machNhan đã liệt kê sẵn tám tên mạch trong mọi
     // prompt, nên block nào cũng "có" tên mạch. Neo cả cụm mach + nhãn HUD in liền nhau.
     [`**${s.mach}** — nhãn ngắn trên HUD: "${s.ngan}"`, 'dòng mạch + nhãn HUD của ĐÚNG cụm'],
@@ -1448,8 +1460,10 @@ for (const g of GAMES) {
     [ERROR_NOTES[g.cluster].split('; ')[0], 'ý lỗi đầu tiên của cụm mà dòng "Dễ nhầm" phải lấy'],
     // Vòng 20: cùng lý do — prompt nào cũng có chữ "Tuần", nên phải neo đúng khoảng của CLUSTER này,
     // tính Học kì bằng chính hocKiCua() chứ không gõ tay (xóa `tuan` khỏi builder là 85 prompt mất nhãn).
-    ...(Array.isArray(s.tuan) ? [`Tuần ${s.tuan[0]}–${s.tuan[1]} · Học kì ${hocKiCua(s.tuan[0])}`, 'nhãn tuần của ĐÚNG cụm'] : []),
-  ]) {
+    // Cặp [needle, label] phải bọc trong MỘT mảng nữa: spread thẳng `[x, y]` ném hai chuỗi vào danh sách,
+    // vòng destruct bèn gắp từng ký tự làm needle — kim chạy 85 lần mà không kiểm gì (lỗ probe 20g bắt).
+    ...(Array.isArray(s.tuan) ? [[`Tuần ${s.tuan[0]}–${s.tuan[1]} · Học kì ${hocKiCua(s.tuan[0])}`, 'nhãn tuần của ĐÚNG cụm']] : []),
+  ], 'mục neo prompt game')) {
     if (!t.includes(needle)) bad(`${g.id}: prompt thiếu ${label} của cụm ${g.cluster} ("${needle.slice(0, 48)}") — builder phải lấy thẳng tools/data/standards.mjs.`);
   }
 }
