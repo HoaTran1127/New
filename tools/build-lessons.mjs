@@ -121,6 +121,7 @@ ${jsonBlock(EXAMPLES[L.cluster], cl.tags, notes)}
 - ${LESSON.movementBreak}
 - ${LESSON.roomFootprint}
 - ${LESSON.tightRoomFocus}
+- ${LESSON.breakReserve}
 - ${LESSON.detectionEquity}
 - ${LESSON.privateView}
 - ${LESSON.pairShare}

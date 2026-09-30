@@ -1,4 +1,4 @@
-# Giáo án AR trên bảng phấn — nguồn cộng đồng và bài học sau 20 vòng
+# Giáo án AR trên bảng phấn — nguồn cộng đồng và bài học sau 21 vòng
 
 Tài liệu này để **người khác tham khảo và nối tiếp**, không phải mô tả tính năng. Phần tính năng nằm ở
 [`prompts/giao-an/README.md`](../prompts/giao-an/README.md); ở đây chỉ ghi: cái gì đã đo được, cái gì đã
@@ -94,13 +94,21 @@ duyệt thì không có API nào làm việc đó. Đo trên 39 giáo án: "hai 
 nếu cứ soi gương thì bộ đếm "em nào chưa lên" của `boardEquity` hiện nguyên trước 35 em, bêu đúng những em rụt
 rè mà `privacy`/`inclusion` đã cấm bêu. `privateView` bịt lỗ đó bằng đúng cách `powerCut` hỏi cắm-điện-hay-pin: hỏi
 một dòng "CHUNG MÀN hay MÀN RIÊNG" với mặc định an toàn CHUNG MÀN, khi CHUNG MÀN thì rút mọi dòng riêng khỏi
-màn hình và chuyển sang giữ-phím-để-xem, khi MÀN RIÊNG thì `window.open` cửa sổ chiếu chỉ-bảng.
+màn hình và chuyển sang giữ-phím-để-xem, khi MÀN RIÊNG thì `window.open` cửa sổ chiếu chỉ-bảng. Vòng 21 vẫn đào
+mâu thuẫn dây chuyền nhưng bằng **phép cộng số học** giữa bốn quy định: `fullPeriod` cho VẬN DỤNG 3–5 phút,
+`exitTicket` giữ 2 phút CUỐI của nó làm vé, `movementBreak` để tổng nghỉ ≤ 3 phút "lấy từ VẬN DỤNG hoặc
+`timeSlack` dôi ra", `tightRoomFocus` nâng trần nghỉ lên ≤ 4 phút khi chật. Cộng lại **nghỉ(4) + vé(2) = 6 > 5**
+= trần cao nhất của VẬN DỤNG, và khi tiết đúng 35 phút thì `timeSlack` dôi = 0 nên nguồn thứ hai cũng cạn. Bốn
+quy định đơn lẻ đều đúng, ghép thành một lời hứa không có chỗ trả — chính vòng 15 đã cắt nguồn mà nó rút; đo
+"ngân sách nghỉ" · "co ngắn nhịp nghỉ" · "bỏ nhịp nghỉ" · "ưu tiên lấy từ" đều **0/39**. `breakReserve` biến nghỉ
+thành một **dòng có thật trên thanh tiến trình** (2 phút, chật 3) rút theo đúng thứ tự timeSlack-dôi → VẬN DỤNG
+trên 2 phút vé → LUYỆN TẬP 12→10, không bao giờ nuốt VẬT THẬT hay vé, và **tự co còn 15 giây** khi sát giờ.
 3. **Quy định phải có con số.** "Chữ phải to" không kiểm chứng được; "≥ 40 px **và** ≥ 5.5% chiều cao khung
    hình, ≤ 12 chữ một dòng" thì validator bắt được. Mọi quy định trong `tools/lib/*.mjs` là chuỗi nguyên văn,
    `tools/validate.mjs` so bằng `includes()`, nên lời văn và mắt kiểm không bao giờ lệch nhau.
 4. **Chốt chặn hai chiều.** Cơ chế game lọt vào giáo án và quy định giáo án lọt sang game đều làm build đỏ.
    Thêm một quy định mới là tự động thêm một khoá bị cấm ở phía bên kia (`LESSON_FAMILY_RULES`).
-5. **Probe đột biến là đơn vị kiểm thử thật.** 89 phép, mỗi phép phá đúng một thứ và đòi đúng thông báo.
+5. **Probe đột biến là đơn vị kiểm thử thật.** 91 phép, mỗi phép phá đúng một thứ và đòi đúng thông báo.
    Không có probe thì một quy định chỉ là câu văn đẹp.
 6. **Tách công cụ giảng bài khỏi game.** Cùng một kiến thức, hai động cơ đối lập: game cần hồi hộp,
    tiết giảng cần giáo viên cầm lái. Nhét tim/điểm/combo vào bảng phấn làm em lên bảng sợ sai hơn là muốn hiểu.
@@ -129,6 +137,7 @@ màn hình và chuyển sang giữ-phím-để-xem, khi MÀN RIÊNG thì `window
 | 18 | **đo giả định im lặng trong modality cảm biến trung tâm**: mọi vòng phản hồi chạy trên HandLandmarker và coi "nhận ra một bàn tay" là chính xác như nhau với mọi em — đo: "HandLandmarker" 39/39 và "camera thấy" 39/39, nhưng "tone da" 0/39 · "da sẫm" 0/39 · "bàn tay nhỏ" 0/39 · "găng tay" 0/39 · "ướt" 0/39 · "không thấy tay" 0/39 · "bỏ sót" 2/39; nguồn: tài liệu nhận diện tư thế tay (bàn tay da sẫm underrepresented trong dữ liệu huấn luyện) + Gender Shades (khuôn mặt, 0,8%→34,7%, chỉ dùng làm bằng chứng *chiều*) | `detectionEquity` ("camera thấy N" = cận dưới số TAY máy nhận ra, không phải số EM đã trả lời; mọi đáp án camera có nút cộng tay +1/+5 cùng lượt; một bước tự kiểm độ phủ lúc chạy thử → hay lọt thì chuyển mặc định bảng-con-nhập-tay; KHÔNG phân loại/chấm/lưu màu da, không xếp em hay bị lọt; ngưỡng "thường xuyên lọt" là dự án chọn). Kèm sửa lỗi đọc của validator: đưa kiểm tra "giáo án bị cắt" lên ĐẦU vòng lặp để không bị nhấn chìm dưới cửa sổ in 40 lỗi |
 | 19 | **đo độ tin cậy của chính bộ quy định**: mô hình copy nguyên mọi tham chiếu chéo `` `tênQuyDinh` `` vào cả 39 giáo án, nên một cái tên sai nhân bản 39 lần — quét máy toàn bộ token `` `camelCase` `` trong `LESSON`/`CHALK`/`HANDOUT` đối chiếu danh sách khoá có thật: 15 tham chiếu hợp lệ, **1 tham chiếu ma** (`detectionEquity` → `wholeClassVote`, đúng ra `classVote`), còn 4 token là trường dữ liệu/API (`errorTag`, `loiViet`, `localStorage`, `speechSynthesis`) không phải quy định | sửa `wholeClassVote` → `classVote` (39 file + docs) + khoá toàn-cục mới trong validator: mọi `` `camelCase` `` bọc trong dấu chấm ngược phải khớp một khoá đã xuất, ngoại trừ đúng bốn tên dữ liệu/API; P86–P87 chứng minh khoá đỏ khi đứa vào tên ma |
 | 20 | **đo mâu thuẫn dây chuyền giữa NHIỀU quy định**: sáu quy định (`boardEquity`, `classBoard`, `classVote`, `verifyData`, `oldHardware`, `timeSlack` + `roomFootprint`) cùng hứa "chỉ hiện ở dải điều khiển của cô, không hiện lên màn chiếu" — mặc định một máy hai tín hiệu xuất riêng, nhưng cắm HDMI mặc định thường là SOI GƯƠNG; đo: "hai màn hình" · "màn hình riêng" · "màn hình mở rộng" · "trình chiếu" đều **0/39**; nguồn: Microsoft PowerPoint (muốn xem ghi chú riêng phải **chủ động** đổi topology sang Extend — nói về chiều kiến trúc, không phải số liệu HTML) | `privateView` (hỏi một dòng "CHUNG MÀN / MÀN RIÊNG", mặc định an toàn CHUNG MÀN, không đoán — như `powerCut` hỏi cắm điện/pin; khi CHUNG MÀN rút mọi dòng riêng khỏi màn hình thường trực + giữ-phím-để-xem ẩn ≤ 0,3 s; khi MÀN RIÊNG `window.open` cửa sổ chiếu chỉ-bảng-không-dải-điều-khiển, chặn thì tự lùi về CHUNG MÀN; không in tên/dãy-ghế thường trực, "Kiểm tra riêng tư" trong chạy thử soi đúng màn máy chiếu đang phát; mốc 0,3 s + mặc định CHUNG MÀN là dự án chọn) |
+| 21 | **đo mâu thuẫn bằng chính PHÉP CỘNG trên các con số của bốn quy định**: `fullPeriod` cho VẬN DỤNG 3–5′ · `exitTicket` giữ 2′ CUỐI của nó làm vé · `movementBreak` tổng nghỉ ≤ 3′ "lấy từ VẬN DỤNG hoặc `timeSlack` dôi" · `tightRoomFocus` nâng nghỉ lên ≤ 4′ khi chật → nghỉ(4) + vé(2) = **6 > 5** = trần VẬN DỤNG, và tiết đúng 35′ thì `timeSlack` dôi = 0 nên nguồn hai cũng cạn; đo: "ngân sách nghỉ" · "co ngắn nhịp nghỉ" · "bỏ nhịp nghỉ" · "ưu tiên lấy từ" đều **0/39**; nguồn: Understood.org (brain-break là chiến lược hành vi có bằng chứng, xếp 1–5 phút sau mỗi 10–25 phút tập trung — khớp đầu dưới mà `movementBreak` đã cite) | `breakReserve` (dòng nghỉ **có thật** trên thanh tiến trình `flow` — nấc thường 2′, chật 3′ — số dự án chọn để phép cộng trong 35′ đóng lại; rút đúng thứ tự timeSlack-dôi → VẬN DỤNG trên 2′ vé (không xuống dưới 2′) → LUYỆN TẬP 12→10, **tuyệt đối không** rút VẬT THẬT hay vé; khi "Còn < 3 phút"/"quá giờ"/cô bấm "Còn 2 phút" thì nhịp **tự CO còn 15 giây** (ba hơi thở + vươn tay, vẫn Toán, camera tắt); một nút "Bỏ nhịp nghỉ tiết này", bộ đếm "nghỉ đã dùng/còn lại" ở dải của cô; thêm một bước chạy thử mô phỏng "Còn 2 phút") |
 
 ## Vì sao chọn những con số đang dùng
 
@@ -297,6 +306,15 @@ màn hình và chuyển sang giữ-phím-để-xem, khi MÀN RIÊNG thì `window
   khi cô buông tay giữa lúc 35 em đang nhìn. Cách hỏi một dòng không đoán cũng mô phỏng đúng `powerCut`
   ("máy đang cắm điện hay chạy pin?") — cùng nguyên tắc: không có API tin cậy thì hỏi người dùng một câu tiếng
   Việt, không đoán.
+- **Dòng nghỉ 2 phút (thường) / 3 phút (chật) và nhịp tự co 15 giây của `breakReserve`** — vòng 21 không lấy
+  số từ một nghiên cứu nào, mà lấy từ **chính phép cộng nội bộ**: để `movementBreak` (≤ 3′, `tightRoomFocus`
+  ≤ 4′) và `exitTicket` (2′ vé) cùng sống trong VẬN DỤNG (3–5′) thì phần nghỉ phải tụt xuống **2′** ở nấc
+  thường và **3′** ở nấc chật (tương ứng `movementBreak` và `tightRoomFocus` cũ), nhờ vậy nghỉ(≤ 3–4) + vé(2)
+  vẫn đóng được trong trần 5′ của VẬN DỤNG mà không cắt VẬT THẬT. Khoảng 1–5 phút mà Understood nêu cho mỗi
+  nhịp brain-break chỉ *chặn trên*; con số 2/3 cụ thể là dự án chọn. Nhịp **15 giây** là phiên bản tối-thiểu
+  khi "Còn 2 phút": đủ cho ba hơi thở + vươn tay quá đầu — vẫn là Toán theo đúng tinh thần `movementBreak` —
+  mà không nuốt vé. Thứ tự rút (timeSlack-dôi → VẬN DỤNG trên 2′ vé → LUYỆN TẬP 12→10) cũng là lựa chọn của
+  dự án, ưu tiên hy sinh phần *luyện thêm* trước phần *kiểm tra cuối tiết*.
 
 ## Nguồn đọc cho từng cụm quy định
 
@@ -648,24 +666,30 @@ thành "tăng X% điểm".
   dòng riêng vẫn lộ mà công cụ không hay biết. Nút "Kiểm tra riêng tư" chỉ là bản soi của CHÍNH cửa sổ đang
   mở, không phải bằng chứng máy chiếu thấy gì — vòng sau nên nghĩ cách để cô xác nhận chéo (ví dụ một hình
   chỉ hiện trên cửa sổ chiếu, cô quay xuống hỏi "cả lớp thấy hình gì").
+- **`breakReserve` mới chốt được phần *số học*, chưa chốt được phần *đo* .** Vòng 21 bảo đảm nghỉ + vé đóng
+  được trong 35 phút trên giấy, nhưng chưa có một tiết thật nào đếm xem: dòng nghỉ 2′ có thật sự bị cô bấm
+  "Bỏ" quá thường xuyên không (nếu có thì nghỉ nên thành tuỳ chọn thay vì mặc định có sẵn), và nhịp tự co
+  15 giây có đủ để một lớp 35 em bình tĩnh lại hay chỉ thành một lần đứng-up-ngồi-down chiếu lệ. Cùng họ với
+  khoản nợ "số lần cộng tay/thấy tay" ở trên: chỉ cần in thêm vài dòng "số tiết đã bỏ nhịp · số lần co 15 giây"
+  vào mục "Báo cáo máy" là có dữ liệu, không cần ghi hình hay lưu danh tính.
 - **Danh sách trắng `errorTag`/`loiViet`/`localStorage`/`speechSynthesis` là danh sách tay.** Khoá tham chiếu
   chéo của vòng 19 chỉ trừ đúng bốn token đó vì chúng là trường dữ liệu và API trình duyệt, không phải quy
   định. Một vòng sau thêm quy định mới mà bọc tên một hàm/API khác trong dấu chấm ngược thì validator sẽ đỏ
   báo "quy định ma" dù không sai — lúc đó phải cân nhắc tách cơ chế khỏi cách viết: hoặc đánh dấu tham chiếu
   quy định bằng một cú pháp riêng (`→`ruleName`←`), hoặc để khoá chỉ bắt tên *khớp khuôn quy định* mà không có
-  trong danh sách. Cách hiện tại đơn giản và an toàn cho 45 quy định, nhưng cần người sau biết nó là nợ kỹ
+  trong danh sách. Cách hiện tại đơn giản và an toàn cho 46 quy định, nhưng cần người sau biết nó là nợ kỹ
   thuật có chủ đích chứ không phải thiếu sót.
 
 ## Muốn đóng góp thì sửa ở đâu
 
 ```text
 tools/lib/chalk.mjs     10 quy định bảng phấn và vật thật      → sinh vào mục 4 của giáo án
-tools/lib/lesson.mjs    45 quy định chế độ giảng bài           → sinh vào mục 0, 1, 2, 3, 5, 6, 7, 8, 9, 10
+tools/lib/lesson.mjs    46 quy định chế độ giảng bài           → sinh vào mục 0, 1, 2, 3, 5, 6, 7, 8, 9, 10
 tools/lib/handout.mjs   4 quy định từ bảng ra vở               → sinh vào mục 9
 tools/data/props.mjs    vật thật + sơ đồ theo 38 cụm
 tools/data/lessons.mjs  tên bài, câu khởi động, dòng ghi nhớ
 tools/build-lessons.mjs ghép thành 39 file prompts/giao-an/
-tools/validate.mjs      59 khoá của họ giáo án + chốt chặn ngược + 13 mục của khung
+tools/validate.mjs      60 khoá của họ giáo án + chốt chặn ngược + 13 mục của khung
                         + trần số hàng "Chữa bài" đo thẳng từ clusters.mjs/error-notes.mjs
 ```
 

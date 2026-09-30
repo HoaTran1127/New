@@ -175,6 +175,7 @@ const LESSON_RULES = [
   [LESSON.movementBreak, 'thiếu quy định nhịp vận động gắn với Toán sau khi ngồi liền mạch'],
   [LESSON.roomFootprint, 'thiếu quy định khoảng trống sàn của phòng học cho nhịp đứng và nhóm'],
   [LESSON.tightRoomFocus, 'thiếu quy định hạ ngưỡng ngồi và bù tần suất cho nhịp đứng-tại-chỗ khi phòng chật'],
+  [LESSON.breakReserve, 'thiếu quy định dòng nghỉ có thật trên thanh tiến trình thay vì chỗ thừa cuối tiết'],
   [LESSON.detectionEquity, 'thiếu quy định không đổi "máy không thấy tay" thành "em không trả lời"'],
   [LESSON.privateView, 'thiếu quy định dải điều khiển riêng của cô chỉ thật khi máy chiếu không soi gương'],
 ];
