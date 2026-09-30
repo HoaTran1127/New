@@ -89,12 +89,12 @@ export const CHALK = {
 export const CHALK_SHORT =
   'bảng phấn ảo alpha 0.55–0.70, mép trên không quá vai + 15% chiều cao khung hình, bảng chữ L <= 40% hoặc bảng to <= 68% khi đứng nép · pinch ngón 4–8 để viết phấn và nắm bàn tay 350–500 ms để lau · không con số nào hiện trơ, mỗi số là một chồng vật đếm được và 10 đơn vị gộp thành một bó · đi đúng ba chặng VẬT THẬT rồi SƠ ĐỒ rồi PHÉP TÍNH, mỗi số trong phép tính có một đường phấn nối về sơ đồ · đề bài tối đa 2 dòng chữ, bài toán đố dựng thành cảnh bằng cách kéo từng vật, ẩn số là ô "?" · phân số chọn số phần 2–12 bằng khay thẻ hoặc bằng ngón tay 2/4/8, mỗi lần quẹt một nhát, tô từng phần rồi mới viết k/N, cùng một giá trị hiện được bằng >= 2 mô hình · đại lượng đo bằng dụng cụ có vạch đúng đơn vị và có đường phấn nối tới vạch đang đọc · lời giải viết từng dòng <= 12 từ, mỗi dòng hỏi một câu trước khi viết tiếp, sai chỉ xoá đúng dòng đó · chạm-bật viết, nghỉ bắt buộc sau 90 giây pinch, mất tay quá 500 ms thì đóng băng nét tại chỗ · lưu bảng vào localStorage khoá "miti-board" tối đa 200 KB, không lưu ảnh hay video camera · khi bài có khối: cạnh khuất nét đứt 3 px alpha 0.55, kéo ngang xoay -90° đến +90° mỗi 15°, nút mở hộp trải đúng 6 mặt lưới khai triển, xếp lớp đếm từng tầng · khi bài có góc hoặc hai đường: vai 11/12 là đỉnh, hai khuỷu 13/14 là hai tia, 90° ± 8° là góc vuông, rồi xác nhận bằng ê-ke phủ lên ảnh';
 
-// Hai quy định hình học chỉ có nghĩa với đúng một số cụm kiến thức. In vào cả 39 giáo án thì mô
+// Hai quy định hình học chỉ có nghĩa với đúng một số cụm kiến thức. In vào cả 44 giáo án thì mô
 // hình sẽ vẽ cạnh khuất trong bài chia số và biến thân học sinh thành ê-ke trong bài phân số —
 // vì vậy build-lessons.mjs nối có điều kiện và validate.mjs chặn cả hai chiều (thiếu và thừa).
 // Lập bảng theo đúng chuỗi vat + so_do trong tools/data/props.mjs, không theo cảm giác chủ đề.
-export const SOLID_CLUSTERS = ['the-tich', 'hinh-hoc-on-tap'];
-export const BODY_CLUSTERS = ['goc', 'vuong-goc-song-song', 'hinh-binh-hanh', 'hinh-thoi', 'hinh-hoc-on-tap'];
+export const SOLID_CLUSTERS = ['the-tich', 'hinh-hoc-on-tap', 'dien-tich-xq-tp'];
+export const BODY_CLUSTERS = ['goc', 'vuong-goc-song-song', 'hinh-binh-hanh', 'hinh-thoi', 'hinh-hoc-on-tap', 'hinh-tam-giac', 'hinh-thang'];
 
 // Số quy định in bằng chữ trong tiêu đề mục 4. build-lessons.mjs và validate.mjs dùng chung bảng này
 // để tiêu đề và bộ kiểm không bao giờ nói hai con số khác nhau.

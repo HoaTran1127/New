@@ -8,7 +8,7 @@
 
 > 🎯 **North Star:** Vào thư viện ➔ Chọn game yêu thích ➔ **1 Click Copy Prompt** ➔ Dán vào **[Google Gemini](https://gemini.google.com)** ➔ Nhận ngay mã nguồn Game Web AR 1 file HTML hoàn chỉnh, bật camera chơi chuyển động 60 FPS cực mượt!
 
-> 🧑‍🏫 **Giáo viên muốn giảng bài thay vì cho học sinh chơi?** Thư viện có thêm **[40 giáo án bảng phấn](prompts/giao-an/README.md)** cho Toán lớp 4–5: giáo viên trình bày trên màn chiếu, mọi con số thành vật thật vẽ phấn cắt và kéo được bằng ngón tay, không tim không điểm không xếp hạng. Chi tiết ở mục **🧑‍🏫 Bộ giáo án giảng bài** phía dưới.
+> 🧑‍🏫 **Giáo viên muốn giảng bài thay vì cho học sinh chơi?** Thư viện có thêm **[44 giáo án bảng phấn](prompts/giao-an/README.md)** cho Toán lớp 4–5: giáo viên trình bày trên màn chiếu, mọi con số thành vật thật vẽ phấn cắt và kéo được bằng ngón tay, không tim không điểm không xếp hạng. Chi tiết ở mục **🧑‍🏫 Bộ giáo án giảng bài** phía dưới.
 
 ---
 
@@ -190,13 +190,13 @@ Nguồn: `tools/lib/verify.mjs`. Đây là tầng sửa hai lỗi **không ai nh
 
 ---
 
-## 🧑‍🏫 Bộ giáo án giảng bài — bảng phấn và vật thật (40 giáo án Toán 4–5)
+## 🧑‍🏫 Bộ giáo án giảng bài — bảng phấn và vật thật (44 giáo án Toán 4–5)
 
 👉 **[Mở bộ giáo án](prompts/giao-an/README.md)** — thư mục `prompts/giao-an/`, sinh bằng `tools/build-lessons.mjs`.
 
 Đây là **CÔNG CỤ GIẢNG BÀI cho giáo viên trình bày trước cả lớp**, tách hẳn khỏi 85 prompt game cho học sinh tự chơi. Hai bộ dùng chung một nguồn vật thật nên cùng một cụm kiến thức thì vật vẽ phấn giống hệt nhau — học sinh gặp lại đúng cái pizza đó khi chuyển từ tiết giảng sang giờ luyện tập — nhưng cơ chế thì **đối lập nhau có chủ đích**:
 
-| | 🧑‍🏫 Bộ giáo án (40) | 🎮 85 prompt game |
+| | 🧑‍🏫 Bộ giáo án (44) | 🎮 85 prompt game |
 | --- | --- | --- |
 | Ai dùng | Giáo viên trình bày, cả lớp xem màn chiếu | Học sinh tự chơi, một máy một hoặc hai em |
 | Nhịp | Chờ giáo viên bấm "Bước tiếp", không tự chuyển | 12 lượt, tăng độ khó ở lượt 5 và lượt 9 |
@@ -206,7 +206,7 @@ Nguồn: `tools/lib/verify.mjs`. Đây là tầng sửa hai lỗi **không ai nh
 | Kiểm đề | `verifyQuestionBank()` chạy một lần **trước Bước 5** | `verifyQuestionBank()` chạy trước vòng chơi đầu tiên |
 | Nguồn quy định | `tools/lib/chalk.mjs` + `tools/lib/lesson.mjs` + `tools/lib/verify.mjs` + `AR_LESSON` trong `tools/lib/ar.mjs` | `tools/lib/feel.mjs` + `tools/lib/classroom.mjs` + `tools/lib/verify.mjs` + `AR_RENDER` trong `tools/lib/ar.mjs` |
 
-### Mạch bài năm bước, giống nhau ở cả 40 giáo án
+### Mạch bài năm bước, giống nhau ở cả 44 giáo án
 
 **Khởi động** 2–3 phút (hỏi gắn với vật thật, chưa viết gì lên bảng) → **Vật thật** 4–5 phút (thao tác tay trên vật đếm được) → **Sơ đồ** 3–4 phút (học sinh tự tay dựng biểu diễn bán cụ thể) → **Phép tính** 3–4 phút (mỗi con số nối ngược về sơ đồ) → **Luyện tập chung** 3–4 phút (cả lớp biểu quyết theo nhãn A–D). Năm bước nằm trong 15–20 phút **đầu của một tiết 35 phút**; thời gian còn lại là luyện tập và chốt bài, và thanh tiến trình giáo viên kéo được để đổi ngân sách theo lớp mình.
 
@@ -271,11 +271,37 @@ Hai lỗ hổng cấu trúc đo được khi đối chiếu bộ giáo án với
 - **Thiếu bài vì thiếu game.** `prompts/giao-an/` được sinh từ catalog: mỗi cặp (cụm Toán, lớp) có game mới có giáo án. Cô dạy chủ đề nào trên lớp thì phải có bài giảng cho chủ đề đó, kể cả khi thư viện chưa viết game — nhưng không có đường nào để khai báo.
 - **Hai lớp đọc chung một lời.** `cong-tru` là cụm duy nhất có game ở cả hai lớp (L4-10 và T5-01), và catalog ghi `muc_tieu_hoc_tap` cho hai dòng y hệt nhau, nên GA4-10 và GA5-01 in ra cùng tiêu đề "Cộng trừ có nhớ và có mượn, nhìn bằng bó que" dù game lớp 5 yêu cầu tính theo thứ tự ưu tiên.
 
-Cách sửa ở tầng dữ liệu, vẫn không chạm prompt game: `CHU_DE_CHI_CO_GIAO_AN` trong `tools/data/lessons.mjs` khai tường minh cặp (cụm, lớp) chỉ có giáo án — cụm mới vẫn phải đủ bộ năm nguồn (`clusters.mjs` · `props.mjs` 5 trường · `examples.mjs` ≥ 2 câu · `error-notes.mjs` đúng 3 mô tả · ba trường viết tay) — còn `giao_an.theo_lop` cho phép ghi đè lời theo từng lớp, khóa chỉ nhận `'4'`/`'5'` và chỉ nhận ba trường viết tay cùng bẩy trường lời. Bài đầu tiên theo đường mới là **chu vi và diện tích hình tròn lớp 5** (`hinh-tron`): vật thật là vòng tròn lăn một vòng trên thước dây và tám quạt cắt ra ghép xen kẽ thành hình gần chữ nhật, nên công thức `r × r × 3.14` đọc được từ cạnh của hình ghép chứ không phải học thuộc. Bộ giáo án hiện có **40 bài trên 39 cụm vật thật**, 85 prompt game vẫn không đổi một byte; 10/10 mutation probe vòng 6 đi qua cả hai chiều (xoá khai báo, khai trùng cặp đã có game, lớp ngoài 4–5, thiếu vật thật, trường ngoài phạm vi, dấu câu thừa, tiếng game trong lời).
+Cách sửa ở tầng dữ liệu, vẫn không chạm prompt game: `CHU_DE_CHI_CO_GIAO_AN` trong `tools/data/lessons.mjs` khai tường minh cặp (cụm, lớp) chỉ có giáo án — cụm mới vẫn phải đủ bộ năm nguồn (`clusters.mjs` · `props.mjs` 5 trường · `examples.mjs` ≥ 2 câu · `error-notes.mjs` đúng 3 mô tả · ba trường viết tay) — còn `giao_an.theo_lop` cho phép ghi đè lời theo từng lớp, khóa chỉ nhận `'4'`/`'5'` và chỉ nhận ba trường viết tay cùng bẩy trường lời. Bài đầu tiên theo đường mới là **chu vi và diện tích hình tròn lớp 5** (`hinh-tron`): vật thật là vòng tròn lăn một vòng trên thước dây và tám quạt cắt ra ghép xen kẽ thành hình gần chữ nhật, nên công thức `r × r × 3,14` đọc được từ cạnh của hình ghép chứ không phải học thuộc. Bộ giáo án hiện có **40 bài trên 39 cụm vật thật**, 85 prompt game vẫn không đổi một byte; 10/10 mutation probe vòng 6 đi qua cả hai chiều (xoá khai báo, khai trùng cặp đã có game, lớp ngoài 4–5, thiếu vật thật, trường ngoài phạm vi, dấu câu thừa, tiếng game trong lời).
+
+### 📚 Vòng 7: bốn chủ đề SGK chưa có game đi qua đường lesson-only
+
+Vòng 7 đối chiếu 40 bài đang có với chương trình GDPT 2018 môn Toán (cấp tiểu học) và xác nhận bằng
+nguồn mở: **nhân và chia phân số dạy ở lớp 4** (lớp 5 chỉ ôn), còn **diện tích hình tam giác, diện tích
+hình thang, chu vi–diện tích hình tròn, DTXQ/DTTP hình hộp chữ nhật và hình lập phương, các phép tính
+với số thập phân, biểu đồ hình quạt tròn đều thuộc lớp 5**. Bộ giáo án thiếu đúng những mạch đó vì
+catalog game không phủ hết chương trình.
+
+Bốn cụm mới viết bằng cơ chế vòng 6 — mỗi cụm đủ cả năm nguồn dữ liệu và tự động nhận quy định hình học
+theo danh sách trong `tools/lib/chalk.mjs`:
+
+| Mã | Bài giảng | Lớp | Vật thật và sơ đồ |
+| --- | --- | --- | --- |
+| `GA4-30` | `nhan-phan-so` — Nhân phân số bằng tấm lưới tô kép | 4 | lưới ô vuông tô theo hàng và theo cột, phần ô tô kép chính là tích |
+| `GA5-12` | `hinh-tam-giac` — Diện tích tam giác: ghép hai tấm bìa thành một hình bình hành | 5 | hai tấm bìa tam giác giống hệt, một tấm xoay 180°; đường cao nét đứt |
+| `GA5-13` | `hinh-thang` — Diện tích hình thang: xoay một mảnh để về hình đã học | 5 | cắt mảnh tam giác theo đường cao rồi ghép sang đầu kia; đáy hình bình hành bằng tổng hai đáy |
+| `GA5-14` | `dien-tich-xq-tp` — Mở hộp: bốn mặt xung quanh và sáu mặt toàn phần | 5 | hộp trong suốt mở thành lưới sáu mặt, bốn mặt xung quanh một màu, hai mặt đáy màu khác |
+
+Bộ giáo án lên **44 bài trên 43 cụm vật thật, 62 cụm kiến thức**; `GA5-12`, `GA5-13`, `GA5-14` nhận đúng
+12 quy định (có quy định hình học nối theo cụm) còn `GA4-30` và `GA5-11` đứng ở 11 quy định — validator
+chặn cả hai chiều nên không thể lệch. Số thập phân viết theo dấu phẩy kiểu Việt (`31,4 cm`, `π ≈ 3,14`).
+
+Còn thiếu để viết tiếp: **chia phân số (l4)**, **nhân–chia số thập phân (l5)**, **biểu đồ hình quạt tròn (l5)**.
+
+Nguồn đã kiểm tra vòng 7: [Tài liệu tìm hiểu chương trình môn Toán — ĐHSP Hà Nội](https://dtbdtx.hnue.edu.vn/Portals/0/Tai%20lieu%20tim%20hieu%20chuong%20trinh%20mon%20Toan.pdf) (bảng yêu cầu cần đạt lớp 4–5), [Diện tích tam giác và hình thang Toán 5 — mathx.vn](https://mathx.vn/cung-em-hoc-toan/dien-tich-hinh-tam-giac-hinh-thang-toan-lop-5-tuan-18.html), [Lý thuyết phép chia phân số — Toán 4 Kết nối tri thức](https://vietjack.com/toan-4-kn/ly-thuyet-phep-chia-phan-so.jsp). Ba bộ sách (Cánh Diều, Kết nối tri thức, Chân trời sáng tạo) xếp tuần tự khác nhau nhưng cùng một lớp, nên giáo án bám theo mạch kiến thức chứ không theo số bài.
 
 ### Vật thật và sơ đồ theo cụm kiến thức (`tools/data/props.mjs`)
 
-39 cụm Toán, mỗi cụm đủ 5 trường `vat · don_vi · ngon_tay · so_do · doc`, không để mô hình tự bịa:
+43 cụm Toán, mỗi cụm đủ 5 trường `vat · don_vi · ngon_tay · so_do · doc`, không để mô hình tự bịa:
 
 | Cụm | Vật thật vẽ phấn | Ngón tay làm gì | Sơ đồ học sinh tự dựng |
 | --- | --- | --- | --- |
@@ -299,8 +325,8 @@ tools/data/gestures.mjs      mã điều khiển: landmark, hình học chốt, 
 tools/data/examples.mjs      câu mẫu few-shot cho từng cụm
 tools/data/error-notes.mjs   nhãn lỗi tiếng Việt theo cụm (errorTag + loiViet) — nguồn chung với game
 tools/data/error-tags.mjs    21 nhãn lỗi dùng giữa các cụm, chỉ bộ giáo án đọc; thiếu một nhãn là builder dừng
-tools/data/props.mjs         vật thật vẽ phấn cho 39 cụm Toán (vat · don_vi · ngon_tay · so_do · doc)
-tools/data/lessons.mjs       nội dung 39 cụm giáo án: tên bài, câu khởi động, dòng ghi nhớ + khối `giao_an` ghi đè lời, `giao_an.theo_lop` tách lời theo lớp, `CHU_DE_CHI_CO_GIAO_AN` khai chủ đề chưa có game
+tools/data/props.mjs         vật thật vẽ phấn cho 43 cụm Toán (vat · don_vi · ngon_tay · so_do · doc)
+tools/data/lessons.mjs       nội dung 43 cụm giáo án: tên bài, câu khởi động, dòng ghi nhớ + khối `giao_an` ghi đè lời, `giao_an.theo_lop` tách lời theo lớp, `CHU_DE_CHI_CO_GIAO_AN` khai chủ đề chưa có game
 tools/lib/ar.mjs             hợp đồng AR — AR_RENDER cho game (video phủ khung hình), AR_LESSON cho giáo án (panel soi tay + boardFrom), bốn mảnh kỹ thuật viết một lần dùng chung
 tools/lib/rules.mjs          quy định lớp học (60/40, calibration, Pause, FPS, an toàn, tổng kết 3 thẻ)
 tools/lib/feel.mjs           quy định vận động to + cảm giác arcade (biên độ, mép khung, trạm nghỉ, hit-stop, combo)
@@ -315,7 +341,7 @@ tools/lib/lesson.mjs         chế độ giảng bài, 13 quy định — dùng 
              ├─ prompts/01-toan4 · 02-toan5 · 03-english4 · 04-english5 (85 file)
              ├─ prompts/VARIANTS_425.md   (85 game × 5 kiểu điều khiển)
              ├─ prompts/01..12 legacy (nâng cấp phụ thuộc, gắn nhãn)
-             ├─ prompts/giao-an/ (40 giáo án + README)  ← tools/build-lessons.mjs
+             ├─ prompts/giao-an/ (44 giáo án + README)  ← tools/build-lessons.mjs
              ├─ catalogs/GAME_CATALOG.js  → index.html vẽ lưới + lọc + copy
              └─ node tools/validate.mjs   → chặn MIXED, thiếu hợp đồng AR, thiếu quy định lớp học,
                                             425 block biến thể, link gãy, thiếu chữ ký MiTi, rò ${},

@@ -111,8 +111,24 @@ export const EXAMPLES = {
     { prompt: 'Hình thoi có cạnh 5 cm. Chu vi?', choices: ['20 cm', '25 cm', '10 cm'], answer: '20 cm', explanation: 'Bốn cạnh bằng nhau nên P = 5 × 4 = 20 cm.', errorTag: 'doi-deu-dai-hai-chenh' },
   ],
   'hinh-tron': [
-    { prompt: 'Hình tròn có bán kính 5 cm. Chu vi là bao nhiêu? (lấy π ≈ 3.14)', choices: ['31.4 cm', '15.7 cm', '314 cm'], answer: '31.4 cm', explanation: 'C = 5 × 2 × 3.14 = 31.4 cm. Lấy 5 × 3.14 là quên nhân đôi bán kính thành đường kính.', errorTag: 'quen_nhan_2_khi_tinh_tu_bankinh' },
-    { prompt: 'Hình tròn có đường kính 10 cm. Diện tích là bao nhiêu? (lấy π ≈ 3.14)', choices: ['314 cm²', '78.5 cm²', '31.4 cm²'], answer: '314 cm²', explanation: 'Bán kính = 10 : 2 = 5 cm, rồi S = 5 × 5 × 3.14 = 314 cm².', errorTag: 'nham_duong_kinh_thanh_bankinh' },
+    { prompt: 'Hình tròn có bán kính 5 cm. Chu vi là bao nhiêu? (lấy π ≈ 3,14)', choices: ['31,4 cm', '15,7 cm', '314 cm'], answer: '31,4 cm', explanation: 'C = 5 × 2 × 3,14 = 31,4 cm. Lấy 5 × 3,14 là quên nhân đôi bán kính thành đường kính.', errorTag: 'quen_nhan_2_khi_tinh_tu_bankinh' },
+    { prompt: 'Hình tròn có đường kính 10 cm. Diện tích là bao nhiêu? (lấy π ≈ 3,14)', choices: ['314 cm²', '78,5 cm²', '31,4 cm²'], answer: '314 cm²', explanation: 'Bán kính = 10 : 2 = 5 cm, rồi S = 5 × 5 × 3,14 = 314 cm².', errorTag: 'nham_duong_kinh_thanh_bankinh' },
+  ],
+  'hinh-tam-giac': [
+    { prompt: 'Tam giác có đáy 8 cm và chiều cao 5 cm. Diện tích?', choices: ['20 cm²', '40 cm²', '13 cm²'], answer: '20 cm²', explanation: 'S = 8 × 5 : 2 = 20 cm². 40 cm² là diện tích hình bình hành ghép được, tức là quên chia 2.', errorTag: 'quen_chia_2_khi_lay_day_nhan_chieu_cao' },
+    { prompt: 'Tam giác vuông có hai cạnh góc vuông 3 cm và 4 cm (cạnh huyền 5 cm). Diện tích?', choices: ['6 cm²', '12 cm²', '7 cm²'], answer: '6 cm²', explanation: 'Hai cạnh góc vuông đóng vai đáy và chiều cao: S = 3 × 4 : 2 = 6 cm². 12 cm² là chu vi, không phải diện tích.', errorTag: 'nham_chu_vi_voi_dien_tich' },
+  ],
+  'hinh-thang': [
+    { prompt: 'Hình thang có hai đáy 6 cm và 10 cm, chiều cao 5 cm. Diện tích?', choices: ['40 cm²', '80 cm²', '45 cm²'], answer: '40 cm²', explanation: 'S = (6 + 10) × 5 : 2 = 40 cm². 80 cm² là quên chia 2.', errorTag: 'quen_chia_2_tong_hai_day_nhan_chieu_cao' },
+    { prompt: 'Hình thang có đáy lớn 12 cm, đáy nhỏ 8 cm, chiều cao 6 cm và hai cạnh bên mỗi cạnh 7 cm. Chu vi?', choices: ['34 cm', '40 cm', '28 cm'], answer: '34 cm', explanation: 'Chu vi cộng độ dài bốn cạnh: 12 + 8 + 7 + 7 = 34 cm. Chiều cao 6 cm không phải một cạnh.', errorTag: 'chep_chieu_cao_vao_phep_tinh_chu_vi' },
+  ],
+  'dien-tich-xq-tp': [
+    { prompt: 'Hình hộp chữ nhật dài 4 cm, rộng 3 cm, cao 2 cm. Diện tích xung quanh?', choices: ['28 cm²', '52 cm²', '24 cm²'], answer: '28 cm²', explanation: 'Chu vi đáy = (4 + 3) × 2 = 14 cm, Sxq = 14 × 2 = 28 cm². 52 cm² là diện tích toàn phần (đã cộng hai mặt đáy).', errorTag: 'nham_xung_quanh_thanh_toan_phan' },
+    { prompt: 'Hình lập phương cạnh 5 cm. Diện tích toàn phần?', choices: ['150 cm²', '100 cm²', '25 cm²'], answer: '150 cm²', explanation: 'Mỗi mặt 5 × 5 = 25 cm², sáu mặt nên S = 25 × 6 = 150 cm². 100 cm² là mới tính bốn mặt xung quanh.', errorTag: 'dem_thieu_mat_cua_hinh_lap_phuong' },
+  ],
+  'nhan-phan-so': [
+    { prompt: 'Tính 2/3 × 4/5.', choices: ['8/15', '6/15', '6/8'], answer: '8/15', explanation: 'Tử nhân tử, mẫu nhân mẫu: 2 × 4 = 8, 3 × 5 = 15. 6/8 là cộng cả tử lẫn mẫu.', errorTag: 'cong_ca_tu_va_mau_thay_vi_nhan' },
+    { prompt: 'Tính 3/4 × 2.', choices: ['3/2', '3/8', '5/4'], answer: '3/2', explanation: '3/4 × 2 = 6/4 = 3/2. Số tự nhiên nhân vào tử, không nhân vào mẫu.', errorTag: 'nhan_so_tu_nhien_vao_mau_thay_vi_tu' },
   ],
   'on-tap-toan-4': [
     { prompt: 'Số gồm 4 triệu, 0 trăm nghìn, 7 nghìn, 5 chục?', choices: ['4 007 050', '4 070 050', '4 700 500'], answer: '4 007 050', explanation: 'Viết đủ cả ba lớp, hàng nào thiếu thì ghi 0.', errorTag: 'thieu_hang_trong' },

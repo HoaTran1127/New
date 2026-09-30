@@ -143,8 +143,28 @@ const C = {
   // (khai ở CHU_DE_CHI_CO_GIAO_AN trong tools/data/lessons.mjs).
   'hinh-tron': {
     tags: ['nham_duong_kinh_thanh_bankinh', 'quen_nhan_2_khi_tinh_tu_bankinh', 'tron_don_vi_do_dai_va_dien_tich'],
-    noi_dung: 'đặc điểm hình tròn: tâm, bán kính, đường kính; chu vi hình tròn; diện tích hình tròn (lấy π ≈ 3.14)',
+    noi_dung: 'đặc điểm hình tròn: tâm, bán kính, đường kính; chu vi hình tròn; diện tích hình tròn (lấy π ≈ 3,14)',
     giai_thich: 'lăn một vòng tròn trên thước dây để đọc chu vi, cắt hình tròn thành tám quạt ghép xen kẽ thành hình gần chữ nhật để đọc diện tích',
+  },
+  'hinh-tam-giac': {
+    tags: ['quen_chia_2_khi_lay_day_nhan_chieu_cao', 'dung_lenh_can_ben_lam_chieu_cao', 'nham_chu_vi_voi_dien_tich'],
+    noi_dung: 'đặc điểm hình tam giác: đáy và chiều cao tương ứng; diện tích bằng đáy nhân chiều cao chia 2',
+    giai_thich: 'ghép thêm một tam giác giống hệt xoay 180 độ thành hình bình hành rồi chia đôi diện tích',
+  },
+  'hinh-thang': {
+    tags: ['nhan_tung_day_rieng_le_voi_chieu_cao', 'quen_chia_2_tong_hai_day_nhan_chieu_cao', 'chep_chieu_cao_vao_phep_tinh_chu_vi'],
+    noi_dung: 'đặc điểm hình thang: hai đáy song song, đường cao; diện tích bằng tổng hai đáy nhân chiều cao chia 2; chu vi',
+    giai_thich: 'xoay mảnh tam giác cắt ở đầu hình thang 180 độ ghép sang đầu kia thành hình bình hành có đáy bằng tổng hai đáy',
+  },
+  'dien-tich-xq-tp': {
+    tags: ['nham_xung_quanh_thanh_toan_phan', 'thieu_buoc_nhan_chu_vi_day_voi_chieu_cao', 'dem_thieu_mat_cua_hinh_lap_phuong'],
+    noi_dung: 'diện tích xung quanh và diện tích toàn phần của hình hộp chữ nhật và hình lập phương; các mặt đối diện bằng nhau',
+    giai_thich: 'mở hộp thành lưới sáu mặt, tô nhóm bốn mặt xung quanh rồi tô tiếp hai mặt đáy',
+  },
+  'nhan-phan-so': {
+    tags: ['cong_ca_tu_va_mau_thay_vi_nhan', 'nhan_so_tu_nhien_vao_mau_thay_vi_tu', 'ket_qua_khong_rut_gon'],
+    noi_dung: 'nhân hai phân số; nhân phân số với số tự nhiên; tính chất giao hoán và kết hợp của phép nhân phân số',
+    giai_thich: 'tô lưới ô đơn vị theo hai hướng: hàng theo phân số thứ nhất, cột theo phân số thứ hai, phần tô kép chính là tích',
   },
   'on-tap-toan-4': {
     tags: ['trộn_loai_phep_tinh', 'quen_rut_gon_ket_qua', 'doc_de_thieu_dieu_kien'],

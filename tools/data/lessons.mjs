@@ -12,7 +12,7 @@
 //
 // Lý do tồn tại: công cụ giảng bài khác game học sinh ở chỗ nó phải có MỘT mạch bài duy nhất
 // đi từ vật thật tới phép tính, và mạch đó phải giống nhau ở mọi bài để giáo viên thuộc được.
-// Nếu để mô hình tự bịa mạch bài cho từng cụm thì 39 giáo án sẽ ra 39 kiểu dạy khác nhau.
+// Nếu để mô hình tự bịa mạch bài cho từng cụm thì 44 giáo án sẽ ra 44 kiểu dạy khác nhau.
 
 import { ERROR_NOTES } from './error-notes.mjs';
 
@@ -169,7 +169,27 @@ const L = {
   'hinh-tron': {
     ten: 'Chu vi và diện tích hình tròn: một vòng lăn và tám quạt ghép',
     khoi_dong: 'Cho cái bánh xe này lăn đúng một vòng trên sàn. Vết sơn trên vành vẽ được một đoạn dài bao nhiêu, và đoạn đó liên quan gì tới cái bánh xe?',
-    chot: 'Chu vi hình tròn bằng đường kính nhân 3.14; cắt hình tròn thành nhiều quạt bằng nhau rồi ghép xen kẽ thành hình gần chữ nhật, nên diện tích bằng bán kính nhân bán kính nhân 3.14.',
+    chot: 'Chu vi hình tròn bằng đường kính nhân 3,14; cắt hình tròn thành nhiều quạt bằng nhau rồi ghép xen kẽ thành hình gần chữ nhật, nên diện tích bằng bán kính nhân bán kính nhân 3,14.',
+  },
+  'hinh-tam-giac': {
+    ten: 'Diện tích tam giác: ghép hai tấm bìa thành một hình bình hành',
+    khoi_dong: 'Chỉ có một tấm bìa hình tam giác. Làm sao dùng nó tìm ra diện tích mà không phải đếm từng ô vuông?',
+    chot: 'Hai tam giác giống hệt ghép lại thành hình bình hành nên diện tích tam giác bằng đáy nhân chiều cao chia 2, và chiều cao phải vuông góc với đáy.',
+  },
+  'hinh-thang': {
+    ten: 'Diện tích hình thang: xoay một mảnh để về hình đã học',
+    khoi_dong: 'Hình thang có hai đáy dài ngắn khác nhau. Cắt chỗ nào và ghép vào đâu để nó thành hình mình đã có công thức?',
+    chot: 'Cắt mảnh tam giác theo đường cao rồi xoay 180 độ ghép sang đầu kia được hình bình hành có đáy bằng tổng hai đáy, nên diện tích hình thang bằng tổng hai đáy nhân chiều cao chia 2.',
+  },
+  'dien-tich-xq-tp': {
+    ten: 'Mở hộp: bốn mặt xung quanh và sáu mặt toàn phần',
+    khoi_dong: 'Dán giấy kín cái hộp này thì tốn nhiều giấy hơn là dán riêng bốn mặt xung quanh, hay bằng nhau?',
+    chot: 'Diện tích xung quanh bằng chu vi đáy nhân chiều cao; diện tích toàn phần bằng diện tích xung quanh cộng hai mặt đáy, và hình lập phương có sáu mặt bằng nhau.',
+  },
+  'nhan-phan-so': {
+    ten: 'Nhân phân số bằng tấm lưới tô kép',
+    khoi_dong: 'Tấm bảng che mất 2/3 chiều dài và 3/4 chiều rộng của một bức tường. Muốn biết nó che mấy phần tường, ta cộng hay nhân hai phân số?',
+    chot: 'Nhân hai phân số thì lấy tử nhân tử, mẫu nhân mẫu; tô lưới theo hai hướng thì phần ô tô kép đúng bằng tích đó, và kết quả phải rút gọn.',
   },
   'on-tap-toan-4': {
     ten: 'Ôn tập cuối lớp 4 trên bốn trạm vật thật',
@@ -273,6 +293,10 @@ export const hasOverride = (clusterKey) => Boolean(L[clusterKey] && L[clusterKey
 // viết tay ở file này), chỉ phần "game cùng cụm" là được phép trống.
 export const CHU_DE_CHI_CO_GIAO_AN = [
   { cluster: 'hinh-tron', lop: '5' },
+  { cluster: 'hinh-tam-giac', lop: '5' },
+  { cluster: 'hinh-thang', lop: '5' },
+  { cluster: 'dien-tich-xq-tp', lop: '5' },
+  { cluster: 'nhan-phan-so', lop: '4' },
 ];
 
 // Dòng thay cho "Bản game của cùng cụm kiến thức này" ở bài chưa có game. Builder in ra, validator
