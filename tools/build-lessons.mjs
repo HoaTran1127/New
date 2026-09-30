@@ -189,6 +189,7 @@ ${AR_RENDER}
 
 10. TRƯỚC KHI LÊN LỚP VÀ SAU KHI DẠY XONG (ba việc chỉ có cô giáo làm được)
 - ${LESSON.rehearsal}
+- ${LESSON.rehearsalBudget}
 - ${LESSON.lessonStudy}
 
 11. MiTi — CHỮ KÝ BẮT BUỘC TRONG HTML

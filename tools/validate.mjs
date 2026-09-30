@@ -178,6 +178,7 @@ const LESSON_RULES = [
   [LESSON.breakReserve, 'thiếu quy định dòng nghỉ có thật trên thanh tiến trình thay vì chỗ thừa cuối tiết'],
   [LESSON.detectionEquity, 'thiếu quy định không đổi "máy không thấy tay" thành "em không trả lời"'],
   [LESSON.privateView, 'thiếu quy định dải điều khiển riêng của cô chỉ thật khi máy chiếu không soi gương'],
+  [LESSON.rehearsalBudget, 'thiếu quy định chạy thử 5 phút giữ đúng nhánh không-camera và ngân sách bước'],
 ];
 // Từ bảng ra vở: một tiết giảng chỉ thật sự xong khi các em làm được bài trên giấy.
 const HANDOUT_RULES = [
@@ -207,6 +208,13 @@ function checkRuleRefs(label, text) {
 for (const [k, v] of Object.entries(LESSON)) checkRuleRefs(`LESSON.${k}`, v);
 for (const [k, v] of Object.entries(CHALK)) checkRuleRefs(`CHALK.${k}`, v);
 for (const [k, v] of Object.entries(HANDOUT)) checkRuleRefs(`HANDOUT.${k}`, v);
+
+// Vòng 22 — bắt cặp tiền đề: `rehearsal` định nghĩa 'Chạy thử 5 phút' là KHÔNG camera, nên bước tự
+// kiểm ĐỘ PHỦ BÀN TAY của `detectionEquity` (đòi "đưa bàn tay vào trước camera") buộc phải trỏ sang
+// Nhành B có camera của `rehearsalBudget`. Mất liên kết này là vòng 18 lại ra lệnh bật camera ngay
+// trong luồng không-camera — hai chỉ thị trái nhau mà mắt người khó thấy, nên khoá bằng máy.
+if (LESSON.detectionEquity.includes('vào trước camera') && !LESSON.detectionEquity.includes('rehearsalBudget'))
+  bad('LESSON.detectionEquity: bước tự kiểm camera phải trỏ `rehearsalBudget` (nhành CÓ camera), không đặt trong luồng chạy thử không-camera của `rehearsal`.');
 
 for (const g of GAMES) {
   const rel = PATH_OF.get(g.id);

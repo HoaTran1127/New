@@ -1,4 +1,4 @@
-# Giáo án AR trên bảng phấn — nguồn cộng đồng và bài học sau 21 vòng
+# Giáo án AR trên bảng phấn — nguồn cộng đồng và bài học sau 22 vòng
 
 Tài liệu này để **người khác tham khảo và nối tiếp**, không phải mô tả tính năng. Phần tính năng nằm ở
 [`prompts/giao-an/README.md`](../prompts/giao-an/README.md); ở đây chỉ ghi: cái gì đã đo được, cái gì đã
@@ -103,12 +103,26 @@ quy định đơn lẻ đều đúng, ghép thành một lời hứa không có 
 "ngân sách nghỉ" · "co ngắn nhịp nghỉ" · "bỏ nhịp nghỉ" · "ưu tiên lấy từ" đều **0/39**. `breakReserve` biến nghỉ
 thành một **dòng có thật trên thanh tiến trình** (2 phút, chật 3) rút theo đúng thứ tự timeSlack-dôi → VẬN DỤNG
 trên 2 phút vé → LUYỆN TẬP 12→10, không bao giờ nuốt VẬT THẬT hay vé, và **tự co còn 15 giây** khi sát giờ.
+Vòng 22 vẫn soi chính bộ quy định của mình nhưng chuyển từ *số học* sang *tiền đề*: nó hỏi "khi một quy định
+ra lệnh THÊM một bước vào chỗ này, cái chỗ này có chứa nổi bước đó không?" `rehearsal` định nghĩa nút "Chạy thử
+5 phút" là "**không cần camera** và không cần lớp", bấm qua "**đúng năm bước**", in "đã thử 5/5", kèm "ĐÚNG MỘT
+danh sách **10 việc** · một trang A4". Thế mà ba quy định sau mỗi cái dặn "thêm đúng MỘT bước/việc" vào đúng
+nút ấy, trong đó `detectionEquity` (v18) đòi "**đưa bàn tay vào trước camera**" — một bước chỉ làm được khi
+camera BẬT, nằm ngay trong luồng được ĐỊNH NGHĨA là không-camera. Đây không phải cộng lệch mà là hai chỉ thị
+loại trừ nhau mà mô hình sinh HTML phải vâng cả hai. Đo trên 39 giáo án: hai chuỗi "không cần camera" và "vào
+trước camera" **cùng xuất hiện 39/39** (chúng chung sống trong mọi file, không hề được hoà), còn mọi cách hoà
+giả tưởng — "nhành" · "tuỳ chọn" · "bật camera cho riêng" · "5/5 bước · nâng cao" — đều **0/39**. `rehearsalBudget`
+chia chạy thử thành **ba nhành** (A không-camera đúng 5 bước; B có-camera cho bước độ phủ, bật–xin-phép–tắt; C
+nâng-cao-tuỳ-chọn cho "Kiểm tra riêng tư" và mô phỏng "Còn 2 phút") và **phong ngân sách** (chữ "5 phút" chỉ tính
+Nhành A; phiếu 10 việc CỐ ĐỊNH không phình). Khác mọi vòng trước, vòng 22 khoá mâu thuẫn bằng một **kiểm tra bắt
+cặp** chứ không chỉ so chuỗi: validator đỏ nếu `detectionEquity` còn nói "vào trước camera" mà mất tham chiếu
+`rehearsalBudget`, nên chính cái lệnh bật-camera-trong-luồng-không-camera ấy không thể quay lại lọt thỏm (P94).
 3. **Quy định phải có con số.** "Chữ phải to" không kiểm chứng được; "≥ 40 px **và** ≥ 5.5% chiều cao khung
    hình, ≤ 12 chữ một dòng" thì validator bắt được. Mọi quy định trong `tools/lib/*.mjs` là chuỗi nguyên văn,
    `tools/validate.mjs` so bằng `includes()`, nên lời văn và mắt kiểm không bao giờ lệch nhau.
 4. **Chốt chặn hai chiều.** Cơ chế game lọt vào giáo án và quy định giáo án lọt sang game đều làm build đỏ.
    Thêm một quy định mới là tự động thêm một khoá bị cấm ở phía bên kia (`LESSON_FAMILY_RULES`).
-5. **Probe đột biến là đơn vị kiểm thử thật.** 91 phép, mỗi phép phá đúng một thứ và đòi đúng thông báo.
+5. **Probe đột biến là đơn vị kiểm thử thật.** 94 phép, mỗi phép phá đúng một thứ và đòi đúng thông báo.
    Không có probe thì một quy định chỉ là câu văn đẹp.
 6. **Tách công cụ giảng bài khỏi game.** Cùng một kiến thức, hai động cơ đối lập: game cần hồi hộp,
    tiết giảng cần giáo viên cầm lái. Nhét tim/điểm/combo vào bảng phấn làm em lên bảng sợ sai hơn là muốn hiểu.
@@ -138,6 +152,7 @@ trên 2 phút vé → LUYỆN TẬP 12→10, không bao giờ nuốt VẬT THẬ
 | 19 | **đo độ tin cậy của chính bộ quy định**: mô hình copy nguyên mọi tham chiếu chéo `` `tênQuyDinh` `` vào cả 39 giáo án, nên một cái tên sai nhân bản 39 lần — quét máy toàn bộ token `` `camelCase` `` trong `LESSON`/`CHALK`/`HANDOUT` đối chiếu danh sách khoá có thật: 15 tham chiếu hợp lệ, **1 tham chiếu ma** (`detectionEquity` → `wholeClassVote`, đúng ra `classVote`), còn 4 token là trường dữ liệu/API (`errorTag`, `loiViet`, `localStorage`, `speechSynthesis`) không phải quy định | sửa `wholeClassVote` → `classVote` (39 file + docs) + khoá toàn-cục mới trong validator: mọi `` `camelCase` `` bọc trong dấu chấm ngược phải khớp một khoá đã xuất, ngoại trừ đúng bốn tên dữ liệu/API; P86–P87 chứng minh khoá đỏ khi đứa vào tên ma |
 | 20 | **đo mâu thuẫn dây chuyền giữa NHIỀU quy định**: sáu quy định (`boardEquity`, `classBoard`, `classVote`, `verifyData`, `oldHardware`, `timeSlack` + `roomFootprint`) cùng hứa "chỉ hiện ở dải điều khiển của cô, không hiện lên màn chiếu" — mặc định một máy hai tín hiệu xuất riêng, nhưng cắm HDMI mặc định thường là SOI GƯƠNG; đo: "hai màn hình" · "màn hình riêng" · "màn hình mở rộng" · "trình chiếu" đều **0/39**; nguồn: Microsoft PowerPoint (muốn xem ghi chú riêng phải **chủ động** đổi topology sang Extend — nói về chiều kiến trúc, không phải số liệu HTML) | `privateView` (hỏi một dòng "CHUNG MÀN / MÀN RIÊNG", mặc định an toàn CHUNG MÀN, không đoán — như `powerCut` hỏi cắm điện/pin; khi CHUNG MÀN rút mọi dòng riêng khỏi màn hình thường trực + giữ-phím-để-xem ẩn ≤ 0,3 s; khi MÀN RIÊNG `window.open` cửa sổ chiếu chỉ-bảng-không-dải-điều-khiển, chặn thì tự lùi về CHUNG MÀN; không in tên/dãy-ghế thường trực, "Kiểm tra riêng tư" trong chạy thử soi đúng màn máy chiếu đang phát; mốc 0,3 s + mặc định CHUNG MÀN là dự án chọn) |
 | 21 | **đo mâu thuẫn bằng chính PHÉP CỘNG trên các con số của bốn quy định**: `fullPeriod` cho VẬN DỤNG 3–5′ · `exitTicket` giữ 2′ CUỐI của nó làm vé · `movementBreak` tổng nghỉ ≤ 3′ "lấy từ VẬN DỤNG hoặc `timeSlack` dôi" · `tightRoomFocus` nâng nghỉ lên ≤ 4′ khi chật → nghỉ(4) + vé(2) = **6 > 5** = trần VẬN DỤNG, và tiết đúng 35′ thì `timeSlack` dôi = 0 nên nguồn hai cũng cạn; đo: "ngân sách nghỉ" · "co ngắn nhịp nghỉ" · "bỏ nhịp nghỉ" · "ưu tiên lấy từ" đều **0/39**; nguồn: Understood.org (brain-break là chiến lược hành vi có bằng chứng, xếp 1–5 phút sau mỗi 10–25 phút tập trung — khớp đầu dưới mà `movementBreak` đã cite) | `breakReserve` (dòng nghỉ **có thật** trên thanh tiến trình `flow` — nấc thường 2′, chật 3′ — số dự án chọn để phép cộng trong 35′ đóng lại; rút đúng thứ tự timeSlack-dôi → VẬN DỤNG trên 2′ vé (không xuống dưới 2′) → LUYỆN TẬP 12→10, **tuyệt đối không** rút VẬT THẬT hay vé; khi "Còn < 3 phút"/"quá giờ"/cô bấm "Còn 2 phút" thì nhịp **tự CO còn 15 giây** (ba hơi thở + vươn tay, vẫn Toán, camera tắt); một nút "Bỏ nhịp nghỉ tiết này", bộ đếm "nghỉ đã dùng/còn lại" ở dải của cô; thêm một bước chạy thử mô phỏng "Còn 2 phút") |
+| 22 | **đo TIỀN ĐỀ của chính các lệnh "thêm một bước"**: `rehearsal` định nghĩa "Chạy thử 5 phút" là "không cần camera · đúng năm bước · đã thử 5/5 · ĐÚNG MỘT danh sách 10 việc · một trang A4", nhưng `detectionEquity` (v18) + `privateView` (v20) + `breakReserve` (v21) mỗi cái dặn "thêm đúng MỘT bước/việc" vào đúng nút ấy, và bước của `detectionEquity` **cần camera BẬT** ("đưa bàn tay vào trước camera") — hai chỉ thị loại trừ nhau; đo: "không cần camera" **39/39** *và* "vào trước camera" **39/39** (chung sống), còn "nhành" · "tuỳ chọn" · "bật camera cho riêng" · "5/5 bước · nâng cao" đều **0/39** | `rehearsalBudget` (chia BA NHÀNH: A không-camera mặc định đúng 5 bước (chạy được khi máy không camera, đúng `oldHardware`/`noAdmin`); B có-camera cho bước độ phủ của `detectionEquity` — bật chủ động + xin phép một dòng + tắt hẳn khi ra (đèn đỏ theo `privacy`/`cameraGeometry`); C nâng-cao-tuỳ-chọn cho "Kiểm tra riêng tư" và mô phỏng "Còn 2 phút". Phong ngân sách: "5 phút" chỉ tính Nhành A (B/C +≤ 2′, dự án chọn), phiếu 10 việc CỐ ĐỊNH không phình. **Khoá bắt-cặp** mới trong validator: đỏ nếu `detectionEquity` còn "vào trước camera" mà mất tham chiếu `rehearsalBudget` — P94 chứng minh) |
 
 ## Vì sao chọn những con số đang dùng
 
@@ -315,6 +330,15 @@ trên 2 phút vé → LUYỆN TẬP 12→10, không bao giờ nuốt VẬT THẬ
   khi "Còn 2 phút": đủ cho ba hơi thở + vươn tay quá đầu — vẫn là Toán theo đúng tinh thần `movementBreak` —
   mà không nuốt vé. Thứ tự rút (timeSlack-dôi → VẬN DỤNG trên 2′ vé → LUYỆN TẬP 12→10) cũng là lựa chọn của
   dự án, ưu tiên hy sinh phần *luyện thêm* trước phần *kiểm tra cuối tiết*.
+- **"Đúng năm bước", "10 việc · một trang A4" và trần "+2 phút" mỗi nhành của `rehearsalBudget`** — vòng 22
+  không bịa số mới mà **giữ nguyên** ba con số đã có trước đó: năm bước là mạch bài của `flow` (Khởi động ·
+  Vật thật · Sơ đồ · Phép tính · Luyện tập), 10 việc là danh sách gốc của `rehearsal`, và cả hai bị chính các
+  lệnh "thêm một bước" làm lệch. Điểm mới là **phong** chúng lại (không một bước camera nào vào Nhành A, phiếu
+  không phình quá 10 việc) chứ không tăng trần. Trần **"+2 phút cho mỗi nhành B/C"** là **lựa chọn của dự án**:
+  Nhành B có thao tác camera thật (bật, đưa tay vào, đọc kết quả, tắt) nên nhiều hơn một cú bấm, nhưng phải
+  đủ nhỏ để cả ba nhành vẫn gọi là "một lượt chạy thử buổi tối" chứ thành một buổi tập huấn. Không nguồn ngoài
+  nào quy định con số này; nó chỉ khoá để chữ "5 phút" của `rehearsal` không bị ba phép cộng âm thầm làm thành
+  nói khoác.
 
 ## Nguồn đọc cho từng cụm quy định
 
@@ -672,24 +696,31 @@ thành "tăng X% điểm".
   15 giây có đủ để một lớp 35 em bình tĩnh lại hay chỉ thành một lần đứng-up-ngồi-down chiếu lệ. Cùng họ với
   khoản nợ "số lần cộng tay/thấy tay" ở trên: chỉ cần in thêm vài dòng "số tiết đã bỏ nhịp · số lần co 15 giây"
   vào mục "Báo cáo máy" là có dữ liệu, không cần ghi hình hay lưu danh tính.
+- **`rehearsalBudget` khoá được *cấu trúc* ba nhành, chưa khoá được *hành vi* Nhành B trên máy trường.** Vòng
+  22 bảo đảm bước camera không còn lọt vào luồng không-camera (P94), nhưng chưa chạy thử trên một trình duyệt
+  trường thật để biết: gọi `getUserMedia` ngay trong Nhành B của một lượt chạy thử buổi tối thì có bị chặn như
+  ở luồng dạy thật không (dính `noAdmin`, `browserCompat`), và "tắt hẳn stream khi rời nhành" có thật sự nhả đèn
+  đỏ trên mọi máy hay chỉ ẩn lớp phủ. Nhánh an toàn đã định sẵn ("máy này không có camera để thử, bỏ qua được"),
+  nên lỗ này không khoá bài — chỉ làm mất đúng bước tự kiểm độ phủ, tức là quay về tình trạng trước vòng 18.
+  Kiểm tra thực địa này cùng nhóm "chạy trên máy thật" đã mở từ vòng 8.
 - **Danh sách trắng `errorTag`/`loiViet`/`localStorage`/`speechSynthesis` là danh sách tay.** Khoá tham chiếu
   chéo của vòng 19 chỉ trừ đúng bốn token đó vì chúng là trường dữ liệu và API trình duyệt, không phải quy
   định. Một vòng sau thêm quy định mới mà bọc tên một hàm/API khác trong dấu chấm ngược thì validator sẽ đỏ
   báo "quy định ma" dù không sai — lúc đó phải cân nhắc tách cơ chế khỏi cách viết: hoặc đánh dấu tham chiếu
   quy định bằng một cú pháp riêng (`→`ruleName`←`), hoặc để khoá chỉ bắt tên *khớp khuôn quy định* mà không có
-  trong danh sách. Cách hiện tại đơn giản và an toàn cho 46 quy định, nhưng cần người sau biết nó là nợ kỹ
+  trong danh sách. Cách hiện tại đơn giản và an toàn cho 47 quy định, nhưng cần người sau biết nó là nợ kỹ
   thuật có chủ đích chứ không phải thiếu sót.
 
 ## Muốn đóng góp thì sửa ở đâu
 
 ```text
 tools/lib/chalk.mjs     10 quy định bảng phấn và vật thật      → sinh vào mục 4 của giáo án
-tools/lib/lesson.mjs    46 quy định chế độ giảng bài           → sinh vào mục 0, 1, 2, 3, 5, 6, 7, 8, 9, 10
+tools/lib/lesson.mjs    47 quy định chế độ giảng bài           → sinh vào mục 0, 1, 2, 3, 5, 6, 7, 8, 9, 10
 tools/lib/handout.mjs   4 quy định từ bảng ra vở               → sinh vào mục 9
 tools/data/props.mjs    vật thật + sơ đồ theo 38 cụm
 tools/data/lessons.mjs  tên bài, câu khởi động, dòng ghi nhớ
 tools/build-lessons.mjs ghép thành 39 file prompts/giao-an/
-tools/validate.mjs      60 khoá của họ giáo án + chốt chặn ngược + 13 mục của khung
+tools/validate.mjs      61 khoá của họ giáo án + chốt chặn ngược + 13 mục của khung
                         + trần số hàng "Chữa bài" đo thẳng từ clusters.mjs/error-notes.mjs
 ```
 
