@@ -279,6 +279,10 @@ const FULL_PINS = [
   ['lesson.mjs', LESSON.guard, 'verifyLesson()', 'hàm kiểm tiết học lúc nạp'],
   ['lesson.mjs', LESSON.guard, 'kiểm đúng bốn điều', 'số điều verifyLesson() phải kiểm'],
   ['lesson.mjs', LESSON.guard, 'Bản không camera', 'bản chuột/chạm vẫn bắt buộc đủ bốn điều'],
+  // Probe vòng 16: viết lại câu thành "Bản không camera được bỏ qua hai điều đầu" vẫn xanh vì bốn chữ
+  // "Bản không camera" còn nguyên — phải neo chính mệnh đề BẮT BUỘC.
+  ['lesson.mjs', LESSON.guard, 'vẫn bắt buộc đủ bốn điều', 'bản không camera không được miễn kiểm'],
+  ['lesson.mjs', LESSON.guard, 'phút thứ 10', 'điểm tự khép mà verifyLesson() phải kiểm'],
 ];
 for (const [file, text, needle, label] of FULL_PINS) {
   if (!text.includes(needle)) bad(`tools/lib/${file} không còn nêu "${needle}" (${label}) — con số nghiệm thu phải sửa cùng tài liệu và bảng kiểm, không đổi âm thầm trong lib.`);
@@ -776,6 +780,9 @@ const LESSON_DOC_NEEDLES = [
   ['bốn dòng', 'số dòng của Bản tiết học', 4, 5, 5, 1],
   ['chưa ghi được', 'dòng thiếu dữ liệu thật, không bịa số', 2, 1, 1, 1],
   ['verifyLesson()', 'hàm kiểm tiết học lúc nạp', 3, 4, 4, 2],
+  // Câu kể chuyện ở README ("verifyLesson() là mục máy tự kiểm thứ 35") là chỗ duy nhất nói người đọc
+  // mục nào trong bảng kiểmứng với tầng này — probe vòng 16: viết lại thành "mục cuối bảng" vẫn xanh.
+  ['máy tự kiểm thứ 35', 'số mục của verifyLesson() trong bảng kiểm', 0, 0, 1, 0],
 ];
 // Con số cũ của vòng 6 ("< 8 động tác lớn mỗi phút") là yêu cầu KHÔNG THỂ đạt với phiên 12 lượt / 4–6 phút.
 // Giữ nó trong tài liệu sẽ sinh game luôn báo CHƯA ĐẠT ở mục cường độ, nên phải bị chặn.
@@ -818,6 +825,9 @@ const COUNT_PATTERNS = [
   [/([0-9]+) VIỆC NGƯỜI THỬ/g, HUMAN_CHECKS.length, 'số việc người thử (chữ hoa)'],
   [/([0-9]+) việc người thử/g, HUMAN_CHECKS.length, 'số việc người thử'],
   [/([0-9]+) mục còn lại/g, OFFLINE_ITEMS, 'số mục bản không camera còn phải đạt'],
+  // Probe vòng 16: template ghi "Mục máy tự kiểm (35 mục," — số nằm trong ngoặc nên các pattern ở trên
+  // không bắt; đổi về "(34 mục," vẫn xanh.
+  [/Mục máy tự kiểm \(([0-9]+) mục/g, MACHINE_ITEMS.length, 'số mục máy tự kiểm trong §9 của template'],
 ];
 for (const [docName, docText] of DOC_FILES) {
   for (const [re, want, label] of COUNT_PATTERNS) {
@@ -948,6 +958,14 @@ if (!HUMAN_CHECKS.some((s) => /bốn em đứng quanh/.test(s) && /20 giây/.tes
 // Tầng tiết học: thiếu hai mục này thì game vẫn báo đạt trong khi một nhóm chơi 20 phút và ba nhóm kia
 // hết tiết chưa tới lượt, còn "vận động >= 60%" vẫn xanh dù bài quá sức với em lớp 4.
 if (!MACHINE_ITEMS.some((s) => s.includes('verifyLesson()') && s.includes('miti-effort'))) bad('Bảng kiểm máy tự kiểm không còn mục nghiệm thu tiết học (verifyLesson() + "miti-effort") — trần thời lượng và thang gắng sức lọt qua nghiệm thu mà không ai báo.');
+// Probe vòng 16: mục [35] bỏ đúng một vế ("15 giây hồi nhịp") vẫn xanh vì hai vế kia còn nguyên. verifyLesson()
+// chỉ có nghĩa khi mục bảng kiểm liệt kê đủ bốn đối tượng nó kiểm, nên neo cả bốn vế vào cùng một mục.
+{
+  const lessonItem = MACHINE_ITEMS.find((s) => s.includes('verifyLesson()'));
+  for (const clause of ['phút thứ 10', 'miti-effort', '15 giây', 'Bản tiết học']) {
+    if (lessonItem && !lessonItem.includes(clause)) bad(`Mục bảng kiểm "verifyLesson()" không còn nêu "${clause}" — mục nghiệm thu tiết học phải liệt kê đủ bốn điều verifyLesson() kiểm, thiếu một vế là game báo ĐẠT mà không kiểm.`);
+  }
+}
 if (!HUMAN_CHECKS.some((s) => /phút thứ 10/.test(s) && /45 phút/.test(s))) bad('Bảng việc người thử không còn câu bấm giờ thật cho phiên 8–10 phút — máy không tự kiểm được việc bốn nhóm có kịp chơi trong một tiết 45 phút.');
 
 if (errors.length) {
