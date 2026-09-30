@@ -360,6 +360,16 @@ const FULL_PINS = [
   ['sport.mjs', SPORT.hoiTinh, 'CẤM duỗi bật nhịp', 'lệnh cấm duỗi ballistic'],
   ['sport.mjs', SPORT.hoiTinh, 'CẤM ép em chạm gót tay xuống đất', 'lệnh cấm tư thế ép buộc'],
   ['sport.mjs', SPORT.hoiTinh, 'HAI động tác duỗi, mỗi động tác 10 giây', 'bản reduced-motion rút gọn nhưng vẫn duỗi'],
+  // Probe vòng 18f: mấy pin trên chỉ an toàn khi con số bị đổi thành chuỗi KHÔNG chứa nó. "15 giây"
+  // vẫn còn nguyên ở vế "duỗi tay ngang ngực 15 giây mỗi bên" nên đổi suất của động tác môn thành
+  // 45 giây vẫn xanh — phải pin cả cột dữ liệu lẫn con số ngay cạnh nhau.
+  ['sport.mjs', SPORT.hoiTinh, '`duoiCo`, **15 giây**', 'suất thời lượng của đúng động tác duỗi môn, không phải của động tác PE'],
+  ['sport.mjs', SPORT.dongTacChinh, 'làm mẫu **3 giây**', 'thời lượng mascot làm mẫu động tác của môn'],
+  ['sport.mjs', SPORT.tiepSuc, 'truyền tay', 'hành động truyền gậy — tiếp sức mà không truyền tay thì thành bốn em chơi riêng'],
+  ['sport.mjs', SPORT.tiepSuc, 'hết 3 lượt', 'ngưỡng đổi người của đường tiếp sức'],
+  ['sport.mjs', SPORT.tiepSuc, 'HYPE.sharedGoal', 'vạch đích tiếp sức dẫn chiếu thanh đích chung của tầng thi đua'],
+  ['sport.mjs', SPORT.tinhThan, 'chạm khuỷu hoặc bắt tay **3 giây**', 'thời lượng nghi thức chơi đẹp trước hiệp 1'],
+  ['sport.mjs', SPORT.tinhThan, 'hiện trên HUD **4 giây**', 'thời gian lời hay nằm trên HUD để em kịp đọc'],
   ['sport.mjs', SPORT.guard, 'verifySport()', 'hàm kiểm chất thể thao lúc nạp'],
   ['sport.mjs', SPORT.guard, 'kiểm đúng bốn điều', 'số điều verifySport() phải kiểm'],
   ['sport.mjs', SPORT.guard, 'vẫn bắt buộc kiểm đủ bốn điều', 'bản tắt tiếng, reduced-motion và không camera không được miễn kiểm'],
@@ -577,6 +587,7 @@ if (!fs.existsSync(VAR_FILE)) {
   if (!vtext.includes('- **Vai chờ có vận động:**')) bad('Phần Quy ước chung của VARIANTS_425.md thiếu dòng Vai chờ có vận động — người copy một block biến thể ra dùng không còn biết ba em chưa tới lượt phải làm gì.');
   if (!vtext.includes('- **Tiết học 45 phút + gắng sức:**')) bad('Phần Quy ước chung của VARIANTS_425.md thiếu dòng Tiết học 45 phút + gắng sức — biến thể copy riêng được mà không còn trần thời lượng lẫn thang gắng sức.');
   if (!vtext.includes('- **Chuẩn kiến thức SGK:**')) bad('Phần Quy ước chung của VARIANTS_425.md thiếu dòng Chuẩn kiến thức SGK — biến thể copy riêng được mà không còn nhãn mạch lẫn dòng yêu cầu cần đạt.');
+  if (!vtext.includes('- **Chất thể thao:**')) bad('Phần Quy ước chung của VARIANTS_425.md thiếu dòng Chất thể thao — biến thể copy riêng được mà không còn tên môn, đường tiếp sức lẫn động tác duỗi của môn.');
   if (!vtext.includes('- **Nghiệm thu:**')) bad('Phần Quy ước chung của VARIANTS_425.md thiếu dòng Nghiệm thu.');
   if (!vtext.includes('prompts/CHECKLIST_NGHIEP_THU.md')) bad('Phần Quy ước chung của VARIANTS_425.md không trỏ tới bảng kiểm in sẵn.');
   VAR_COUNT = blocks.length;
@@ -667,6 +678,7 @@ if (!fs.existsSync(VAR_FILE)) {
     } else {
       for (const [needle, label] of [
         [`Môn của block ${vcode} này là "${vsp.mon}"`, 'tên môn của ĐÚNG kiểu điều khiển — block liệt kê quy định thể thao chung chung là không đủ'],
+        [`(mã điều khiển ${vGesture || (vgame.gestures || [])[0]}, không tự đổi môn trong một phiên)`, 'mã điều khiển mà môn này gắn theo'],
         [`động tác đặc trưng "${vsp.dongTac}"`, 'động tác đặc trưng của môn'],
         [`hiệu lệnh mở đầu "${vsp.hieuLenh}"`, 'hiệu lệnh của môn'],
         [`lời hay khi bạn sai "${vsp.loiHay}"`, 'lời hay của môn khi bạn sai'],
@@ -938,6 +950,9 @@ const SPORT_DOC_NEEDLES = [
   ['<= 6 từ', 'trần độ dài động tác đặc trưng', 9, 12, 6, 3],
   ['hiệu lệnh', 'khẩu lệnh của mascot trước lượt đầu', 4, 5, 3, 1],
   ['tiếp sức', '12 lượt là một đường tiếp sức', 2, 4, 2, 1],
+  // Heading 4.8 của master viết hoa toàn bộ nên kim thường ở dòng trên không với tới: xóa "ĐƯỜNG TIẾP
+  // SỨC" khỏi heading (probe 18f) vẫn xanh vì các vế còn lại giữ nguyên số "tiếp sức" lowercase.
+  ['ĐƯỜNG TIẾP SỨC', 'heading 4.8 gọi 12 lượt là một đường tiếp sức', 1, 0, 0, 0],
   ['Không sao, chạy tiếp', 'dòng duy nhất khi rơi gậy, không trừ tim', 2, 2, 1, 1],
   ['chạm khuỷu', 'nghi thức trước hiệp 1', 4, 4, 2, 2],
   ['chế bai', 'lệnh cấm mọi dòng mỉa bạn sai', 3, 3, 2, 1],
@@ -948,6 +963,10 @@ const SPORT_DOC_NEEDLES = [
   ['duỗi', 'động tác duỗi riêng của môn trong hạ nhiệt', 18, 12, 12, 7],
   ['Cơ em đang duỗi', 'HUD hồi tĩnh nêu tên cơ', 2, 2, 1, 1],
   ['verifySport()', 'hàm kiểm chất thể thao lúc nạp', 3, 4, 3, 3],
+  // Nhãn khối là chỗ duy nhất nói với người viết prompt rằng bảy quy định dưới nó là MỘT tầng có tên.
+  // Probe vòng 18f: đổi "- CHẤT THỂ THAO (nguồn:" thành "- (nguồn:" ở template vẫn xanh vì cả bảy quy
+  // định còn nguyên — khối luật không tên thì tài liệu chỉ còn là một đoạn văn dài.
+  ['- CHẤT THỂ THAO (nguồn:', 'nhãn khối chất thể thao trong template', 0, 1, 0, 0],
   ['máy tự kiểm thứ 37', 'số mục của verifySport() trong bảng kiểm', 0, 0, 1, 0],
   ['Sáu quy định "chất thể thao"', 'heading mục kể chuyện tầng 18 ở README', 0, 0, 1, 0],
   ['Tầng "chất thể thao"', 'heading mục kể chuyện tầng 18 ở prompts/README', 0, 0, 0, 1],
@@ -1220,6 +1239,10 @@ if (!HUMAN_CHECKS.some((s) => /tập môn gì/.test(s) && /CẢ ĐỘI/.test(s))
   if (!SPORT.hoiTinh.includes('45–60 giây') || !PE.coolDown.includes('45–60')) bad('Cửa sổ hạ nhiệt lệch giữa tools/lib/sport.mjs và tools/lib/pe.mjs — động tác duỗi của môn sẽ rơi khỏi khoảng PE đã quy định.');
   if (!SPORT.hoiTinh.includes('15 giây') || !PE.coolDown.includes('15 giây')) bad('Thời lượng một động tác duỗi không còn là 15 giây ở cả sport.mjs lẫn pe.mjs — tầng thể thao phải dùng đúng suất thời lượng PE đã chia.');
   for (const num of ['90 độ', '15 giây']) if (!SPORT.dongTacChinh.includes(num) || !PE.loadCap.includes(num)) bad(`Trần tải trọng "${num}" lệch giữa sport.mjs và pe.mjs — một trong hai lib đã đổi số còn lib kia thì không.`);
+  // Vạch đích tiếp sức KHÔNG có số riêng: nó mượn đúng một thanh đích mà tầng thi đua đã dựng, nên
+  // reference phải còn ở cả hai phía. Probe vòng 18f: xóa `HYPE.sharedGoal` khỏi sport.mjs vẫn xanh vì
+  // HUD "Đội mình" trong tiepSuc tự nó là một chuỗi hợp lệ — chỉ so với lib kia mới thấy nó là bản second.
+  if (!SPORT.tiepSuc.includes('HYPE.sharedGoal') || !HYPE.sharedGoal) bad('Đường tiếp sức không còn dùng lại thanh đích chung của tầng thi đua (`HYPE.sharedGoal`) — hai vạch đích trên một HUD sẽ cạnh tranh nhau chỗ và cạnh tranh luôn sự chú ý của bốn em.');
 }
 
 // Mỗi prompt game phải mang đúng MÔN của chính mã điều khiển mình, không phải danh sách môn chung.
@@ -1230,6 +1253,9 @@ for (const g of GAMES) {
   if (!rel || !fs.existsSync(path.join(ROOT, rel))) continue;
   const t = fs.readFileSync(path.join(ROOT, rel), 'utf8');
   for (const [needle, label] of [
+    // Khối luật phải được GỌI TÊN kèm vòng sinh ra nó: bảy quy định đứng trơ thì người đọc prompt không
+    // biết chúng chữa cái lỗ "0/85 môn thể thao" đo được ở vòng 18.
+    ['- CHẤT THỂ THAO (vòng 18:', 'nhãn khối chất thể thao kèm khảo sát'],
     // Tên môn đứng một mình thì yếu: quy định monDanh đã nêu ví dụ trong mọi prompt. Neo liền mã điều
     // khiển + tên môn + động tác, để block khác môn bị đổi vẫn bị bắt.
     [`(mã điều khiển ${g.gestures[0]}, không tự đổi môn trong một phiên): **${s.mon}** — động tác đặc trưng "${s.dongTac}"`, 'dòng môn + động tác của ĐÚNG mã điều khiển'],
