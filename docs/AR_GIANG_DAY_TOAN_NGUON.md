@@ -1,4 +1,4 @@
-# Giáo án AR trên bảng phấn — nguồn cộng đồng và bài học sau 11 vòng
+# Giáo án AR trên bảng phấn — nguồn cộng đồng và bài học sau 12 vòng
 
 Tài liệu này để **người khác tham khảo và nối tiếp**, không phải mô tả tính năng. Phần tính năng nằm ở
 [`prompts/giao-an/README.md`](../prompts/giao-an/README.md); ở đây chỉ ghi: cái gì đã đo được, cái gì đã
@@ -7,7 +7,7 @@ thay đổi vì số liệu, và nên đọc gì trước khi sửa tiếp.
 ## Nguyên tắc làm việc đã trả giá mà thành
 
 1. **Đo trước khi thêm quy định.** Mỗi vòng bắt đầu bằng một lệnh `grep` trên đúng 39 file giáo án đã sinh,
-   chứ không bắt đầu bằng ý tưởng. Tám vòng gần nhất đều tìm thấy lỗ 0/39 — nghĩa là nếu ngồi nghĩ thì
+   chứ không bắt đầu bằng ý tưởng. Chín vòng gần nhất đều tìm thấy lỗ 0/39 — nghĩa là nếu ngồi nghĩ thì
    sẽ nghĩ ra thứ đã có sẵn.
 2. **Đo cả chỗ mình tự mâu thuẫn.** Vòng 9 không đi tìm ý mới: nó đọc lại chính các quy định đã có và thấy
    hai quy định cũ đòi cái không thể cùng có — một webcam vừa phải nhìn bàn tay em đứng trước bảng,
@@ -16,12 +16,15 @@ thay đổi vì số liệu, và nên đọc gì trước khi sửa tiếp.
    "lớp 35 em" đều nằm sẵn trong cùng một file, chỉ có 12 < 35 là chưa ai đem chia cho ai. Vòng 11 là một
    dạng lỗi thứ ba: một con số **đúng chuẩn** ("sĩ số tiểu học không quá 35") đã bị chép nguyên văn vào 39
    file như thể nó là số đo của lớp thật, và thành ra mọi tỉ lệ trong giáo án đều vô nghĩa ở lớp 45 em.
+   Vòng 12 lại là một phía bị bỏ quên của chính quy định mình đã viết: `fullPeriod` (vòng 4) lo tiết cháy
+   sang *dài* — báo "quá giờ" chứ không tự cắt — còn chiều ngược lại, lớp xong trước mười phút hoặc bị cắt
+   giữa bước SƠ ĐỒ, thì 0/39 file có một kế hoạch nào.
 3. **Quy định phải có con số.** "Chữ phải to" không kiểm chứng được; "≥ 40 px **và** ≥ 5.5% chiều cao khung
    hình, ≤ 12 chữ một dòng" thì validator bắt được. Mọi quy định trong `tools/lib/*.mjs` là chuỗi nguyên văn,
    `tools/validate.mjs` so bằng `includes()`, nên lời văn và mắt kiểm không bao giờ lệch nhau.
 4. **Chốt chặn hai chiều.** Cơ chế game lọt vào giáo án và quy định giáo án lọt sang game đều làm build đỏ.
    Thêm một quy định mới là tự động thêm một khoá bị cấm ở phía bên kia (`LESSON_FAMILY_RULES`).
-5. **Probe đột biến là đơn vị kiểm thử thật.** 63 phép, mỗi phép phá đúng một thứ và đòi đúng thông báo.
+5. **Probe đột biến là đơn vị kiểm thử thật.** 67 phép, mỗi phép phá đúng một thứ và đòi đúng thông báo.
    Không có probe thì một quy định chỉ là câu văn đẹp.
 6. **Tách công cụ giảng bài khỏi game.** Cùng một kiến thức, hai động cơ đối lập: game cần hồi hộp,
    tiết giảng cần giáo viên cầm lái. Nhét tim/điểm/combo vào bảng phấn làm em lên bảng sợ sai hơn là muốn hiểu.
@@ -41,6 +44,7 @@ thay đổi vì số liệu, và nên đọc gì trước khi sửa tiếp.
 | 9 | 0/39 nói camera quay cái gì (trong khi 39/39 đòi vừa soi bảng vừa đếm tay 35 em) · 0/39 nhắc quyền quản trị và `file://` · 0/39 nhắc em không giơ được tay | `cameraGeometry`, `noAdmin`, `physicalAccess` |
 | 10 | 39/39 viết "12 lượt một tiết" và "35 em" nhưng 0/39 biết em nào đã lên · 0/39 cách chạy thử khi chưa có lớp · 0/39 nhắc đồng nghiệp, năm học sau, nhập/xuất giáo án | `boardEquity`, `rehearsal`, `lessonStudy` + mục 10 mới (khung thành 13 mục) |
 | 11 | 39/39 chép "lớp 35 em" và "cách màn chiếu 7–8 m" như số đo lớp thật · 0/39 mất điện giữa tiết · 0/39 nhắc bộ đồ dùng dạy học hoặc đường vật thật bằng giấy | `bigClass`, `powerCut`, `paperProps` + mục 7 đổi tên để gồm cả mất điện |
+| 12 | 0/39 "thừa giờ" · 0/39 "dư giờ" · 0/39 "cháy giáo án" (mới chỉ lo tiết cháy về phía dài) · 0/39 "làm việc theo nhóm" và 0/39 "bốn vai trò" · 0/39 "xong sớm" và 0/39 "làm xong trước" | `timeSlack`, `groupWork`, `fastFinishers` |
 
 ## Vì sao chọn những con số đang dùng
 
@@ -90,6 +94,21 @@ thay đổi vì số liệu, và nên đọc gì trước khi sửa tiếp.
   theo kích thước vật thật đã khai trong `tools/data/props.mjs` (pizza chia 8, dải phân số, lưới khối), chưa
   ai cắt thử. Đây là chỗ nên đo trước khi chỉnh: nếu cắt thật lâu hơn 10 phút thì đường "giấy cắt" sụp và
   lớp không có đồ dùng chỉ còn đường "viên phấn, nắp chai".
+- **Ba kịch bản đóng bài 10 / 5 / 2 phút trong `timeSlack`** — ngưỡng 8 phút và 3 phút là cách chia một
+  khoảng 10–15 phút dư thành " còn làm được một câu", "chỉ còn đọc vé", "chỉ còn chốt lại"; **do dự án tự
+  chọn**, chưa đo xem giáo viên Việt Nam thường dư bao nhiêu phút. Điều lấy được từ tài liệu là *nguyên tắc*:
+  ba nguồn về "early finishers" và "pace" đều nói cùng một việc — phần việc thêm phải đào sâu đúng nội dung
+  đã học, không phải khối lượng mới. Câu cấm "dạy sang kiến thức mới lúc dư giờ" là suy ra từ chính nguyên
+  tắc đó, không phải từ một chuẩn nào của Bộ.
+- **Nhóm 4 em, bốn vai trò, 3–6 phút, tối đa 2 lượt một tiết** — sĩ số 4 em một bàn lấy theo cách xếp bàn
+  phổ thông (và khớp với "một tờ A4 đủ bộ cho bàn 4 em" của vòng 11); "tối đa 2 lượt" là phép chia trần
+  LUYỆN TẬP 12–15 phút cho hai lượt có chốt kết quả. Việc giao vai trò theo **vị trí ngồi** chứ không theo
+  lực học là lựa chọn có chủ đích, theo hướng tài liệu về nhóm trong Toán tiểu học: vai trò là cách để mọi
+  em có phần việc, không phải cách để chia trình độ. EEF có mục "collaborative learning" trong toolkit
+  nhưng trang trả về 403 khi mở, nên **không** trích con số tiến bộ thêm bao nhiêu tháng của họ vào repo này.
+- **"Cùng đáp số nhưng khác cách" là bài chọn thêm duy nhất có răng** — đây là ý lấy từ tài liệu "going
+  deeper" (đào sâu bằng cách biểu diễn khác, không bằng thêm câu). Số lượng đúng 3 bài, không "thêm 10 câu",
+  là quy định tự chọn của dự án để phiếu vẫn in trên một trang A4.
 
 ## Nguồn đọc cho từng cụm quy định
 
@@ -200,6 +219,26 @@ Nhóm này trả lời câu "không có đồ dùng thì có dạy được vậ
 đồ tự làm tại chỗ vẫn được tính là vật thật, với điều kiện giữ nguyên đơn vị đếm. Các bài không so sánh
 điểm số giữa đồ tự làm và bộ kit mua sẵn, nên không dòng nào trong repo này nói "đồ giấy tốt bằng đồ nhựa".
 
+**Lớp làm xong sớm: không thưởng bằng thêm bài, cho chọn và đào sâu (đo vòng 12)**
+- [Your Student Finished Early — Now What? — Edutopia](https://www.edutopia.org/article/fast-finishers-school-keeping-students-any-grade-engaged/) — bài này là căn cứ trực tiếp cho câu "không bao giờ 'thêm 10 câu'" và cho ý "cho em chọn theo thực đơn hoạt động có chủ đích thay vì luyện tập lặp lại": tác giả viết rõ việc giao thêm bài giống hệt là một cuộc chạy đua tích luỹ điểm thay vì xây kỹ năng.
+- [Going Deeper: Achieving greater depth in the primary classroom — NRich (Cambridge)](https://nrich.maths.org/going-deeper-achieving-greater-depth-primary-classroom) — nguồn của ý "cùng đáp số, khác cách": đào sâu bằng cách biểu diễn khác, không bằng số câu nhiều hơn.
+- [Simple and meaningful activities for early finishers — Truth for Teachers](https://truthforteachers.com/simple-and-meaningful-activities-for-early-finishers/)
+
+**Nhịp tiết dạy: cháy giờ và thừa giờ là hai bài toán khác nhau**
+- [Pacing and time allocation at the micro- and meso-level within the class hour — ResearchGate](https://www.researchgate.net/publication/47446874_Pacing_and_time_allocation_at_the_micro-_and_meso-level_within_the_class_hour_Why_pacing_is_important_how_to_study_it_and_what_it_implies_for_individual_lesson_planning) — nghiên cứu về cách phân phối giờ trong một tiết và hàm ý cho việc soạn bài.
+- [Unpacking the "Pace" Problem: Moving Beyond a Vague Target — University of Newcastle teacher training](https://uonhistoryteachertraining.school.blog/2025/03/11/unpacking-the-pace-problem-moving-beyond-a-vague-target/) — "pace" là mục tiêu mơ hồ nhất trong sổ dự giờ; `timeSlack` dịch nó thành hai con số đo được ("đã dùng X · còn Y") và ba kịch bản bấm được.
+- [Always feel rushed in class? — Truth for Teachers (podcast)](https://truthforteachers.com/truth-for-teachers-podcast/time-management-in-classroom-teaching/)
+
+**Làm việc theo nhóm trong Toán tiểu học**
+- [How I Get Kids to Actually Participate in Math Group Work — Edutopia](https://www.edutopia.org/article/math-group-work-participation/)
+- [Using Roles in Group Work — Center for Teaching and Learning, WashU](https://ctl.wustl.edu/resources/using-roles-in-group-work/)
+- [Collaborative learning approaches — Education Endowment Foundation](https://educationendowmentfoundation.org.uk/education-evidence/teaching-learning-toolkit/collaborative-learning-approaches) — **trang này trả về 403 khi mở bằng công cụ trong vòng 12**, nên repo chỉ dùng nó làm đầu mối tra cứu, không trích bất kì con số tiến bộ nào của EEF.
+- [The Collaborative Math Classroom — Heinemann](https://www.heinemann.com/blog/the-collaborative-math-classroom-a-vision-of-teaching-and-learning-mathematics)
+Bài của Edutopia đáng chú ý ở một chỗ: tác giả kể lại một tiết nhóm mà "không ai được giao vai trò" và kết quả là
+chỉ vài em nói. `groupWork` vì thế bắt buộc bốn vai trò gắn với vị trí ngồi, và bắt mỗi em viết đáp án riêng
+trước khi nhóm chốt — đó là phần "trách nhiệm cá nhân" mà các tài liệu nhóm đều nhắc, chứ không phải sáng kiến
+của dự án này.
+
 Lưu ý cách dùng danh mục này: các trang trên là **nguồn để hiểu vì sao chọn kỹ thuật**, không phải nơi trích
 số liệu hiệu quả. Dự án này chưa chạy thử nghiệm lớp học nào, nên không con số nào ở trên được nhân lên
 thành "tăng X% điểm".
@@ -241,16 +280,29 @@ thành "tăng X% điểm".
   trụ được bao lâu khi rút sạc, nên chưa thể hứa "còn đủ pin cho 35 phút". Bản in vẫn là đường bảo hiểm
   duy nhất đã ghi trong quy định.
 
+- **Nhóm 4 em giả định bàn xếp bốn chỗ.** Nhiều trường tiểu học Việt Nam xếp bàn đôi, và khi đó "một bàn
+  bốn em" phải ghép hai bàn — công cụ chưa có nút nào hỏi cô về kiểu xếp bàn. `groupWork` đang suy ra số
+  bàn từ sĩ số (45 em → 11 bàn) chứ không từ sơ đồ lớp thật.
+- **Hai lượt nhóm có thật sự nhét được vào 12–15 phút LUYỆN TẬP?** Trần "tối đa 2 lượt" là phép chia trên
+  giấy. Chưa có một tiết dạy thật nào để biết thời gian xếp lại vai trò và chốt kết quả consumes bao nhiêu,
+  và cũng chưa biết lượt thứ hai có bị cô giáo bỏ vì cháy giờ hay không.
+- **Kịch bản "Còn 10 phút" có thể cạn câu.** `LESSON_DATA` yêu cầu tối thiểu 6 mục, nên nếu cô đã dùng hết
+  trong bốn bước thì không còn "câu chưa dùng" để mở. Hướng sửa đúng là thêm trường chọn thêm (bài đào sâu
+  có sẵn dữ liệu, kiểm chứng được như `LESSON_DATA`) vào `tools/data/lessons.mjs` thay vì để công cụ tự bịa
+  — hiện tại quy định chỉ nói *nguyên tắc* của ba bài, chưa có dữ liệu chốt cho từng bài.
+- **Ngưỡng 8 phút / 3 phút của `timeSlack` chưa dựng theo số đo nào** — xem mục "Vì sao chọn những con số
+  đang dùng". Muốn có số thật thì phải ghi lại giờ dùng thật của từng chặng trong vài tiết dạy.
+
 ## Muốn đóng góp thì sửa ở đâu
 
 ```text
 tools/lib/chalk.mjs     10 quy định bảng phấn và vật thật      → sinh vào mục 4 của giáo án
-tools/lib/lesson.mjs    32 quy định chế độ giảng bài           → sinh vào mục 0, 1, 2, 3, 5, 6, 7, 8, 9, 10
+tools/lib/lesson.mjs    35 quy định chế độ giảng bài           → sinh vào mục 0, 1, 2, 3, 5, 6, 7, 8, 9, 10
 tools/lib/handout.mjs   3 quy định từ bảng ra vở               → sinh vào mục 9
 tools/data/props.mjs    vật thật + sơ đồ theo 38 cụm
 tools/data/lessons.mjs  tên bài, câu khởi động, dòng ghi nhớ
 tools/build-lessons.mjs ghép thành 39 file prompts/giao-an/
-tools/validate.mjs      45 khoá của họ giáo án + chốt chặn ngược + 13 mục của khung
+tools/validate.mjs      48 khoá của họ giáo án + chốt chặn ngược + 13 mục của khung
 ```
 
 Quy trình một vòng nâng cấp: đo bằng `grep` trên `prompts/giao-an/GA*.md` → viết quy định có con số vào

@@ -87,6 +87,7 @@ Không dùng Tailwind Play CDN, không file .css/.js/.json/ảnh/mp3 ngoài. Ch�
 - BƯỚC 5 · LUYỆN TẬP CHUNG — cả lớp làm bài cùng dạng, giáo viên dùng nút "Cả lớp trả lời" để biểu quyết bằng ngón tay.
 - Giáo viên bấm "Bước tiếp" để sang bước; mỗi bước dừng lại bao lâu là do giáo viên quyết định.
 - ${LESSON.pace}
+- ${LESSON.timeSlack}
 
 3. DỮ LIỆU CỦA BÀI (LESSON_DATA)
 - ${LESSON.fadedExample}
@@ -115,6 +116,7 @@ ${jsonBlock(EXAMPLES[L.cluster], cl.tags, notes)}
 - ${LESSON.classVote}
 - ${LESSON.classBoard}
 - ${LESSON.pairShare}
+- ${LESSON.groupWork}
 - ${LESSON.handover}
 - ${LESSON.boardEquity}
 - ${LESSON.strayHands}
@@ -171,6 +173,7 @@ ${AR_RENDER}
 - ${HANDOUT.answerKey}
 - ${HANDOUT.notebook}
 - ${LESSON.exitTicket}
+- ${LESSON.fastFinishers}
 
 10. TRƯỚC KHI LÊN LỚP VÀ SAU KHI DẠY XONG (ba việc chỉ có cô giáo làm được)
 - ${LESSON.rehearsal}
@@ -185,7 +188,7 @@ ${AR_RENDER}
 12. ĐẦU RA
 - Chỉ xuất toàn bộ file HTML hoàn chỉnh, không kèm giải thích dài.
 - Không TODO, không pseudocode, không "...", không "// code tương tự ở trên", không phần "bạn tự bổ sung".
-- Tự kiểm tra trước khi xuất: ${LESSON_SHORT} · ${CHALK_SHORT} · ${HANDOUT_SHORT} · ${ACCESS_SHORT} · có đủ năm bước và không bước nào tự chuyển khi giáo viên chưa bấm · LESSON_DATA đủ 6 mục với 2 mục mẫu nguyên văn · bảng không tự lau ở bất kì bước nào · in được bản nền trắng chữ đen · phiếu bài tập in từ đúng LESSON_DATA và trang đáp án đi sau tách riêng · khung "Nội dung để chép" đúng ba dòng · có bộ đếm lượt "đã lên N/M" ở dải điều khiển và không khi nào lên màn chiếu · "Chạy thử 5 phút" và checklist 10 việc chạy được không cần camera · "Xuất cho đồng nghiệp" và "In phiếu dự giờ" không chứa tên học sinh · mọi tỉ lệ về lớp đều chia cho sĩ số đã nhập, chưa có sĩ số thì ẩn tỉ lệ · mất điện thì bản in + hình cắt giấy vẫn đi đủ năm bước · chữ ký MiTi ở ba chỗ · file chạy độc lập không lỗi console.
+- Tự kiểm tra trước khi xuất: ${LESSON_SHORT} · ${CHALK_SHORT} · ${HANDOUT_SHORT} · ${ACCESS_SHORT} · có đủ năm bước và không bước nào tự chuyển khi giáo viên chưa bấm · LESSON_DATA đủ 6 mục với 2 mục mẫu nguyên văn · bảng không tự lau ở bất kì bước nào · in được bản nền trắng chữ đen · phiếu bài tập in từ đúng LESSON_DATA và trang đáp án đi sau tách riêng · khung "Nội dung để chép" đúng ba dòng · có bộ đếm lượt "đã lên N/M" ở dải điều khiển và không khi nào lên màn chiếu · "Chạy thử 5 phút" và checklist 10 việc chạy được không cần camera · "Xuất cho đồng nghiệp" và "In phiếu dự giờ" không chứa tên học sinh · mọi tỉ lệ về lớp đều chia cho sĩ số đã nhập, chưa có sĩ số thì ẩn tỉ lệ · mất điện thì bản in + hình cắt giấy vẫn đi đủ năm bước · ba kịch bản "Còn 10 phút / Còn 5 phút / Còn 2 phút" chỉ lấy việc lớp đã làm, dư giờ không dạy sang kiến thức mới · lượt "Làm việc theo nhóm 4 em" có bốn vai trò gắn với vị trí ngồi, mỗi em viết đáp án riêng trước khi nhóm chốt, không xếp hạng nhóm · phiếu có khối "Ba bài chọn thêm" (củng cố · cùng đáp số khác cách · vận dụng thật) cho em xong sớm và không có dòng "cả lớp đợi bạn" · chữ ký MiTi ở ba chỗ · file chạy độc lập không lỗi console.
 \`\`\`
 
 ## Ghi chú cho người tạo prompt (không gửi Gemini)
@@ -252,9 +255,9 @@ ${byLop[5].map(row).join('\n')}
 ## Muốn thêm hoặc sửa giáo án
 
 - Thêm cụm kiến thức mới: sửa \`tools/data/clusters.mjs\`, \`tools/data/props.mjs\` (đủ 5 trường) và \`tools/data/lessons.mjs\` (đủ 3 trường), rồi chạy \`node tools/build.mjs\`.
-- Đổi quy định bảng phấn: \`tools/lib/chalk.mjs\` (10 quy định).
-- Đổi quy định từ bảng ra vở: \`tools/lib/handout.mjs\` (3 quy định).
-- Đổi quy định chế độ giảng bài: \`tools/lib/lesson.mjs\` (32 quy định).
+- Đổi quy định bảng phấn: \`tools/lib/chalk.mjs\` (${Object.keys(CHALK).length} quy định).
+- Đổi quy định từ bảng ra vở: \`tools/lib/handout.mjs\` (${Object.keys(HANDOUT).length} quy định).
+- Đổi quy định chế độ giảng bài: \`tools/lib/lesson.mjs\` (${Object.keys(LESSON).length} quy định).
 - \`node tools/validate.mjs\` sẽ chặn nếu thiếu quy định nào, nếu vật thật thiếu trường, hoặc nếu cơ chế game lọt vào giáo án.
 `;
 }

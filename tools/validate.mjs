@@ -164,6 +164,9 @@ const LESSON_RULES = [
   [LESSON.bigClass, 'thiếu quy định mọi con số về lớp phải là hàm của sĩ số'],
   [LESSON.powerCut, 'thiếu quy định dạy tiếp khi mất điện'],
   [LESSON.paperProps, 'thiếu đường vật thật bằng giấy khi lớp không có đồ dùng'],
+  [LESSON.timeSlack, 'thiếu kế hoạch cho tiết thừa giờ và tiết cháy giữa bước'],
+  [LESSON.groupWork, 'thiếu quy định làm việc theo nhóm 4 em'],
+  [LESSON.fastFinishers, 'thiếu đường đi sâu cho em làm xong sớm'],
 ];
 // Từ bảng ra vở: một tiết giảng chỉ thật sự xong khi các em làm được bài trên giấy.
 const HANDOUT_RULES = [
