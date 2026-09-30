@@ -126,6 +126,7 @@ ${AR_RENDER}
 - Cấu hình camera: getUserMedia({ video: { facingMode: "user", width: { ideal: 1280 }, height: { ideal: 720 }, frameRate: { ideal: 30 } }). Ưu tiên khung 16:9 vì đầu ra là màn chiếu; nếu camera cho tỉ lệ khác thì crop về vùng vẽ cố định, không để giãn hình làm sai tọa độ. Lật gương ngang khi hiển thị và khi tính tọa độ.
 - Chỉ xin quyền camera SAU khi giáo viên bấm "Bật camera" hoặc "Mời em lên bảng". Trạng thái bằng tiếng Việt: Đang tải → Xin quyền camera → Camera sẵn sàng → Đang nhận diện → Lỗi (kèm nút Thử lại).
 - ${LESSON.privacy}
+- ${LESSON.cameraGeometry}
 - ${CLASSROOM.framing}
 - ${CLASSROOM.safeZone}
 - Ở công cụ giảng bài thì dải trên cùng đặt thanh tiến trình năm bước và hai cột biên đặt dải điều khiển cùng khay vật thật; vì không có điểm, tim hay mascot nên toàn bộ chỗ đó dành cho nút bấm và nhãn bước.
@@ -136,12 +137,14 @@ ${AR_RENDER}
 
 7. DẠY KHI KHÔNG CÓ CAMERA VÀ KHÔNG CÓ MẠNG (bắt buộc, đây là chế độ dạy chính ở nhiều lớp)
 - ${LESSON.noNetwork}
+- ${LESSON.noAdmin}
 - Chuột và bàn phím thay được MỌI thao tác tay: giữ chuột trái hoặc rê ngón tay trên màn hình cảm ứng là viết phấn, phím E là giẻ lau, phím cách là sang bước, mũi tên trái là lùi bước, R là phát lại bước, S là lưu bảng, P là in bảng.
 - Kéo thả vật thật và thẻ đáp án bằng chuột; chấm ngón tay thay bằng một cú chạm.
 - Có nhãn "Chế độ không dùng camera" ở góc màn chiếu và nút Bật camera riêng, không cần tải lại trang.
 
 8. TIẾP CẬN, AN TOÀN VÀ HIỆU NĂNG
 - ${LESSON.inclusion}
+- ${LESSON.physicalAccess}
 - ${LESSON.noProjector}
 - ${ACCESS.contrast}
 - ${ACCESS.notColorOnly}
@@ -242,7 +245,7 @@ ${byLop[5].map(row).join('\n')}
 - Thêm cụm kiến thức mới: sửa \`tools/data/clusters.mjs\`, \`tools/data/props.mjs\` (đủ 5 trường) và \`tools/data/lessons.mjs\` (đủ 3 trường), rồi chạy \`node tools/build.mjs\`.
 - Đổi quy định bảng phấn: \`tools/lib/chalk.mjs\` (10 quy định).
 - Đổi quy định từ bảng ra vở: \`tools/lib/handout.mjs\` (3 quy định).
-- Đổi quy định chế độ giảng bài: \`tools/lib/lesson.mjs\` (23 quy định).
+- Đổi quy định chế độ giảng bài: \`tools/lib/lesson.mjs\` (26 quy định).
 - \`node tools/validate.mjs\` sẽ chặn nếu thiếu quy định nào, nếu vật thật thiếu trường, hoặc nếu cơ chế game lọt vào giáo án.
 `;
 }

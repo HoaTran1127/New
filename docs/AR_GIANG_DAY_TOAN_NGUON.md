@@ -1,4 +1,4 @@
-# Giáo án AR trên bảng phấn — nguồn cộng đồng và bài học sau 8 vòng
+# Giáo án AR trên bảng phấn — nguồn cộng đồng và bài học sau 9 vòng
 
 Tài liệu này để **người khác tham khảo và nối tiếp**, không phải mô tả tính năng. Phần tính năng nằm ở
 [`prompts/giao-an/README.md`](../prompts/giao-an/README.md); ở đây chỉ ghi: cái gì đã đo được, cái gì đã
@@ -7,16 +7,20 @@ thay đổi vì số liệu, và nên đọc gì trước khi sửa tiếp.
 ## Nguyên tắc làm việc đã trả giá mà thành
 
 1. **Đo trước khi thêm quy định.** Mỗi vòng bắt đầu bằng một lệnh `grep` trên đúng 39 file giáo án đã sinh,
-   chứ không bắt đầu bằng ý tưởng. Bốn vòng gần nhất đều tìm thấy lỗ 0/39 — nghĩa là nếu ngồi nghĩ thì
+   chứ không bắt đầu bằng ý tưởng. Bảy vòng gần nhất đều tìm thấy lỗ 0/39 — nghĩa là nếu ngồi nghĩ thì
    sẽ nghĩ ra thứ đã có sẵn.
-2. **Quy định phải có con số.** "Chữ phải to" không kiểm chứng được; "≥ 40 px **và** ≥ 5.5% chiều cao khung
+2. **Đo cả chỗ mình tự mâu thuẫn.** Vòng 9 không đi tìm ý mới: nó đọc lại chính các quy định đã có và thấy
+   hai quy định cũ đòi cái không thể cùng có — một webcam vừa phải nhìn bàn tay em đứng trước bảng,
+   vừa phải đếm ngón tay 35 em cuối phòng. Lỗi kiểu này `grep` thường không bắt được, vì mỗi từ khoá đều
+   *có* trong file; phải đọc hai câu cạnh nhau mới thấy.
+3. **Quy định phải có con số.** "Chữ phải to" không kiểm chứng được; "≥ 40 px **và** ≥ 5.5% chiều cao khung
    hình, ≤ 12 chữ một dòng" thì validator bắt được. Mọi quy định trong `tools/lib/*.mjs` là chuỗi nguyên văn,
    `tools/validate.mjs` so bằng `includes()`, nên lời văn và mắt kiểm không bao giờ lệch nhau.
-3. **Chốt chặn hai chiều.** Cơ chế game lọt vào giáo án và quy định giáo án lọt sang game đều làm build đỏ.
+4. **Chốt chặn hai chiều.** Cơ chế game lọt vào giáo án và quy định giáo án lọt sang game đều làm build đỏ.
    Thêm một quy định mới là tự động thêm một khoá bị cấm ở phía bên kia (`LESSON_FAMILY_RULES`).
-4. **Probe đột biến là đơn vị kiểm thử thật.** 50 phép, mỗi phép phá đúng một thứ và đòi đúng thông báo.
+5. **Probe đột biến là đơn vị kiểm thử thật.** 54 phép, mỗi phép phá đúng một thứ và đòi đúng thông báo.
    Không có probe thì một quy định chỉ là câu văn đẹp.
-5. **Tách công cụ giảng bài khỏi game.** Cùng một kiến thức, hai động cơ đối lập: game cần hồi hộp,
+6. **Tách công cụ giảng bài khỏi game.** Cùng một kiến thức, hai động cơ đối lập: game cần hồi hộp,
    tiết giảng cần giáo viên cầm lái. Nhét tim/điểm/combo vào bảng phấn làm em lên bảng sợ sai hơn là muốn hiểu.
 
 ## Số liệu đo được trên 39 giáo án, theo vòng
@@ -30,7 +34,8 @@ thay đổi vì số liệu, và nên đọc gì trước khi sửa tiếp.
 | 5 | dashboard chỉ ghép `games + legacy`, giáo án nằm im trong thư mục | tab "Giáo án giảng bài", 136 card |
 | 6 | 0/39 trả lời cả lớp không cần webcam · 0/39 nhắc quyền riêng tư khi quay cả lớp | `classBoard`, `privacy` |
 | 7 | 0/39 nhịp nói-with-you · 0/39 đoán trước khi thao tác · 0/39 mẫu che dần · 0/39 vé kết thúc tiết | `pairShare`, `predict`, `fadedExample`, `exitTicket` |
-| 8 | 0/39 phòng không có máy chiếu · 0/39 trần RAM/số model/camera_low · 0/39 phát hiện năng lực trình duyệt | `noProjector`, `oldHardware`, `browserCompat` |
+| 8 | 0/39 phòng không có máy chiếu · 0/39 trần RAM và số model chạy cùng lúc · 0/39 phát hiện năng lực trình duyệt | `noProjector`, `oldHardware`, `browserCompat` |
+| 9 | 0/39 nói camera quay cái gì (trong khi 39/39 đòi vừa soi bảng vừa đếm tay 35 em) · 0/39 nhắc quyền quản trị và `file://` · 0/39 nhắc em không giơ được tay | `cameraGeometry`, `noAdmin`, `physicalAccess` |
 
 ## Vì sao chọn những con số đang dùng
 
@@ -52,6 +57,18 @@ thay đổi vì số liệu, và nên đọc gì trước khi sửa tiếp.
 - **≥ 44 px cho nút chạm và ≥ 55% khung hình cho bảng ở chế độ không màn chiếu** — 44 px theo khuyến nghị
   vùng chạm thông dụng của giao diện cảm ứng; 55% là mức dự án tự chọn để trên laptop 13 inch vẫn còn chỗ
   cho dải điều khiển. Hai con số này khác nhau về bản chất: một cái là chuẩn ngành, một cái là phỏng đoán.
+- **Hình học camera trong `cameraGeometry` (cách bảng 1,0–2,5 m, bàn tay ≥ 20% chiều cao khung hình,
+  "Quay lớp" phải thấy ≥ 2/3 số em, đổi chế độ ≤ 2 giây, ngưỡng 50% sĩ số)** — **toàn bộ là do dự án tự
+  chọn**. Đã mở ba trang hướng dẫn đặt camera nhận diện tay của nhà sản xuất để tìm số tham chiếu; cả ba
+  đều không công bố bảng khoảng cách/ngưỡng nào, nên không được trích số liệu từ đó. Chỉ có một con số lấy
+  được từ tài liệu thương mại là góc nhìn webcam phổ biến 60°/78°/90° (camera phòng 90–120°), và nó chỉ
+  dùng để giải thích vì sao webcam laptop đặt ở bàn cô giáo không phủ được dãy cuối.
+- **Vì sao bàn tay ở cuối phòng không dùng để viết phấn được**: bài báo MediaPipe Hands mô tả kiến trúc
+  hai tầng — "a palm detector that operates on a full input image" rồi landmark model chạy trên vùng cắt.
+  Palm phải hiện ra trong ảnh gốc thì cả pipeline mới có cái để cắt, nên tay ở xa và nhỏ là điểm yếu có
+  tính nguyên tắc. Chiều ngược lại cũng phải nói thẳng: bài báo chỉ đo hiệu năng trên **mobile GPU**
+  (Pixel 3, S20, iPhone 11) chứ không đo CPU, và tự nhận chịu được "large scale span (~20x)" — nên mọi con
+  số FPS và khoảng cách trong repo này **không phải** số liệu của bài báo.
 
 ## Nguồn đọc cho từng cụm quy định
 
@@ -86,6 +103,24 @@ thay đổi vì số liệu, và nên đọc gì trước khi sửa tiếp.
 **Nhận diện tay trên thiết bị lớp học**
 - [MediaPipe Hands: On-device Real-time Hand Tracking — arXiv 2006.10214](https://arxiv.org/abs/2006.10214)
 - [On-Device, Real-Time Hand Tracking with MediaPipe — Google Research](https://research.google/blog/on-device-real-time-hand-tracking-with-mediapipe/)
+- [Bản đầy đủ có hình của bài báo — ar5iv 2006.10214](https://ar5iv.labs.arxiv.org/html/2006.10214) — nguồn của câu "palm detector operates on a full input image" và "large scale span (~20x)".
+
+**Đặt camera nhận diện tay ở đâu (mới đọc vòng 9, các trang này KHÔNG có bảng số nào)**
+- [Webcam Hand Tracking Camera Setup — Lighting and Framing](https://gesturesynth.me/webcam-hand-tracking-camera-setup/)
+- [Camera Setup for Hand Tracking: Framing and FPS](https://neural-lab.com/blog/camera-setup-for-hand-tracking)
+- [Camera Placement — Ultraleap documentation](https://docs.ultraleap.com/touchfree-user-manual/camera-placement.html)
+- [How to choose a webcam? The viewing angle](https://www.onedirect.co.uk/content/video-conferencing/webcam/angle-of-view) — trang duy nhất trong nhóm này có con số (góc nhìn phổ biến 60°/78°/90°, camera phòng 90–120°).
+Ghi lại để người sau khỏi mất công: ba trang đầu được mở bằng trình duyệt trong vòng 9 và không trả về
+khoảng cách làm việc, ngưỡng cỡ bàn tay hay FPS nào. Nếu cần số thật thì phải tự đo, đừng trích lại các
+trang đó như thể chúng có số.
+
+**Máy trong trường: không quyền quản trị, không cài phần mềm**
+- [Allowing teachers to install software on school PCs — Spiceworks Community](https://community.spiceworks.com/t/allowing-teachers-to-install-software-on-school-pcs/569567)
+- [Allow non-admin users access to apps — Microsoft Tech Community](https://techcommunity.microsoft.com/discussions/windows11/allow-non-admin-users-access-to-apps/4296087)
+
+**Em không giơ được tay, không đi lại được: lớp học hoà nhập**
+- [Inclusive Teaching: Physical Disability — ADCET (Úc)](https://www.adcet.edu.au/inclusive-teaching/specific-disabilities/physical-disability)
+- [Teaching Students with Physical Disabilities — Accessible Campus (Canada)](https://accessiblecampus.ca/tools-resources/educators-tool-kit/teaching-tips/teaching-students-with-physical-disabilities/)
 
 **Máy thật trong lớp học: không máy chiếu, máy cũ, trình duyệt khác nhau**
 - [Secure contexts — MDN](https://developer.mozilla.org/en-US/docs/Web/Security/Defenses/Secure_Contexts) — `getUserMedia` chỉ chạy trên HTTPS hoặc `localhost`; mở file giáo án bằng `file://` hay HTTP thì camera mất mà không có lỗi nào của model cả, nên `browserCompat` phải thử đúng ba đường mở.
@@ -113,17 +148,23 @@ thành "tăng X% điểm".
 - **Nút "Báo cáo máy" chưa có nơi nhận.** Quy định chỉ chép ra bốn dòng để cô dán sang máy khác có mạng;
   vẫn thiếu một kênh (mail, form, issue mẫu) để những dòng đó quay về được với người bảo trì bộ giáo án.
   Không có kênh này thì "chạy được trên máy nào" mãi mãi là phỏng đoán.
+- **Chưa đo được độ phủ thật của một webcam trong lớp 35 em.** Ngưỡng "thấy ≥ 2/3 số em" và "dưới 50% sĩ
+  số thì dùng bảng con" là số tự chọn; cần một phép đo thật (đặt máy ở ba vị trí, đếm số em vào khung) để
+  thay bằng số có nghĩa.
+- **Chưa biết `file://` có đọc được model ở những trình duyệt nào.** `noAdmin` cố tình không khẳng định mà
+  bắt công cụ phải thử và báo kết quả thật — nghĩa là chính repo này cũng chưa có số liệu, và mục "Báo cáo
+  máy" ở trên là con đường duy nhất để có.
 
 ## Muốn đóng góp thì sửa ở đâu
 
 ```text
 tools/lib/chalk.mjs     10 quy định bảng phấn và vật thật      → sinh vào mục 4 của giáo án
-tools/lib/lesson.mjs    23 quy định chế độ giảng bài           → sinh vào mục 0, 2, 3, 5, 6, 7, 8, 9
+tools/lib/lesson.mjs    26 quy định chế độ giảng bài           → sinh vào mục 0, 2, 3, 5, 6, 7, 8, 9
 tools/lib/handout.mjs   3 quy định từ bảng ra vở               → sinh vào mục 9
 tools/data/props.mjs    vật thật + sơ đồ theo 38 cụm
 tools/data/lessons.mjs  tên bài, câu khởi động, dòng ghi nhớ
 tools/build-lessons.mjs ghép thành 39 file prompts/giao-an/
-tools/validate.mjs      36 khoá của họ giáo án + chốt chặn ngược + 12 mục của khung
+tools/validate.mjs      39 khoá của họ giáo án + chốt chặn ngược + 12 mục của khung
 ```
 
 Quy trình một vòng nâng cấp: đo bằng `grep` trên `prompts/giao-an/GA*.md` → viết quy định có con số vào

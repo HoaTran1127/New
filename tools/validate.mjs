@@ -155,6 +155,9 @@ const LESSON_RULES = [
   [LESSON.noProjector, 'thiếu quy định dạy khi phòng không có máy chiếu'],
   [LESSON.oldHardware, 'thiếu trần tài nguyên đo được cho máy cũ'],
   [LESSON.browserCompat, 'thiếu quy định phát hiện năng lực trình duyệt thay vì khai phiên bản'],
+  [LESSON.cameraGeometry, 'thiếu quy định một camera chỉ quay được một hướng (soi bảng hoặc quay lớp)'],
+  [LESSON.noAdmin, 'thiếu quy định máy trường không có quyền quản trị'],
+  [LESSON.physicalAccess, 'thiếu đường trả lời cho em không giơ được tay'],
 ];
 // Từ bảng ra vở: một tiết giảng chỉ thật sự xong khi các em làm được bài trên giấy.
 const HANDOUT_RULES = [
