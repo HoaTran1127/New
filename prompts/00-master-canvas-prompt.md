@@ -231,6 +231,42 @@ biên phần "vận động to" ở mục 4.3 thành một tiết thể dục th
   + hít thở; bỏ mục đồng hồ vận động >= 60%, thay bằng đếm "số lượt em chủ động thao tác trong phiên"; nhịp thẻ và trần tải
   trọng áp dụng nguyên văn.
 
+4.6 TIẾT HỌC 45 PHÚT + GẮNG SỨC THẬT (bắt buộc — nguồn: `tools/lib/lesson.mjs`, validate chặn nếu thiếu) — phần quyết định một phiên có vừa với một tiết và em có mệt thật không
+
+Mục 4.5 quản lý KHÔNG GIAN của một hoạt động thể dục (khởi động, biên độ, trạm nghỉ, hạ nhiệt, trần tải trọng). Khảo sát
+85 prompt trước vòng 16: "8–10 phút" = 0/85, "45 phút" = 0/85, "gắng sức" = 0/85, "đổ mồ hôi" = 0/85, "thở gấp" = 0/85,
+"hồi nhịp" = 0/85 — không tầng nào nói một phiên dài bao lâu và em đã mệt tới mức nào. Hai hệ quả thật ở lớp: một nhóm
+chơi say sưa 20 phút thì ba nhóm còn lại hết tiết chưa tới lượt (vòng 15 đã chia ĐỦ lượt, chưa chia THỜI GIAN), và
+"đồng hồ vận động >= 60% thời lượng phiên" chỉ đếm số lần đưa tay nên không phân biệt bài vừa sức với bài quá sức. Sáu
+quy định dưới đây biến một phiên thành một hoạt động thể dục có thời lượng và có kiểm tra độ mệt.
+
+- TRẦN 8–10 PHÚT CHO MỘT PHIÊN: HUD có đồng hồ phiên "Còn <n> phút" (chữ >= 20px, không nhấp nháy, không đổi màu đỏ) chạy
+  từ lúc bấm KHỞI ĐỘNG; 60–90 giây khởi động + 12 lượt chính + 45–60 giây hạ nhiệt phải nằm trọn trong trần đó. Phút thứ 10
+  rơi vào đâu thì game khép lại ở RANH GIỚI lượt kế tiếp chứ không cắt giữa lượt đang chơi, màn tổng kết tự hiện, không bắt
+  em bấm "Kết thúc". Trần này chỉ tính cả phiên — từng thẻ câu hỏi vẫn KHÔNG có đồng hồ đếm ngược (đã cấm ở mục 6.3).
+- KẾ HOẠCH TIẾT 45 PHÚT IN TỪ SỐ THẬT: màn tổng kết in một dòng "Kế hoạch tiết 45 phút: <n> phiên × <n> phút + <n> phút đổi
+  nhóm + 5 phút chốt tờ rời" tính từ thời lượng phiên thật vừa chơi, và giáo viên thấy ngay nếu bốn nhóm không vừa — khi đó
+  dòng đó ghi thẳng "tiết này chỉ đủ 3 nhóm chơi, nhóm còn lại ôn bằng tờ rời", không để thầy cô tự tính lại. Nút "Kết phiên"
+  cho giáo viên bấm bất cứ lúc nào: game đóng ngay ở ranh giới lượt kế tiếp, không trừ tim, không hỏi lý do, không tính là em
+  bỏ dở.
+- BỐN MỨC GẮNG SỨC CUỐI MỖI HIỆP: em tự báo gắng sức trên "dễ quá" · "vừa" · "mệt" · "kiệt" (bốn mức tương ứng 1–4), một
+  hàng bốn nút >= 56px, chọn bằng cái chỉ tay hoặc chạm; không mức nào bị coi là sai, không trừ tim, không đổi điểm. Kết quả
+  ghi vào localStorage "miti-effort" theo từng hiệp và đọc lại được ở phiên sau; màn tổng kết in "Gắng sức: hiệp 1 <mức> ·
+  hiệp 2 <mức> · hiệp 3 <mức>". Bản tắt tiếng và bản reduced-motion vẫn có đủ bốn mức bằng chữ và hình.
+- 15 GIÂY HỒI NHỊP GIỮA HIỆP: mascot hướng dẫn hít vào 4 nhịp – thở ra 6 nhịp theo vạch nhịp (không phải im lặng đứng chờ),
+  HUD hiện "Nhịp của em: còn nhanh / vừa phải / chậm rồi" suy từ số động tác mỗi phút của 30 giây vừa qua, kèm ghi chú
+  "ước lượng từ chuyển động, không phải đo mạch". Hiệp sau chỉ bắt đầu sau khi hồi nhịp xong; `prefers-reduced-motion` thì rút
+  còn 10 giây đếm chữ, vẫn đủ 12 lượt chính.
+- KHỐI "BẢN TIẾT HỌC" ĐÚNG BỐN DÒNG: "Phiên vừa chơi: <n> phút · vận động <n>%" · "Gắng sức: hiệp 1 <mức> · hiệp 2 <mức> ·
+  hiệp 3 <mức>" · "Kế hoạch tiết 45 phút: <n> phiên × <n> phút" · "Bốn em hôm nay: <tên> <n> động tác, <tên> <n> nhịp cổ vũ".
+  Toàn bộ bốn dòng nằm trong khối chữ mà nút "Copy tờ rời" copy được; không dòng nào được bịa số — dòng nào thiếu dữ liệu thật
+  thì in "chưa ghi được" thay vì đoán.
+- TỰ KIỂM BẰNG `verifyLesson()`: chạy MỘT LẦN lúc nạp và kiểm đúng bốn điều — đồng hồ phiên có thật và phiên tự khép ở phút
+  thứ 10 tại ranh giới lượt · bốn mức gắng sức xuất hiện cuối mỗi hiệp và ghi đọc lại được từ "miti-effort" · 15 giây hồi nhịp
+  chạy giữa các hiệp trước khi hiệp sau bắt đầu · khối "Bản tiết học" in đủ bốn dòng lấy từ số thật. Thiếu điều nào thì
+  `console.warn` tiếng Việt nêu đúng phần lệch và bảng kiểm ghi CHƯA ĐẠT kèm câu nên sửa gì trong prompt. Bản không camera vẫn
+  bắt buộc đủ bốn điều, vì đồng hồ phiên và gắng sức không phụ thuộc camera.
+
 ========================
 5. HỌC TẬP DẪN LỐI (LEARNING-FIRST)
 ========================
@@ -631,7 +667,7 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
   Bảng liệt kê TỪNG ràng buộc kèm trạng thái ĐẠT / CHƯA ĐẠT. Trạng thái đó phải do code kiểm thật lúc chạy,
   không phải chữ tĩnh kê sẵn. Một bảng báo "ĐẠT" mà không kiểm gì là lỗi nghiêm trọng nhất của game giáo dục.
   Bảng chỉ người lớn mở được: không trừ tim, không chặn chơi, học sinh không nhìn thấy.
-- 34 MỤC MÁY TỰ KIỂM, mỗi mục một hàm trả true/false:
+- 35 MỤC MÁY TỰ KIỂM, mỗi mục một hàm trả true/false:
   [1] QUESTION_DATA đủ số mục và verifyQuestionBank() ĐÃ chạy trước lượt chơi đầu tiên
   [2] mọi mục đang phát hành có answer nằm trong choices đúng một lần
   [3] 📷 drawImage khung hình webcam đi qua toScreen(lx, ly), không còn phép nhân thô với W/H
@@ -666,14 +702,15 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
   [32] verifyIdentity() đã chạy lúc nạp: mascot tên riêng <= 2 từ hiện ở >= 5 chỗ, ba biến --miti-1/--miti-2/--miti-3 có thật trong CSS và khớp IDENTITY_DATA, đúng MỘT khoảnh khắc chữ ký dài >= 2 giây chỉ chạy 1 lần/phiên, một đạo cụ neo landmark, ba câu thoại <= 6 từ
   [33] verifyMusic() đã chạy lúc nạp: loop nhạc nền tổng hợp bằng Web Audio (không có <audio src> hay fetch() file âm thanh ngoài), BPM nằm trong 100–128, gain bus nhạc <= 0.18, bus nhạc hạ xuống <= 30% khi speechSynthesis đang đọc, và bản "miti-mute" có vạch nhịp đập theo BPM thay cho tiếng
   [34] verifyQueue() đã chạy lúc nạp: ba vai chờ (cổ vũ đủ 8 nhịp · trọng tài giơ thẻ "Động tác to / nhỏ" · thư ký đọc lại đề và đáp án) có nhãn tên trên HUD, đồng hồ chờ chạy riêng và gọi đúng tên em đang chờ ở giây 15, bộ đếm "Lượt của em <n>/3" đổi vai đúng sau 3 lượt trong 12 lượt, và +5 điểm của vai chờ chỉ vào thanh "Cả nhóm" chứ không vào "miti-best"
-  Mục gắn 📷 chỉ áp dụng khi có webcam: bản không camera bỏ 6 mục đó và vẫn phải đạt 28 mục còn lại.
+  [35] verifyLesson() đã chạy lúc nạp: đồng hồ phiên "Còn <n> phút" có thật và phiên tự khép ở phút thứ 10 tại RANH GIỚI lượt, bốn mức gắng sức "dễ quá / vừa / mệt / kiệt" hiện cuối mỗi hiệp và đọc lại được từ localStorage "miti-effort", 15 giây "hồi nhịp" hít 4 nhịp – thở ra 6 nhịp chạy xong trước khi hiệp sau bắt đầu, và khối "Bản tiết học" in đủ bốn dòng lấy từ số thật
+  Mục gắn 📷 chỉ áp dụng khi có webcam: bản không camera bỏ 6 mục đó và vẫn phải đạt 29 mục còn lại.
 - XUẤT BẢN VĂN: bảng có nút "Xuất bản văn" sinh một khối chữ tiếng Việt copy được — tên game, bản chuẩn MiTi,
   ngày giờ, kiểu điều khiển đang chạy, số mục ĐẠT / CHƯA ĐẠT, danh sách mục chưa đạt kèm lý do.
   Khối chữ chỉ hiện trên màn hình và vào clipboard máy đó; không gửi lên máy chủ nào, không xin quyền, không để lại dữ liệu.
 - MỤC CHƯA ĐẠT PHẢI GIẢI THÍCH ĐƯỢC: mỗi dòng kèm một câu nguyên nhân kỹ thuật cho người lớn
   (ví dụ "toScreen không được dùng ở drawImage — vật thể đang tính bằng lx * W") và một câu nên sửa thế nào trong prompt.
   Cấm báo "lỗi" rồi im lặng, cấm chữ chung chung kiểu "hệ thống có vấn đề".
-- 25 VIỆC NGƯỜI THỬ PHẢI BẤM TAY (máy không tự kiểm được, làm theo đúng thứ tự, khoảng 15 phút):
+- 26 VIỆC NGƯỜI THỬ PHẢI BẤM TAY (máy không tự kiểm được, làm theo đúng thứ tự, khoảng 15 phút):
   đứng xa tới mức chỉ còn hai bàn tay · giữ im một tư thế 5 giây · che nửa người bằng tay · tắt camera giữa vòng ·
   rút mạng lúc đang tải model · đổi tay thuận sang Trái giữa chừng · bật reduced-motion ở hệ điều hành rồi mở game ·
   cố tình sai 4 câu liên tiếp · mở bằng điện thoại đặt dọc · đưa một học sinh lớp 4 chưa đọc hướng dẫn chơi thử 60 giây ·
@@ -692,6 +729,7 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
   chơi hai game cùng chủ đề liên tiếp rồi gập máy lại — em có gọi ra được tên mascot, màu và khoảnh khắc chữ ký của TỪNG game, hay với em vẫn là một game mặc hai bộ áo?
   nghe trọn một hiệp — nhạc có giữ nhịp cho em vận động theo (mỗi cú chốt rơi vào một phách mạnh) hay chỉ là tiếng nền vô định? Bấm "Tắt tiếng" rồi chơi tiếp: nhịp chuyển động có rớt dưới 12 lần mỗi phút không?
   cho bốn em đứng quanh một máy chơi trọn một hiệp — ba em chưa tới lượt có thật sự vận động (vỗ đủ 8 nhịp, giơ thẻ, đọc lại đề và đáp án) hay vẫn đứng xem? Đứng im 20 giây tới lượt: mascot có gọi đúng tên em đang chờ và ra một động tác 5 giây không?
+  bấm giờ thật khi nhóm đầu cầm máy — phiên có tự khép ở phút thứ 10 ngay tại ranh giới lượt (không cắt giữa một em đang chơi) và dòng "Kế hoạch tiết 45 phút" in ra có đủ chỗ cho bốn nhóm không? Hỏi em cuối mỗi hiệp "dễ quá / vừa / mệt / kiệt": tới hiệp 3 mức có tăng thật hay em toàn chọn "dễ quá"?
   Bảng in kèm từng việc và ô ghi kết quả: `prompts/CHECKLIST_NGHIEP_THU.md`.
 - THIẾU MỤC NÀO THÌ SỬA PROMPT, KHÔNG SỬA TAY FILE HTML: dán lại nguyên văn quy định tương ứng vào cuối prompt rồi sinh lại file.
 
@@ -711,6 +749,12 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
 [ ] phiên đạt >= 12 nhịp chuyển động mỗi phút và đồng hồ vận động >= 60% thời lượng, cả hai đếm từ code thật
 [ ] không có động tác nhảy tiếp đất, xoay thân nhanh quá 90 độ, hay hai tay trên cao liên tục quá 15 giây; cúi thấp tối đa 3/12 lượt
 [ ] nhắc uống nước đúng một dòng ở tổng kết khi phiên >= 6 phút, không pop-up giữa vòng chơi
+[ ] HUD có đồng hồ phiên "Còn <n> phút" (>= 20px, không nhấp nháy, không đỏ) và phiên tự khép ở phút thứ 10 tại RANH GIỚI lượt, tổng kết tự hiện; thẻ câu hỏi vẫn không có đồng hồ đếm ngược
+[ ] màn tổng kết in "Kế hoạch tiết 45 phút: <n> phiên × <n> phút + <n> phút đổi nhóm + 5 phút chốt tờ rời" từ số thật; nút "Kết phiên" đóng êm ở ranh giới lượt, không trừ tim, không hỏi lý do
+[ ] bốn mức gắng sức "dễ quá" · "vừa" · "mệt" · "kiệt" (nút >= 56px) hiện cuối mỗi hiệp, ghi localStorage "miti-effort" và đọc lại được ở phiên sau, không mức nào bị coi là sai
+[ ] giữa các hiệp có 15 giây "hồi nhịp" hít vào 4 nhịp – thở ra 6 nhịp theo vạch nhịp trước khi hiệp sau bắt đầu; reduced-motion rút còn 10 giây đếm chữ, vẫn đủ 12 lượt
+[ ] khối "Bản tiết học" in đủ bốn dòng lấy từ số thật trong khối nút "Copy tờ rời" copy được; thiếu dữ liệu thì in "chưa ghi được", cấm bịa số
+[ ] verifyLesson() chạy MỘT LẦN lúc nạp, kiểm đúng bốn điều của tiết học và bản không camera vẫn bắt buộc đủ bốn điều
 [ ] errorTag sửa đúng 2 lần được xếp ôn vào +1/+3/+7 ngày trong "miti-review", ôn vững thì giãn +21 ngày
 [ ] 3 giây đầu vào gameplay là một cú "ồ" bằng vật thể AR, không phải màn chữ
 [ ] "miti-best" lưu đúng ba số, HUD hiệp 2 hiện "Kỷ lục: <n> · Em đang: <m>" và PHÁ KỶ LỤC chỉ nổ một lần
@@ -785,10 +829,10 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
 [ ] đạo cụ AR neo landmark bằng toScreen(); bản không camera thì đạo cụ đứng yên ở góc HUD dưới chứ không biến mất
 [ ] ba câu thoại đọc bằng speechSynthesis giọng vi-VN, <= 3 câu mỗi phút, câu khi sai là câu đỡ chứ không chế giễu
 [ ] bảng kiểm ẩn mở bằng 7 lần chạm logo MiTi hoặc Ctrl+Alt+K, trạng thái ĐẠT do code kiểm thật lúc chạy
-[ ] cả 34 mục máy tự kiểm đều có hàm kiểm tương ứng, không mục nào là chữ kê sẵn
+[ ] cả 35 mục máy tự kiểm đều có hàm kiểm tương ứng, không mục nào là chữ kê sẵn
 [ ] mục CHƯA ĐẠT kèm nguyên nhân kỹ thuật + cách sửa trong prompt, không có dòng "lỗi hệ thống"
 [ ] nút "Xuất bản văn" copy được khối chữ tiếng Việt, không gửi lên máy chủ nào
-[ ] bản không camera bỏ đúng 6 mục 📷 và vẫn đạt 28 mục còn lại, không bỏ luôn bảng kiểm
+[ ] bản không camera bỏ đúng 6 mục 📷 và vẫn đạt 29 mục còn lại, không bỏ luôn bảng kiểm
 [ ] fallback chuột/chạm/phím chơi trọn vẹn, tự kích hoạt khi camera lỗi
 [ ] QUESTION_DATA có ít nhất 30 mục (Toán) hoặc 60 mục (Tiếng Anh), mỗi mục có đáp án + lời giải + errorTag + loiViet + dang
 [ ] dữ liệu đặt đầu file, code engine đặt sau, không có chỗ nào rút gọn
@@ -852,7 +896,7 @@ Sau khi tự kiểm tra, CHỈ xuất ra file HTML hoàn chỉnh, không kèm gi
   toàn bộ quy định phía trên chỉ là lời mong đợi. Bắt game tự kiểm bằng hàm true/false biến lời hứa thành trạng thái đọc được.
 - **Trạng thái phải do code kiểm, không phải chữ kê sẵn**: một bảng tĩnh in sẵn chữ "ĐẠT" còn hại hơn không có bảng,
   vì người lớn tưởng là đã kiểm. Đây là lý do quy định ghi rõ "không phải một danh sách chữ tĩnh".
-- **Tách 34 mục máy / 25 việc người thử**: cái gì máy kiểm được thì đừng đùn cho giáo viên; cái máy không kiểm được
+- **Tách 35 mục máy / 26 việc người thử**: cái gì máy kiểm được thì đừng đùn cho giáo viên; cái máy không kiểm được
   (cháu có hiểu luật chơi mà không đọc hướng dẫn không, rút mạng thì sao) thì đừng giả vờ kiểm. Con số 15 phút là thời lượng
   một tiết thực tế, không phải danh sách dài vô hạn.
 - **Mục chưa đạt phải nói nguyên nhân và cách sửa**: bảng kiểm chỉ báo "lỗi" sẽ bị bỏ qua; kèm câu "thiếu ở dòng nào,

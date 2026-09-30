@@ -23,6 +23,7 @@ import { CELEBRATE } from './lib/celebrate.mjs';
 import { IDENTITY } from './lib/identity.mjs';
 import { RHYTHM } from './lib/rhythm.mjs';
 import { QUEUE } from './lib/queue.mjs';
+import { LESSON } from './lib/lesson.mjs';
 import { IDENTITIES } from './data/identities.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
@@ -51,7 +52,7 @@ const MASTER_LIB = [
   ['2.0', 'ar.mjs'], ['4.5', 'pe.mjs'], ['5.1', 'memory.mjs'], ['6.1', 'classroom.mjs'],
   ['6.2', 'verify.mjs'], ['6.3', 'light.mjs'], ['8.1', 'feel.mjs'], ['8.2', 'hype.mjs'], ['8.3', 'anticipation.mjs'], ['8.4', 'celebrate.mjs'],
   ['9.1', 'access.mjs'], ['11.', 'acceptance.mjs'], ['8.5', 'identity.mjs'], ['8.6', 'rhythm.mjs'],
-  ['7.2', 'queue.mjs'],
+  ['7.2', 'queue.mjs'], ['4.6', 'lesson.mjs'],
 ];
 
 const rows = readCatalog(path.join(ROOT, 'catalogs', 'GAME_CATALOG.csv'));
@@ -203,6 +204,7 @@ const FULL_LAYERS = [
   ['bản sắc riêng', 'identity.mjs', 'IDENTITY', IDENTITY],
   ['nhạc nền theo nhịp', 'rhythm.mjs', 'RHYTHM', RHYTHM],
   ['vai chờ có vận động', 'queue.mjs', 'QUEUE', QUEUE],
+  ['tiết học 45 phút + gắng sức', 'lesson.mjs', 'LESSON', LESSON],
 ];
 const FULL_RULES = FULL_LAYERS.flatMap(([label, file, objName, obj]) =>
   Object.entries(obj).map(([key, text]) => [text, `thiếu quy định ${label} ${objName}.${key} của tools/lib/${file}`]));
@@ -253,6 +255,30 @@ const FULL_PINS = [
   ['queue.mjs', QUEUE.spacing, '20 giây "vào vị trí"', 'thời gian vào vị trí khi đổi người'],
   ['queue.mjs', QUEUE.teamScore, 'KHÔNG cộng vào "miti-best"', 'điểm vai chờ không vào kỷ lục cá nhân'],
   ['queue.mjs', QUEUE.guard, 'kiểm đúng bốn điều', 'số điều verifyQueue() phải kiểm'],
+  // Tầng tiết học (vòng 16): trần thời lượng và độ mệt thật là hai con số duy nhất nối "game vận động"
+  // với một tiết 45 phút, nên neo cả số lẫn mệnh đề cấm (kinh nghiệm probe vòng 15d).
+  ['lesson.mjs', LESSON.sessionCap, '8–10 phút', 'trần thời lượng một phiên'],
+  ['lesson.mjs', LESSON.sessionCap, 'phút thứ 10', 'điểm phiên tự khép'],
+  ['lesson.mjs', LESSON.sessionCap, '>= 20px', 'chữ đồng hồ phiên tối thiểu'],
+  ['lesson.mjs', LESSON.sessionCap, 'RANH GIỚI lượt kế tiếp', 'phiên không cắt giữa lượt đang chơi'],
+  ['lesson.mjs', LESSON.sessionCap, 'vẫn KHÔNG có đồng hồ đếm ngược', 'lệnh cấm đồng hồ trên thẻ câu hỏi'],
+  ['lesson.mjs', LESSON.rotationFit, 'Kế hoạch tiết 45 phút', 'dòng kế hoạch giáo viên đọc được'],
+  ['lesson.mjs', LESSON.rotationFit, 'Nút "Kết phiên"', 'giáo viên kết phiên được bất cứ lúc nào'],
+  ['lesson.mjs', LESSON.rotationFit, 'không trừ tim, không hỏi lý do', 'kết phiên không phạt em'],
+  ['lesson.mjs', LESSON.rpe, 'báo gắng sức trên bốn mức', 'thang tự báo mệt của em'],
+  ['lesson.mjs', LESSON.rpe, '"dễ quá" · "vừa" · "mệt" · "kiệt"', 'bốn mức cụ thể của thang gắng sức'],
+  ['lesson.mjs', LESSON.rpe, '>= 56px', 'kích thước nút gắng sức'],
+  ['lesson.mjs', LESSON.rpe, 'localStorage "miti-effort"', 'nơi lưu gắng sức theo hiệp'],
+  ['lesson.mjs', LESSON.rpe, 'không mức nào bị coi là sai', 'lệnh cấm phạt em báo mệt'],
+  ['lesson.mjs', LESSON.recovery, '15 giây "hồi nhịp"', 'thời gian hồi nhịp giữa hiệp'],
+  ['lesson.mjs', LESSON.recovery, 'hít vào 4 nhịp – thở ra 6 nhịp', 'cơ chế hô hấp của hồi nhịp'],
+  ['lesson.mjs', LESSON.recovery, 'không phải đo mạch', 'ghi chú trung thực của số nhịp ước lượng'],
+  ['lesson.mjs', LESSON.lessonSheet, '"Bản tiết học"', 'khối bằng chứng cho giáo viên'],
+  ['lesson.mjs', LESSON.lessonSheet, 'đúng bốn dòng', 'số dòng của Bản tiết học'],
+  ['lesson.mjs', LESSON.lessonSheet, 'chưa ghi được', 'cách xử lý dòng thiếu dữ liệu thật, không bịa số'],
+  ['lesson.mjs', LESSON.guard, 'verifyLesson()', 'hàm kiểm tiết học lúc nạp'],
+  ['lesson.mjs', LESSON.guard, 'kiểm đúng bốn điều', 'số điều verifyLesson() phải kiểm'],
+  ['lesson.mjs', LESSON.guard, 'Bản không camera', 'bản chuột/chạm vẫn bắt buộc đủ bốn điều'],
 ];
 for (const [file, text, needle, label] of FULL_PINS) {
   if (!text.includes(needle)) bad(`tools/lib/${file} không còn nêu "${needle}" (${label}) — con số nghiệm thu phải sửa cùng tài liệu và bảng kiểm, không đổi âm thầm trong lib.`);
@@ -274,6 +300,7 @@ const SHORT_PINS = {
   IDENTITY_SHORT: ['2 từ', '>= 5 chỗ', '60/441', '1 lần/phiên', '6 từ'],
   RHYTHM_SHORT: ['100–116 BPM', '128', '0.18', '30% gain', 'vạch nhịp', 'verifyMusic()'],
   QUEUE_SHORT: ['8 nhịp', '3 lượt/em', 'trần 20 giây', 'giây 15', '1 sải tay', '1,2 m', '+5 điểm', 'verifyQueue()'],
+  LESSON_SHORT: ['8–10 phút', 'phút thứ 10', 'Kế hoạch tiết 45 phút', 'Kết phiên', 'bốn mức gắng sức', '>= 56px', 'miti-effort', '15 giây hồi nhịp', 'Bản tiết học', 'verifyLesson()'],
 };
 for (const seg of chainSegments) {
   for (const needle of SHORT_PINS[seg.name] || []) {
@@ -462,6 +489,7 @@ if (!fs.existsSync(VAR_FILE)) {
   if (!vtext.includes('- **Khoảnh khắc ăn mừng:**')) bad('Phần Quy ước chung của VARIANTS_425.md thiếu dòng Khoảnh khắc ăn mừng.');
   if (!vtext.includes('- **Nhạc nền theo nhịp:**')) bad('Phần Quy ước chung của VARIANTS_425.md thiếu dòng Nhạc nền theo nhịp.');
   if (!vtext.includes('- **Vai chờ có vận động:**')) bad('Phần Quy ước chung của VARIANTS_425.md thiếu dòng Vai chờ có vận động — người copy một block biến thể ra dùng không còn biết ba em chưa tới lượt phải làm gì.');
+  if (!vtext.includes('- **Tiết học 45 phút + gắng sức:**')) bad('Phần Quy ước chung của VARIANTS_425.md thiếu dòng Tiết học 45 phút + gắng sức — biến thể copy riêng được mà không còn trần thời lượng lẫn thang gắng sức.');
   if (!vtext.includes('- **Nghiệm thu:**')) bad('Phần Quy ước chung của VARIANTS_425.md thiếu dòng Nghiệm thu.');
   if (!vtext.includes('prompts/CHECKLIST_NGHIEP_THU.md')) bad('Phần Quy ước chung của VARIANTS_425.md không trỏ tới bảng kiểm in sẵn.');
   VAR_COUNT = blocks.length;
@@ -509,6 +537,7 @@ if (!fs.existsSync(VAR_FILE)) {
     if (!b.includes('**Bản sắc riêng của game:**')) bad(`biến thể #${i + 1}: thiếu dòng Bản sắc riêng của game.`);
     if (!b.includes('**Nhạc nền theo nhịp:**')) bad(`biến thể #${i + 1}: thiếu dòng Nhạc nền theo nhịp.`);
     if (!b.includes('**Vai chờ có vận động:**')) bad(`biến thể #${i + 1}: thiếu dòng Vai chờ có vận động.`);
+    if (!b.includes('**Tiết học 45 phút + gắng sức:**')) bad(`biến thể #${i + 1}: thiếu dòng Tiết học 45 phút + gắng sức.`);
     // Block biến thể copy riêng được, nên phải mang đúng dữ liệu bản sắc của chính game nó nói tới.
     // split('\n## Prompt ') đã ăn luôn hai chữ "## Prompt", nên dòng đầu block bắt đầu bằng số thứ tự.
     const vid = (b.match(/^\d+ — (\S+) — V\d/) || [])[1];
@@ -716,8 +745,8 @@ const VOICE_DOC_NEEDLES = [
 // Probe vòng 15: xóa trọn mục 7.2 của master hoặc block VAI CHỜ của template thì mỗi số vẫn còn ở mục khác,
 // nên bảng này neo ĐÚNG số lần nêu hiện có — tài liệu có thể thêm chỗ nêu, nhưng xóa một chỗ thì phải sửa bảng kèm lý do.
 const QUEUE_DOC_NEEDLES = [
-  ['8 nhịp', 'số nhịp cổ vũ mỗi lần', 9, 9, 8, 3],
-  ['3 lượt', 'số lượt mỗi em trong 12 lượt', 11, 8, 5, 2],
+  ['8 nhịp', 'số nhịp cổ vũ mỗi lần', 10, 10, 9, 3],
+  ['3 lượt', 'số lượt mỗi em trong 12 lượt', 12, 8, 6, 2],
   ['20 giây', 'trần đứng chờ và vào vị trí', 5, 7, 4, 2],
   ['1 sải tay', 'vòng đứng của mỗi em', 2, 3, 2, 1],
   ['1,2 m', 'máy cách em đang chơi', 2, 3, 2, 1],
@@ -726,7 +755,27 @@ const QUEUE_DOC_NEEDLES = [
   ['Lượt của em', 'bộ đếm lượt trên HUD', 4, 4, 2, 1],
   ['vào vị trí', '20 giây vào vị trí khi đổi người', 2, 3, 1, 1],
   ['giây 15', 'lúc mascot gọi tên em đang chờ', 4, 4, 4, 2],
-  ['bốn điều', 'số điều verifyQueue() kiểm', 2, 1, 1, 1],
+  ['bốn điều', 'số điều verifyQueue() kiểm', 6, 3, 3, 3],
+];
+// Tầng tiết học (vòng 16): thời lượng và độ mệt là hai con số nối một phiên game với một tiết thể dục thật.
+// Cùng nguyên tắc với bảng trên — neo ĐÚNG số lần nêu hiện có ở bốn tài liệu, thêm chỗ nêu thì vô hại,
+// xóa một chỗ (kể cả xóa trọn mục 4.6 của master hay block TIẾT HỌC của template) là build đỏ.
+const LESSON_DOC_NEEDLES = [
+  ['8–10 phút', 'trần thời lượng một phiên', 1, 2, 3, 2],
+  ['phút thứ 10', 'điểm phiên tự khép', 3, 4, 5, 2],
+  ['20px', 'chữ đồng hồ phiên tối thiểu', 3, 3, 1, 1],
+  ['RANH GIỚI lượt', 'phiên không cắt giữa lượt đang chơi', 3, 1, 2, 1],
+  ['Kế hoạch tiết 45 phút', 'dòng kế hoạch in từ số thật', 4, 4, 5, 3],
+  ['Kết phiên', 'nút giáo viên bấm bất cứ lúc nào', 2, 3, 2, 1],
+  ['dễ quá', 'mức đầu của thang gắng sức', 5, 4, 4, 1],
+  ['56px', 'kích thước nút gắng sức', 2, 3, 2, 1],
+  ['miti-effort', 'nơi lưu gắng sức theo hiệp', 4, 5, 4, 1],
+  ['hồi nhịp', '15 giây giữa các hiệp', 5, 6, 6, 2],
+  ['4 nhịp', 'hít vào 4 nhịp – thở ra 6 nhịp', 3, 3, 2, 1],
+  ['Bản tiết học', 'khối bằng chứng cho giáo viên', 3, 5, 4, 1],
+  ['bốn dòng', 'số dòng của Bản tiết học', 4, 5, 5, 1],
+  ['chưa ghi được', 'dòng thiếu dữ liệu thật, không bịa số', 2, 1, 1, 1],
+  ['verifyLesson()', 'hàm kiểm tiết học lúc nạp', 3, 4, 4, 2],
 ];
 // Con số cũ của vòng 6 ("< 8 động tác lớn mỗi phút") là yêu cầu KHÔNG THỂ đạt với phiên 12 lượt / 4–6 phút.
 // Giữ nó trong tài liệu sẽ sinh game luôn báo CHƯA ĐẠT ở mục cường độ, nên phải bị chặn.
@@ -752,7 +801,7 @@ for (const [docSlot, [docName, docText]] of DOC_FILES.entries()) {
   for (const [needle, label] of IDENTITY_DOC_NEEDLES) {
     if (!docText.includes(needle)) bad(`${docName} thiếu con số bản sắc riêng (${label}): không thấy "${needle}".`);
   }
-  for (const [needle, label, ...mins] of [...RHYTHM_DOC_NEEDLES, ...VOICE_DOC_NEEDLES, ...QUEUE_DOC_NEEDLES]) {
+  for (const [needle, label, ...mins] of [...RHYTHM_DOC_NEEDLES, ...VOICE_DOC_NEEDLES, ...QUEUE_DOC_NEEDLES, ...LESSON_DOC_NEEDLES]) {
     const want = mins[docSlot];
     const got = docText.split(needle).length - 1;
     if (got < want) bad(`${docName} chỉ còn nêu "${needle}" (${label}) ${got} lần, chuẩn hiện hành là ${want} lần — tài liệu chuẩn phải giữ đủ chỗ nêu ở CẢ phần luật lẫn bảng kiểm tự kiểm, không được để một phần mất số.`);
@@ -838,6 +887,7 @@ const DOC_LAYERS = [
   ['bản sắc riêng của từng game', '8.5 BẢN SẮC RIÊNG', 'Phần bản sắc riêng đã điền đủ'],
   ['nhạc nền theo nhịp', '8.6 NHẠC NỀN THEO NHỊP', 'Phần nhạc nền đã điền đủ'],
   ['vai chờ có vận động', '7.2 BỐN EM MỘT MÁY', 'Phần vai chờ đã điền đủ'],
+  ['tiết học 45 phút + gắng sức', '4.6 TIẾT HỌC 45 PHÚT', 'Phần tiết học đã điền đủ'],
   ['cảm giác arcade', '8.1 CẢM GIÁC ARCADE', 'Phần arcade đã điền đủ'],
   ['thi đua + cao trào', '8.2 THI ĐUA + CAO TRÀO', 'Phần thi đua + cao trào đã điền đủ'],
   ['ham quay lại', '8.3 HAM QUAY LẠI', 'Phần ham quay lại đã điền đủ'],
@@ -895,6 +945,10 @@ if (!HUMAN_CHECKS.some((s) => /nhịp/i.test(s) && /Tắt tiếng/.test(s))) bad
 // đứng xem trọn tiết học — đúng điều mục tiêu thể dục cấm.
 if (!MACHINE_ITEMS.some((s) => s.includes('verifyQueue()') && s.includes('3 lượt'))) bad('Bảng kiểm máy tự kiểm không còn mục nghiệm thu vai chờ (verifyQueue() + 3 lượt/em) — ba em đứng xem lọt qua nghiệm thu mà không ai báo.');
 if (!HUMAN_CHECKS.some((s) => /bốn em đứng quanh/.test(s) && /20 giây/.test(s))) bad('Bảng việc người thử không còn câu "bốn em đứng quanh một máy, em chờ có vận động không" — chỗ duy nhất phát hiện một tiết học chỉ một em được động đậy.');
+// Tầng tiết học: thiếu hai mục này thì game vẫn báo đạt trong khi một nhóm chơi 20 phút và ba nhóm kia
+// hết tiết chưa tới lượt, còn "vận động >= 60%" vẫn xanh dù bài quá sức với em lớp 4.
+if (!MACHINE_ITEMS.some((s) => s.includes('verifyLesson()') && s.includes('miti-effort'))) bad('Bảng kiểm máy tự kiểm không còn mục nghiệm thu tiết học (verifyLesson() + "miti-effort") — trần thời lượng và thang gắng sức lọt qua nghiệm thu mà không ai báo.');
+if (!HUMAN_CHECKS.some((s) => /phút thứ 10/.test(s) && /45 phút/.test(s))) bad('Bảng việc người thử không còn câu bấm giờ thật cho phiên 8–10 phút — máy không tự kiểm được việc bốn nhóm có kịp chơi trong một tiết 45 phút.');
 
 if (errors.length) {
   console.error('Xác minh thất bại — ' + errors.length + ' vấn đề:');

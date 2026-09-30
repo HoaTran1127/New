@@ -66,7 +66,7 @@ Bốn biến thể đầu dùng **cùng một hợp đồng AR** như prompt gam
 - `04-english5/` — 15 game Tiếng Anh 5.
 - `01-prompt-…` đến `12-prompt-…` — **12 prompt legacy** đời đầu: giữ nguyên cơ chế game, đã thay MediaPipe Legacy/Tailwind CDN/Tone.js bằng chuẩn hiện hành và gắn nhãn `LEGACY`. Không dùng làm khuôn cho game mới.
 - `VARIANTS_425.md` — 425 biến thể (85 game × 5 kiểu điều khiển), do `tools/build-variants.mjs` sinh.
-- `CHECKLIST_NGHIEP_THU.md` — bảng kiểm cầm tay khi nhận file HTML về: 34 mục máy tự kiểm + 25 việc người thử bấm tay (trong đó 6 mục gắn 📷 chỉ có camera mới kiểm được; bản không camera bỏ 6 mục đó và vẫn phải đạt 28 mục còn lại), do `tools/build-acceptance.mjs` sinh từ `tools/lib/acceptance.mjs`.
+- `CHECKLIST_NGHIEP_THU.md` — bảng kiểm cầm tay khi nhận file HTML về: 35 mục máy tự kiểm + 26 việc người thử bấm tay (trong đó 6 mục gắn 📷 chỉ có camera mới kiểm được; bản không camera bỏ 6 mục đó và vẫn phải đạt 29 mục còn lại), do `tools/build-acceptance.mjs` sinh từ `tools/lib/acceptance.mjs`.
 
 ## ✅ Nghiệm thu một game vừa sinh
 
@@ -191,13 +191,28 @@ Việc người thử số 24 ("nghe trọn một hiệp — nhạc có giữ nh
 
 Việc người thử số 25 ("cho bốn em đứng quanh một máy chơi trọn một hiệp — ba em chưa tới lượt có thật sự vận động hay vẫn đứng xem? Đứng im 20 giây tới lượt: mascot có gọi đúng tên em đang chờ và ra một động tác 5 giây không?") là chỗ duy nhất phát hiện một tiết học mà chỉ một em được động đậy: nhãn vai trên HUD và bộ đếm lượt thì máy kiểm được, còn việc em có thật vỗ tay hay chỉ đứng đọc nhãn thì không.
 
+## ⏱ Tầng "tiết học 45 phút + gắng sức thật" — `tools/lib/lesson.mjs` (vòng 16)
+
+Đo 85 prompt trước vòng 16: **"8–10 phút" 0/85, "45 phút" 0/85, "gắng sức" 0/85, "đổ mồ hôi" 0/85, "thở gấp" 0/85, "hồi nhịp" 0/85**. `pe.mjs` (mục 4.5) quản lý **không gian** của một hoạt động thể dục nhưng không tầng nào quản lý **THỜI LƯỢNG** một phiên và **ĐỘ MỆT THẬT** của em. Hai hệ quả đo được ở lớp: một nhóm chơi say sưa 20 phút thì ba nhóm còn lại hết tiết chưa tới lượt (vòng 15 đã chia đủ lượt, chưa chia giờ), và "đồng hồ vận động >= 60%" chỉ đếm số lần đưa tay nên không phân biệt vừa sức với quá sức.
+
+| Luật | Con số | Kiểm ở đâu |
+|:---|:---|:---|
+| Trần thời lượng một phiên | phiên **8–10 phút**; HUD "Còn `<n>` phút" (chữ **>= 20px**, không nhấp nháy, không đỏ); 60–90 giây khởi động + 12 lượt + 45–60 giây hạ nhiệt nằm trọn trong trần; phút thứ 10 thì khép ở **RANH GIỚI lượt kế tiếp**; thẻ câu hỏi vẫn **không** có đồng hồ đếm ngược | `verifyLesson()` + mục `[35]` |
+| Kế hoạch tiết 45 phút | tổng kết in "Kế hoạch tiết 45 phút: `<n>` phiên × `<n>` phút + `<n>` phút đổi nhóm + 5 phút chốt tờ rời" từ số thật; không đủ thì ghi thẳng "tiết này chỉ đủ 3 nhóm chơi"; nút "Kết phiên" **không trừ tim, không hỏi lý do** | mục `[35]` |
+| Bốn mức gắng sức | "dễ quá" · "vừa" · "mệt" · "kiệt" (1–4) cuối **mỗi** hiệp, hàng bốn nút **>= 56px**; không mức nào bị coi là sai; ghi localStorage `"miti-effort"` theo hiệp, đọc lại được phiên sau | mục `[35]` |
+| Hồi nhịp giữa hiệp | **15 giây** "hồi nhịp" với **hít vào 4 nhịp – thở ra 6 nhịp** theo vạch nhịp, HUD "Nhịp của em: còn nhanh / vừa phải / chậm rồi" + ghi chú "không phải đo mạch"; reduced-motion còn **10 giây** đếm chữ | mục `[35]` |
+| Bản tiết học | khối **đúng bốn dòng** (phút · vận động % / gắng sức ba hiệp / kế hoạch 45 phút / bốn em hôm nay) nằm trong khối nút "Copy tờ rời" copy được; thiếu số thật thì in "**chưa ghi được**" | mục `[35]` |
+| Tiết học phải tự chứng minh | `verifyLesson()` chạy MỘT LẦN lúc nạp, kiểm **đúng bốn điều**; bản không camera **vẫn bắt buộc đủ bốn điều** vì đồng hồ phiên và gắng sức không phụ thuộc camera | mục `[35]` |
+
+Việc người thử số 26 ("bấm giờ thật khi nhóm đầu cầm máy — phiên có tự khép ở phút thứ 10 ngay tại ranh giới lượt và dòng "Kế hoạch tiết 45 phút" có đủ chỗ cho bốn nhóm không? Cuối mỗi hiệp hỏi em mức gắng sức: tới hiệp 3 có tăng thật không?") là chỗ máy không tự kiểm được: game có đồng hồ thì máy kiểm được, còn việc một tiết học thật có chia đủ bốn nhóm và em có mệt thật thì phải có người đứng nhìn.
+
 ## 🔁 Pipeline của thư viện
 
 85 prompt game **được sinh tự động**, không sửa tay:
 
 ```
 tools/data/games.mjs + clusters.mjs + gestures.mjs + examples.mjs + error-notes.mjs + identities.mjs
-tools/lib/ar.mjs · rules.mjs · feel.mjs · classroom.mjs · access.mjs · light.mjs · celebrate.mjs · identity.mjs · rhythm.mjs · queue.mjs · verify.mjs · pe.mjs · memory.mjs · hype.mjs · anticipation.mjs · acceptance.mjs
+tools/lib/ar.mjs · rules.mjs · feel.mjs · classroom.mjs · access.mjs · light.mjs · celebrate.mjs · identity.mjs · rhythm.mjs · queue.mjs · lesson.mjs · verify.mjs · pe.mjs · memory.mjs · hype.mjs · anticipation.mjs · acceptance.mjs
         └─ node tools/build.mjs ─→ catalogs/GAME_CATALOG.csv · .md · .js + prompts/0X-*/ + index.html + prompts/CHECKLIST_NGHIEP_THU.md
 ```
 
