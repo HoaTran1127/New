@@ -343,6 +343,38 @@ là "vung tay chọn đáp án" — trẻ không hình dung mình đang tập m�
   tác duỗi của môn nằm trong hạ nhiệt. Thiếu điều nào thì `console.warn` tiếng Việt nêu điều nào lệch và bảng kiểm ghi CHƯA ĐẠT.
   Bản tắt tiếng, bản reduced-motion và bản không camera vẫn bắt buộc kiểm đủ bốn điều trên.
 
+4.9 GIA ĐÌNH — TỜ GỬI BỐ MẸ (bắt buộc — nguồn: `tools/lib/family.mjs`, validate chặn nếu thiếu) — phần quyết định tiết học có đi được về nhà hay không
+
+Tầng chuẩn kiến thức (mục 4.7) và tầng tiết học (mục 4.6) đã làm ra một "tờ rời" — nhưng tờ ấy viết cho GIÁO VIÊN: đối chiếu
+yêu cầu cần đạt, tính giờ lên lớp. Khảo sát 85 prompt trước vòng 19: "phụ huynh" = 0/85, "gia đình" = 0/85, "bố mẹ" = 0/85,
+"ở nhà" = 0/85, "bài tập về nhà" = 0/85, trong khi "tờ rời" đã 85/85. Hệ quả đo được: tiết học kết thúc ở cổng trường, còn
+cái trẻ nhớ cả tuần lại là cái màn hình nhắc trẻ cuối cùng. Sáu quy định dưới đây nối đúng sợi dây đó — và nối mà KHÔNG biến
+game thành bài tập về nhà, thứ mục 6.3 đã chặn ngay trong lớp. Tầng này không tự đặt con số nào: trần 16 từ lấy của mục 6.3,
+trần 12 từ và động tác 3 giây lấy của mục 4.7, khối "Copy tờ rời" và dòng "Cả nhóm" lấy của mục 4.7 và 8.2.
+
+- ĐÚNG MỘT KHỐI "GỬI BỐ MẸ", ĐÚNG BỐN DÒNG: màn tổng kết in một khối gồm "Hôm nay con tập môn <môn> — <n> động tác" ·
+  "Con học <tên mạch ngắn>, <k> câu đúng trên <tổng>" · "Mẹo con mang về: <mẹo>" · "Việc 3 phút ở nhà: <một hoạt động>", mỗi
+  dòng <= 20 từ, chữ >= 20px, nằm TRONG khối chữ mà nút "Copy tờ rời" copy được — không screensaver, không trang riêng, không
+  bắt bố mẹ mở thêm ứng dụng nào khác. Dòng nào thiếu dữ liệu thật thì in "chưa ghi được"; CẤM bịa số, CẤM in hai khối.
+- DÒNG CUỐI LÀ MỘT VIỆC 3 PHÚT KHÔNG MÀN HÌNH, KHÔNG VIẾT: cả nhà làm cùng nhau động tác đặc trưng của môn (cột `dongTac`
+  trong `tools/data/sports.mjs`) rồi hỏi nhau MIỆNG đúng MỘT đề lấy nguyên văn từ `QUESTION_DATA` của phiên vừa chơi (đề
+  <= 16 từ). CẤM biến thành bài tập về nhà có ghi vở, CẤM giao thêm đề thứ hai, CẤM yêu cầu bố mẹ chụp ảnh hay quay video gửi
+  lại, CẤM đòi mua thêm đồ dùng; đây là để con nhắc lại bằng miệng chứ không phải để bố mẹ dạy lại — CẤM kèm thang điểm hay lời phê.
+- "MẸO CON MANG VỀ" CHÉP NGUYÊN VĂN MẸO TRÊN MÀN HÌNH: lấy đúng cột `meo` (<= 12 từ) trong `tools/data/standards.mjs` của cụm
+  vừa học — không viết lại, không tóm tắt, không đổi số — kèm MỘT động tác 3 giây bố mẹ làm cùng con đúng bằng động tác mascot
+  đã làm trong lớp. CẤM phát minh mẹo khác ở tờ gửi về: hai bản mẹo lệch nhau buộc con phải nhớ hai lần.
+- KHỐI NÀY CHỈ NÓI VỀ EM ĐANG CHƠI: CẤM in tên bạn khác, CẤM xếp hạng "con đứng thứ <n>", CẤM mọi dòng so sánh với một em cụ
+  thể; thành tích tập thể chỉ được đọc bằng đúng MỘT dòng "Cả nhóm: <x>/<mốc>" mà mục 8.2 đã dựng, không kèm danh sách tên.
+  CẤM nêu số điện thoại, email, ảnh hay bất kỳ dữ liệu cá nhân nào của gia đình vào khối chữ copy được này.
+- CẤM GIỌNG ĐE DỌA VÀ CẤM TẠO NGHĨA VỤ: không "nếu không luyện con sẽ tụt", không "mỗi ngày bắt buộc 3 phút", không "nếu bỏ
+  sẽ mất <n> sao". Ngay sau bốn dòng là MỘT dòng chốt duy nhất <= 24 từ, hoặc "Nhà mình làm cùng nhau khi nào cũng được", hoặc
+  "Khi nào con muốn chơi lại thì con tự bấm" — CẤM in cả hai.
+- TỰ KIỂM BẰNG `verifyFamily()`: chạy MỘT LẦN lúc nạp và kiểm đúng bốn điều — khối "Gửi bố mẹ" có ĐÚNG MỘT lần và nằm trong
+  khối "Copy tờ rời" · bốn dòng in từ số thật của phiên chứ không phải chữ chép sẵn · hoạt động 3 phút không màn hình có thật
+  và lấy đúng cột `dongTac` của môn · khối không có tên bạn khác, không xếp hạng, không dòng đe dọa. Thiếu điều nào thì
+  `console.warn` tiếng Việt nêu điều lệch và bảng kiểm ghi CHƯA ĐẠT. Bản một học sinh, bản không camera và bản tắt tiếng vẫn
+  bắt buộc kiểm đủ bốn điều trên.
+
 ========================
 5. HỌC TẬP DẪN LỐI (LEARNING-FIRST)
 ========================
@@ -743,7 +775,7 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
   Bảng liệt kê TỪNG ràng buộc kèm trạng thái ĐẠT / CHƯA ĐẠT. Trạng thái đó phải do code kiểm thật lúc chạy,
   không phải chữ tĩnh kê sẵn. Một bảng báo "ĐẠT" mà không kiểm gì là lỗi nghiêm trọng nhất của game giáo dục.
   Bảng chỉ người lớn mở được: không trừ tim, không chặn chơi, học sinh không nhìn thấy.
-- 37 MỤC MÁY TỰ KIỂM, mỗi mục một hàm trả true/false:
+- 38 MỤC MÁY TỰ KIỂM, mỗi mục một hàm trả true/false:
   [1] QUESTION_DATA đủ số mục và verifyQuestionBank() ĐÃ chạy trước lượt chơi đầu tiên
   [2] mọi mục đang phát hành có answer nằm trong choices đúng một lần
   [3] 📷 drawImage khung hình webcam đi qua toScreen(lx, ly), không còn phép nhân thô với W/H
@@ -781,14 +813,15 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
   [35] verifyLesson() đã chạy lúc nạp: đồng hồ phiên "Còn <n> phút" có thật và phiên tự khép ở phút thứ 10 tại RANH GIỚI lượt, bốn mức gắng sức "dễ quá / vừa / mệt / kiệt" hiện cuối mỗi hiệp và đọc lại được từ localStorage "miti-effort", 15 giây "hồi nhịp" hít 4 nhịp – thở ra 6 nhịp chạy xong trước khi hiệp sau bắt đầu, và khối "Bản tiết học" in đủ bốn dòng lấy từ số thật
   [36] verifyStandard() đã chạy lúc nạp: mọi câu mang nhãn mạch nằm trong tám mạch của tools/data/standards.mjs và HUD có thật (nhãn <= 18 ký tự, >= 18px), dòng "Yêu cầu cần đạt:" xuất hiện ở đúng hai màn và khớp NGUYÊN VĂN bảng chuẩn, mạch chính <= 9/12 lượt kèm >= 3 lượt thuộc mạch khác và tổng kết in "Hôm nay em chạm <n> mạch", mỗi cụm có "Dễ nhầm" ở câu đầu (<= 16 từ) và "Mẹo nhớ" <= 12 từ kèm động tác 3 giây
   [37] verifySport() đã chạy lúc nạp: tên môn thể thao <= 4 từ lấy từ tools/data/sports.mjs có thật trên HUD và ở đúng hai màn, động tác đặc trưng của môn (<= 6 từ) được mascot làm mẫu 3 giây kèm hiệu lệnh <= 4 từ, nghi thức tinh thần thể thao chạy đúng hai lần (chạm khuỷu 3 giây trước hiệp 1 + lời hay <= 6 từ khi bạn sai, không dòng chế bai), bảng thành tích ba mốc giảm dần cho CẢ ĐỘI lưu "miti-sport" và động tác duỗi riêng của môn 15 giây nằm trong hạ nhiệt 45–60 giây
-  Mục gắn 📷 chỉ áp dụng khi có webcam: bản không camera bỏ 6 mục đó và vẫn phải đạt 31 mục còn lại.
+  [38] verifyFamily() đã chạy lúc nạp: màn tổng kết in ĐÚNG MỘT khối "Gửi bố mẹ" gồm đúng bốn dòng (mỗi dòng <= 20 từ, chữ >= 20px) nằm trong khối "Copy tờ rời" copy được, bốn dòng lấy từ số thật của phiên chứ không phải chữ chép sẵn (thiếu thì in "chưa ghi được", cấm bịa), dòng "Việc 3 phút ở nhà" là một hoạt động không màn hình không ghi vở lấy đúng cột dongTac của môn kèm MỘT đề <= 16 từ đã chơi, và khối không có tên bạn khác, không xếp hạng, không dữ liệu cá nhân, không dòng đe dọa
+  Mục gắn 📷 chỉ áp dụng khi có webcam: bản không camera bỏ 6 mục đó và vẫn phải đạt 32 mục còn lại.
 - XUẤT BẢN VĂN: bảng có nút "Xuất bản văn" sinh một khối chữ tiếng Việt copy được — tên game, bản chuẩn MiTi,
   ngày giờ, kiểu điều khiển đang chạy, số mục ĐẠT / CHƯA ĐẠT, danh sách mục chưa đạt kèm lý do.
   Khối chữ chỉ hiện trên màn hình và vào clipboard máy đó; không gửi lên máy chủ nào, không xin quyền, không để lại dữ liệu.
 - MỤC CHƯA ĐẠT PHẢI GIẢI THÍCH ĐƯỢC: mỗi dòng kèm một câu nguyên nhân kỹ thuật cho người lớn
   (ví dụ "toScreen không được dùng ở drawImage — vật thể đang tính bằng lx * W") và một câu nên sửa thế nào trong prompt.
   Cấm báo "lỗi" rồi im lặng, cấm chữ chung chung kiểu "hệ thống có vấn đề".
-- 28 VIỆC NGƯỜI THỬ PHẢI BẤM TAY (máy không tự kiểm được, làm theo đúng thứ tự, khoảng 15 phút):
+- 29 VIỆC NGƯỜI THỬ PHẢI BẤM TAY (máy không tự kiểm được, làm theo đúng thứ tự, khoảng 15 phút):
   đứng xa tới mức chỉ còn hai bàn tay · giữ im một tư thế 5 giây · che nửa người bằng tay · tắt camera giữa vòng ·
   rút mạng lúc đang tải model · đổi tay thuận sang Trái giữa chừng · bật reduced-motion ở hệ điều hành rồi mở game ·
   cố tình sai 4 câu liên tiếp · mở bằng điện thoại đặt dọc · đưa một học sinh lớp 4 chưa đọc hướng dẫn chơi thử 60 giây ·
@@ -810,6 +843,7 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
   bấm giờ thật khi nhóm đầu cầm máy — phiên có tự khép ở phút thứ 10 ngay tại ranh giới lượt (không cắt giữa một em đang chơi) và dòng "Kế hoạch tiết 45 phút" in ra có đủ chỗ cho bốn nhóm không? Hỏi em cuối mỗi hiệp "dễ quá / vừa / mệt / kiệt": tới hiệp 3 mức có tăng thật hay em toàn chọn "dễ quá"?
   đọc to dòng "Yêu cầu cần đạt:" ở màn tổng kết và đối chiếu với sách giáo khoa của lớp — dòng đó có đúng yêu cầu của cụm này không, hay chỉ là một câu chung chung ai cũng viết được? Hỏi em đang chơi "câu vừa rồi thuộc mạch nào" và "mẹo nhớ là gì": em trả lời được thì nhãn mạch và mẹo đã vào đầu, nếu em chỉ đọc lại chữ trên HUD thì hai dòng đó đang trang trí.
   hỏi em đang chơi "mình đang tập môn gì" và "lúc nãy cơ nào được duỗi" — em có gọi ra được tên môn thể thao và động tác duỗi, hay cả buổi với em chỉ là vung tay chọn đáp án? Xem trọn một hiệp: bốn em có thật sự chạm khuỷu trước hiệp 1 và có nói lời hay khi bạn sai không? Đọc bảng thành tích cuối phiên: đó là mốc của CẢ ĐỘI hay đã vô tình thành xếp hạng cá nhân?
+  copy tờ rời đưa cho bố mẹ đọc tại chỗ — trong mười giây họ có nói lại được con vừa tập môn gì, mẹo nào và cả nhà cùng làm gì trong 3 phút không? Việc 3 phút đó có buộc ai mở thêm màn hình, ghi vở, chụp ảnh hay mua đồ không? Đọc to tờ gửi về: có tên bạn nào khác, có dòng so sánh hay dọa dẫm nào lọt vào tay người ở nhà không?
   Bảng in kèm từng việc và ô ghi kết quả: `prompts/CHECKLIST_NGHIEP_THU.md`.
 - THIẾU MỤC NÀO THÌ SỬA PROMPT, KHÔNG SỬA TAY FILE HTML: dán lại nguyên văn quy định tương ứng vào cuối prompt rồi sinh lại file.
 
@@ -924,10 +958,10 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
 [ ] đạo cụ AR neo landmark bằng toScreen(); bản không camera thì đạo cụ đứng yên ở góc HUD dưới chứ không biến mất
 [ ] ba câu thoại đọc bằng speechSynthesis giọng vi-VN, <= 3 câu mỗi phút, câu khi sai là câu đỡ chứ không chế giễu
 [ ] bảng kiểm ẩn mở bằng 7 lần chạm logo MiTi hoặc Ctrl+Alt+K, trạng thái ĐẠT do code kiểm thật lúc chạy
-[ ] cả 37 mục máy tự kiểm đều có hàm kiểm tương ứng, không mục nào là chữ kê sẵn
+[ ] cả 38 mục máy tự kiểm đều có hàm kiểm tương ứng, không mục nào là chữ kê sẵn
 [ ] mục CHƯA ĐẠT kèm nguyên nhân kỹ thuật + cách sửa trong prompt, không có dòng "lỗi hệ thống"
 [ ] nút "Xuất bản văn" copy được khối chữ tiếng Việt, không gửi lên máy chủ nào
-[ ] bản không camera bỏ đúng 6 mục 📷 và vẫn đạt 31 mục còn lại, không bỏ luôn bảng kiểm
+[ ] bản không camera bỏ đúng 6 mục 📷 và vẫn đạt 32 mục còn lại, không bỏ luôn bảng kiểm
 [ ] fallback chuột/chạm/phím chơi trọn vẹn, tự kích hoạt khi camera lỗi
 [ ] QUESTION_DATA có ít nhất 30 mục (Toán) hoặc 60 mục (Tiếng Anh), mỗi mục có đáp án + lời giải + errorTag + loiViet + dang
 [ ] dữ liệu đặt đầu file, code engine đặt sau, không có chỗ nào rút gọn
@@ -991,7 +1025,7 @@ Sau khi tự kiểm tra, CHỈ xuất ra file HTML hoàn chỉnh, không kèm gi
   toàn bộ quy định phía trên chỉ là lời mong đợi. Bắt game tự kiểm bằng hàm true/false biến lời hứa thành trạng thái đọc được.
 - **Trạng thái phải do code kiểm, không phải chữ kê sẵn**: một bảng tĩnh in sẵn chữ "ĐẠT" còn hại hơn không có bảng,
   vì người lớn tưởng là đã kiểm. Đây là lý do quy định ghi rõ "không phải một danh sách chữ tĩnh".
-- **Tách 37 mục máy / 28 việc người thử**: cái gì máy kiểm được thì đừng đùn cho giáo viên; cái máy không kiểm được
+- **Tách 38 mục máy / 29 việc người thử**: cái gì máy kiểm được thì đừng đùn cho giáo viên; cái máy không kiểm được
   (cháu có hiểu luật chơi mà không đọc hướng dẫn không, rút mạng thì sao) thì đừng giả vờ kiểm. Con số 15 phút là thời lượng
   một tiết thực tế, không phải danh sách dài vô hạn.
 - **Mục chưa đạt phải nói nguyên nhân và cách sửa**: bảng kiểm chỉ báo "lỗi" sẽ bị bỏ qua; kèm câu "thiếu ở dòng nào,

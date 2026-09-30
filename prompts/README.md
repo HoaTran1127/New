@@ -66,7 +66,7 @@ Bốn biến thể đầu dùng **cùng một hợp đồng AR** như prompt gam
 - `04-english5/` — 15 game Tiếng Anh 5.
 - `01-prompt-…` đến `12-prompt-…` — **12 prompt legacy** đời đầu: giữ nguyên cơ chế game, đã thay MediaPipe Legacy/Tailwind CDN/Tone.js bằng chuẩn hiện hành và gắn nhãn `LEGACY`. Không dùng làm khuôn cho game mới.
 - `VARIANTS_425.md` — 425 biến thể (85 game × 5 kiểu điều khiển), do `tools/build-variants.mjs` sinh.
-- `CHECKLIST_NGHIEP_THU.md` — bảng kiểm cầm tay khi nhận file HTML về: 37 mục máy tự kiểm + 28 việc người thử bấm tay (trong đó 6 mục gắn 📷 chỉ có camera mới kiểm được; bản không camera bỏ 6 mục đó và vẫn phải đạt 31 mục còn lại), do `tools/build-acceptance.mjs` sinh từ `tools/lib/acceptance.mjs`.
+- `CHECKLIST_NGHIEP_THU.md` — bảng kiểm cầm tay khi nhận file HTML về: 38 mục máy tự kiểm + 29 việc người thử bấm tay (trong đó 6 mục gắn 📷 chỉ có camera mới kiểm được; bản không camera bỏ 6 mục đó và vẫn phải đạt 32 mục còn lại), do `tools/build-acceptance.mjs` sinh từ `tools/lib/acceptance.mjs`.
 
 ## ✅ Nghiệm thu một game vừa sinh
 
@@ -237,6 +237,22 @@ Việc người thử số 27 ("đọc to dòng "Yêu cầu cần đạt:" ở m
 `verifySport()` chạy MỘT LẦN lúc nạp và kiểm **đúng bốn điều**; bản tắt tiếng, bản reduced-motion và bản **không camera vẫn bắt buộc kiểm đủ bốn điều** — tên môn, lời hay và bảng thành tích là chuyện của lớp học, không phụ thuộc webcam.
 
 Việc người thử số 28 ("hỏi em đang chơi 'mình đang tập môn gì' và 'lúc nãy cơ nào được duỗi' — em có gọi ra được tên môn và động tác duỗi, hay cả buổi chỉ là vung tay chọn đáp án? Xem bốn em có chạm khuỷu và nói lời hay khi bạn sai không; đọc bảng thành tích: đó là mốc của CẢ ĐỘI hay đã thành xếp hạng cá nhân?") là chỗ máy không tự kiểm được: `verifySport()` thấy chuỗi tên môn trên HUD, còn việc trẻ có thật sự hình dung mình đang tập thể dục thể thao thì phải có người đứng hỏi.
+
+## 👪 Tầng "gia đình" — `tools/lib/family.mjs` (vòng 19)
+
+Đo 85 prompt trước vòng 19: **"phụ huynh" 0/85, "gia đình" 0/85, "bố mẹ" 0/85, "ở nhà" 0/85, "bài tập về nhà" 0/85**. Chữ "tờ rời" thì **85/85** — nhưng tờ rời của `lesson.mjs` + `curriculum.mjs` viết cho **giáo viên** (đối chiếu yêu cầu cần đạt, tính giờ lên lớp), không một dòng nào nói cho người ở nhà biết con vừa tập môn gì, mẹo nào và cả nhà làm gì cùng con mà không mở thêm một màn hình nữa. Hệ quả: **tiết học kết thúc ở cổng trường**, cái trẻ nhớ cả tuần lại là cái màn hình nhắc trẻ cuối cùng. Tầng này nối đúng một sợi dây đó — và nối mà **không biến game thành bài tập về nhà**, thứ mà `light.mjs` đã chặn ngay trong lớp.
+
+| Luật | Con số | Kiểm ở đâu |
+|:---|:---|:---|
+| Đúng MỘT khối "Gửi bố mẹ", đúng BỐN dòng | mỗi dòng **<= 20 từ**, chữ **>= 20px**, nằm **TRONG** khối nút "Copy tờ rời" copy được; thứ tự: môn + `<n>` động tác · mạch + `<k>`/`<tổng>` câu đúng · mẹo · việc 3 phút. Thiếu số thật thì in **"chưa ghi được"**, **cấm bịa**, **cấm in hai khối một phiên** | `verifyFamily()` + mục `[38]` |
+| Một việc 3 phút ở nhà | **KHÔNG màn hình và KHÔNG viết**: cả nhà làm cùng nhau động tác của môn (cột `dongTac` trong `tools/data/sports.mjs`) rồi hỏi nhau **MIỆNG đúng MỘT đề** nguyên văn từ `QUESTION_DATA` của phiên vừa chơi, đề **<= 16 từ** theo trần `light.mjs`; **cấm ghi vở, cấm đề thứ hai, cấm đòi ảnh/video, cấm đòi mua đồ, cấm kèm thang điểm** | mục `[38]` |
+| Mẹo nguyên văn | cột `meo` **<= 12 từ** trong `tools/data/standards.mjs`, **không viết lại, không tóm tắt, không đổi số**, kèm **một động tác 3 giây** bố mẹ làm cùng con đúng bằng động tác mascot đã làm trong lớp | mục `[38]` |
+| Riêng tư, không so đo | **cấm tên bạn khác**, **cấm "con đứng thứ `<n>`"**, **cấm mọi dòng so sánh với một em cụ thể**; thành tích tập thể chỉ bằng **đúng một dòng** "Cả nhóm: `<x>`/`<mốc>`" của `hype.mjs`; **cấm số điện thoại, email, ảnh, dữ liệu cá nhân** vào khối copy được | mục `[38]` |
+| Không đe dọa, không nghĩa vụ | **cấm** "nếu không luyện con sẽ tụt", "mỗi ngày bắt buộc 3 phút"; sau bốn dòng là **MỘT dòng duy nhất <= 24 từ**, hoặc "Nhà mình làm cùng nhau khi nào cũng được" hoặc "Khi nào con muốn chơi lại thì con tự bấm" — **cấm in cả hai** | mục `[38]` |
+
+`verifyFamily()` chạy MỘT LẦN lúc nạp và kiểm **đúng bốn điều**; bản **một học sinh, bản không camera và bản tắt tiếng vẫn bắt buộc kiểm đủ bốn điều** — tờ giấy về nhà không phụ thuộc webcam lẫn loa.
+
+Việc người thử số 29 ("copy tờ rời đưa cho bố mẹ đọc tại chỗ — trong mười giây họ có nói lại được con vừa tập môn gì, mẹo nào và cả nhà cùng làm gì trong 3 phút không? Việc 3 phút đó có buộc ai mở thêm màn hình, ghi vở, chụp ảnh hay mua đồ không? Đọc to tờ gửi về: có tên bạn nào khác, có dòng so sánh hay dọa dẫm nào lọt vào tay người ở nhà không?") là chỗ máy không tự kiểm được: `verifyFamily()` đếm được bốn dòng và biết chúng đến từ số thật, còn việc một người lớn bận rộn có đọc nổi tờ đó trong mười giây hay không thì phải đưa tờ giấy cho họ thật.
 
 ## 🔁 Pipeline của thư viện
 

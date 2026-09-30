@@ -26,6 +26,7 @@ import { QUEUE } from './lib/queue.mjs';
 import { LESSON } from './lib/lesson.mjs';
 import { CURRICULUM, CURRICULUM_SHORT } from './lib/curriculum.mjs';
 import { SPORT } from './lib/sport.mjs';
+import { FAMILY } from './lib/family.mjs';
 import { STANDARDS, STANDARD_KEYS, MACH_TEN } from './data/standards.mjs';
 import { SPORTS, SPORT_KEYS } from './data/sports.mjs';
 import { IDENTITIES } from './data/identities.mjs';
@@ -66,7 +67,7 @@ const MASTER_LIB = [
   ['2.0', 'ar.mjs'], ['4.5', 'pe.mjs'], ['5.1', 'memory.mjs'], ['6.1', 'classroom.mjs'],
   ['6.2', 'verify.mjs'], ['6.3', 'light.mjs'], ['8.1', 'feel.mjs'], ['8.2', 'hype.mjs'], ['8.3', 'anticipation.mjs'], ['8.4', 'celebrate.mjs'],
   ['9.1', 'access.mjs'], ['11.', 'acceptance.mjs'], ['8.5', 'identity.mjs'], ['8.6', 'rhythm.mjs'],
-  ['7.2', 'queue.mjs'], ['4.6', 'lesson.mjs'], ['4.7', 'curriculum.mjs'], ['4.8', 'sport.mjs'],
+  ['7.2', 'queue.mjs'], ['4.6', 'lesson.mjs'], ['4.7', 'curriculum.mjs'], ['4.8', 'sport.mjs'], ['4.9', 'family.mjs'],
 ];
 
 const rows = readCatalog(path.join(ROOT, 'catalogs', 'GAME_CATALOG.csv'));
@@ -221,6 +222,7 @@ const FULL_LAYERS = [
   ['tiết học 45 phút + gắng sức', 'lesson.mjs', 'LESSON', LESSON],
   ['chuẩn kiến thức SGK', 'curriculum.mjs', 'CURRICULUM', CURRICULUM],
   ['chất thể thao', 'sport.mjs', 'SPORT', SPORT],
+  ['gia đình', 'family.mjs', 'FAMILY', FAMILY],
 ];
 const FULL_RULES = FULL_LAYERS.flatMap(([label, file, objName, obj]) =>
   Object.entries(obj).map(([key, text]) => [text, `thiếu quy định ${label} ${objName}.${key} của tools/lib/${file}`]));
@@ -383,6 +385,54 @@ const FULL_PINS = [
   ['sport.mjs', SPORT.guard, 'verifySport()', 'hàm kiểm chất thể thao lúc nạp'],
   ['sport.mjs', SPORT.guard, 'kiểm đúng bốn điều', 'số điều verifySport() phải kiểm'],
   ['sport.mjs', SPORT.guard, 'vẫn bắt buộc kiểm đủ bốn điều', 'bản tắt tiếng, reduced-motion và không camera không được miễn kiểm'],
+  // Tầng gia đình (vòng 19): tờ gửi bố mẹ chỉ còn là một khối chữ nếu bốn dòng, trần 20 từ và việc 3 phút
+  // còn nguyên; rút một dòng hay đổi một trần là nó biến thành tin nhắn quảng cáo hoặc bài tập về nhà.
+  // Neo cả số lẫn mệnh đề CẤM theo đúng kinh nghiệm probe 15d/16/18f.
+  ['family.mjs', FAMILY.guiBoMe, 'ĐÚNG MỘT khối "Gửi bố mẹ"', 'tờ gửi về chỉ có đúng một khối, không hai'],
+  ['family.mjs', FAMILY.guiBoMe, 'đúng BỐN dòng', 'số dòng của khối'],
+  ['family.mjs', FAMILY.guiBoMe, '<= 20 từ', 'trần độ dài mỗi dòng'],
+  ['family.mjs', FAMILY.guiBoMe, 'chữ >= 20px', 'cỡ chữ tối thiểu để bố mẹ đọc không cần kính'],
+  ['family.mjs', FAMILY.guiBoMe, 'nút "Copy tờ rời"', 'khối phải nằm trong chữ copy được'],
+  ['family.mjs', FAMILY.guiBoMe, 'không screensaver', 'cấm biến tờ gửi về thành hiệu ứng'],
+  ['family.mjs', FAMILY.guiBoMe, 'không phải mở thêm ứng dụng nào khác', 'cấm bắt bố mẹ cài thêm thứ gì'],
+  ['family.mjs', FAMILY.guiBoMe, '"Hôm nay con tập môn <môn> — <n> động tác"', 'dòng 1: môn + số động tác thật'],
+  ['family.mjs', FAMILY.guiBoMe, '"Con học <tên mạch ngắn>, <k> câu đúng trên <tổng>"', 'dòng 2: mạch + tỉ lệ đúng'],
+  ['family.mjs', FAMILY.guiBoMe, '"Mẹo con mang về: <mẹo>"', 'dòng 3'],
+  ['family.mjs', FAMILY.guiBoMe, '"Việc 3 phút ở nhà: <một hoạt động>"', 'dòng 4'],
+  ['family.mjs', FAMILY.guiBoMe, 'in "chưa ghi được"', 'dòng thiếu dữ liệu phải nhận, không được điền chữ khác'],
+  ['family.mjs', FAMILY.guiBoMe, 'CẤM bịa số', 'lệnh cấm bịa thành tích của con'],
+  ['family.mjs', FAMILY.baPhut, 'đúng MỘT hoạt động dài 3 phút', 'số việc và thời lượng giao về nhà'],
+  ['family.mjs', FAMILY.baPhut, 'KHÔNG màn hình và KHÔNG viết', 'việc ở nhà không mở thêm thiết bị, không ghi vở'],
+  ['family.mjs', FAMILY.baPhut, 'cột `dongTac` trong `tools/data/sports.mjs`', 'động tác cả nhà làm lấy từ bảng môn, không tự đặt'],
+  ['family.mjs', FAMILY.baPhut, 'hỏi nhau MIỆNG đúng MỘT đề', 'đề nhắc lại chỉ một, đọc miệng'],
+  ['family.mjs', FAMILY.baPhut, '`QUESTION_DATA` của phiên vừa chơi', 'đề lấy từ đúng phiên đã chơi, không ra đề mới'],
+  ['family.mjs', FAMILY.baPhut, 'đề <= 16 từ', 'trần độ dài đề, cùng trần của tầng nhẹ đầu'],
+  ['family.mjs', FAMILY.baPhut, 'CẤM biến thành bài tập về nhà có ghi vở', 'lệnh cấm biến game thành giao bài'],
+  ['family.mjs', FAMILY.baPhut, 'CẤM giao thêm đề thứ hai', 'lệnh cấm chất đề'],
+  ['family.mjs', FAMILY.baPhut, 'CẤM yêu cầu bố mẹ chụp ảnh hay quay video gửi lại', 'lệnh cấm giao việc cho người lớn'],
+  ['family.mjs', FAMILY.baPhut, 'CẤM đòi mua thêm đồ dùng', 'lệnh cấm đòi đồ chơi'],
+  ['family.mjs', FAMILY.baPhut, 'CẤM kèm thang điểm hay lời phê', 'lệnh cấm chấm điểm ở nhà'],
+  ['family.mjs', FAMILY.meoNha, 'NGUYÊN VĂN cột `meo` (<= 12 từ)', 'mẹo mang về chép nguyên văn từ bảng chuẩn'],
+  ['family.mjs', FAMILY.meoNha, '`tools/data/standards.mjs`', 'bảng chuẩn là nguồn của mẹo, không tự viết'],
+  ['family.mjs', FAMILY.meoNha, 'không viết lại, không tóm tắt, không đổi số', 'cấm biến báo mẹo khi chép về nhà'],
+  ['family.mjs', FAMILY.meoNha, 'MỘT động tác 3 giây bố mẹ làm cùng con', 'động tác kèm mẹo, đúng bằng động tác mascot'],
+  ['family.mjs', FAMILY.meoNha, 'CẤM phát minh mẹo khác ở tờ gửi về', 'lệnh cấm hai bản mẹo lệch nhau'],
+  ['family.mjs', FAMILY.riengTu, 'CẤM in tên bạn khác', 'tờ gửi về không nêu danh tính bạn'],
+  ['family.mjs', FAMILY.riengTu, 'CẤM xếp hạng "con đứng thứ <n>"', 'lệnh cấm xếp hạng cá nhân trên tờ giấy'],
+  ['family.mjs', FAMILY.riengTu, 'CẤM bất kỳ dòng so sánh nào với một em cụ thể', 'lệnh cấm so con với bạn'],
+  ['family.mjs', FAMILY.riengTu, '"Cả nhóm: <x>/<mốc>"', 'thành tích tập thể chỉ đọc bằng đúng một dòng của tầng thi đua'],
+  ['family.mjs', FAMILY.riengTu, 'CẤM nêu số điện thoại, email, ảnh', 'lệnh cấm dữ liệu cá nhân của gia đình'],
+  ['family.mjs', FAMILY.khongDoi, 'giọng đe dọa hay tạo nghĩa vụ', 'giọng đi kèm của tờ gửi về'],
+  ['family.mjs', FAMILY.khongDoi, '"nếu không luyện con sẽ tụt"', 'một trong ba câu dọa phải cấm, neo nguyên văn'],
+  ['family.mjs', FAMILY.khongDoi, 'một dòng duy nhất <= 24 từ', 'trần độ dài dòng chốt'],
+  ['family.mjs', FAMILY.khongDoi, '"Nhà mình làm cùng nhau khi nào cũng được"', 'dạng chốt thứ nhất'],
+  ['family.mjs', FAMILY.khongDoi, '"Khi nào con muốn chơi lại thì con tự bấm"', 'dạng chốt thứ hai'],
+  ['family.mjs', FAMILY.khongDoi, 'CẤM in cả hai dòng', 'chỉ được chốt bằng MỘT trong hai dạng'],
+  ['family.mjs', FAMILY.guard, 'verifyFamily()', 'hàm kiểm tờ gửi bố mẹ lúc nạp'],
+  ['family.mjs', FAMILY.guard, 'kiểm đúng bốn điều', 'số điều verifyFamily() phải kiểm'],
+  ['family.mjs', FAMILY.guard, 'khối "Gửi bố mẹ" có ĐÚNG MỘT lần', 'điều 1 mà hàm phải bắt'],
+  ['family.mjs', FAMILY.guard, 'chứ không phải chữ chép sẵn', 'điều 2: bốn dòng phải từ số thật của phiên'],
+  ['family.mjs', FAMILY.guard, 'Bản một học sinh, bản không camera và bản tắt tiếng vẫn bắt buộc kiểm đủ bốn điều', 'không bản nào được miễn kiểm'],
 ];
 for (const [file, text, needle, label] of FULL_PINS) {
   if (!text.includes(needle)) bad(`tools/lib/${file} không còn nêu "${needle}" (${label}) — con số nghiệm thu phải sửa cùng tài liệu và bảng kiểm, không đổi âm thầm trong lib.`);
@@ -407,6 +457,7 @@ const SHORT_PINS = {
   LESSON_SHORT: ['8–10 phút', 'phút thứ 10', 'Kế hoạch tiết 45 phút', 'Kết phiên', 'bốn mức gắng sức', '>= 56px', 'miti-effort', '15 giây hồi nhịp', 'Bản tiết học', 'verifyLesson()'],
   CURRICULUM_SHORT: ['<= 18 ký tự', 'Yêu cầu cần đạt', 'nguyên văn', 'Copy tờ rời', '<= 9/12 lượt', '>= 3 lượt thuộc mạch khác', 'Dễ nhầm', '<= 16 từ', 'Mẹo nhớ', '<= 12 từ', 'động tác 3 giây', 'verifyStandard()'],
   SPORT_SHORT: ['tên môn thể thao <= 4 từ', 'động tác đặc trưng của môn <= 6 từ', 'hiệu lệnh <= 4 từ', 'truyền tay sau 3 lượt', 'rơi gậy không trừ tim', 'chạm khuỷu 3 giây', 'lời hay <= 6 từ', 'ba mốc', 'cả đội', 'miti-sport', 'cấm xếp hạng cá nhân', 'duỗi riêng của môn 15 giây', 'hạ nhiệt 45–60 giây', 'verifySport()'],
+  FAMILY_SHORT: ['khối "Gửi bố mẹ" 4 dòng', '<= 20 từ', '>= 20px', '"Copy tờ rời"', 'việc 3 phút ở nhà không màn hình', 'cột `dongTac`', '<= 16 từ', 'cột `meo` <= 12 từ', 'động tác 3 giây', 'không tên bạn khác', 'không xếp hạng', 'không đe dọa', 'verifyFamily()'],
 };
 for (const seg of chainSegments) {
   for (const needle of SHORT_PINS[seg.name] || []) {
@@ -598,6 +649,7 @@ if (!fs.existsSync(VAR_FILE)) {
   if (!vtext.includes('- **Tiết học 45 phút + gắng sức:**')) bad('Phần Quy ước chung của VARIANTS_425.md thiếu dòng Tiết học 45 phút + gắng sức — biến thể copy riêng được mà không còn trần thời lượng lẫn thang gắng sức.');
   if (!vtext.includes('- **Chuẩn kiến thức SGK:**')) bad('Phần Quy ước chung của VARIANTS_425.md thiếu dòng Chuẩn kiến thức SGK — biến thể copy riêng được mà không còn nhãn mạch lẫn dòng yêu cầu cần đạt.');
   if (!vtext.includes('- **Chất thể thao:**')) bad('Phần Quy ước chung của VARIANTS_425.md thiếu dòng Chất thể thao — biến thể copy riêng được mà không còn tên môn, đường tiếp sức lẫn động tác duỗi của môn.');
+  if (!vtext.includes('- **Gia đình — tờ gửi bố mẹ:**')) bad('Phần Quy ước chung của VARIANTS_425.md thiếu dòng Gia đình — tờ gửi bố mẹ — người copy một block biến thể ra dùng sẽ không còn biết màn tổng kết phải in tờ nào về nhà.');
   if (!vtext.includes('- **Nghiệm thu:**')) bad('Phần Quy ước chung của VARIANTS_425.md thiếu dòng Nghiệm thu.');
   if (!vtext.includes('prompts/CHECKLIST_NGHIEP_THU.md')) bad('Phần Quy ước chung của VARIANTS_425.md không trỏ tới bảng kiểm in sẵn.');
   VAR_COUNT = blocks.length;
@@ -695,6 +747,20 @@ if (!fs.existsSync(VAR_FILE)) {
         [`động tác duỗi cơ cuối buổi "${vsp.duoiCo}"`, 'động tác duỗi cơ riêng của môn'],
       ]) {
         if (!b.includes(needle)) bad(`biến thể #${i + 1} (${vid}): thiếu ${label} của môn "${vsp.mon}" ("${needle.slice(0, 48)}") — builder phải lấy thẳng tools/data/sports.mjs vào từng block.`);
+      }
+    }
+    // Bốn dòng "Gửi bố mẹ" của block này phải là dữ liệu THẬT của đúng game + đúng kiểu điều khiển.
+    // Probe vòng 19: một block chỉ ghi "<môn>" chung chung vẫn xanh nếu sáu quy định generic còn nguyên,
+    // nên neo từng dòng kèm dữ liệu — builder đánh mất một dòng là 425 block cùng đỏ.
+    if (vsp && vstd) {
+      for (const [needle, label] of [
+        [`Bốn dòng "Gửi bố mẹ" của block ${vcode} này:`, 'dòng dữ liệu gia đình của ĐÚNG kiểu điều khiển'],
+        [`"Hôm nay con tập môn ${vsp.mon} — <n> động tác"`, 'dòng 1 mang tên môn của block này'],
+        [`"Con học ${vstd.ngan}, <k> câu đúng trên <tổng>"`, 'dòng 2 mang nhãn mạch của cụm này'],
+        [`"Mẹo con mang về: ${vstd.meo}"`, 'dòng 3 mang mẹo nguyên văn của cụm này'],
+        [`"Việc 3 phút ở nhà: cả nhà cùng ${vsp.dongTac} rồi hỏi nhau miệng một đề vừa chơi"`, 'dòng 4 mang động tác đặc trưng của môn này'],
+      ]) {
+        if (!b.includes(needle)) bad(`biến thể #${i + 1} (${vid}): thiếu ${label} ("${needle.slice(0, 48)}") — builder phải nối tools/data/sports.mjs và tools/data/standards.mjs vào đúng block.`);
       }
     }
     // Chuỗi tự kiểm của biến thể cũng phải mang đủ mọi tầng, cùng registry như prompt.
@@ -983,6 +1049,42 @@ const SPORT_DOC_NEEDLES = [
   ['người thử số 28', 'việc người thử tương ứng ở prompts/README', 0, 0, 0, 1],
   ['việc người thử thứ 28', 'việc người thử tương ứng ở README', 0, 0, 1, 0],
 ];
+// Tầng gia đình (vòng 19) là tầng đầu tiên có người đọc KHÔNG ở trong lớp, nên tài liệu chuẩn phải giữ
+// đủ cả bốn nơi: master cho luật, template cho người viết prompt điền theo, hai README cho lý do.
+// Counts đo từ tài liệu thật rồi hạ một bậc làm sàn — xóa cả một mục kể chuyện ở README thì kim dưới
+// với tới, xóa đúng chỗ đó.
+const FAMILY_DOC_NEEDLES = [
+  ['Gửi bố mẹ', 'khối chữ bốn dòng đưa về nhà', 2, 4, 2, 1],
+  ['bốn dòng', 'số dòng của khối "Gửi bố mẹ"', 6, 8, 7, 3],
+  ['<= 20 từ', 'trần số từ mỗi dòng gửi về nhà', 2, 3, 1, 1],
+  ['Copy tờ rời', 'khối chữ mà nút copy lấy được tờ gửi về', 12, 12, 6, 5],
+  ['3 phút', 'thời lượng một việc cả nhà làm cùng nhau', 5, 7, 6, 4],
+  ['dongTac', 'động tác của môn trong việc 3 phút ở nhà', 4, 5, 4, 2],
+  ['<= 16 từ', 'trần số từ của đề hỏi nhau miệng ở nhà (mượn light.mjs)', 5, 10, 5, 3],
+  ['chưa ghi được', 'dòng in khi thiếu số thật của phiên', 4, 4, 2, 2],
+  ['cấm bịa', 'lệnh cấm bịa số trên tờ gửi về', 2, 2, 1, 1],
+  ['<= 12 từ', 'trần số từ của "Mẹo con mang về" (mượn curriculum.mjs)', 4, 7, 4, 2],
+  ['động tác 3 giây', 'động tác bố mẹ làm cùng con ở nhà', 5, 6, 5, 2],
+  ['xếp hạng', 'lệnh cấm xếp hạng con trên tờ gửi về', 12, 8, 6, 4],
+  ['đe dọa', 'lệnh cấm giọng đe dọa ở tờ gửi về', 3, 5, 4, 2],
+  ['bài tập về nhà', 'lệnh cấm biến game thành bài tập về nhà', 2, 1, 1, 2],
+  ['chụp ảnh', 'cấm đòi bố mẹ chụp ảnh gửi lại', 1, 1, 1, 1],
+  ['mua đồ', 'cấm đòi mua thêm đồ dùng', 1, 1, 1, 1],
+  ['Nhà mình làm cùng nhau', 'một trong hai dòng kết của khối', 1, 1, 1, 1],
+  ['Khi nào con muốn chơi lại', 'dòng kết còn lại, chỉ được in một trong hai', 1, 1, 1, 1],
+  ['verifyFamily()', 'hàm kiểm tầng gia đình lúc nạp', 2, 3, 2, 2],
+  ['hỏi nhau MIỆNG', 'việc 3 phút hỏi nhau bằng miệng, không viết', 1, 1, 0, 0],
+  ['ĐÚNG MỘT khối', 'lệnh đúng một khối "Gửi bố mẹ" mỗi phiên', 1, 2, 0, 0],
+  ['ghi vở', 'cấm biến tờ gửi về thành bài tập ghi vở', 2, 2, 1, 1],
+  ['screensaver', 'cấm trang riêng, tờ gửi về phải nằm trong khối copy được', 1, 1, 1, 0],
+  ['- GIA ĐÌNH (nguồn:', 'nhãn khối gia đình trong template', 0, 1, 0, 0],
+  ['máy tự kiểm thứ 38', 'số mục của verifyFamily() trong bảng kiểm', 0, 0, 1, 0],
+  ['Sáu quy định "gia đình"', 'heading mục kể chuyện tầng 19 ở README', 0, 0, 1, 0],
+  ['Tầng "gia đình"', 'heading mục kể chuyện tầng 19 ở prompts/README', 0, 0, 0, 1],
+  ['người thử số 29', 'việc người thử tương ứng ở prompts/README', 0, 0, 0, 1],
+  ['việc người thử thứ 29', 'việc người thử tương ứng ở README', 0, 0, 1, 0],
+  ['phụ huynh', 'khảo sát 0/85 mở đầu tầng gia đình', 1, 0, 1, 1],
+];
 // Con số cũ của vòng 6 ("< 8 động tác lớn mỗi phút") là yêu cầu KHÔNG THỂ đạt với phiên 12 lượt / 4–6 phút.
 // Giữ nó trong tài liệu sẽ sinh game luôn báo CHƯA ĐẠT ở mục cường độ, nên phải bị chặn.
 const SUPERSEDED = [
@@ -1007,7 +1109,7 @@ for (const [docSlot, [docName, docText]] of DOC_FILES.entries()) {
   for (const [needle, label] of IDENTITY_DOC_NEEDLES) {
     if (!docText.includes(needle)) bad(`${docName} thiếu con số bản sắc riêng (${label}): không thấy "${needle}".`);
   }
-  for (const [needle, label, ...mins] of [...RHYTHM_DOC_NEEDLES, ...VOICE_DOC_NEEDLES, ...QUEUE_DOC_NEEDLES, ...LESSON_DOC_NEEDLES, ...CURRICULUM_DOC_NEEDLES, ...SPORT_DOC_NEEDLES]) {
+  for (const [needle, label, ...mins] of [...RHYTHM_DOC_NEEDLES, ...VOICE_DOC_NEEDLES, ...QUEUE_DOC_NEEDLES, ...LESSON_DOC_NEEDLES, ...CURRICULUM_DOC_NEEDLES, ...SPORT_DOC_NEEDLES, ...FAMILY_DOC_NEEDLES]) {
     const want = mins[docSlot];
     const got = docText.split(needle).length - 1;
     if (got < want) bad(`${docName} chỉ còn nêu "${needle}" (${label}) ${got} lần, chuẩn hiện hành là ${want} lần — tài liệu chuẩn phải giữ đủ chỗ nêu ở CẢ phần luật lẫn bảng kiểm tự kiểm, không được để một phần mất số.`);
@@ -1099,6 +1201,7 @@ const DOC_LAYERS = [
   ['tiết học 45 phút + gắng sức', '4.6 TIẾT HỌC 45 PHÚT', 'Phần tiết học đã điền đủ'],
   ['chuẩn kiến thức SGK', '4.7 CHUẨN KIẾN THỨC', 'Phần chuẩn kiến thức đã điền đủ'],
   ['chất thể thao', '4.8 CHẤT THỂ THAO', 'Phần chất thể thao đã điền đủ'],
+  ['gia đình', '4.9 GIA ĐÌNH', 'Phần gia đình đã điền đủ'],
   ['cảm giác arcade', '8.1 CẢM GIÁC ARCADE', 'Phần arcade đã điền đủ'],
   ['thi đua + cao trào', '8.2 THI ĐUA + CAO TRÀO', 'Phần thi đua + cao trào đã điền đủ'],
   ['ham quay lại', '8.3 HAM QUAY LẠI', 'Phần ham quay lại đã điền đủ'],
@@ -1255,9 +1358,23 @@ if (!HUMAN_CHECKS.some((s) => /tập môn gì/.test(s) && /CẢ ĐỘI/.test(s))
   if (!SPORT.tiepSuc.includes('HYPE.sharedGoal') || !HYPE.sharedGoal) bad('Đường tiếp sức không còn dùng lại thanh đích chung của tầng thi đua (`HYPE.sharedGoal`) — hai vạch đích trên một HUD sẽ cạnh tranh nhau chỗ và cạnh tranh luôn sự chú ý của bốn em.');
 }
 
+// Vòng 19: tầng gia đình KHÔNG tự đặt con số nào — trần 16 từ mượn của tầng nhẹ đầu, trần 12 từ và
+// động tác 3 giây mượn của tầng chuẩn kiến thức, khối "Copy tờ rời" và dòng "Cả nhóm" mượn của tầng
+// thi đua/chuẩn. Mỗi lib đứng riêng vẫn tự nhất quán nên pin đơn lib không thấy lệch; chỉ đối chiếu
+// trực tiếp hai lib mới phát hiện một bên đã âm thầm đổi số.
+{
+  if (!FAMILY.baPhut.includes('<= 16 từ') || !LIGHT.shortPrompt.includes('16 từ')) bad('Trần độ dài đề lệch giữa tools/lib/family.mjs và tools/lib/light.mjs — đề mang về nhà dài hơn đề trên màn hình thì "việc 3 phút" biến thành giờ luyện đọc.');
+  if (!FAMILY.meoNha.includes('<= 12 từ') || !CURRICULUM.meoDongTac.includes('<= 12 từ')) bad('Trần độ dài mẹo nhớ lệch giữa tools/lib/family.mjs và tools/lib/curriculum.mjs — hai bản mẹo dài ngắn khác nhau là con phải nhớ hai lần.');
+  if (!FAMILY.meoNha.includes('động tác 3 giây') || !CURRICULUM.meoDongTac.includes('động tác 3 giây')) bad('Động tác kèm mẹo nhớ không còn cùng một suất 3 giây ở hai tầng — bố mẹ làm theo động tác khác động tác mascot vừa dạy.');
+  if (!FAMILY.guiBoMe.includes('Copy tờ rời') || !CURRICULUM.ycDong.includes('Copy tờ rời')) bad('Tờ "Gửi bố mẹ" không còn nằm trong khối "Copy tờ rời" của tầng chuẩn kiến thức — giáo viên copy một lần mà mất phần của gia đình.');
+  if (!FAMILY.riengTu.includes('Cả nhóm: <x>/<mốc>') || !HYPE.sharedGoal.includes('Cả nhóm: <x>/<mốc>')) bad('Dòng thành tích tập thể trên tờ gửi về không còn chép đúng định dạng của tầng thi đua — hai chỗ cùng nói "Cả nhóm" theo hai kiểu là bốn em không biết đọc số nào.');
+  for (const k of SPORT_KEYS) if (!SPORTS[k].dongTac) bad(`sports.mjs.${k}: thiếu cột dongTac — dòng "Việc 3 phút ở nhà" của mọi game gắn theo mã này sẽ rỗng, và bố mẹ không biết cùng con làm động tác gì.`);
+}
+
 // Mỗi prompt game phải mang đúng MÔN của chính mã điều khiển mình, không phải danh sách môn chung.
 for (const g of GAMES) {
   const s = SPORTS[g.gestures[0]];
+  const std = STANDARDS[g.cluster];
   if (!s) continue;
   const rel = PATH_OF.get(g.id);
   if (!rel || !fs.existsSync(path.join(ROOT, rel))) continue;
@@ -1274,6 +1391,21 @@ for (const g of GAMES) {
     [`động tác duỗi cơ cuối buổi "${s.duoiCo}"`, 'động tác duỗi riêng của môn'],
   ]) {
     if (!t.includes(needle)) bad(`${g.id}: prompt thiếu ${label} của môn ${s.mon} ("${needle.slice(0, 48)}") — builder phải lấy thẳng tools/data/sports.mjs theo mã ${g.gestures[0]}.`);
+  }
+  // Tầng gia đình cũng nối vào đúng dữ liệu của game này: bốn dòng tờ gửi về mang tên môn, nhãn mạch,
+  // mẹo nguyên văn và động tác đặc trưng. Probe vòng 19 nhắm vào đây: nếu builder chỉ để "<môn> <mẹo>"
+  // chung chung thì 85 prompt vẫn xanh mà tờ gửi về nhà của mọi game lại giống nhau một màu.
+  if (std) {
+    for (const [needle, label] of [
+      ['- GIA ĐÌNH — TỜ GỬI BỐ MẸ (vòng 19:', 'nhãn khối gia đình kèm khảo sát'],
+      [`Bốn dòng của khối "Gửi bố mẹ" ở màn tổng kết`, 'dòng dữ liệu gia đình'],
+      [`"Hôm nay con tập môn **${s.mon}** — <n> động tác"`, 'dòng 1 mang tên môn của chính game này'],
+      [`"Con học ${std.ngan}, <k> câu đúng trên <tổng>"`, 'dòng 2 mang nhãn mạch của chính cụm này'],
+      [`"Mẹo con mang về: ${std.meo}"`, 'dòng 3 mang mẹo nguyên văn của chính cụm này'],
+      [`"Việc 3 phút ở nhà: cả nhà cùng ${s.dongTac} rồi hỏi nhau miệng một đề vừa chơi"`, 'dòng 4 mang động tác đặc trưng của chính môn này'],
+    ]) {
+      if (!t.includes(needle)) bad(`${g.id}: prompt thiếu ${label} ("${needle.slice(0, 48)}") — tờ gửi bố mẹ phải nối tools/data/sports.mjs và tools/data/standards.mjs của đúng game, không được để chỗ trống chung.`);
+    }
   }
 }
 
