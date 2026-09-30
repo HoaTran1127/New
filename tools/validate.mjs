@@ -175,6 +175,7 @@ const LESSON_RULES = [
   [LESSON.movementBreak, 'thiếu quy định nhịp vận động gắn với Toán sau khi ngồi liền mạch'],
   [LESSON.roomFootprint, 'thiếu quy định khoảng trống sàn của phòng học cho nhịp đứng và nhóm'],
   [LESSON.tightRoomFocus, 'thiếu quy định hạ ngưỡng ngồi và bù tần suất cho nhịp đứng-tại-chỗ khi phòng chật'],
+  [LESSON.detectionEquity, 'thiếu quy định không đổi "máy không thấy tay" thành "em không trả lời"'],
 ];
 // Từ bảng ra vở: một tiết giảng chỉ thật sự xong khi các em làm được bài trên giấy.
 const HANDOUT_RULES = [
@@ -366,6 +367,10 @@ if (!fs.existsSync(LESSON_DIR)) {
     if (!fs.existsSync(file)) { bad(`Thiếu file giáo án: ${rel}`); continue; }
     const t = fs.readFileSync(file, 'utf8');
     const tag = L.id;
+    // Kiểm tra giáo án bị cắt TH_FIRST: một file cụt sẽ sinh hàng chục lỗi "thiếu quy định" dây chuyền,
+    // nhấn chìm chẩn đoán thật xuống dưới cửa sổ in 40 dòng. Báo nó đứng đầu để đọc được ngay.
+    const lines = t.split('\n').length;
+    if (lines < 110) bad(`${tag}: giáo án chỉ ${lines} dòng — nội dung bị cắt.`);
     for (const m of LESSON_MUST) if (!t.includes(m)) bad(`${tag}: giáo án thiếu mục ${m}.`);
     for (const [needle, msg] of CHALK_RULES) if (!t.includes(needle)) bad(`${tag}: ${msg}.`);
     for (const [needle, msg] of LESSON_RULES) if (!t.includes(needle)) bad(`${tag}: ${msg}.`);
@@ -388,8 +393,6 @@ if (!fs.existsSync(LESSON_DIR)) {
     if (/[\u3400-\u9fff\u3040-\u30ff]/.test(t)) bad(`${tag}: giáo án lẫn ký tự CJK.`);
     // Chỉ bắt URL thật: câu "không dùng Tone.js" trong quy định âm thanh là lời CẤM, không phải phụ thuộc.
     if (/@mediapipe\/hands|@mediapipe\/camera_utils|cdn\.tailwindcss\.com/.test(t)) bad(`${tag}: còn phụ thuộc bị cấm.`);
-    const lines = t.split('\n').length;
-    if (lines < 110) bad(`${tag}: giáo án chỉ ${lines} dòng — nội dung bị cắt.`);
   }
 
   // verifyData (phủ nhãn lỗi) và repairWork (số hàng trang Chữa bài) lấy trần từ SỐ NHÃN THẬT của cụm,

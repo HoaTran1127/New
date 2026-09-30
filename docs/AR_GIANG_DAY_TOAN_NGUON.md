@@ -1,4 +1,4 @@
-# Giáo án AR trên bảng phấn — nguồn cộng đồng và bài học sau 17 vòng
+# Giáo án AR trên bảng phấn — nguồn cộng đồng và bài học sau 18 vòng
 
 Tài liệu này để **người khác tham khảo và nối tiếp**, không phải mô tả tính năng. Phần tính năng nằm ở
 [`prompts/giao-an/README.md`](../prompts/giao-an/README.md); ở đây chỉ ghi: cái gì đã đo được, cái gì đã
@@ -7,7 +7,7 @@ thay đổi vì số liệu, và nên đọc gì trước khi sửa tiếp.
 ## Nguyên tắc làm việc đã trả giá mà thành
 
 1. **Đo trước khi thêm quy định.** Mỗi vòng bắt đầu bằng một lệnh `grep` trên đúng 39 file giáo án đã sinh,
-   chứ không bắt đầu bằng ý tưởng. Mười bốn vòng gần nhất đều tìm thấy lỗ 0/39 — nghĩa là nếu ngồi nghĩ thì
+   chứ không bắt đầu bằng ý tưởng. Mười lăm vòng gần nhất đều tìm thấy lỗ 0/39 — nghĩa là nếu ngồi nghĩ thì
    sẽ nghĩ ra thứ đã có sẵn.
 2. **Đo cả chỗ mình tự mâu thuẫn.** Vòng 9 không đi tìm ý mới: nó đọc lại chính các quy định đã có và thấy
    hai quy định cũ đòi cái không thể cùng có — một webcam vừa phải nhìn bàn tay em đứng trước bảng,
@@ -59,13 +59,29 @@ chính lớp cần đổi tư thế nhiều nhất lại nhận nhịp yếu nh�
 lỗi hình học trong `roomFootprint`: nó đồng nhất "không có lối đi" với "không đứng được", trong khi một em
 đứng thẳng lên rồi ngồi xuống trong chính chỗ ngồi của mình không cần lối đi — chỉ nhịp dang tay, xếp hàng,
 dùng người làm phân số mới cần. `tightRoomFocus` sửa cả hai: giữ nhịp đứng-tại-chỗ, và bù cho biên độ nhỏ
-bằng cách hạ ngưỡng ngồi xuống ≤ 8 phút trong nấc chật.
+bằng cách hạ ngưỡng ngồi xuống ≤ 8 phút trong nấc chật. Vòng 18 rời khỏi chuỗi vận động để đo một giả định im
+lặng nằm sâu hơn, ngay trong **chính modality cảm biến** mà mọi quy định phản hồi đều đứng trên: HandLandmarker.
+Toàn bộ vòng "camera thấy N/32 em", đếm ngón tay và lọc tay lạ (`classBoard`, `wholeClassVote`, `strayHands`,
+`cameraGeometry`) đang coi việc nhận ra một bàn tay là **chính xác như nhau với mọi bàn tay**. Đo trên 39 giáo
+án xác nhận độ lệch giữa cái có và cái thiếu: "HandLandmarker" và "camera thấy" có ở **39/39**, nhưng "tone
+da", "da sẫm", "bàn tay nhỏ", "găng tay", "ướt", "không thấy tay" đều **0/39**. Nghiên cứu nhận diện tư thế
+tay (bàn tay da sẫm *underrepresented* trong dữ liệu huấn luyện) và thị giác máy nói chung (Gender Shades, sai
+lệch theo màu da trên khuôn mặt) cho thấy giả định kia sai có hệ thống. Hệ quả lớp học rất cụ thể: nếu máy
+chỉ nhận ra 8 trong 12 bàn tay đang giơ, thì "camera thấy 8/32" — con số mà `privacy` và `cameraGeometry` bắt
+in ra để trung thực — lại vô tình **khai sub những em bị lọt** (thường là em da sẫm, tay nhỏ, ngồi cuối phòng
+ngược sáng), đúng cái bẫy "chỉ gọi mấy em đầu bàn" mà cả bộ giáo án này sinh ra để phá. `detectionEquity` chặn
+lỗ đó: "camera thấy N" chỉ là cận dưới số tay máy nhận ra chứ không phải số em đã trả lời, mọi đáp án camera
+có nút cộng tay +1/+5 cùng lượt, một bước tự kiểm độ phủ lúc chạy thử, và cấm tuyệt đối phân loại/lưu màu da.
+Vòng 18 cũng sửa một lỗi **khả năng đọc của chính validator**: khi giáo án bị cắt, `validate.mjs` chỉ in 40 lỗi
+đầu, nên phép thử cắt-file (P12) bỗng "thoát" chỉ vì hai quy định mới đẩy chẩn đoán "nội dung bị cắt" xuống
+dưới cửa sổ in; bèn đưa kiểm tra cắt-file lên **đầu** vòng lặp để nó luôn được báo trước khi ngập trong lỗi dây
+chuyền.
 3. **Quy định phải có con số.** "Chữ phải to" không kiểm chứng được; "≥ 40 px **và** ≥ 5.5% chiều cao khung
    hình, ≤ 12 chữ một dòng" thì validator bắt được. Mọi quy định trong `tools/lib/*.mjs` là chuỗi nguyên văn,
    `tools/validate.mjs` so bằng `includes()`, nên lời văn và mắt kiểm không bao giờ lệch nhau.
 4. **Chốt chặn hai chiều.** Cơ chế game lọt vào giáo án và quy định giáo án lọt sang game đều làm build đỏ.
    Thêm một quy định mới là tự động thêm một khoá bị cấm ở phía bên kia (`LESSON_FAMILY_RULES`).
-5. **Probe đột biến là đơn vị kiểm thử thật.** 83 phép, mỗi phép phá đúng một thứ và đòi đúng thông báo.
+5. **Probe đột biến là đơn vị kiểm thử thật.** 85 phép, mỗi phép phá đúng một thứ và đòi đúng thông báo.
    Không có probe thì một quy định chỉ là câu văn đẹp.
 6. **Tách công cụ giảng bài khỏi game.** Cùng một kiến thức, hai động cơ đối lập: game cần hồi hộp,
    tiết giảng cần giáo viên cầm lái. Nhét tim/điểm/combo vào bảng phấn làm em lên bảng sợ sai hơn là muốn hiểu.
@@ -91,6 +107,7 @@ bằng cách hạ ngưỡng ngồi xuống ≤ 8 phút trong nấc chật.
 | 15 | **mâu thuẫn pace × flow**: 0/39 "nghỉ giải lao" · 0/39 "vận động giữa tiết" · 0/39 "đứng dậy" · 0/39 "vươn vai" — năm bước 15–20 phút của `flow` và nhịp chờ của `pace` giả định 35 em ngồi bất động nhìn bảng; từ "giải lao" duy nhất có mặt lại là một câu CẤM trong `latePupil` | `movementBreak` (ngồi liền ≤ 12 phút → nhịp vận động 30–90s vẫn là Toán, nghỉ ngắn 1–3 phút tổng ≤ 3 phút không cắt VẬT THẬT, camera tắt, có phiên bản ngồi cho cả lớp) |
 | 16 | **đo chính hệ quả của quy định vòng 15**: `movementBreak`/`groupWork`/`handover`/`boardEquity` âm thầm đòi khoảng trống trên sàn, trong khi `bigClass` mới hỏi SĨ SỐ chứ chưa hỏi diện tích — 0/39 "chật" · 0/39 "không đủ chỗ" · 0/39 "lối đi" · 0/39 "dịch bàn" · 0/39 "đứng tại chỗ" · 0/39 "chỗ đứng", dù "đứng lên" và "nhóm 4 em" có ở 39/39 file · số thật: định mức VN ~1,5 m²/đầu em, phòng 48 m² chỉ chuẩn ở ~32 em → 45 em/48 m² ~1,07 m² | `roomFootprint` (hỏi m² một lần → m²/đầu em; ≥ 1,8 + lối đi ≥ 60 cm mới cho đứng quay người/xếp hình; < 1,2 bỏ nhịp dịch ngang, giữ đứng-tại-chỗ (vòng 17 hiệu chỉnh); an toàn: không lách qua bạn, giữ lối thoát, không kê bàn chắn cửa) |
 | 17 | **đo tiếp hệ quả của vòng 16**: `movementBreak` giữ ngưỡng ngồi liền ≤ 12 phút với giả định nhịp còn là nhịp toàn thân, nhưng `roomFootprint` vừa rút nhịp đó ở phòng chật (< 1,2 m²/đầu em) xuống còn vươn tay/xoay cổ — chính lớp đông-trật nhất nhận nhịp yếu nhất mà vẫn chờ đủ 12 phút; và `roomFootprint` đồng nhất "không lối đi" với "không đứng được" dù đứng-thẳng-tại-chỗ không cần lối đi | `tightRoomFocus` (nấc chật: giữ nhịp đứng-tại-chỗ 20–60s vẫn là Toán, hạ ngưỡng ngồi liền ≤ 12 → ≤ 8 phút, tổng nghỉ ≤ 4 phút, không cắt VẬT THẬT, camera vẫn tắt; sửa `roomFootprint` để chỉ cắt nhịp dịch ngang/di chuyển) |
+| 18 | **đo giả định im lặng trong modality cảm biến trung tâm**: mọi vòng phản hồi chạy trên HandLandmarker và coi "nhận ra một bàn tay" là chính xác như nhau với mọi em — đo: "HandLandmarker" 39/39 và "camera thấy" 39/39, nhưng "tone da" 0/39 · "da sẫm" 0/39 · "bàn tay nhỏ" 0/39 · "găng tay" 0/39 · "ướt" 0/39 · "không thấy tay" 0/39 · "bỏ sót" 2/39; nguồn: tài liệu nhận diện tư thế tay (bàn tay da sẫm underrepresented trong dữ liệu huấn luyện) + Gender Shades (khuôn mặt, 0,8%→34,7%, chỉ dùng làm bằng chứng *chiều*) | `detectionEquity` ("camera thấy N" = cận dưới số TAY máy nhận ra, không phải số EM đã trả lời; mọi đáp án camera có nút cộng tay +1/+5 cùng lượt; một bước tự kiểm độ phủ lúc chạy thử → hay lọt thì chuyển mặc định bảng-con-nhập-tay; KHÔNG phân loại/chấm/lưu màu da, không xếp em hay bị lọt; ngưỡng "thường xuyên lọt" là dự án chọn). Kèm sửa lỗi đọc của validator: đưa kiểm tra "giáo án bị cắt" lên ĐẦU vòng lặp để không bị nhấn chìm dưới cửa sổ in 40 lỗi |
 
 ## Vì sao chọn những con số đang dùng
 
@@ -242,6 +259,16 @@ bằng cách hạ ngưỡng ngồi xuống ≤ 8 phút trong nấc chật.
   biên-độ-nhỏ; số phút dôi ra được bù vào trần tổng (3 → 4 phút) để không cắt bước VẬT THẬT. Bản tổng hệ thống
   đó cũng nói rõ "tính không đồng nhất của giao thức ngăn chốt liều chuẩn xác", nên repo cố tình không bịa một
   con số nào thành "chuẩn khoa học".
+- **Ngưỡng "thường xuyên lọt" của `detectionEquity` (2 em phải cộng tay trong một nhịp, hoặc 3 nhịp liên tiếp
+  máy thấy thấp hơn rõ rệt số tay cô quan sát)** — đây là **lựa chọn của dự án**, không nguồn nào quy định một
+  bàn tay da sẫm hay tay nhỏ thì mô hình bỏ sót bao nhiêu %. Hai nguồn chỉ dựng được *hướng* rủi ro, không phải
+  *định lượng cho HandLandmarker*: tài liệu nhận diện tư thế tay (arXiv 2406.03599) nói bàn tay da sẫm
+  "underrepresented" trong bộ dữ liệu OneHand10k và điều đó "biasing models toward homogeneous populations",
+  còn Gender Shades đưa con số lệch lớn (0,8% → 34,7%) nhưng là trên **khuôn mặt** của hệ nhận dạng thương
+  mại, không phải trên bàn tay. Dự án cố ý KHÔNG nhân hai con số đó thành "HandLandmarker sai X% với em da
+  sẫm" — thay vào đó ra một ngưỡng HÀNH VI cho cô (bao nhiêu lần phải cứu bằng nút cộng tay thì đổi kênh), vì
+  thứ đo được trong một lớp thật là "máy có theo kịp mắt cô không", không phải độ chính xác thống kê của mô
+  hình. Ngưỡng 2 và 3 nhịp chọn thấp để một em liên tục bị lọt không phải chịu nhiều nhịp bị ghi sai.
 
 ## Nguồn đọc cho từng cụm quy định
 
@@ -425,6 +452,12 @@ Ba dòng sau (`camera TẮT`, "phiên bản ngồi cho cả lớp", "không thi 
 - [Normal Attention Span Expectations By Age — Brain Balance Centers](https://www.brainbalancecenters.com/blog/normal-attention-span-expectations-by-age) — nêu quy tắc kinh nghiệm "2–3 phút cho mỗi năm tuổi", với trẻ **8 tuổi ≈ 16–24 phút**, **10 tuổi ≈ 20–30 phút**; trang tự nói đây là mức nền và phụ thuộc từng trẻ. Dùng làm *điểm neo*: ngưỡng 12 phút (lớp rộng, nhịp toàn thân) và 8 phút (lớp chật, nhịp đứng-tại-chỗ) đều nằm **dưới** cận dưới ~16 phút ấy, tức là cả hai là lựa chọn "cho nghỉ sớm hơn mức phải", không phải giới hạn chú ý. Đây **không** phải nơi lấy con số 8 (số đó dự án tự chọn).
 - [Active School Breaks and Students' Attention: A Systematic Review — PMC8224334](https://pmc.ncbi.nlm.nih.gov/articles/PMC8224334/) — kết luận cùng chiều rằng vận động cường độ vừa–nặng cải thiện chú ý rõ hơn ngồi yên, "một đợt ngắn có thể hiệu quả hơn một đợt dài", và các giao thức thường ngắt những bloc giảng dài. Quan trọng không kém: bản tổng hệ thống **nói rõ tính không đồng nhất của giao thức khiến không chốt được liều chuẩn xác**, nên vòng 17 chỉ mượn *chiều* kết luận (nhịp biên độ nhỏ → bù bằng tần suất) chứ **không** biến 8 phút/20–60 giây/4 phút thành số "khoa học". Ngưỡng của `movementBreak` (vòng 15, từ Understood) vẫn giữ cho lớp rộng; `tightRoomFocus` chỉ hạ nó ở nấc chật của `roomFootprint`.
 
+**Nhận diện bàn tay không công bằng theo màu da/tay nhỏ/ánh sáng (đo vòng 18)**
+- [Synthetic Data for Inclusive, Robust, Hand Pose Estimation — arXiv 2406.03599](https://arxiv.org/html/2406.03599v2) — nguồn *trực tiếp đúng modality*: tài liệu ghi bàn tay "darker skin color ... are noticeably underrepresented in OneHand10k" và việc thiếu dữ liệu huấn luyện đó làm giảm chất lượng cho các nhóm bị đại diện ít, "biasing models toward homogeneous populations". Đây là bằng chứng **cùng bài toán (tư thế bàn tay)**, nên là trục chính của `detectionEquity`. Lưu ý trung thực: trang này đưa *hướng* (kém hơn cho tay da sẫm) chứ **không** cho một con số % lỗi riêng cho HandLandmarker — dự án vì thế không trích "sai X%" mà chỉ ra ngưỡng hành vi cho cô.
+- [Study finds gender and skin-type bias in commercial AI systems (Gender Shades) — MIT News](https://news.mit.edu/2018/study-finds-gender-skin-type-bias-artificial-intelligence-systems-0212) và [buolamwini18a (PMLR v81)](https://proceedings.mlr.press/v81/buolamwini18a/buolamwini18a.pdf) — bằng chứng kinh điển rằng cùng hệ thị giác thương mại, sai lệch có thể từ "0.8 percent for light-skinned men" lên "34.7 percent for dark-skinned women". **Trung thực về phạm vi: đây là nhận dạng KHUÔN MẶT, không phải bàn tay**; chỉ dùng để cho thấy rủi ro lệch theo màu da là có thật và lớn trong thị giác máy, **không** biến 0,8%/34,7% thành con số cho HandLandmarker.
+- Nguồn thử mà **không** định lượng được cho MediaPipe ở phiên đo: một bản đánh giá ["Quantifying Similarities Between MediaPipe and a Known ..." — PMC11683656](https://pmc.ncbi.nlm.nih.gov/articles/PMC11683656/) so MediaPipe với hệ chuẩn nhưng không cho chênh lệch theo màu da; ghi lại để vòng sau nếu có benchmark HandLandmarker theo complexion thì thay ngưỡng hành vi bằng số thật.
+- Toàn bộ **ngưỡng của `detectionEquity`** (2 em phải cộng tay bằng tay trong một nhịp, 3 nhịp liên tiếp máy thấy thấp hơn mắt cô) là **lựa chọn của dự án**, không nguồn nào quy định; các nguồn trên chỉ dựng *hướng* rủi ro, không quy mô hoá cho bàn tay.
+
 Lưu ý cách dùng danh mục này: các trang trên là **nguồn để hiểu vì sao chọn kỹ thuật**, không phải nơi trích
 số liệu hiệu quả. Dự án này chưa chạy thử nghiệm lớp học nào, nên không con số nào ở trên được nhân lên
 thành "tăng X% điểm".
@@ -559,17 +592,32 @@ thành "tăng X% điểm".
   với ≤ 3 phút (`movementBreak`) + ngưỡng ngồi ≤ 8 phút + năm bước 15–20 phút của `pace`: chưa có lần nào xếp
   lịch thật để biết một tiết chật có nhét đủ nhịp mà **không** phải cắt VẬT THẬT như quy định cấm hay không.
   Đây là bài kiểm tra bằng đồng hồ bấm, thuộc nhóm "đo thực địa một tiết 35 phút" đã mở từ đầu.
+- **Chưa có benchmark HandLandmarker theo màu da/tay nhỏ.** Vòng 18 dựng `detectionEquity` trên *hướng* rủi ro
+  (tài liệu bàn tay + Gender Shades trên khuôn mặt), chưa có con số % bỏ sót riêng cho HandLandmarker với từng
+  nhóm bàn tay. Nếu vòng sau tìm được benchmark đó thì thay ngưỡng hành vi (2 em / 3 nhịp) bằng số đo, và có
+  thể đổi khuyến nghị "rẻ nhất" (chuyển bảng con) thành "chỉ cần chỉnh lại độ sáng/góc".
+- **Bước tự kiểm độ phủ chưa có giao diện cụ thể.** `detectionEquity` nói cô đưa "vài bàn tay khác nhau" vào
+  trước camera, nhưng chưa định nghĩa công cụ hiển thị gì để cô đọc được "máy thấy thiếu": cần một màn hình
+  đếm tay thời gian thực có bật/tắt được trong 'Chạy thử', đối chiếu số tay máy nhận với số ngón cô giơ.
+- **Không phân loại màu da nhưng cũng không đo được mình có đang bỏ sót ai không.** Cấm lưu màu da là đúng
+  `privacy`, nhưng hệ quả là công cụ KHÔNG tự biết "tay da sẫm bị lọt nhiều hơn" — nó chỉ thấy tổng số tay.
+  Chỗ dựa duy nhất là mắt cô và nút cộng tay; đây là đánh đổi có chủ đích giữa quyền riêng tư và khả năng tự
+  phát hiện thiên kiến, cần người dùng cuối quyết nếu muốn nâng cấp (ví dụ đo theo cụm không định danh).
+- **Ngưỡng 2 em / 3 nhịp và việc "chuyển mặc định sang bảng-con" chưa chạy thử ở lớp thật.** giống mọi ngưỡng
+  hành vi khác, chưa có một tiết nào đếm xem cô phải bấm cộng tay bao nhiêu lần trước khi nên bỏ kênh camera.
+  Dữ liệu này nằm gọn trong mục "Báo cáo máy" đã mở từ vòng 8: in thêm vài dòng "số lần cộng tay/thấy tay" là
+  đủ, không cần camera ghi hình hay lưu danh tính.
 
 ## Muốn đóng góp thì sửa ở đâu
 
 ```text
 tools/lib/chalk.mjs     10 quy định bảng phấn và vật thật      → sinh vào mục 4 của giáo án
-tools/lib/lesson.mjs    43 quy định chế độ giảng bài           → sinh vào mục 0, 1, 2, 3, 5, 6, 7, 8, 9, 10
+tools/lib/lesson.mjs    44 quy định chế độ giảng bài           → sinh vào mục 0, 1, 2, 3, 5, 6, 7, 8, 9, 10
 tools/lib/handout.mjs   4 quy định từ bảng ra vở               → sinh vào mục 9
 tools/data/props.mjs    vật thật + sơ đồ theo 38 cụm
 tools/data/lessons.mjs  tên bài, câu khởi động, dòng ghi nhớ
 tools/build-lessons.mjs ghép thành 39 file prompts/giao-an/
-tools/validate.mjs      57 khoá của họ giáo án + chốt chặn ngược + 13 mục của khung
+tools/validate.mjs      58 khoá của họ giáo án + chốt chặn ngược + 13 mục của khung
                         + trần số hàng "Chữa bài" đo thẳng từ clusters.mjs/error-notes.mjs
 ```
 
