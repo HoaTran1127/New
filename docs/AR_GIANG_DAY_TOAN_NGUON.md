@@ -1,4 +1,4 @@
-# Giáo án AR trên bảng phấn — nguồn cộng đồng và bài học sau 22 vòng
+# Giáo án AR trên bảng phấn — nguồn cộng đồng và bài học sau 23 vòng
 
 Tài liệu này để **người khác tham khảo và nối tiếp**, không phải mô tả tính năng. Phần tính năng nằm ở
 [`prompts/giao-an/README.md`](../prompts/giao-an/README.md); ở đây chỉ ghi: cái gì đã đo được, cái gì đã
@@ -117,12 +117,26 @@ nâng-cao-tuỳ-chọn cho "Kiểm tra riêng tư" và mô phỏng "Còn 2 phút
 Nhành A; phiếu 10 việc CỐ ĐỊNH không phình). Khác mọi vòng trước, vòng 22 khoá mâu thuẫn bằng một **kiểm tra bắt
 cặp** chứ không chỉ so chuỗi: validator đỏ nếu `detectionEquity` còn nói "vào trước camera" mà mất tham chiếu
 `rehearsalBudget`, nên chính cái lệnh bật-camera-trong-luồng-không-camera ấy không thể quay lại lọt thỏm (P94).
+Vòng 23 đào cùng kiểu "tiền đề im lặng" nhưng giữa hai quy định cách nhau 12 vòng: `noProjector` (v8) đã nâng
+"phòng KHÔNG có máy chiếu" lên một chế độ dạy hạng nhất — "một màn hình duy nhất cho cô + học sinh nhìn gần",
+hoặc không màn nào phải in ra. Mười hai vòng sau, `privateView` (v20) lại dựng toàn bộ lời hứa "chỉ cô thấy"
+quay quanh cái máy chiếu: nó hỏi "Máy chiếu đang CHUNG MÀN hay MÀN RIÊNG?" và chữa bằng cách `window.open` một
+cửa sổ thứ hai "kéo sang máy chiếu". Đo: `privateView` nhắc "máy chiếu" 5 lần, đối chiếu `noProjector` = **false**,
+còn mọi cụm hoà giải tưởng-tượng ("Ép CHUNG MÀN", "màn cả lớp đang nhìn") = **0/39**. Giao của hai quy định
+chưa từng được định nghĩa, và đó lại là chỗ nguy hiểm NHẤT: không máy chiếu nghĩa là cả 45 em vây quanh ĐÚNG
+MỘT màn hình, nên dải "chỉ cô thấy" phơi trần trước cả lớp, trong khi không tồn tại cái màn thứ hai để kéo nó
+đi — lời hứa "MÀN RIÊNG" của privateView trở thành vô nghĩa. Vòng 23 không thêm quy định thứ 48 mà SỬA trực tiếp
+`privateView`: thêm mệnh đề (0) phân nhánh theo `noProjector` — ở chế độ không màn chiếu thì **mặc nhiên coi là
+CHUNG MÀN, không hỏi, không `window.open`**, chỉ giữ cơ chế giữ-phím-để-xem; và đổi câu hỏi thành "Màn mà cả lớp
+đang nhìn…" để nó đúng cả với ti vi một màn. Cùng kiểu khoá bắt-cặp như vòng 22: validator đỏ nếu `privateView`
+còn `window.open` mà thiếu một trong hai vế (nhắc `noProjector`, hoặc lệnh "MẶC NHIÊN coi là CHUNG MÀN") — P95
+cắt vế đầu, P96 cắt vế sau, cả hai phải đỏ.
 3. **Quy định phải có con số.** "Chữ phải to" không kiểm chứng được; "≥ 40 px **và** ≥ 5.5% chiều cao khung
    hình, ≤ 12 chữ một dòng" thì validator bắt được. Mọi quy định trong `tools/lib/*.mjs` là chuỗi nguyên văn,
    `tools/validate.mjs` so bằng `includes()`, nên lời văn và mắt kiểm không bao giờ lệch nhau.
 4. **Chốt chặn hai chiều.** Cơ chế game lọt vào giáo án và quy định giáo án lọt sang game đều làm build đỏ.
    Thêm một quy định mới là tự động thêm một khoá bị cấm ở phía bên kia (`LESSON_FAMILY_RULES`).
-5. **Probe đột biến là đơn vị kiểm thử thật.** 94 phép, mỗi phép phá đúng một thứ và đòi đúng thông báo.
+5. **Probe đột biến là đơn vị kiểm thử thật.** 96 phép, mỗi phép phá đúng một thứ và đòi đúng thông báo.
    Không có probe thì một quy định chỉ là câu văn đẹp.
 6. **Tách công cụ giảng bài khỏi game.** Cùng một kiến thức, hai động cơ đối lập: game cần hồi hộp,
    tiết giảng cần giáo viên cầm lái. Nhét tim/điểm/combo vào bảng phấn làm em lên bảng sợ sai hơn là muốn hiểu.
@@ -153,6 +167,7 @@ cặp** chứ không chỉ so chuỗi: validator đỏ nếu `detectionEquity` c
 | 20 | **đo mâu thuẫn dây chuyền giữa NHIỀU quy định**: sáu quy định (`boardEquity`, `classBoard`, `classVote`, `verifyData`, `oldHardware`, `timeSlack` + `roomFootprint`) cùng hứa "chỉ hiện ở dải điều khiển của cô, không hiện lên màn chiếu" — mặc định một máy hai tín hiệu xuất riêng, nhưng cắm HDMI mặc định thường là SOI GƯƠNG; đo: "hai màn hình" · "màn hình riêng" · "màn hình mở rộng" · "trình chiếu" đều **0/39**; nguồn: Microsoft PowerPoint (muốn xem ghi chú riêng phải **chủ động** đổi topology sang Extend — nói về chiều kiến trúc, không phải số liệu HTML) | `privateView` (hỏi một dòng "CHUNG MÀN / MÀN RIÊNG", mặc định an toàn CHUNG MÀN, không đoán — như `powerCut` hỏi cắm điện/pin; khi CHUNG MÀN rút mọi dòng riêng khỏi màn hình thường trực + giữ-phím-để-xem ẩn ≤ 0,3 s; khi MÀN RIÊNG `window.open` cửa sổ chiếu chỉ-bảng-không-dải-điều-khiển, chặn thì tự lùi về CHUNG MÀN; không in tên/dãy-ghế thường trực, "Kiểm tra riêng tư" trong chạy thử soi đúng màn máy chiếu đang phát; mốc 0,3 s + mặc định CHUNG MÀN là dự án chọn) |
 | 21 | **đo mâu thuẫn bằng chính PHÉP CỘNG trên các con số của bốn quy định**: `fullPeriod` cho VẬN DỤNG 3–5′ · `exitTicket` giữ 2′ CUỐI của nó làm vé · `movementBreak` tổng nghỉ ≤ 3′ "lấy từ VẬN DỤNG hoặc `timeSlack` dôi" · `tightRoomFocus` nâng nghỉ lên ≤ 4′ khi chật → nghỉ(4) + vé(2) = **6 > 5** = trần VẬN DỤNG, và tiết đúng 35′ thì `timeSlack` dôi = 0 nên nguồn hai cũng cạn; đo: "ngân sách nghỉ" · "co ngắn nhịp nghỉ" · "bỏ nhịp nghỉ" · "ưu tiên lấy từ" đều **0/39**; nguồn: Understood.org (brain-break là chiến lược hành vi có bằng chứng, xếp 1–5 phút sau mỗi 10–25 phút tập trung — khớp đầu dưới mà `movementBreak` đã cite) | `breakReserve` (dòng nghỉ **có thật** trên thanh tiến trình `flow` — nấc thường 2′, chật 3′ — số dự án chọn để phép cộng trong 35′ đóng lại; rút đúng thứ tự timeSlack-dôi → VẬN DỤNG trên 2′ vé (không xuống dưới 2′) → LUYỆN TẬP 12→10, **tuyệt đối không** rút VẬT THẬT hay vé; khi "Còn < 3 phút"/"quá giờ"/cô bấm "Còn 2 phút" thì nhịp **tự CO còn 15 giây** (ba hơi thở + vươn tay, vẫn Toán, camera tắt); một nút "Bỏ nhịp nghỉ tiết này", bộ đếm "nghỉ đã dùng/còn lại" ở dải của cô; thêm một bước chạy thử mô phỏng "Còn 2 phút") |
 | 22 | **đo TIỀN ĐỀ của chính các lệnh "thêm một bước"**: `rehearsal` định nghĩa "Chạy thử 5 phút" là "không cần camera · đúng năm bước · đã thử 5/5 · ĐÚNG MỘT danh sách 10 việc · một trang A4", nhưng `detectionEquity` (v18) + `privateView` (v20) + `breakReserve` (v21) mỗi cái dặn "thêm đúng MỘT bước/việc" vào đúng nút ấy, và bước của `detectionEquity` **cần camera BẬT** ("đưa bàn tay vào trước camera") — hai chỉ thị loại trừ nhau; đo: "không cần camera" **39/39** *và* "vào trước camera" **39/39** (chung sống), còn "nhành" · "tuỳ chọn" · "bật camera cho riêng" · "5/5 bước · nâng cao" đều **0/39** | `rehearsalBudget` (chia BA NHÀNH: A không-camera mặc định đúng 5 bước (chạy được khi máy không camera, đúng `oldHardware`/`noAdmin`); B có-camera cho bước độ phủ của `detectionEquity` — bật chủ động + xin phép một dòng + tắt hẳn khi ra (đèn đỏ theo `privacy`/`cameraGeometry`); C nâng-cao-tuỳ-chọn cho "Kiểm tra riêng tư" và mô phỏng "Còn 2 phút". Phong ngân sách: "5 phút" chỉ tính Nhành A (B/C +≤ 2′, dự án chọn), phiếu 10 việc CỐ ĐỊNH không phình. **Khoá bắt-cặp** mới trong validator: đỏ nếu `detectionEquity` còn "vào trước camera" mà mất tham chiếu `rehearsalBudget` — P94 chứng minh) |
+| 23 | **đo TIỀN ĐỀ của hai quy định cách nhau 12 vòng**: `noProjector` (v8) biến "không có máy chiếu" thành chế độ hạng nhất ("MỘT màn hình duy nhất cho cô + học sinh nhìn gần", hoặc in ra), nhưng `privateView` (v20) dựng cả lời hứa "chỉ cô thấy" quanh cái máy chiếu — hỏi "Máy chiếu CHUNG MÀN hay MÀN RIÊNG?" và chữa bằng `window.open` cửa sổ thứ hai "kéo sang máy chiếu"; đo: `privateView` nhắc "máy chiếu" **5 lần**, đối chiếu `noProjector` = **false**, cụm hoà giải ("Ép CHUNG MÀN" · "màn cả lớp đang nhìn") = **0/39** — giao của chúng (cả 45 em vây một màn, rủi ro lộ cao nhất, không có màn hai để kéo đi) chưa từng định nghĩa | SỬA `privateView` (không thêm quy định 48): mệnh đề (0) phân nhánh `noProjector` → ở "Chế độ không màn chiếu" thì **mặc nhiên CHUNG MÀN, không hỏi, không `window.open`**, chỉ giữ-phím-để-xem; đổi câu hỏi thành "Màn mà cả lớp đang nhìn…" (đúng cả với ti vi một màn). **Khoá bắt-cặp** mới: đỏ nếu `privateView` còn `window.open` mà thiếu nhắc `noProjector` HOẶC thiếu "MẶC NHIÊN coi là CHUNG MÀN" — P95 cắt vế đầu, P96 cắt vế sau |
 
 ## Vì sao chọn những con số đang dùng
 
@@ -710,6 +725,12 @@ thành "tăng X% điểm".
   quy định bằng một cú pháp riêng (`→`ruleName`←`), hoặc để khoá chỉ bắt tên *khớp khuôn quy định* mà không có
   trong danh sách. Cách hiện tại đơn giản và an toàn cho 47 quy định, nhưng cần người sau biết nó là nợ kỹ
   thuật có chủ đích chứ không phải thiếu sót.
+- **Hai "khoá bắt-cặp" (vòng 22, 23) là mã tay, không phải một cơ chế tổng quát.** `validate.mjs` giờ có đúng
+  HAI kiểm tra dạng "nếu quy định A còn cụm X thì buộc phải nhắc quy định B" (detectionEquity→rehearsalBudget,
+  privateView→noProjector). Chúng mạnh hơn khoá `includes()` thông thường vì bắt được mâu thuẫn *tiền đề* mà mắt
+  khó thấy, nhưng mỗi cái viết cho ĐÚNG MỘT cặp tên-hàm-cụ-thể. Thêm quy định mới có cùng dạng rủi ro thì PHẢI
+  viết thêm một `if` nữa — chưa có bảng khai báo cặp nào để mở rộng. Nếu sau này có ≥ 3 cặp, nên trừu tượng hoá
+  thành một danh sách `[[quyDinh, dieuKien, phaiChua]]` và lặp, thay vì nối tiếp vài `if` cứng.
 
 ## Muốn đóng góp thì sửa ở đâu
 

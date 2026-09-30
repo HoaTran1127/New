@@ -216,6 +216,14 @@ for (const [k, v] of Object.entries(HANDOUT)) checkRuleRefs(`HANDOUT.${k}`, v);
 if (LESSON.detectionEquity.includes('vào trước camera') && !LESSON.detectionEquity.includes('rehearsalBudget'))
   bad('LESSON.detectionEquity: bước tự kiểm camera phải trỏ `rehearsalBudget` (nhành CÓ camera), không đặt trong luồng chạy thử không-camera của `rehearsal`.');
 
+// Vòng 23 — bắt cặp tiền đề: `noProjector` đưa "Chế độ không màn chiếu" (MỘT màn duy nhất, không máy
+// chiếu) thành một chế độ dạy hạng nhất, còn `privateView` ban đầu chỉ hỏi toàn về "máy chiếu" và hứa
+// window.open cửa sổ thứ hai kéo sang máy chiếu. Giao của chúng (cả lớp vây một màn, rủi ro lộ cao
+// nhất mà không có màn riêng nào) chưa được định. privateView nay PHẢI biết noProjector và ÉP CHUNG MÀN
+// trong chế độ đó; mất một trong hai vế là câu hỏi topology lại hiện ra vô nghĩa trên lớp không máy chiếu.
+if (LESSON.privateView.includes('window.open') && (!LESSON.privateView.includes('noProjector') || !LESSON.privateView.includes('MẶC NHIÊN coi là CHUNG MÀN')))
+  bad('LESSON.privateView: phải tính tới "Chế độ không màn chiếu" của `noProjector` — bỏ hỏi topology và mặc nhiên coi là CHUNG MÀN khi chỉ có một màn duy nhất, không window.open cửa sổ riêng.');
+
 for (const g of GAMES) {
   const rel = PATH_OF.get(g.id);
   if (!rel) { bad(`${g.id}: không có đường dẫn prompt trong catalog.`); continue; }
