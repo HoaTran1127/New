@@ -12,6 +12,10 @@ import { MOTION, FEEL, MOTION_SHORT, FEEL_SHORT } from './lib/feel.mjs';
 import { CLASSROOM, CLASSROOM_SHORT } from './lib/classroom.mjs';
 import { ACCESS, ACCESS_SHORT } from './lib/access.mjs';
 import { VERIFY, ADAPT, VERIFY_SHORT, ADAPT_SHORT } from './lib/verify.mjs';
+import { ACCEPT, ACCEPT_SHORT, MACHINE_ITEMS } from './lib/acceptance.mjs';
+import { PE, PE_SHORT } from './lib/pe.mjs';
+import { RETENTION, RETENTION_SHORT } from './lib/memory.mjs';
+import { HYPE, HYPE_SHORT } from './lib/hype.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 
@@ -86,10 +90,21 @@ Không dùng Tailwind Play CDN, không file .css/.js/.json/ảnh/mp3 ngoài. Ch�
 - ${MOTION.reach}
 - ${MOTION.variety}
 - ${MOTION.breather}
+- ${PE.warmUp}
+- ${PE.pace}
+- ${PE.activeShare}
+- ${PE.coolDown}
+- ${PE.loadCap}
 - Độ dài: 12 lượt chính. Lượt 5 và lượt 9 chỉ là mốc NHỊP: thêm một bước trung gian và rút thời gian hiển thị hạt, không rút thời gian đọc đề. Level của lượt chơi không đổi theo vị trí mà do thích ứng quyết định (bốn dòng dưới).
 - ${ADAPT.levelShift}
 - ${ADAPT.failFloor}
 - ${ADAPT.hiddenLevel}
+- ${RETENTION.spacedQueue}
+- ${RETENTION.interleave}
+- ${HYPE.climax}
+- ${HYPE.personalBest}
+- ${HYPE.ghost}
+- ${HYPE.sharedGoal}
 - Điểm: +10 nhân chuỗi trả lời đúng. Sai không phạt bằng cách biến mất kiến thức: vẫn hiện lời giải đầy đủ.
 - Điều kiện thua: ${english ? 'hết 5 tim (mỗi đáp án sai trừ 1 tim)' : 'hết 5 tim (mỗi đáp án sai trừ 1 tim)'}. Điều kiện thắng: hết 12 lượt, hiện tổng kết.
 - Chống ăn may: ${RULES.antiLuck}
@@ -140,14 +155,18 @@ ${gestureBlock(g.gestures)}- Cử chỉ chỉ fire ở lượt chuyển trạng 
 - ${ACCESS.caption}
 - Sai: DỪNG 2 giây, ${cl.giai_thich}; chỉ rõ bước hoặc chữ số hoặc từ cần sửa; không để hiệu ứng che lời giải.
 - Câu sai được xếp vào CUỐI vòng chơi để luyện lại trong cùng phiên, ưu tiên xuất hiện lại sớm.
+- ${RETENTION.recallPrimer}
+- ${RETENTION.explainBack}
+- ${RETENTION.forgettingGuard}
 - Màn tổng kết nhóm theo errorTag: "Em hay sai ở: ${ERROR_NOTES[g.cluster].split('; ')[0]}" — kèm số câu đúng/sai theo mức độ, không chỉ báo điểm.
 - ${RULES.summary}
 - ${MOTION.meter}
 - ${CLASSROOM.mastery}
+- ${RETENTION.teacherNote}
 ${english ? `- ${RULES.listening}\n` : ''}${english ? `- ${RULES.listening}\n- Dùng window.speechSynthesis đọc to từ/câu tiếng Anh (en-US hoặc en-GB) khi trả lời đúng, có nút phát lại ở màn học liệu.` : '- Hiện lại phép tính theo cột dọc hoặc sơ đồ đoạn thẳng cho đúng dạng bài của ' + gradeTxt + '.'}
 
 7. GIAO DIỆN VÀ AN TOÀN
-- Bố cục: Bắt đầu → Kiểm tra thiết bị → Định vị → Xem cách chuyển động → 2 lượt luyện mẫu → 12 lượt chính → Phản hồi → Ôn câu sai → Kết quả → Chơi lại.
+- Bố cục: Bắt đầu → Kiểm tra thiết bị → Định vị → Xem cách chuyển động → 2 lượt luyện mẫu → KHỞI ĐỘNG 60–90 giây → 10 giây "Em còn nhớ không?" → 12 lượt chính → Phản hồi → Ôn câu sai → HẠ NHIỆT 45–60 giây → Kết quả → Chơi lại.
 - Vùng chơi lớn, chữ to (đề bài >= 28px desktop, >= 20px điện thoại), responsive cả dọc và ngang.
 - ${ACCESS.contrast}
 - Có Pause, Replay, Tắt camera, Giảm hiệu ứng chuyển động và nút "Chỉnh lại tư thế". Không leaderboard, không quảng cáo.
@@ -160,10 +179,13 @@ ${english ? `- ${RULES.listening}\n` : ''}${english ? `- ${RULES.listening}\n- D
 - ${FEEL.fx}
 - ${FEEL.bonus}
 - ${FEEL.mascot}
+- ${HYPE.hook}
+- ${HYPE.reveal}
 - ${CLASSROOM.twoPlayer}
 - Bộ sưu tập: mỗi màn thắng mở khóa 1 thẻ theo chủ đề ${g.name}, lưu localStorage key "miti-collection", có màn "Sưu tập của em".
 - Ngồi tại chỗ vẫn chơi được; không yêu cầu chạy nhảy hay động tác nguy hiểm; không rời khỏi vùng camera.
 - ${RULES.safety}
+- ${PE.water}
 - KHÔNG upload ảnh/video từ camera; chỉ dùng landmark trong bộ nhớ; không thu thập dữ liệu cá nhân.
 - Toàn bộ UI, tên nút, hướng dẫn, thông báo lỗi, lời giải thích bằng TIẾNG VIỆT${english ? ' (chỉ học liệu tiếng Anh giữ nguyên tiếng Anh)' : ''}. Không để thuật ngữ kỹ thuật (confidence, cooldown, fallback) hiện trên giao diện học sinh.
 
@@ -173,10 +195,18 @@ ${english ? `- ${RULES.listening}\n` : ''}${english ? `- ${RULES.listening}\n- D
 - Chân trang hoặc màn kết quả có dòng: MiTi • Học bằng chuyển động.
 - Không xóa hoặc đổi tên thương hiệu khi replay, khi vào gameplay hoặc ở chế độ không camera.
 
-9. ĐẦU RA
+9. NGHIỆM THU
+- ${ACCEPT.selfReport}
+- ${ACCEPT.items}
+- ${ACCEPT.printable}
+- ${ACCEPT.failRule}
+- ${ACCEPT.manual}
+- Bảng kiểm in sẵn cho người thử nằm trong \`prompts/CHECKLIST_NGHIEP_THU.md\` của bản chuẩn MiTi; game phải tự kiểm được ${MACHINE_ITEMS.length} mục ở trên mà không cần ai đọc code.
+
+10. ĐẦU RA
 - Chỉ xuất toàn bộ file HTML hoàn chỉnh, không kèm giải thích dài.
 - Không TODO, không pseudocode, không "...", không "// code tương tự ở trên", không phần "bạn tự bổ sung".
-- Tự kiểm tra trước khi xuất: camera xin sau nút Bắt đầu · có loading/error/định vị · 640×480 và lật gương · nền AR là khung hình camera với lớp phủ tối không vượt 0.45 · mọi tọa độ đi qua toScreen, không còn phép nhân thô với W/H · vật thể có z và bóng dưới chân · có ít nhất một vật ảo neo vào landmark cơ thể · gesture fire theo lượt chuyển + cooldown + confidence · không tính hover là đã chọn · calibration đo tầm tay và đặt ngưỡng theo đơn vị vừa đo · ${MOTION_SHORT} · ${FEEL_SHORT} · ${CLASSROOM_SHORT} · ${ACCESS_SHORT} · ${VERIFY_SHORT} · ${ADAPT_SHORT} · tab ẩn hoặc mất tiêu điểm là tự Pause, quay lại đếm 3-2-1 · nhận diện 1 lần mỗi 2–3 khung hình, particle có pool, tự giảm chi tiết khi FPS tụt · tổng kết ba thẻ "Làm tốt / Cần luyện / Động tác lần sau" · ${GESTURES[g.gestures[0]].vi.toLowerCase()} hoạt động đúng cơ chế · fallback chuột/chạm chơi trọn vẹn · QUESTION_DATA đủ ${bank.so} mục, mỗi mục có answer + explanation + loiViet · câu sai vào hàng đợi luyện lại · tổng kết theo nhóm lỗi · bộ sưu tập lưu localStorage · chữ ký MiTi ở ba màn · file chạy độc lập không lỗi console.
+- Tự kiểm tra trước khi xuất: camera xin sau nút Bắt đầu · có loading/error/định vị · 640×480 và lật gương · nền AR là khung hình camera với lớp phủ tối không vượt 0.45 · mọi tọa độ đi qua toScreen, không còn phép nhân thô với W/H · vật thể có z và bóng dưới chân · có ít nhất một vật ảo neo vào landmark cơ thể · gesture fire theo lượt chuyển + cooldown + confidence · không tính hover là đã chọn · calibration đo tầm tay và đặt ngưỡng theo đơn vị vừa đo · ${MOTION_SHORT} · ${PE_SHORT} · ${RETENTION_SHORT} · ${FEEL_SHORT} · ${HYPE_SHORT} · ${CLASSROOM_SHORT} · ${ACCESS_SHORT} · ${VERIFY_SHORT} · ${ADAPT_SHORT} · ${ACCEPT_SHORT} · tab ẩn hoặc mất tiêu điểm là tự Pause, quay lại đếm 3-2-1 · nhận diện 1 lần mỗi 2–3 khung hình, particle có pool, tự giảm chi tiết khi FPS tụt · tổng kết ba thẻ "Làm tốt / Cần luyện / Động tác lần sau" · ${GESTURES[g.gestures[0]].vi.toLowerCase()} hoạt động đúng cơ chế · fallback chuột/chạm chơi trọn vẹn · QUESTION_DATA đủ ${bank.so} mục, mỗi mục có answer + explanation + loiViet · câu sai vào hàng đợi luyện lại · tổng kết theo nhóm lỗi · bộ sưu tập lưu localStorage · chữ ký MiTi ở ba màn · file chạy độc lập không lỗi console.
 \`\`\`
 
 ## Ghi chú cho người tạo prompt (không gửi Gemini)

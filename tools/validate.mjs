@@ -12,6 +12,10 @@ import { MOTION, FEEL } from './lib/feel.mjs';
 import { CLASSROOM } from './lib/classroom.mjs';
 import { ACCESS } from './lib/access.mjs';
 import { VERIFY, ADAPT } from './lib/verify.mjs';
+import { ACCEPT, MACHINE_ITEMS, HUMAN_CHECKS, CAMERA_ONLY, OFFLINE_ITEMS } from './lib/acceptance.mjs';
+import { PE, PE_NO_CAMERA } from './lib/pe.mjs';
+import { RETENTION } from './lib/memory.mjs';
+import { HYPE, HYPE_SHORT } from './lib/hype.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const errors = [];
@@ -44,7 +48,7 @@ for (const [code, g] of Object.entries(GESTURES)) {
 
 // 2. Prompt game: đủ khối bắt buộc, không rò ký tự template, không lẫn ký tự tiếng Hoa.
 const PATH_OF = new Map(rows.map((r) => [r.id, r.prompt]));
-const MUST = ['1. HỌC TẬP', '2. THẾ GIỚI AR VÀ VÒNG CHƠI', '3. NGÂN HÀNG DỮ LIỆU (QUESTION_DATA)', '4. NỀN AR, CAMERA VÀ GESTURE', '5. FALLBACK (bắt buộc)', '6. PHẢN HỒI HỌC TẬP', '7. GIAO DIỆN VÀ AN TOÀN', '8. MiTi — CHỮ KÝ BẮT BUỘC TRONG HTML', '9. ĐẦU RA'];
+const MUST = ['1. HỌC TẬP', '2. THẾ GIỚI AR VÀ VÒNG CHƠI', '3. NGÂN HÀNG DỮ LIỆU (QUESTION_DATA)', '4. NỀN AR, CAMERA VÀ GESTURE', '5. FALLBACK (bắt buộc)', '6. PHẢN HỒI HỌC TẬP', '7. GIAO DIỆN VÀ AN TOÀN', '8. MiTi — CHỮ KÝ BẮT BUỘC TRONG HTML', '9. NGHIỆM THU', '10. ĐẦU RA'];
 // Hợp đồng AR: thiếu một trong các ràng buộc này thì game chỉ còn là canvas 2D có webcam kèm theo.
 const AR_RULES = [
   [/toScreen\(lx, ly\)/, 'thiếu hàm chiếu toScreen'],
@@ -111,6 +115,41 @@ const ADAPT_RULES = [
   [ADAPT.failFloor, 'thiếu sàn chống nản (không cho sai quá 3 câu liên tiếp)'],
   [ADAPT.hiddenLevel, 'thiếu quy định ẩn level với học sinh'],
 ];
+// Nghiệm thu: không có bảng kiểm thì 40 quy định trước đó chỉ là 40 lời mong đợi — không ai biết file HTML nhận về có đạt không.
+const ACCEPT_RULES = [
+  [ACCEPT.selfReport, 'thiếu bảng kiểm tự nghiệm thu trong game'],
+  [ACCEPT.items, `thiếu danh sách ${MACHINE_ITEMS.length} mục máy tự kiểm`],
+  [ACCEPT.printable, 'thiếu quy định xuất bản văn bảng kiểm'],
+  [ACCEPT.failRule, 'thiếu quy định mục chưa đạt phải kèm nguyên nhân'],
+  [ACCEPT.manual, `thiếu bảng ${HUMAN_CHECKS.length} việc người thử phải bấm tay`],
+];
+// Thể dục có cấu trúc: "vận động to" mà không khởi động, không đo nhịp, không hạ nhiệt thì vẫn chỉ là trò chơi, chưa phải bài thể dục.
+const PE_RULES = [
+  [PE.warmUp, 'thiếu bước khởi động 60–90 giây trước hiệp 1'],
+  [PE.pace, 'thiếu nhịp thẻ 3,0–4,5 giây / >= 12 nhịp chuyển động mỗi phút'],
+  [PE.activeShare, 'thiếu đồng hồ thời gian vận động >= 60% thời lượng phiên'],
+  [PE.coolDown, 'thiếu bước hạ nhiệt 45–60 giây trước màn tổng kết'],
+  [PE.water, 'thiếu nhắc uống nước đúng một lần ở tổng kết'],
+  [PE.loadCap, 'thiếu trần tải trọng động (cấm nhảy tiếp đất, xoay nhanh, tay trên cao quá 15 giây)'],
+];
+// Nhớ bài lâu dài: một game dạy rất vui trong 5 phút mà không có mốc ôn thì trả lại kiến thức cho cô giáo sau ba ngày.
+const RET_RULES = [
+  [RETENTION.spacedQueue, 'thiếu lịch ôn có mốc +1/+3/+7 ngày trong "miti-review"'],
+  [RETENTION.interleave, 'thiếu quy định >= 3/12 lượt xen cụm kiến thức khác'],
+  [RETENTION.recallPrimer, 'thiếu câu mở màn "Em còn nhớ không?" 10 giây trước lượt 1'],
+  [RETENTION.explainBack, 'thiếu câu hỏi lại "Vì sao đúng?" ở 4/12 lượt'],
+  [RETENTION.forgettingGuard, 'thiếu quy định quên không bị phạt + tổng kết "vẫn nhớ / cần ôn lại"'],
+  [RETENTION.teacherNote, 'thiếu tờ rời copy được cho giáo viên'],
+];
+// Thi đua + cao trào: cảm giác chờ đợi và mốc để phá là thứ giữ học sinh quay lại, không phải cú chạm đẹp.
+const HYPE_RULES = [
+  [HYPE.hook, 'thiếu cú "ồ" ba giây đầu khi vào gameplay'],
+  [HYPE.personalBest, 'thiếu kỷ lục của chính em trong "miti-best" + sự kiện PHÁ KỶ LỤC'],
+  [HYPE.ghost, 'thiếu vệt ghost của lượt tốt nhất phiên trước (alpha <= 0.35)'],
+  [HYPE.climax, 'thiếu hiệp 3 "HIỆP QUYẾT ĐỊNH" (nhân đôi điểm, vẫn 4 lượt)'],
+  [HYPE.reveal, 'thiếu nghi thức mở thưởng 2,5 giây cuối mỗi hiệp'],
+  [HYPE.sharedGoal, 'thiếu đích chung "Cả nhóm: <x>/<mốc>", không xếp hạng bạn'],
+];
 for (const g of GAMES) {
   const rel = PATH_OF.get(g.id);
   if (!rel) { bad(`${g.id}: không có đường dẫn prompt trong catalog.`); continue; }
@@ -125,6 +164,14 @@ for (const g of GAMES) {
   for (const [needle, msg] of ACCESS_RULES) if (!t.includes(needle)) bad(`${g.id}: ${msg}.`);
   for (const [needle, msg] of VERIFY_RULES) if (!t.includes(needle)) bad(`${g.id}: ${msg}.`);
   for (const [needle, msg] of ADAPT_RULES) if (!t.includes(needle)) bad(`${g.id}: ${msg}.`);
+  for (const [needle, msg] of ACCEPT_RULES) if (!t.includes(needle)) bad(`${g.id}: ${msg}.`);
+  for (const [needle, msg] of PE_RULES) if (!t.includes(needle)) bad(`${g.id}: ${msg}.`);
+  for (const [needle, msg] of RET_RULES) if (!t.includes(needle)) bad(`${g.id}: ${msg}.`);
+  for (const [needle, msg] of HYPE_RULES) if (!t.includes(needle)) bad(`${g.id}: ${msg}.`);
+  if (!t.includes(HYPE_SHORT)) bad(`${g.id}: chuỗi tự kiểm ở phần ĐẦU RA thiếu phần thi đua + cao trào.`);
+  // Bố cục phải nhét khởi động vào TRƯỚC 12 lượt và hạ nhiệt vào TRƯỚC màn tổng kết, không phải để ngoài luồng.
+  if (!t.includes('KHỞI ĐỘNG 60–90 giây → 10 giây "Em còn nhớ không?" → 12 lượt chính')) bad(`${g.id}: bố cục thiếu khởi động rồi thiếu câu "Em còn nhớ không?" ngay trước 12 lượt chính.`);
+  if (!t.includes('HẠ NHIỆT 45–60 giây → Kết quả')) bad(`${g.id}: bố cục thiếu bước hạ nhiệt ngay trước màn Kết quả.`);
   if (!t.includes(GESTURES[g.gestures[0]].bien_do)) bad(`${g.id}: prompt thiếu biên độ động tác của cử chỉ chính ${g.gestures[0]}.`);
   if (SUBJ_OF.get(g.id) === 'Tiếng Anh' && !t.includes(RULES.listening)) bad(`${g.id}: game Tiếng Anh thiếu nguyên tắc nghe-trước.`);
   if (t.includes('${')) bad(`${g.id}: còn ký tự template chưa nội suy (${t.match(/\$\{[^}]*}/)[0]}).`);
@@ -164,6 +211,10 @@ for (const l of LEGACY) {
     if (!t.includes(needle)) bad(`${l.id}: khối chuẩn MiTi thiếu quy định lớp học "${needle}".`);
   }
   if (!t.includes('#FFD84D')) bad(`${l.id}: thiếu chữ ký MiTi trong prompt.`);
+  for (const [needle, msg] of ACCEPT_RULES) if (!t.includes(needle)) bad(`${l.id}: ${msg}.`);
+  for (const [needle, msg] of PE_RULES) if (!t.includes(needle)) bad(`${l.id}: ${msg}.`);
+  for (const [needle, msg] of RET_RULES) if (!t.includes(needle)) bad(`${l.id}: ${msg}.`);
+  for (const [needle, msg] of HYPE_RULES) if (!t.includes(needle)) bad(`${l.id}: ${msg}.`);
   for (const [re, msg] of AR_RULES.filter(([, m]) => m !== 'thiếu mô tả AR của cử chỉ chính')) {
     if (!re.test(t)) bad(`${l.id}: ${msg}.`);
   }
@@ -203,6 +254,9 @@ if (!fs.existsSync(VAR_FILE)) {
     }
   });
   if (arBlocks !== 340) bad(`VARIANTS_425.md phải có 340 block nền AR (85 × 4 biến thể camera), hiện có ${arBlocks}.`);
+  if (!vtext.includes('- **Thi đua + cao trào:**')) bad('Phần Quy ước chung của VARIANTS_425.md thiếu dòng Thi đua + cao trào.');
+  if (!vtext.includes('- **Nghiệm thu:**')) bad('Phần Quy ước chung của VARIANTS_425.md thiếu dòng Nghiệm thu.');
+  if (!vtext.includes('prompts/CHECKLIST_NGHIEP_THU.md')) bad('Phần Quy ước chung của VARIANTS_425.md không trỏ tới bảng kiểm in sẵn.');
   VAR_COUNT = blocks.length;
   const CLASS_NEEDLES = [RULES.antiLuck, RULES.perf, RULES.autoPause, RULES.safety, RULES.summary];
   const FEEL_NEEDLES = [FEEL.hitStop, FEEL.combo, FEEL.cheer, FEEL.bonus, FEEL.fx];
@@ -210,6 +264,13 @@ if (!fs.existsSync(VAR_FILE)) {
   const ACCESS_NEEDLES = [ACCESS.flash, ACCESS.reducedMotion, ACCESS.notColorOnly, ACCESS.caption, ACCESS.contrast];
   // Ngân hàng câu hỏi và thích ứng là quy định về NỘI DUNG, mọi biến thể điều khiển đều phải mang.
   const Q_NEEDLES = [VERIFY.selfCheck, VERIFY.distractorValid, VERIFY.rangeGuard, VERIFY.noGuessable, VERIFY.difficultySteps, ADAPT.levelShift, ADAPT.failFloor, ADAPT.hiddenLevel];
+  // Bảng kiểm nghiệm thu phải đi theo TỪNG block: người dùng copy một block riêng thì không có chỗ nào khác mà đọc quy định.
+  const ACCEPT_NEEDLES = [ACCEPT.selfReport, ACCEPT.items, ACCEPT.printable, ACCEPT.failRule, ACCEPT.manual];
+  // Thể dục có cấu trúc: năm bước giống nhau cho mọi biến thể; riêng đồng hồ vận động cần cơ thể trong khung hình.
+  const PE_NEEDLES = [PE.warmUp, PE.pace, PE.coolDown, PE.water, PE.loadCap];
+  // Nhớ bài phải đi theo từng block: người dùng copy một block thì lịch ôn không được biến mất.
+  const RET_NEEDLES = [RETENTION.spacedQueue, RETENTION.interleave, RETENTION.recallPrimer, RETENTION.explainBack, RETENTION.forgettingGuard, RETENTION.teacherNote];
+  const HYPE_NEEDLES = [HYPE.hook, HYPE.personalBest, HYPE.ghost, HYPE.climax, HYPE.reveal, HYPE.sharedGoal];
   blocks.forEach((b, i) => {
     for (const needle of CLASS_NEEDLES) if (!b.includes(needle)) bad(`biến thể #${i + 1}: thiếu quy định "${needle.slice(0, 32)}...".`);
     const calibNeedle = b.includes('V5 — NO-CAMERA') || b.includes('V4 — VOICE') ? 'không cần calibration' : RULES.calibration;
@@ -225,6 +286,22 @@ if (!fs.existsSync(VAR_FILE)) {
     if (!b.includes('**Nhịp và độ khó:**')) bad(`biến thể #${i + 1}: thiếu dòng Nhịp và độ khó.`);
     for (const needle of Q_NEEDLES) if (!b.includes(needle)) bad(`biến thể #${i + 1}: thiếu quy tắc nội dung "${needle.slice(0, 30)}...".`);
     if (/[Tt]ăng độ khó ở lượt 5/.test(b)) bad(`biến thể #${i + 1}: vẫn dùng độ khó theo vị trí lượt chơi.`);
+    if (!b.includes('**Bảng kiểm nghiệm thu:**')) bad(`biến thể #${i + 1}: thiếu dòng Bảng kiểm nghiệm thu.`);
+    for (const needle of ACCEPT_NEEDLES) if (!b.includes(needle)) bad(`biến thể #${i + 1}: thiếu quy tắc nghiệm thu "${needle.slice(0, 30)}...".`);
+    if (!/\*\*Nền AR:\*\*/.test(b) && !b.includes(ACCEPT.noCamera)) bad(`biến thể #${i + 1}: bản không camera thiếu dòng nói rõ mục nào được bỏ.`);
+    if (!b.includes('**Thể dục có cấu trúc:**')) bad(`biến thể #${i + 1}: thiếu dòng Thể dục có cấu trúc.`);
+    if (!b.includes('**Nhớ bài có lịch:**')) bad(`biến thể #${i + 1}: thiếu dòng Nhớ bài có lịch.`);
+    for (const needle of RET_NEEDLES) if (!b.includes(needle)) bad(`biến thể #${i + 1}: thiếu quy tắc nhớ bài "${needle.slice(0, 30)}...".`);
+    if (!b.includes('**Thi đua + cao trào:**')) bad(`biến thể #${i + 1}: thiếu dòng Thi đua + cao trào.`);
+    for (const needle of HYPE_NEEDLES) if (!b.includes(needle)) bad(`biến thể #${i + 1}: thiếu quy tắc hào hứng "${needle.slice(0, 30)}...".`);
+    if (!b.includes(HYPE_SHORT)) bad(`biến thể #${i + 1}: dòng tự kiểm thiếu phần thi đua + cao trào.`);
+    for (const needle of PE_NEEDLES) if (!b.includes(needle)) bad(`biến thể #${i + 1}: thiếu quy tắc thể dục "${needle.slice(0, 30)}...".`);
+    const tracksBody = /\*\*Nền AR:\*\*/.test(b) && !b.includes('V4 — VOICE');
+    if (tracksBody) {
+      if (!b.includes(PE.activeShare)) bad(`biến thể #${i + 1}: block nhận diện cơ thể thiếu đồng hồ thời gian vận động.`);
+    } else if (!b.includes(PE_NO_CAMERA)) {
+      bad(`biến thể #${i + 1}: block không đo cơ thể thiếu dòng đổi cách đo cường độ.`);
+    }
     if (/\*\*Nền AR:\*\*/.test(b)) {
       for (const needle of [MOTION.amplitude, MOTION.reach, MOTION.variety, MOTION.breather, MOTION.meter, FEEL.mascot]) {
         if (!b.includes(needle)) bad(`biến thể #${i + 1}: block camera thiếu "${needle.slice(0, 30)}...".`);
@@ -277,6 +354,34 @@ for (const [f, re] of claims) {
   if (!re.test(t)) bad(`${f}: chưa ghi đúng số 85 prompt.`);
 }
 
+// 7c. Bảng kiểm nghiệm thu in được: file phải tồn tại, đủ số dòng, và khớp từng chuỗi trong lib.
+const CHECK_FILE = path.join(ROOT, 'prompts', 'CHECKLIST_NGHIEP_THU.md');
+let checkRows = 0;
+if (!fs.existsSync(CHECK_FILE)) {
+  bad('Thiếu prompts/CHECKLIST_NGHIEP_THU.md — chạy `node tools/build-acceptance.mjs`.');
+} else {
+  const c = fs.readFileSync(CHECK_FILE, 'utf8').replace(/\r\n/g, '\n');
+  for (const needle of [ACCEPT.selfReport, ACCEPT.items, ACCEPT.printable, ACCEPT.failRule, ACCEPT.manual]) {
+    if (!c.includes(needle)) bad(`Bảng kiểm thiếu quy định nghiệm thu "${needle.slice(0, 40)}...".`);
+  }
+  checkRows = c.split('\n').filter((l) => l.startsWith('- [ ] ')).length;
+  if (checkRows !== MACHINE_ITEMS.length) bad(`Bảng kiểm phải có ${MACHINE_ITEMS.length} dòng máy tự kiểm, hiện có ${checkRows}.`);
+  const humanRows = c.split('\n').filter((l) => /^\d+\. /.test(l)).length;
+  if (humanRows !== HUMAN_CHECKS.length) bad(`Bảng kiểm phải có ${HUMAN_CHECKS.length} việc người thử, hiện có ${humanRows}.`);
+  const camRows = c.split('\n').filter((l) => l.startsWith('- [ ] ') && l.includes('📷')).length;
+  if (camRows !== CAMERA_ONLY.length) bad(`Bảng kiểm phải gắn 📷 cho đúng ${CAMERA_ONLY.length} mục camera, hiện có ${camRows}.`);
+  if (!c.includes(String(OFFLINE_ITEMS))) bad(`Bảng kiểm phải ghi rõ bản không camera còn ${OFFLINE_ITEMS} mục phải đạt.`);
+  for (const item of MACHINE_ITEMS) if (!c.includes(item)) bad(`Bảng kiểm thiếu mục máy tự kiểm "${item.slice(0, 40)}...".`);
+  for (const item of HUMAN_CHECKS) if (!c.includes(item)) bad(`Bảng kiểm thiếu việc người thử "${item.slice(0, 40)}...".`);
+}
+
+// 7d. Master prompt phải ghi đúng số mục của bảng kiểm — lib đổi số mà master vẫn giữ số cũ thì người viết prompt làm theo bản sai.
+const masterFile = path.join(ROOT, 'prompts', '00-master-canvas-prompt.md');
+const master = fs.readFileSync(masterFile, 'utf8');
+for (const needle of [`${MACHINE_ITEMS.length} MỤC MÁY TỰ KIỂM`, `${HUMAN_CHECKS.length} VIỆC NGƯỜI THỬ`, '11. NGHIỆM THU', 'prompts/CHECKLIST_NGHIEP_THU.md', `${CAMERA_ONLY.length} mục`, `${OFFLINE_ITEMS} mục còn lại`]) {
+  if (!master.includes(needle)) bad(`Master prompt thiếu/ch lệch nghiệm thu "${needle}".`);
+}
+
 // 7b. Template phải liệt kê đủ mọi mã trong GESTURES — thêm mã mới mà quên ghi template thì người viết prompt không biết mà dùng.
 const tplFile = path.join(ROOT, 'prompts', 'templates', 'game-prompt-template.md');
 const tpl = fs.readFileSync(tplFile, 'utf8');
@@ -287,10 +392,71 @@ for (const code of Object.keys(GESTURES)) {
   if (!new RegExp('\\b' + code + '\\b').test(tpl)) bad(`Template thiếu mã điều khiển ${code}.`);
 }
 
+// 7e. Tài liệu hướng dẫn (master · template · README) phải giữ đúng số mục và đủ sáu quy định thể dục.
+// Những file này sửa tay nên lệch số là chuyện xảy ra thật: lib đổi 16 -> 19 mục mà README vẫn viết 16
+// thì người viết prompt làm theo bản sai, và không có gì báo.
+const PE_DOC_NEEDLES = [
+  ['60–90', 'khởi động'],
+  ['3,0–4,5', 'nhịp thẻ'],
+  ['nhịp chuyển động mỗi phút', 'cường độ đếm được'],
+  ['45–60', 'hạ nhiệt'],
+  ['ngụm nước', 'nhắc uống nước'],
+  ['90 độ', 'trần tải trọng'],
+  ['+1', 'lịch ôn +1/+3/+7 ngày'],
+  ['Em còn nhớ không?', 'câu mở màn kiểm trí nhớ'],
+  ['Vì sao', 'hỏi lại vì sao đúng'],
+  ['tờ rời', 'tờ rời cho giáo viên'],
+  ['PHÁ KỶ LỤC', 'sự kiện phá kỷ lục của chính em'],
+  ['HIỆP QUYẾT ĐỊNH', 'hiệp 3 leo thang'],
+  ['miti-best', 'kỷ lục lưu trong miti-best'],
+  ['mở thưởng', 'nghi thức mở thưởng cuối hiệp'],
+  ['Cả nhóm', 'đích chung của nhóm, không xếp hạng'],
+  ['ghost', 'vệt ghost của phiên trước'],
+];
+// Con số cũ của vòng 6 ("< 8 động tác lớn mỗi phút") là yêu cầu KHÔNG THỂ đạt với phiên 12 lượt / 4–6 phút.
+// Giữ nó trong tài liệu sẽ sinh game luôn báo CHƯA ĐẠT ở mục cường độ, nên phải bị chặn.
+const SUPERSEDED = [
+  [/>= 8 động tác lớn mỗi phút/, 'còn dùng con số cường độ cũ (>= 8 động tác lớn mỗi phút) — đã thay bằng >= 12 nhịp chuyển động mỗi phút'],
+];
+const DOC_FILES = [
+  ['prompts/00-master-canvas-prompt.md', master],
+  ['prompts/templates/game-prompt-template.md', tpl],
+  ['README.md', fs.readFileSync(path.join(ROOT, 'README.md'), 'utf8')],
+  ['prompts/README.md', fs.readFileSync(path.join(ROOT, 'prompts', 'README.md'), 'utf8')],
+];
+for (const [docName, docText] of DOC_FILES) {
+  for (const [needle, label] of PE_DOC_NEEDLES) {
+    if (!docText.includes(needle)) bad(`${docName} thiếu quy định (${label}): không thấy "${needle}".`);
+  }
+  for (const [re, msg] of SUPERSEDED) if (re.test(docText)) bad(`${docName}: ${msg}.`);
+}
+// Mọi con số nói về bảng kiểm trong tài liệu phải khớp lib — tính bằng regex, khôngHard-code số cũ.
+const COUNT_PATTERNS = [
+  [/([0-9]+) MỤC MÁY TỰ KIỂM/g, MACHINE_ITEMS.length, 'số mục máy tự kiểm (chữ hoa)'],
+  [/([0-9]+) mục máy tự kiểm/g, MACHINE_ITEMS.length, 'số mục máy tự kiểm'],
+  [/([0-9]+) VIỆC NGƯỜI THỬ/g, HUMAN_CHECKS.length, 'số việc người thử (chữ hoa)'],
+  [/([0-9]+) việc người thử/g, HUMAN_CHECKS.length, 'số việc người thử'],
+  [/([0-9]+) mục còn lại/g, OFFLINE_ITEMS, 'số mục bản không camera còn phải đạt'],
+];
+for (const [docName, docText] of DOC_FILES) {
+  for (const [re, want, label] of COUNT_PATTERNS) {
+    for (const m of docText.matchAll(re)) {
+      if (Number(m[1]) !== want) bad(`${docName} ghi "${m[0]}" (${label}) nhưng lib hiện có ${want} — chạy lại build hoặc sửa tài liệu.`);
+    }
+  }
+}
+// Số mục của khung master phải khớp số heading cấp 1 thật trong file, để không ai quảng cáo "khung 10 mục" cho một file 13 mục.
+const masterSections = (master.match(/^[0-9]+\. [A-ZÀ-Ỹ]/gm) || []).length;
+for (const [docName, docText] of DOC_FILES.filter(([n]) => n !== 'prompts/00-master-canvas-prompt.md')) {
+  if (!new RegExp(`khung( chuẩn| master)? ${masterSections} mục`, 'i').test(docText)) {
+    bad(`${docName} phải ghi "khung ${masterSections} mục" khớp số mục thật của master prompt (file hiện có ${masterSections} heading cấp 1).`);
+  }
+}
+
 if (errors.length) {
   console.error('Xác minh thất bại — ' + errors.length + ' vấn đề:');
   for (const e of errors.slice(0, 40)) console.error('  • ' + e);
   if (errors.length > 40) console.error('  ... và ' + (errors.length - 40) + ' vấn đề khác.');
   process.exit(1);
 }
-console.log(`Xác minh đạt: ${rows.length} dòng catalog, ${GAMES.length} prompt game, ${VAR_COUNT} prompt biến thể, ${CLUSTER_KEYS.length} cụm kiến thức, ${LEGACY.length} prompt legacy, ${cat.games.length + cat.legacy.length} card dashboard.`);
+console.log(`Xác minh đạt: ${rows.length} dòng catalog, ${GAMES.length} prompt game, ${VAR_COUNT} prompt biến thể, ${CLUSTER_KEYS.length} cụm kiến thức, ${LEGACY.length} prompt legacy, ${cat.games.length + cat.legacy.length} card dashboard, bảng kiểm ${checkRows}/${MACHINE_ITEMS.length} mục máy + ${HUMAN_CHECKS.length} việc người thử.`);

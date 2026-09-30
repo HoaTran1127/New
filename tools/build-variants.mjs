@@ -11,6 +11,10 @@ import { MOTION, FEEL, MOTION_SHORT, FEEL_SHORT } from './lib/feel.mjs';
 import { CLASSROOM, CLASSROOM_SHORT } from './lib/classroom.mjs';
 import { ACCESS, ACCESS_SHORT } from './lib/access.mjs';
 import { VERIFY, ADAPT, VERIFY_SHORT, ADAPT_SHORT } from './lib/verify.mjs';
+import { ACCEPT, ACCEPT_SHORT, MACHINE_ITEMS, HUMAN_CHECKS, CAMERA_ONLY } from './lib/acceptance.mjs';
+import { PE, PE_SHORT, PE_NO_CAMERA } from './lib/pe.mjs';
+import { RETENTION, RETENTION_SHORT } from './lib/memory.mjs';
+import { HYPE, HYPE_SHORT } from './lib/hype.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const OUT = path.join(ROOT, 'prompts', 'VARIANTS_425.md');
@@ -60,7 +64,9 @@ function block(n, row, g, v) {
   const calib = camera && !voice ? RULES.calibration : 'Biến thể này không đọc chuyển động tay nên không cần calibration; vẫn phải có một màn hướng dẫn ngắn, không tutorial dài.';
   // Biến thể VOICE chỉ có một micro nên không có chế độ hai người chơi: lấy 3 vế đầu của chuỗi rút gọn.
   const voiceShort = CLASSROOM_SHORT.split(' · ').slice(0, 3).join(' · ');
-  const qCheck = ' · ' + VERIFY_SHORT + ' · ' + ADAPT_SHORT;
+  const qCheck = ' · ' + PE_SHORT + ' · ' + RETENTION_SHORT + ' · ' + HYPE_SHORT + ' · ' + VERIFY_SHORT + ' · ' + ADAPT_SHORT + ' · ' + ACCEPT_SHORT;
+  // Dòng nghiệm thu cho mọi block: game phải tự chứng minh nó đạt, người thử không phải đọc code.
+  const accept = ACCEPT.selfReport + ' ' + ACCEPT.printable + ' ' + ACCEPT.failRule + (camera ? '' : ' ' + ACCEPT.noCamera);
   const selfCheck = voice
     ? 'nền AR phủ kín khung hình với lớp tối alpha không vượt 0.45 · sóng âm và khối từ nổi đặt ngay trong khung hình thật · transcript lệch một bên không che người nói · ' + MOTION_SHORT + ' · ' + FEEL_SHORT + ' · ' + voiceShort + ' · ' + ACCESS_SHORT + qCheck
     : camera
@@ -70,6 +76,12 @@ function block(n, row, g, v) {
   const motion = camera
     ? `${MOTION.amplitude} ${MOTION.reach} ${MOTION.variety} ${MOTION.breather} ${MOTION.meter}`
     : 'Bản phím/chuột không bắt buộc vận động toàn thân nhưng vẫn chia 12 lượt thành 3 hiệp, giữa hai hiệp nghỉ 5 giây có đếm ngược, và màn tổng kết hiện thẻ "Em đã trả lời N lượt trong M phút".';
+  // Cấu trúc buổi thể dục: bản có nhận diện cơ thể đo được cường độ, bản VOICE/NO-CAMERA giữ nguyên khung nhưng đổi cách đo.
+  const pe = camera && !voice
+    ? `${PE.warmUp} ${PE.pace} ${PE.activeShare} ${PE.coolDown} ${PE.water} ${PE.loadCap}`
+    : `${PE.warmUp} ${PE.pace} ${PE.coolDown} ${PE.water} ${PE.loadCap} ${PE_NO_CAMERA}`;
+  const hype = `${HYPE.hook} ${HYPE.personalBest} ${HYPE.ghost} ${HYPE.climax} ${HYPE.reveal} ${HYPE.sharedGoal}`;
+  const memory = `${RETENTION.spacedQueue} ${RETENTION.interleave} ${RETENTION.recallPrimer} ${RETENTION.explainBack} ${RETENTION.forgettingGuard} ${RETENTION.teacherNote}`;
 
   return `## Prompt ${String(n).padStart(3, '0')} — ${row.id} — ${v.code} — ${v.label}
 
@@ -87,6 +99,9 @@ ${controlBlock(v, g)}` : controlBlock(v, g)}
 **Vòng chơi:** 12 lượt. ${RULES.antiLuck} ${RULES.autoPause} ${calib}
 **Nhịp và độ khó:** lượt 5 và lượt 9 chỉ là mốc NHỊP — thêm một bước trung gian và rút thời gian hiển thị hạt, không rút thời gian đọc đề; level không đổi theo vị trí mà do thích ứng quyết định. ${ADAPT.levelShift} ${ADAPT.failFloor} ${ADAPT.hiddenLevel}
 **Vận động:** ${motion}
+**Thể dục có cấu trúc:** ${pe}
+**Nhớ bài có lịch:** ${memory}
+**Thi đua + cao trào:** ${hype}
 **Tự kiểm chứng đề:** ${VERIFY.selfCheck} ${VERIFY.distractorValid} ${VERIFY.rangeGuard} ${VERIFY.noGuessable} ${VERIFY.difficultySteps}
 **Ngân hàng dữ liệu:** \`const QUESTION_DATA = [...]\` đặt ở ĐẦU khối <script>, engine đặt phía sau; tối thiểu ${bank.so} mục chia 3 mức độ theo khuôn { id, level, prompt, choices, answer, explanation, errorTag, loiViet }; mỗi mục một đáp án đúng duy nhất kiểm chứng được bằng code; ${bank.luu_y} errorTag lấy đúng một trong: ${cl.tags.join(', ')}; loiViet là cụm tiếng Việt có dấu lấy nguyên văn từ danh sách lỗi: ${ERROR_NOTES[g.cluster]}. Xáo trộn vị trí đáp án có seed theo lượt.
 **Phản hồi học tập:** đúng thì phản hồi tích cực ngay kèm một dòng ghi nhớ; sai thì DỪNG 2 giây, ${cl.giai_thich}, chỉ rõ bước hoặc chữ số hoặc từ cần sửa, không hiệu ứng nào che lời giải; câu sai xếp vào CUỐI vòng để luyện lại. ${RULES.summary}${english ? ` ${RULES.listening} ${RULES.speechSynthesis}` : ''}
@@ -96,6 +111,7 @@ ${controlBlock(v, g)}` : controlBlock(v, g)}
 ${camera && !voice ? `**Chế độ lớp:** ${CLASSROOM.twoPlayer}\n**Tay thuận:** ${ACCESS.handedness}\n` : ''}**Giao diện:** đề bài >= 28px trên desktop và >= 20px trên điện thoại, tương phản chữ >= 4.5:1, responsive cả dọc lẫn ngang; HUD có nhiệm vụ + điểm + chuỗi đúng + tiến độ + trạng thái camera; có Pause, Replay, Giảm hiệu ứng chuyển động${camera ? ' và Tắt camera' : ''}; không leaderboard, không quảng cáo. ${RULES.perf}
 **An toàn + riêng tư + tiếng Việt:** ${RULES.safety} Mỗi động tác đều có phiên bản ngồi tại chỗ; không quay chạy nhảy, không rời vùng camera. Không upload ảnh/video từ camera, chỉ giữ landmark trong bộ nhớ, tiến độ lưu localStorage máy đó. Toàn bộ UI, tên nút, hướng dẫn, thông báo và lời giải bằng TIẾNG VIỆT (chỉ học liệu ${subjectNote}); không để lộ thuật ngữ kỹ thuật confidence / cooldown / fallback cho học sinh.
 **Chữ ký MiTi (bắt buộc trong HTML):** ô bo góc màu #FFD84D chứa chữ M màu #07111F + chữ MiTi đậm + dấu ✦ nhỏ, inline SVG/CSS không hotlink ảnh ngoài; xuất hiện ở màn Bắt đầu, HUD khi chơi và màn Kết quả; chân trang hoặc màn kết quả có dòng "MiTi • Học bằng chuyển động"; không xóa hay đổi tên thương hiệu khi replay hoặc ở chế độ không camera.
+**Bảng kiểm nghiệm thu:** ${accept} ${ACCEPT.items} ${ACCEPT.manual}
 **Xuất file:** chạy được ngay khi lưu thành .html, không TODO, không pseudocode, không "...", không phần "bạn tự bổ sung", không lỗi console. Tự kiểm tra: ${selfCheck} · QUESTION_DATA đủ ${bank.so} mục có answer + explanation + loiViet · câu sai vào hàng đợi luyện lại · bộ sưu tập lưu localStorage "miti-collection" · chữ ký MiTi ở ba màn.
 
 ---
@@ -124,10 +140,14 @@ let out = `# 🎯 425 PROMPT BIẾN THỂ — MiTi (85 game × 5 kiểu điều 
 - Số câu tối thiểu: ${BANK['Toán'].so} mục cho game Toán, ${BANK['Tiếng Anh'].so} mục cho game Tiếng Anh; mỗi mục có \`errorTag\` + \`loiViet\`.
 - Camera/micro chỉ xin sau nút BẮT ĐẦU; luôn có chế độ không camera chơi trọn game; không upload ảnh/video camera.
 - **Vận động + arcade:** mỗi lượt là một động tác to (>= 50% tầm với), vùng đích nằm sát mép khung, 3 hiệp kèm trạm nghỉ 5 giây; cú chạm có hit-stop, combo và chữ khen bật lên trong khung hình.
+- **Thi đua + cao trào:** cú "ồ" 3 giây đầu khi vào gameplay · "miti-best" + sự kiện "PHÁ KỶ LỤC!" khi thật sự vượt mốc của chính em · vệt ghost alpha <= 0.35 chạy theo lượt tốt nhất phiên trước · hiệp 3 "HIỆP QUYẾT ĐỊNH" nhân đôi điểm (vẫn 4 lượt + trạm nghỉ 5 giây) · nghi thức mở thưởng 2,5 giây cuối hiệp, luôn có quà, không đổi level thích ứng · đích chung "Cả nhóm: <x>/<mốc 40>" và không bao giờ là bảng xếp hạng bạn.
+- **Thể dục có cấu trúc:** khởi động 60–90 giây trước hiệp 1 (không tính điểm), thẻ bay vào 3,0–4,5 giây và ở lại <= 8 giây, >= 12 nhịp chuyển động mỗi phút, đồng hồ vận động >= 60% thời lượng phiên, hạ nhiệt 45–60 giây trước màn tổng kết, nhắc uống nước đúng một lần, và trần tải trọng (cấm nhảy tiếp đất, xoay nhanh quá 90 độ, giữ tay trên cao quá 15 giây).
 - **Lớp học thật:** chữ và HUD không đè lên thân học sinh, cơ chế chọn theo mức camera đang thấy, hồ sơ tiến bộ "miti-mastery" xếp câu theo lỗi yếu nhất, có chế độ hai học sinh trong một khung hình (trừ biến thể VOICE).
 - **Tiếp cận:** không hiệu ứng nào nhấp nháy quá 3 lần/giây, \`prefers-reduced-motion\` được đọc lúc khởi động và bật sẵn chế độ Giảm hiệu ứng (không giảm nội dung học), đúng/sai phân biệt bằng >= 2 kênh ngoài màu, mọi âm thanh có bản chữ, tương phản chữ >= 4.5:1, có chọn tay thuận lúc calibration (trừ biến thể VOICE và NO-CAMERA).
 - **Đề phải tự kiểm được:** engine chạy \`verifyQuestionBank()\` một lần lúc nạp và loại mọi mục lỗi (đáp án không có trong choices, hai phương án trùng nhau, level lệch với số bước, số vượt phạm vi SGK); vị trí đáp án đúng phân bố đều 1/3 ± 10%.
 - **Độ khó theo năng lực:** 2 câu đúng liên tiếp thì lên một level, 2 câu sai liên tiếp thì xuống một level cùng \`errorTag\`; không em nào được phép sai quá 3 câu liên tiếp; level ẩn với học sinh và chỉ hiện ở tổng kết cho giáo viên.
+- **Nhớ bài có lịch:** câu đã sửa đúng 2 lần được xếp ôn lại vào +1, +3, +7 ngày (nhớ vững thì giãn +21) trong localStorage \`miti-review\`; phiên có >= 3 lượt xen cụm khác và >= 1 lượt ôn đến hạn; 10 giây "Em còn nhớ không?" trước lượt 1; "Vì sao đúng?" ở 4/12 lượt; quên thì không trừ tim, tổng kết chia "vẫn nhớ / cần ôn lại" kèm tờ rời copy cho giáo viên.
+- **Nghiệm thu:** mọi block đều đòi một bảng kiểm ẩn mở bằng 7 lần chạm logo MiTi, trạng thái do code kiểm thật lúc chạy — ${MACHINE_ITEMS.length} mục máy tự kiểm (trong đó ${CAMERA_ONLY.length} mục gắn 📷 chỉ áp dụng khi có webcam) + ${HUMAN_CHECKS.length} việc người thử bấm tay. Bảng in sẵn để cầm tay khi vào lớp: \`prompts/CHECKLIST_NGHIEP_THU.md\`.
 - Chữ ký MiTi có ở ba màn: Bắt đầu, HUD, Kết quả.
 
 `;

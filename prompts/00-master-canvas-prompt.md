@@ -153,7 +153,7 @@ Nhận diện chuyển động — đây là phần hay hỏng nhất, làm đú
 ========================
 4. VÒNG LẶP GAME
 ========================
-BẮT ĐẦU → KIỂM TRA THIẾT BỊ → ĐỊNH VỊ → CHO XEM CÁCH MOVE → LUYỆN MẪU → VÒNG CHƠI → PHẢN HỒI NGAY → GIẢI THÍCH TRỰC QUAN → CÂU TIẾP THEO → TỔNG KẾT → CHƠI LẠI.
+BẮT ĐẦU → KIỂM TRA THIẾT BỊ → ĐỊNH VỊ → CHO XEM CÁCH MOVE → LUYỆN MẪU → KHỞI ĐỘNG 60–90 GIÂY → 10 GIÂY "EM CÒN NHỚ KHÔNG?" → VÒNG CHƠI (12 lượt) → PHẢN HỒI NGAY → GIẢI THÍCH TRỰC QUAN → CÂU TIẾP THEO → HẠ NHIỆT 45–60 GIÂY → TỔNG KẾT → CHƠI LẠI.
 Round đầu tiên phải hiểu được trong vài giây, không cần đọc hướng dẫn dài.
 
 Cân bằng lượt chơi (chống ăn may):
@@ -200,6 +200,38 @@ Nguồn: `tools/lib/verify.mjs` (khối `ADAPT`), validate chặn nếu thiếu.
   Chuỗi thích ứng chạy im lặng phía sau; phân bố số câu và tỉ lệ đúng theo level chỉ ở màn tổng kết cho giáo viên.
 
 ========================
+4.5 THỂ DỤC CÓ CẤU TRÚC (nguồn: `tools/lib/pe.mjs`, validate chặn nếu thiếu)
+========================
+Mục tiêu của thư viện này là trò chơi giúp các con VẬN ĐỘNG THỂ DỤC mà vẫn hiểu bài. Một game buộc trẻ đứng với tay
+hết tầm liên tục 12 lượt rồi tắt máy ngay — đó là rủi ro cơ bắp nguội, chưa phải bài thể dục. Sáu quy định dưới đây
+biên phần "vận động to" ở mục 4.3 thành một tiết thể dục thu nhỏ: làm nóng → nhịp → đo cường độ → hạ nhiệt → nước → trần tải.
+
+- KHỞI ĐỘNG 60–90 GIÂY trước hiệp 1, không tính điểm, không trừ tim: bốn động tác theo thứ tự — đánh nhẹ hai vai 10 nhịp,
+  xoay cổ tay 10 vòng mỗi bên, dang hai tay lên cao rồi hạ 8 nhịp, bước tại chỗ nâng cao đầu gối 15 giây; hình que + chữ
+  tiếng Việt + đồng hồ đếm ngược trên HUD. Bấm "Bỏ khởi động" vẫn được nhưng màn tổng kết nhắc một dòng nhẹ
+  "Lần sau mình khởi động đủ nhé". Máy bật Giảm hiệu ứng thì rút thành cổ tay – cổ chân – hít thở tại chỗ, KHÔNG bỏ hẳn.
+- NHỊP MỖI LƯỢT: thẻ đáp án bay vào 3,0–4,5 giây, ở lại tối đa 8 giây kể từ khi hiện hết, giữa hai lượt chừa <= 1,5 giây
+  để về tư thế; thời gian đọc đề KHÔNG bị rút. CƯỜNG ĐỘ CẢ PHIÊN: >= 12 nhịp chuyển động mỗi phút, đếm mỗi lần bàn tay hoặc thân
+  vượt ngưỡng 15% tầm với đã calibration — tính cả nhịp khởi động, cả nhịp với tới lẫn nhịp rút về trong 12 lượt, và nhịp hạ
+  nhiệt — chia số phút chơi thật, không đếm phỏng đoán.
+  Con số cũ "8 động tác lớn mỗi phút" là yêu cầu KHÔNG THỂ đạt: 12 lượt chia 4–6 phút nhiều lắm cũng chỉ 3 động tác mỗi phút,
+  nên mọi game sẽ báo CHƯA ĐẠT ở mục cường độ. Đơn vị đếm phải là NHỊP vượt ngưỡng, không phải số lượt chơi.
+- ĐỒNG HỒ THỜI GIAN VẬN ĐỘNG: tích lũy số giây tay/thân học sinh di chuyển thật (vượt ngưỡng 15% tầm với đã calibration);
+  tổng kết in "Em đã chuyển động X giây trên tổng Y giây của phiên" và yêu cầu >= 60%. Dưới 60% thì mời thêm MỘT hiệp phụ
+  4 lượt nhẹ, không trừ tim, không phạt, không hiện chữ "không đạt".
+- HẠ NHIỆT 45–60 GIÂY trước màn tổng kết: duỗi tay ngang ngực 15 giây mỗi bên, cúi nhẹ chạm mũi bàn chân 15 giây,
+  kéo vai ra sau 10 nhịp, kèm hít thở đếm 4 vào – 4 ra; mascot cùng làm, đồng hồ hiển thị trong khung hình camera.
+  Không tính điểm, không trừ tim, không được bỏ bằng một nút "Bỏ qua" (chỉ ngắn lại khi máy bật Giảm hiệu ứng).
+- NHẮC UỐNG NƯỚC: khi phiên chơi từ 6 phút hoặc đây là phiên thứ hai liên tiếp trong cùng thẻ học, tổng kết hiện đúng
+  MỘT dòng "Mình uống vài ngụm nước rồi hãy chơi tiếp nhé" — không pop-up giữa vòng, không lặp lại, không chặn nút nào.
+- TRẦN TẢI TRỌNG ĐỘNG: cấm nhảy rồi tiếp đất, cấm xoay thân nhanh quá 90 độ, cấm giữ hai tay trên cao liên tục quá 15 giây,
+  tối đa 3/12 lượt là động tác cúi thấp. Mất landmark 3 giây hoặc FPS tụt thì hạ về nhịp chậm + một dòng tiếng Việt nhắc
+  chỉnh tư thế, không dồn tiếp động tác cho đủ lượt.
+- BẢN KHÔNG CAMERA vẫn giữ cấu trúc buổi tập: khởi động và hạ nhiệt chuyển thành bản tại chỗ nhẹ cho cổ tay – bàn chân – vai
+  + hít thở; bỏ mục đồng hồ vận động >= 60%, thay bằng đếm "số lượt em chủ động thao tác trong phiên"; nhịp thẻ và trần tải
+  trọng áp dụng nguyên văn.
+
+========================
 5. HỌC TẬP DẪN LỐI (LEARNING-FIRST)
 ========================
 - Chuyển động phải phục vụ trực tiếp mục tiêu học tập; nếu bỏ camera mà bài học mất ý nghĩa thì cử chỉ đang sai.
@@ -210,6 +242,34 @@ Nguồn: `tools/lib/verify.mjs` (khối `ADAPT`), validate chặn nếu thiếu.
 - Toàn bộ học liệu lấy từ QUESTION_DATA, không hard-code một câu hỏi duy nhất.
 - Game Tiếng Anh theo nguyên tắc nghe-trước: phát audio TRƯỚC khi hiện chữ, mỗi lượt có nút phát lại; sai thì phát lại chậm hơn (0.8x)
   và chỉ hiện chữ sau khi học sinh đã chốt đáp án; từ bị nghe sai được xếp lại ở lượt sau trong cùng phiên.
+
+========================
+5.1 NHỚ BÀI CÓ LỊCH (nguồn: `tools/lib/memory.mjs`, validate chặn nếu thiếu)
+========================
+Mục tiêu của thư viện là "hiểu bài NHỚ BÀI". Các quy định phía trên làm trẻ hiểu trong 5 phút; không có mốc ôn thì sau ba ngày
+kiến thức quay về tay giáo viên. Sáu quy định dưới đây biến chữ "lặp lại cách quãng" thành ngày cụ thể đếm được bằng code.
+
+- LỊCH ÔN CÓ MỐC NGÀY: một errorTag sửa đúng 2 lần liên tiếp → xếp ôn lại vào +1 ngày, +3 ngày, +7 ngày (theo ngày của máy);
+  lần ôn nào cũng đúng thì giãn mốc kế tiếp thành +21 ngày. Đầu phiên đọc localStorage key "miti-review" (chỉ { id, due } —
+  không tên học sinh, không ảnh, không video) và đưa các mục ĐÃ ĐẾN HẠN vào tối đa 4/12 lượt của phiên này, ưu tiên hơn câu mới;
+  mục chưa đến hạn không được xen. localStorage bị chặn thì bỏ hẳn phần lịch và vẫn chơi trọn 12 lượt.
+- XEN CỤM KIẾN THỨC: trong 12 lượt chính phải có >= 3 lượt thuộc cụm KHÁC cụm chính của game (lấy từ "miti-mastery" hoặc
+  QUESTION_DATA cùng khối ở level thấp hơn), đặt xen kẽ chứ không dồn cuối phiên. Trong một cụm vẫn giữ thứ tự dễ → khó, không đảo bước.
+- CÂU MỞ MÀN "EM CÒN NHỚ KHÔNG?": TRƯỚC lượt chính thứ nhất, chiếu 10 giây một câu em từng làm đúng ở phiên trước (theo lịch đến hạn,
+  không gợi ý, không hiện đáp án); em trả lời bằng cơ chế điều khiển đang dùng hoặc chuột. Đúng → mascot reo và giãn sang mốc kế tiếp.
+  Sai → KHÔNG trừ tim, KHÔNG tính là câu sai mới, chỉ xếp mục đó vào lượt 3 kèm lời giải từng bước. Phiên đầu trên máy (không hồ sơ)
+  thì bỏ qua bước này, không báo lỗi.
+- HỎI LẠI "VÌ SAO ĐÚNG?": ở đúng 4/12 lượt (một lượt mỗi hiệp và mọi lượt ôn), ngay sau cú chốt đúng, hiện câu
+  "Vì sao em chọn câu trả lời này?" với 3 phương án trong tối đa 5 giây. Chọn đúng → cộng chuỗi; chọn sai → KHÔNG trừ tim và hiện
+  lại một dòng lời giải. Câu này không tính vào 12 lượt, không rút thời gian đọc đề của lượt kế; bản Giảm hiệu ứng và bản không
+  camera được bỏ bằng một nút "Thôi" mà không penalty. (Chỉ 4/12 lượt là để không phá nhịp >= 12 nhịp chuyển động mỗi phút ở 4.5.)
+- QUÊN THÌ KHÔNG PHẠT: mục từng đúng >= 2 lần mà sai khi ôn lại → không trừ tim, không cắt chuỗi, chỉ hạ lịch về mốc ngắn nhất
+  (+1 ngày) và ghi một dòng vào hồ sơ. Tổng kết thay vì điểm số hiện "Hôm nay em vẫn nhớ: ..." (tối đa 3 id ôn đúng) và
+  "Cần ôn lại: ..." (tối đa 3 id đến hạn nhưng sai), kèm đúng một câu động viên có nội dung cụ thể, không phải chữ "Cố lên".
+- TỜ RỜI CHO GIÁO VIÊN: màn tổng kết có nút "Copy tờ rời" sinh khối chữ tiếng Việt copy được — tên game, ba errorTag yếu nhất,
+  số ngày từ lần chơi gần nhất, lịch ôn sắp tới (ngày + số câu), một đề xuất hành động kiểu "trước ngày 7/10 cho em ôn lại 3 lỗi
+  thiếu mượn bằng 5 phút tại chỗ", và số động tác + phút vận động của phiên. Tờ rời chỉ hiện trên màn hình và vào clipboard máy đó,
+  không gửi lên máy chủ nào, không chứa tên hay ảnh học sinh — dùng chung nguyên tắc riêng tư với bản nghiệm thu.
 
 ========================
 6. NGÂN HÀNG LỖI + TIẾN BỘ (học từ mô hình thư viện lỗi có nhãn)
@@ -300,6 +360,35 @@ vài mục lỗi; nếu chỉ viết "mỗi mục một đáp án đúng duy nh�
 - Mọi juice chạy trong ngân sách particle của mục 4.1 và tôn trọng nút "Giảm hiệu ứng chuyển động";
   khi hit-stop thì không tụt FPS (dùng freeze frame, không dùng sleep).
 
+8.2 THI ĐUA + CAO TRÀO — phần quyết định trẻ có CHỜ ĐỢI được chơi lần nữa
+
+Juice ở 8.1 làm mỗi cú chạm đã mắt, nhưng một game cú chạm đẹp vẫn nhàm sau phút thứ hai nếu không có
+gì để chờ: không mốc để phá, không hiệp căng hơn, không khoảnh khắc mở thưởng. Sáu quy định dưới đây ở
+nguồn `tools/lib/hype.mjs`. Nguyên tắc xuyên suốt: thi đua với CHÍNH MÌNH hoặc với ĐÍCH CHUNG, không bao giờ
+xếp hạng bạn ngồi cạnh (đây là lý do mục 7 cấm leaderboard và hai người chơi không so điểm nhau).
+
+- CÚ "Ồ" BA GIÂY ĐẦU: ngay khi vào gameplay (chưa vào lượt 1), một vật thể AR cỡ lớn bay ngang sát phía trước
+  người chơi kèm vệt neon và tiếng "vút", mascot chào bằng đúng một dòng nhiệm vụ, chữ nhiệm vụ >= 44px.
+  Không mở màn bằng màn chữ dài hay bảng hướng dẫn; hướng dẫn nằm ở nút "Xem cách chuyển động".
+  Bản không camera dùng vệt sáng trên nền tối; bản Giảm hiệu ứng cho vật thể trượt tới chậm và không giật màn hình.
+- KỶ LỤC CỦA CHÍNH EM: localStorage key "miti-best" lưu đúng ba số { điểm cao nhất, chuỗi đúng dài nhất, ngày } —
+  không tên, không ảnh, không nội dung câu hỏi; chế độ hai học sinh tính riêng từng nửa màn hình. Từ hiệp 2 HUD có dòng
+  nhỏ "Kỷ lục: <n> · Em đang: <m>"; khi vượt thì nổ ĐÚNG MỘT lần "PHÁ KỶ LỤC!" 1,2 giây + âm riêng + một thẻ bộ sưu tập;
+  tổng kết viết "Em hơn bản thân lần trước: +<x> điểm". Chưa có "miti-best" thì ẩn hẳn dòng kỷ lục, không hiện số 0.
+- VỆT CỦA EM (ghost): lượt đầu mỗi hiệp, một dải sáng hình người cách điệu (alpha <= 0.35, KHÔNG phải ảnh/video người chơi)
+  chạy trước đúng nhịp lượt tốt nhất phiên trước (lưu { giây, combo } trong "miti-best"); về trước vệt thì +5 điểm và chữ
+  "NHANH HƠN EM HÔM QUA!". Không có dữ liệu thì bỏ vệt, không hiện chữ "thua"/"chậm hơn". Giảm hiệu ứng thay vệt bằng
+  con số ("Mốc của em: 3,2 giây").
+- HIỆP QUYẾT ĐỊNH: ba hiệp leo thang thật — hiệp 1 nền tĩnh, thẻ 4,5 giây; hiệp 2 viền HUD sáng theo combo, thẻ 3,75 giây;
+  hiệp 3 nhãn "HIỆP QUYẾT ĐỊNH": điểm nhân đôi, thêm đúng 1 thẻ vàng, mascot hô mở hiệp, âm nền nhanh hơn (dưới trần 3 lần/giây).
+  Mỗi hiệp vẫn 4 lượt, vẫn trạm nghỉ 5 giây, ngân hàng câu hỏi và level KHÔNG đổi theo hiệp; sai ở hiệp 3 không phạt nặng hơn hiệp 1.
+- NGHI THỨC MỞ THƯỞNG: cuối mỗi hiệp 2,5 giây mở phong bao — ba nhịp quay qua đúng ba phương án (thẻ bộ sưu tập / +10 điểm / quyền
+  chọn câu dễ hơn một bậc) rồi dừng, kèm tiếng "tách". Phần thưởng luôn có, không bao giờ "trắng", và KHÔNG đổi level thích ứng đang chạy
+  (quyền chọn câu dễ hơn chỉ áp dụng cho đúng một lượt). Giảm hiệu ứng và bản không camera mở ngay bằng chữ + nút "Nhận".
+- ĐÍCH CHUNG CỦA NHÓM: cột "Cả nhóm: <x>/<mốc> câu đúng" (mốc mặc định 40, người lớn đổi trong khoảng 20–60) ở dải dưới, tăng theo
+  mỗi lượt đúng của bất kỳ em nào trên máy; chạm mốc thì cả màn ăn mừng 3 giây và mở một thẻ CHUNG. Cột chỉ hiện tổng số câu đúng,
+  không hiện điểm từng em cạnh nhau, không tên, không hạng nhất — đích chung, không phải bảng xếp hạng.
+
 ========================
 9. AN TOÀN + RIÊNG TƯ + TIẾP CẬN
 ========================
@@ -341,7 +430,64 @@ vài mục lỗi; nếu chỉ viết "mỗi mục một đáp án đúng duy nh�
 - Không đổi tên thương hiệu, không xóa logo khi vào gameplay, khi replay hoặc ở chế độ fallback.
 
 ========================
-11. TỰ KIỂM TRA TRƯỚC KHI XUẤT CODE
+11. NGHIỆM THU (game phải tự chứng minh nó đạt chuẩn)
+========================
+Bối cảnh: người dùng dán prompt này vào Gemini Canvas, nhận về một file HTML dài vài nghìn dòng.
+Không có cách nghiệm thu thì 40 quy định phía trên chỉ là 40 lời mong đợi — không ai biết file có toScreen thật không.
+
+- BẢNG KIỂM TỰ ĐỘNG: game có một bảng ẩn, mở bằng cách bấm 7 lần vào logo MiTi hoặc tổ hợp Ctrl+Alt+K.
+  Bảng liệt kê TỪNG ràng buộc kèm trạng thái ĐẠT / CHƯA ĐẠT. Trạng thái đó phải do code kiểm thật lúc chạy,
+  không phải chữ tĩnh kê sẵn. Một bảng báo "ĐẠT" mà không kiểm gì là lỗi nghiêm trọng nhất của game giáo dục.
+  Bảng chỉ người lớn mở được: không trừ tim, không chặn chơi, học sinh không nhìn thấy.
+- 25 MỤC MÁY TỰ KIỂM, mỗi mục một hàm trả true/false:
+  [1] QUESTION_DATA đủ số mục và verifyQuestionBank() ĐÃ chạy trước lượt chơi đầu tiên
+  [2] mọi mục đang phát hành có answer nằm trong choices đúng một lần
+  [3] 📷 drawImage khung hình webcam đi qua toScreen(lx, ly), không còn phép nhân thô với W/H
+  [4] 📷 alpha lớp phủ tối đang dùng <= 0.45
+  [5] 📷 có ít nhất một vật thể neo vào landmark và cập nhật mỗi khung hình
+  [6] 📷 giữ nguyên một tư thế 2 giây không sinh thêm cú chốt nào (cooldown + hysteresis hoạt động)
+  [7] tab ẩn là tự Pause và khi quay lại có đếm 3-2-1
+  [8] 12 lượt chia 3 hiệp và giữa hiệp có trạm nghỉ 5 giây
+  [9] matchMedia prefers-reduced-motion được đọc và có hiệu lực thật
+  [10] bộ đếm flash đo được không thành phần nào bật–tắt quá 3 lần mỗi giây
+  [11] tỉ lệ tương phản tính từ màu thật đang dùng >= 4.5:1 cho chữ thường và >= 3:1 cho chữ lớn
+  [12] 📷 lựa chọn tay thuận được áp dụng vào tay điều khiển
+  [13] localStorage ghi và đọc được cả "miti-collection" lẫn "miti-mastery"
+  [14] 2 câu đúng liên tiếp làm level tăng và câu sai thứ 4 trong chuỗi rơi về level 1
+  [15] không có URL bị cấm nào được tải (kiểm ở danh sách network request thật)
+  [16] chữ ký MiTi có mặt ở cả ba màn Bắt đầu / HUD / Kết quả
+  [17] khởi động 60–90 giây đã chạy trước hiệp 1 và hạ nhiệt 45–60 giây đã chạy trước màn tổng kết
+  [18] nhịp thẻ đúng chuẩn: 3,0–4,5 giây bay vào, ở lại <= 8 giây, phiên đạt >= 12 nhịp chuyển động mỗi phút
+  [19] 📷 đồng hồ thời gian vận động tích lũy đạt >= 60% thời lượng phiên
+  [20] lịch ôn +1, +3, +7 ngày ghi được vào localStorage "miti-review" và đọc lại được sau khi đóng rồi mở tab
+  [21] phiên có >= 3 lượt thuộc cụm khác cụm chính và >= 1 lượt là câu đến hạn ôn, đếm từ danh sách lượt thật
+  [22] câu "Em còn nhớ không?" chạy 10 giây trước lượt 1 và trả lời sai ở đó không trừ tim, không cắt chuỗi đúng
+  [23] HUD có dòng "Kỷ lục: <n> · Em đang: <m>" và PHÁ KỶ LỤC chỉ nổ khi điểm thật vượt mốc trong "miti-best"
+  [24] hiệp 3 chạy "HIỆP QUYẾT ĐỊNH" (nhân đôi điểm, thêm 1 thẻ vàng) nhưng vẫn đúng 4 lượt + trạm nghỉ 5 giây
+  [25] nghi thức mở thưởng cuối hiệp dài 2,5 giây, luôn có phần thưởng, không đổi level thích ứng, mở ngay khi reduced-motion
+  Mục gắn 📷 chỉ áp dụng khi có webcam: bản không camera bỏ 6 mục đó và vẫn phải đạt 19 mục còn lại.
+- XUẤT BẢN VĂN: bảng có nút "Xuất bản văn" sinh một khối chữ tiếng Việt copy được — tên game, bản chuẩn MiTi,
+  ngày giờ, kiểu điều khiển đang chạy, số mục ĐẠT / CHƯA ĐẠT, danh sách mục chưa đạt kèm lý do.
+  Khối chữ chỉ hiện trên màn hình và vào clipboard máy đó; không gửi lên máy chủ nào, không xin quyền, không để lại dữ liệu.
+- MỤC CHƯA ĐẠT PHẢI GIẢI THÍCH ĐƯỢC: mỗi dòng kèm một câu nguyên nhân kỹ thuật cho người lớn
+  (ví dụ "toScreen không được dùng ở drawImage — vật thể đang tính bằng lx * W") và một câu nên sửa thế nào trong prompt.
+  Cấm báo "lỗi" rồi im lặng, cấm chữ chung chung kiểu "hệ thống có vấn đề".
+- 17 VIỆC NGƯỜI THỬ PHẢI BẤM TAY (máy không tự kiểm được, làm theo đúng thứ tự, khoảng 15 phút):
+  đứng xa tới mức chỉ còn hai bàn tay · giữ im một tư thế 5 giây · che nửa người bằng tay · tắt camera giữa vòng ·
+  rút mạng lúc đang tải model · đổi tay thuận sang Trái giữa chừng · bật reduced-motion ở hệ điều hành rồi mở game ·
+  cố tình sai 4 câu liên tiếp · mở bằng điện thoại đặt dọc · đưa một học sinh lớp 4 chưa đọc hướng dẫn chơi thử 60 giây ·
+  chơi trọn một phiên rồi đứng lại 30 giây xem em có thở nhanh hơn và người ấm lên rõ rệt không ·
+  làm động tác cúi thấp ở lượt cuối rồi đứng thẳng lên nhanh xem có choáng váng hay mất thăng bằng không ·
+  chơi hai phiên cách nhau một ngày xem phiên sau có mở bằng đúng câu hôm trước và xếp câu đến hạn ôn lên trước câu mới không ·
+  cố tình trả lời sai một câu từng đúng hai lần ở phiên hôm sau xem game có giữ lời "quên thì không phạt" hay vẫn trừ tim.
+  vừa bấm BẮT ĐẦU được 3 giây — em có cảm giác đây là game thật (một cú "ồ") hay chỉ là màn chữ?
+  chơi hai phiên liên tiếp — phiên sau có hiện đúng "Kỷ lục: <n>" của phiên trước và vệt ghost chạy theo đúng lượt tốt nhất không?
+  chơi đến hiệp 3 — em có nhận ra hiệp này căng hơn thật (điểm nhân đôi, thẻ vàng thêm) mà câu hỏi không khó hơn không?
+  Bảng in kèm từng việc và ô ghi kết quả: `prompts/CHECKLIST_NGHIEP_THU.md`.
+- THIẾU MỤC NÀO THÌ SỬA PROMPT, KHÔNG SỬA TAY FILE HTML: dán lại nguyên văn quy định tương ứng vào cuối prompt rồi sinh lại file.
+
+========================
+12. TỰ KIỂM TRA TRƯỚC KHI XUẤT CODE
 ========================
 [ ] camera chỉ xin quyền sau nút BẮT ĐẦU
 [ ] có trạng thái loading / permission / ready / tracking / error bằng tiếng Việt
@@ -351,6 +497,22 @@ vài mục lỗi; nếu chỉ viết "mỗi mục một đáp án đúng duy nh�
 [ ] vùng đích nằm sát mép khung và đổi vị trí theo lượt, không chồng lên ngực–mặt học sinh
 [ ] xen kẽ trái/phải/hai tay, không quá 4 lượt liên tiếp cùng một bên; mỗi 3 lượt đổi mặt phẳng động tác
 [ ] 3 hiệp × 4 lượt, giữa hiệp có trạm nghỉ 5 giây; tổng kết có thẻ đếm số động tác và phút chơi
+[ ] khởi động 60–90 giây chạy TRƯỚC hiệp 1 và hạ nhiệt 45–60 giây chạy TRƯỚC màn tổng kết, không tính điểm, không trừ tim
+[ ] nhịp thẻ 3,0–4,5 giây bay vào, ở lại <= 8 giây, giữa hai lượt <= 1,5 giây; thời gian đọc đề không bị rút
+[ ] phiên đạt >= 12 nhịp chuyển động mỗi phút và đồng hồ vận động >= 60% thời lượng, cả hai đếm từ code thật
+[ ] không có động tác nhảy tiếp đất, xoay thân nhanh quá 90 độ, hay hai tay trên cao liên tục quá 15 giây; cúi thấp tối đa 3/12 lượt
+[ ] nhắc uống nước đúng một dòng ở tổng kết khi phiên >= 6 phút, không pop-up giữa vòng chơi
+[ ] errorTag sửa đúng 2 lần được xếp ôn vào +1/+3/+7 ngày trong "miti-review", ôn vững thì giãn +21 ngày
+[ ] 3 giây đầu vào gameplay là một cú "ồ" bằng vật thể AR, không phải màn chữ
+[ ] "miti-best" lưu đúng ba số, HUD hiệp 2 hiện "Kỷ lục: <n> · Em đang: <m>" và PHÁ KỶ LỤC chỉ nổ một lần
+[ ] vệt ghost là dải sáng alpha <= 0.35 (không phải ảnh người chơi), không có dữ liệu thì ẩn, không chữ "thua"
+[ ] hiệp 3 "HIỆP QUYẾT ĐỊNH" nhân đôi điểm nhưng vẫn 4 lượt + trạm nghỉ 5 giây, level không đổi theo hiệp
+[ ] mở thưởng cuối hiệp 2,5 giây, luôn có quà, không đổi level thích ứng, reduced-motion thì mở ngay
+[ ] cột "Cả nhóm: <x>/<mốc>" chỉ hiện tổng câu đúng, không điểm từng em cạnh nhau, không tên, không hạng nhất
+[ ] phiên có >= 3 lượt xen cụm khác và >= 1 lượt là câu đến hạn ôn; phiên đầu trên máy thì bỏ qua lịch mà không báo lỗi
+[ ] 10 giây "Em còn nhớ không?" chạy trước lượt 1; sai ở đó không trừ tim, không cắt chuỗi, chỉ đưa vào lượt 3
+[ ] "Vì sao đúng?" xuất hiện ở đúng 4/12 lượt, không tính vào 12 lượt, không rút thời gian đọc đề
+[ ] câu quen lại mà sai không bị phạt; tổng kết có "Hôm nay em vẫn nhớ / Cần ôn lại" và nút "Copy tờ rời" cho giáo viên
 [ ] nhận diện chạy 1 lần mỗi 2–3 khung hình, particle có pool, có chế độ tự giảm chi tiết khi FPS tụt
 [ ] tab ẩn hoặc mất tiêu điểm là tự Pause; quay lại đếm 3-2-1 và reset cooldown cùng bộ làm mượt
 [ ] khung hình tối/ngược sáng thì gợi ý chỉnh ánh sáng và vẫn chơi được tiếp
@@ -386,6 +548,11 @@ vài mục lỗi; nếu chỉ viết "mỗi mục một đáp án đúng duy nh�
 [ ] 2 câu đúng liên tiếp lên một level, 2 câu sai liên tiếp xuống một level cùng errorTag
 [ ] không cho sai quá 3 câu liên tiếp; câu thứ 4 là level 1 kèm lời giải từng bước, chọn lại đúng không trừ tim lần hai
 [ ] không hiện "level"/sao xếp hạng cho học sinh; phân bố level chỉ ở màn tổng kết cho giáo viên
+[ ] bảng kiểm ẩn mở bằng 7 lần chạm logo MiTi hoặc Ctrl+Alt+K, trạng thái ĐẠT do code kiểm thật lúc chạy
+[ ] cả 25 mục máy tự kiểm đều có hàm kiểm tương ứng, không mục nào là chữ kê sẵn
+[ ] mục CHƯA ĐẠT kèm nguyên nhân kỹ thuật + cách sửa trong prompt, không có dòng "lỗi hệ thống"
+[ ] nút "Xuất bản văn" copy được khối chữ tiếng Việt, không gửi lên máy chủ nào
+[ ] bản không camera bỏ đúng 6 mục 📷 và vẫn đạt 19 mục còn lại, không bỏ luôn bảng kiểm
 [ ] fallback chuột/chạm/phím chơi trọn vẹn, tự kích hoạt khi camera lỗi
 [ ] QUESTION_DATA có ít nhất 40 mục (Toán) hoặc 60 mục (Tiếng Anh), mỗi mục có đáp án + lời giải + errorTag + loiViet
 [ ] dữ liệu đặt đầu file, code engine đặt sau, không có chỗ nào rút gọn
@@ -444,3 +611,53 @@ Sau khi tự kiểm tra, CHỈ xuất ra file HTML hoàn chỉnh, không kèm gi
   khiến em ngồi gần thì fire liên tục, em ngồi xa thì vung hết cỡ vẫn không được tính.
 - **60/40 + Pause tự động + ngân sách FPS**: ba quy tắc này đến từ lớp học thật — máy cấu hình thấp, tab bị ẩn khi cô chiếu màn hình,
   và học sinh nhanh chóng phát hiện rằng vung tay bừa vẫn thắng.
+- **Bảng kiểm nghiệm thu nằm TRONG game**: quy trình của thư viện này là "chỉ viết prompt", file HTML do Gemini Canvas sinh ra
+  và không ai đọc hết vài nghìn dòng để xem `toScreen` có thật được dùng ở `drawImage` hay không. Không có nghiệm thu thì
+  bốn mươi quy định phía trên chỉ là bốn mươi lời mong đợi. Bắt game tự kiểm bằng hàm true/false biến lời hứa thành trạng thái đọc được.
+- **Trạng thái phải do code kiểm, không phải chữ kê sẵn**: một bảng tĩnh in sẵn chữ "ĐẠT" còn hại hơn không có bảng,
+  vì người lớn tưởng là đã kiểm. Đây là lý do quy định ghi rõ "không phải một danh sách chữ tĩnh".
+- **Tách 25 mục máy / 17 việc người thử**: cái gì máy kiểm được thì đừng đùn cho giáo viên; cái máy không kiểm được
+  (cháu có hiểu luật chơi mà không đọc hướng dẫn không, rút mạng thì sao) thì đừng giả vờ kiểm. Con số 15 phút là thời lượng
+  một tiết thực tế, không phải danh sách dài vô hạn.
+- **Mục chưa đạt phải nói nguyên nhân và cách sửa**: bảng kiểm chỉ báo "lỗi" sẽ bị bỏ qua; kèm câu "thiếu ở dòng nào,
+  dán lại quy định nào vào prompt" thì người viết prompt sửa được ngay, và sửa prompt chứ không sửa tay file HTML.
+- **Khởi động + hạ nhiệt là hai bước bị thiếu khi "vận động to" đã đủ**: vòng 3 buộc động tác >= 50% tầm với, và kết quả là
+  game bắt trẻ với tay hết tầm ngay sau nút BẮT ĐẦU rồi tắt máy khi hết 12 lượt. Đứng lên ngồi xuống 4 phút với cơ nguội là cách
+  nhanh nhất để một em đau vai và nghỉ luôn môn này — cấu trúc tiết thể dục (làm nóng → tập → giãn) phải viết thành quy định riêng.
+- **Cường độ phải đo được, không được là cảm giác "hơi mệt"**: ">= 12 nhịp chuyển động mỗi phút" và "đồng hồ vận động >= 60% thời lượng"
+  là hai con số giáo viên dự giờ kiểm được bằng mắt và code kiểm được bằng bộ đếm; không có chúng thì mọi game 12 lượt đều tự xưng là bài thể dục.
+- **Trần tải trọng liệt kê từng động tác bị cấm**: nhảy tiếp đất, xoay thân nhanh quá 90 độ, giữ tay trên cao quá 15 giây là những thứ
+  y tế trường học không cho làm hàng loạt. Nói "an toàn khi vận động" thì mô hình vẫn sinh động tác nhảy; phải kể tên mới chặn được.
+- **Nhắc uống nước một dòng, không pop-up**: đây là lời khuyên cho giáo viên, không phải cơ chế chơi. Pop-up giữa vòng vừa cắt mạch vui
+  vừa bị trẻ bấm bỏ; một dòng ở màn tổng kết thì người lớn đọc được mà học sinh không bị chặn.
+- **"Cách quãng" phải thành mốc ngày**: quy định cũ chỉ viết "lặp lại cách quãng" trong ngoặc, nên mô hình chọn một hàng đợi
+  "câu sai gần nhất" và coi thế là xong — trẻ gặp lại câu sai sau 30 giây chứ không phải sau 3 ngày, tức là không có trí nhớ dài hạn.
+  +1/+3/+7/+21 là thang giãn cách quen dùng trong tài liệu sư phạm phổ thông và đếm được bằng `Date` trong một file HTML.
+- **Trích hồi trước khi dạy lại**: câu "Em còn nhớ không?" 10 giây bắt trẻ kéo kiến thức ra khỏi trí nhớ TRƯỚC khi được xem lại —
+  đó là cơ chế tạo trí nhớ, không phải bài kiểm tra thưởng phạt. Nếu để mô hình tự quyết thì nó Will hiển thị lại đáp án cho vui,
+  nên quy định ghi "không gợi ý, không hiện đáp án".
+- **Quên thì không được phạt**: nếu câu ôn lại mà trừ tim, trẻ học cách không mở game lần sau — đúng thứ mà một công cụ lớp học
+  phải tránh nhất. Đổi phạt bằng "hạ lịch ôn về +1 ngày" biến lần quên thành một lượt dạy kèm, đồng bộ với sàn chống nản ở mục 4.4.
+- **"Vì sao đúng?" chỉ ở 4/12 lượt**: tự giải thích giúp nhớ lâu nhưng mỗi câu hỏi thêm 5 giây ngồi yên; hỏi cả 12 lượt sẽ kéo
+  nhịp xuống dưới 12 nhịp chuyển động mỗi phút ở mục 4.5. Chọn 4 (một mỗi hiệp + mọi lượt ôn) là chỗ hai mục tiêu không đạp nhau.
+- **Tờ rời thay vì hệ thống báo cáo**: cô giáo không cần dashboard, cần một đoạn chữ copy được dán vào sổ chủ nhiệm. Vì thế tờ rời
+  chỉ có 5 mục cố định, không tên học sinh, không gửi đi đâu — cùng nguyên tắc riêng tư với bản nghiệm thu.
+- **Ba giây đầu là chỗ thư viện này trống nhất**: khảo sát 85 prompt đo được 0 lần các chữ "kỷ lục", "phá kỷ lục", "bóng ma",
+  "mở thưởng", "hiệp quyết định", "đích chung" — bộ quy định đã đủ nhớ lâu và đủ vận động, nhưng không có gì tạo sự chờ đợi
+  trước khi bấm Chơi. Một cú "ồ" bằng vật thể AR bay ngang + một dòng nhiệm vụ >= 44px rẻ hơn nhiều so với màn hướng dẫn mà
+  không em nào đọc, và đó đúng là chỗ trẻ lớp 4–5 quyết định có chơi tiếp hay không.
+- **Kỷ lục của chính em, không phải hạng của bạn**: thi đua trong lớp chỉ an toàn khi mốc so sánh là con số em đó đã đạt.
+  `miti-best` vì thế chỉ giữ ba số { điểm cao nhất, chuỗi đúng dài nhất, ngày } — không tên, không ảnh, không nội dung câu hỏi —
+  và "chưa có dữ liệu thì ẩn hẳn dòng kỷ lục" chặn đúng tình huống trẻ mới chơi thấy số 0 ngay HUD.
+- **Vệt ghost là dải sáng alpha <= 0.35, không phải ảnh người**: "chơi với chính mình của phiên trước" là động lực rất mạnh,
+  nhưng lưu ảnh hay khung hình người chơi thì phạm quy định riêng tư. Chỉ lưu { giây, combo } rồi dựng lại bằng một dải sáng
+  cách điệu giữ được cảm giác rượt đuổi mà không giữ dữ liệu nào của em.
+- **Hiệp 3 nhân đôi điểm nhưng KHÔNG khó hơn**: cao trào phải đến từ điểm và nhịp hình ảnh, không từ đề bài. Nếu hiệp cuối
+  cũng tăng độ khó thì đây lại là "tăng độ khó theo vị trí" đội lốt — cái đã bị bỏ để nhường cho độ khó thích ứng — và trẻ yếu
+  sẽ trượt đúng lúc bị cắt timer. Vẫn 4 lượt, vẫn trạm nghỉ 5 giây, sai vẫn dừng 2 giây và hiện lời giải.
+- **Mở thưởng luôn có phần thưởng**: quay số mà ra "trắng" là cách nhanh nhất để trẻ thôi bấm lần sau. Ba phương án cố định
+  (thẻ bộ sưu tập / +10 điểm / một lượt chọn câu dễ hơn một bậc) và "không đổi level thích ứng đang chạy" là để phần thưởng
+  không âm thầm phá bộ đếm chuỗi ở mục độ khó thích ứng.
+- **Đích chung thay bảng xếp hạng**: cột "Cả nhóm: <x>/<mốc>" cho cả lớp một lý do để cổ vũ nhau mà vẫn giữ nguyên tắc
+  "không xếp hạng, không leaderboard" — mốc 40 câu đúng (người lớn chỉnh 20–60) là mức cho một nhóm nhỏ đổi máy nhau,
+  không phải cuộc đua giữa các cá nhân.
