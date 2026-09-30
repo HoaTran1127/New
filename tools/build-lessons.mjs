@@ -72,6 +72,7 @@ Không dùng Tailwind Play CDN, không file .css/.js/.json/ảnh/mp3 ngoài. Ch�
 - Phạm vi kiến thức: chỉ dùng nội dung Toán lớp ${L.lop} đã học. Cấm ra đề vượt chương trình.
 - Lỗi học sinh thường mắc ở chủ đề này (mỗi câu sai ghi đúng một trong các lỗi này): ${ERROR_NOTES[L.cluster]}.
 - Đồ dùng thật cô giáo nên có trên bục để đối chiếu với bảng phấn ảo: ${L.vat}.
+- ${LESSON.paperProps}
 - Dòng ghi nhớ viết bằng phấn ở cuối tiết, đúng một câu: "${L.chot}"
 - Sĩ số là dữ liệu đầu vào của tiết học, nhập một lần cho mỗi lớp cùng lượt với tên lớp: mọi con số về lớp đều chia cho M này — "đã lên 9/32", "camera thấy 8/32 em", "9/32 em còn vướng ở SƠ ĐỒ", độ phủ camera. Không có M thì ba con số kia phải ẩn đi, không được hiển thị một cột hoặc một phần trăm vô nghĩa.
 
@@ -119,6 +120,7 @@ ${jsonBlock(EXAMPLES[L.cluster], cl.tags, notes)}
 - ${LESSON.strayHands}
 - ${LESSON.retain}
 - ${LESSON.multiClass}
+- ${LESSON.bigClass}
 
 6. NỀN AR, CAMERA VÀ NHẬN DIỆN TAY
 ${AR_RENDER}
@@ -137,9 +139,10 @@ ${AR_RENDER}
 - Camera chỉ bật được trong môi trường an toàn (HTTPS, localhost hoặc mở file trực tiếp). Nếu trình duyệt chặn, báo một dòng tiếng Việt "Muốn dùng camera thì mở file qua HTTPS hoặc bấm nút Bật camera lại" rồi dạy tiếp bằng chuột và bàn phím, không để giáo viên kẹt ở màn lỗi tiếng Anh.
 - Nếu CDN hoặc model không tải được: hiện thông báo tiếng Việt rồi chạy tiếp ở chế độ không camera, tiết dạy vẫn đủ 100% nội dung.
 
-7. DẠY KHI KHÔNG CÓ CAMERA VÀ KHÔNG CÓ MẠNG (bắt buộc, đây là chế độ dạy chính ở nhiều lớp)
+7. DẠY KHI KHÔNG CÓ CAMERA, KHÔNG CÓ MẠNG, VÀ KHI MẤT ĐIỆN (bắt buộc, đây là chế độ dạy chính ở nhiều lớp)
 - ${LESSON.noNetwork}
 - ${LESSON.noAdmin}
+- ${LESSON.powerCut}
 - Chuột và bàn phím thay được MỌI thao tác tay: giữ chuột trái hoặc rê ngón tay trên màn hình cảm ứng là viết phấn, phím E là giẻ lau, phím cách là sang bước, mũi tên trái là lùi bước, R là phát lại bước, S là lưu bảng, P là in bảng.
 - Kéo thả vật thật và thẻ đáp án bằng chuột; chấm ngón tay thay bằng một cú chạm.
 - Có nhãn "Chế độ không dùng camera" ở góc màn chiếu và nút Bật camera riêng, không cần tải lại trang.
@@ -182,7 +185,7 @@ ${AR_RENDER}
 12. ĐẦU RA
 - Chỉ xuất toàn bộ file HTML hoàn chỉnh, không kèm giải thích dài.
 - Không TODO, không pseudocode, không "...", không "// code tương tự ở trên", không phần "bạn tự bổ sung".
-- Tự kiểm tra trước khi xuất: ${LESSON_SHORT} · ${CHALK_SHORT} · ${HANDOUT_SHORT} · ${ACCESS_SHORT} · có đủ năm bước và không bước nào tự chuyển khi giáo viên chưa bấm · LESSON_DATA đủ 6 mục với 2 mục mẫu nguyên văn · bảng không tự lau ở bất kì bước nào · in được bản nền trắng chữ đen · phiếu bài tập in từ đúng LESSON_DATA và trang đáp án đi sau tách riêng · khung "Nội dung để chép" đúng ba dòng · có bộ đếm lượt "đã lên N/M" ở dải điều khiển và không khi nào lên màn chiếu · "Chạy thử 5 phút" và checklist 10 việc chạy được không cần camera · "Xuất cho đồng nghiệp" và "In phiếu dự giờ" không chứa tên học sinh · chữ ký MiTi ở ba chỗ · file chạy độc lập không lỗi console.
+- Tự kiểm tra trước khi xuất: ${LESSON_SHORT} · ${CHALK_SHORT} · ${HANDOUT_SHORT} · ${ACCESS_SHORT} · có đủ năm bước và không bước nào tự chuyển khi giáo viên chưa bấm · LESSON_DATA đủ 6 mục với 2 mục mẫu nguyên văn · bảng không tự lau ở bất kì bước nào · in được bản nền trắng chữ đen · phiếu bài tập in từ đúng LESSON_DATA và trang đáp án đi sau tách riêng · khung "Nội dung để chép" đúng ba dòng · có bộ đếm lượt "đã lên N/M" ở dải điều khiển và không khi nào lên màn chiếu · "Chạy thử 5 phút" và checklist 10 việc chạy được không cần camera · "Xuất cho đồng nghiệp" và "In phiếu dự giờ" không chứa tên học sinh · mọi tỉ lệ về lớp đều chia cho sĩ số đã nhập, chưa có sĩ số thì ẩn tỉ lệ · mất điện thì bản in + hình cắt giấy vẫn đi đủ năm bước · chữ ký MiTi ở ba chỗ · file chạy độc lập không lỗi console.
 \`\`\`
 
 ## Ghi chú cho người tạo prompt (không gửi Gemini)
@@ -251,7 +254,7 @@ ${byLop[5].map(row).join('\n')}
 - Thêm cụm kiến thức mới: sửa \`tools/data/clusters.mjs\`, \`tools/data/props.mjs\` (đủ 5 trường) và \`tools/data/lessons.mjs\` (đủ 3 trường), rồi chạy \`node tools/build.mjs\`.
 - Đổi quy định bảng phấn: \`tools/lib/chalk.mjs\` (10 quy định).
 - Đổi quy định từ bảng ra vở: \`tools/lib/handout.mjs\` (3 quy định).
-- Đổi quy định chế độ giảng bài: \`tools/lib/lesson.mjs\` (29 quy định).
+- Đổi quy định chế độ giảng bài: \`tools/lib/lesson.mjs\` (32 quy định).
 - \`node tools/validate.mjs\` sẽ chặn nếu thiếu quy định nào, nếu vật thật thiếu trường, hoặc nếu cơ chế game lọt vào giáo án.
 `;
 }

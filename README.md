@@ -225,7 +225,7 @@ Trình tự này theo khung **Concrete – Representational – Abstract**: lỗ
 - **Chống mỏi tay** (viết phấn giữa không trung là động tác mỏi nhanh nhất của hand tracking): chế độ **chạm-bật viết** để không phải giữ pinch, **nghỉ bắt buộc sau 90 giây** pinch liên tục kèm đếm ngược 5 giây, khay phấn đặt ngang khuỷu tay làm điểm tựa, và **mất landmark quá 500 ms thì nét dở đóng băng tại chỗ** chứ không xoá hay nhảy nét.
 - **Lưu bảng của tiết dạy**: tuần tự hoá nét vẽ + vật + sơ đồ vào `localStorage` khoá `miti-board`, tối đa **200 KB**, có nút Lưu / Mở / In (nền trắng chữ đen). **Tuyệt đối không lưu ảnh hay video camera.**
 
-### 👩‍🏫 Hai mươi chín quy định chế độ giảng bài (`tools/lib/lesson.mjs`)
+### 👩‍🏫 Ba mươi hai quy định chế độ giảng bài (`tools/lib/lesson.mjs`)
 
 - **Giáo viên trình bày**: màn chiếu 16:9, bảng chiếm ≥ 70%, chữ phấn **≥ 40 px** (lớn hơn mức 34 px của game) vì người đọc đứng ở cuối phòng; điều khiển trọn bài bằng chuột và bàn phím, camera chỉ bật khi mời em lên bảng.
 - **Không một cơ chế game nào**: không tim, điểm, combo, xếp hạng, đồng hồ gây áp lực, hit-stop, giật màn hình, mascot. Sai thì chỉ có một dòng phấn đỡ bằng chữ.
@@ -262,7 +262,11 @@ Trình tự này theo khung **Concrete – Representational – Abstract**: lỗ
 - **Cô phải chạy thử lúc ở nhà, không phải lúc 7h sáng trước 35 em**: nút "Chạy thử 5 phút" đi hết năm bước không cần camera không cần lớp rồi in kết quả "đã thử 5/5 bước"; nút "Dạy ngay" bỏ mọi cấu hình (lớp vừa dùng, sĩ số vừa nhập, camera TẮT, chữ cỡ lớp đông) và vào bước KHỞI ĐỘNG trong ≤ 3 giây. Lần đầu mở một giáo án lạ hiện **đúng một** checklist 10 việc chuẩn bị in trên một trang A4, mỗi việc một ô tick. Mọi thông báo trên màn chiếu là một dòng ≤ 90 ký tự, không thuật ngữ kỹ thuật, phím tắt in ngay trên nhãn nút.
 - **Một giáo án đi qua nhiều giáo viên và nhiều năm học**: "Xuất cho đồng nghiệp" chép tệp `.json` gồm `LESSON_DATA`, cấu hình ba chặng, sĩ số và nhãn lỗi — **không chứa tên học sinh**; người nhận bấm "Nhập giáo án", không cài gì thêm. "In phiếu dự giờ" ra một trang A4 với năm bước kèm ngân sách phút và tối đa 8 dòng ghi, chia ba cột ("bước nào cả lớp dừng lâu" · "câu nào nhiều em sai theo nhãn lỗi nào" · "chỗ nào phải giảng lại bằng sơ đồ") — đúng lối sinh hoạt chuyên môn theo nghiên cứu bài học, góp ý dựa vào việc học sinh đã làm. Bản bảng lưu mang nhãn "4A · 2026-09-14 · 32 em"; bản cũ hơn 30 ngày **không tự xoá**, chỉ gợi ý xuất ra tệp khi gần hết trần 200 KB.
 
-Nguồn tham chiếu cho các vòng nâng cấp (CRA, lời giải mẫu, think-pair-share, vé kết thúc tiết, camera trong lớp học, máy thật trong lớp học, hình học camera, lớp học hoà nhập, phân lượt lên bảng và giáo án dùng chung cả tổ) ghi ở [docs/AR_GIANG_DAY_TOAN_NGUON.md](docs/AR_GIANG_DAY_TOAN_NGUON.md).
+- **Sĩ số chuẩn là 35, sĩ số thật có thể là 45–55 — mọi con số về lớp phải là hàm của M**: "lớp 35 em" và "cách màn chiếu 7–8 m" là viết theo chuẩn xếp lớp của Bộ GD&ĐT, không phải theo thực tế đô thị. Trần lượt lên bảng thành `clamp(round(M/3), 12, 16)` (35 em → đúng 12 như quy định cũ, 45 em → 15, 55 em → 16); khi M > 40 thì "camera thấy ≥ 2/3 số em" là bất khả thi với webcam laptop nên "Quay lớp" tự chuyển sang **mẫu đại diện** ("ước lượng từ 3/5 dãy, không phải cả lớp") và Bảng con thành mặc định; "Xem thử từ cuối lớp" có thêm nấc **12 m** và được chọn trước khi M > 40. Chưa nhập sĩ số thì **cấm** in "1/3 lớp" hay một tỉ lệ nào đó.
+- **Mất điện giữa tiết là chuyện có thật, và nó không được làm mất bài**: xin Screen Wake Lock ngay khi vào dạy (thử `"wakeLock" in navigator`, mất lock thì tự xin lại khi tab quay lại, không có API thì nói một dòng tiếng Việt và dạy tiếp); trước giờ dạy cô in một bản bảng coi như bảo hiểm — mất điện thì tiết vẫn đi đủ mạch năm bước bằng bản in + vật thật trên tay + phiếu. Cấm hiện màn hình lỗi "mất kết nối" che hết bài. Không có API đọc pin đáng tin ở mọi trình duyệt nên thay vì đoán, công cụ hỏi một dòng "cắm điện hay chạy pin?" — chọn "pin" thì bật sẵn "Chạy nhẹ"; **không bao giờ** đòi cắm điện như điều kiện để dạy.
+- **Không có bộ đồ dùng dạy học thì vẫn phải có vật thật**: vật thật TRÊN TAY học sinh lấy từ một trong ba nguồn — giấy cắt từ nút "In vật thật" (một tờ A4 đủ bộ cho bàn 4 em, cắt trong ≤ 10 phút, cùng tỉ lệ và cùng số phần với hình trên bảng), đồ có sẵn trong lớp mà cả lớp thống nhất "một đơn vị đếm được là gì" (viên phấn, que tính, nắp chai, hạt nhãn), hoặc đồ nhà mang lên. **Không được** thay bước VẬT THẬT bằng cả lớp nhìn cô kéo chuột: trình tự vật thật → sơ đồ → phép tính tồn tại để tay được chạm trước khi mắt đọc kí hiệu. Cụm không cắt giấy được (thể tích, hai xe chuyển động) thì bản in là lưới khối xếp được hoặc dải thời gian cắt dán, không phải bài tập viết.
+
+Nguồn tham chiếu cho các vòng nâng cấp (CRA, lời giải mẫu, think-pair-share, vé kết thúc tiết, camera trong lớp học, máy thật trong lớp học, hình học camera, lớp học hoà nhập, phân lượt lên bảng, giáo án dùng chung cả tổ, sĩ số thật và mất điện) ghi ở [docs/AR_GIANG_DAY_TOAN_NGUON.md](docs/AR_GIANG_DAY_TOAN_NGUON.md).
 
 ### 📄 Ba quy định "từ bảng ra vở" (`tools/lib/handout.mjs`)
 
@@ -306,7 +310,7 @@ tools/lib/classroom.mjs      quy định lớp học thật (vùng an toàn cho 
 tools/lib/access.mjs         tiếp cận + an toàn thần kinh (trần nhấp nháy, reduced-motion, không chỉ dùng màu, phụ đề, tương phản, tay thuận)
 tools/lib/verify.mjs         tự kiểm chứng đề + độ khó thích ứng (verifyQuestionBank, nhiễu theo lỗi thật, guard phạm vi, chống mẹo, level thích ứng, sàn chống nản)
 tools/lib/chalk.mjs          bảng phấn + vật thật, 10 quy định — dùng cho BỘ GIÁO ÁN
-tools/lib/lesson.mjs         chế độ giảng bài, 29 quy định — dùng cho BỘ GIÁO ÁN
+tools/lib/lesson.mjs         chế độ giảng bài, 32 quy định — dùng cho BỘ GIÁO ÁN
 tools/lib/handout.mjs        từ bảng ra vở, 3 quy định (phiếu in, đáp án, chép vào vở)
         │
         └─ node tools/build.mjs

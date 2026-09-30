@@ -1,4 +1,4 @@
-# Giáo án AR trên bảng phấn — nguồn cộng đồng và bài học sau 10 vòng
+# Giáo án AR trên bảng phấn — nguồn cộng đồng và bài học sau 11 vòng
 
 Tài liệu này để **người khác tham khảo và nối tiếp**, không phải mô tả tính năng. Phần tính năng nằm ở
 [`prompts/giao-an/README.md`](../prompts/giao-an/README.md); ở đây chỉ ghi: cái gì đã đo được, cái gì đã
@@ -7,19 +7,21 @@ thay đổi vì số liệu, và nên đọc gì trước khi sửa tiếp.
 ## Nguyên tắc làm việc đã trả giá mà thành
 
 1. **Đo trước khi thêm quy định.** Mỗi vòng bắt đầu bằng một lệnh `grep` trên đúng 39 file giáo án đã sinh,
-   chứ không bắt đầu bằng ý tưởng. Bảy vòng gần nhất đều tìm thấy lỗ 0/39 — nghĩa là nếu ngồi nghĩ thì
+   chứ không bắt đầu bằng ý tưởng. Tám vòng gần nhất đều tìm thấy lỗ 0/39 — nghĩa là nếu ngồi nghĩ thì
    sẽ nghĩ ra thứ đã có sẵn.
 2. **Đo cả chỗ mình tự mâu thuẫn.** Vòng 9 không đi tìm ý mới: nó đọc lại chính các quy định đã có và thấy
    hai quy định cũ đòi cái không thể cùng có — một webcam vừa phải nhìn bàn tay em đứng trước bảng,
    vừa phải đếm ngón tay 35 em cuối phòng. Lỗi kiểu này `grep` thường không bắt được, vì mỗi từ khoá đều
    *có* trong file. Vòng 10 cũng là một phép chia bị bỏ sót: "12 lượt một tiết", "hàng đợi 4 em" và
-   "lớp 35 em" đều nằm sẵn trong cùng một file, chỉ có 12 < 35 là chưa ai đem chia cho ai.
+   "lớp 35 em" đều nằm sẵn trong cùng một file, chỉ có 12 < 35 là chưa ai đem chia cho ai. Vòng 11 là một
+   dạng lỗi thứ ba: một con số **đúng chuẩn** ("sĩ số tiểu học không quá 35") đã bị chép nguyên văn vào 39
+   file như thể nó là số đo của lớp thật, và thành ra mọi tỉ lệ trong giáo án đều vô nghĩa ở lớp 45 em.
 3. **Quy định phải có con số.** "Chữ phải to" không kiểm chứng được; "≥ 40 px **và** ≥ 5.5% chiều cao khung
    hình, ≤ 12 chữ một dòng" thì validator bắt được. Mọi quy định trong `tools/lib/*.mjs` là chuỗi nguyên văn,
    `tools/validate.mjs` so bằng `includes()`, nên lời văn và mắt kiểm không bao giờ lệch nhau.
 4. **Chốt chặn hai chiều.** Cơ chế game lọt vào giáo án và quy định giáo án lọt sang game đều làm build đỏ.
    Thêm một quy định mới là tự động thêm một khoá bị cấm ở phía bên kia (`LESSON_FAMILY_RULES`).
-5. **Probe đột biến là đơn vị kiểm thử thật.** 58 phép, mỗi phép phá đúng một thứ và đòi đúng thông báo.
+5. **Probe đột biến là đơn vị kiểm thử thật.** 63 phép, mỗi phép phá đúng một thứ và đòi đúng thông báo.
    Không có probe thì một quy định chỉ là câu văn đẹp.
 6. **Tách công cụ giảng bài khỏi game.** Cùng một kiến thức, hai động cơ đối lập: game cần hồi hộp,
    tiết giảng cần giáo viên cầm lái. Nhét tim/điểm/combo vào bảng phấn làm em lên bảng sợ sai hơn là muốn hiểu.
@@ -38,6 +40,7 @@ thay đổi vì số liệu, và nên đọc gì trước khi sửa tiếp.
 | 8 | 0/39 phòng không có máy chiếu · 0/39 trần RAM và số model chạy cùng lúc · 0/39 phát hiện năng lực trình duyệt | `noProjector`, `oldHardware`, `browserCompat` |
 | 9 | 0/39 nói camera quay cái gì (trong khi 39/39 đòi vừa soi bảng vừa đếm tay 35 em) · 0/39 nhắc quyền quản trị và `file://` · 0/39 nhắc em không giơ được tay | `cameraGeometry`, `noAdmin`, `physicalAccess` |
 | 10 | 39/39 viết "12 lượt một tiết" và "35 em" nhưng 0/39 biết em nào đã lên · 0/39 cách chạy thử khi chưa có lớp · 0/39 nhắc đồng nghiệp, năm học sau, nhập/xuất giáo án | `boardEquity`, `rehearsal`, `lessonStudy` + mục 10 mới (khung thành 13 mục) |
+| 11 | 39/39 chép "lớp 35 em" và "cách màn chiếu 7–8 m" như số đo lớp thật · 0/39 mất điện giữa tiết · 0/39 nhắc bộ đồ dùng dạy học hoặc đường vật thật bằng giấy | `bigClass`, `powerCut`, `paperProps` + mục 7 đổi tên để gồm cả mất điện |
 
 ## Vì sao chọn những con số đang dùng
 
@@ -71,6 +74,22 @@ thay đổi vì số liệu, và nên đọc gì trước khi sửa tiếp.
   tính nguyên tắc. Chiều ngược lại cũng phải nói thẳng: bài báo chỉ đo hiệu năng trên **mobile GPU**
   (Pixel 3, S20, iPhone 11) chứ không đo CPU, và tự nhận chịu được "large scale span (~20x)" — nên mọi con
   số FPS và khoảng cách trong repo này **không phải** số liệu của bài báo.
+- **`clamp(round(M/3), 12, 16)` cho trần lượt lên bảng.** 35 em phải ra đúng 12 để khớp với quy định
+  "MỜI EM LÊN BẢNG" đã có từ vòng 1 — đó là lý do mẫu số là 3 chứ không phải một con số đẹp hơn. Dải 12–16
+  khoá để lớp 55 em không đòi 18 lượt (một tiết 35 phút không đủ chỗ) và lớp 24 em không bị ép xuống 8 lượt.
+  **Đây là phép nội suy của dự án, không phải số liệu nào về thời gian lên bảng.**
+- **Hai nấc 8 m và 12 m của nút "Xem thử từ cuối lớp"** — 8 m là mức đã dùng từ vòng 2; 12 m là mức tự chọn
+  cho lớp đông phải xếp thêm bàn, không phải khoảng cách đo được ở một phòng học Việt Nam nào. Con số 40 em
+  làm ngưỡng chuyển nấc lấy theo các bài báo về sĩ số: quy định của Bộ GD&ĐT là không quá 35, còn lớp thật
+  ở đô thị thường vượt ngưỡng đó — nên ngưỡng phải đặt *trên* 35 thì mới có tác dụng.
+- **`"wakeLock" in navigator` trong `powerCut`** — API có thật, được MDN và Chrome mô tả đúng hai điều mà
+  quy định dùng: phải xin lại khi trang mất tiêu điểm, và không phải trình duyệt nào cũng có. Vòng này cố
+  tình **không** đưa số phút trụ pin vào: `getBattery()` không chạy trên mọi trình duyệt nên mọi cam kết
+  "dạy tiếp được 20 phút mất điện" đều là chữ bịa.
+- **Một tờ A4 đủ bộ cho bàn 4 em, cắt trong ≤ 10 phút** — hai con số của `paperProps` do dự án ước lượng
+  theo kích thước vật thật đã khai trong `tools/data/props.mjs` (pizza chia 8, dải phân số, lưới khối), chưa
+  ai cắt thử. Đây là chỗ nên đo trước khi chỉnh: nếu cắt thật lâu hơn 10 phút thì đường "giấy cắt" sụp và
+  lớp không có đồ dùng chỉ còn đường "viên phấn, nắp chai".
 
 ## Nguồn đọc cho từng cụm quy định
 
@@ -155,6 +174,32 @@ chuyên môn theo nghiên cứu bài học khác với dự giờ kiểu cũ.
 - [Exploring the issue of digital divide in teaching and learning (BYOD classrooms) — Queen's University Belfast](https://pure.qub.ac.uk/files/187871215/BYOD_Classrooms_Digital_Divide_Issues_Revision_4.pdf)
 - [Education Equity in Crisis: The Digital Divide — The Education Trust](https://west.edtrust.org/resource/education-equity-in-crisis-the-digital-divide/) — thiết bị trong lớp không đồng đều là chuyện hệ thống, không phải ngoại lệ, nên chế độ không màn chiếu và "Chạy nhẹ" là đường dạy chính chứ không phải phần cứu hộ.
 
+**Sĩ số một lớp tiểu học Việt Nam: chuẩn 35, thực tế cao hơn (đo vòng 11)**
+- [Bộ GD&ĐT chỉ đạo sĩ số tiểu học không quá 35 học sinh/lớp — thực tế khó thực hiện — Báo Đầu tư](https://baodautu.vn/bo-gddt-chi-dao-si-so-tieu-hoc-khong-qua-35-hoc-sinhlop-thuc-te-kho-thuc-hien-d221653.html)
+- [Phụ huynh Hà Nội mong sĩ số 35 học sinh/lớp nhưng biết là không dễ đạt — Giáo dục Việt Nam](https://giaoduc.net.vn/phu-huynh-ha-noi-mong-si-so-35-hoc-sinhlop-nhung-biet-la-khong-de-de-dat-post244628.gd)
+- [Quy định sĩ số lớp ở tiểu học không quá 35, chuyên gia nói gì? — VietnamNet](https://vietnamnet.vn/quy-dinh-si-so-lop-o-tieu-hoc-khong-qua-35-chuyen-gia-noi-gi-2308652.html)
+- [Yêu cầu sĩ số lớp tiểu học không quá 35 học sinh liệu có khả thi? — ANTV](https://antv.gov.vn/xa-hoi-4/quy-dinh-truong-tieu-hoc-si-so-khong-qua-35-hoc-sinh-tren-lop-kho-thuc-hien-F55D7EAE8.html)
+Bốn bài này là toàn bộ căn cứ của `bigClass`: 35 là **chuẩn xếp lớp**, không phải sĩ số điển hình, nên nó
+không được đứng ở vị trí một con số đo được. Lưu ý các bài không đưa một phân bố sĩ số nào (không có "% lớp
+trên 45"), nên `bigClass` chỉ đặt ngưỡng 40 em và nói rõ đó là ngưỡng do dự án chọn.
+
+**Giữ màn hình sáng suốt tiết (Screen Wake Lock)**
+- [Screen Wake Lock API — MDN](https://developer.mozilla.org/en-US/docs/Web/API/Screen_Wake_Lock_API)
+- [Stay awake with the Screen Wake Lock API — Chrome for Developers](https://developer.chrome.com/docs/capabilities/web-apis/wake-lock)
+- [WakeLock — MDN](https://developer.mozilla.org/en-US/docs/Web/API/WakeLock)
+- [Wake Lock Demo — MDN dom-examples](https://mdn.github.io/dom-examples/screen-wake-lock-api/)
+Hai trang đầu là căn cứ cho đúng hai câu trong `powerCut`: phải xin lock lại sau khi trang mất tiêu điểm,
+và phải kiểm tra sự có mặt của API thay vì giả định. Máy chiếu tự tắt nguồn thì API không cứu được — đó là
+lý do quy định này đặt bản in lên trước wake lock.
+
+**Vật thật tự làm, giá rẻ khi lớp không có bộ đồ dùng**
+- [Foundation phase teachers' use of manipulatives to teach — South African Journal of Education (SAJCE)](https://sajce.co.za/index.php/sajce/article/view/495/869)
+- [Development and Validation of Locally Sourced Math Manipulatives — AJARR](https://journalajarr.com/index.php/AJARR/article/view/963)
+- [Teaching resources: Using manipulatives in mathematics learning — ACER](https://people.acer.org/en/publications/teaching-resources-using-manipulatives-in-mathematics-learning)
+Nhóm này trả lời câu "không có đồ dùng thì có dạy được vật thật không" bằng đúng hướng `paperProps` chọn:
+đồ tự làm tại chỗ vẫn được tính là vật thật, với điều kiện giữ nguyên đơn vị đếm. Các bài không so sánh
+điểm số giữa đồ tự làm và bộ kit mua sẵn, nên không dòng nào trong repo này nói "đồ giấy tốt bằng đồ nhựa".
+
 Lưu ý cách dùng danh mục này: các trang trên là **nguồn để hiểu vì sao chọn kỹ thuật**, không phải nơi trích
 số liệu hiệu quả. Dự án này chưa chạy thử nghiệm lớp học nào, nên không con số nào ở trên được nhân lên
 thành "tăng X% điểm".
@@ -185,16 +230,27 @@ thành "tăng X% điểm".
   sử lâu dài thì phải quyết định một trong hai: hoặc lưu danh định vị trí ngồi (vẫn là dữ liệu học sinh),
   hoặc chấp nhận không có lịch sử. Đó là quyết định của người dùng cuối, chưa nên tự chốt trong prompt.
 
+- **Phân bố sĩ số thật của một lớp tiểu học Việt Nam chưa ai đo.** `bigClass` chỉ biết rằng chuẩn là 35 và
+  lớp đô thị có thể trên 45; ngưỡng 40 em để đổi nấc "Xem thử từ cuối lớp" và để bật mẫu đại diện là ngưỡng
+  tự chọn. Nếu có số liệu thật (tỉ lệ lớp trên 45 theo vùng) thì ngưỡng đó phải dịch chuyển, và mọi con số
+  khác chia theo M cũng đổi theo.
+- **Chưa cắt thử một bộ vật thật bằng giấy.** "một tờ A4 đủ bộ cho bàn 4 em, cắt trong ≤ 10 phút" là ước
+  lượng từ kích thước hình trong `props.mjs`. Cần một lần cắt thật để biết hình nào cắt được, hình nào vỡ
+  ra vụn vô dụng (đặc biệt là dải phân số mẫu 12 và lưới khối hộp).
+- **Wake lock không phải pin.** `powerCut` giữ màn hình sáng chứ không giữ máy chạy; chưa đo laptop trường
+  trụ được bao lâu khi rút sạc, nên chưa thể hứa "còn đủ pin cho 35 phút". Bản in vẫn là đường bảo hiểm
+  duy nhất đã ghi trong quy định.
+
 ## Muốn đóng góp thì sửa ở đâu
 
 ```text
 tools/lib/chalk.mjs     10 quy định bảng phấn và vật thật      → sinh vào mục 4 của giáo án
-tools/lib/lesson.mjs    29 quy định chế độ giảng bài           → sinh vào mục 0, 2, 3, 5, 6, 7, 8, 9, 10
+tools/lib/lesson.mjs    32 quy định chế độ giảng bài           → sinh vào mục 0, 1, 2, 3, 5, 6, 7, 8, 9, 10
 tools/lib/handout.mjs   3 quy định từ bảng ra vở               → sinh vào mục 9
 tools/data/props.mjs    vật thật + sơ đồ theo 38 cụm
 tools/data/lessons.mjs  tên bài, câu khởi động, dòng ghi nhớ
 tools/build-lessons.mjs ghép thành 39 file prompts/giao-an/
-tools/validate.mjs      42 khoá của họ giáo án + chốt chặn ngược + 13 mục của khung
+tools/validate.mjs      45 khoá của họ giáo án + chốt chặn ngược + 13 mục của khung
 ```
 
 Quy trình một vòng nâng cấp: đo bằng `grep` trên `prompts/giao-an/GA*.md` → viết quy định có con số vào

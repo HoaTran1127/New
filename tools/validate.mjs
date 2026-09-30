@@ -161,6 +161,9 @@ const LESSON_RULES = [
   [LESSON.boardEquity, 'thiếu bộ đếm lượt lên bảng cho cả lớp'],
   [LESSON.rehearsal, 'thiếu chế độ chạy thử không cần lớp và checklist chuẩn bị'],
   [LESSON.lessonStudy, 'thiếu đường dùng chung giáo án cho tổ chuyên môn'],
+  [LESSON.bigClass, 'thiếu quy định mọi con số về lớp phải là hàm của sĩ số'],
+  [LESSON.powerCut, 'thiếu quy định dạy tiếp khi mất điện'],
+  [LESSON.paperProps, 'thiếu đường vật thật bằng giấy khi lớp không có đồ dùng'],
 ];
 // Từ bảng ra vở: một tiết giảng chỉ thật sự xong khi các em làm được bài trên giấy.
 const HANDOUT_RULES = [
@@ -321,7 +324,7 @@ if (!fs.existsSync(LESSON_DIR)) {
     '4. BẢNG PHẤN VÀ VẬT THẬT — MƯỜI QUY ĐỊNH BẮT BUỘC',
     '5. CẢ LỚP THAM GIA',
     '6. NỀN AR, CAMERA VÀ NHẬN DIỆN TAY',
-    '7. DẠY KHI KHÔNG CÓ CAMERA VÀ KHÔNG CÓ MẠNG (bắt buộc, đây là chế độ dạy chính ở nhiều lớp)',
+    '7. DẠY KHI KHÔNG CÓ CAMERA, KHÔNG CÓ MẠNG, VÀ KHI MẤT ĐIỆN (bắt buộc, đây là chế độ dạy chính ở nhiều lớp)',
     '8. TIẾP CẬN, AN TOÀN VÀ HIỆU NĂNG',
     '9. TỪ BẢNG RA VỞ — PHIẾU BÀI TẬP, ĐÁP ÁN VÀ NỘI DUNG CHÉP',
     '10. TRƯỚC KHI LÊN LỚP VÀ SAU KHI DẠY XONG (ba việc chỉ có cô giáo làm được)',
