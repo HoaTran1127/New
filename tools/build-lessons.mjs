@@ -116,6 +116,8 @@ ${jsonBlock(EXAMPLES[L.cluster], cl.tags, notes)}
 5. CẢ LỚP THAM GIA
 - ${LESSON.classVote}
 - ${LESSON.classBoard}
+- ${LESSON.noSlate}
+- ${LESSON.homeLanguage}
 - ${LESSON.pairShare}
 - ${LESSON.groupWork}
 - ${LESSON.handover}
@@ -172,6 +174,7 @@ ${AR_RENDER}
 
 9. TỪ BẢNG RA VỞ — PHIẾU BÀI TẬP, ĐÁP ÁN VÀ NỘI DUNG CHÉP
 - ${HANDOUT.worksheet}
+- ${HANDOUT.printRun}
 - ${HANDOUT.answerKey}
 - ${HANDOUT.notebook}
 - ${LESSON.exitTicket}

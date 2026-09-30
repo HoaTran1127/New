@@ -170,10 +170,13 @@ const LESSON_RULES = [
   [LESSON.numberFormat, 'thiếu quy định hiển thị và đọc số theo kiểu Việt Nam'],
   [LESSON.latePupil, 'thiếu đường cho em đến muộn hoặc vắng buổi trước'],
   [LESSON.repairWork, 'thiếu bước trả bài và chữa bài'],
+  [LESSON.homeLanguage, 'thiếu quy định tiếng Việt là ngôn ngữ thứ hai và nút "Ít chữ hơn"'],
+  [LESSON.noSlate, 'thiếu quy định bảng con là bất kì mặt phẳng nào trong lớp'],
 ];
 // Từ bảng ra vở: một tiết giảng chỉ thật sự xong khi các em làm được bài trên giấy.
 const HANDOUT_RULES = [
   [HANDOUT.worksheet, 'thiếu quy định in phiếu bài tập từ LESSON_DATA'],
+  [HANDOUT.printRun, 'thiếu quy định một lượt in của cả lớp ra ít tờ và chữ đọc được trên giấy'],
   [HANDOUT.answerKey, 'thiếu quy định trang đáp án riêng cho giáo viên'],
   [HANDOUT.notebook, 'thiếu quy định khung nội dung để chép vào vở'],
 ];

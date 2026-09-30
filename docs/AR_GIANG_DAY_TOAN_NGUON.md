@@ -1,4 +1,4 @@
-# Giáo án AR trên bảng phấn — nguồn cộng đồng và bài học sau 13 vòng
+# Giáo án AR trên bảng phấn — nguồn cộng đồng và bài học sau 14 vòng
 
 Tài liệu này để **người khác tham khảo và nối tiếp**, không phải mô tả tính năng. Phần tính năng nằm ở
 [`prompts/giao-an/README.md`](../prompts/giao-an/README.md); ở đây chỉ ghi: cái gì đã đo được, cái gì đã
@@ -7,7 +7,7 @@ thay đổi vì số liệu, và nên đọc gì trước khi sửa tiếp.
 ## Nguyên tắc làm việc đã trả giá mà thành
 
 1. **Đo trước khi thêm quy định.** Mỗi vòng bắt đầu bằng một lệnh `grep` trên đúng 39 file giáo án đã sinh,
-   chứ không bắt đầu bằng ý tưởng. Mười vòng gần nhất đều tìm thấy lỗ 0/39 — nghĩa là nếu ngồi nghĩ thì
+   chứ không bắt đầu bằng ý tưởng. Mười một vòng gần nhất đều tìm thấy lỗ 0/39 — nghĩa là nếu ngồi nghĩ thì
    sẽ nghĩ ra thứ đã có sẵn.
 2. **Đo cả chỗ mình tự mâu thuẫn.** Vòng 9 không đi tìm ý mới: nó đọc lại chính các quy định đã có và thấy
    hai quy định cũ đòi cái không thể cùng có — một webcam vừa phải nhìn bàn tay em đứng trước bảng,
@@ -28,13 +28,24 @@ thay đổi vì số liệu, và nên đọc gì trước khi sửa tiếp.
    không trên prompt. `verifyData` (viết từ vòng 2) bắt ngân hàng câu hỏi phủ "ít nhất 3 nhãn lỗi", nhưng
    `node -e` trên 38 cụm cho thấy cụm chẵn-lẻ chỉ khai 2 nhãn — một quy định mà chính giáo án của repo
    không thể tuân theo, và cách duy nhất để "tuân" là bịa nhãn thứ ba. Loại lỗi này không `grep` nào trên
-   `prompts/giao-an/` thấy được, vì chuỗi sai nằm ở hai file dữ liệu khác nhau.
+   `prompts/giao-an/` thấy được, vì chuỗi sai nằm ở hai file dữ liệu khác nhau. Vòng 14 quay lại đo trên
+   prompt và tìm ba phía chưa ai viết. Thứ nhất, giả định im lặng rằng mọi em đọc thông thạo tiếng Việt:
+   0/39 "từ khó", 0/39 "giải nghĩa", 0/39 "ít chữ hơn", 0/39 "chỉ vào hình" — trong khi lớp tiểu học Việt
+   Nam có em người dân tộc thiểu số hoặc em mới chuyển đến thành phố, với các em đó một câu Toán đánh sai vì
+   chưa quen chữ chứ không vì chưa hiểu số, và tiết đầu thì không cách nào nhận ra em nào. Thứ hai, lượt
+   "Bảng con" (viết từ vòng 6) giả định mỗi em đã có một cái bảng: 0/39 "không có bảng con", 0/39 "mặt sau vở",
+   0/39 "nắp hộp" — sĩ số 45 em thì phải có 45 bảng + 45 bút, thứ nhiều trường không đủ. Thứ ba, phiếu (họ
+   `handout.mjs`) chỉ nói khoảng trắng và một màu đen mà chưa nói in ra to bao nhiêu và mất bao nhiêu tờ:
+   0/39 "cỡ chữ", 0/39 "in một mặt" — mà máy in trường thường một mặt và 45 em thì hai trang mỗi em là 90 tờ.
+   Cả ba con số ≥ 15 × 20 cm / 8 → 6 → 4 và ≤ 8 chữ là ngưỡng **do dự án chọn**; riêng mức in ≥ 12 pt lấy từ
+   một hướng dẫn đọc được thật (Dyslexia Scotland: "at least 12pt") và nguyên tắc "change the language, not
+   the math" của Edutopia đứng sau quy định "Ít chữ hơn", cả hai ghi rõ ở phần "Vì sao chọn những con số đang dùng".
 3. **Quy định phải có con số.** "Chữ phải to" không kiểm chứng được; "≥ 40 px **và** ≥ 5.5% chiều cao khung
    hình, ≤ 12 chữ một dòng" thì validator bắt được. Mọi quy định trong `tools/lib/*.mjs` là chuỗi nguyên văn,
    `tools/validate.mjs` so bằng `includes()`, nên lời văn và mắt kiểm không bao giờ lệch nhau.
 4. **Chốt chặn hai chiều.** Cơ chế game lọt vào giáo án và quy định giáo án lọt sang game đều làm build đỏ.
    Thêm một quy định mới là tự động thêm một khoá bị cấm ở phía bên kia (`LESSON_FAMILY_RULES`).
-5. **Probe đột biến là đơn vị kiểm thử thật.** 73 phép, mỗi phép phá đúng một thứ và đòi đúng thông báo.
+5. **Probe đột biến là đơn vị kiểm thử thật.** 77 phép, mỗi phép phá đúng một thứ và đòi đúng thông báo.
    Không có probe thì một quy định chỉ là câu văn đẹp.
 6. **Tách công cụ giảng bài khỏi game.** Cùng một kiến thức, hai động cơ đối lập: game cần hồi hộp,
    tiết giảng cần giáo viên cầm lái. Nhét tim/điểm/combo vào bảng phấn làm em lên bảng sợ sai hơn là muốn hiểu.
@@ -56,6 +67,7 @@ thay đổi vì số liệu, và nên đọc gì trước khi sửa tiếp.
 | 11 | 39/39 chép "lớp 35 em" và "cách màn chiếu 7–8 m" như số đo lớp thật · 0/39 mất điện giữa tiết · 0/39 nhắc bộ đồ dùng dạy học hoặc đường vật thật bằng giấy | `bigClass`, `powerCut`, `paperProps` + mục 7 đổi tên để gồm cả mất điện |
 | 12 | 0/39 "thừa giờ" · 0/39 "dư giờ" · 0/39 "cháy giáo án" (mới chỉ lo tiết cháy về phía dài) · 0/39 "làm việc theo nhóm" và 0/39 "bốn vai trò" · 0/39 "xong sớm" và 0/39 "làm xong trước" | `timeSlack`, `groupWork`, `fastFinishers` |
 | 13 | 0/39 coi "dấu chấm" là một quy định hiển thị, 0/39 "dấu nhân"/"dấu chia", 0/39 `parseFloat`, 0/39 `toFixed` ("dấu phẩy" chỉ có ở 4/39 bài dạy số thập phân) · 0/39 "đến muộn" và 0/39 "vắng" · 0/39 "trả bài" và 0/39 "chữa bài" · **đo trên dữ liệu**: `verifyData` bắt phủ "≥ 3 nhãn lỗi" nhưng 1/38 cụm (chẵn-lẻ) chỉ khai 2 nhãn — giáo án đó vô nghiệm | `numberFormat`, `latePupil`, `repairWork` + `verifyData` đổi trần thành `min(3, số nhãn của cụm)` + validate chặn `tags`/`loiViet` lệch nhau |
+| 14 | 0/39 "từ khó" · 0/39 "giải nghĩa" · 0/39 "ít chữ hơn" · 0/39 "chỉ vào hình" (giả định mọi em đọc thông thạo tiếng Việt) · 0/39 "không có bảng con" · 0/39 "mặt sau vở" · 0/39 "nắp hộp" (lượt Bảng con giả định mỗi em đã có bảng) · phiếu: 0/39 "cỡ chữ" · 0/39 "in một mặt" | `homeLanguage`, `noSlate` + `HANDOUT.printRun` (họ từ-bảng-ra-vở thành 4 quy định) |
 
 ## Vì sao chọn những con số đang dùng
 
@@ -150,6 +162,35 @@ thay đổi vì số liệu, và nên đọc gì trước khi sửa tiếp.
   nào**. Hướng "chữa bằng nhận xét, không sửa hộ, không tô đỏ" theo tài liệu marking ở mục nguồn đọc; riêng
   "công cụ không lưu và không hiện điểm" là **lựa chọn của dự án** cho khớp với cam kết không giữ dữ liệu
   học sinh, không phải một quy định nào cấm hiển thị điểm.
+- **"Ít chữ hơn" rút còn ≤ 8 chữ rồi còn hình + số** — ngưỡng 8 chữ **do dự án tự chọn**, chưa có nguồn nào
+  đo một đề Toán lớp 4–5 mấy chữ thì em đọc tiếng Việt như ngôn ngữ thứ hai còn hiểu được. Cách chọn: 8 chữ
+  là cỡ một câu lệnh ngắn ("Viên phấn này chia mấy phần?"), đủ để giữ lại con số và từ chỉ quan hệ nhưng bỏ
+  được phần văn dẫn. Phần *nguyên tắc* thì có nguồn đàng hoàng: bài "Adapting Math Word Problems for ELLs"
+  của Edutopia nêu thẳng khẩu hiệu **"change the language, not the math"** — rút câu bằng cách bỏ văn thừa, chia
+  câu ghép, đổi về thì đơn giản, thay thuật ngữ bằng từ thường, chứ **không** hạ chuẩn Toán và **không** đổi số.
+  Bài đó cũng khuyên lồng "mathematical models and manipulatives" (thanh phân số, khối) để giảm bớt gánh
+  chữ, đúng là hình thức của "chỉ vào sơ đồ / kéo vật thật". Vì vậy quy định buộc giữ nguyên văn mọi con số,
+  đơn vị và từ quan hệ. Cấm gọi em đọc to đề để "rèn tiếng Việt" và cấm dán bản dịch tiếng Anh là suy từ chính
+  tài liệu EAL: với các em đó tiếng Anh cũng là chữ lạ, và đọc to trước lớp đổi cái khó lấy một cái khác
+  (mất mặt) chứ không giải quyết gì.
+- **Bảng con = bất kì mặt phẳng ≥ 15 × 20 cm, viết ≤ 20 giây, mở ≤ 5 giây, ≤ 3 lượt kiểm tra một tiết, cô đi
+  nhìn 3–4 bàn trong ≤ 40 giây** — cả năm con số đều **do dự án tự chọn**, không phải chuẩn của bộ tài liệu
+  mini-whiteboard nào. Cách chọn từng số: 15 × 20 cm là cỡ nửa trang vở hoặc một tờ A4 cắt đôi nên em viết
+  được một chữ số hai chữ số; 20 giây đủ viết một đáp án mà không biến thành giờ thi; 5 giây là thời gian
+  một lớp 45 em cùng úp-mở theo hiệu lệnh; 3 lượt lấy từ trần LUYỆN TẬP chia cho các nhịp khác; 40 giây là
+  quãng cô đi được hai lượt bàn rồi quay lại mà không mất bài. Con số "cô chỉ thấy 4/11 bàn" là ví dụ sĩ số
+  45 em xếp bàn 4, không phải số đo. Việc **cấm hỏi "ai làm đúng giơ tay"** dựa trên hai suy luận được nêu
+  thẳng trong quy định: em nào cũng tự nhận đúng, và giơ tay là mẫu của 5–10% em hay phát biểu chứ không phải
+  mẫu của cả lớp.
+- **Chữ in trên phiếu ≥ 12 pt, bớt câu theo thứ tự 8 → 6 → 4, một tờ A4 in 2 mặt cho hai em, "45 em → 23 tờ",
+  vượt 24 tờ thì gợi ý để dành** — mức **≥ 12 pt** có nguồn thật: hướng dẫn "Dyslexia-friendly typed formats"
+  của Dyslexia Scotland ghi tài liệu in "should be at least 12pt", nên đây không còn là con số tự chọn. Trang
+  về cỡ chữ cho người yếu thị lực (teachingvisuallyimpaired.com) khi mở không trả về nội dung đọc được nên
+  không lấy thêm số từ đó. Cách chọn các số còn lại: 8 → 6 → 4 là bậc giảm để số câu luôn chẵn và in được theo
+  nửa trang; "45 em → 23 tờ" là phép chia trần (45/2 = 22.5 → 23 tờ, mỗi tờ hai em) và ngưỡng 24 tờ chỉ
+  là "nhiều hơn một xấp 20 tờ một chút" để gợi ý cắt bớt — không phải định mức giấy nào của trường. Quy tắc
+  "phân biệt bằng hoa văn chứ không bằng màu" lấy từ thực tế máy in một màu và bản phô-tô nhiều lần làm mờ màu
+  thành xám, đây là suy luận kỹ thuật chứ không trích một chuẩn in nào.
 
 ## Nguồn đọc cho từng cụm quy định
 
@@ -302,6 +343,21 @@ Phần kiểm chứng được của quy định (không cần tin ai): `Intl.Nu
 - [How do we help absent students catch up? — Meet Every Learner's Needs](https://meeteverylearnersneeds.substack.com/p/how-do-we-help-absent-students-catch)
 Cả ba đều bàn về vắng dài ngày, nhiều tuần; `latePupil` rút phần dùng được cho một buổi (dựng lại đúng ba bước đã làm từ bài đã lưu, cho xem lúc lớp đang làm bài, không dạy lại từ đầu) và giữ nguyên phần mà chúng cảnh báo: không biến em thành người phải giải thích trước lớp ngay phút vừa tới.
 
+**Học sinh nói tiếng Việt như ngôn ngữ thứ hai: đổi cách nói, không đổi Toán (đo vòng 14)**
+- [Adapting Math Word Problems for ELLs — Edutopia](https://www.edutopia.org/article/teaching-word-problems-ells/) — căn cứ trực tiếp cho `homeLanguage`: bài nêu khẩu hiệu "change the language, not the math" (rút văn thừa, chia câu ghép, đổi thì đơn giản, thay thuật ngữ bằng từ thường) và khuyên dùng "mathematical models and manipulatives" để giảm gánh chữ. **Không** đưa ngưỡng số chữ nào, nên "≤ 8 chữ" vẫn là con số dự án tự chọn.
+- [5 Powerful Math Strategies for Multilingual Learners — ASCD](https://www.ascd.org/blogs/5-powerful-math-strategies-for-multilingual-learners) — nguồn của nhịp cho em diễn đạt bằng cách khác ngoài nói/đọc.
+- [Engaging multilingual learners in mathematics — WIDA (University of Wisconsin)](https://wida.wisc.edu/news/engaging-multilingual-learners-mathematics) và [Math Instruction for English Language Learners — Colorín Colorado](https://www.colorincolorado.org/article/math-instruction-english-language-learners) — nền cho phần cấm "gọi em đọc to đề để rèn ngôn ngữ" và cấm dán bản dịch: cả hai đều bàn về giữ nội dung Toán trong tầm với của em thay vì biến giờ Toán thành giờ đọc. Repo không nhân số liệu tiến bộ nào từ các trang này.
+
+**Bảng con khi lớp không có bảng con (đo vòng 14)**
+- [Mini whiteboards — Chartered College of Teaching](https://my.chartered.college/wp-content/uploads/2018/10/9.-Mini-Whiteboards.pdf) — một bài "so what" gọn về vì sao mặt phẳng viết cá nhân giúp mọi em cùng trả lời thay vì vài em xung phong. Đây là căn cứ *nguyên tắc* cho `noSlate`, không phải nơi lấy số 15 × 20 cm hay 20 giây.
+- [6 Ways to Use Clipboards and Whiteboards to Boost Participation — Edutopia](https://www.edutopia.org/article/low-tech-student-participation-tools-increase-participation/) — ý "low-tech participation tool": khi không có bảng thì giấy/bìa/nắp vẫn dùng được, đúng bốn mặt phẳng mà `noSlate` liệt kê.
+- [Mini Whiteboards: 8 Whole-Class Checks (and When Not To) — Structural Learning](https://www.structural-learning.com/post/mini-whiteboards-classroom-teachers-guide) — phần "when not to" khớp với cảnh báo của `noSlate` về kiểm tra quá nhiều lượt biến tiết học thành giờ thi.
+
+**Một lượt in của cả lớp: cỡ chữ và số tờ (đo vòng 14)**
+- [Dyslexia-friendly typed formats — Dyslexia Scotland](https://dyslexiascotland.org.uk/dyslexia-friendly-typed-formats/) — nguồn của mức in **≥ 12 pt** ("should be at least 12pt"); trang này cũng nói rõ nghiên cứu **không** cho sans-serif lợi thế nhất quán so với serif, nên `printRun` không ép phông chữ, chỉ ép cỡ chữ và hoa văn phân biệt thay cho màu.
+- [Accessible design for print — Ministry of Social Development (New Zealand)](https://msd.govt.nz/about-msd-and-our-work/work-programmes/accessibility/accessibility-guide/design-for-print.html) — cùng hướng dẫn về khoảng trắng và tương phản khi in một màu, củng hộ thêm cho quy tắc "phân biệt bằng hoa văn chứ không bằng màu".
+- [Font Legibility for Students who are Blind or Visually Impaired — Teaching Visually Impaired](https://www.teachingvisuallyimpaired.com/font-legibility.html) — mở ra **không lấy được nội dung** ở phiên đo này nên **không** trích số từ trang; ghi lại để người sau thử lại. Số tờ ("45 em → 23 tờ") và bậc 8 → 6 → 4 vẫn là phép chia và lựa chọn của dự án, không có nguồn in ấn nào đằng sau.
+
 Lưu ý cách dùng danh mục này: các trang trên là **nguồn để hiểu vì sao chọn kỹ thuật**, không phải nơi trích
 số liệu hiệu quả. Dự án này chưa chạy thử nghiệm lớp học nào, nên không con số nào ở trên được nhân lên
 thành "tăng X% điểm".
@@ -376,18 +432,35 @@ thành "tăng X% điểm".
   còn `pace`/`fullPeriod` không trừ 4 phút đó khỏi chặng nào. Vòng sau phải quyết nó đứng cạnh KHỞI ĐỘNG
   (cắt 4 phút của Khởi động) hay cạnh LUYỆN TẬP (cắt 4 phút của Luyện tập) — hiện tại prompt để trống, tức
   là mỗi công cụ sẽ tự chọn một chỗ khác nhau.
+- **"≤ 8 chữ" của nút "Ít chữ hơn" chưa có phép thử nào.** `homeLanguage` nói hai mức rút (≤ 8 chữ, rồi chỉ
+  còn hình + số) nhưng chưa có bảng câu bắt buộc rút đúng. Vòng sau nên thêm vào `verifyLessonBank()` một
+  khoá: với mỗi `prompt` trong `LESSON_DATA`, chuỗi "ít chữ hơn" phải ≤ 8 chữ và **giữ nguyên mọi chữ số +
+  đơn vị + từ quan hệ** có trong bản đầy đủ — rút mà mất số là rút sai. Chưa có lớp thật nào được đo để biết
+  8 chữ đã đủ ngắn cho em đọc tiếng Việt như ngôn ngữ thứ hai chưa.
+- **Chưa biết bao nhiêu lớp tiểu học Việt Nam không đủ bảng con.** `noSlate` suy ra từ "45 bảng + 45 bút là
+  nhiều trường không đủ" chứ chưa có khảo sát; cần một câu hỏi trong "Báo cáo máy" hoặc phiếu dự giờ ("lớp
+  này có bao nhiêu bảng con?") để đường mặt-phẳng-thay-thế thành dữ liệu thật thay vì giả định.
+- **Bốn mặt phẳng thay thế chưa cắt/úp thử.** "≥ 15 × 20 cm", "viết ≤ 20 giây", "mở ≤ 5 giây", "cô đi nhìn
+  3–4 bàn trong ≤ 40 giây" đều là con số tự chọn; cần một lần tập thật với một bàn để biết úp-mở cả lớp có
+  vào 5 giây không và mặt sau vở có đủ to để viết một số có hai chữ số hay không.
+- **"45 em → 23 tờ" chỉ đúng khi in 2 mặt cho hai em.** `printRun` mặc định in theo bàn, nhưng máy in một mặt
+  thì một tờ thành hai tờ → 45 tờ. Chưa có định mức giấy của trường nào để biết ngưỡng "vượt 24 tờ thì gợi ý
+  để dành" có ý nghĩa không; nên lấy số tờ thật cô phải chi mỗi tuần trước khi chỉnh ngưỡng.
+- **Cỡ chữ 12 pt là mức sàn chứ không phải mức tối ưu.** Nguồn Dyslexia Scotland chỉ nói "at least 12pt"; phiếu
+  in hai mặt cho hai em rồi cắt đôi thì mỗi em chỉ còn một phần tư trang, chưa chắc bốn câu 12 pt nhét nổi.
+  Cần in thử một phiếu thật để biết số câu tối đa trên nửa trang ở 12 pt, rồi mới chốt bậc 8 → 6 → 4.
 
 ## Muốn đóng góp thì sửa ở đâu
 
 ```text
 tools/lib/chalk.mjs     10 quy định bảng phấn và vật thật      → sinh vào mục 4 của giáo án
-tools/lib/lesson.mjs    38 quy định chế độ giảng bài           → sinh vào mục 0, 1, 2, 3, 5, 6, 7, 8, 9, 10
-tools/lib/handout.mjs   3 quy định từ bảng ra vở               → sinh vào mục 9
+tools/lib/lesson.mjs    40 quy định chế độ giảng bài           → sinh vào mục 0, 1, 2, 3, 5, 6, 7, 8, 9, 10
+tools/lib/handout.mjs   4 quy định từ bảng ra vở               → sinh vào mục 9
 tools/data/props.mjs    vật thật + sơ đồ theo 38 cụm
 tools/data/lessons.mjs  tên bài, câu khởi động, dòng ghi nhớ
 tools/build-lessons.mjs ghép thành 39 file prompts/giao-an/
-tools/validate.mjs      51 khoá của họ giáo án + chốt chặn ngược + 13 mục của khung
-                        + trần số hàng "Chữa bài" đo thẳng từ clusters.mjs/error-notes.mjs                      + trần 3 nhãn lỗi đo thẳng từ error-notes.mjs/clusters.mjs
+tools/validate.mjs      54 khoá của họ giáo án + chốt chặn ngược + 13 mục của khung
+                        + trần số hàng "Chữa bài" đo thẳng từ clusters.mjs/error-notes.mjs
 ```
 
 Quy trình một vòng nâng cấp: đo bằng `grep` trên `prompts/giao-an/GA*.md` → viết quy định có con số vào
