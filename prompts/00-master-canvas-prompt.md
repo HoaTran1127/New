@@ -354,6 +354,43 @@ Lớp này chuyển gánh nặng từ **đầu tính** sang **mắt nhìn và ng
 - Điểm, tim và chuỗi đúng của hai em TÁCH RIÊNG, không cộng gộp, không hiển thị bảng so sánh.
 - Đề bài hiện chung ở giữa nhưng mỗi em có lượt riêng; em chốt trước được cộng chuỗi, em kia vẫn còn đủ thời gian trả lời.
 - Không xếp hạng, không trừ điểm vì chậm hơn bạn; màn tổng kết của chế độ này vẫn là ba thẻ cho TỪNG em.
+
+7.2 BỐN EM MỘT MÁY: VAI CHỜ CÓ VẬN ĐỘNG (bắt buộc — nguồn: `tools/lib/queue.mjs`, validate chặn nếu thiếu) — phần quyết định ba em chưa tới lượt có phải đứng xem không
+
+Mục 7.1 giải quyết hai em CÙNG chơi. Khảo sát 85 prompt trước vòng 15: "bốn em" = 85/85 nhưng "cổ vũ" 0/85,
+"trọng tài" 0/85, "thư ký" 0/85, "đến lượt" 0/85 — mọi prompt đều biết một máy có bốn em đứng quanh, còn không
+prompt nào nói ba em kia làm gì. Một tiết 45 phút chia bốn nhóm thì mỗi em chạm máy khoảng 4 phút, ba em còn lại
+đứng xem: đúng điều mục tiêu thể dục cấm. Sáu quy định dưới đây biến thời gian chờ thành thời gian vận động.
+
+- BỐN VAI, MỖI VAI CÓ ĐỘNG TÁC: một em cầm máy; vai "Cổ vũ" giữ nhịp vỗ tay hoặc dậm chân theo vạch nhịp, mỗi lần
+  đủ 8 nhịp; vai "Trọng tài" giơ thẻ "Động tác to / nhỏ" ngang vai ngay sau cú chốt của bạn (em tự giơ là đủ, game
+  không cần nhận diện thẻ); vai "Thư ký" đọc to lại đề bài VÀ đáp án đúng cùng lúc `speechSynthesis` chạy — chỗ luyện
+  phát âm tốt nhất của game Tiếng Anh. Tên vai kèm tên em hiện trên HUD. CẤM để một em làm "người xem" không có việc;
+  chỉ hai em thì bỏ vai Thư ký; chỉ một em thì ẩn hẳn HUD vai chờ chứ không để ô trống, game vẫn chơi trọn 12 lượt.
+- XOAY VÒNG CỨNG 3 LƯỢT/EM: 12 lượt chính chia đều cho số em đang chơi (bốn em là 3 lượt mỗi em). Bộ đếm
+  `currentPlayer` quyết định ai cầm máy, HUD ghi "Lượt của em: <tên> · <n>/3" và đổi vai ngay khi em đó đủ 3 lượt —
+  hết lượt thì sang vai Cổ vũ ở hiệp sau. Một em chơi quá 6 trên 12 lượt là lỗi cân bằng, không phải "em đó nhanh
+  hơn". Nút "Đổi người chơi" cho giáo viên bấm bất cứ lúc nào: đổi vai tức thì, không trừ tim, không hỏi lý do.
+- TRẦN ĐỨNG CHỜ 20 GIÂY: mỗi vai không cầm máy có đồng hồ chờ riêng (không phải đồng hồ lượt chơi). Tới 15 giây,
+  mascot gọi ĐÚNG TÊN em đang chờ kèm một động tác 5 giây làm mẫu tại chỗ (hai tay lên cao rồi hạ / khuỵu gối /
+  xoay hông, chọn theo hiệp đang chạy), hiện ở dải dưới HUD chứ không che đề bài. Tới 20 giây mà em vẫn đứng im thì
+  động tác đó tự bật thành nhiệm vụ "Cả nhóm cùng làm 5 giây" và +5 điểm cho thanh "Cả nhóm". Đồng hồ vận động AR
+  vẫn chỉ đo em cầm máy; ba em vai chờ đếm bằng số nhịp cổ vũ, số thẻ giơ, số lần đọc lại và ghi ở dòng "Bốn em
+  hôm nay", KHÔNG nhập vào đồng hồ AR để tránh số ảo.
+- GIÃN CÁCH 1 SẢI TAY: màn "Định vị" yêu cầu mỗi em đứng trong một vòng tròn 1 sải tay tính từ vai mình, máy đặt
+  cách em đang chơi >= 1,2 m, hai em vai chờ đứng SAU vạch vai chứ không sát hông bạn đang chơi. Camera không thấy
+  hết bốn em là chuyện bình thường và KHÔNG được báo lỗi — chỉ em đang chơi cần vào khung hình. Trước mỗi lần đổi
+  người có 20 giây "vào vị trí" đếm 3-2-1 theo nhịp nhạc, trong lúc đó không thẻ nào rơi. Cấm mọi nhiệm vụ đòi hai
+  em chạm tay nhau, đổi chỗ cho nhau hoặc đi chéo qua vùng đang chơi khi thẻ còn đang bay.
+- ĐIỂM VAI CHỜ VÀO "CẢ NHÓM": mỗi lần Trọng tài giơ thẻ đúng lúc, Thư ký đọc lại đúng đáp án, hoặc Cổ vũ giữ đủ
+  8 nhịp thì +5 điểm động tác cho thanh "Cả nhóm <x>/<mốc>" đã có sẵn; điểm này KHÔNG cộng vào "miti-best", KHÔNG
+  đổi thứ hạng của em đang chơi và không trừ khi em làm sai. Màn tổng kết in thêm một dòng "Bốn em hôm nay: <tên>
+  <n> động tác, <tên> <n> nhịp cổ vũ" cho giáo viên, nằm trong khối chữ mà nút "Copy tờ rời" copy được.
+- TỰ KIỂM BẰNG `verifyQueue()`: chạy MỘT LẦN lúc nạp, kiểm đúng bốn điều — ba vai chờ có thật kèm nhãn tên trên HUD;
+  đồng hồ chờ chạy riêng và gọi tên em ở giây 15; bộ đếm "Lượt của em <n>/3" tăng đúng và đổi vai sau 3 lượt; điểm
+  vai chờ chỉ vào thanh "Cả nhóm". Thiếu thì `console.warn` tiếng Việt nêu đúng phần lệch và bảng kiểm ghi CHƯA ĐẠT
+  kèm câu nên sửa gì trong prompt. Bản một học sinh: verifyQueue() bỏ qua hai mục vai chờ và đồng hồ chờ thay vì
+  báo lỗi giả, vẫn bắt buộc kiểm bộ đếm lượt.
 - Biến thể VOICE (Web Speech API chỉ có một micro) không dùng chế độ hai người; hiện dòng giải thích tiếng Việt khi em bấm vào.
 
 ========================
@@ -594,7 +631,7 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
   Bảng liệt kê TỪNG ràng buộc kèm trạng thái ĐẠT / CHƯA ĐẠT. Trạng thái đó phải do code kiểm thật lúc chạy,
   không phải chữ tĩnh kê sẵn. Một bảng báo "ĐẠT" mà không kiểm gì là lỗi nghiêm trọng nhất của game giáo dục.
   Bảng chỉ người lớn mở được: không trừ tim, không chặn chơi, học sinh không nhìn thấy.
-- 33 MỤC MÁY TỰ KIỂM, mỗi mục một hàm trả true/false:
+- 34 MỤC MÁY TỰ KIỂM, mỗi mục một hàm trả true/false:
   [1] QUESTION_DATA đủ số mục và verifyQuestionBank() ĐÃ chạy trước lượt chơi đầu tiên
   [2] mọi mục đang phát hành có answer nằm trong choices đúng một lần
   [3] 📷 drawImage khung hình webcam đi qua toScreen(lx, ly), không còn phép nhân thô với W/H
@@ -628,14 +665,15 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
   [31] pháo giấy nổ đúng bốn loại mốc với 40–60 hạt sinh qua hàm chiếu điểm chạm (không nổ ở câu đúng thường), slow-mo chỉ chạy 600 ms cho thẻ vàng và 1,5 giây cuối hiệp 3, navigator.vibrate luôn nằm trong if (navigator.vibrate)
   [32] verifyIdentity() đã chạy lúc nạp: mascot tên riêng <= 2 từ hiện ở >= 5 chỗ, ba biến --miti-1/--miti-2/--miti-3 có thật trong CSS và khớp IDENTITY_DATA, đúng MỘT khoảnh khắc chữ ký dài >= 2 giây chỉ chạy 1 lần/phiên, một đạo cụ neo landmark, ba câu thoại <= 6 từ
   [33] verifyMusic() đã chạy lúc nạp: loop nhạc nền tổng hợp bằng Web Audio (không có <audio src> hay fetch() file âm thanh ngoài), BPM nằm trong 100–128, gain bus nhạc <= 0.18, bus nhạc hạ xuống <= 30% khi speechSynthesis đang đọc, và bản "miti-mute" có vạch nhịp đập theo BPM thay cho tiếng
-  Mục gắn 📷 chỉ áp dụng khi có webcam: bản không camera bỏ 6 mục đó và vẫn phải đạt 27 mục còn lại.
+  [34] verifyQueue() đã chạy lúc nạp: ba vai chờ (cổ vũ đủ 8 nhịp · trọng tài giơ thẻ "Động tác to / nhỏ" · thư ký đọc lại đề và đáp án) có nhãn tên trên HUD, đồng hồ chờ chạy riêng và gọi đúng tên em đang chờ ở giây 15, bộ đếm "Lượt của em <n>/3" đổi vai đúng sau 3 lượt trong 12 lượt, và +5 điểm của vai chờ chỉ vào thanh "Cả nhóm" chứ không vào "miti-best"
+  Mục gắn 📷 chỉ áp dụng khi có webcam: bản không camera bỏ 6 mục đó và vẫn phải đạt 28 mục còn lại.
 - XUẤT BẢN VĂN: bảng có nút "Xuất bản văn" sinh một khối chữ tiếng Việt copy được — tên game, bản chuẩn MiTi,
   ngày giờ, kiểu điều khiển đang chạy, số mục ĐẠT / CHƯA ĐẠT, danh sách mục chưa đạt kèm lý do.
   Khối chữ chỉ hiện trên màn hình và vào clipboard máy đó; không gửi lên máy chủ nào, không xin quyền, không để lại dữ liệu.
 - MỤC CHƯA ĐẠT PHẢI GIẢI THÍCH ĐƯỢC: mỗi dòng kèm một câu nguyên nhân kỹ thuật cho người lớn
   (ví dụ "toScreen không được dùng ở drawImage — vật thể đang tính bằng lx * W") và một câu nên sửa thế nào trong prompt.
   Cấm báo "lỗi" rồi im lặng, cấm chữ chung chung kiểu "hệ thống có vấn đề".
-- 24 VIỆC NGƯỜI THỬ PHẢI BẤM TAY (máy không tự kiểm được, làm theo đúng thứ tự, khoảng 15 phút):
+- 25 VIỆC NGƯỜI THỬ PHẢI BẤM TAY (máy không tự kiểm được, làm theo đúng thứ tự, khoảng 15 phút):
   đứng xa tới mức chỉ còn hai bàn tay · giữ im một tư thế 5 giây · che nửa người bằng tay · tắt camera giữa vòng ·
   rút mạng lúc đang tải model · đổi tay thuận sang Trái giữa chừng · bật reduced-motion ở hệ điều hành rồi mở game ·
   cố tình sai 4 câu liên tiếp · mở bằng điện thoại đặt dọc · đưa một học sinh lớp 4 chưa đọc hướng dẫn chơi thử 60 giây ·
@@ -653,6 +691,7 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
   bật tiếng đầy đủ rồi mở game cho bốn em cùng chơi — SFX có ngắn và dễ chịu hay một tiếng "ting" lặp lại thành chói tai? Bấm "Tắt tiếng" rồi chơi trọn một hiệp: mọi phản hồi còn đọc được bằng chữ và hình không?
   chơi hai game cùng chủ đề liên tiếp rồi gập máy lại — em có gọi ra được tên mascot, màu và khoảnh khắc chữ ký của TỪNG game, hay với em vẫn là một game mặc hai bộ áo?
   nghe trọn một hiệp — nhạc có giữ nhịp cho em vận động theo (mỗi cú chốt rơi vào một phách mạnh) hay chỉ là tiếng nền vô định? Bấm "Tắt tiếng" rồi chơi tiếp: nhịp chuyển động có rớt dưới 12 lần mỗi phút không?
+  cho bốn em đứng quanh một máy chơi trọn một hiệp — ba em chưa tới lượt có thật sự vận động (vỗ đủ 8 nhịp, giơ thẻ, đọc lại đề và đáp án) hay vẫn đứng xem? Đứng im 20 giây tới lượt: mascot có gọi đúng tên em đang chờ và ra một động tác 5 giây không?
   Bảng in kèm từng việc và ô ghi kết quả: `prompts/CHECKLIST_NGHIEP_THU.md`.
 - THIẾU MỤC NÀO THÌ SỬA PROMPT, KHÔNG SỬA TAY FILE HTML: dán lại nguyên văn quy định tương ứng vào cuối prompt rồi sinh lại file.
 
@@ -729,6 +768,12 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
 [ ] bus nhạc hạ xuống <= 30% gain khi speechSynthesis đọc đề hoặc mascot nói, trả lại trong 300–500 ms; nhạc không báo hiệu đúng/sai
 [ ] tắt tiếng còn vạch nhịp đập theo BPM ở mép dưới HUD (<= 3 xung/giây, <= 25% khung hình); reduced-motion thì vạch đứng yên, nhạc tắt hẳn và 12 lượt vẫn chơi trọn
 [ ] verifyMusic() chạy một lần lúc nạp, kiểm năm điều (Web Audio, BPM 100–128, gain <= 0.18, im lặng trước "Bắt đầu", nhường speechSynthesis) và báo CHƯA ĐẠT bằng tiếng Việt khi thiếu
+[ ] ba vai chờ có thật và có tên trên HUD: Cổ vũ giữ đủ 8 nhịp theo vạch nhịp, Trọng tài giơ thẻ "Động tác to / nhỏ" sau cú chốt của bạn, Thư ký đọc lại đề và đáp án cùng speechSynthesis; không em nào làm "người xem"
+[ ] 12 lượt chia đều 3 lượt/em với HUD "Lượt của em: <tên> · <n>/3", đổi vai tự động khi đủ 3 lượt, có nút "Đổi người chơi" cho giáo viên không trừ tim và không hỏi lý do
+[ ] trần đứng chờ 20 giây: đồng hồ chờ chạy riêng cho vai không cầm máy, giây 15 mascot gọi đúng tên em chờ kèm động tác 5 giây ở dải dưới HUD, không che đề
+[ ] mỗi em đứng trong một vòng 1 sải tay, máy cách em đang chơi >= 1,2 m, camera không thấy đủ bốn em không phải lỗi, đổi người có 20 giây "vào vị trí" đếm 3-2-1 và không thẻ nào rơi
+[ ] +5 điểm vai chờ chỉ vào thanh "Cả nhóm", không vào "miti-best" và không đổi thứ hạng em đang chơi; tổng kết có dòng "Bốn em hôm nay: <tên> <n> động tác" trong khối chữ Copy tờ rời
+[ ] verifyQueue() chạy một lần lúc nạp, kiểm bốn điều (ba vai có nhãn tên · đồng hồ chờ gọi tên ở giây 15 · bộ đếm 3 lượt/em đổi vai đúng · điểm vào "Cả nhóm") và bỏ qua hai mục vai chờ ở bản một học sinh thay vì báo lỗi giả
 [ ] 2 câu đúng liên tiếp lên một level, 2 câu sai liên tiếp xuống một level cùng errorTag
 [ ] không cho sai quá 3 câu liên tiếp; câu thứ 4 là level 1 kèm lời giải từng bước, chọn lại đúng không trừ tim lần hai
 [ ] không hiện "level"/sao xếp hạng cho học sinh; phân bố level chỉ ở màn tổng kết cho giáo viên
@@ -740,10 +785,10 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
 [ ] đạo cụ AR neo landmark bằng toScreen(); bản không camera thì đạo cụ đứng yên ở góc HUD dưới chứ không biến mất
 [ ] ba câu thoại đọc bằng speechSynthesis giọng vi-VN, <= 3 câu mỗi phút, câu khi sai là câu đỡ chứ không chế giễu
 [ ] bảng kiểm ẩn mở bằng 7 lần chạm logo MiTi hoặc Ctrl+Alt+K, trạng thái ĐẠT do code kiểm thật lúc chạy
-[ ] cả 33 mục máy tự kiểm đều có hàm kiểm tương ứng, không mục nào là chữ kê sẵn
+[ ] cả 34 mục máy tự kiểm đều có hàm kiểm tương ứng, không mục nào là chữ kê sẵn
 [ ] mục CHƯA ĐẠT kèm nguyên nhân kỹ thuật + cách sửa trong prompt, không có dòng "lỗi hệ thống"
 [ ] nút "Xuất bản văn" copy được khối chữ tiếng Việt, không gửi lên máy chủ nào
-[ ] bản không camera bỏ đúng 6 mục 📷 và vẫn đạt 27 mục còn lại, không bỏ luôn bảng kiểm
+[ ] bản không camera bỏ đúng 6 mục 📷 và vẫn đạt 28 mục còn lại, không bỏ luôn bảng kiểm
 [ ] fallback chuột/chạm/phím chơi trọn vẹn, tự kích hoạt khi camera lỗi
 [ ] QUESTION_DATA có ít nhất 30 mục (Toán) hoặc 60 mục (Tiếng Anh), mỗi mục có đáp án + lời giải + errorTag + loiViet + dang
 [ ] dữ liệu đặt đầu file, code engine đặt sau, không có chỗ nào rút gọn
@@ -807,7 +852,7 @@ Sau khi tự kiểm tra, CHỈ xuất ra file HTML hoàn chỉnh, không kèm gi
   toàn bộ quy định phía trên chỉ là lời mong đợi. Bắt game tự kiểm bằng hàm true/false biến lời hứa thành trạng thái đọc được.
 - **Trạng thái phải do code kiểm, không phải chữ kê sẵn**: một bảng tĩnh in sẵn chữ "ĐẠT" còn hại hơn không có bảng,
   vì người lớn tưởng là đã kiểm. Đây là lý do quy định ghi rõ "không phải một danh sách chữ tĩnh".
-- **Tách 33 mục máy / 24 việc người thử**: cái gì máy kiểm được thì đừng đùn cho giáo viên; cái máy không kiểm được
+- **Tách 34 mục máy / 25 việc người thử**: cái gì máy kiểm được thì đừng đùn cho giáo viên; cái máy không kiểm được
   (cháu có hiểu luật chơi mà không đọc hướng dẫn không, rút mạng thì sao) thì đừng giả vờ kiểm. Con số 15 phút là thời lượng
   một tiết thực tế, không phải danh sách dài vô hạn.
 - **Mục chưa đạt phải nói nguyên nhân và cách sửa**: bảng kiểm chỉ báo "lỗi" sẽ bị bỏ qua; kèm câu "thiếu ở dòng nào,

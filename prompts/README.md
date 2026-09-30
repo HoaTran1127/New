@@ -66,7 +66,7 @@ Bốn biến thể đầu dùng **cùng một hợp đồng AR** như prompt gam
 - `04-english5/` — 15 game Tiếng Anh 5.
 - `01-prompt-…` đến `12-prompt-…` — **12 prompt legacy** đời đầu: giữ nguyên cơ chế game, đã thay MediaPipe Legacy/Tailwind CDN/Tone.js bằng chuẩn hiện hành và gắn nhãn `LEGACY`. Không dùng làm khuôn cho game mới.
 - `VARIANTS_425.md` — 425 biến thể (85 game × 5 kiểu điều khiển), do `tools/build-variants.mjs` sinh.
-- `CHECKLIST_NGHIEP_THU.md` — bảng kiểm cầm tay khi nhận file HTML về: 33 mục máy tự kiểm + 24 việc người thử bấm tay (trong đó 6 mục gắn 📷 chỉ có camera mới kiểm được; bản không camera bỏ 6 mục đó và vẫn phải đạt 27 mục còn lại), do `tools/build-acceptance.mjs` sinh từ `tools/lib/acceptance.mjs`.
+- `CHECKLIST_NGHIEP_THU.md` — bảng kiểm cầm tay khi nhận file HTML về: 34 mục máy tự kiểm + 25 việc người thử bấm tay (trong đó 6 mục gắn 📷 chỉ có camera mới kiểm được; bản không camera bỏ 6 mục đó và vẫn phải đạt 28 mục còn lại), do `tools/build-acceptance.mjs` sinh từ `tools/lib/acceptance.mjs`.
 
 ## ✅ Nghiệm thu một game vừa sinh
 
@@ -176,13 +176,28 @@ Hợp đồng âm thanh ở mục trên toàn là điều CẤM, nên hệ quả
 
 Việc người thử số 24 ("nghe trọn một hiệp — nhạc có giữ nhịp cho em vận động theo hay chỉ là tiếng nền vô định? Tắt tiếng rồi chơi tiếp, nhịp chuyển động có rớt dưới 12 lần mỗi phút không?") là chỗ máy không tự kiểm được: nhạc thật hay nhạc kê chữ đều phát ra tiếng như nhau, nhưng chỉ nhạc đúng nhịp mới khiến em cử động theo.
 
+## 🧍‍🧍‍🧍 Vai chờ có vận động: một máy bốn em thì ba em chưa tới lượt phải có động tác
+
+Đo 85 prompt trước vòng 15: **"bốn em" 85/85** nhưng **"cổ vũ" 0/85, "trọng tài" 0/85, "thư ký" 0/85, "đến lượt" 0/85, "xoay vòng" 0/85**. Mọi prompt đều biết lớp có bốn em đứng quanh một máy, không prompt nào nói ba em còn lại làm gì. Một tiết 45 phút chia bốn nhóm thì mỗi em chạm máy ~4 phút, ~35 phút còn lại là đứng xem — đúng thứ mục tiêu thể dục cấm. `tools/lib/queue.mjs` viết khoảng trống đó thành sáu quy định có con số (`CLASSROOM.twoPlayer` mới chỉ lo hai em **cùng chơi**):
+
+| Luật | Con số | Kiểm ở đâu |
+|:---|:---|:---|
+| Bốn vai, mỗi vai một động tác | em chơi cầm máy · "Cổ vũ" vỗ tay/dậm chân **đủ 8 nhịp** mỗi lần · "Trọng tài" giơ thẻ "Động tác to / nhỏ" **ngang vai ngay sau cú chốt** · "Thư ký" đọc to lại **đề bài và đáp án đúng** khi `speechSynthesis` chạy; CẤM "người xem"; hai em bỏ vai Thư ký, một em ẩn HUD vai chờ | `verifyQueue()` + mục `[34]` |
+| Xoay vòng cứng | 12 lượt chia đều, **3 lượt/em**; HUD "Lượt của em `<tên>` · `<n>/3`"; nút "Đổi người chơi" **không trừ tim**; một em chơi quá **6/12 lượt** là lỗi cân bằng | mục `[34]` |
+| Trần đứng chờ | đồng hồ chờ riêng cho vai không cầm máy; **giây 15** mascot gọi **đúng tên** + động tác **5 giây** ở dải dưới HUD; **giây 20** thành "Cả nhóm cùng làm 5 giây"; điểm vai chờ **không** nhập đồng hồ AR | mục `[19]` + `[34]` |
+| Giãn cách | mỗi em một vòng **1 sải tay**, máy cách em đang chơi **>= 1,2 m**, vai chờ đứng **SAU vạch vai**; camera không thấy hết bốn em **không phải lỗi**; **20 giây "vào vị trí"** 3-2-1 khi đổi người, không thẻ nào rơi | mục `[34]` |
+| Điểm vào "Cả nhóm" | **`+5` điểm động tác** cho thanh "Cả nhóm `<x>`/`<mốc>`"; **không** vào `miti-best`, **không** đổi hạng em đang chơi, **không** trừ khi sai; tổng kết in "Bốn em hôm nay: ..." trong khối nút "Copy tờ rời" copy được | mục `[23]` + `[34]` |
+| Vai chờ phải tự chứng minh | `verifyQueue()` chạy MỘT LẦN lúc nạp, kiểm bốn điều (nhãn tên trên HUD · đồng hồ chờ gọi tên ở giây 15 · `<n>/3` đổi vai sau 3 lượt · điểm chỉ vào "Cả nhóm"); bản một học sinh **bỏ qua hai mục vai chờ** thay vì báo lỗi giả | mục `[34]` |
+
+Việc người thử số 25 ("cho bốn em đứng quanh một máy chơi trọn một hiệp — ba em chưa tới lượt có thật sự vận động hay vẫn đứng xem? Đứng im 20 giây tới lượt: mascot có gọi đúng tên em đang chờ và ra một động tác 5 giây không?") là chỗ duy nhất phát hiện một tiết học mà chỉ một em được động đậy: nhãn vai trên HUD và bộ đếm lượt thì máy kiểm được, còn việc em có thật vỗ tay hay chỉ đứng đọc nhãn thì không.
+
 ## 🔁 Pipeline của thư viện
 
 85 prompt game **được sinh tự động**, không sửa tay:
 
 ```
 tools/data/games.mjs + clusters.mjs + gestures.mjs + examples.mjs + error-notes.mjs + identities.mjs
-tools/lib/ar.mjs · rules.mjs · feel.mjs · classroom.mjs · access.mjs · light.mjs · celebrate.mjs · identity.mjs · rhythm.mjs · verify.mjs · pe.mjs · memory.mjs · hype.mjs · anticipation.mjs · acceptance.mjs
+tools/lib/ar.mjs · rules.mjs · feel.mjs · classroom.mjs · access.mjs · light.mjs · celebrate.mjs · identity.mjs · rhythm.mjs · queue.mjs · verify.mjs · pe.mjs · memory.mjs · hype.mjs · anticipation.mjs · acceptance.mjs
         └─ node tools/build.mjs ─→ catalogs/GAME_CATALOG.csv · .md · .js + prompts/0X-*/ + index.html + prompts/CHECKLIST_NGHIEP_THU.md
 ```
 

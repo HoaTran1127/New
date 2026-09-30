@@ -22,6 +22,7 @@ import { LIGHT } from './lib/light.mjs';
 import { CELEBRATE } from './lib/celebrate.mjs';
 import { IDENTITY } from './lib/identity.mjs';
 import { RHYTHM } from './lib/rhythm.mjs';
+import { QUEUE } from './lib/queue.mjs';
 import { IDENTITIES } from './data/identities.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
@@ -50,6 +51,7 @@ const MASTER_LIB = [
   ['2.0', 'ar.mjs'], ['4.5', 'pe.mjs'], ['5.1', 'memory.mjs'], ['6.1', 'classroom.mjs'],
   ['6.2', 'verify.mjs'], ['6.3', 'light.mjs'], ['8.1', 'feel.mjs'], ['8.2', 'hype.mjs'], ['8.3', 'anticipation.mjs'], ['8.4', 'celebrate.mjs'],
   ['9.1', 'access.mjs'], ['11.', 'acceptance.mjs'], ['8.5', 'identity.mjs'], ['8.6', 'rhythm.mjs'],
+  ['7.2', 'queue.mjs'],
 ];
 
 const rows = readCatalog(path.join(ROOT, 'catalogs', 'GAME_CATALOG.csv'));
@@ -200,6 +202,7 @@ const FULL_LAYERS = [
   ['khoảnh khắc ăn mừng', 'celebrate.mjs', 'CELEBRATE', CELEBRATE],
   ['bản sắc riêng', 'identity.mjs', 'IDENTITY', IDENTITY],
   ['nhạc nền theo nhịp', 'rhythm.mjs', 'RHYTHM', RHYTHM],
+  ['vai chờ có vận động', 'queue.mjs', 'QUEUE', QUEUE],
 ];
 const FULL_RULES = FULL_LAYERS.flatMap(([label, file, objName, obj]) =>
   Object.entries(obj).map(([key, text]) => [text, `thiếu quy định ${label} ${objName}.${key} của tools/lib/${file}`]));
@@ -235,6 +238,14 @@ const FULL_PINS = [
   // vẫn xanh vì mệnh đề reduced-motion phía sau còn hai chữ "vạch nhịp". Neo cả cơ chế, không neo từ.
   ['rhythm.mjs', RHYTHM.quiet, 'vạch nhịp đập theo đúng BPM', 'cơ chế nhịp nhìn được khi tắt tiếng'],
   ['rhythm.mjs', RHYTHM.guard, 'verifyMusic()', 'hàm kiểm nhạc nền lúc nạp'],
+  ['queue.mjs', QUEUE.roles, '8 nhịp', 'số nhịp một lần cổ vũ của vai chờ'],
+  ['queue.mjs', QUEUE.rotate, '3 lượt mỗi em', 'số lượt cầm máy của mỗi em trong 12 lượt'],
+  ['queue.mjs', QUEUE.waitCap, 'Trần đứng chờ 20 giây', 'trần thời gian một em đứng không'],
+  ['queue.mjs', QUEUE.waitCap, '15 giây', 'giây mascot gọi tên em đang chờ'],
+  ['queue.mjs', QUEUE.spacing, '1 sải tay', 'vòng đứng riêng của mỗi em'],
+  ['queue.mjs', QUEUE.spacing, '>= 1,2 m', 'khoảng cách máy tới em đang chơi'],
+  ['queue.mjs', QUEUE.teamScore, '+5 điểm động tác', 'điểm vai chờ vào thanh Cả nhóm'],
+  ['queue.mjs', QUEUE.guard, 'verifyQueue()', 'hàm kiểm vai chờ lúc nạp'],
 ];
 for (const [file, text, needle, label] of FULL_PINS) {
   if (!text.includes(needle)) bad(`tools/lib/${file} không còn nêu "${needle}" (${label}) — con số nghiệm thu phải sửa cùng tài liệu và bảng kiểm, không đổi âm thầm trong lib.`);
@@ -255,6 +266,7 @@ const SHORT_PINS = {
   CELEBRATE_SHORT: ['40–60 hạt', '200 ms', '0.25', '4 giọng SFX', '0,45×'],
   IDENTITY_SHORT: ['2 từ', '>= 5 chỗ', '60/441', '1 lần/phiên', '6 từ'],
   RHYTHM_SHORT: ['100–116 BPM', '128', '0.18', '30% gain', 'vạch nhịp', 'verifyMusic()'],
+  QUEUE_SHORT: ['8 nhịp', '3 lượt/em', '20 giây', '1 sải tay', '1,2 m', '+5 điểm', 'verifyQueue()'],
 };
 for (const seg of chainSegments) {
   for (const needle of SHORT_PINS[seg.name] || []) {
@@ -442,6 +454,7 @@ if (!fs.existsSync(VAR_FILE)) {
   if (!vtext.includes('- **Ham quay lại:**')) bad('Phần Quy ước chung của VARIANTS_425.md thiếu dòng Ham quay lại.');
   if (!vtext.includes('- **Khoảnh khắc ăn mừng:**')) bad('Phần Quy ước chung của VARIANTS_425.md thiếu dòng Khoảnh khắc ăn mừng.');
   if (!vtext.includes('- **Nhạc nền theo nhịp:**')) bad('Phần Quy ước chung của VARIANTS_425.md thiếu dòng Nhạc nền theo nhịp.');
+  if (!vtext.includes('- **Vai chờ có vận động:**')) bad('Phần Quy ước chung của VARIANTS_425.md thiếu dòng Vai chờ có vận động — người copy một block biến thể ra dùng không còn biết ba em chưa tới lượt phải làm gì.');
   if (!vtext.includes('- **Nghiệm thu:**')) bad('Phần Quy ước chung của VARIANTS_425.md thiếu dòng Nghiệm thu.');
   if (!vtext.includes('prompts/CHECKLIST_NGHIEP_THU.md')) bad('Phần Quy ước chung của VARIANTS_425.md không trỏ tới bảng kiểm in sẵn.');
   VAR_COUNT = blocks.length;
@@ -488,6 +501,7 @@ if (!fs.existsSync(VAR_FILE)) {
     if (!b.includes('**Khoảnh khắc ăn mừng:**')) bad(`biến thể #${i + 1}: thiếu dòng Khoảnh khắc ăn mừng.`);
     if (!b.includes('**Bản sắc riêng của game:**')) bad(`biến thể #${i + 1}: thiếu dòng Bản sắc riêng của game.`);
     if (!b.includes('**Nhạc nền theo nhịp:**')) bad(`biến thể #${i + 1}: thiếu dòng Nhạc nền theo nhịp.`);
+    if (!b.includes('**Vai chờ có vận động:**')) bad(`biến thể #${i + 1}: thiếu dòng Vai chờ có vận động.`);
     // Block biến thể copy riêng được, nên phải mang đúng dữ liệu bản sắc của chính game nó nói tới.
     // split('\n## Prompt ') đã ăn luôn hai chữ "## Prompt", nên dòng đầu block bắt đầu bằng số thứ tự.
     const vid = (b.match(/^\d+ — (\S+) — V\d/) || [])[1];
@@ -691,6 +705,18 @@ const VOICE_DOC_NEEDLES = [
   ['3 giọng', 'trần giọng nhạc nền trên bus riêng', 4, 4, 1, 1],
   ['7 giọng', 'tổng trần mọi giọng đang phát', 3, 4, 1, 1],
 ];
+// Tầng vai chờ (vòng 15): sáu con số phân biệt "một máy một em chơi, ba em đứng xem" với "bốn em đều vận động".
+// Probe vòng 15: xóa trọn mục 7.2 của master hoặc block VAI CHỜ của template thì mỗi số vẫn còn ở mục khác,
+// nên bảng này neo ĐÚNG số lần nêu hiện có — tài liệu có thể thêm chỗ nêu, nhưng xóa một chỗ thì phải sửa bảng kèm lý do.
+const QUEUE_DOC_NEEDLES = [
+  ['8 nhịp', 'số nhịp cổ vũ mỗi lần', 9, 9, 8, 3],
+  ['3 lượt', 'số lượt mỗi em trong 12 lượt', 11, 7, 5, 2],
+  ['20 giây', 'trần đứng chờ và vào vị trí', 4, 6, 3, 2],
+  ['1 sải tay', 'vòng đứng của mỗi em', 2, 3, 2, 1],
+  ['1,2 m', 'máy cách em đang chơi', 2, 3, 2, 1],
+  ['+5 điểm', 'điểm vai chờ vào "Cả nhóm"', 5, 6, 2, 1],
+  ['verifyQueue()', 'hàm kiểm vai chờ lúc nạp', 3, 3, 3, 2],
+];
 // Con số cũ của vòng 6 ("< 8 động tác lớn mỗi phút") là yêu cầu KHÔNG THỂ đạt với phiên 12 lượt / 4–6 phút.
 // Giữ nó trong tài liệu sẽ sinh game luôn báo CHƯA ĐẠT ở mục cường độ, nên phải bị chặn.
 const SUPERSEDED = [
@@ -715,7 +741,7 @@ for (const [docSlot, [docName, docText]] of DOC_FILES.entries()) {
   for (const [needle, label] of IDENTITY_DOC_NEEDLES) {
     if (!docText.includes(needle)) bad(`${docName} thiếu con số bản sắc riêng (${label}): không thấy "${needle}".`);
   }
-  for (const [needle, label, ...mins] of [...RHYTHM_DOC_NEEDLES, ...VOICE_DOC_NEEDLES]) {
+  for (const [needle, label, ...mins] of [...RHYTHM_DOC_NEEDLES, ...VOICE_DOC_NEEDLES, ...QUEUE_DOC_NEEDLES]) {
     const want = mins[docSlot];
     const got = docText.split(needle).length - 1;
     if (got < want) bad(`${docName} chỉ còn nêu "${needle}" (${label}) ${got} lần, chuẩn hiện hành là ${want} lần — tài liệu chuẩn phải giữ đủ chỗ nêu ở CẢ phần luật lẫn bảng kiểm tự kiểm, không được để một phần mất số.`);
@@ -800,6 +826,7 @@ const DOC_LAYERS = [
   ['khoảnh khắc ăn mừng + âm thanh', '8.4 KHOẢNH KHẮC ĂN MỪNG', 'Phần ăn mừng + âm thanh đã điền đủ'],
   ['bản sắc riêng của từng game', '8.5 BẢN SẮC RIÊNG', 'Phần bản sắc riêng đã điền đủ'],
   ['nhạc nền theo nhịp', '8.6 NHẠC NỀN THEO NHỊP', 'Phần nhạc nền đã điền đủ'],
+  ['vai chờ có vận động', '7.2 BỐN EM MỘT MÁY', 'Phần vai chờ đã điền đủ'],
   ['cảm giác arcade', '8.1 CẢM GIÁC ARCADE', 'Phần arcade đã điền đủ'],
   ['thi đua + cao trào', '8.2 THI ĐUA + CAO TRÀO', 'Phần thi đua + cao trào đã điền đủ'],
   ['ham quay lại', '8.3 HAM QUAY LẠI', 'Phần ham quay lại đã điền đủ'],
@@ -853,6 +880,10 @@ if (!HUMAN_CHECKS.some((s) => /bộ áo/.test(s))) bad('Bảng việc người t
 if (!MACHINE_ITEMS.some((s) => s.includes('verifyMusic()') && s.includes('100–128'))) bad('Bảng kiểm máy tự kiểm không còn mục nào nghiệm thu nhạc nền (verifyMusic + trần BPM 100–128) — lớp nhịp mất người canh.');
 if (!MACHINE_ITEMS.some((s) => s.includes('4 giọng SFX') && s.includes('3 giọng'))) bad('Bảng kiểm máy tự kiểm không còn mục nào nghiệm thu ngân sách giọng 4 giọng SFX + 3 giọng nhạc nền — hai lib sẽ lại cãi nhau về trần âm thanh.');
 if (!HUMAN_CHECKS.some((s) => /nhịp/i.test(s) && /Tắt tiếng/.test(s))) bad('Bảng việc người thử không còn câu "tắt tiếng rồi nhịp chuyển động có rớt không" — chỗ duy nhất phát hiện nhạc nền chỉ là tiếng nền vô định.');
+// Tầng vai chờ: một máy bốn em mà bỏ hai mục này thì game vẫn đạt 33 mục còn lại trong khi ba em
+// đứng xem trọn tiết học — đúng điều mục tiêu thể dục cấm.
+if (!MACHINE_ITEMS.some((s) => s.includes('verifyQueue()') && s.includes('3 lượt'))) bad('Bảng kiểm máy tự kiểm không còn mục nghiệm thu vai chờ (verifyQueue() + 3 lượt/em) — ba em đứng xem lọt qua nghiệm thu mà không ai báo.');
+if (!HUMAN_CHECKS.some((s) => /bốn em đứng quanh/.test(s) && /20 giây/.test(s))) bad('Bảng việc người thử không còn câu "bốn em đứng quanh một máy, em chờ có vận động không" — chỗ duy nhất phát hiện một tiết học chỉ một em được động đậy.');
 
 if (errors.length) {
   console.error('Xác minh thất bại — ' + errors.length + ' vấn đề:');
