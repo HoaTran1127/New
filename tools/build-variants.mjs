@@ -25,6 +25,7 @@ import { LESSON, LESSON_SHORT } from './lib/lesson.mjs';
 import { CURRICULUM, CURRICULUM_SHORT } from './lib/curriculum.mjs';
 import { SPORT, SPORT_SHORT } from './lib/sport.mjs';
 import { FAMILY, FAMILY_SHORT } from './lib/family.mjs';
+import { PACE, PACE_SHORT, hocKi } from './lib/pacing.mjs';
 import { standard } from './data/standards.mjs';
 import { identity } from './data/identities.mjs';
 import { sport } from './data/sports.mjs';
@@ -82,7 +83,7 @@ function block(n, row, g, v) {
   const calib = camera && !voice ? RULES.calibration : 'Biến thể này không đọc chuyển động tay nên không cần calibration; vẫn phải có một màn hướng dẫn ngắn, không tutorial dài.';
   // Biến thể VOICE chỉ có một micro nên không có chế độ hai người chơi: lấy 3 vế đầu của chuỗi rút gọn.
   const voiceShort = CLASSROOM_SHORT.split(' · ').slice(0, 3).join(' · ');
-  const qCheck = ' · ' + LIGHT_SHORT + ' · ' + CELEBRATE_SHORT + ' · ' + IDENTITY_SHORT + ' · ' + RHYTHM_SHORT + ' · ' + QUEUE_SHORT + ' · ' + LESSON_SHORT + ' · ' + CURRICULUM_SHORT + ' · ' + SPORT_SHORT + ' · ' + FAMILY_SHORT + ' · ' + PE_SHORT + ' · ' + RETENTION_SHORT + ' · ' + HYPE_SHORT + ' · ' + ANT_SHORT + ' · ' + VERIFY_SHORT + ' · ' + ADAPT_SHORT + ' · ' + ACCEPT_SHORT;
+  const qCheck = ' · ' + LIGHT_SHORT + ' · ' + CELEBRATE_SHORT + ' · ' + IDENTITY_SHORT + ' · ' + RHYTHM_SHORT + ' · ' + QUEUE_SHORT + ' · ' + LESSON_SHORT + ' · ' + CURRICULUM_SHORT + ' · ' + SPORT_SHORT + ' · ' + FAMILY_SHORT + ' · ' + PACE_SHORT + ' · ' + PE_SHORT + ' · ' + RETENTION_SHORT + ' · ' + HYPE_SHORT + ' · ' + ANT_SHORT + ' · ' + VERIFY_SHORT + ' · ' + ADAPT_SHORT + ' · ' + ACCEPT_SHORT;
   // Dòng nghiệm thu cho mọi block: game phải tự chứng minh nó đạt, người thử không phải đọc code.
   const accept = ACCEPT.selfReport + ' ' + ACCEPT.printable + ' ' + ACCEPT.failRule + (camera ? '' : ' ' + ACCEPT.noCamera);
   const selfCheck = voice
@@ -137,6 +138,7 @@ ${controlBlock(v, g)}` : controlBlock(v, g)}
 **Chuẩn kiến thức SGK:** ${CURRICULUM.machNhan} ${CURRICULUM.ycDong} ${CURRICULUM.machTron} ${CURRICULUM.bayTruoc} ${CURRICULUM.meoDongTac} ${CURRICULUM.guard} Mạch của cụm ${g.cluster} là "${st.mach}" với nhãn HUD "${st.ngan}"; dòng "Yêu cầu cần đạt: ${st.yc}" in nguyên văn ở hai màn; mẹo nhớ "${st.meo}" kèm một động tác 3 giây; "Dễ nhầm: ${ERROR_NOTES[g.cluster].split('; ')[0]}" báo trước câu đầu cụm.
 **Chất thể thao:** ${SPORT.monDanh} ${SPORT.dongTacChinh} ${SPORT.tiepSuc} ${SPORT.tinhThan} ${SPORT.thanhTich} ${SPORT.hoiTinh} ${SPORT.guard} Môn của block ${v.code} này là "${sp.mon}" (mã điều khiển ${v.gesture || g.gestures[0]}, không tự đổi môn trong một phiên) với động tác đặc trưng "${sp.dongTac}", hiệu lệnh mở đầu "${sp.hieuLenh}", lời hay khi bạn sai "${sp.loiHay}", động tác duỗi cơ cuối buổi "${sp.duoiCo}".
 **Gia đình — tờ gửi bố mẹ:** ${FAMILY.guiBoMe} ${FAMILY.baPhut} ${FAMILY.meoNha} ${FAMILY.riengTu} ${FAMILY.khongDoi} ${FAMILY.guard} Bốn dòng "Gửi bố mẹ" của block ${v.code} này: "Hôm nay con tập môn ${sp.mon} — <n> động tác" · "Con học ${st.ngan}, <k> câu đúng trên <tổng>" · "Mẹo con mang về: ${st.meo}" · "Việc 3 phút ở nhà: cả nhà cùng ${sp.dongTac} rồi hỏi nhau miệng một đề vừa chơi".
+**Tuần học:** ${PACE.nhanTuan} ${PACE.hoiMotCau} ${PACE.onTheoTuan} ${PACE.nuocRut} ${PACE.tongOn} ${PACE.guard} Cụm ${g.cluster} của block ${v.code} này nằm trong **Tuần ${st.tuan[0]}–${st.tuan[1]} · Học kì ${hocKi(st.tuan[0])}** (cột \`tuan\` của \`tools/data/standards.mjs\`) — in đúng nhãn đó ở màn khởi động, màn tổng kết và trong khối "Copy tờ rời".
 **Tiếp cận + an toàn thần kinh:** ${ACCESS.flash} ${ACCESS.reducedMotion} ${ACCESS.notColorOnly} ${ACCESS.caption} ${ACCESS.contrast}
 ${camera && !voice ? `**Chế độ lớp:** ${CLASSROOM.twoPlayer}\n**Tay thuận:** ${ACCESS.handedness}\n` : ''}**Giao diện:** đề bài >= 28px trên desktop và >= 20px trên điện thoại, tương phản chữ >= 4.5:1, responsive cả dọc lẫn ngang; HUD có nhiệm vụ + điểm + chuỗi đúng + tiến độ + trạng thái camera; có Pause, Replay, Giảm hiệu ứng chuyển động${camera ? ' và Tắt camera' : ''}; không leaderboard, không quảng cáo. ${RULES.perf}
 **An toàn + riêng tư + tiếng Việt:** ${RULES.safety} Mỗi động tác đều có phiên bản ngồi tại chỗ; không quay chạy nhảy, không rời vùng camera. Không upload ảnh/video từ camera, chỉ giữ landmark trong bộ nhớ, tiến độ lưu localStorage máy đó. Toàn bộ UI, tên nút, hướng dẫn, thông báo và lời giải bằng TIẾNG VIỆT (chỉ học liệu ${subjectNote}); không để lộ thuật ngữ kỹ thuật confidence / cooldown / fallback cho học sinh.

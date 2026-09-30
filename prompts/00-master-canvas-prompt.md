@@ -375,6 +375,43 @@ trần 12 từ và động tác 3 giây lấy của mục 4.7, khối "Copy tờ
   `console.warn` tiếng Việt nêu điều lệch và bảng kiểm ghi CHƯA ĐẠT. Bản một học sinh, bản không camera và bản tắt tiếng vẫn
   bắt buộc kiểm đủ bốn điều trên.
 
+4.10 TUẦN HỌC — LỚP ĐANG HỌC TỚI TUẦN MẤY (bắt buộc — nguồn: `tools/lib/pacing.mjs` + cột `tuan` của `tools/data/standards.mjs`, validate chặn nếu thiếu) — phần quyết định giáo viên cầm 85 thẻ game có biết mở thẻ nào cho tiết hôm nay hay không
+
+Mục 4.7 đã buộc mỗi câu nói được mình thuộc mạch nào và lớp cần đạt tới đâu, `tools/lib/memory.mjs` đã hẹn ôn +1/+3/+7 ngày cho
+TỪNG EM — nhưng không tầng nào trả lời câu hỏi đầu tiên của một giáo viên: "hôm nay tuần 13 thì tôi cho lớp chơi game nào?".
+Khảo sát 85 prompt trước vòng 20: "tuần 1" = 0/85, "tuần 12" = 0/85, "theo tuần" = 0/85, "phân phối chương trình" = 0/85,
+"học kì" = 0/85, "giữa kì" = 0/85, "đến tuần" = 0/85; chính `catalogs/curriculum/toan-lop-4-5-sgk-matrix.md` cũng 0 lần chữ
+"tuần". Hệ quả: thư viện 85 game không có thứ tự sử dụng, còn lịch ôn thì chỉ đúng với em đã chơi nhiều phiên, không đúng với
+cả lớp vừa bước vào tuần kiểm tra. Tầng này cũng không tự đặt con số: khoảng tuần lấy từ cột `tuan`, mốc kiểm tra lấy từ
+`SCHOOL_YEAR`, còn >= 3/12 lượt xen thì trùng với ba lượt xen mạch của mục 4.7.
+
+- NHÃN TUẦN Ở HAI MÀN, LẤY TỪ BẢNG CHUẨN: mỗi game in ĐÚNG MỘT nhãn "Tuần <a>–<b> · Học kì <n>" ở màn khởi động và màn tổng
+  kết, chữ >= 18px, nằm TRONG khối "Copy tờ rời"; a và b chép nguyên văn cột `tuan` của cụm trong `tools/data/standards.mjs`,
+  Học kì tính theo tuần mở bài (`tuan[0]` <= 18 là Học kì 1, từ 19 là Học kì 2). CẤM tự đặt khoảng tuần khác bảng, CẤM in "cả
+  năm" hoặc để trống, CẤM một cụm phủ quá 10 tuần. Kèm đúng một dòng <= 14 từ "theo phân phối chung — cô xác nhận tuần của lớp
+  em" để không ai nhầm bảng này với thời khóa biểu của trường.
+- HỎI TUẦN ĐÚNG MỘT CÂU, Ở PHIÊN ĐẦU: "Lớp mình đang học tuần mấy?" hiện một lần với hàng nút số 1–35 gom theo tháng; bấm xong
+  lưu localStorage "miti-week" và các phiên sau đọc lại chứ không hỏi nữa. Chưa chọn thì game vẫn chơi bình thường và HUD ghi
+  "Tuần: chưa chọn" — CẤM chặn nút "Bắt đầu", CẤM hỏi giữa phiên, CẤM hỏi lại khi đã có "miti-week", CẤM tiện đó hỏi tên học
+  sinh hay bất kỳ dữ liệu cá nhân nào.
+- >= 3/12 LƯỢT LÀ CỤM ĐÃ QUA TUẦN: khi đã biết tuần của lớp, ít nhất ba lượt chính phải là cụm có `tuan[1]` nhỏ hơn tuần đó —
+  đem cái đã học xong ra luyện lại, không đánh đố trước chương trình. Ba lượt này trùng được với ba lượt xen mạch của mục 4.7,
+  miễn cụm chọn vừa khác mạch vừa đã qua tuần. Tổng kết in "Tuần <t> · em ôn lại <n> cụm đã học" bằng số thật. CẤM lấy một cụm
+  chưa tới tuần mở bài làm đề MỚI.
+- HAI TUẦN NƯỚC RÚT CHỈ ĐỔI THỨ TỰ, KHÔNG ĐỔI LUẬT: trong 2 tuần trước một mốc của `SCHOOL_YEAR.moc` (giữa học kì 1, cuối học
+  kì 1, giữa học kì 2, cuối học kì 2), HUD in thêm "Còn <n> tuần tới kiểm tra <tên mốc>" và hai lượt ĐẦU lấy cụm có errorTag
+  yếu nhất của em trong "miti-mastery". CẤM tăng độ khó, CẤM trừ tim nhiều hơn, CẤM biến 12 lượt thành đề thi thử có đồng hồ,
+  CẤM kéo dài phiên quá trần 10 phút của mục 4.6, CẤM bỏ khởi động và hạ nhiệt để nhét thêm đề.
+- TỪ TUẦN 33 LÀ TỔNG ÔN: đến hết tuần 35, >= 6/12 lượt chính là cụm đã học xong trước tuần hiện tại và CẤM giới thiệu cụm mới
+  (không cụm nào có `tuan[0]` lớn hơn tuần hiện tại được xuất hiện). Tổng kết in "Cả năm có <k> cụm, em vững <m> cụm" với <k>
+  đếm từ bảng chuẩn của đúng lớp, <m> đếm từ "miti-mastery" — thiếu số thì in "chưa ghi được", CẤM bịa.
+- TỰ KIỂM BẰNG `verifyPacing()`: chạy MỘT LẦN lúc nạp và kiểm đúng bốn điều — mọi câu mang nhãn tuần khớp NGUYÊN VĂN cột
+  `tuan` và khoảng đó nằm trong 1–35 · câu hỏi tuần chạy ĐÚNG MỘT lần ở phiên đầu, đọc lại được từ "miti-week", không chặn nút
+  nào của màn Bắt đầu · khi đã có tuần của lớp thì >= 3/12 lượt là cụm có `tuan[1]` nhỏ hơn tuần đó · nhãn nước rút và chế độ
+  tổng ôn đổi đúng theo `SCHOOL_YEAR` mà không đổi luật chơi, không đổi trần tải trọng của mục 4.5. Thiếu điều nào thì
+  `console.warn` tiếng Việt nêu điều lệch và bảng kiểm ghi CHƯA ĐẠT. Bản không camera, bản một học sinh và bản tắt tiếng vẫn
+  bắt buộc kiểm đủ bốn điều, vì tuần học không phụ thuộc webcam.
+
 ========================
 5. HỌC TẬP DẪN LỐI (LEARNING-FIRST)
 ========================
@@ -775,7 +812,7 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
   Bảng liệt kê TỪNG ràng buộc kèm trạng thái ĐẠT / CHƯA ĐẠT. Trạng thái đó phải do code kiểm thật lúc chạy,
   không phải chữ tĩnh kê sẵn. Một bảng báo "ĐẠT" mà không kiểm gì là lỗi nghiêm trọng nhất của game giáo dục.
   Bảng chỉ người lớn mở được: không trừ tim, không chặn chơi, học sinh không nhìn thấy.
-- 38 MỤC MÁY TỰ KIỂM, mỗi mục một hàm trả true/false:
+- 39 MỤC MÁY TỰ KIỂM, mỗi mục một hàm trả true/false:
   [1] QUESTION_DATA đủ số mục và verifyQuestionBank() ĐÃ chạy trước lượt chơi đầu tiên
   [2] mọi mục đang phát hành có answer nằm trong choices đúng một lần
   [3] 📷 drawImage khung hình webcam đi qua toScreen(lx, ly), không còn phép nhân thô với W/H
@@ -814,14 +851,15 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
   [36] verifyStandard() đã chạy lúc nạp: mọi câu mang nhãn mạch nằm trong tám mạch của tools/data/standards.mjs và HUD có thật (nhãn <= 18 ký tự, >= 18px), dòng "Yêu cầu cần đạt:" xuất hiện ở đúng hai màn và khớp NGUYÊN VĂN bảng chuẩn, mạch chính <= 9/12 lượt kèm >= 3 lượt thuộc mạch khác và tổng kết in "Hôm nay em chạm <n> mạch", mỗi cụm có "Dễ nhầm" ở câu đầu (<= 16 từ) và "Mẹo nhớ" <= 12 từ kèm động tác 3 giây
   [37] verifySport() đã chạy lúc nạp: tên môn thể thao <= 4 từ lấy từ tools/data/sports.mjs có thật trên HUD và ở đúng hai màn, động tác đặc trưng của môn (<= 6 từ) được mascot làm mẫu 3 giây kèm hiệu lệnh <= 4 từ, nghi thức tinh thần thể thao chạy đúng hai lần (chạm khuỷu 3 giây trước hiệp 1 + lời hay <= 6 từ khi bạn sai, không dòng chế bai), bảng thành tích ba mốc giảm dần cho CẢ ĐỘI lưu "miti-sport" và động tác duỗi riêng của môn 15 giây nằm trong hạ nhiệt 45–60 giây
   [38] verifyFamily() đã chạy lúc nạp: màn tổng kết in ĐÚNG MỘT khối "Gửi bố mẹ" gồm đúng bốn dòng (mỗi dòng <= 20 từ, chữ >= 20px) nằm trong khối "Copy tờ rời" copy được, bốn dòng lấy từ số thật của phiên chứ không phải chữ chép sẵn (thiếu thì in "chưa ghi được", cấm bịa), dòng "Việc 3 phút ở nhà" là một hoạt động không màn hình không ghi vở lấy đúng cột dongTac của môn kèm MỘT đề <= 16 từ đã chơi, và khối không có tên bạn khác, không xếp hạng, không dữ liệu cá nhân, không dòng đe dọa
-  Mục gắn 📷 chỉ áp dụng khi có webcam: bản không camera bỏ 6 mục đó và vẫn phải đạt 32 mục còn lại.
+  [39] verifyPacing() đã chạy lúc nạp: mọi câu mang nhãn "Tuần <a>–<b> · Học kì <n>" khớp NGUYÊN VĂN cột tuan của tools/data/standards.mjs (khoảng nằm trong 1–35, một cụm phủ tối đa 10 tuần) và nhãn đó có thật ở hai màn với chữ >= 18px nằm trong khối "Copy tờ rời" · câu "Lớp mình đang học tuần mấy?" chạy ĐÚNG MỘT lần ở phiên đầu, đọc lại được từ "miti-week" và không chặn nút "Bắt đầu" · khi đã biết tuần của lớp thì >= 3/12 lượt là cụm có tuan[1] nhỏ hơn tuần đó · nhãn nước rút và chế độ tổng ôn đổi đúng theo SCHOOL_YEAR mà không đổi luật chơi, không đổi trần tải trọng
+  Mục gắn 📷 chỉ áp dụng khi có webcam: bản không camera bỏ 6 mục đó và vẫn phải đạt 33 mục còn lại.
 - XUẤT BẢN VĂN: bảng có nút "Xuất bản văn" sinh một khối chữ tiếng Việt copy được — tên game, bản chuẩn MiTi,
   ngày giờ, kiểu điều khiển đang chạy, số mục ĐẠT / CHƯA ĐẠT, danh sách mục chưa đạt kèm lý do.
   Khối chữ chỉ hiện trên màn hình và vào clipboard máy đó; không gửi lên máy chủ nào, không xin quyền, không để lại dữ liệu.
 - MỤC CHƯA ĐẠT PHẢI GIẢI THÍCH ĐƯỢC: mỗi dòng kèm một câu nguyên nhân kỹ thuật cho người lớn
   (ví dụ "toScreen không được dùng ở drawImage — vật thể đang tính bằng lx * W") và một câu nên sửa thế nào trong prompt.
   Cấm báo "lỗi" rồi im lặng, cấm chữ chung chung kiểu "hệ thống có vấn đề".
-- 29 VIỆC NGƯỜI THỬ PHẢI BẤM TAY (máy không tự kiểm được, làm theo đúng thứ tự, khoảng 15 phút):
+- 30 VIỆC NGƯỜI THỬ PHẢI BẤM TAY (máy không tự kiểm được, làm theo đúng thứ tự, khoảng 15 phút):
   đứng xa tới mức chỉ còn hai bàn tay · giữ im một tư thế 5 giây · che nửa người bằng tay · tắt camera giữa vòng ·
   rút mạng lúc đang tải model · đổi tay thuận sang Trái giữa chừng · bật reduced-motion ở hệ điều hành rồi mở game ·
   cố tình sai 4 câu liên tiếp · mở bằng điện thoại đặt dọc · đưa một học sinh lớp 4 chưa đọc hướng dẫn chơi thử 60 giây ·
@@ -844,6 +882,7 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
   đọc to dòng "Yêu cầu cần đạt:" ở màn tổng kết và đối chiếu với sách giáo khoa của lớp — dòng đó có đúng yêu cầu của cụm này không, hay chỉ là một câu chung chung ai cũng viết được? Hỏi em đang chơi "câu vừa rồi thuộc mạch nào" và "mẹo nhớ là gì": em trả lời được thì nhãn mạch và mẹo đã vào đầu, nếu em chỉ đọc lại chữ trên HUD thì hai dòng đó đang trang trí.
   hỏi em đang chơi "mình đang tập môn gì" và "lúc nãy cơ nào được duỗi" — em có gọi ra được tên môn thể thao và động tác duỗi, hay cả buổi với em chỉ là vung tay chọn đáp án? Xem trọn một hiệp: bốn em có thật sự chạm khuỷu trước hiệp 1 và có nói lời hay khi bạn sai không? Đọc bảng thành tích cuối phiên: đó là mốc của CẢ ĐỘI hay đã vô tình thành xếp hạng cá nhân?
   copy tờ rời đưa cho bố mẹ đọc tại chỗ — trong mười giây họ có nói lại được con vừa tập môn gì, mẹo nào và cả nhà cùng làm gì trong 3 phút không? Việc 3 phút đó có buộc ai mở thêm màn hình, ghi vở, chụp ảnh hay mua đồ không? Đọc to tờ gửi về: có tên bạn nào khác, có dòng so sánh hay dọa dẫm nào lọt vào tay người ở nhà không?
+  đọc nhãn tuần ở màn khởi động rồi đối chiếu với thời khóa biểu thật của lớp — game ghi "Tuần 22–24 · Học kì 2" có khớp với việc lớp đang học tới đâu, hay bảng tuần chỉ là chữ trang trí? Hỏi em "tuần trước lớp mình học bài gì": em trả lời được thì ba lượt ôn theo tuần đang ôn cái có thật, nếu em chỉ đọc lại chữ trên HUD thì ba lượt đó không ôn gì cả. Xem hai lượt đầu của phiên gần kỳ kiểm tra: đó có thật là chỗ em yếu nhất không, hay game vẫn xếp câu ngẫu nhiên rồi chỉ đổi mỗi dòng chữ "Còn 2 tuần tới kiểm tra"?
   Bảng in kèm từng việc và ô ghi kết quả: `prompts/CHECKLIST_NGHIEP_THU.md`.
 - THIẾU MỤC NÀO THÌ SỬA PROMPT, KHÔNG SỬA TAY FILE HTML: dán lại nguyên văn quy định tương ứng vào cuối prompt rồi sinh lại file.
 
@@ -958,10 +997,10 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
 [ ] đạo cụ AR neo landmark bằng toScreen(); bản không camera thì đạo cụ đứng yên ở góc HUD dưới chứ không biến mất
 [ ] ba câu thoại đọc bằng speechSynthesis giọng vi-VN, <= 3 câu mỗi phút, câu khi sai là câu đỡ chứ không chế giễu
 [ ] bảng kiểm ẩn mở bằng 7 lần chạm logo MiTi hoặc Ctrl+Alt+K, trạng thái ĐẠT do code kiểm thật lúc chạy
-[ ] cả 38 mục máy tự kiểm đều có hàm kiểm tương ứng, không mục nào là chữ kê sẵn
+[ ] cả 39 mục máy tự kiểm đều có hàm kiểm tương ứng, không mục nào là chữ kê sẵn
 [ ] mục CHƯA ĐẠT kèm nguyên nhân kỹ thuật + cách sửa trong prompt, không có dòng "lỗi hệ thống"
 [ ] nút "Xuất bản văn" copy được khối chữ tiếng Việt, không gửi lên máy chủ nào
-[ ] bản không camera bỏ đúng 6 mục 📷 và vẫn đạt 32 mục còn lại, không bỏ luôn bảng kiểm
+[ ] bản không camera bỏ đúng 6 mục 📷 và vẫn đạt 33 mục còn lại, không bỏ luôn bảng kiểm
 [ ] fallback chuột/chạm/phím chơi trọn vẹn, tự kích hoạt khi camera lỗi
 [ ] QUESTION_DATA có ít nhất 30 mục (Toán) hoặc 60 mục (Tiếng Anh), mỗi mục có đáp án + lời giải + errorTag + loiViet + dang
 [ ] dữ liệu đặt đầu file, code engine đặt sau, không có chỗ nào rút gọn
@@ -1025,7 +1064,7 @@ Sau khi tự kiểm tra, CHỈ xuất ra file HTML hoàn chỉnh, không kèm gi
   toàn bộ quy định phía trên chỉ là lời mong đợi. Bắt game tự kiểm bằng hàm true/false biến lời hứa thành trạng thái đọc được.
 - **Trạng thái phải do code kiểm, không phải chữ kê sẵn**: một bảng tĩnh in sẵn chữ "ĐẠT" còn hại hơn không có bảng,
   vì người lớn tưởng là đã kiểm. Đây là lý do quy định ghi rõ "không phải một danh sách chữ tĩnh".
-- **Tách 38 mục máy / 29 việc người thử**: cái gì máy kiểm được thì đừng đùn cho giáo viên; cái máy không kiểm được
+- **Tách 39 mục máy / 30 việc người thử**: cái gì máy kiểm được thì đừng đùn cho giáo viên; cái máy không kiểm được
   (cháu có hiểu luật chơi mà không đọc hướng dẫn không, rút mạng thì sao) thì đừng giả vờ kiểm. Con số 15 phút là thời lượng
   một tiết thực tế, không phải danh sách dài vô hạn.
 - **Mục chưa đạt phải nói nguyên nhân và cách sửa**: bảng kiểm chỉ báo "lỗi" sẽ bị bỏ qua; kèm câu "thiếu ở dòng nào,

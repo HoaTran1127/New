@@ -66,7 +66,7 @@ Bốn biến thể đầu dùng **cùng một hợp đồng AR** như prompt gam
 - `04-english5/` — 15 game Tiếng Anh 5.
 - `01-prompt-…` đến `12-prompt-…` — **12 prompt legacy** đời đầu: giữ nguyên cơ chế game, đã thay MediaPipe Legacy/Tailwind CDN/Tone.js bằng chuẩn hiện hành và gắn nhãn `LEGACY`. Không dùng làm khuôn cho game mới.
 - `VARIANTS_425.md` — 425 biến thể (85 game × 5 kiểu điều khiển), do `tools/build-variants.mjs` sinh.
-- `CHECKLIST_NGHIEP_THU.md` — bảng kiểm cầm tay khi nhận file HTML về: 38 mục máy tự kiểm + 29 việc người thử bấm tay (trong đó 6 mục gắn 📷 chỉ có camera mới kiểm được; bản không camera bỏ 6 mục đó và vẫn phải đạt 32 mục còn lại), do `tools/build-acceptance.mjs` sinh từ `tools/lib/acceptance.mjs`.
+- `CHECKLIST_NGHIEP_THU.md` — bảng kiểm cầm tay khi nhận file HTML về: 39 mục máy tự kiểm + 30 việc người thử bấm tay (trong đó 6 mục gắn 📷 chỉ có camera mới kiểm được; bản không camera bỏ 6 mục đó và vẫn phải đạt 33 mục còn lại), do `tools/build-acceptance.mjs` sinh từ `tools/lib/acceptance.mjs`.
 
 ## ✅ Nghiệm thu một game vừa sinh
 
@@ -254,13 +254,29 @@ Việc người thử số 28 ("hỏi em đang chơi 'mình đang tập môn gì
 
 Việc người thử số 29 ("copy tờ rời đưa cho bố mẹ đọc tại chỗ — trong mười giây họ có nói lại được con vừa tập môn gì, mẹo nào và cả nhà cùng làm gì trong 3 phút không? Việc 3 phút đó có buộc ai mở thêm màn hình, ghi vở, chụp ảnh hay mua đồ không? Đọc to tờ gửi về: có tên bạn nào khác, có dòng so sánh hay dọa dẫm nào lọt vào tay người ở nhà không?") là chỗ máy không tự kiểm được: `verifyFamily()` đếm được bốn dòng và biết chúng đến từ số thật, còn việc một người lớn bận rộn có đọc nổi tờ đó trong mười giây hay không thì phải đưa tờ giấy cho họ thật.
 
+## 📅 Tầng "tuần học" — `tools/lib/pacing.mjs` + cột `tuan` của `tools/data/standards.mjs` (vòng 20)
+
+Đo 85 prompt trước vòng 20: **"tuần 1" 0/85, "tuần 12" 0/85, "theo tuần" 0/85, "phân phối chương trình" 0/85, "học kì" 0/85, "giữa kì" 0/85, "đến tuần" 0/85** — chính `catalogs/curriculum/toan-lop-4-5-sgk-matrix.md` cũng **0** lần chữ "tuần". `curriculum.mjs` (vòng 17) đã buộc mỗi câu nói được mình thuộc **mạch nào**, `memory.mjs` đã hẹn ôn +1/+3/+7 ngày cho **từng em**, nhưng không tầng nào trả lời câu hỏi đầu tiên của một giáo viên cầm 85 thẻ: **"hôm nay tuần 13 thì tôi cho lớp chơi game nào?"**. Hệ quả đo được: thư viện 85 game không có thứ tự sử dụng, còn lịch ôn chỉ đúng với em đã chơi nhiều phiên, không đúng với cả lớp vừa bước vào tuần kiểm tra.
+
+| Luật | Con số | Kiểm ở đâu |
+|:---|:---|:---|
+| Nhãn tuần ở hai màn, lấy nguyên văn từ bảng chuẩn | đúng MỘT nhãn "Tuần `<a>`–`<b>` · Học kì `<n>`" ở màn khởi động + màn tổng kết, chữ **>= 18px**, nằm **TRONG** khối "Copy tờ rời"; Học kì tính theo `tuan[0]` (**<= 18 là Học kì 1**, từ 19 là Học kì 2); **cấm** tự đặt khoảng tuần khác cột `tuan`, **cấm** in "cả năm" hoặc để trống, **cấm** một cụm phủ quá **10 tuần**; kèm đúng một dòng **<= 14 từ** "theo phân phối chung — cô xác nhận tuần của lớp em" | `verifyPacing()` + mục `[39]` |
+| Hỏi tuần đúng một câu, chỉ ở phiên đầu | "Lớp mình đang học tuần mấy?" hiện **ĐÚNG MỘT LẦN** ở phiên đầu trên máy: hàng nút số **1–35** gom theo tháng, bấm xong lưu localStorage `"miti-week"` và các phiên sau đọc lại; chưa chọn thì vẫn chơi bình thường, HUD ghi "Tuần: chưa chọn"; **cấm chặn nút "Bắt đầu"**, **cấm** hỏi giữa phiên, **cấm** tiện hỏi tuần mà hỏi tên học sinh hay dữ liệu cá nhân nào khác | mục `[39]` |
+| >= 3/12 lượt là cụm **đã qua** tuần | khi đã biết tuần của lớp, **>= 3/12 lượt** phải là cụm có `tuan[1]` nhỏ hơn tuần hiện tại — luyện cái cả lớp đã học xong chứ không đánh đố trước chương trình; ba lượt này **trùng được** với ba lượt xen mạch của tầng chuẩn kiến thức; tổng kết in "Tuần `<t>` · em ôn lại `<n>` cụm đã học" bằng số thật; **cấm** chọn cụm chưa tới tuần làm đề MỚI | mục `[39]` |
+| Hai tuần nước rút: đổi thứ tự, không đổi luật | trong **2 tuần** trước một mốc của `SCHOOL_YEAR.moc` (giữa học kì 1, cuối học kì 1, giữa học kì 2, cuối học kì 2), HUD thêm "Còn `<n>` tuần tới kiểm tra `<tên mốc>`" và **hai lượt ĐẦU** lấy cụm có errorTag yếu nhất trong `"miti-mastery"`; **cấm** tăng độ khó, **cấm** trừ tim nhiều hơn, **cấm** biến 12 lượt thành đề thi thử có đồng hồ, **cấm** vượt trần 10 phút của tầng tiết học, **cấm** bỏ khởi động và hạ nhiệt để nhét thêm đề | mục `[39]` |
+| Từ tuần 33 là tổng ôn | **>= 6/12 lượt** là cụm đã học xong và **cấm** giới thiệu cụm mới (không cụm nào có `tuan[0]` lớn hơn tuần hiện tại được xuất hiện); tổng kết in "Cả năm có `<k>` cụm, em vững `<m>` cụm" với `<k>` đếm từ bảng chuẩn của đúng lớp, `<m>` từ `"miti-mastery"` — thiếu số in **"chưa ghi được"**, **cấm bịa** | mục `[39]` |
+
+`verifyPacing()` chạy MỘT LẦN lúc nạp và kiểm **đúng bốn điều**; **bản không camera, bản một học sinh và bản tắt tiếng vẫn bắt buộc kiểm đủ bốn điều** — tuần học nằm trong quyển sổ liên lạc, không phụ thuộc webcam lẫn loa. Khoảng tuần ở đây là **phân phối chung** của năm học 35 tuần chứ không phải thời khóa biểu của trường: nhãn nào cũng đi kèm dòng "cô xác nhận tuần của lớp em", và câu hỏi tuần chỉ có hai lựa chọn thật — chọn một số 1–35, hoặc để trống để chơi như mọi khi.
+
+Việc người thử số 30 ("đọc nhãn tuần ở màn khởi động rồi đối chiếu với thời khóa biểu thật của lớp — game ghi 'Tuần 22–24 · Học kì 2' có khớp với việc lớp đang học tới đâu không? Hỏi em 'tuần trước lớp mình học bài gì' rồi xem ba lượt ôn có đúng là cái đã học chứ không phải chương năm sau. Xem hai lượt đầu của phiên nước rút: có thật là hai cụm em yếu nhất, hay game chỉ đổi mỗi dòng chữ trên HUD?") là chỗ máy không tự kiểm được: `verifyPacing()` so được chuỗi nhãn với cột `tuan` và đếm được ba lượt đã qua tuần, còn việc nhãn đó có đúng với **lớp thật đang học tới đâu** thì chỉ cô giáo đối chiếu sổ đầu bài mới biết.
+
 ## 🔁 Pipeline của thư viện
 
 85 prompt game **được sinh tự động**, không sửa tay:
 
 ```
 tools/data/games.mjs + clusters.mjs + gestures.mjs + examples.mjs + error-notes.mjs + identities.mjs + standards.mjs + sports.mjs
-tools/lib/ar.mjs · rules.mjs · feel.mjs · classroom.mjs · access.mjs · light.mjs · celebrate.mjs · identity.mjs · rhythm.mjs · queue.mjs · lesson.mjs · curriculum.mjs · sport.mjs · family.mjs · verify.mjs · pe.mjs · memory.mjs · hype.mjs · anticipation.mjs · acceptance.mjs
+tools/lib/ar.mjs · rules.mjs · feel.mjs · classroom.mjs · access.mjs · light.mjs · celebrate.mjs · identity.mjs · rhythm.mjs · queue.mjs · lesson.mjs · curriculum.mjs · sport.mjs · family.mjs · pacing.mjs · verify.mjs · pe.mjs · memory.mjs · hype.mjs · anticipation.mjs · acceptance.mjs
         └─ node tools/build.mjs ─→ catalogs/GAME_CATALOG.csv · .md · .js + prompts/0X-*/ + index.html + prompts/CHECKLIST_NGHIEP_THU.md
 ```
 
