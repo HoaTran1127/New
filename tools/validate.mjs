@@ -241,6 +241,24 @@ for (const { from, when, need, msg } of RULE_LINKS)
       bad(`LESSON.${name}: ${msg}`);
   }
 
+// Vòng 28 — KHOÁ SỐ HỌC của TRẦN LƯỢT LÊN BẢNG (field-test (c) mà vòng 26/27 để ngỏ). `bigClass` + `handover`
+// + `boardEquity` tuyên bố "mọi con số về lớp là hàm của M", đưa công thức clamp(round(M/3), 12, 16) KÈM các
+// ví dụ đã tính sẵn ("35 em ra 12, 45 em ra 15, 55 em ra 16"), nhưng chính phép tính đó chưa bao giờ được TRA.
+// Một lần sửa tay làm ví dụ lệch khỏi công thức ("45 em ra 14", "55 em ra 17") sẽ đi nguyên văn vào cả 39 giáo
+// án mà build vẫn xanh — mâu thuẫn ngay trong một quy định, khó thấy bằng mắt. Khoá này bóc ĐÚNG các tham số
+// (số chia, trần, sàn) từ chính chuỗi công thức, rồi đòi mọi ví dụ "S em ra [đúng] T" thoả T === clamp(round(S/sốchia), sàn, trần).
+for (const [name, txt] of Object.entries(LESSON)) {
+  const f = txt.match(/clamp\(round\(M\/(\d+)\),\s*(\d+),\s*(\d+)\)/);
+  if (!f) continue;
+  const div = Number(f[1]), lo = Number(f[2]), hi = Number(f[3]);
+  for (const ex of txt.matchAll(/(\d+) em ra (?:đúng )?(\d+)/g)) {
+    const size = Number(ex[1]), claim = Number(ex[2]);
+    const want = Math.min(hi, Math.max(lo, Math.round(size / div)));
+    if (want !== claim)
+      bad(`LESSON.${name}: ví dụ trần "lớp ${size} em ra ${claim}" sai số học — clamp(round(${size}/${div}), ${lo}, ${hi}) = ${want}.`);
+  }
+}
+
 for (const g of GAMES) {
   const rel = PATH_OF.get(g.id);
   if (!rel) { bad(`${g.id}: không có đường dẫn prompt trong catalog.`); continue; }

@@ -1,4 +1,4 @@
-# Giáo án AR trên bảng phấn — nguồn cộng đồng và bài học sau 27 vòng
+# Giáo án AR trên bảng phấn — nguồn cộng đồng và bài học sau 28 vòng
 
 Tài liệu này để **người khác tham khảo và nối tiếp**, không phải mô tả tính năng. Phần tính năng nằm ở
 [`prompts/giao-an/README.md`](../prompts/giao-an/README.md); ở đây chỉ ghi: cái gì đã đo được, cái gì đã
@@ -204,12 +204,25 @@ mẫu số lấy số phiếu bảng con thay vì camera — vẫn cùng dân s�
 thêm hàng thứ tư (`classVote` nhắc "giảng lại bước SƠ ĐỒ" ⇒ phải chứa "cận dưới" VÀ `detectionEquity`) —
 đúng bước mà tài liệu vòng 26 đã hứa làm khi có cặp thứ 4. Probe: P106 xoá cụm mẫu số mới khỏi `classVote`
 bản lib. Không trích dẫn ngoài; toàn bộ là vòng NỘI BỘ.
+Vòng 28 nhắm đúng chỗ vòng 26 và 27 cùng ghi là "còn mở": **công thức trần lượt lên bảng chưa bao giờ được TRA
+bằng số học.** `bigClass` + `handover` + `boardEquity` không chỉ nêu `clamp(round(M/3), 12, 16)` mà còn đưa ba
+ví dụ ĐÃ TÍNH sẵn ("35 em ra 12, 45 em ra 15, 55 em ra 16") — nghĩa là một lần sửa tay làm ví dụ lệch khỏi
+công thức (gõ "45 em ra 14", hay bỏ quên trần nên viết "55 em ra 17") sẽ được copy nguyên văn vào **cả 39**
+giáo án mà build vẫn xanh: repo sinh PROMPT chứ không sinh HTML, nên không có chỗ nào chạy `clamp` thật để mà
+đố. Đo: công thức xuất hiện **39/39** *và* đi kèm ví dụ **6 chỗ** (handover 3, bigClass 3, boardEquity 1 "35
+em ra đúng 12") nhưng **0** kiểm chứng nào nối được vế "ra N" với phép tính. Vá = một khoá **đọc-chính-nó**:
+validator bóc `số chia / sàn / trần` ngay từ chuỗi `clamp(round(M/D), LO, HI)` trong từng quy định, rồi bắt mọi
+ví dụ `S em ra [đúng] T` thoả `T === min(HI, max(LO, round(S/D)))` — không nhập tay hằng số thứ hai nên không
+thể lệch khỏi công thức mà khoá không thấy. Probe: P107 ("45 em ra 14", round(45/3)=15) và P108 ("55 em ra 17",
+clamp chặn ở 16) đều đỏ "sai số học". Đây vẫn là vòng NỘI BỘ (đo bằng grep, không trích dẫn ngoài); nó KHÔNG
+thay được phép thử "nhập M=45 vào HTML rồi xem bộ đếm có nhảy lên 15 không" — phép đó cần một bản HTML thật,
+vẫn còn mở — nhưng nó chặn đúng lớp lỗi mà một repo-sinh-prompt hoàn toàn mù: số học in sai trong lời dẫn.
 3. **Quy định phải có con số.** "Chữ phải to" không kiểm chứng được; "≥ 40 px **và** ≥ 5.5% chiều cao khung
    hình, ≤ 12 chữ một dòng" thì validator bắt được. Mọi quy định trong `tools/lib/*.mjs` là chuỗi nguyên văn,
    `tools/validate.mjs` so bằng `includes()`, nên lời văn và mắt kiểm không bao giờ lệch nhau.
 4. **Chốt chặn hai chiều.** Cơ chế game lọt vào giáo án và quy định giáo án lọt sang game đều làm build đỏ.
    Thêm một quy định mới là tự động thêm một khoá bị cấm ở phía bên kia (`LESSON_FAMILY_RULES`).
-5. **Probe đột biến là đơn vị kiểm thử thật.** 106 phép, mỗi phép phá đúng một thứ và đòi đúng thông báo.
+5. **Probe đột biến là đơn vị kiểm thử thật.** 108 phép, mỗi phép phá đúng một thứ và đòi đúng thông báo.
    Không có probe thì một quy định chỉ là câu văn đẹp.
 6. **Tách công cụ giảng bài khỏi game.** Cùng một kiến thức, hai động cơ đối lập: game cần hồi hộp,
    tiết giảng cần giáo viên cầm lái. Nhét tim/điểm/combo vào bảng phấn làm em lên bảng sợ sai hơn là muốn hiểu.
@@ -245,6 +258,7 @@ bản lib. Không trích dẫn ngoài; toàn bộ là vòng NỘI BỘ.
 | 25 | **đo nốt hai nguồn rò trái họ còn lại** (cùng góc đo v24, nội bộ bằng grep, không trích dẫn ngoài): `ACCESS.caption` mang "mascot nói", "combo, mất máu, thắng màn" và khối `AR_RENDER` của game mang "speed lines", "sát mặt người chơi", "nhịp game nhanh", "spawn", "va chạm", "màn chơi" — tất cả đang nằm nguyên trong 39 giáo án vì `build-lessons` dán thẳng hai chuỗi game-viết; đo trước: "mất máu" **39/39**, "speed lines" **39/39** | THÊM quy định #49 `soundToText` (giữ quan tâm `caption` bằng từ của lớp: mọi âm thanh giờ giảng có bản chữ, tiếng Anh/thuật ngữ kèm nút "Hiện chữ" bật ngay từ đầu, "tách"/"soạt" kèm biểu tượng nhìn thấy, học sinh nghe kém/cuối phòng/lớp ồn vẫn theo 100%, bản chữ **không bao giờ là kênh DUY NHẤT** báo đúng/sai — không mascot/combo/mất máu) và hằng số `AR_LESSON` trong `ar.mjs` (**giữ AR thật**: cover-fit `Math.max`, một lớp rgba 0.45, `toScreen(lx,ly)`, z 1.6→0.35, NEO VÀO CƠ THỂ; bỏ đuôi arcade + đổi nền sang "nền lớp học", nét phấn, con trỏ, vật thật ảo, sơ đồ). `build-lessons` nhập `AR_LESSON`/`soundToText`; validator bỏ `caption` khỏi `LESSON_ACCESS_EXCLUDE`, khoá `soundToText`, `GAME_LEAK` 5→14. Đo sau: "mất máu" **0/39**, "speed lines" **0/39**, 14 needle **0/39**, còn `toScreen` + "NEO VÀO CƠ THỂ" **39/39**. P100 mất `soundToText`, P101 lọt sang game, P102 dán ngược `ACCESS.caption`, P103 dán ngược `AR_RENDER` |
 | 26 | **đo một con số bị quy định ra sau đổi mà hai quy định ra trước không theo** (góc đo v21/22, nội bộ bằng grep): `bigClass` (v11) đặt trần lượt lên bảng = `clamp(round(M/3), 12, 16)` + tuyên bố "mọi con số về lớp là hàm của M", nhưng `handover` và `boardEquity` (ra trước) vẫn khoá cứng "tối đa 12 lượt" (boardEquity lấy "MỘT TIẾT 12 LƯỢT" làm tiêu đề); đo: "12 lượt" **3×/file** *và* `clamp(round(M/3), 12, 16)` **39/39** *và* bộ đếm "/15" **39/39** — HTML sinh ra nhận cùng lúc "quá 12 thì khoá" và "9/15" | HỢP NHẤT VỀ MỘT NGUỒN (không đổi số nào): giữ `bigClass` là trần duy nhất, viết lại `handover` + `boardEquity` + `LESSON_SHORT` để đọc đúng `clamp(round(M/3), 12, 16)` và ghi rõ "12 chỉ là giá trị tại M=35"; bigClass tuyên bố mình là TRẦN DUY NHẤT. **Khoá bắt-cặp** mới (kiểu v22/23): đỏ nếu `handover`/`boardEquity` nhắc "lượt lên bảng" mà thiếu `clamp(round(M/3)` — P104 (handover lùi về 12 cứng), P105 (boardEquity lùi về 12 cứng). Sau: mỗi GA còn đúng **1** chữ "12 lượt" (ví dụ M=35) thay vì 3, `clamp(...)` **4×**, build xanh + deterministic, probe **105/105** |
 | 27 | **đo một QUYẾT ĐỊNH dùng MẪU SỐ sai** (góc đo mới: tử-số-vs-mẫu-số, nội bộ bằng grep): `detectionEquity` (v18) đã chứng minh số bàn tay camera thấy chỉ là **cận dưới** số em thực giơ (góc quay, ánh sáng, bạn cuối dãy bị che), nhưng `classVote` lấy chính con số cận-dưới ấy làm TỬ SỐ rồi chia cho SĨ SỐ M để ra tỉ lệ và bật gợi ý "giảng lại bước SƠ ĐỒ" khi vượt 1/3 — sai hai chiều (nhận diện kém làm tỉ lệ GIẢ, mất cảnh báo đúng lúc cần; một nhóm nổi bật làm tỉ lệ TĂNG, giảng lại oan). Đo (needle điều khiển `classVote` · `detectionEquity` **39/39**): "1/3" **2×/file**, cả hai chỗ đều là "1/3 tổng số em"/"1/3 lớp", "tổng số đáp án đã ghi nhận" **0/39** | SỬA `classVote` (không thêm quy định #50): đổi mẫu số thành **TỔNG SỐ ĐÁP ÁN ĐÃ GHI NHẬN** = tay camera thấy + cô bấm nút +1/+5 (cùng dân số với tử số), ngưỡng 1/3 áp dụng trên phần đã ghi nhận; khi tổng < sĩ số đã nhập thì **fail-loud**: in đúng một dòng "mới ghi nhận N/M em — kết quả có thể chưa đủ để kết luận, cô nhìn cả lớp rồi bấm cộng tay"; khi lớp chuyển sang bảng-con-nhập-tay theo `detectionEquity`, mẫu số lấy số phiếu bảng con. Nhân tiện trả nợ kỹ thuật: gom **ba `if` bắt-cặp** của v22/23/26 vào một bảng khai báo `RULE_LINKS = [{from, when, need, msg}]` với vòng lặp ngoài duy nhất — đúng cam kết "khi có cặp thứ 4 thì gom vào một danh sách"; hàng thứ tư là `classVote` ⇒ phải chứa "cận dưới" VÀ `detectionEquity`. P106 xoá cụm mẫu-số-mới khỏi `classVote` lib, đỏ đúng thông báo. Probe **106/106**, build xanh, deterministic |
+| 28 | **TRA phép tính của trần lượt lên bảng** (field-test (c) mà v26/27 cùng ghi "còn mở"; nội bộ bằng grep): `bigClass`+`handover`+`boardEquity` nêu `clamp(round(M/3), 12, 16)` kèm ba ví dụ **đã tính sẵn** ("35 em ra 12, 45 em ra 15, 55 em ra 16"), nhưng repo sinh PROMPT chứ không sinh HTML — **không chỗ nào chạy `clamp` thật**, nên một lần sửa tay làm ví dụ lệch ("45 em ra 14", hay quên trần → "55 em ra 17") sẽ copy nguyên văn vào **cả 39** giáo án mà build vẫn xanh. Đo: công thức **39/39**, đi kèm **6** ví dụ "S em ra T", nhưng **0** kiểm chứng nối được vế "ra T" với phép tính | THÊM khoá **đọc-chính-nó** trong `validate.mjs`: bóc `số-chia / sàn / trần` ngay từ chuỗi `clamp(round(M/D), LO, HI)` của từng quy định rồi đòi mọi ví dụ `S em ra [đúng] T` thoả `T === min(HI, max(LO, round(S/D)))` — **không nhập tay hằng số thứ hai** nên khoá không thể lệch khỏi công thức. Đây chỉ là khoá thuần (prompt không đổi), không thay được phép thử "nhập M=45 vào HTML xem bộ đếm nhảy 15" (vẫn cần HTML thật, còn mở). P107 ("45 em ra 14", round(45/3)=15), P108 ("55 em ra 17", clamp chặn ở 16) đỏ "sai số học". Probe **108/108**, build xanh + deterministic, game side không đổi |
 
 ## Vì sao chọn những con số đang dùng
 
@@ -845,15 +859,11 @@ thành "tăng X% điểm".
   vì giữ nó hand-authored như hiện tại. (b) ~~các **khoá bắt-cặp** của vòng 19/22/23 vẫn là `if` cứng từng cặp tên-hàm;
   có cặp thứ 4 thì trừu tượng hoá thành bảng khai báo `[[quyDinh, dieuKien, phaiChua]]` như bullet trên~~ **ĐÃ LÀM ở
   vòng 27**: bảng `RULE_LINKS` thay cả ba `if`, và hàng thứ tư (`classVote`) là cặp đã kích hoạt việc refactor.
-  (c) `bigClass`
+  (c) ~~`bigClass`
   dùng trần `clamp(round(M/3), 12, 16)` nhưng chưa probe nào đổi sĩ số M rồi kiểm trần lượt lên bảng + "mẫu đại diện"
-  nhảy đúng nấc — một field-test cho `roomFootprint`/`breakReserve`/`rehearsalBudget` vẫn còn thiếu.
+  nhảy đúng nấc~~ **MỘT PHẦN ĐÃ LÀM ở vòng 28**: khoá mới đối chiếu mọi ví dụ "S em ra T" với chính phép `clamp(round(M/D), LO, HI)` bóc từ chuỗi, nên gõ lệch số học trong lời dẫn ("45 em ra 14", "55 em ra 17") nay build đỏ (P107/P108). Cái **còn mở**: vì repo chỉ sinh PROMPT, chưa có bản HTML nào để mà "nhập M=45 rồi xem bộ đếm nhảy lên 15" — phép thử đầu-cuối đó vẫn cần một lần chạy thật.
 - **Vòng 26 đã hợp nhất TRẦN LƯỢT LÊN BẢNG về một nguồn.** `handover` + `boardEquity` + `LESSON_SHORT` không còn khoá cứng "12 lượt" mà đọc đúng `clamp(round(M/3), 12, 16)` của `bigClass`; mỗi GA chỉ còn 1 chữ "12 lượt" (ví dụ
-  M=35) thay vì 3, và khoá bắt-cặp thứ ba đỏ nếu ai đó lùi lại hằng số (P104/P105). **Việc còn mở:** vòng này chỉ
-  làm ba chỗ *nói cùng một công thức*, **chưa** kiểm *số học* của công thức — chưa có probe nào cho M=45 rồi xác
-  nhận trần ra đúng 15, M=55 ra 16, M=35 ra 12, hay M < 36 không tụt dưới 12. Đó chính là field-test (c) ở bullet
-  trên, nay càng đáng làm vì cả ba quy định đã cùng trông chờ vào một biểu thức duy nhất: chỉ cần biểu thức đó sai
-  thì sai ở mọi nơi.
+  M=35) thay vì 3, và khoá bắt-cặp thứ ba đỏ nếu ai đó lùi lại hằng số (P104/P105). **Việc còn mở — ĐÃ TIẾN ở vòng 28:** vòng 26 mới làm ba chỗ *nói cùng một công thức* còn *số học* của công thức thì vòng 28 khoá bằng máy (đối chiếu ví dụ với `clamp`, P107/P108); việc *thật sự* còn mở là chạy bản HTML sinh ra với M thay đổi để xác nhận bộ đếm nhảy đúng nấc — điều một repo-sinh-prompt không tự làm được.
 - **Vòng 27 đã sửa MẪU SỐ của `classVote`** (1/3 giờ chia cho TỔNG SỐ ĐÁP ÁN ĐÃ GHI NHẬN, fail-loud khi tổng < sĩ số) **và gom ba `if` bắt-cặp thành bảng `RULE_LINKS`.** **Việc còn mở:** (a) cùng góc đo "quyết định dùng mẫu số sai" còn nhiều ứng viên chưa được soi — `movementBreak`/`breakReserve` chia ngân sách nghỉ trên 35′ cố định trong khi `bigClass` cho phép sĩ số thay đổi thời lượng khởi động, `noSlate` suy tỉ lệ bảng con từ sĩ số mà chưa kiểm xem sĩ số ấy lấy từ đâu (đã nhập hay mặc định 35), `detectionEquity` tự nó đặt ngưỡng "2/3 số em" cũng trên một M chưa chắc đã nhập. (b) `RULE_LINKS` mới có 4 hàng, mỗi hàng vẫn là một chuỗi `when` + một mảng `need` nguyên văn; chưa có cơ chế bảo đảm các needle `need` không bị đổi tên ở quy định nguồn mà không cập nhật hàng bảng (kiểu nợ mà `checkRuleRefs` đã giải quyết cho tham chiếu backtick). (c) Field-test (c) của vòng 26 vẫn còn nguyên, và nay `classVote` cũng chờ cùng một phép kiểm: nếu clamp sai thì cả tỉ lệ biểu quyết cũng suy ra từ một M sai.
 
 ## Muốn đóng góp thì sửa ở đâu
@@ -866,7 +876,8 @@ tools/data/props.mjs    vật thật + sơ đồ theo 38 cụm
 tools/data/lessons.mjs  tên bài, câu khởi động, dòng ghi nhớ
 tools/build-lessons.mjs ghép thành 39 file prompts/giao-an/
 tools/validate.mjs      63 khoá của họ giáo án + chốt chặn ngược + chốt cấp cụm từ GAME_LEAK + bảng RULE_LINKS
-                        (4 khoá bắt-cặp) + 13 mục của khung + trần số hàng "Chữa bài" đo thẳng từ clusters.mjs/error-notes.mjs
+                        (4 khoá bắt-cặp) + khoá số học trần lượt lên bảng (đối chiếu ví dụ với `clamp`) + 13 mục
+                        của khung + trần số hàng "Chữa bài" đo thẳng từ clusters.mjs/error-notes.mjs
 ```
 
 Quy trình một vòng nâng cấp: đo bằng `grep` trên `prompts/giao-an/GA*.md` → viết quy định có con số vào
