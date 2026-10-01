@@ -218,29 +218,28 @@ for (const [k, v] of Object.entries(LESSON)) checkRuleRefs(`LESSON.${k}`, v);
 for (const [k, v] of Object.entries(CHALK)) checkRuleRefs(`CHALK.${k}`, v);
 for (const [k, v] of Object.entries(HANDOUT)) checkRuleRefs(`HANDOUT.${k}`, v);
 
-// Vòng 22 — bắt cặp tiền đề: `rehearsal` định nghĩa 'Chạy thử 5 phút' là KHÔNG camera, nên bước tự
-// kiểm ĐỘ PHỦ BÀN TAY của `detectionEquity` (đòi "đưa bàn tay vào trước camera") buộc phải trỏ sang
-// Nhành B có camera của `rehearsalBudget`. Mất liên kết này là vòng 18 lại ra lệnh bật camera ngay
-// trong luồng không-camera — hai chỉ thị trái nhau mà mắt người khó thấy, nên khoá bằng máy.
-if (LESSON.detectionEquity.includes('vào trước camera') && !LESSON.detectionEquity.includes('rehearsalBudget'))
-  bad('LESSON.detectionEquity: bước tự kiểm camera phải trỏ `rehearsalBudget` (nhành CÓ camera), không đặt trong luồng chạy thử không-camera của `rehearsal`.');
-
-// Vòng 23 — bắt cặp tiền đề: `noProjector` đưa "Chế độ không màn chiếu" (MỘT màn duy nhất, không máy
-// chiếu) thành một chế độ dạy hạng nhất, còn `privateView` ban đầu chỉ hỏi toàn về "máy chiếu" và hứa
-// window.open cửa sổ thứ hai kéo sang máy chiếu. Giao của chúng (cả lớp vây một màn, rủi ro lộ cao
-// nhất mà không có màn riêng nào) chưa được định. privateView nay PHẢI biết noProjector và ÉP CHUNG MÀN
-// trong chế độ đó; mất một trong hai vế là câu hỏi topology lại hiện ra vô nghĩa trên lớp không máy chiếu.
-if (LESSON.privateView.includes('window.open') && (!LESSON.privateView.includes('noProjector') || !LESSON.privateView.includes('MẶC NHIÊN coi là CHUNG MÀN')))
-  bad('LESSON.privateView: phải tính tới "Chế độ không màn chiếu" của `noProjector` — bỏ hỏi topology và mặc nhiên coi là CHUNG MÀN khi chỉ có một màn duy nhất, không window.open cửa sổ riêng.');
-
-// Vòng 26 — bắt cặp TRẦN LƯỢT LÊN BẢNG: `bigClass` (v11) đặt trần = clamp(round(M/3), 12, 16) và tuyên bố
-// "mọi con số về lớp phải là hàm của M", nhưng `handover` và `boardEquity` (ra TRƯỚC) vẫn khoá cứng "tối đa
-// 12 lượt". Đo trên 39 giáo án: "12 lượt" xuất hiện 3×/file *và* công thức clamp sống 39/39 — HTML sinh ra
-// nhận cùng lúc "quá 12 thì tạm khoá" và một bộ đếm "/15". Nay cả ba khớp ĐÚNG MỘT công thức; để `handover`
-// hoặc `boardEquity` nhắc trần "lượt lên bảng" mà bỏ hàm của M là build đỏ.
-for (const name of ['handover', 'boardEquity'])
-  if (LESSON[name].includes('lượt lên bảng') && !LESSON[name].includes('clamp(round(M/3)'))
-    bad(`LESSON.${name}: trần "lượt lên bảng" phải là hàm của sĩ số theo \`bigClass\` — clamp(round(M/3), 12, 16), không được là hằng số 12 tuyệt đối.`);
+// Vòng 22/23/26/27 — KHOÁ BẮT-CẶP TIỀN ĐỀ giữa hai quy định. Mỗi liên kết: "nếu quy định `from` còn chứa
+// cụm `when` thì BUỘC phải nhắc đủ mọi cụm trong `need`". Đây là loại mâu thuẫn mắt người khó thấy (một
+// quy định ra sau đổi/ngầm định điều quy định ra trước đang giả định), nên khoá bằng máy. Trước vòng 27
+// đây là vài `if` viết tay rời rạc; docs đã hứa "khi có cặp thứ 4 thì gom thành bảng khai báo" — classVote→
+// detectionEquity chính là cặp thứ 4, nên refactor thành RULE_LINKS + một vòng lặp: thêm liên kết mới =
+// thêm một dòng bảng, không phải viết thêm `if`.
+const RULE_LINKS = [
+  { from: ['detectionEquity'], when: 'vào trước camera', need: ['rehearsalBudget'],
+    msg: 'bước tự kiểm camera phải trỏ `rehearsalBudget` (nhành CÓ camera), không đặt trong luồng chạy thử không-camera của `rehearsal`.' },
+  { from: ['privateView'], when: 'window.open', need: ['noProjector', 'MẶC NHIÊN coi là CHUNG MÀN'],
+    msg: 'phải tính tới "Chế độ không màn chiếu" của `noProjector` — bỏ hỏi topology và mặc nhiên coi là CHUNG MÀN khi chỉ có một màn duy nhất, không window.open cửa sổ riêng.' },
+  { from: ['handover', 'boardEquity'], when: 'lượt lên bảng', need: ['clamp(round(M/3)'],
+    msg: 'trần "lượt lên bảng" phải là hàm của sĩ số theo `bigClass` — clamp(round(M/3), 12, 16), không được là hằng số 12 tuyệt đối.' },
+  { from: ['classVote'], when: 'giảng lại bước SƠ ĐỒ', need: ['cận dưới', 'detectionEquity'],
+    msg: 'ngưỡng "1/3 … giảng lại" phải so cột đáp án sai với TỔNG SỐ ĐÁP ÁN ĐÃ GHI NHẬN (cùng dân số với tử số) và nhắc `detectionEquity` rằng camera chỉ là cận dưới — không chia mù cho sĩ số.' },
+];
+for (const { from, when, need, msg } of RULE_LINKS)
+  for (const name of from) {
+    const txt = LESSON[name];
+    if (txt.includes(when) && !need.every((s) => txt.includes(s)))
+      bad(`LESSON.${name}: ${msg}`);
+  }
 
 for (const g of GAMES) {
   const rel = PATH_OF.get(g.id);
