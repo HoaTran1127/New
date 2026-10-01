@@ -66,7 +66,7 @@ Bốn biến thể đầu dùng **cùng một hợp đồng AR** như prompt gam
 - `04-english5/` — 15 game Tiếng Anh 5.
 - `01-prompt-…` đến `12-prompt-…` — **12 prompt legacy** đời đầu: giữ nguyên cơ chế game, đã thay MediaPipe Legacy/Tailwind CDN/Tone.js bằng chuẩn hiện hành và gắn nhãn `LEGACY`. Không dùng làm khuôn cho game mới.
 - `VARIANTS_425.md` — 425 biến thể (85 game × 5 kiểu điều khiển), do `tools/build-variants.mjs` sinh.
-- `CHECKLIST_NGHIEP_THU.md` — bảng kiểm cầm tay khi nhận file HTML về: 40 mục máy tự kiểm + 31 việc người thử bấm tay (trong đó 6 mục gắn 📷 chỉ có camera mới kiểm được; bản không camera bỏ 6 mục đó và vẫn phải đạt 34 mục còn lại), do `tools/build-acceptance.mjs` sinh từ `tools/lib/acceptance.mjs`.
+- `CHECKLIST_NGHIEP_THU.md` — bảng kiểm cầm tay khi nhận file HTML về: 41 mục máy tự kiểm + 32 việc người thử bấm tay (trong đó 6 mục gắn 📷 chỉ có camera mới kiểm được; bản không camera bỏ 6 mục đó và vẫn phải đạt 35 mục còn lại), do `tools/build-acceptance.mjs` sinh từ `tools/lib/acceptance.mjs`.
 
 ## ✅ Nghiệm thu một game vừa sinh
 
@@ -286,13 +286,29 @@ Việc người thử số 30 ("đọc nhãn tuần ở màn khởi động rồ
 
 Việc người thử số 31 ("quay một vòng dang hai tay ngay tại chỗ em sẽ đứng — bàn ghế, cặp, tường có nằm trong tầm vung không? Chọn 'dép lê' rồi chơi một phiên xem mọi động tác nhấc chân cao có biến mất thật không, hay chỉ đổi mỗi chữ. Bật 'Lớp mình chật' giữa hai phiên rồi đếm nhịp. Bấm 'Em mệt / em đau' ở hiệp 2: game có vào thẳng hạ nhiệt mà không trừ tim, không hỏi lý do, không một lời 'cố lên' nào không?") là chỗ máy không tự kiểm được: code biết bộ động tác đã được lọc và nút đủ lớn, còn **chỗ đó có thật sự trống không** thì chỉ người đứng vào chỗ của em, dang hai tay, mới biết.
 
+## 🪁 Tầng "sân chơi Việt Nam" — `tools/lib/folk.mjs` + `tools/data/folk.mjs` (vòng 22)
+
+Đo 85 prompt trước vòng 22: **"dân gian" 0/85, "đồng dao" 0/85, "ô ăn quan" 0/85, "nhảy dây" 0/85, "kéo co" 0/85, "rồng rắn" 0/85, "vạch phấn" 0/85, "viên sỏi" 0/85** — trong khi **"GO" 0/85** và **"TEAM" 0/85** nên `rules.mjs` đã chặn chữ Tây từ lâu: cái thiếu là **khung chơi**. Vòng 18 cho mỗi mã điều khiển một **môn quốc tế** (bắn cung, bóng bàn, phi tiêu) mà sân trường làng không có, SGK Thể dục 4–5 thì mục "Ôn trò chơi vận động" chính là **trò chơi dân gian**. Sáu quy định, đều có con số:
+
+| Luật | Con số | Kiểm ở đâu |
+|:---|:---|:---|
+| Một **trò dẫn dắt** theo đúng mã điều khiển | 14 mã · 14 trò lấy NGUYÊN VĂN từ `tools/data/folk.mjs` (`GRAB` → Ô ăn quan, `POINT` → Chi chi chành chành, `TWO_HAND_BALANCE` → Gánh nước): `tro` **<= 4 từ** ở dòng "Cách chơi" + nhãn mini-trạm **>= 18px**, `loiCho` **<= 8 từ**, `dieu` = `dong`/`tinh`; **cấm** góc HUD trên (của tên môn), **cấm** đổi trò giữa phiên | `verifyFolk()` điều 1 |
+| Một **lời hô theo nhịp** | `chant` **<= 8 tiếng**, hô **ĐẦU mỗi hiệp** theo **vạch nhịp 8 nhịp**, **BA lần một phiên**; `loai` = "dong dao" là đồng dao thật — **cấm** gọi lời đếm ("dem") là đồng dao, **cấm** beep, **cấm** biến chant thành câu hỏi; Tiếng Anh: **một mẫu câu <= 8 từ, giọng en-US**; tắt tiếng: chữ trên vạch nhịp, **<= 3 lần nhấp nháy/giây** | `verifyFolk()` điều 2 |
+| **Bản tại chỗ**, không đổi tên trò | mọi lượt trong **1 sải tay** + **hình quạt 90 độ** phía trước; **năm trò bị loại** ("Nhảy lò cò", "Trồng cây chuối", "Bịt mắt bắt dê", "Rồng rắn chạy vòng", "Kéo co dây thật"); **cấm** nắm tay / đeo tay / cõng bạn / thổi vào mặt bạn | `verifyFolk()` điều 4 |
+| **Một đồ dùng** trong tám món | `FOLK_PROPS` (vạch phấn · dây nhảy · khăn vải · viên sỏi · gậy tre · quả cầu giấy · túi đậu · vòng tròn), AR một màu **alpha <= 0.45**; **cấm** em cầm, nhặt, bốc, thổi, đội, truyền tay vật thật ở **mọi lượt trong 12 lượt** | `verifyFolk()` điều 3 |
+| **Trò đôi bạn** trên một máy | hai em cạnh nhau cùng làm động tác tại chỗ, đổi vai **sau mỗi 3 lượt**; **cấm** đòi thêm bạn ngoài lớp, **cấm** chờ đủ bốn em; tổng kết in **ĐÚNG MỘT** dòng "Trò chơi hôm nay: <trò> — bản <động/tĩnh> tại chỗ" trong khối "Copy tờ rời" | `verifyFolk()` điều 1 + 4 |
+
+`verifyFolk()` chạy MỘT LẦN lúc nạp và kiểm **đúng bốn điều**; thiếu thì `console.warn` tiếng Việt nêu đúng phần lệch và bảng kiểm ghi CHƯA ĐẠT ở **mục `[41]`**. **Bản không camera, bản một học sinh và bản tắt tiếng vẫn bắt buộc kiểm đủ bốn điều** — sân chơi và lời hô không phụ thuộc webcam.
+
+Việc người thử số 32 ("chơi thử một phiên ngay tại chỗ em sẽ đứng — trò chơi dân gian hiện trên màn hình có phải trò em thật sự từng chơi ở sân trường, hay chỉ là cái tên dán lên một cú vung tay? Đọc to lời hô hai lần xem có khớp vạch nhịp, nhìn xuống tay xem game có đòi cầm vật thật, gọi tên năm trò đã loại xem có trò nào được dựng lại dưới tên khác không") là chỗ máy không tự kiểm được: `validate.mjs` so được chuỗi với `tools/data/folk.mjs`, còn **trò đó có thật ở sân trường em không** thì chỉ người lớn lên ở đó mới trả lời được.
+
 ## 🔁 Pipeline của thư viện
 
 85 prompt game **được sinh tự động**, không sửa tay:
 
 ```
-tools/data/games.mjs + clusters.mjs + gestures.mjs + examples.mjs + error-notes.mjs + identities.mjs + standards.mjs + sports.mjs
-tools/lib/ar.mjs · rules.mjs · feel.mjs · classroom.mjs · access.mjs · light.mjs · celebrate.mjs · identity.mjs · rhythm.mjs · queue.mjs · lesson.mjs · curriculum.mjs · sport.mjs · family.mjs · pacing.mjs · playzone.mjs · verify.mjs · pe.mjs · memory.mjs · hype.mjs · anticipation.mjs · acceptance.mjs
+tools/data/games.mjs + clusters.mjs + gestures.mjs + examples.mjs + error-notes.mjs + identities.mjs + standards.mjs + sports.mjs + folk.mjs
+tools/lib/ar.mjs · rules.mjs · feel.mjs · classroom.mjs · access.mjs · light.mjs · celebrate.mjs · identity.mjs · rhythm.mjs · queue.mjs · lesson.mjs · curriculum.mjs · sport.mjs · family.mjs · pacing.mjs · playzone.mjs · folk.mjs · verify.mjs · pe.mjs · memory.mjs · hype.mjs · anticipation.mjs · acceptance.mjs
         └─ node tools/build.mjs ─→ catalogs/GAME_CATALOG.csv · .md · .js + prompts/0X-*/ + index.html + prompts/CHECKLIST_NGHIEP_THU.md
 ```
 

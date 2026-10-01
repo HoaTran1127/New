@@ -455,6 +455,64 @@ theo hướng phải né hay lùi; và không có một chỗ nào để một e
   "miti-stop". Thiếu điều nào thì `console.warn` tiếng Việt nêu đúng phần lệch và bảng kiểm ghi CHƯA ĐẠT. Bản không camera, bản
   một học sinh và bản tắt tiếng vẫn bắt buộc kiểm đủ bốn điều, vì bàn ghế và quyền nghỉ không phụ thuộc webcam.
 
+4.12 SÂN CHƠI VIỆT NAM — TRÒ DẪN DẮT, LỜI HÔ VÀ ĐỒ DÙNG SÂN TRƯỜNG (bắt buộc — nguồn: `tools/lib/folk.mjs` + `tools/data/folk.mjs`, validate chặn nếu thiếu) — phần quyết định em có hình dung được động tác mình vừa làm là động tác của cái gì, hay chỉ là một cú vung tay vô danh
+
+Mục 4.8 đã gắn cho mỗi mã điều khiển một môn thể thao, nhưng khảo sát 85 prompt trước vòng 22 đếm được "dân
+gian" = 0/85, "đồng dao" = 0/85, "ô ăn quan" = 0/85, "nhảy dây" = 0/85, "kéo co" = 0/85, "rồng rắn" = 0/85,
+"sân trường" = 0/85, "vạch phấn" = 0/85, "viên sỏi" = 0/85 — trong khi "GO" = 0/85 và "TEAM" = 0/85, tức chữ
+Tây trên HUD đã bị `tools/lib/rules.mjs` chặn từ lâu: thứ còn thiếu là KHUNG CHƠI. Một học sinh trường làng
+không có cung, không có lưới, không có bàn bóng, còn sân trường em có đúng vạch phấn, một sợi dây nhảy và vài
+viên sỏi; mục "Ôn trò chơi vận động" của SGK Thể dục lớp 4–5 cũng chính là trò chơi dân gian. Hai lỗ nữa đo
+cùng lúc: không tầng nào quy định tiếng đếm GIỮA các nhịp nên khoảng trống đó đầy beep điện tử, và không quy
+định nào về đồ dùng nên mô hình hay đòi em nhặt viên sỏi — ở lớp 45 em, phát và thu đồ là hết nửa tiết.
+
+- TRÒ DẪN DẮT LẤY NGUYÊN VĂN TỪ `tools/data/folk.mjs`, KHÔNG ĐỂ MÔ HÌNH TỰ CHỌN: mỗi game mang đúng MỘT trò
+  chơi dân gian theo đúng MÃ ĐIỀU KHIỂN của chính game (mười bốn mã, mười bốn trò — `GRAB` → Ô ăn quan,
+  `STEP` → Nhảy dây, `VOICE` → Rồng rắn lên mây, `FINGER_COUNT` → Tập tầm vông), gồm tên trò (cột `tro`,
+  <= 4 từ), một dòng cách chơi (cột `loiCho`, <= 8 từ) và loại động hay tĩnh (cột `dieu`). Tên trò hiện ở dòng
+  "Cách chơi" ngay dưới màn chào và ở nhãn mini-trạm, chữ >= 18px; CẤM chiếm góc HUD trên — chỗ đó thuộc về tên
+  môn ở mục 4.8, hai nhãn giành nhau một góc thì em không đọc được cái nào. CẤM bịa trò không ai chơi, CẤM gọi
+  bằng tên chung chung ("vận động cùng bạn"), CẤM đổi trò giữa phiên; bảng không có trò cho mã đó thì builder
+  báo lỗi chứ không để mô hình tự chọn.
+- MỘT LỜI HÔ THEO NHỊP, BA LẦN MỘT PHIÊN — KHÔNG PHẢI BEEP ĐẾM SỐ: đúng MỘT dòng chant lấy nguyên văn cột
+  `chant` (<= 8 tiếng) — "Gánh gánh gồng gồng" cho `TWO_HAND_BALANCE`, "Thả đỉa ba ba, con đỉa bắt mày" cho
+  `HOLD_POSE` — vai "Cổ vũ" của mục 7.2 hô một lần ở ĐẦU mỗi hiệp theo vạch nhịp 8 nhịp của mục 8.6 —
+  ba lần một phiên, không hơn. Cột `loai` = "dong dao" là đồng dao thật, CẤM gọi lời đếm (`loai` = "dem") bằng
+  hai chữ "đồng dao" trước lớp. CẤM thay lời hô bằng beep đếm số, CẤM hô hai dòng liền nhau, CẤM biến chant
+  thành câu hỏi hay thành điều kiện chốt đáp án. Chant do bạn hô nên KHÔNG tính vào ngân sách 3 câu thoại mỗi
+  phút của mascot. Game Tiếng Anh đổi chant thành đúng MỘT mẫu câu đang luyện (<= 8 từ, đọc giọng en-US), động
+  tác giữ nguyên. Bản tắt tiếng thì chant hiện thành chữ trên vạch nhịp, mỗi tiếng sáng đúng một nhịp, không
+  nhấp nháy quá 3 lần mỗi giây.
+- BẢN TẠI CHỖ: NĂM TRÒ BỊ LOẠI THẲNG CỔ, ĐỔI ĐỘNG TÁC CHỨ KHÔNG ĐỔI TÊN: mọi lượt vẫn nằm TRONG vòng 1 sải tay
+  và trong hình quạt 90 độ PHÍA TRƯỚC mặt em (mục 4.5 và 4.11). CẤM dựng lại dưới mọi tên gọi: "Nhảy lò cò"
+  và "Trồng cây chuối" (đòi đứng một chân), "Bịt mắt bắt dê" (che mắt thật khi đang đi nhanh), "Rồng rắn chạy
+  vòng" (nối đuôi chạy quanh sân), "Kéo co dây thật" (dây căng ngang người). Rồng rắn lên mây CHỈ còn phần hô –
+  đáp, kéo co CHỈ còn bản dây AR do một em kéo về vạch. CẤM mọi động tác nắm tay, đeo tay, cõng bạn hay thổi
+  vào mặt bạn. "chân đất / dép lê" và "Lớp mình chật" của mục 4.11 KHÔNG làm đổi tên trò — tên đổi giữa phiên
+  là lỗi, không phải tính năng.
+- MỘT ĐỒ DÙNG SÂN TRƯỜNG TRONG TÁM MÓN, CẤM EM CẦM VẬT THẬT: mỗi game gọi đúng MỘT đồ dùng bằng NGUYÊN VĂN một
+  phần tử của `FOLK_PROPS` (vạch phấn · dây nhảy · khăn vải · viên sỏi · gậy tre · quả cầu giấy · túi đậu ·
+  vòng tròn), lấy từ cột `doDung`, vẽ bằng đạo cụ AR một màu không che đề bài (alpha <= 0.45 theo mục 2.0). CẤM
+  đòi em cầm, nhặt, bốc, thổi, đội hay truyền tay vật thật ở mọi lượt trong 12 lượt — lớp 45 em thì phát thu đồ
+  là hết nửa tiết, và đó cũng là chỗ vi khuẩn đi quanh. CẤM đồ dùng trường làng không có: ván trượt, giày
+  patin, dơi bóng chày, lưới tennis, bóng rổ có bảng, gậy golf, cung tên thật. Ngoài tám món thì builder dừng.
+- TRÒ ĐÔI BẠN CHƠI BẰNG HAI EM CẠNH NHAU, KHÔNG CHỜ ĐỦ NGƯỜI: trò nào gốc cần hai người thì bản chơi là HAI em
+  đứng cạnh nhau cùng làm động tác tại chỗ, hai em còn lại giữ vai chờ theo mục 7.2 và ĐỔI vai sau mỗi 3 lượt —
+  vẫn đúng trần 3 lượt một vai, không lượt nào biến thành lượt xem. CẤM đòi thêm bạn ngoài lớp, CẤM đòi ra hành
+  lang hay xuống sân cho đủ người, CẤM chờ đủ bốn em mới cho bắt đầu. Bản một học sinh: chính em hô chant bằng
+  nút "Hô cùng bạn" hoặc tự đọc, HUD vai chờ ẩn hẳn, game vẫn trọn 12 lượt. Màn tổng kết in ĐÚNG MỘT dòng "Trò
+  chơi hôm nay: <tên trò> — bản <động/tĩnh> tại chỗ" nằm trong khối mà nút "Copy tờ rời" copy được, để cô nối
+  được game vào tiết Thể dục; CẤM in dòng đó khi phiên không có cú hô chant nào.
+- TỰ KIỂM BẰNG `verifyFolk()`: chạy MỘT LẦN lúc nạp và kiểm đúng bốn điều — trò dẫn dắt lấy NGUYÊN VĂN từ
+  `tools/data/folk.mjs` theo đúng mã điều khiển, tên <= 4 từ hiện ở dòng "Cách chơi" và nhãn mini-trạm, không
+  giành góc HUD của tên môn · chant lấy nguyên văn cột `chant` (<= 8 tiếng), hô đúng BA lần một phiên theo vạch
+  nhịp 8 nhịp, bản tắt tiếng còn chữ trên vạch nhịp, và không lời đếm nào bị gọi là "đồng dao" · đồ dùng là đúng
+  MỘT trong tám món `FOLK_PROPS` và không một lượt nào trong 12 lượt đòi em cầm vật thật · không trò nào thuộc
+  năm trò đã loại xuất hiện, mọi động tác nằm trong vòng 1 sải tay và bản dép lê / lớp chật vẫn giữ đúng tên
+  trò. Thiếu điều nào thì `console.warn` tiếng Việt nêu đúng phần lệch và bảng kiểm ghi CHƯA ĐẠT. Bản không
+  camera, bản một học sinh và bản tắt tiếng vẫn bắt buộc kiểm đủ bốn điều, vì sân chơi và lời hô không phụ thuộc
+  webcam.
+
 ========================
 5. HỌC TẬP DẪN LỐI (LEARNING-FIRST)
 ========================
@@ -855,7 +913,7 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
   Bảng liệt kê TỪNG ràng buộc kèm trạng thái ĐẠT / CHƯA ĐẠT. Trạng thái đó phải do code kiểm thật lúc chạy,
   không phải chữ tĩnh kê sẵn. Một bảng báo "ĐẠT" mà không kiểm gì là lỗi nghiêm trọng nhất của game giáo dục.
   Bảng chỉ người lớn mở được: không trừ tim, không chặn chơi, học sinh không nhìn thấy.
-- 40 MỤC MÁY TỰ KIỂM, mỗi mục một hàm trả true/false:
+- 41 MỤC MÁY TỰ KIỂM, mỗi mục một hàm trả true/false:
   [1] QUESTION_DATA đủ số mục và verifyQuestionBank() ĐÃ chạy trước lượt chơi đầu tiên
   [2] mọi mục đang phát hành có answer nằm trong choices đúng một lần
   [3] 📷 drawImage khung hình webcam đi qua toScreen(lx, ly), không còn phép nhân thô với W/H
@@ -896,14 +954,15 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
   [38] verifyFamily() đã chạy lúc nạp: màn tổng kết in ĐÚNG MỘT khối "Gửi bố mẹ" gồm đúng bốn dòng (mỗi dòng <= 20 từ, chữ >= 20px) nằm trong khối "Copy tờ rời" copy được, bốn dòng lấy từ số thật của phiên chứ không phải chữ chép sẵn (thiếu thì in "chưa ghi được", cấm bịa), dòng "Việc 3 phút ở nhà" là một hoạt động không màn hình không ghi vở lấy đúng cột dongTac của môn kèm MỘT đề <= 16 từ đã chơi, và khối không có tên bạn khác, không xếp hạng, không dữ liệu cá nhân, không dòng đe dọa
   [39] verifyPacing() đã chạy lúc nạp: mọi câu mang nhãn "Tuần <a>–<b> · Học kì <n>" khớp NGUYÊN VĂN cột tuan của tools/data/standards.mjs (khoảng nằm trong 1–35, một cụm phủ tối đa 10 tuần) và nhãn đó có thật ở hai màn với chữ >= 18px nằm trong khối "Copy tờ rời" · câu "Lớp mình đang học tuần mấy?" chạy ĐÚNG MỘT lần ở phiên đầu, đọc lại được từ "miti-week" và không chặn nút "Bắt đầu" · khi đã biết tuần của lớp thì >= 3/12 lượt là cụm có tuan[1] nhỏ hơn tuần đó · nhãn nước rút và chế độ tổng ôn đổi đúng theo SCHOOL_YEAR mà không đổi luật chơi, không đổi trần tải trọng
   [40] verifyPlayzone() đã chạy lúc nạp: thẻ "Dẹp chỗ chơi" có thật với đúng bốn dòng <= 12 từ, chạy trong 60–90 giây khởi động và tối đa 20 giây, không thêm màn hình trước nút "Bắt đầu" · ba lựa chọn giày dép lưu "miti-foot" (chân đất / dép lê thì 0/12 lượt nhấc chân cao, không một động tác đứng một chân nào) và nút "Lớp mình chật" lưu "miti-space" đổi động tác di chuyển thành tại chỗ mà vẫn >= 12 nhịp/phút, vật thể AR chỉ vào hình quạt 90 độ phía trước · bộ động tác chốt MỘT LẦN đầu phiên và không mở rộng giữa phiên · nút "Em mệt / em đau" >= 56px luôn bấm được, một cú bấm đưa thẳng vào hạ nhiệt 45–60 giây tại ranh giới lượt, không trừ tim, có ghi "miti-stop"
-  Mục gắn 📷 chỉ áp dụng khi có webcam: bản không camera bỏ 6 mục đó và vẫn phải đạt 34 mục còn lại.
+  [41] verifyFolk() đã chạy lúc nạp: trò dân gian dẫn dắt lấy NGUYÊN VĂN từ tools/data/folk.mjs theo đúng mã điều khiển của game (tên <= 4 từ, hiện ở dòng "Cách chơi" và nhãn mini-trạm, không chiếm góc HUD của tên môn) · chant lấy nguyên văn cột `chant` (<= 8 tiếng) hô đúng BA lần một phiên theo vạch nhịp 8 nhịp, bản "miti-mute" hiện chữ trên vạch nhịp, và không lời đếm nào bị gọi là "đồng dao" · đúng MỘT đồ dùng trong tám món FOLK_PROPS vẽ bằng AR alpha <= 0.45 và không một lượt nào trong 12 lượt đòi em cầm vật thật · không có "Nhảy lò cò", "Trồng cây chuối", "Bịt mắt bắt dê", "Rồng rắn chạy vòng", "Kéo co dây thật" dưới bất kỳ tên gọi nào, mọi động tác nằm trong vòng 1 sải tay và bản dép lê / lớp chật giữ nguyên tên trò
+  Mục gắn 📷 chỉ áp dụng khi có webcam: bản không camera bỏ 6 mục đó và vẫn phải đạt 35 mục còn lại.
 - XUẤT BẢN VĂN: bảng có nút "Xuất bản văn" sinh một khối chữ tiếng Việt copy được — tên game, bản chuẩn MiTi,
   ngày giờ, kiểu điều khiển đang chạy, số mục ĐẠT / CHƯA ĐẠT, danh sách mục chưa đạt kèm lý do.
   Khối chữ chỉ hiện trên màn hình và vào clipboard máy đó; không gửi lên máy chủ nào, không xin quyền, không để lại dữ liệu.
 - MỤC CHƯA ĐẠT PHẢI GIẢI THÍCH ĐƯỢC: mỗi dòng kèm một câu nguyên nhân kỹ thuật cho người lớn
   (ví dụ "toScreen không được dùng ở drawImage — vật thể đang tính bằng lx * W") và một câu nên sửa thế nào trong prompt.
   Cấm báo "lỗi" rồi im lặng, cấm chữ chung chung kiểu "hệ thống có vấn đề".
-- 31 VIỆC NGƯỜI THỬ PHẢI BẤM TAY (máy không tự kiểm được, làm theo đúng thứ tự, khoảng 15 phút):
+- 32 VIỆC NGƯỜI THỬ PHẢI BẤM TAY (máy không tự kiểm được, làm theo đúng thứ tự, khoảng 15 phút):
   đứng xa tới mức chỉ còn hai bàn tay · giữ im một tư thế 5 giây · che nửa người bằng tay · tắt camera giữa vòng ·
   rút mạng lúc đang tải model · đổi tay thuận sang Trái giữa chừng · bật reduced-motion ở hệ điều hành rồi mở game ·
   cố tình sai 4 câu liên tiếp · mở bằng điện thoại đặt dọc · đưa một học sinh lớp 4 chưa đọc hướng dẫn chơi thử 60 giây ·
@@ -928,6 +987,7 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
   copy tờ rời đưa cho bố mẹ đọc tại chỗ — trong mười giây họ có nói lại được con vừa tập môn gì, mẹo nào và cả nhà cùng làm gì trong 3 phút không? Việc 3 phút đó có buộc ai mở thêm màn hình, ghi vở, chụp ảnh hay mua đồ không? Đọc to tờ gửi về: có tên bạn nào khác, có dòng so sánh hay dọa dẫm nào lọt vào tay người ở nhà không?
   đọc nhãn tuần ở màn khởi động rồi đối chiếu với thời khóa biểu thật của lớp — game ghi "Tuần 22–24 · Học kì 2" có khớp với việc lớp đang học tới đâu, hay bảng tuần chỉ là chữ trang trí? Hỏi em "tuần trước lớp mình học bài gì": em trả lời được thì ba lượt ôn theo tuần đang ôn cái có thật, nếu em chỉ đọc lại chữ trên HUD thì ba lượt đó không ôn gì cả. Xem hai lượt đầu của phiên gần kỳ kiểm tra: đó có thật là chỗ em yếu nhất không, hay game vẫn xếp câu ngẫu nhiên rồi chỉ đổi mỗi dòng chữ "Còn 2 tuần tới kiểm tra"?
   đứng đúng chỗ em sẽ chơi rồi dang hai tay quay một vòng — có chạm bàn, ghế, cặp hay tường không, sàn có vừa lau chưa? Chọn "chân đất / dép lê" ở thẻ "Dẹp chỗ chơi" rồi chơi trọn một phiên: động tác nhấc chân cao có biến mất thật khỏi 12 lượt hay vẫn hiện ra? Bật "Lớp mình chật" giữa hai phiên: phiên sau có còn đòi em né sang bên hoặc lùi lại không? Cuối cùng bấm nút "Em mệt / em đau" ở hiệp 2 — game có đi thẳng vào hạ nhiệt mà không trừ tim, không hỏi lý do, không có dòng "cố lên" nào không, hay em vẫn phải chơi nốt cho đủ 12 lượt?
+  chơi thử một phiên ngay tại chỗ em sẽ đứng rồi trả lời ba câu: trò chơi dân gian hiện trên màn hình có phải trò em thật sự từng chơi ở sân trường, hay chỉ là cái tên dán lên một cú vung tay? Đọc to lời hô theo nhịp hai lần — em có hô khớp vạch nhịp đang chạy, hay lời hô tới sớm hơn động tác? Và nhìn xuống tay em: game có lúc nào đòi em cầm, nhặt, thổi vật thật không? Cuối cùng gọi tên năm trò đã bị loại ("Nhảy lò cò", "Trồng cây chuối", "Bịt mắt bắt dê", "Rồng rắn chạy vòng", "Kéo co dây thật") — game có dựng lại một trong năm trò đó dưới tên nào khác không, hay mọi động tác vẫn nằm gọn trong vòng 1 sải tay?
   Bảng in kèm từng việc và ô ghi kết quả: `prompts/CHECKLIST_NGHIEP_THU.md`.
 - THIẾU MỤC NÀO THÌ SỬA PROMPT, KHÔNG SỬA TAY FILE HTML: dán lại nguyên văn quy định tương ứng vào cuối prompt rồi sinh lại file.
 
@@ -1042,10 +1102,10 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
 [ ] đạo cụ AR neo landmark bằng toScreen(); bản không camera thì đạo cụ đứng yên ở góc HUD dưới chứ không biến mất
 [ ] ba câu thoại đọc bằng speechSynthesis giọng vi-VN, <= 3 câu mỗi phút, câu khi sai là câu đỡ chứ không chế giễu
 [ ] bảng kiểm ẩn mở bằng 7 lần chạm logo MiTi hoặc Ctrl+Alt+K, trạng thái ĐẠT do code kiểm thật lúc chạy
-[ ] cả 40 mục máy tự kiểm đều có hàm kiểm tương ứng, không mục nào là chữ kê sẵn
+[ ] cả 41 mục máy tự kiểm đều có hàm kiểm tương ứng, không mục nào là chữ kê sẵn
 [ ] mục CHƯA ĐẠT kèm nguyên nhân kỹ thuật + cách sửa trong prompt, không có dòng "lỗi hệ thống"
 [ ] nút "Xuất bản văn" copy được khối chữ tiếng Việt, không gửi lên máy chủ nào
-[ ] bản không camera bỏ đúng 6 mục 📷 và vẫn đạt 34 mục còn lại, không bỏ luôn bảng kiểm
+[ ] bản không camera bỏ đúng 6 mục 📷 và vẫn đạt 35 mục còn lại, không bỏ luôn bảng kiểm
 [ ] fallback chuột/chạm/phím chơi trọn vẹn, tự kích hoạt khi camera lỗi
 [ ] QUESTION_DATA có ít nhất 30 mục (Toán) hoặc 60 mục (Tiếng Anh), mỗi mục có đáp án + lời giải + errorTag + loiViet + dang
 [ ] dữ liệu đặt đầu file, code engine đặt sau, không có chỗ nào rút gọn
@@ -1109,7 +1169,7 @@ Sau khi tự kiểm tra, CHỈ xuất ra file HTML hoàn chỉnh, không kèm gi
   toàn bộ quy định phía trên chỉ là lời mong đợi. Bắt game tự kiểm bằng hàm true/false biến lời hứa thành trạng thái đọc được.
 - **Trạng thái phải do code kiểm, không phải chữ kê sẵn**: một bảng tĩnh in sẵn chữ "ĐẠT" còn hại hơn không có bảng,
   vì người lớn tưởng là đã kiểm. Đây là lý do quy định ghi rõ "không phải một danh sách chữ tĩnh".
-- **Tách 40 mục máy / 31 việc người thử**: cái gì máy kiểm được thì đừng đùn cho giáo viên; cái máy không kiểm được
+- **Tách 41 mục máy / 32 việc người thử**: cái gì máy kiểm được thì đừng đùn cho giáo viên; cái máy không kiểm được
   (cháu có hiểu luật chơi mà không đọc hướng dẫn không, rút mạng thì sao) thì đừng giả vờ kiểm. Con số 15 phút là thời lượng
   một tiết thực tế, không phải danh sách dài vô hạn.
 - **Mục chưa đạt phải nói nguyên nhân và cách sửa**: bảng kiểm chỉ báo "lỗi" sẽ bị bỏ qua; kèm câu "thiếu ở dòng nào,

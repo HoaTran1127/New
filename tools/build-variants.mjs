@@ -27,9 +27,11 @@ import { SPORT, SPORT_SHORT } from './lib/sport.mjs';
 import { FAMILY, FAMILY_SHORT } from './lib/family.mjs';
 import { PACE, PACE_SHORT, hocKi } from './lib/pacing.mjs';
 import { PLAYZONE, PLAYZONE_SHORT } from './lib/playzone.mjs';
+import { FOLK, FOLK_SHORT } from './lib/folk.mjs';
 import { standard } from './data/standards.mjs';
 import { identity } from './data/identities.mjs';
 import { sport } from './data/sports.mjs';
+import { folk } from './data/folk.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const OUT = path.join(ROOT, 'prompts', 'VARIANTS_425.md');
@@ -71,6 +73,7 @@ function block(n, row, g, v) {
   const st = standard(g.cluster);
   // V5 không có mã điều khiển riêng nên mượn môn của chính game, để bản không camera vẫn tập đúng một môn.
   const sp = sport(v.gesture || g.gestures[0]);
+  const fk = folk(v.gesture || g.gestures[0]);
   const bank = BANK[row.mon];
   const it = identity(g.id);
   if (!it) throw new Error(`Thiếu bản sắc cho game ${g.id} — bổ sung tools/data/identities.mjs.`);
@@ -84,7 +87,7 @@ function block(n, row, g, v) {
   const calib = camera && !voice ? RULES.calibration : 'Biến thể này không đọc chuyển động tay nên không cần calibration; vẫn phải có một màn hướng dẫn ngắn, không tutorial dài.';
   // Biến thể VOICE chỉ có một micro nên không có chế độ hai người chơi: lấy 3 vế đầu của chuỗi rút gọn.
   const voiceShort = CLASSROOM_SHORT.split(' · ').slice(0, 3).join(' · ');
-  const qCheck = ' · ' + LIGHT_SHORT + ' · ' + CELEBRATE_SHORT + ' · ' + IDENTITY_SHORT + ' · ' + RHYTHM_SHORT + ' · ' + QUEUE_SHORT + ' · ' + LESSON_SHORT + ' · ' + CURRICULUM_SHORT + ' · ' + SPORT_SHORT + ' · ' + FAMILY_SHORT + ' · ' + PACE_SHORT + ' · ' + PLAYZONE_SHORT + ' · ' + PE_SHORT + ' · ' + RETENTION_SHORT + ' · ' + HYPE_SHORT + ' · ' + ANT_SHORT + ' · ' + VERIFY_SHORT + ' · ' + ADAPT_SHORT + ' · ' + ACCEPT_SHORT;
+  const qCheck = ' · ' + LIGHT_SHORT + ' · ' + CELEBRATE_SHORT + ' · ' + IDENTITY_SHORT + ' · ' + RHYTHM_SHORT + ' · ' + QUEUE_SHORT + ' · ' + LESSON_SHORT + ' · ' + CURRICULUM_SHORT + ' · ' + SPORT_SHORT + ' · ' + FAMILY_SHORT + ' · ' + PACE_SHORT + ' · ' + PLAYZONE_SHORT + ' · ' + FOLK_SHORT + ' · ' + PE_SHORT + ' · ' + RETENTION_SHORT + ' · ' + HYPE_SHORT + ' · ' + ANT_SHORT + ' · ' + VERIFY_SHORT + ' · ' + ADAPT_SHORT + ' · ' + ACCEPT_SHORT;
   // Dòng nghiệm thu cho mọi block: game phải tự chứng minh nó đạt, người thử không phải đọc code.
   const accept = ACCEPT.selfReport + ' ' + ACCEPT.printable + ' ' + ACCEPT.failRule + (camera ? '' : ' ' + ACCEPT.noCamera);
   const selfCheck = voice
@@ -141,6 +144,7 @@ ${controlBlock(v, g)}` : controlBlock(v, g)}
 **Gia đình — tờ gửi bố mẹ:** ${FAMILY.guiBoMe} ${FAMILY.baPhut} ${FAMILY.meoNha} ${FAMILY.riengTu} ${FAMILY.khongDoi} ${FAMILY.guard} Bốn dòng "Gửi bố mẹ" của block ${v.code} này: "Hôm nay con tập môn ${sp.mon} — <n> động tác" · "Con học ${st.ngan}, <k> câu đúng trên <tổng>" · "Mẹo con mang về: ${st.meo}" · "Việc 3 phút ở nhà: cả nhà cùng ${sp.dongTac} rồi hỏi nhau miệng một đề vừa chơi".
 **Tuần học:** ${PACE.nhanTuan} ${PACE.hoiMotCau} ${PACE.onTheoTuan} ${PACE.nuocRut} ${PACE.tongOn} ${PACE.guard} Cụm ${g.cluster} của block ${v.code} này nằm trong **Tuần ${st.tuan[0]}–${st.tuan[1]} · Học kì ${hocKi(st.tuan[0])}** (cột \`tuan\` của \`tools/data/standards.mjs\`) — in đúng nhãn đó ở màn khởi động, màn tổng kết và trong khối "Copy tờ rời".
 **Chỗ chơi an toàn:** ${PLAYZONE.depCho} ${PLAYZONE.giayDep} ${PLAYZONE.lopChat} ${PLAYZONE.locDongTac} ${PLAYZONE.nutMet} ${PLAYZONE.guard} Động tác đặc trưng "${sp.dongTac}" của môn "${sp.mon}" trong block ${v.code} này bắt buộc có bản tại chỗ nằm gọn trong vòng 1 sải tay khi bật "Lớp mình chật", và nút "Em mệt / em đau" >= 56px luôn bấm được ở cả bản camera lẫn bản không camera.
+**Sân chơi Việt Nam:** ${FOLK.chonTro} ${FOLK.dongDao} ${FOLK.banAnToan} ${FOLK.doDung} ${FOLK.doiBan} ${FOLK.guard} Trò dân gian dẫn dắt của block ${v.code} này là **${fk.tro}** (mã điều khiển ${v.gesture || g.gestures[0]}, không tự đổi trò trong một phiên) — cách chơi "${fk.loiCho}", lời hô theo nhịp "${fk.chant}" (\`${fk.loai}\`, hô đúng BA lần một phiên theo vạch nhịp 8 nhịp), đồ dùng AR "${fk.doDung}", trò ${fk.dieu}; tên trò không chiếm góc HUD của môn "${sp.mon}", và năm trò đã loại (nhảy lò cò, trồng cây chuối, bịt mắt bắt dê, rồng rắn chạy vòng, kéo co dây thật) không được dựng lại dưới tên nào khác.
 **Tiếp cận + an toàn thần kinh:** ${ACCESS.flash} ${ACCESS.reducedMotion} ${ACCESS.notColorOnly} ${ACCESS.caption} ${ACCESS.contrast}
 ${camera && !voice ? `**Chế độ lớp:** ${CLASSROOM.twoPlayer}\n**Tay thuận:** ${ACCESS.handedness}\n` : ''}**Giao diện:** đề bài >= 28px trên desktop và >= 20px trên điện thoại, tương phản chữ >= 4.5:1, responsive cả dọc lẫn ngang; HUD có nhiệm vụ + điểm + chuỗi đúng + tiến độ + trạng thái camera; có Pause, Replay, Giảm hiệu ứng chuyển động${camera ? ' và Tắt camera' : ''}; không leaderboard, không quảng cáo. ${RULES.perf}
 **An toàn + riêng tư + tiếng Việt:** ${RULES.safety} Mỗi động tác đều có phiên bản ngồi tại chỗ; không quay chạy nhảy, không rời vùng camera. Không upload ảnh/video từ camera, chỉ giữ landmark trong bộ nhớ, tiến độ lưu localStorage máy đó. Toàn bộ UI, tên nút, hướng dẫn, thông báo và lời giải bằng TIẾNG VIỆT (chỉ học liệu ${subjectNote}); không để lộ thuật ngữ kỹ thuật confidence / cooldown / fallback cho học sinh.
