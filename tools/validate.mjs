@@ -29,8 +29,10 @@ import { SPORT } from './lib/sport.mjs';
 import { FAMILY } from './lib/family.mjs';
 import { PACE } from './lib/pacing.mjs';
 import { PLAYZONE } from './lib/playzone.mjs';
+import { FOLK } from './lib/folk.mjs';
 import { STANDARDS, STANDARD_KEYS, MACH_TEN, SCHOOL_YEAR, hocKiCua } from './data/standards.mjs';
 import { SPORTS, SPORT_KEYS } from './data/sports.mjs';
+import { FOLK as FOLK_BANK, FOLK_KEYS, FOLK_PROPS, FOLK_BANNED } from './data/folk.mjs';
 import { IDENTITIES } from './data/identities.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
@@ -80,7 +82,7 @@ const MASTER_LIB = [
   ['6.2', 'verify.mjs'], ['6.3', 'light.mjs'], ['8.1', 'feel.mjs'], ['8.2', 'hype.mjs'], ['8.3', 'anticipation.mjs'], ['8.4', 'celebrate.mjs'],
   ['9.1', 'access.mjs'], ['11.', 'acceptance.mjs'], ['8.5', 'identity.mjs'], ['8.6', 'rhythm.mjs'],
   ['7.2', 'queue.mjs'], ['4.6', 'lesson.mjs'], ['4.7', 'curriculum.mjs'], ['4.8', 'sport.mjs'], ['4.9', 'family.mjs'],
-  ['4.10', 'pacing.mjs'], ['4.11', 'playzone.mjs'],
+  ['4.10', 'pacing.mjs'], ['4.11', 'playzone.mjs'], ['4.12', 'folk.mjs'],
 ];
 
 const rows = readCatalog(path.join(ROOT, 'catalogs', 'GAME_CATALOG.csv'));
@@ -227,6 +229,7 @@ const ANT_RULES = [
 // tại, tức là lần sửa sau sẽ xóa luôn cả lib. Kiểm nhãn riêng, không chỉ kiểm nội dung.
 const ZONE_RULES = [
   ['- CHỖ CHƠI AN TOÀN (', 'thiếu khối "CHỖ CHƠI AN TOÀN" nêu nguồn tools/lib/playzone.mjs — sáu quy định chỗ chơi không còn nhãn để người viết prompt đối chiếu'],
+  ['- SÂN CHƠI VIỆT NAM (', 'thiếu khối "SÂN CHƠI VIỆT NAM" nêu nguồn tools/lib/folk.mjs — sáu quy định sân chơi không còn nhãn để người viết prompt đối chiếu'],
 ];
 // Các tầng "phải có MỌI luật, nguyên văn, ở MỌI nơi": bộ kiểm lấy thẳng Object.entries(lib) thay vì
 // gõ tay danh sách. Probe vòng 11 cho thấy danh sách gõ tay là lỗ hổng thật — xóa ${LIGHT.visualShare}
@@ -245,6 +248,7 @@ const FULL_LAYERS = [
   ['gia đình', 'family.mjs', 'FAMILY', FAMILY],
   ['tuần học', 'pacing.mjs', 'PACE', PACE],
   ['chỗ chơi an toàn', 'playzone.mjs', 'PLAYZONE', PLAYZONE],
+  ['sân chơi Việt Nam', 'folk.mjs', 'FOLK', FOLK],
 ];
 const FULL_RULES = FULL_LAYERS.flatMap(([label, file, objName, obj]) =>
   Object.entries(obj).map(([key, text]) => [text, `thiếu quy định ${label} ${objName}.${key} của tools/lib/${file}`]));
@@ -556,6 +560,47 @@ const FULL_PINS = [
   ['playzone.mjs', PLAYZONE.guard, 'bộ động tác không đổi giữa phiên', 'điều 3 của verifyPlayzone()'],
   ['playzone.mjs', PLAYZONE.guard, '`console.warn` tiếng Việt nêu đúng phần lệch', 'thiếu điều nào phải nói rõ điều đó, không im lặng'],
   ['rules.mjs', RULES.safety, 'giữ cách tường một vòng 1 sải tay', 'dòng an toàn 85/85 prompt phải dùng đơn vị sải tay của vòng 21, không quay lại "một bước"'],
+  ['folk.mjs', FOLK.chonTro, 'đúng MỘT trò chơi dân gian', 'mỗi game một trò dẫn dắt, không phải danh sách để model tự chọn'],
+  ['folk.mjs', FOLK.chonTro, 'NGUYÊN VĂN từ `tools/data/folk.mjs`', 'trò phải lấy từ bảng dữ liệu, không để mô hình tự bịa trò'],
+  ['folk.mjs', FOLK.chonTro, 'mười bốn mã, mười bốn trò', 'bảng trò phủ đủ mã điều khiển'],
+  ['folk.mjs', FOLK.chonTro, '(cột `tro`, <= 4 từ)', 'trần độ dài tên trò nằm ngay trên nhãn HUD'],
+  ['folk.mjs', FOLK.chonTro, '(cột `loiCho`, <= 8 từ)', 'trần độ dài dòng cách chơi để em đọc hết trong một hơi'],
+  ['folk.mjs', FOLK.chonTro, 'CẤM xuất hiện ở góc HUD trên', 'tên trò không được giành chỗ tên môn thể thao của vòng 18'],
+  ['folk.mjs', FOLK.chonTro, 'CẤM đổi trò giữa phiên', 'đổi trò giữa phiên là đổi luôn cách chơi đang chạy'],
+  ['folk.mjs', FOLK.dongDao, '(<= 8 tiếng)', 'trần độ dài lời hô theo nhịp'],
+  ['folk.mjs', FOLK.dongDao, 'ba lần một phiên, không hơn', 'ngân sách lời hô phải nằm dưới trần 3 câu mỗi phút'],
+  ['folk.mjs', FOLK.dongDao, 'CẤM thay lời hô bằng beep đếm số', 'không có lời hô thì em đếm bằng tiếng beep vô nghĩa'],
+  ['folk.mjs', FOLK.dongDao, 'CẤM biến chant thành câu hỏi hay thành điều kiện chốt đáp án', 'lời hô là nhịp, không thành thêm một câu hỏi'],
+  ['folk.mjs', FOLK.dongDao, 'KHÔNG tính vào ngân sách 3 câu thoại mỗi phút', 'chant do vai Cổ vũ hô, không phải mascot đọc'],
+  ['folk.mjs', FOLK.dongDao, '(<= 8 từ, đọc giọng en-US)', 'game Tiếng Anh hô bằng mẫu câu đang luyện, đọc giọng Anh'],
+  ['folk.mjs', FOLK.dongDao, 'không nhấp nháy quá 3 lần mỗi giây', 'chữ sáng theo nhịp vẫn chịu trần nhấp nháy của tầng tiếp cận'],
+  ['folk.mjs', FOLK.banAnToan, 'vòng 1 sải tay và trong hình quạt 90 độ', 'bản tại chỗ của trò dân gian phải khớp trần chỗ chơi vòng 21'],
+  ['folk.mjs', FOLK.banAnToan, 'Năm trò bị loại thẳng', 'phải nêu đích danh trò bị cấm, không để model tự đoán'],
+  ['folk.mjs', FOLK.banAnToan, 'CẤM mọi động tác nắm tay bạn', 'trò đôi bạn không được biến thành tiếp xúc thật'],
+  ['folk.mjs', FOLK.banAnToan, 'KHÔNG làm đổi tên trò', 'thẻ dẹp chỗ chơi chỉ đổi động tác, không đổi khung chơi'],
+  ['folk.mjs', FOLK.doDung, 'đúng MỘT đồ dùng sân trường', 'một đạo cụ thật duy nhất để HUD không thành cửa hàng'],
+  ['folk.mjs', FOLK.doDung, 'vạch phấn · dây nhảy · khăn vải · viên sỏi', 'ngân hàng tám món sân trường là nguồn duy nhất'],
+  ['folk.mjs', FOLK.doDung, 'CẤM đòi em cầm, nhặt, bốc, thổi, đội hay truyền tay vật thật', 'lớp 45 em thì phát thu đồ là hết nửa tiết'],
+  ['folk.mjs', FOLK.doDung, 'ván trượt, giày patin, dơi bóng chày', 'đồ dùng trường làng không có thì game không chạy được'],
+  ['folk.mjs', FOLK.doiBan, 'ĐỔI vai sau mỗi 3 lượt', 'trò đôi bạn phải khớp trần 3 lượt một vai của tầng vai chờ'],
+  ['folk.mjs', FOLK.doiBan, 'CẤM đòi thêm bạn ngoài lớp', 'một máy trong một lớp không được chờ đủ người mới chơi'],
+  ['folk.mjs', FOLK.doiBan, 'CẤM in dòng đó khi phiên không có cú hô chant nào', 'dòng tổng kết chỉ nói điều thật sự xảy ra'],
+  ['folk.mjs', FOLK.guard, '`verifyFolk()` chạy MỘT LẦN', 'hàm kiểm tầng sân chơi lúc nạp'],
+  ['folk.mjs', FOLK.guard, 'kiểm đúng bốn điều', 'số điều verifyFolk() phải kiểm'],
+  ['folk.mjs', FOLK.guard, 'hô đúng BA lần một phiên', 'điều 2 của verifyFolk() phải nêu đủ số lần hô'],
+  ['folk.mjs', FOLK.guard, 'không một lượt nào trong 12 lượt đòi em cầm vật thật', 'điều 3 của verifyFolk()'],
+  ['folk.mjs', FOLK.guard, 'Bản không camera, bản một học sinh và bản tắt tiếng vẫn bắt buộc kiểm đủ bốn điều', 'sân chơi và lời hô không phụ thuộc webcam'],
+  ['folk.mjs', FOLK.chonTro, 'chữ >= 18px', 'trần cỡ chữ của tên trò ở dòng "Cách chơi" và nhãn mini-trạm'],
+  ['folk.mjs', FOLK.chonTro, 'CẤM bịa trò không ai chơi', 'ngân hàng trò thật, không để mô hình tự nghĩ'],
+  ['folk.mjs', FOLK.chonTro, 'CẤM gọi trò bằng tên chung chung', 'tên trò phải là trò thật, không phải "vận động cùng bạn"'],
+  ['folk.mjs', FOLK.chonTro, 'builder báo lỗi, không để mô hình tự chọn', 'thiếu trò trong bảng thì dừng build'],
+  ['folk.mjs', FOLK.dongDao, 'CẤM gọi lời đếm', 'lời đếm không được mang nhãn "đồng dao"'],
+  ['folk.mjs', FOLK.dongDao, 'Bản "miti-mute"', 'bản tắt tiếng hiện chữ lời hô trên vạch nhịp'],
+  ['folk.mjs', FOLK.doDung, 'NGUYÊN VĂN một phần tử trong tám món', 'đồ dùng lấy từ FOLK_PROPS, không tự đặt tên'],
+  ['folk.mjs', FOLK.doiBan, 'CẤM chờ đủ bốn em mới cho bắt đầu', 'một máy trong lớp không được thành "không chơi được"'],
+  ['folk.mjs', FOLK.doiBan, 'in ĐÚNG MỘT dòng "Trò chơi hôm nay:', 'dòng tổng kết chỉ in khi phiên có cú hô thật'],
+  ['folk.mjs', FOLK.guard, '· không trò nào thuộc năm trò đã loại', 'điều 4 của verifyFolk() phải kiểm đủ năm trò'],
+  ['folk.mjs', FOLK.guard, '`console.warn` tiếng Việt nêu đúng phần lệch', 'hàm kiểm phải nói được chỗ lệch bằng tiếng Việt'],
 ];
 for (const [file, text, needle, label] of FULL_PINS) {
   if (!text.includes(needle)) bad(`tools/lib/${file} không còn nêu "${needle}" (${label}) — con số nghiệm thu phải sửa cùng tài liệu và bảng kiểm, không đổi âm thầm trong lib.`);
@@ -583,6 +628,7 @@ const SHORT_PINS = {
   FAMILY_SHORT: ['khối "Gửi bố mẹ" 4 dòng', '<= 20 từ', '>= 20px', '"Copy tờ rời"', 'việc 3 phút ở nhà không màn hình', 'cột `dongTac`', '<= 16 từ', 'cột `meo` <= 12 từ', 'động tác 3 giây', 'không tên bạn khác', 'không xếp hạng', 'không đe dọa', 'verifyFamily()'],
   PACE_SHORT: ['"Tuần <a>–<b> · Học kì <n>"', 'cột tuan', 'tối đa 10 tuần', 'đúng MỘT lần ở phiên đầu', 'lưu "miti-week"', 'không chặn nút "Bắt đầu"', '>= 3/12 lượt', SCHOOL_YEAR.nuocRut + ' tuần trước mốc kiểm tra', 'cấm đổi luật', 'từ tuần ' + SCHOOL_YEAR.tongOnTu, '>= 6/12 lượt ôn', 'cấm cụm mới', 'verifyPacing()'],
   PLAYZONE_SHORT: ['"Dẹp chỗ chơi"', '4 dòng <= 12 từ', '60–90 giây', '20 giây', '1 sải tay', '>= 1,2 m', '"miti-foot"', '0/12 lượt nhấc chân cao', 'đứng một chân', '"Lớp mình chật"', '"miti-space"', '>= 12 nhịp/phút', '>= 60%', '90 độ', 'chốt một lần đầu phiên', '"Em mệt / em đau"', '>= 56px', 'hạ nhiệt 45–60 giây', 'không trừ tim', '"miti-stop"', 'verifyPlayzone()'],
+  FOLK_SHORT: ['trò dân gian dẫn dắt', 'tools/data/folk.mjs', 'tên <= 4 từ', '"Cách chơi"', '>= 18px', 'chant <= 8 tiếng', 'BA lần một phiên', 'vạch nhịp 8 nhịp', 'đồng dao', 'mẫu câu <= 8 từ', 'giọng en-US', 'nhảy lò cò', 'trồng cây chuối', 'bịt mắt bắt dê', 'kéo co dây thật', '1 sải tay', 'tám món FOLK_PROPS', 'alpha <= 0.45', 'đổi vai sau 3 lượt', 'Trò chơi hôm nay', 'không giành góc HUD của tên môn', 'lời đếm cấm gọi là đồng dao', 'cấm đòi cầm vật thật', 'verifyFolk()'],
 };
 for (const seg of chainSegments) {
   for (const needle of SHORT_PINS[seg.name] || []) {
@@ -894,6 +940,25 @@ if (!fs.existsSync(VAR_FILE)) {
         [`"Việc 3 phút ở nhà: cả nhà cùng ${vsp.dongTac} rồi hỏi nhau miệng một đề vừa chơi"`, 'dòng 4 mang động tác đặc trưng của môn này'],
       ]) {
         if (!b.includes(needle)) bad(`biến thể #${i + 1} (${vid}): thiếu ${label} ("${needle.slice(0, 48)}") — builder phải nối tools/data/sports.mjs và tools/data/standards.mjs vào đúng block.`);
+      }
+    }
+    // Trò dẫn dắt cũng là dữ liệu theo KIỂU ĐIỀU KHIỂN: block copy riêng được thì phải mang đúng trò
+    // của chính nó chứ không phải danh sách mười bốn trò — V1–V4 có mã riêng, V5 mượn mã đầu của game.
+    const vfk = vgame && FOLK_BANK[vGesture || (vgame.gestures || [])[0]];
+    if (!vfk || !vsp) {
+      bad(`biến thể #${i + 1} (${vid || 'không đọc được id'}): không tra được trò dân gian cho kiểu điều khiển ${vcode || 'lệch nhãn'} — bảng folk của builder và validate đã lệch nhau.`);
+    } else {
+      for (const [needle, label] of [
+        ['**Sân chơi Việt Nam:**', 'dòng khối sân chơi Việt Nam — người copy riêng một block sẽ không còn biết game phải mang trò dân gian nào'],
+        [`Trò dân gian dẫn dắt của block ${vcode} này là **${vfk.tro}**`, 'tên trò của ĐÚNG kiểu điều khiển — block liệt kê quy định sân chơi chung chung là không đủ'],
+        [`cách chơi "${vfk.loiCho}"`, 'dòng cách chơi của trò'],
+        [`lời hô theo nhịp "${vfk.chant}" (\`${vfk.loai}\``, 'chant kèm nhãn loại lời hô'],
+        [`đồ dùng AR "${vfk.doDung}"`, 'đồ dùng sân trường của trò'],
+        [`trò ${vfk.dieu};`, 'loại động hay tĩnh của trò'],
+        [`tên trò không chiếm góc HUD của môn "${vsp.mon}"`, 'trò dân gian không giành góc HUD của tên môn'],
+        [`năm trò đã loại (${FOLK_BANNED.map((x) => x.tro.toLowerCase()).join(', ')})`, 'năm trò bị loại nêu đích danh ngay trong block'],
+      ]) {
+        if (!b.includes(needle)) bad(`biến thể #${i + 1} (${vid}): thiếu ${label} của trò ${vfk.tro} ("${needle.slice(0, 48)}") — builder phải lấy thẳng tools/data/folk.mjs vào từng block.`);
       }
     }
     // Chuỗi tự kiểm của biến thể cũng phải mang đủ mọi tầng, cùng registry như prompt.
@@ -1311,6 +1376,64 @@ const PLAYZONE_DOC_NEEDLES = [
   // các needle chữ ở trên vẫn xanh hết.
   ['mục `[40]`', 'con trỏ từ prompts/README về đúng dòng bảng kiểm của verifyPlayzone()', 0, 0, 0, 5],
 ];
+// Vòng 22: tầng "sân chơi Việt Nam". Các mốc dưới ĐO TỪ tài liệu thật rồi hạ một bậc làm sàn,
+// giống cách PLAYZONE_DOC_NEEDLES làm ở vòng 21. Lý do phải có sàn: sáu quy định này sống ở ba chỗ khác
+// nhau (master §4.12, template, hai README) và một lần sửa tay ở chỗ nào cũng làm tầng đó biến mất khỏi
+// chỗ đó mà build vẫn xanh.
+const FOLK_DOC_NEEDLES = [
+  ["TRÒ DẪN DẮT LẤY NGUYÊN VĂN TỪ", "nhãn bullet trò dẫn dắt ở master", 1, 0, 0, 0],
+  ["MỘT LỜI HÔ THEO NHỊP, BA LẦN MỘT PHIÊN", "nhãn bullet lời hô ở master", 1, 0, 0, 0],
+  ["NĂM TRÒ BỊ LOẠI THẲNG CỔ", "nhãn bullet năm trò bị loại ở master", 1, 0, 0, 0],
+  ["MỘT ĐỒ DÙNG SÂN TRƯỜNG TRONG TÁM MÓN", "nhãn bullet đồ dùng ở master", 1, 0, 0, 0],
+  ["TRÒ ĐÔI BẠN CHƠI BẰNG HAI EM CẠNH NHAU", "nhãn bullet trò đôi bạn ở master", 1, 0, 0, 0],
+  ["TỰ KIỂM BẰNG `verifyFolk()`", "nhãn bullet hàm tự kiểm ở master", 1, 0, 0, 0],
+  ["[41] verifyFolk()", "mục 41 của bảng kiểm máy tự kiểm trong master", 1, 0, 0, 0],
+  ["- SÂN CHƠI VIỆT NAM (nguồn:", "nhãn khối sân chơi trong template", 0, 1, 0, 0],
+  ["Phần sân chơi đã điền đủ", "dòng checklist sân chơi trong template", 0, 1, 0, 0],
+  ["Sáu quy định \"sân chơi Việt Nam\"", "heading mục kể chuyện tầng 22 ở README", 0, 0, 1, 0],
+  ["Tầng \"sân chơi Việt Nam\"", "heading mục kể chuyện tầng 22 ở prompts/README", 0, 0, 0, 1],
+  ["máy tự kiểm thứ 41", "số mục của verifyFolk() trong bảng kiểm", 0, 0, 1, 0],
+  ["việc người thử thứ 32", "việc người thử tương ứng ở README", 0, 0, 1, 0],
+  ["người thử số 32", "việc người thử tương ứng ở prompts/README", 0, 0, 0, 1],
+  ["mục `[41]`", "con trỏ từ prompts/README về đúng dòng bảng kiểm của verifyFolk()", 0, 0, 0, 1],
+  ["sports.mjs + folk.mjs", "danh sách file data trong pipeline prompts/README", 0, 0, 0, 1],
+  ["· playzone.mjs · folk.mjs", "danh sách file lib trong pipeline prompts/README", 0, 0, 0, 1],
+  ["tools/data/folk.mjs", "ngân hàng trò dân gian", 4, 3, 3, 3],
+  ["tools/lib/folk.mjs", "tầng quy định sân chơi", 1, 1, 2, 1],
+  ["FOLK_PROPS", "danh sách tám món đồ dùng", 2, 2, 3, 1],
+  ["verifyFolk()", "hàm kiểm tầng sân chơi lúc nạp", 1, 1, 2, 5],
+  ["Nhảy lò cò", "trò bị loại 1 (đứng một chân)", 2, 1, 1, 1],
+  ["Trồng cây chuối", "trò bị loại 2 (đứng một chân)", 2, 1, 1, 1],
+  ["Bịt mắt bắt dê", "trò bị loại 3 (che mắt)", 2, 1, 1, 1],
+  ["Rồng rắn chạy vòng", "trò bị loại 4 (chạy quanh sân)", 1, 1, 1, 1],
+  ["Kéo co dây thật", "trò bị loại 5 (dây căng ngang người)", 2, 1, 1, 1],
+  ["vạch phấn", "đồ dùng sân trường thứ nhất", 2, 1, 1, 1],
+  ["dây nhảy", "đồ dùng sân trường thứ hai", 1, 1, 1, 1],
+  ["khăn vải", "đồ dùng sân trường thứ ba", 1, 1, 1, 1],
+  ["viên sỏi", "đồ dùng sân trường thứ tư", 3, 1, 2, 1],
+  ["gậy tre", "đồ dùng sân trường thứ năm", 1, 1, 1, 1],
+  ["quả cầu giấy", "đồ dùng sân trường thứ sáu", 1, 1, 1, 1],
+  ["túi đậu", "đồ dùng sân trường thứ bảy", 1, 1, 1, 1],
+  ["vòng tròn", "đồ dùng sân trường thứ tám", 1, 1, 1, 1],
+  ["Ô ăn quan", "trò dẫn dắt của mã GRAB", 1, 0, 1, 1],
+  ["Nhảy dây", "trò dẫn dắt của mã STEP", 1, 0, 1, 0],
+  ["Rồng rắn lên mây", "trò dẫn dắt của mã VOICE", 1, 0, 1, 0],
+  ["Tập tầm vông", "trò dẫn dắt của mã FINGER_COUNT", 1, 0, 1, 0],
+  ["Gánh nước", "trò dẫn dắt của mã TWO_HAND_BALANCE ở prompts/README", 0, 0, 0, 1],
+  ["Chi chi chành chành", "trò dẫn dắt của mã POINT ở prompts/README", 0, 0, 0, 1],
+  ["Gánh gánh gồng gồng", "chant đồng dao làm ví dụ ở master", 1, 0, 0, 0],
+  ["Thả đỉa ba ba", "chant đồng dao làm ví dụ ở master", 1, 0, 0, 0],
+  ["đồng dao", "loại lời hô mà tầng sân chơi buộc dùng thật", 3, 3, 5, 2],
+  ["trò chơi dân gian", "chữ \"trò chơi dân gian\"", 1, 1, 2, 1],
+  ["sân trường", "nơi trò chơi dân gian tồn tại", 2, 1, 5, 2],
+  ["<= 4 từ", "trần độ dài tên trò dẫn dắt", 6, 8, 6, 2],
+  ["<= 8 từ", "trần độ dài dòng cách chơi", 1, 1, 1, 1],
+  ["<= 8 tiếng", "trần độ dài lời hô theo nhịp", 2, 2, 2, 1],
+  ["vạch nhịp 8 nhịp", "nhịp mà lời hô phải bám theo", 1, 1, 1, 1],
+  ["BA lần một phiên", "số lần hô lời hô trong một phiên", 1, 1, 1, 1],
+  ["alpha <= 0.45", "trần phủ của đồ dùng AR", 3, 2, 1, 1],
+  ["Trò chơi hôm nay", "dòng tổng kết tên trò ở màn khép phiên", 0, 1, 1, 1],
+];
 // Con số cũ của vòng 6 ("< 8 động tác lớn mỗi phút") là yêu cầu KHÔNG THỂ đạt với phiên 12 lượt / 4–6 phút.
 // Giữ nó trong tài liệu sẽ sinh game luôn báo CHƯA ĐẠT ở mục cường độ, nên phải bị chặn.
 const SUPERSEDED = [
@@ -1336,7 +1459,7 @@ for (const [docSlot, [docName, docText]] of DOC_FILES.entries()) {
   for (const [needle, label] of IDENTITY_DOC_NEEDLES) {
     if (!docText.includes(needle)) bad(`${docName} thiếu con số bản sắc riêng (${label}): không thấy "${needle}".`);
   }
-  for (const [needle, label, ...mins] of [...RHYTHM_DOC_NEEDLES, ...VOICE_DOC_NEEDLES, ...QUEUE_DOC_NEEDLES, ...LESSON_DOC_NEEDLES, ...CURRICULUM_DOC_NEEDLES, ...SPORT_DOC_NEEDLES, ...FAMILY_DOC_NEEDLES, ...PACE_DOC_NEEDLES, ...PLAYZONE_DOC_NEEDLES]) {
+  for (const [needle, label, ...mins] of [...RHYTHM_DOC_NEEDLES, ...VOICE_DOC_NEEDLES, ...QUEUE_DOC_NEEDLES, ...LESSON_DOC_NEEDLES, ...CURRICULUM_DOC_NEEDLES, ...SPORT_DOC_NEEDLES, ...FAMILY_DOC_NEEDLES, ...PACE_DOC_NEEDLES, ...PLAYZONE_DOC_NEEDLES, ...FOLK_DOC_NEEDLES]) {
     const want = mins[docSlot];
     const got = docText.split(needle).length - 1;
     if (got < want) bad(`${docName} chỉ còn nêu "${needle}" (${label}) ${got} lần, chuẩn hiện hành là ${want} lần — tài liệu chuẩn phải giữ đủ chỗ nêu ở CẢ phần luật lẫn bảng kiểm tự kiểm, không được để một phần mất số.`);
@@ -1649,6 +1772,27 @@ if (!HUMAN_CHECKS.some((s) => /dép lê/.test(s) && /Em mệt/.test(s))) bad('B�
 // Hai tầng nói về cùng MỘT khoảng cách: nếu một trong hai đổi đơn vị thì prompt sẽ mang hai chuẩn khác nhau.
 if (!PLAYZONE.depCho.includes('1 sải tay') || !QUEUE.spacing.includes('1 sải tay')) bad('PLAYZONE.depCho và QUEUE.spacing phải cùng dùng đơn vị "1 sải tay" — một tầng đổi sang mét hay "bước" là 85 prompt mang hai chuẩn khoảng cách mâu thuẫn nhau.');
 
+// Vòng 22: tầng sân chơi Việt Nam nghiệm thu KHUNG CHƠI và LỜI HÔ, nên mục bảng kiểm phải nêu lại đủ
+// bốn điều verifyFolk() kiểm — thiếu một vế (ví dụ "không lời đếm nào bị gọi là đồng dao") thì game bịa
+// một câu đếm vô nghĩa vẫn báo ĐẠT.
+if (!MACHINE_ITEMS.some((s) => s.includes('verifyFolk()') && s.includes('FOLK_PROPS'))) bad('Bảng kiểm máy tự kiểm không còn mục nghiệm thu tầng sân chơi Việt Nam (verifyFolk() + FOLK_PROPS) — thiếu mục này thì game bỏ hẳn trò dân gian, lời hô và đồ dùng mà vẫn báo ĐẠT.');
+{
+  const folkItem = MACHINE_ITEMS.find((s) => s.includes('verifyFolk()'));
+  for (const clause of ['tools/data/folk.mjs', 'NGUYÊN VĂN', 'tên <= 4 từ', '"Cách chơi"', 'nhãn mini-trạm', 'không chiếm góc HUD của tên môn', 'cột `chant`', '<= 8 tiếng', 'BA lần một phiên', 'vạch nhịp 8 nhịp', '"miti-mute"', 'không lời đếm nào bị gọi là "đồng dao"', 'tám món FOLK_PROPS', 'alpha <= 0.45', 'không một lượt nào trong 12 lượt đòi em cầm vật thật', '"Nhảy lò cò"', '"Trồng cây chuối"', '"Bịt mắt bắt dê"', '"Rồng rắn chạy vòng"', '"Kéo co dây thật"', '1 sải tay', 'dép lê / lớp chật']) {
+    if (folkItem && !folkItem.includes(clause)) bad(`Mục bảng kiểm "verifyFolk()" không còn nêu "${clause}" — mục nghiệm thu tầng sân chơi phải liệt kê đủ bốn điều verifyFolk() kiểm; bớt một vế là chỗ hỏng đó lọt qua nghiệm thu.`);
+  }
+}
+if (!HUMAN_CHECKS.some((s) => /sân trường/.test(s) && /vật thật/.test(s))) bad('Bảng việc người thử không còn câu hỏi trò chơi có phải trò em thật sự từng chơi ở sân trường và game có lúc nào đòi cầm vật thật không — máy so được chuỗi với bảng dữ liệu nhưng không biết trò đó có tồn tại ở sân trường em không.');
+{
+  const folkCheck = HUMAN_CHECKS.find((s) => s.includes('chơi thử một phiên ngay tại chỗ'));
+  for (const clause of ['trò chơi dân gian', 'sân trường', 'Đọc to lời hô theo nhịp', 'hô khớp vạch nhịp', 'sớm hơn động tác', 'cầm, nhặt, thổi vật thật', 'năm trò đã bị loại', '"Nhảy lò cò"', '"Trồng cây chuối"', '"Bịt mắt bắt dê"', '"Rồng rắn chạy vòng"', '"Kéo co dây thật"', '1 sải tay']) {
+    if (folkCheck && !folkCheck.includes(clause)) bad(`Việc người thử "chơi thử một phiên ngay tại chỗ" không còn nêu "${clause}" — người thử phải đi hết bốn điều của verifyFolk() bằng tay; thiếu một vế thì lỗi thật ở đúng chỗ đó không ai nhìn thấy.`);
+  }
+}
+// Chữ "đồng dao" là thứ DỄ bị đổi nhất khi người sửa thấy một lời đếm: nếu lib gọi nó là "vè" hay
+// "ca dao" thì bảy lời cam kết ở data mất chỗ đối chiếu, và cô giáo không còn biết dòng nào là thật.
+if (!FOLK.dongDao.includes('"dong dao"') || !FOLK.dongDao.includes('"dem"')) bad('FOLK.dongDao không còn nêu hai giá trị nhãn `dong dao` và `dem` của cột loai — quy định mất chỗ dựa thì bảy dòng đồng dao trong data thành lời hứa miệng.');
+
 // Vòng 18: bảng môn thể thao là DỮ LIỆU theo MÃ ĐIỀU KHIỂN. GESTURES có 14 mã nên bảng môn phải phủ đủ
 // 14; thiếu mã thì builder throw, nhưng sửa nội dung (đổi tên môn, viết dài động tác, để hai mã trùng
 // một môn) thì không tầng nào bắt — nên đối chiếu thẳng ở đây.
@@ -1679,6 +1823,71 @@ if (!PLAYZONE.depCho.includes('1 sải tay') || !QUEUE.spacing.includes('1 sải
   // reference phải còn ở cả hai phía. Probe vòng 18f: xóa `HYPE.sharedGoal` khỏi sport.mjs vẫn xanh vì
   // HUD "Đội mình" trong tiepSuc tự nó là một chuỗi hợp lệ — chỉ so với lib kia mới thấy nó là bản second.
   if (!SPORT.tiepSuc.includes('HYPE.sharedGoal') || !HYPE.sharedGoal) bad('Đường tiếp sức không còn dùng lại thanh đích chung của tầng thi đua (`HYPE.sharedGoal`) — hai vạch đích trên một HUD sẽ cạnh tranh nhau chỗ và cạnh tranh luôn sự chú ý của bốn em.');
+}
+// Vòng 22: bảng trò chơi dân gian cũng là DỮ LIỆU theo MÃ ĐIỀU KHIỂN, và nó mang hai thứ mà các
+// tầng khác không có: TÊN TRÒ THẬT (game tự bịa "trò vận động cùng bạn" thì không em nào nhận ra) và
+// LỜI HÔ gán nhãn "đồng dao" (cô nghe ra ngay lời đếm bịa, và mất tin vào cả phần còn lại). Sửa nội
+// dung trong tools/data/folk.mjs — đổi tên trò, viết dài chant, gọi một lời đếm là đồng dao — thì không
+// tầng nào ở trên bắt được, nên đối chiếu thẳng ở đây.
+{
+  const codes = Object.keys(GESTURES);
+  for (const c of codes) if (!FOLK_KEYS.includes(c)) bad(`GESTURES có mã ${c} nhưng folk.mjs chưa có dòng trò chơi dân gian — bổ sung tro/loiCho/chant/loai/doDung/dieu.`);
+  for (const k of FOLK_KEYS) if (!GESTURES[k]) bad(`folk.mjs có dòng ${k} không có trong GESTURES — bảng trò gắn theo mã điều khiển, không được tự thêm mã.`);
+  if (FOLK_KEYS.length !== codes.length) bad(`folk.mjs có ${FOLK_KEYS.length} dòng nhưng GESTURES có ${codes.length} mã điều khiển — bảng trò phải phủ đủ.`);
+  const TU_CAP = { tro: 4, loiCho: 8 };
+  const seenTro = new Map();
+  for (const k of FOLK_KEYS) {
+    const f = FOLK_BANK[k];
+    for (const fld of ['tro', 'loiCho', 'chant', 'loai', 'doDung', 'dieu']) {
+      if (!f[fld] || !String(f[fld]).trim()) bad(`folk.mjs.${k}: thiếu trường ${fld} — builder sẽ in ra một chỗ trống ngay giữa dòng luật sân chơi.`);
+    }
+    for (const fld of ['tro', 'loiCho']) {
+      const w = soTu(f[fld] || '');
+      if (w > TU_CAP[fld]) bad(`folk.mjs.${k}.${fld} = "${f[fld]}" dài ${w} từ, trần ${TU_CAP[fld]} từ — tên trò còn phải nằm vừa dòng "Cách chơi" dưới màn chào, còn cách chơi thì mascot phải đọc xong trong một hơi.`);
+    }
+    // chant đo bằng TIẾNG chứ không phải bằng từ: tiếng Việt một từ = một tiếng, nên đếm từ là đếm
+    // tiếng. Trần 8 tiếng là đúng một vạch nhịp — dài hơn thì vai "Cổ vũ" hô chưa xong đã hết nhịp.
+    const tieng = soTu(f.chant || '');
+    if (tieng > 8) bad(`folk.mjs.${k}.chant = "${f.chant}" dài ${tieng} tiếng, trần 8 tiếng — câu hô dài hơn một vạch nhịp 8 nhịp thì chant biến thành một câu đọc chứ không phải nhịp tập thể dục.`);
+    if (!FOLK_PROPS.includes(f.doDung)) bad(`folk.mjs.${k}.doDung = "${f.doDung}" không nằm trong tám món FOLK_PROPS — đồ dùng ngoài ngân hàng sân trường thì trường làng không có, và quy định "một màu, alpha <= 0.45" cũng không còn áp dụng cho nó.`);
+    if (!['dong', 'tinh'].includes(f.dieu)) bad(`folk.mjs.${k}.dieu = "${f.dieu}" không phải "dong" hay "tinh" — dòng tổng kết "Trò chơi hôm nay: <trò> — bản <động/tĩnh> tại chỗ" không còn giá trị để in.`);
+    if (!['dong dao', 'dem'].includes(f.loai)) bad(`folk.mjs.${k}.loai = "${f.loai}" không phải "dong dao" hay "dem" — chỉ hai nhãn đó phân biệt được lời hô có thật với lời đếm do thư viện soạn.`);
+    if (seenTro.has(f.tro)) bad(`folk.mjs: ${seenTro.get(f.tro)} và ${k} cùng mang trò "${f.tro}" — hai kiểu điều khiển cùng một trò thì dòng "Trò chơi hôm nay" của hai game cạnh nhau không còn khác nhau.`);
+    else seenTro.set(f.tro, k);
+    if (/[\u3400-\u9fff\u3040-\u30ff]/.test(JSON.stringify(f))) bad(`folk.mjs.${k}: lẫn ký tự CJK.`);
+  }
+  // Mỗi món trong ngân hàng tám đồ dùng phải có ÍT NHẤT một game dùng: món không ai dùng là chữ trang
+  // trí trong bảng, và người đọc prompt không còn cách nào biết nó thật sự xuất hiện trên màn hình.
+  for (const p of FOLK_PROPS) if (!FOLK_KEYS.some((k) => FOLK_BANK[k].doDung === p)) bad(`FOLK_PROPS có "${p}" nhưng không dòng trò nào mang cột doDung giá trị đó — một món không game nào dùng thì nó nằm trong bảng cho đủ tám, còn game thật lại vẽ đồ dùng khác.`);
+  // Nhãn "dong dao" là một LỜI CAM KẾT văn hóa, không phải metadata: bảy dòng dưới là lời đồng dao thật
+  // trong trí nhớ sân trường. Thêm dòng mang nhãn này mà không có trong danh sách thì validate dừng —
+  // người thêm phải tự xác nhận đó là lời thật, vì không code nào phân biệt được đồng dao với lời đếm.
+  const DONG_DAO = [
+    'Chi chi chành chành',
+    'Kéo cưa lừa xẻ, ông thợ nào khỏe',
+    'Chim bay cò bay',
+    'Gánh gánh gồng gồng',
+    'Rồng rắn lên mây, có cây lúc lắc',
+    'Thả đỉa ba ba, con đỉa bắt mày',
+    'Tập tầm vông, tay không tay có',
+  ];
+  const labeled = FOLK_KEYS.filter((k) => FOLK_BANK[k].loai === 'dong dao');
+  if (labeled.length !== DONG_DAO.length) bad(`folk.mjs có ${labeled.length} dòng gắn nhãn "dong dao" nhưng danh sách đồng dao thật chốt ở validate là ${DONG_DAO.length} — thêm dòng mang nhãn này là phải xác nhận đó là lời đồng dao có thật, không phải lời đếm tự soạn.`);
+  for (const k of labeled) if (!DONG_DAO.includes(FOLK_BANK[k].chant)) bad(`folk.mjs.${k} gắn nhãn "dong dao" cho chant "${FOLK_BANK[k].chant}" — dòng đó không nằm trong bảy lời đồng dao đã xác nhận. Gọi một lời đếm là "đồng dao" trước lớp thì cô và trò đều nghe ra, và cả phần còn lại của game mất tin.`);
+  // Năm trò bị loại phải được NÊU ĐÍCH DANH ở cả lib lẫn bảng kiểm — chỉ ghi "năm trò bị cấm" chung
+  // chung thì game dựng lại "Nhảy lò cò" dưới một tên na ná vẫn báo ĐẠT.
+  for (const b of FOLK_BANNED) {
+    if (!FOLK.banAnToan.includes(b.tro)) bad(`FOLK_BANNED có "${b.tro}" nhưng quy định FOLK.banAnToan không nêu đích danh — game dựng lại trò đã loại dưới một tên na ná vẫn vượt qua luật.`);
+    if (!FOLK.guard.includes(b.tro)) bad(`FOLK_BANNED có "${b.tro}" nhưng bốn điều của verifyFolk() không nêu tên — mục bảng kiểm không còn cơ sở để chặn.`);
+  }
+  if (FOLK_BANNED.length !== 5) bad(`FOLK_BANNED có ${FOLK_BANNED.length} trò nhưng lib và bảng kiểm đang chốt "năm trò bị loại" — thêm hay bớt trò phải sửa cả ba chỗ cùng lúc, không để luật nói năm mà danh sách nói bốn.`);
+  // Con số của tầng sân chơi MƯỢN từ tầng khác; đổi một bên thì 85 prompt mang hai chuẩn mâu thuẫn.
+  if (!FOLK.banAnToan.includes('1 sải tay') || !PLAYZONE.depCho.includes('1 sải tay')) bad('Khoảng cách an toàn lệch giữa tools/lib/folk.mjs và tools/lib/playzone.mjs — một tầng đổi sang mét hay "một bước" là trò dân gian và thẻ dẹp chỗ chơi mô tả hai không gian khác nhau.');
+  if (!FOLK.banAnToan.includes('90 độ') || !PE.loadCap.includes('90 độ')) bad('Hình quạt 90 độ lệch giữa folk.mjs và pe.mjs — bản "tại chỗ" của trò dân gian sẽ thoát trần xoay thân mà tầng thể dục đã đặt.');
+  if (!FOLK.dongDao.includes('8 nhịp') || !RHYTHM.move.includes('8 nhịp')) bad('Vạch nhịp 8 nhịp lệch giữa folk.mjs và rhythm.mjs — lời hô đếm theo vạch mà nhạc nền không cùng nhịp thì em hô trước động tác một nhịp.');
+  if (!FOLK.dongDao.includes('3 câu thoại mỗi phút') || !IDENTITY.lines.includes('3 câu thoại mỗi phút')) bad('Ngân sách giọng "3 câu thoại mỗi phút" không còn được cả tầng mascot lẫn tầng chant viện — chant sẽ đè lên lời mascot đọc đề.');
+  if (!FOLK.doiBan.includes('3 lượt') || !QUEUE.rotate.includes('3 lượt mỗi em')) bad('Trần 3 lượt một vai lệch giữa folk.mjs và queue.mjs — trò đôi bạn sẽ đòi em cầm máy lâu hơn suất mà tầng vai chờ đã chia.');
+  if (!FOLK.doDung.includes('<= 0.45') || !SPORT.tiepSuc.includes('<= 0.45')) bad('Trần alpha đạo cụ AR <= 0.45 lệch giữa folk.mjs và sport.mjs — hai lớp đồ họa trong suốt chồng lên nhau sẽ che mất em đang chơi.');
 }
 
 // Vòng 19: tầng gia đình KHÔNG tự đặt con số nào — trần 16 từ mượn của tầng nhẹ đầu, trần 12 từ và
@@ -1729,6 +1938,29 @@ for (const g of GAMES) {
     ]) {
       if (!t.includes(needle)) bad(`${g.id}: prompt thiếu ${label} ("${needle.slice(0, 48)}") — tờ gửi bố mẹ phải nối tools/data/sports.mjs và tools/data/standards.mjs của đúng game, không được để chỗ trống chung.`);
     }
+  }
+}
+
+// Mỗi prompt game phải mang ĐÚNG TRÒ của mã điều khiển mình, kèm chant, đồ dùng và loại động/tĩnh.
+// Probe vòng 22: builder thay dòng dữ liệu bằng một câu chung chung ("hôm nay em chơi một trò dân
+// gian") thì khối SÂN CHƠI VIỆT NAM vẫn nguyên, 85 prompt vẫn xanh, mà không em nào biết trò của mình
+// là trò nào — nên neo từng mẩu dữ liệu ngay trong prompt đã sinh.
+for (const g of GAMES) {
+  const f = FOLK_BANK[g.gestures[0]];
+  if (!f) continue;
+  const rel = PATH_OF.get(g.id);
+  if (!rel || !fs.existsSync(path.join(ROOT, rel))) continue;
+  const t = fs.readFileSync(path.join(ROOT, rel), 'utf8');
+  for (const [needle, label] of [
+    ['- SÂN CHƠI VIỆT NAM (vòng 22:', 'nhãn khối sân chơi kèm khảo sát'],
+    [`(cùng mã điều khiển ${g.gestures[0]}, lấy nguyên văn từ \`tools/data/folk.mjs\`, không tự đổi trò trong một phiên): **${f.tro}**`, 'tên trò của ĐÚNG mã điều khiển'],
+    [`cách chơi "${f.loiCho}"`, 'dòng cách chơi của trò'],
+    [`lời hô theo nhịp "${f.chant}" (\`${f.loai}\`)`, 'chant kèm nhãn loại lời hô'],
+    [`đồ dùng AR "${f.doDung}"`, 'đồ dùng sân trường của trò'],
+    [`trò ${f.dieu}.`, 'loại động hay tĩnh của trò'],
+    ['KHÔNG chiếm góc HUD của tên môn', 'câu cấm tên trò giành góc HUD của tên môn'],
+  ]) {
+    if (!t.includes(needle)) bad(`${g.id}: prompt thiếu ${label} của trò ${f.tro} ("${needle.slice(0, 48)}") — builder phải lấy thẳng tools/data/folk.mjs theo mã ${g.gestures[0]}.`);
   }
 }
 
