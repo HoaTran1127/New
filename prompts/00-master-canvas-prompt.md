@@ -558,6 +558,57 @@ bắt luyện phát âm ở 85/85 prompt nhưng 82 game không có chỗ nào em
   Việt nêu đúng phần lệch và bảng kiểm ghi CHƯA ĐẠT kèm câu nên sửa gì trong prompt. Bản một học sinh, bản không
   camera và bản tắt tiếng vẫn bắt buộc kiểm đủ bốn điều.
 
+
+4.14 BẠN DẪN — MỘT EM LÀM MẪU ĐỘNG TÁC, BA EM BẮT CHƯỚC (bắt buộc — nguồn: `tools/lib/lead.mjs` + `tools/data/leads.mjs`, validate chặn nếu thiếu) — phần quyết định người làm mẫu động tác có bao giờ là một em trong nhóm hay luôn là máy
+
+Khảo sát 85 prompt trước khi viết mục này: "em làm mẫu" 0/85 · "bạn làm mẫu" 0/85 · "bắt chước" 0/85 ·
+"người dẫn" 0/85 · "em dẫn" 0/85 · "nhìn bạn" 0/85 · "làm theo bạn" 0/85 · "đồng diễn" 0/85 · "nhịp chung" 0/85.
+Chiều ngược lại: "mascot làm mẫu" 85/85, riêng chuỗi "làm mẫu" xuất hiện 8 lần trong một prompt và cả tám lần
+mascot là chủ ngữ. Nghĩa là người làm mẫu động tác chưa bao giờ là một em: ba em chưa tới lượt vẫn chỉ xem máy
+làm rồi bắt chước máy, còn "nhìn bạn rồi bắt chước bạn" — hoạt động mở đầu mọi tiết Thể dục lớp 4–5 — hoàn toàn
+vắng mặt. Tầng vai chờ (mục 7.2) cho ba em chưa tới lượt làm cổ vũ, trọng tài, thư ký, nhưng không vai nào đứng
+ở vị trí dẫn đầu; tầng đố bạn (mục 4.13) đưa một em lên vị trí người đặt đề còn người đáp vẫn lặp lại động tác
+máy đã biết. Chỗ hỏng thứ tư: em rụt rè không muốn nói thì chưa có đường nào để làm một việc lớn chỉ bằng tay —
+dẫn một động tác không cần một lời nào, không micro, không đọc, không viết.
+
+- ĐÚNG BA LẦN "BẠN DẪN" MỘT PHIÊN, MỖI HIỆP MỘT LẦN, MỖI LẦN ĐÚNG 5 GIÂY: lần của hiệp 1 nằm ở 5 giây ĐẦU TIÊN
+  sau nút "Bắt đầu" (trước lượt 1, không kéo dài khởi động quá trần 60–90 giây của mục 4.10), lần của hiệp 2 và
+  hiệp 3 nằm ngay SAU trạm nghỉ 5 giây giữa hai hiệp. Em dẫn làm MỘT trong ba động tác của `tools/data/leads.mjs`
+  (mười bốn mã điều khiển, mỗi mã ba động tác, mỗi động tác <= 6 từ), lấy theo đúng mã điều khiển của game này.
+  BA lần dẫn KHÔNG tính vào 12 lượt hỏi bài, CẤM biến thành lượt thứ 13, CẤM đổi ngân hàng câu hỏi, CẤM rút thời
+  gian đọc đề của lượt kế, CẤM để mascot dẫn thay khi bản chơi có từ hai học sinh.
+- THẺ "BẠN DẪN" MỘT HÀNG BA ĐỘNG TÁC, KHÔNG MICRO, KHÔNG ĐÁNH DẤU ✓: tới lần dẫn thì HUD hiện thẻ "Bạn dẫn" bằng
+  MỘT hàng ba động tác đúng mã điều khiển, chữ >= 20px, không che đề bài, tự tắt sau 5 giây cùng nhịp trạm — lấy
+  đúng trần thẻ báo-trước của mục 4.9. Em dẫn bấm "Em dẫn" rồi LÀM ĐÚNG MỘT động tác trong 5 giây, bằng tay và
+  thân, không cần nói. CẤM bật microphone ở lần dẫn này (chỉ ba game mã VOICE có micro), CẤM bắt em đọc, viết
+  hay gõ tên động tác, CẤM in dấu ✓ cạnh một động tác cụ thể trên thẻ. Bản một học sinh: chính em bấm "Em dẫn",
+  làm MỘT động tác rồi lặp lại đúng động tác đó thêm hai lần theo vạch nhịp 3 nhịp, thẻ vẫn hiện đủ ba động tác.
+- BA EM CÒN LẠI BẮT CHƯỚC TRONG ĐÚNG 1 SẢI TAY CỦA MÌNH, KHÔNG AI CHẠM NHAU: ba em còn lại nhìn em dẫn và bắt
+  chước ĐÚNG MỘT động tác vừa làm, trong cùng 5 giây, mỗi em vẫn đứng tại chỗ và trong vòng 1 sải tay cộng hình
+  quạt 90 độ PHÍA TRƯỚC mặt em (mục 4.5 và 4.11). CẤM xếp hàng vòng tròn, CẤM chạm tay hay chạm vai, CẤM quay mặt
+  vào nhau, CẤM rời khỏi chỗ. Game không nhận diện từng em và không so em nào giống hơn: cô bấm nút "Cả nhóm đã
+  làm theo" là lần dẫn khép lại. Game Tiếng Anh: động tác dẫn vẫn mang nhãn tiếng Việt, thẻ "Bạn dẫn" không hiện
+  từ tiếng Anh.
+- DẪN LỆCH KHÔNG PHẠT AI — MASCOT LÀM MẪU LẠI 3 GIÂY: em dẫn làm động tác NGOÀI ba động tác trên thẻ, làm quá tầm
+  1 sải tay, hoặc đứng im hết 5 giây thì game KHÔNG trừ tim, KHÔNG cắt chuỗi đúng, mascot làm mẫu lại MỘT động tác
+  trong thẻ đúng 3 giây (theo trần mascot làm mẫu của mục 4.11) và cả nhóm bắt chước động tác đó; thẻ "Bạn dẫn" của
+  hiệp kế vẫn lấy từ ngân hàng. Em bắt chước không kịp hoặc làm khác thì lượt đó không tính là sai cho em nào. CẤM
+  phạt em đặt động tác lệch, CẤM in chữ "sai nhịp" hay "làm sai" cạnh tên em, CẤM trừ điểm cả nhóm vì một lần dẫn lệch.
+- ĐIỂM DẪN VÀO "CẢ NHÓM", KHÔNG XẾP HẠNG NGƯỜI DẪN: một lần dẫn khép lại hợp lệ cộng +5 vào thanh
+  "Cả nhóm <x>/<mốc>" đã có (mục 7.3), KHÔNG cộng vào "miti-best", KHÔNG đổi thứ hạng của em đang chơi. Màn tổng
+  kết in ĐÚNG MỘT dòng "Em dẫn hôm nay: <tên> <n> hiệp" nằm trong khối mà nút "Copy tờ rời" copy được, cùng khối
+  với dòng "Bốn em hôm nay" và dòng "Em đố hôm nay". CẤM xếp hạng riêng người dẫn, CẤM chấm động tác đẹp hay xấu,
+  CẤM biến 5 giây dẫn thành lượt thi cá nhân.
+- TỰ KIỂM BẰNG `verifyLead()`: chạy MỘT LẦN lúc nạp và kiểm đúng bốn điều — đúng BA lần "Bạn dẫn" một phiên ở đầu
+  mỗi hiệp, mỗi lần ĐÚNG 5 giây và 12 lượt hỏi bài giữ nguyên · động tác dẫn lấy NGUYÊN VĂN từ `tools/data/leads.mjs`
+  theo đúng mã điều khiển của game, thẻ "Bạn dẫn" MỘT hàng ba động tác chữ >= 20px tự tắt sau 5 giây, không bật
+  microphone và không đánh dấu ✓ động tác nào là đúng · ba em còn lại bắt chước trong vòng 1 sải tay và hình quạt
+  90 độ của chính mình, không chạm nhau, nút "Cả nhóm đã làm theo" bấm được thật, dẫn lệch hoặc đứng im không trừ
+  tim và mascot làm mẫu lại 3 giây · +5 điểm dẫn chỉ vào thanh "Cả nhóm" và dòng "Em dẫn hôm nay" nằm trong khối
+  "Copy tờ rời". Thiếu điều nào thì `console.warn` tiếng Việt nêu đúng phần lệch và bảng kiểm ghi CHƯA ĐẠT kèm câu
+  nên sửa gì trong prompt. Bản một học sinh, bản không camera, bản tắt tiếng, bản "dép lê" và bản "lớp mình chật"
+  vẫn bắt buộc kiểm đủ bốn điều, vì một em làm mẫu và ba em nhìn theo không phụ thuộc webcam.
+
 ========================
 5. HỌC TẬP DẪN LỐI (LEARNING-FIRST)
 ========================
@@ -958,7 +1009,7 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
   Bảng liệt kê TỪNG ràng buộc kèm trạng thái ĐẠT / CHƯA ĐẠT. Trạng thái đó phải do code kiểm thật lúc chạy,
   không phải chữ tĩnh kê sẵn. Một bảng báo "ĐẠT" mà không kiểm gì là lỗi nghiêm trọng nhất của game giáo dục.
   Bảng chỉ người lớn mở được: không trừ tim, không chặn chơi, học sinh không nhìn thấy.
-- 42 MỤC MÁY TỰ KIỂM, mỗi mục một hàm trả true/false:
+- 43 MỤC MÁY TỰ KIỂM, mỗi mục một hàm trả true/false:
   [1] QUESTION_DATA đủ số mục và verifyQuestionBank() ĐÃ chạy trước lượt chơi đầu tiên
   [2] mọi mục đang phát hành có answer nằm trong choices đúng một lần
   [3] 📷 drawImage khung hình webcam đi qua toScreen(lx, ly), không còn phép nhân thô với W/H
@@ -1001,14 +1052,15 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
   [40] verifyPlayzone() đã chạy lúc nạp: thẻ "Dẹp chỗ chơi" có thật với đúng bốn dòng <= 12 từ, chạy trong 60–90 giây khởi động và tối đa 20 giây, không thêm màn hình trước nút "Bắt đầu" · ba lựa chọn giày dép lưu "miti-foot" (chân đất / dép lê thì 0/12 lượt nhấc chân cao, không một động tác đứng một chân nào) và nút "Lớp mình chật" lưu "miti-space" đổi động tác di chuyển thành tại chỗ mà vẫn >= 12 nhịp/phút, vật thể AR chỉ vào hình quạt 90 độ phía trước · bộ động tác chốt MỘT LẦN đầu phiên và không mở rộng giữa phiên · nút "Em mệt / em đau" >= 56px luôn bấm được, một cú bấm đưa thẳng vào hạ nhiệt 45–60 giây tại ranh giới lượt, không trừ tim, có ghi "miti-stop"
   [41] verifyFolk() đã chạy lúc nạp: trò dân gian dẫn dắt lấy NGUYÊN VĂN từ tools/data/folk.mjs theo đúng mã điều khiển của game (tên <= 4 từ, hiện ở dòng "Cách chơi" và nhãn mini-trạm, không chiếm góc HUD của tên môn) · chant lấy nguyên văn cột `chant` (<= 8 tiếng) hô đúng BA lần một phiên theo vạch nhịp 8 nhịp, bản "miti-mute" hiện chữ trên vạch nhịp, và không lời đếm nào bị gọi là "đồng dao" · đúng MỘT đồ dùng trong tám món FOLK_PROPS vẽ bằng AR alpha <= 0.45 và không một lượt nào trong 12 lượt đòi em cầm vật thật · không có "Nhảy lò cò", "Trồng cây chuối", "Bịt mắt bắt dê", "Rồng rắn chạy vòng", "Kéo co dây thật" dưới bất kỳ tên gọi nào, mọi động tác nằm trong vòng 1 sải tay và bản dép lê / lớp chật giữ nguyên tên trò
   [42] verifyQuiz() đã chạy lúc nạp: đúng BA lượt "Đố bạn" một phiên nằm ở CUỐI mỗi hiệp và chín lượt còn lại vẫn lấy từ ngân hàng đề · mẫu câu đố lấy NGUYÊN VĂN từ tools/data/quiz.mjs theo đúng mạch kiến thức của cụm, thẻ "Đố bạn" một hàng ba mẫu câu chữ >= 20px tự tắt sau 6 giây, game không bật microphone và không hiện sẵn đáp án · lượt đố được trả lời bằng đúng MỘT động tác của mã điều khiển trong vòng 1 sải tay, đề lệch không trừ tim và không cắt chuỗi, nút "Em chịu, bạn đáp giúp" bấm được thật · +5 điểm đố chỉ vào thanh "Cả nhóm" và dòng "Em đố hôm nay: <tên> <n> đề" nằm trong khối "Copy tờ rời"
-  Mục gắn 📷 chỉ áp dụng khi có webcam: bản không camera bỏ 6 mục đó và vẫn phải đạt 36 mục còn lại.
+  [43] verifyLead() đã chạy lúc nạp: đúng BA lần "Bạn dẫn" một phiên ở đầu mỗi hiệp, mỗi lần ĐÚNG 5 giây và 12 lượt hỏi bài giữ nguyên · động tác dẫn lấy NGUYÊN VĂN từ tools/data/leads.mjs theo đúng mã điều khiển của game, thẻ "Bạn dẫn" một hàng ba động tác chữ >= 20px tự tắt sau 5 giây, game không bật microphone và không đánh dấu ✓ động tác nào là đúng · ba em còn lại bắt chước trong vòng 1 sải tay và hình quạt 90 độ của chính mình, không chạm nhau, nút "Cả nhóm đã làm theo" bấm được thật, dẫn lệch hoặc đứng im không trừ tim và mascot làm mẫu lại 3 giây · +5 điểm dẫn chỉ vào thanh "Cả nhóm" và dòng "Em dẫn hôm nay: <tên> <n> hiệp" nằm trong khối "Copy tờ rời"
+  Mục gắn 📷 chỉ áp dụng khi có webcam: bản không camera bỏ 6 mục đó và vẫn phải đạt 37 mục còn lại.
 - XUẤT BẢN VĂN: bảng có nút "Xuất bản văn" sinh một khối chữ tiếng Việt copy được — tên game, bản chuẩn MiTi,
   ngày giờ, kiểu điều khiển đang chạy, số mục ĐẠT / CHƯA ĐẠT, danh sách mục chưa đạt kèm lý do.
   Khối chữ chỉ hiện trên màn hình và vào clipboard máy đó; không gửi lên máy chủ nào, không xin quyền, không để lại dữ liệu.
 - MỤC CHƯA ĐẠT PHẢI GIẢI THÍCH ĐƯỢC: mỗi dòng kèm một câu nguyên nhân kỹ thuật cho người lớn
   (ví dụ "toScreen không được dùng ở drawImage — vật thể đang tính bằng lx * W") và một câu nên sửa thế nào trong prompt.
   Cấm báo "lỗi" rồi im lặng, cấm chữ chung chung kiểu "hệ thống có vấn đề".
-- 33 VIỆC NGƯỜI THỬ PHẢI BẤM TAY (máy không tự kiểm được, làm theo đúng thứ tự, khoảng 15 phút):
+- 34 VIỆC NGƯỜI THỬ PHẢI BẤM TAY (máy không tự kiểm được, làm theo đúng thứ tự, khoảng 15 phút):
   đứng xa tới mức chỉ còn hai bàn tay · giữ im một tư thế 5 giây · che nửa người bằng tay · tắt camera giữa vòng ·
   rút mạng lúc đang tải model · đổi tay thuận sang Trái giữa chừng · bật reduced-motion ở hệ điều hành rồi mở game ·
   cố tình sai 4 câu liên tiếp · mở bằng điện thoại đặt dọc · đưa một học sinh lớp 4 chưa đọc hướng dẫn chơi thử 60 giây ·
@@ -1034,6 +1086,8 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
   đọc nhãn tuần ở màn khởi động rồi đối chiếu với thời khóa biểu thật của lớp — game ghi "Tuần 22–24 · Học kì 2" có khớp với việc lớp đang học tới đâu, hay bảng tuần chỉ là chữ trang trí? Hỏi em "tuần trước lớp mình học bài gì": em trả lời được thì ba lượt ôn theo tuần đang ôn cái có thật, nếu em chỉ đọc lại chữ trên HUD thì ba lượt đó không ôn gì cả. Xem hai lượt đầu của phiên gần kỳ kiểm tra: đó có thật là chỗ em yếu nhất không, hay game vẫn xếp câu ngẫu nhiên rồi chỉ đổi mỗi dòng chữ "Còn 2 tuần tới kiểm tra"?
   đứng đúng chỗ em sẽ chơi rồi dang hai tay quay một vòng — có chạm bàn, ghế, cặp hay tường không, sàn có vừa lau chưa? Chọn "chân đất / dép lê" ở thẻ "Dẹp chỗ chơi" rồi chơi trọn một phiên: động tác nhấc chân cao có biến mất thật khỏi 12 lượt hay vẫn hiện ra? Bật "Lớp mình chật" giữa hai phiên: phiên sau có còn đòi em né sang bên hoặc lùi lại không? Cuối cùng bấm nút "Em mệt / em đau" ở hiệp 2 — game có đi thẳng vào hạ nhiệt mà không trừ tim, không hỏi lý do, không có dòng "cố lên" nào không, hay em vẫn phải chơi nốt cho đủ 12 lượt?
   chơi thử một phiên ngay tại chỗ em sẽ đứng rồi trả lời ba câu: trò chơi dân gian hiện trên màn hình có phải trò em thật sự từng chơi ở sân trường, hay chỉ là cái tên dán lên một cú vung tay? Đọc to lời hô theo nhịp hai lần — em có hô khớp vạch nhịp đang chạy, hay lời hô tới sớm hơn động tác? Và nhìn xuống tay em: game có lúc nào đòi em cầm, nhặt, thổi vật thật không? Cuối cùng gọi tên năm trò đã bị loại ("Nhảy lò cò", "Trồng cây chuối", "Bịt mắt bắt dê", "Rồng rắn chạy vòng", "Kéo co dây thật") — game có dựng lại một trong năm trò đó dưới tên nào khác không, hay mọi động tác vẫn nằm gọn trong vòng 1 sải tay?
+  đọc to một mẫu câu "Đố bạn" ở cuối hiệp 1 rồi để bạn bên cạnh đáp bằng động tác — đề có nằm đúng mạch đang học và có đáp án thật trên thẻ hay em phải tự bịa? Cố tình điền một số ngoài phạm vi đã học: game có trừ tim, có cắt chuỗi đúng, hay chỉ âm thầm đổi sang đề ngân hàng ở lượt kế? Bấm "Em chịu, bạn đáp giúp" khi chưa nghĩ ra — lượt đó có bị tính là sai không, và dòng "Em đố hôm nay" có nằm trong khối "Copy tờ rời"?
+  để một em bấm "Em dẫn" và làm một động tác trong 5 giây — ba em kia có thật sự nhìn và bắt chước, hay mỗi em vẫn chỉ làm theo mascot? Em dẫn cố tình làm động tác ngoài ba động tác trên thẻ: game có trừ tim, có cắt chuỗi đúng, hay mascot chỉ làm mẫu lại 3 giây? Bấm "Cả nhóm đã làm theo" khi có em chưa kịp đứng đúng chỗ — dòng "Em dẫn hôm nay" có nằm trong khối mà nút "Copy tờ rời" copy được không, và +5 điểm có lọt vào "miti-best" của riêng ai không?
   Bảng in kèm từng việc và ô ghi kết quả: `prompts/CHECKLIST_NGHIEP_THU.md`.
 - THIẾU MỤC NÀO THÌ SỬA PROMPT, KHÔNG SỬA TAY FILE HTML: dán lại nguyên văn quy định tương ứng vào cuối prompt rồi sinh lại file.
 
@@ -1148,10 +1202,10 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
 [ ] đạo cụ AR neo landmark bằng toScreen(); bản không camera thì đạo cụ đứng yên ở góc HUD dưới chứ không biến mất
 [ ] ba câu thoại đọc bằng speechSynthesis giọng vi-VN, <= 3 câu mỗi phút, câu khi sai là câu đỡ chứ không chế giễu
 [ ] bảng kiểm ẩn mở bằng 7 lần chạm logo MiTi hoặc Ctrl+Alt+K, trạng thái ĐẠT do code kiểm thật lúc chạy
-[ ] cả 42 mục máy tự kiểm đều có hàm kiểm tương ứng, không mục nào là chữ kê sẵn
+[ ] cả 43 mục máy tự kiểm đều có hàm kiểm tương ứng, không mục nào là chữ kê sẵn
 [ ] mục CHƯA ĐẠT kèm nguyên nhân kỹ thuật + cách sửa trong prompt, không có dòng "lỗi hệ thống"
 [ ] nút "Xuất bản văn" copy được khối chữ tiếng Việt, không gửi lên máy chủ nào
-[ ] bản không camera bỏ đúng 6 mục 📷 và vẫn đạt 36 mục còn lại, không bỏ luôn bảng kiểm
+[ ] bản không camera bỏ đúng 6 mục 📷 và vẫn đạt 37 mục còn lại, không bỏ luôn bảng kiểm
 [ ] fallback chuột/chạm/phím chơi trọn vẹn, tự kích hoạt khi camera lỗi
 [ ] QUESTION_DATA có ít nhất 30 mục (Toán) hoặc 60 mục (Tiếng Anh), mỗi mục có đáp án + lời giải + errorTag + loiViet + dang
 [ ] dữ liệu đặt đầu file, code engine đặt sau, không có chỗ nào rút gọn
@@ -1215,7 +1269,7 @@ Sau khi tự kiểm tra, CHỈ xuất ra file HTML hoàn chỉnh, không kèm gi
   toàn bộ quy định phía trên chỉ là lời mong đợi. Bắt game tự kiểm bằng hàm true/false biến lời hứa thành trạng thái đọc được.
 - **Trạng thái phải do code kiểm, không phải chữ kê sẵn**: một bảng tĩnh in sẵn chữ "ĐẠT" còn hại hơn không có bảng,
   vì người lớn tưởng là đã kiểm. Đây là lý do quy định ghi rõ "không phải một danh sách chữ tĩnh".
-- **Tách 42 mục máy / 33 việc người thử**: cái gì máy kiểm được thì đừng đùn cho giáo viên; cái máy không kiểm được
+- **Tách 43 mục máy / 34 việc người thử**: cái gì máy kiểm được thì đừng đùn cho giáo viên; cái máy không kiểm được
   (cháu có hiểu luật chơi mà không đọc hướng dẫn không, rút mạng thì sao) thì đừng giả vờ kiểm. Con số 15 phút là thời lượng
   một tiết thực tế, không phải danh sách dài vô hạn.
 - **Mục chưa đạt phải nói nguyên nhân và cách sửa**: bảng kiểm chỉ báo "lỗi" sẽ bị bỏ qua; kèm câu "thiếu ở dòng nào,

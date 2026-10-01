@@ -66,7 +66,7 @@ Bốn biến thể đầu dùng **cùng một hợp đồng AR** như prompt gam
 - `04-english5/` — 15 game Tiếng Anh 5.
 - `01-prompt-…` đến `12-prompt-…` — **12 prompt legacy** đời đầu: giữ nguyên cơ chế game, đã thay MediaPipe Legacy/Tailwind CDN/Tone.js bằng chuẩn hiện hành và gắn nhãn `LEGACY`. Không dùng làm khuôn cho game mới.
 - `VARIANTS_425.md` — 425 biến thể (85 game × 5 kiểu điều khiển), do `tools/build-variants.mjs` sinh.
-- `CHECKLIST_NGHIEP_THU.md` — bảng kiểm cầm tay khi nhận file HTML về: 42 mục máy tự kiểm + 33 việc người thử bấm tay (trong đó 6 mục gắn 📷 chỉ có camera mới kiểm được; bản không camera bỏ 6 mục đó và vẫn phải đạt 36 mục còn lại), do `tools/build-acceptance.mjs` sinh từ `tools/lib/acceptance.mjs`.
+- `CHECKLIST_NGHIEP_THU.md` — bảng kiểm cầm tay khi nhận file HTML về: 43 mục máy tự kiểm + 34 việc người thử bấm tay (trong đó 6 mục gắn 📷 chỉ có camera mới kiểm được; bản không camera bỏ 6 mục đó và vẫn phải đạt 37 mục còn lại), do `tools/build-acceptance.mjs` sinh từ `tools/lib/acceptance.mjs`.
 
 ## ✅ Nghiệm thu một game vừa sinh
 
@@ -318,13 +318,29 @@ Việc người thử số 32 ("chơi thử một phiên ngay tại chỗ em s�
 
 Việc người thử số 33 ("đọc to một mẫu câu "Đố bạn" ở cuối hiệp 1 rồi để bạn bên cạnh đáp bằng động tác — đề có nằm đúng mạch đang học và có đáp án thật trên thẻ không? cố tình điền một số ngoài phạm vi đã học xem game có trừ tim hay chỉ âm thầm đổi sang đề ngân hàng? bấm "Em chịu, bạn đáp giúp" rồi tìm dòng "Em đố hôm nay" trong khối "Copy tờ rời"") là chỗ máy không tự kiểm được: `validate.mjs` so được mẫu câu với `tools/data/quiz.mjs`, còn **đề đó có vừa sức em được đố không** thì chỉ người lớn đứng cạnh em mới trả lời được.
 
+## 🫱 Tầng "bạn dẫn" — `tools/lib/lead.mjs` + `tools/data/leads.mjs` (vòng 24)
+
+Đo 85 prompt trước vòng 24: **"em làm mẫu" 0/85, "bạn làm mẫu" 0/85, "bắt chước" 0/85, "người dẫn" 0/85, "em dẫn" 0/85, "đồng diễn" 0/85, "nhịp chung" 0/85** — ngược lại **"mascot làm mẫu" 85/85**, riêng chuỗi "làm mẫu" xuất hiện 8 lần trong một prompt và cả tám lần mascot là chủ ngữ. Nghĩa là người làm mẫu động tác chưa bao giờ là một em: ba em chưa tới lượt vẫn chỉ xem máy làm rồi bắt chước máy, còn "nhìn bạn rồi bắt chước bạn" — cách trẻ nạp một động tác mới nhanh nhất và là hoạt động mở đầu mọi tiết Thể dục lớp 4–5 — hoàn toàn vắng mặt. Tầng này đặt một em vào vị trí dẫn đầu trong 5 giây, không cần nói một lời nào.
+
+| Luật | Con số | Kiểm ở đâu |
+|:---|:---|:---|
+| Đúng **BA lần "Bạn dẫn"** một phiên | mỗi hiệp **MỘT lần**, mỗi lần **ĐÚNG 5 giây**, **không tính vào 12 lượt hỏi bài**; động tác NGUYÊN VĂN từ `tools/data/leads.mjs` (mười bốn mã điều khiển × ba động tác, mỗi động tác **<= 6 từ**) | `verifyLead()` điều 1 |
+| Thẻ **"Bạn dẫn"** một hàng ba động tác | **>= 20px**, **tự tắt sau 5 giây**, **không microphone**, **không đánh dấu ✓**; em dẫn bấm "Em dẫn" rồi **làm** động tác, không cần nói | `verifyLead()` điều 2 |
+| **Ba em còn lại bắt chước** | mỗi em trong **vòng 1 sải tay** + **hình quạt 90 độ** của chính mình, **không chạm nhau**, **không xếp vòng tròn**; cô bấm "Cả nhóm đã làm theo" | `verifyLead()` điều 3 |
+| **Dẫn lệch không phạt ai** | **không trừ tim, không cắt chuỗi đúng**, mascot **làm mẫu lại 3 giây**, thẻ hiệp kế vẫn là ngân hàng; em bắt chước không kịp **không tính sai** | `verifyLead()` điều 3 |
+| **Điểm dẫn vào "Cả nhóm"** | **+5**, **không** vào "miti-best"; tổng kết in **"Em dẫn hôm nay: <tên> <n> hiệp"** trong khối "Copy tờ rời" | `verifyLead()` điều 4 |
+
+`verifyLead()` chạy MỘT LẦN lúc nạp và kiểm **đúng bốn điều**; thiếu thì `console.warn` tiếng Việt nêu đúng phần lệch và bảng kiểm ghi CHƯA ĐẠT ở **mục `[43]`**. Bản một học sinh, bản không camera, bản tắt tiếng, bản "dép lê" và bản "lớp mình chật" vẫn bắt buộc kiểm đủ bốn điều, vì một em làm mẫu và ba em nhìn theo không phụ thuộc webcam.
+
+Việc người thử số 34 ("để một em bấm "Em dẫn" và làm một động tác trong 5 giây — ba em kia có thật sự nhìn và bắt chước hay vẫn chỉ làm theo mascot? em dẫn làm động tác ngoài thẻ thì game có trừ tim không? dòng "Em dẫn hôm nay" có nằm trong khối "Copy tờ rời" không?") là chỗ máy không tự kiểm được: `validate.mjs` so được động tác với `tools/data/leads.mjs`, còn **ba em có bắt chước thật không** thì chỉ người lớn đứng cạnh mới trả lời được.
+
 ## 🔁 Pipeline của thư viện
 
 85 prompt game **được sinh tự động**, không sửa tay:
 
 ```
-tools/data/games.mjs + clusters.mjs + gestures.mjs + examples.mjs + error-notes.mjs + identities.mjs + standards.mjs + sports.mjs + folk.mjs + quiz.mjs
-tools/lib/ar.mjs · rules.mjs · feel.mjs · classroom.mjs · access.mjs · light.mjs · celebrate.mjs · identity.mjs · rhythm.mjs · queue.mjs · lesson.mjs · curriculum.mjs · sport.mjs · family.mjs · pacing.mjs · playzone.mjs · folk.mjs · quiz.mjs · verify.mjs · pe.mjs · memory.mjs · hype.mjs · anticipation.mjs · acceptance.mjs
+tools/data/games.mjs + clusters.mjs + gestures.mjs + examples.mjs + error-notes.mjs + identities.mjs + standards.mjs + sports.mjs + folk.mjs + quiz.mjs + leads.mjs
+tools/lib/ar.mjs · rules.mjs · feel.mjs · classroom.mjs · access.mjs · light.mjs · celebrate.mjs · identity.mjs · rhythm.mjs · queue.mjs · lesson.mjs · curriculum.mjs · sport.mjs · family.mjs · pacing.mjs · playzone.mjs · folk.mjs · quiz.mjs · lead.mjs · verify.mjs · pe.mjs · memory.mjs · hype.mjs · anticipation.mjs · acceptance.mjs
         └─ node tools/build.mjs ─→ catalogs/GAME_CATALOG.csv · .md · .js + prompts/0X-*/ + index.html + prompts/CHECKLIST_NGHIEP_THU.md
 ```
 
