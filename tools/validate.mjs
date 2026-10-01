@@ -259,6 +259,15 @@ for (const [name, txt] of Object.entries(LESSON)) {
   }
 }
 
+// Vòng 29 — KHOÁ GƯƠNG RÚT GỌN. `LESSON_SHORT` được build-lessons dán NGUYÊN VĂN vào dòng "Tự kiểm tra trước
+// khi xuất" của cả 39 giáo án, nên nó là BẢN GƯƠNG của từng quy định dài. Vòng 27 sửa `classVote` (mẫu số =
+// TỔNG SỐ ĐÁP ÁN ĐÃ GHI NHẬN) nhưng sót gương: SHORT vẫn ghi "camera thấy N em … sai quá 1/3 thì gợi ý giảng
+// lại" — đúng lỗi mẫu-số-mù vừa gỡ, nằm ở bước kiểm CUỐI nên mô hình dễ theo bản ngắn mà bỏ bản dài. Cùng họ
+// với vòng 26 (lê trần "12 lượt" ở gương). RULE_LINKS ở trên chỉ lặp LESSON[name], không chạm SHORT, nên cần
+// khoá riêng: hễ SHORT nhắc lệnh "giảng lại bước SƠ ĐỒ" thì phải mang qualifier "ĐÃ GHI NHẬN" của bản dài.
+if (LESSON_SHORT.includes('giảng lại bước SƠ ĐỒ') && !LESSON_SHORT.includes('ĐÃ GHI NHẬN'))
+  bad('LESSON_SHORT: gương "Cả lớp trả lời" phải tính 1/3 trên số đáp án ĐÃ GHI NHẬN (khớp `classVote` vòng 27), không để "camera thấy N em … sai quá 1/3" mù như bản cũ.');
+
 for (const g of GAMES) {
   const rel = PATH_OF.get(g.id);
   if (!rel) { bad(`${g.id}: không có đường dẫn prompt trong catalog.`); continue; }
