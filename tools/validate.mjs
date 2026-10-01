@@ -31,10 +31,12 @@ import { PACE } from './lib/pacing.mjs';
 import { PLAYZONE } from './lib/playzone.mjs';
 import { FOLK } from './lib/folk.mjs';
 import { QUIZ } from './lib/quiz.mjs';
+import { LEAD } from './lib/lead.mjs';
 import { STANDARDS, STANDARD_KEYS, MACH_TEN, SCHOOL_YEAR, hocKiCua } from './data/standards.mjs';
 import { SPORTS, SPORT_KEYS } from './data/sports.mjs';
 import { FOLK as FOLK_BANK, FOLK_KEYS, FOLK_PROPS, FOLK_BANNED } from './data/folk.mjs';
 import { QUIZ as QUIZ_BANK, QUIZ_KEYS, quizFrames } from './data/quiz.mjs';
+import { LEADS, LEAD_KEYS, leadMoves } from './data/leads.mjs';
 import { IDENTITIES } from './data/identities.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
@@ -84,7 +86,7 @@ const MASTER_LIB = [
   ['6.2', 'verify.mjs'], ['6.3', 'light.mjs'], ['8.1', 'feel.mjs'], ['8.2', 'hype.mjs'], ['8.3', 'anticipation.mjs'], ['8.4', 'celebrate.mjs'],
   ['9.1', 'access.mjs'], ['11.', 'acceptance.mjs'], ['8.5', 'identity.mjs'], ['8.6', 'rhythm.mjs'],
   ['7.2', 'queue.mjs'], ['4.6', 'lesson.mjs'], ['4.7', 'curriculum.mjs'], ['4.8', 'sport.mjs'], ['4.9', 'family.mjs'],
-  ['4.10', 'pacing.mjs'], ['4.11', 'playzone.mjs'], ['4.12', 'folk.mjs'], ['4.13', 'quiz.mjs'],
+  ['4.10', 'pacing.mjs'], ['4.11', 'playzone.mjs'], ['4.12', 'folk.mjs'], ['4.13', 'quiz.mjs'], ['4.14', 'lead.mjs'],
 ];
 
 const rows = readCatalog(path.join(ROOT, 'catalogs', 'GAME_CATALOG.csv'));
@@ -233,6 +235,7 @@ const ZONE_RULES = [
   ['- CHỖ CHƠI AN TOÀN (', 'thiếu khối "CHỖ CHƠI AN TOÀN" nêu nguồn tools/lib/playzone.mjs — sáu quy định chỗ chơi không còn nhãn để người viết prompt đối chiếu'],
   ['- SÂN CHƠI VIỆT NAM (', 'thiếu khối "SÂN CHƠI VIỆT NAM" nêu nguồn tools/lib/folk.mjs — sáu quy định sân chơi không còn nhãn để người viết prompt đối chiếu'],
   ['- ĐỐ BẠN — EM ĐẶT ĐỀ CHO BẠN ĐÁP (', 'thiếu khối ĐỐ BẠN nêu nguồn tools/lib/quiz.mjs — sáu quy định đố bạn không còn nhãn để người viết prompt đối chiếu'],
+  ['- BẠN DẪN — MỘT EM LÀM MẪU, BA EM BẮT CHƯỚC (', 'thiếu khối BẠN DẪN nêu nguồn tools/lib/lead.mjs — sáu quy định bạn dẫn không còn nhãn để người viết prompt đối chiếu'],
 ];
 // Các tầng "phải có MỌI luật, nguyên văn, ở MỌI nơi": bộ kiểm lấy thẳng Object.entries(lib) thay vì
 // gõ tay danh sách. Probe vòng 11 cho thấy danh sách gõ tay là lỗ hổng thật — xóa ${LIGHT.visualShare}
@@ -253,6 +256,7 @@ const FULL_LAYERS = [
   ['chỗ chơi an toàn', 'playzone.mjs', 'PLAYZONE', PLAYZONE],
   ['sân chơi Việt Nam', 'folk.mjs', 'FOLK', FOLK],
   ['đố bạn', 'quiz.mjs', 'QUIZ', QUIZ],
+  ['bạn dẫn', 'lead.mjs', 'LEAD', LEAD],
 ];
 const FULL_RULES = FULL_LAYERS.flatMap(([label, file, objName, obj]) =>
   Object.entries(obj).map(([key, text]) => [text, `thiếu quy định ${label} ${objName}.${key} của tools/lib/${file}`]));
@@ -642,6 +646,71 @@ const FULL_PINS = [
   ['quiz.mjs', QUIZ.cachDo, 'Bản một học sinh: chính em bấm "Em đố", đọc mẫu câu rồi tự đáp, thẻ vẫn hiện đủ ba mẫu', 'một em vẫn có lượt đố, không được bỏ'],
   ['quiz.mjs', QUIZ.dapCuaBan, 'vai "Thư ký" đọc to lại cả đề lẫn đáp án đúng theo tầng vai chờ', 'lượt đố có vai chờ thật, không thành lượt ngồi xem'],
   ['quiz.mjs', QUIZ.xuLyLech, 'CẤM in chữ "đề sai" cạnh tên em', 'đề lệch không biến thành nhãn xấu trước lớp'],
+  // Vòng 24: tầng "bạn dẫn". Cùng bài học với vòng 23 — một lib tự nhất quán thì sửa số trong lib là
+  // prompt, biến thể, legacy và bảng kiểm đổi theo im lặng, nên phải neo từng con số vào đúng chuỗi.
+  ['lead.mjs', LEAD.nguonDan, 'ĐÚNG BA lần "Bạn dẫn"', 'số lần dẫn trong một phiên'],
+  ['lead.mjs', LEAD.nguonDan, 'mỗi hiệp MỘT lần', 'vị trí lần dẫn trong hiệp'],
+  ['lead.mjs', LEAD.nguonDan, '5 giây ĐẦU TIÊN sau nút "Bắt đầu"', 'lần dẫn hiệp 1 nằm trước lượt 1, không kéo dài khởi động'],
+  ['lead.mjs', LEAD.nguonDan, 'ngay SAU trạm nghỉ 5 giây giữa hai hiệp', 'lần dẫn hiệp 2–3 nằm sau trạm nghỉ'],
+  ['lead.mjs', LEAD.nguonDan, 'trần 60–90 giây', 'lần dẫn hiệp 1 vẫn nằm trong trần khởi động của tầng thể dục'],
+  ['lead.mjs', LEAD.nguonDan, 'dài ĐÚNG 5 giây', 'trần thời gian một lần dẫn'],
+  ['lead.mjs', LEAD.nguonDan, '`tools/data/leads.mjs`', 'động tác dẫn phải lấy từ bảng leads, không phải bảng trò dân gian hay bảng đố'],
+  ['lead.mjs', LEAD.nguonDan, 'lấy theo đúng mã điều khiển', 'động tác dẫn gắn theo mã điều khiển của game này'],
+  ['lead.mjs', LEAD.nguonDan, 'KHÔNG tính vào 12 lượt hỏi bài', 'lần dẫn không được ăn vào 12 lượt'],
+  ['lead.mjs', LEAD.nguonDan, 'CẤM biến thành lượt thứ 13', 'trần 12 lượt phải giữ nguyên'],
+  ['lead.mjs', LEAD.nguonDan, 'CẤM đổi ngân hàng câu hỏi', 'lần dẫn không được thay Question_Data'],
+  ['lead.mjs', LEAD.nguonDan, 'CẤM rút thời gian đọc đề của lượt kế tiếp', 'lần dẫn không được cắt thời gian của lượt hỏi bài'],
+  ['lead.mjs', LEAD.nguonDan, 'CẤM để mascot dẫn thay khi bản chơi có từ hai học sinh', 'người dẫn phải là một em, không phải máy'],
+  ['lead.mjs', LEAD.cachDan, 'thẻ "Bạn dẫn" bằng MỘT hàng ba động tác', 'bố cục thẻ dẫn'],
+  ['lead.mjs', LEAD.cachDan, 'đúng mã điều khiển', 'thẻ dẫn chỉ hiện ba động tác của mã này'],
+  ['lead.mjs', LEAD.cachDan, 'chữ >= 20px', 'sàn cỡ chữ của thẻ dẫn'],
+  ['lead.mjs', LEAD.cachDan, 'không che đề bài', 'thẻ dẫn không được đè lên đề'],
+  ['lead.mjs', LEAD.cachDan, 'tự tắt sau 5 giây', 'trần thời gian thẻ dẫn'],
+  ['lead.mjs', LEAD.cachDan, 'trần thẻ báo-trước của tầng chuẩn kiến thức', 'thẻ dẫn mượn trần của tầng chuẩn, không tự đặt trần mới'],
+  ['lead.mjs', LEAD.cachDan, 'bấm nút "Em dẫn"', 'em phải bấm để dẫn, game không tự mở lượt dẫn'],
+  ['lead.mjs', LEAD.cachDan, 'LÀM ĐÚNG MỘT động tác trong 5 giây', 'một lần dẫn chỉ một động tác'],
+  ['lead.mjs', LEAD.cachDan, 'không cần nói', 'em rụt rè vẫn dẫn được chỉ bằng tay'],
+  ['lead.mjs', LEAD.cachDan, 'CẤM game bật microphone ở lần dẫn này (chỉ ba game mã VOICE mới có micro)', 'trần micro của tầng điều khiển'],
+  ['lead.mjs', LEAD.cachDan, 'CẤM bắt em đọc, viết hay gõ tên động tác', 'lần dẫn không biến thành bài chính tả'],
+  ['lead.mjs', LEAD.cachDan, 'CẤM hiện dấu ✓ cạnh một động tác cụ thể trên thẻ', 'thẻ dẫn không in sẵn lựa chọn đúng'],
+  ['lead.mjs', LEAD.cachDan, 'Bản một học sinh: chính em bấm "Em dẫn", làm MỘT động tác rồi lặp lại đúng động tác đó thêm hai lần theo vạch nhịp 3 nhịp', 'một em vẫn có lần dẫn, không được bỏ'],
+  ['lead.mjs', LEAD.cachDan, 'thẻ vẫn hiện đủ ba động tác', 'bản một em vẫn thấy cả ba động tác'],
+  ['lead.mjs', LEAD.lamTheo, 'ba em còn lại nhìn em dẫn và bắt chước', 'lần dẫn phải có việc cho ba em chờ'],
+  ['lead.mjs', LEAD.lamTheo, 'ĐÚNG MỘT động tác vừa làm', 'bắt chước một động tác, không phải cả ba'],
+  ['lead.mjs', LEAD.lamTheo, 'trong cùng 5 giây', 'cả nhóm cùng một nhịp với em dẫn'],
+  ['lead.mjs', LEAD.lamTheo, 'đứng tại chỗ của mình', 'không ai phải rời chỗ'],
+  ['lead.mjs', LEAD.lamTheo, 'trong vòng 1 sải tay cộng hình quạt 90 độ PHÍA TRƯỚC mặt em', 'bắt chước trong vùng an toàn của chính mình'],
+  ['lead.mjs', LEAD.lamTheo, 'CẤM xếp hàng vòng tròn', 'cấm bố trí buộc di chuyển'],
+  ['lead.mjs', LEAD.lamTheo, 'CẤM chạm tay hay chạm vai nhau', 'cấm tiếp xúc cơ thể'],
+  ['lead.mjs', LEAD.lamTheo, 'CẤM quay mặt vào nhau', 'cấm xoay thân nhanh'],
+  ['lead.mjs', LEAD.lamTheo, 'không so em nào giống hơn', 'không chấm bắt chước — lượt dẫn không thành thi ai giống'],
+  ['lead.mjs', LEAD.lamTheo, 'cô bấm nút "Cả nhóm đã làm theo"', 'nút khép lần dẫn thuộc về giáo viên'],
+  ['lead.mjs', LEAD.lamTheo, 'Lần dẫn không trừ tim', 'lần dẫn không được cắt nhịp tim của ai'],
+  ['lead.mjs', LEAD.lamTheo, 'Game Tiếng Anh: động tác dẫn vẫn mang nhãn tiếng Việt', 'game Tiếng Anh không dịch nhãn động tác dẫn'],
+  ['lead.mjs', LEAD.xuLyLech, 'động tác NGOÀI ba động tác trên thẻ', 'đường lùi khi em dẫn ra ngoài ngân hàng'],
+  ['lead.mjs', LEAD.xuLyLech, 'đứng im hết 5 giây', 'đường lùi khi em dẫn không làm gì'],
+  ['lead.mjs', LEAD.xuLyLech, 'KHÔNG trừ tim, KHÔNG cắt chuỗi đúng', 'dẫn lệch không phạt'],
+  ['lead.mjs', LEAD.xuLyLech, 'mascot làm mẫu lại MỘT động tác trong ba động tác của thẻ đúng 3 giây', 'mascot làm mẫu lại theo trần mascot của tầng chất thể thao'],
+  ['lead.mjs', LEAD.xuLyLech, 'thẻ "Bạn dẫn" của hiệp kế vẫn lấy từ ngân hàng', 'lần lệch không đổi nguồn động tác'],
+  ['lead.mjs', LEAD.xuLyLech, 'CẤM in chữ "sai nhịp" hay "làm sai" cạnh tên em', 'dẫn lệch không biến thành nhãn xấu trước lớp'],
+  ['lead.mjs', LEAD.xuLyLech, 'CẤM trừ điểm cả nhóm vì một lần dẫn lệch', 'một lần lệch không xóa điểm tập thể'],
+  ['lead.mjs', LEAD.diemVai, '+5 điểm vào thanh "Cả nhóm <x>/<mốc>"', 'điểm dẫn vào thang tập thể đang có'],
+  ['lead.mjs', LEAD.diemVai, 'KHÔNG cộng vào "miti-best"', 'điểm dẫn không vào xếp hạng cá nhân'],
+  ['lead.mjs', LEAD.diemVai, 'KHÔNG đổi thứ hạng của em đang chơi', 'điểm dẫn không đổi hạng'],
+  ['lead.mjs', LEAD.diemVai, 'ĐÚNG MỘT dòng "Em dẫn hôm nay: <tên> <n> hiệp"', 'dòng tổng kết lần dẫn'],
+  ['lead.mjs', LEAD.diemVai, '"Copy tờ rời"', 'dòng tổng kết nằm trong khối copy được'],
+  ['lead.mjs', LEAD.diemVai, 'dòng "Em đố hôm nay" của tầng đố bạn', 'dòng dẫn phải cùng khối với dòng đố'],
+  ['lead.mjs', LEAD.diemVai, 'CẤM xếp hạng riêng người dẫn', 'người dẫn không thành một bảng xếp hạng thứ hai'],
+  ['lead.mjs', LEAD.diemVai, 'CẤM biến 5 giây dẫn thành lượt thi cá nhân', '5 giây dẫn không thành cuộc thi'],
+  ['lead.mjs', LEAD.guard, '`verifyLead()` chạy MỘT LẦN', 'hàm kiểm tầng bạn dẫn lúc nạp'],
+  ['lead.mjs', LEAD.guard, 'kiểm đúng bốn điều', 'số điều verifyLead() phải kiểm'],
+  ['lead.mjs', LEAD.guard, 'ĐÚNG BA lần "Bạn dẫn" một phiên ở đầu mỗi hiệp, mỗi lần ĐÚNG 5 giây, 12 lượt hỏi bài giữ nguyên', 'điều 1 của verifyLead() phải nêu đủ ba con số'],
+  ['lead.mjs', LEAD.guard, 'động tác dẫn lấy NGUYÊN VĂN từ `tools/data/leads.mjs`', 'verifyLead() phải đối chiếu động tác với đúng bảng leads'],
+  ['lead.mjs', LEAD.guard, 'không bật microphone và không đánh dấu ✓', 'điều 2 của verifyLead()'],
+  ['lead.mjs', LEAD.guard, 'bắt chước trong vòng 1 sải tay và hình quạt 90 độ của chính mình', 'điều 3 của verifyLead()'],
+  ['lead.mjs', LEAD.guard, 'dẫn lệch hay đứng im đều không trừ tim', 'điều 3 của verifyLead() phải phủ cả hai đường lùi'],
+  ['lead.mjs', LEAD.guard, '+5 điểm dẫn chỉ vào thanh "Cả nhóm"', 'điều 4 của verifyLead()'],
+  ['lead.mjs', LEAD.guard, 'Bản một học sinh, bản không camera, bản tắt tiếng, bản "dép lê" và bản "lớp mình chật" vẫn bắt buộc kiểm đủ bốn điều', 'bản nào cũng phải kiểm lần dẫn'],
 ];
 for (const [file, text, needle, label] of FULL_PINS) {
   if (!text.includes(needle)) bad(`tools/lib/${file} không còn nêu "${needle}" (${label}) — con số nghiệm thu phải sửa cùng tài liệu và bảng kiểm, không đổi âm thầm trong lib.`);
@@ -670,6 +739,7 @@ const SHORT_PINS = {
   PACE_SHORT: ['"Tuần <a>–<b> · Học kì <n>"', 'cột tuan', 'tối đa 10 tuần', 'đúng MỘT lần ở phiên đầu', 'lưu "miti-week"', 'không chặn nút "Bắt đầu"', '>= 3/12 lượt', SCHOOL_YEAR.nuocRut + ' tuần trước mốc kiểm tra', 'cấm đổi luật', 'từ tuần ' + SCHOOL_YEAR.tongOnTu, '>= 6/12 lượt ôn', 'cấm cụm mới', 'verifyPacing()'],
   PLAYZONE_SHORT: ['"Dẹp chỗ chơi"', '4 dòng <= 12 từ', '60–90 giây', '20 giây', '1 sải tay', '>= 1,2 m', '"miti-foot"', '0/12 lượt nhấc chân cao', 'đứng một chân', '"Lớp mình chật"', '"miti-space"', '>= 12 nhịp/phút', '>= 60%', '90 độ', 'chốt một lần đầu phiên', '"Em mệt / em đau"', '>= 56px', 'hạ nhiệt 45–60 giây', 'không trừ tim', '"miti-stop"', 'verifyPlayzone()'],
   QUIZ_SHORT: ['đúng BA/12 lượt "Đố bạn"', 'cuối mỗi hiệp', 'tools/data/quiz.mjs', 'mạch kiến thức', 'nguyên văn', 'điền MỘT số/từ', 'chín lượt còn lại', 'ngân hàng đề', '>= 20px', 'tự tắt sau 6 giây', 'không bật microphone', 'không hiện sẵn đáp án', 'một động tác của mã điều khiển', '1 sải tay', 'Thư ký đọc lại', 'đề lệch không trừ tim', 'không cắt chuỗi', '<= 6 từ', 'Em chịu, bạn đáp giúp', '+5 điểm', '"Cả nhóm"', 'miti-best', 'Em đố hôm nay', 'Copy tờ rời', 'verifyQuiz()'],
+  LEAD_SHORT: ['đúng BA lần "Bạn dẫn"', 'đầu mỗi hiệp', 'mỗi lần 5 giây', 'không tính vào 12 lượt hỏi bài', 'nguyên văn', 'một trong ba động tác', 'tools/data/leads.mjs', 'theo đúng mã điều khiển', 'một hàng ba động tác', '>= 20px', 'tự tắt sau 5 giây', 'không bật microphone', 'không đánh dấu ✓', 'bắt chước', '1 sải tay', '90 độ', 'không chạm nhau', 'Cả nhóm đã làm theo', 'dẫn lệch', 'đứng im', 'không trừ tim', 'mascot làm mẫu lại 3 giây', '+5 điểm', '"Cả nhóm"', 'miti-best', 'Em dẫn hôm nay', 'Copy tờ rời', 'verifyLead()'],
   FOLK_SHORT: ['trò dân gian dẫn dắt', 'tools/data/folk.mjs', 'tên <= 4 từ', '"Cách chơi"', '>= 18px', 'chant <= 8 tiếng', 'BA lần một phiên', 'vạch nhịp 8 nhịp', 'đồng dao', 'mẫu câu <= 8 từ', 'giọng en-US', 'nhảy lò cò', 'trồng cây chuối', 'bịt mắt bắt dê', 'kéo co dây thật', '1 sải tay', 'tám món FOLK_PROPS', 'alpha <= 0.45', 'đổi vai sau 3 lượt', 'Trò chơi hôm nay', 'không giành góc HUD của tên môn', 'lời đếm cấm gọi là đồng dao', 'cấm đòi cầm vật thật', 'verifyFolk()'],
 };
 for (const seg of chainSegments) {
@@ -1012,6 +1082,20 @@ if (!fs.existsSync(VAR_FILE)) {
         [`bạn đáp bằng động tác "${vsp.dongTac}"`, 'động tác đặc trưng của môn block này'],
       ]) {
         if (!b.includes(needle)) bad(`biến thể #${i + 1} (${vid}): thiếu ${label} ("${needle.slice(0, 48)}") — builder phải lấy thẳng tools/data/quiz.mjs vào đúng block.`);
+      }
+    }
+    // Động tác dẫn cũng là dữ liệu theo KIỂU ĐIỀU KHIỂN: người copy riêng một block phải biết block của
+    // mình cho em dẫn ba động tác nào, không phải "một động tác tự do".
+    const vlm = vgame ? LEADS[vGesture || (vgame.gestures || [])[0]] : null;
+    if (vlm) {
+      for (const [needle, label] of [
+        ['**Bạn dẫn — một em làm mẫu, ba em bắt chước:**', 'dòng khối bạn dẫn — người copy riêng một block sẽ không biết ai dẫn và ai bắt chước'],
+        [`Ba động tác "Bạn dẫn" của block ${vcode} này (mã điều khiển ${vGesture || (vgame.gestures || [])[0]}`, 'mã điều khiển mà ba động tác dẫn này gắn theo'],
+        [`"${vlm[0]}" · "${vlm[1]}" · "${vlm[2]}"`, 'ba động tác dẫn nguyên văn của ĐÚNG kiểu điều khiển này'],
+        ['lấy nguyên văn từ `tools/data/leads.mjs`', 'block phải trỏ thẳng về bảng động tác dẫn'],
+        ['game không bật microphone, không chạm nhau và không chấm em nào giống hơn', 'block dẫn không micro, không chạm, không chấm ai giống hơn'],
+      ]) {
+        if (!b.includes(needle)) bad(`biến thể #${i + 1} (${vid}): thiếu ${label} ("${needle.slice(0, 48)}") — builder phải lấy thẳng tools/data/leads.mjs vào đúng block.`);
       }
     }
     // Chuỗi tự kiểm của biến thể cũng phải mang đủ mọi tầng, cùng registry như prompt.
@@ -1513,7 +1597,7 @@ const QUIZ_DOC_NEEDLES = [
   ['người thử số 33', 'việc người thử tương ứng ở prompts/README', 0, 0, 0, 1],
   ['mục `[42]`', 'con trỏ từ prompts/README về đúng dòng bảng kiểm của verifyQuiz()', 0, 0, 0, 1],
   ['folk.mjs + quiz.mjs', 'danh sách file data trong pipeline prompts/README', 0, 0, 0, 1],
-  ['quiz.mjs · verify.mjs', 'danh sách file lib trong pipeline prompts/README', 0, 0, 0, 1],
+  ['quiz.mjs · lead.mjs · verify.mjs', 'danh sách file lib trong pipeline prompts/README', 0, 0, 0, 1],
   ['tools/data/quiz.mjs', 'bảng mẫu câu đố bạn', 4, 3, 4, 3],
   ['tools/lib/quiz.mjs', 'tầng quy định đố bạn', 1, 1, 2, 1],
   ['verifyQuiz()', 'hàm kiểm tầng đố bạn lúc nạp', 2, 2, 3, 6],
@@ -1545,6 +1629,57 @@ const QUIZ_DOC_NEEDLES = [
   ['Đúng **BA lượt "Đố bạn"** một phiên', 'dòng bảng kể chuyện tầng đố bạn ở prompts/README', 0, 0, 0, 1],
   ['mỗi hiệp **MỘT lượt** ở **CUỐI hiệp**', 'vị trí lượt đố ở hai README', 0, 0, 1, 1],
 ];
+// Vòng 24: tầng "bạn dẫn". Cùng cách làm với QUIZ_DOC_NEEDLES: đo từ tài liệu thật rồi lấy đúng số đo
+// làm sàn, để xóa một chỗ nêu ở master hay ở một trong hai README là build đỏ ngay. Sáu quy định này
+// sống ở bốn file, nên một lần sửa tay ở chỗ nào cũng làm tầng bạn dẫn biến mất khỏi chỗ đó mà build
+// vẫn xanh — và người dán prompt không còn mục nào để đối chiếu khi game thiếu lượt dẫn.
+const LEAD_DOC_NEEDLES = [
+  ['ĐÚNG BA LẦN "BẠN DẪN" MỘT PHIÊN', 'nhãn bullet nguồn dẫn ở master', 1, 0, 0, 0],
+  ['THẺ "BẠN DẪN" MỘT HÀNG BA ĐỘNG TÁC', 'nhãn bullet thẻ dẫn ở master', 1, 0, 0, 0],
+  ['BA EM CÒN LẠI BẮT CHƯỚC TRONG ĐÚNG 1 SẢI TAY', 'nhãn bullet bắt chước ở master', 1, 0, 0, 0],
+  ['DẪN LỆCH KHÔNG PHẠT AI', 'nhãn bullet dẫn lệch ở master', 1, 0, 0, 0],
+  ['ĐIỂM DẪN VÀO "CẢ NHÓM"', 'nhãn bullet điểm dẫn ở master', 1, 0, 0, 0],
+  ['TỰ KIỂM BẰNG `verifyLead()`', 'nhãn bullet hàm tự kiểm ở master', 1, 0, 0, 0],
+  ['[43] verifyLead()', 'mục 43 của bảng kiểm máy tự kiểm trong master', 1, 0, 0, 0],
+  ['5 giây ĐẦU TIÊN', 'vị trí lần dẫn hiệp 1 ở master', 1, 0, 0, 0],
+  ['SAU trạm nghỉ 5 giây', 'vị trí lần dẫn hiệp 2–3 ở master', 1, 0, 0, 0],
+  ['KHÔNG tính vào 12 lượt hỏi bài', 'trần 12 lượt ở master', 1, 0, 0, 0],
+  ['CẤM để mascot dẫn thay', 'người dẫn phải là một em, không phải máy', 1, 0, 0, 0],
+  ['CẤM in dấu ✓', 'thẻ dẫn không đánh dấu động tác đúng ở master', 1, 0, 0, 0],
+  ['CẤM xếp hàng vòng tròn', 'khung bắt chước ở master', 1, 0, 0, 0],
+  ['CẤM quay mặt', 'bắt chước tại chỗ ở master', 1, 0, 0, 0],
+  ['CẤM in chữ "sai nhịp"', 'dẫn lệch không thành nhãn xấu ở master', 1, 0, 0, 0],
+  ['vạch nhịp 3 nhịp', 'bản một học sinh tự lặp động tác theo nhịp', 1, 0, 0, 0],
+  ['Bản một học sinh: chính em bấm "Em dẫn"', 'bản một em vẫn có lần dẫn ở master', 1, 0, 0, 0],
+  ['Game Tiếng Anh: động tác dẫn vẫn mang nhãn tiếng Việt', 'lần dẫn trong game Tiếng Anh ở master', 1, 0, 0, 0],
+  ['- BẠN DẪN — MỘT EM LÀM MẪU, BA EM BẮT CHƯỚC (nguồn:', 'nhãn khối bạn dẫn trong template', 0, 1, 0, 0],
+  ['Phần bạn dẫn đã điền đủ', 'dòng checklist bạn dẫn trong template', 0, 1, 0, 0],
+  ['Sáu quy định "bạn dẫn"', 'heading mục kể chuyện tầng 24 ở README', 0, 0, 1, 0],
+  ['Tầng "bạn dẫn"', 'heading mục kể chuyện tầng 24 ở prompts/README', 0, 0, 0, 1],
+  ['máy tự kiểm thứ 43', 'số mục của verifyLead() trong bảng kiểm', 0, 0, 1, 0],
+  ['việc người thử thứ 34', 'việc người thử tương ứng ở README', 0, 0, 1, 0],
+  ['người thử số 34', 'việc người thử tương ứng ở prompts/README', 0, 0, 0, 1],
+  ['mục `[43]`', 'con trỏ từ prompts/README về đúng dòng bảng kiểm của verifyLead()', 0, 0, 0, 1],
+  ['folk.mjs + quiz.mjs + leads.mjs', 'danh sách file data trong pipeline prompts/README', 0, 0, 0, 1],
+  ['`verifyLead()` chạy', 'hàm kiểm tầng bạn dẫn ở template và prompts/README', 0, 1, 0, 1],
+  ['tools/data/leads.mjs', 'bảng động tác bạn dẫn', 4, 3, 4, 3],
+  ['tools/lib/lead.mjs', 'tầng quy định bạn dẫn', 1, 1, 2, 1],
+  ['verifyLead()', 'hàm kiểm tầng bạn dẫn lúc nạp', 2, 2, 3, 6],
+  ['Bạn dẫn', 'chữ "Bạn dẫn"', 7, 4, 4, 2],
+  ['mười bốn mã điều khiển', 'phủ 14 mã của bảng động tác dẫn', 1, 0, 2, 1],
+  ['MỘT hàng ba động tác', 'thẻ dẫn một hàng ba động tác', 2, 1, 0, 0],
+  ['mỗi lần ĐÚNG 5 giây', 'trần 5 giây của một lần dẫn', 2, 1, 0, 0],
+  ['đúng BA lần "Bạn dẫn"', 'số lần dẫn một phiên', 2, 1, 0, 0],
+  ['BA lần dẫn', 'đếm lần dẫn trong một phiên', 1, 1, 1, 0],
+  ['nút "Cả nhóm đã làm theo"', 'nút khép lần dẫn do cô bấm', 2, 1, 0, 0],
+  ['"Em dẫn hôm nay: <tên> <n> hiệp"', 'dòng tổng kết lần dẫn', 2, 2, 2, 1],
+  ['| **Đúng BA lần "Bạn dẫn" một phiên** |', 'dòng bảng kể chuyện tầng bạn dẫn ở README', 0, 0, 1, 0],
+  ['| Đúng **BA lần "Bạn dẫn"** một phiên |', 'dòng bảng kể chuyện tầng bạn dẫn ở prompts/README', 0, 0, 0, 1],
+  ['**không bật microphone**, **không đánh dấu ✓**', 'thẻ dẫn không micro, không đánh dấu ở README', 0, 0, 1, 0],
+  ['| **Dẫn lệch không phạt ai** |', 'dòng bảng dẫn lệch ở hai README', 0, 0, 1, 1],
+  ['| **Điểm dẫn vào "Cả nhóm"** |', 'dòng bảng điểm dẫn ở hai README', 0, 0, 1, 1],
+  ['mười bốn mã điều khiển × ba động tác', 'bản chốt bảng động tác dẫn ở hai README', 0, 0, 2, 1],
+];
 const DOC_FILES = [
   ['prompts/00-master-canvas-prompt.md', master],
   ['prompts/templates/game-prompt-template.md', tpl],
@@ -1564,7 +1699,7 @@ for (const [docSlot, [docName, docText]] of DOC_FILES.entries()) {
   for (const [needle, label] of IDENTITY_DOC_NEEDLES) {
     if (!docText.includes(needle)) bad(`${docName} thiếu con số bản sắc riêng (${label}): không thấy "${needle}".`);
   }
-  for (const [needle, label, ...mins] of [...RHYTHM_DOC_NEEDLES, ...VOICE_DOC_NEEDLES, ...QUEUE_DOC_NEEDLES, ...LESSON_DOC_NEEDLES, ...CURRICULUM_DOC_NEEDLES, ...SPORT_DOC_NEEDLES, ...FAMILY_DOC_NEEDLES, ...PACE_DOC_NEEDLES, ...PLAYZONE_DOC_NEEDLES, ...FOLK_DOC_NEEDLES, ...QUIZ_DOC_NEEDLES]) {
+  for (const [needle, label, ...mins] of [...RHYTHM_DOC_NEEDLES, ...VOICE_DOC_NEEDLES, ...QUEUE_DOC_NEEDLES, ...LESSON_DOC_NEEDLES, ...CURRICULUM_DOC_NEEDLES, ...SPORT_DOC_NEEDLES, ...FAMILY_DOC_NEEDLES, ...PACE_DOC_NEEDLES, ...PLAYZONE_DOC_NEEDLES, ...FOLK_DOC_NEEDLES, ...QUIZ_DOC_NEEDLES, ...LEAD_DOC_NEEDLES]) {
     const want = mins[docSlot];
     const got = docText.split(needle).length - 1;
     if (got < want) bad(`${docName} chỉ còn nêu "${needle}" (${label}) ${got} lần, chuẩn hiện hành là ${want} lần — tài liệu chuẩn phải giữ đủ chỗ nêu ở CẢ phần luật lẫn bảng kiểm tự kiểm, không được để một phần mất số.`);
@@ -1889,6 +2024,21 @@ if (!MACHINE_ITEMS.some((s) => s.includes("verifyQuiz()") && s.includes('BA lư�
   }
   if (!HUMAN_CHECKS.some((s) => s.includes('Đố bạn') && s.includes('động tác'))) bad('Bảng kiểm hết việc người thử cho tầng đố bạn — cô không bấm thử lượt đố thì không ai biết thẻ "Đố bạn" có thật hay chỉ là chữ trên màn hình.');
 }
+// Vòng 24: tầng bạn dẫn nghiệm thu bằng hành động của bốn em, nên mục bảng kiểm phải nêu lại đủ bốn điều
+// verifyLead() kiểm. Bớt một vế (ví dụ "không đánh dấu ✓") thì game in sẵn động tác đúng lên thẻ vẫn báo ĐẠT,
+// và lượt dẫn chỉ còn là một cái nhãn trên HUD.
+if (!MACHINE_ITEMS.some((s) => s.includes('verifyLead()') && s.includes('BA lần "Bạn dẫn"'))) bad('Bảng kiểm máy tự kiểm không còn mục nghiệm thu tầng bạn dẫn (verifyLead() + BA lần "Bạn dẫn") — thiếu mục này thì game bỏ hẳn lượt em làm mẫu mà vẫn báo ĐẠT.');
+{
+  const leadItem = MACHINE_ITEMS.find((s) => s.includes('verifyLead()')) || '';
+  for (const clause of ['tools/data/leads.mjs', 'NGUYÊN VĂN', 'mã điều khiển', 'đầu mỗi hiệp', '12 lượt hỏi bài', 'một hàng ba động tác', '>= 20px', '5 giây', 'không bật microphone', 'không đánh dấu ✓', 'bắt chước', '1 sải tay', '90 độ', 'không chạm nhau', 'Cả nhóm đã làm theo', 'dẫn lệch', 'đứng im', 'không trừ tim', 'mascot làm mẫu lại 3 giây', '+5 điểm', 'Cả nhóm', 'Em dẫn hôm nay', 'Copy tờ rời']) {
+    if (!leadItem.includes(clause)) bad(`Mục verifyLead() của bảng kiểm không còn nêu "${clause}" — bảng kiểm lỏng hơn quy định trong tools/lib/lead.mjs thì game thiếu lượt dẫn vẫn được đóng dấu ĐẠT.`);
+  }
+  if (!HUMAN_CHECKS.some((s) => s.includes('Em dẫn') && s.includes('bắt chước'))) bad('Bảng kiểm hết việc người thử cho tầng bạn dẫn — không ai bấm thử lượt dẫn thì không ai biết ba em kia có thật sự nhìn bạn và bắt chước, hay vẫn đứng xem máy làm mẫu.');
+  const leadCheck = HUMAN_CHECKS.find((s) => s.includes('Em dẫn'));
+  for (const clause of ['5 giây', 'bắt chước', '1 sải tay', 'chạm tay hay chạm vai', 'đứng im', 'trừ tim', 'cắt chuỗi đúng', 'làm mẫu lại 3 giây', 'ngân hàng', 'Cả nhóm đã làm theo', 'Em dẫn hôm nay', 'Copy tờ rời', 'miti-best']) {
+    if (leadCheck && !leadCheck.includes(clause)) bad(`Việc người thử "Em dẫn" không còn nêu "${clause}" — người thử phải đi hết bốn điều của verifyLead() bằng tay; thiếu một vế thì lỗi thật ở đúng chỗ đó không ai nhìn thấy.`);
+  }
+}
 {
   const folkItem = MACHINE_ITEMS.find((s) => s.includes('verifyFolk()'));
   for (const clause of ['tools/data/folk.mjs', 'NGUYÊN VĂN', 'tên <= 4 từ', '"Cách chơi"', 'nhãn mini-trạm', 'không chiếm góc HUD của tên môn', 'cột `chant`', '<= 8 tiếng', 'BA lần một phiên', 'vạch nhịp 8 nhịp', '"miti-mute"', 'không lời đếm nào bị gọi là "đồng dao"', 'tám món FOLK_PROPS', 'alpha <= 0.45', 'không một lượt nào trong 12 lượt đòi em cầm vật thật', '"Nhảy lò cò"', '"Trồng cây chuối"', '"Bịt mắt bắt dê"', '"Rồng rắn chạy vòng"', '"Kéo co dây thật"', '1 sải tay', 'dép lê / lớp chật']) {
@@ -2057,6 +2207,75 @@ if (!FOLK.dongDao.includes('"dong dao"') || !FOLK.dongDao.includes('"dem"')) bad
   if (!QUIZ.dapCuaBan.includes('Thư ký') || !QUEUE.roles.includes('Thư ký')) bad('Vai "Thư ký" đọc lại đề bị lệch giữa quiz.mjs và queue.mjs — lượt đố sẽ giao việc cho một vai chờ không tồn tại trên HUD.');
   if (!QUIZ.guard.includes('Bản một học sinh') || !QUEUE.guard.includes('Bản một học sinh')) bad('Bản một học sinh không còn được cả hai tầng đố bạn và vai chờ quy định — game một em sẽ tự chọn bỏ lượt đố hay bỏ HUD vai chờ.');
 }
+// Vòng 24: bảng động tác dẫn là DỮ LIỆU theo MÃ ĐIỀU KHIỂN, không phải chữ trong prompt. Builder đọc
+// thẳng tools/data/leads.mjs nên sửa chữ một động tác thì 85 prompt, 425 block và 12 legacy cùng đổi theo
+// im lặng — đối chiếu nguyên văn 42 động tác với bản chốt ở đây là cách duy nhất thấy lệch. Kèm kiểm
+// cấu trúc: đủ mười bốn mã, mỗi mã đúng ba động tác, mỗi động tác <= 6 từ, không lẫn CJK, không trùng
+// động tác đặc trưng hay động tác duỗi của môn (sports.mjs), không tên một trò dân gian đã loại, và không
+// động tác nào vượt trần tải trọng (pe.mjs) hay bản "dép lê" (playzone.mjs).
+{
+  const LEAD_MOVES_EXPECT = {
+    POINT: ['Đưa một tay lên cao', 'Chỉ tay ngang vai trái', 'Hạ tay xuống đầu gối'],
+    SWIPE: ['Quét tay ngang trước bụng', 'Gạt tay từ phải sang', 'Vẽ tay vòng trước ngực'],
+    PUNCH: ['Đấm tay trái ra trước', 'Đấm tay phải ra trước', 'Đấm hai tay so le'],
+    GRAB: ['Nắm tay kéo về ngực', 'Với tay lên rồi nắm', 'Mở tay đẩy ra trước'],
+    DRAG: ['Kéo tay ngang qua người', 'Đẩy tay ra trước chậm', 'Vuốt tay từ cao xuống'],
+    STEP: ['Dậm chân tại chỗ', 'Bước nhỏ sang bên trái', 'Bước nhỏ sang bên phải'],
+    TWO_HAND_STRETCH: ['Duỗi hai tay ngang vai', 'Vòng hai tay trước ngực', 'Giơ hai tay chữ Y'],
+    TWO_HAND_BALANCE: ['Dang tay giữ thăng bằng', 'Đứng yên một tay trước', 'Chụm hai tay trước ngực'],
+    ANGLE_POSE: ['Nghiêng thân sang trái', 'Nghiêng thân sang phải', 'Uốn vai xuống từ từ'],
+    VOICE: ['Vẫy tay gọi bạn', 'Đưa tay lên miệng', 'Chỉ tay vào tai mình'],
+    CLAP: ['Vỗ hai tay trước ngực', 'Vỗ một cái rồi dang tay', 'Vỗ thấp gần đầu gối'],
+    PINCH: ['Se ngón tay trước mắt', 'Nắm thả hai bàn tay', 'Kéo ngón tay xuống thấp'],
+    HOLD_POSE: ['Giữ tay ngang vai đếm ba', 'Đứng yên chống tay hông', 'Gập khuỷu giữ ba nhịp'],
+    FINGER_COUNT: ['Xòe bàn tay lên cao', 'Gấp ngón đếm ba số', 'Đưa một ngón ra trước'],
+  };
+  if (LEAD_KEYS.length !== Object.keys(LEAD_MOVES_EXPECT).length) bad(`tools/data/leads.mjs có ${LEAD_KEYS.length} mã nhưng bản chốt ở validate là ${Object.keys(LEAD_MOVES_EXPECT).length} mã — thêm hay bớt mã điều khiển phải sửa cả GESTURES, sports.mjs và master §4.14.`);
+  for (const c of Object.keys(LEAD_MOVES_EXPECT)) {
+    const got = (LEADS[c] || []).join(' · ');
+    const want = LEAD_MOVES_EXPECT[c].join(' · ');
+    if (got !== want) bad(`tools/data/leads.mjs mã "${c}" lệch bản chốt:\n    đang là "${got}"\n    chuẩn là "${want}" — đổi động tác dẫn là đổi thứ ba em khác phải nhìn và bắt chước trước lớp, phải đổi cùng lúc ở 85 prompt, 425 block, 12 legacy và master §4.14.`);
+  }
+  for (const c of LEAD_KEYS) {
+    if (!Object.keys(LEAD_MOVES_EXPECT).includes(c)) bad(`tools/data/leads.mjs có mã "${c}" ngoài bản chốt của validate — thêm mã mới phải viết đủ ba động tác và ghi vào master §4.14.`);
+  }
+  // Trần tải trọng và bản "dép lê" là chữ ký của hai tầng khác; một động tác dẫn vượt trần thì thẻ "Bạn dẫn"
+  // tự mâu thuẫn với quy định an toàn in ngay dưới nó.
+  const LEAD_BANNED = [/nhảy/, /tiếp đất/, /đứng một chân/, /nhấc chân cao/, /xoay nhanh/, /cõng/, /đeo/, /bịt mắt/, /lò cò/, /kéo co/, /cây chuối/];
+  const allMoves = [];
+  for (const [c, moves] of Object.entries(LEADS)) {
+    if (!Array.isArray(moves) || moves.length !== 3) bad(`tools/data/leads.mjs.${c} có ${Array.isArray(moves) ? moves.length : 'không rõ'} động tác, chuẩn là ĐÚNG BA — thẻ "Bạn dẫn" hiển thị MỘT hàng ba động tác nên thêm hay bớt đều vỡ bố cục.`);
+    if (Array.isArray(moves) && new Set(moves).size !== moves.length) bad(`tools/data/leads.mjs.${c} có động tác trùng nhau — hàng ba động tác mà hai ô giống nhau thì em dẫn chỉ thực sự có hai lựa chọn.`);
+    for (const mv of moves) {
+      allMoves.push(mv);
+      const w = mv.trim().split(/\s+/).length;
+      if (w > 6) bad(`tools/data/leads.mjs.${c}: động tác "${mv}" dài ${w} từ, trần 6 từ — dòng dài hơn không nằm vừa thẻ "Bạn dẫn" chữ >= 20px mà em bắt chước cũng không kịp nhìn trong 5 giây.`);
+      if (/[\u3400-\u9fff\u3040-\u30ff]/.test(mv)) bad(`tools/data/leads.mjs.${c}: động tác "${mv}" lẫn ký tự CJK.`);
+      for (const re of LEAD_BANNED) if (re.test(mv)) bad(`tools/data/leads.mjs.${c}: động tác "${mv}" chạm cấm ${re} — tầng thể dục và tầng chỗ chơi đã chặn kiểu vận động này, thẻ dẫn không được mở lại.`);
+      for (const k of SPORT_KEYS) {
+        if (SPORTS[k].dongTac === mv || SPORTS[k].duoiCo === mv) bad(`tools/data/leads.mjs.${c}: động tác "${mv}" trùng động tác ${SPORTS[k].dongTac === mv ? 'đặc trưng' : 'duỗi cơ'} của môn ${SPORTS[k].mon} — lượt dẫn sẽ lặp đúng một dòng mà tầng chất thể thao đã quy định, hàng ba động tác mất hai lựa chọn thật.`);
+      }
+    }
+  }
+  if (new Set(allMoves).size !== allMoves.length) bad(`tools/data/leads.mjs có ${allMoves.length} động tác nhưng chỉ ${new Set(allMoves).size} khác nhau — bốn em bấm "Em dẫn" hiệp nào cũng thấy lại đúng động tác đó thì lần dẫn không dạy thêm động tác nào.`);
+  for (const c of SPORT_KEYS) if (!LEADS[c]) bad(`tools/data/leads.mjs thiếu mã điều khiển ${c} — game gắn mã này sẽ build lỗi hoặc tự bịa động tác dẫn ngoài tầm.`);
+}
+// Các con số lần dẫn MƯỢN từ tầng khác; đổi một bên thì 85 prompt mang hai chuẩn mâu thuẫn.
+{
+  if (!LEAD.cachDan.includes('>= 20px') || !CURRICULUM.bayTruoc.includes('>= 20px')) bad('Cỡ chữ thẻ >= 20px lệch giữa tools/lib/lead.mjs và tools/lib/curriculum.mjs — thẻ "Bạn dẫn" nhỏ hơn thẻ báo-trước thì em ngồi sau không đọc được động tác phải bắt chước.');
+  if (!LEAD.cachDan.includes('5 giây') || !HYPE.climax.includes('trạm nghỉ 5 giây')) bad('Trạm nghỉ 5 giây bị lệch giữa lead.mjs và hype.mjs — lần dẫn hiệp 2–3 sẽ dính vào giữa nhịp nghỉ mà tầng thi đua đã chốt.');
+  if (!LEAD.lamTheo.includes('1 sải tay') || !PLAYZONE.depCho.includes('1 sải tay')) bad('Khoảng cách an toàn lệch giữa lead.mjs và playzone.mjs — động tác bắt chước sẽ vẽ lại một vùng đứng khác vùng đã dẹp chỗ chơi.');
+  if (!LEAD.lamTheo.includes('90 độ') || !PE.loadCap.includes('90 độ')) bad('Hình quạt 90 độ lệch giữa lead.mjs và pe.mjs — lượt dẫn sẽ thoát trần xoay thân mà tầng thể dục đã đặt.');
+  if (!LEAD.diemVai.includes('+5 điểm') || !QUEUE.teamScore.includes('+5')) bad('Điểm +5 vai phụ lệch giữa lead.mjs và queue.mjs — lần dẫn và vai chờ sẽ cộng vào thanh "Cả nhóm" theo hai mức khác nhau.');
+  if (!LEAD.diemVai.includes('miti-best') || !QUEUE.teamScore.includes('miti-best')) bad('Quy ước không cộng vào "miti-best" không còn ở cả lead.mjs lẫn queue.mjs — điểm dẫn sẽ tràn vào xếp hạng cá nhân.');
+  if (!LEAD.diemVai.includes('Copy tờ rời') || !QUEUE.teamScore.includes('Copy tờ rời')) bad('Dòng tổng kết lần dẫn không còn nằm trong khối "Copy tờ rời" của tầng vai chờ — giáo viên copy một lần sẽ mất phần bạn dẫn.');
+  if (!LEAD.diemVai.includes('Em đố hôm nay') || !QUIZ.diemVai.includes('Em đố hôm nay')) bad('Dòng "Em đố hôm nay" bị lệch giữa lead.mjs và quiz.mjs — tờ rời sẽ có hai dòng tổng kết không cùng một khối.');
+  if (!LEAD.xuLyLech.includes('mascot làm mẫu') || !SPORT.dongTacChinh.includes('mascot làm mẫu')) bad('Trần "mascot làm mẫu" không còn được cả tầng bạn dẫn lẫn tầng chất thể thao viện — đường lùi của lần dẫn lệch sẽ tự đặt một kiểu làm mẫu mới ngoài trần 3 giây.');
+  if (!LEAD.xuLyLech.includes('3 giây') || !CURRICULUM.meoDongTac.includes('động tác 3 giây')) bad('Suất 3 giây của động tác làm mẫu lệch giữa lead.mjs và curriculum.mjs — hai loại thẻ trên cùng một HUD sống hai khoảng thời gian khác nhau.');
+  if (!LEAD.nguonDan.includes('60–90 giây') || !PE.warmUp.includes('60–90 GIÂY')) bad('Trần khởi động 60–90 giây không còn được cả lead.mjs lẫn pe.mjs nêu — lần dẫn hiệp 1 sẽ kéo khởi động dài ra ngoài trần của tầng thể dục.');
+  if (!LEAD.cachDan.includes('Bản một học sinh') || !QUEUE.guard.includes('Bản một học sinh')) bad('Bản một học sinh không còn được cả hai tầng bạn dẫn và vai chờ quy định — game một em sẽ tự chọn bỏ lượt dẫn hay bỏ HUD vai chờ.');
+  if (!LEAD.cachDan.includes('chỉ ba game mã VOICE mới có micro') || !QUIZ.cachDo.includes('micro')) bad('Trần microphone chỉ có ở ba game mã VOICE không còn được viện ở cả hai tầng — lượt dẫn sẽ bật camera giọng ở 82 game không có micro.');
+}
 // Vòng 19: tầng gia đình KHÔNG tự đặt con số nào — trần 16 từ mượn của tầng nhẹ đầu, trần 12 từ và
 // động tác 3 giây mượn của tầng chuẩn kiến thức, khối "Copy tờ rời" và dòng "Cả nhóm" mượn của tầng
 // thi đua/chuẩn. Mỗi lib đứng riêng vẫn tự nhất quán nên pin đơn lib không thấy lệch; chỉ đối chiếu
@@ -2148,6 +2367,26 @@ for (const g of GAMES) {
     ['đúng BA/12 lượt ở cuối mỗi hiệp', 'trần lượt đố nêu ngay trong prompt game'],
   ]) {
     if (!t.includes(needle)) bad(`${g.id}: prompt thiếu ${label} ("${needle.slice(0, 48)}") — builder phải lấy thẳng tools/data/quiz.mjs theo mạch ${stdQ.mach}.`);
+  }
+}
+
+// Mỗi prompt game phải mang đúng BA ĐỘNG TÁC DẪN của mã điều khiển mình. Probe vòng 24: builder thay
+// dòng dữ liệu bằng "em dẫn một động tác tự chọn" thì khối BẠN DẪN vẫn nguyên, 85 prompt vẫn xanh, mà
+// không game nào biết động tác nào thuộc mã nào — đúng chỗ hỏng mà tầng này sinh ra để chữa.
+for (const g of GAMES) {
+  const lm = LEADS[g.gestures[0]];
+  if (!lm) continue;
+  const rel = PATH_OF.get(g.id);
+  if (!rel || !fs.existsSync(path.join(ROOT, rel))) continue;
+  const t = fs.readFileSync(path.join(ROOT, rel), 'utf8');
+  for (const [needle, label] of [
+    ['- BẠN DẪN — MỘT EM LÀM MẪU, BA EM BẮT CHƯỚC (vòng 24:', 'nhãn khối bạn dẫn kèm khảo sát'],
+    [`- Ba động tác "Bạn dẫn" của game này (mã điều khiển ${g.gestures[0]}`, 'dòng dữ liệu động tác dẫn kèm đúng mã điều khiển của game'],
+    [`"${lm[0]}" · "${lm[1]}" · "${lm[2]}"`, 'ba động tác dẫn nguyên văn của ĐÚNG mã điều khiển này'],
+    ['đúng BA lần một phiên ở đầu mỗi hiệp', 'trần lần dẫn nêu ngay trong prompt game'],
+    ['lấy nguyên văn ba động tác dưới đây từ `tools/data/leads.mjs`', 'prompt phải trỏ thẳng về bảng động tác dẫn'],
+  ]) {
+    if (!t.includes(needle)) bad(`${g.id}: prompt thiếu ${label} ("${needle.slice(0, 48)}") — builder phải lấy thẳng tools/data/leads.mjs theo mã ${g.gestures[0]}.`);
   }
 }
 
