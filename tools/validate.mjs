@@ -32,11 +32,13 @@ import { PLAYZONE } from './lib/playzone.mjs';
 import { FOLK } from './lib/folk.mjs';
 import { QUIZ } from './lib/quiz.mjs';
 import { LEAD } from './lib/lead.mjs';
+import { TAKEAWAY } from './lib/takeaway.mjs';
 import { STANDARDS, STANDARD_KEYS, MACH_TEN, SCHOOL_YEAR, hocKiCua } from './data/standards.mjs';
 import { SPORTS, SPORT_KEYS } from './data/sports.mjs';
 import { FOLK as FOLK_BANK, FOLK_KEYS, FOLK_PROPS, FOLK_BANNED } from './data/folk.mjs';
 import { QUIZ as QUIZ_BANK, QUIZ_KEYS, quizFrames } from './data/quiz.mjs';
 import { LEADS, LEAD_KEYS, leadMoves } from './data/leads.mjs';
+import { TAKEAWAY as TAKEAWAY_BANK, TAKEAWAY_KEYS, takeawayFrames } from './data/takeaways.mjs';
 import { IDENTITIES } from './data/identities.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
@@ -86,7 +88,7 @@ const MASTER_LIB = [
   ['6.2', 'verify.mjs'], ['6.3', 'light.mjs'], ['8.1', 'feel.mjs'], ['8.2', 'hype.mjs'], ['8.3', 'anticipation.mjs'], ['8.4', 'celebrate.mjs'],
   ['9.1', 'access.mjs'], ['11.', 'acceptance.mjs'], ['8.5', 'identity.mjs'], ['8.6', 'rhythm.mjs'],
   ['7.2', 'queue.mjs'], ['4.6', 'lesson.mjs'], ['4.7', 'curriculum.mjs'], ['4.8', 'sport.mjs'], ['4.9', 'family.mjs'],
-  ['4.10', 'pacing.mjs'], ['4.11', 'playzone.mjs'], ['4.12', 'folk.mjs'], ['4.13', 'quiz.mjs'], ['4.14', 'lead.mjs'],
+  ['4.10', 'pacing.mjs'], ['4.11', 'playzone.mjs'], ['4.12', 'folk.mjs'], ['4.13', 'quiz.mjs'], ['4.14', 'lead.mjs'], ['4.15', 'takeaway.mjs'],
 ];
 
 const rows = readCatalog(path.join(ROOT, 'catalogs', 'GAME_CATALOG.csv'));
@@ -236,6 +238,7 @@ const ZONE_RULES = [
   ['- SÂN CHƠI VIỆT NAM (', 'thiếu khối "SÂN CHƠI VIỆT NAM" nêu nguồn tools/lib/folk.mjs — sáu quy định sân chơi không còn nhãn để người viết prompt đối chiếu'],
   ['- ĐỐ BẠN — EM ĐẶT ĐỀ CHO BẠN ĐÁP (', 'thiếu khối ĐỐ BẠN nêu nguồn tools/lib/quiz.mjs — sáu quy định đố bạn không còn nhãn để người viết prompt đối chiếu'],
   ['- BẠN DẪN — MỘT EM LÀM MẪU, BA EM BẮT CHƯỚC (', 'thiếu khối BẠN DẪN nêu nguồn tools/lib/lead.mjs — sáu quy định bạn dẫn không còn nhãn để người viết prompt đối chiếu'],
+  ['- CÂU CHỐT — BỐN EM LẦN LƯỢT NÓI MỘT CÂU BẰNG LỜI CỦA MÌNH (', 'thiếu khối CÂU CHỐT nêu nguồn tools/lib/takeaway.mjs — sáu quy định câu chốt không còn nhãn để người viết prompt đối chiếu'],
 ];
 // Các tầng "phải có MỌI luật, nguyên văn, ở MỌI nơi": bộ kiểm lấy thẳng Object.entries(lib) thay vì
 // gõ tay danh sách. Probe vòng 11 cho thấy danh sách gõ tay là lỗ hổng thật — xóa ${LIGHT.visualShare}
@@ -257,6 +260,7 @@ const FULL_LAYERS = [
   ['sân chơi Việt Nam', 'folk.mjs', 'FOLK', FOLK],
   ['đố bạn', 'quiz.mjs', 'QUIZ', QUIZ],
   ['bạn dẫn', 'lead.mjs', 'LEAD', LEAD],
+  ['câu chốt', 'takeaway.mjs', 'TAKEAWAY', TAKEAWAY],
 ];
 const FULL_RULES = FULL_LAYERS.flatMap(([label, file, objName, obj]) =>
   Object.entries(obj).map(([key, text]) => [text, `thiếu quy định ${label} ${objName}.${key} của tools/lib/${file}`]));
@@ -711,6 +715,68 @@ const FULL_PINS = [
   ['lead.mjs', LEAD.guard, 'dẫn lệch hay đứng im đều không trừ tim', 'điều 3 của verifyLead() phải phủ cả hai đường lùi'],
   ['lead.mjs', LEAD.guard, '+5 điểm dẫn chỉ vào thanh "Cả nhóm"', 'điều 4 của verifyLead()'],
   ['lead.mjs', LEAD.guard, 'Bản một học sinh, bản không camera, bản tắt tiếng, bản "dép lê" và bản "lớp mình chật" vẫn bắt buộc kiểm đủ bốn điều', 'bản nào cũng phải kiểm lần dẫn'],
+
+  // Vòng 25: tầng câu chốt. Mỗi con số dưới đây là một chỗ hỏng đo được: hạ trần 20 giây, bỏ cụm
+  // "bốn lượt × 5 giây", để mascot đọc khung câu, hay bật microphone ở khối chốt — tất cả đều biến 85
+  // prompt thành game khác mà không quy định nào ở trên bắt được.
+  ['takeaway.mjs', TAKEAWAY.viTri, 'ĐÚNG MỘT khối "Câu chốt"', 'số khối chốt trong một phiên'],
+  ['takeaway.mjs', TAKEAWAY.viTri, 'dài ĐÚNG 20 giây', 'trần thời gian khối chốt'],
+  ['takeaway.mjs', TAKEAWAY.viTri, 'ngay SAU lượt đố thứ ba của hiệp 3 và TRƯỚC màn tổng kết', 'vị trí khối chốt trong phiên'],
+  ['takeaway.mjs', TAKEAWAY.viTri, 'nằm TRONG trần 8–10 phút đang có', 'khối chốt mượn trần phiên của tầng tiết học, không nới phiên'],
+  ['takeaway.mjs', TAKEAWAY.viTri, 'khép ở phút thứ 10 SAU khi khối chốt xong', 'đồng hồ phiên chờ khối chốt khép'],
+  ['takeaway.mjs', TAKEAWAY.viTri, 'KHÔNG tính vào 12 lượt hỏi bài', 'khối chốt không ăn vào 12 lượt'],
+  ['takeaway.mjs', TAKEAWAY.viTri, 'CẤM biến thành lượt thứ 13', 'trần 12 lượt phải giữ nguyên'],
+  ['takeaway.mjs', TAKEAWAY.viTri, 'CẤM rút thời gian đọc đề', 'khối chốt không cắt thời gian của lượt hỏi bài'],
+  ['takeaway.mjs', TAKEAWAY.viTri, 'không thay thế phần "thả lỏng" và "giãn cơ"', 'chốt trí tuệ không xóa phần thân thể cuối tiết'],
+  ['takeaway.mjs', TAKEAWAY.viTri, 'CẤM để mascot chốt thay khi bản chơi có từ hai học sinh', 'câu chốt phải do một em nói, không phải máy'],
+  ['takeaway.mjs', TAKEAWAY.khungChon, 'lấy NGUYÊN VĂN từ `tools/data/takeaways.mjs` theo đúng MẠCH kiến thức', 'khung câu phải lấy từ bảng theo mạch, không tự bịa'],
+  ['takeaway.mjs', TAKEAWAY.khungChon, 'BA nút chọn, mỗi nút MỘT hàng, chữ >= 20px', 'bố cục và cỡ chữ của ba nút chọn'],
+  ['takeaway.mjs', TAKEAWAY.khungChon, 'nói to phần bỏ trống "…" bằng lời của chính em', 'chỗ trống là phần EM nói'],
+  ['takeaway.mjs', TAKEAWAY.khungChon, 'thẻ "Câu chốt" bằng MỘT hàng, chữ >= 20px, không che đề bài, tự tắt sau 6 giây cùng nhịp trạm', 'thẻ chốt theo trần thẻ của tầng chuẩn kiến thức'],
+  ['takeaway.mjs', TAKEAWAY.khungChon, 'Chỗ trống do EM nói, KHÔNG do game điền', 'game không tự điền đáp án'],
+  ['takeaway.mjs', TAKEAWAY.khungChon, 'CẤM game bật microphone ở khối chốt này (chỉ ba game mã VOICE mới có micro)', 'trần micro của tầng điều khiển'],
+  ['takeaway.mjs', TAKEAWAY.khungChon, 'CẤM nhận dạng giọng nói hay phiên âm câu của em', 'câu của em không bị máy ghi âm hay chuyển thành chữ'],
+  ['takeaway.mjs', TAKEAWAY.khungChon, 'CẤM hiện sẵn đáp án đúng cạnh chỗ trống', 'khung câu không in kèm lời giải'],
+  ['takeaway.mjs', TAKEAWAY.khungChon, 'CẤM bắt em đọc, viết hay gõ câu chốt', 'khối chốt không thành bài chính tả'],
+  ['takeaway.mjs', TAKEAWAY.khungChon, 'CẤM mascot đọc khung câu thành lời (mỗi câu mascot chỉ <= 6 từ)', 'trần lời mascot của tầng bản sắc'],
+  ['takeaway.mjs', TAKEAWAY.bonEmNoi, 'cả bốn em đều có MỘT lượt trong khối 20 giây', 'bốn em bốn lượt, không ai ngồi xem'],
+  ['takeaway.mjs', TAKEAWAY.bonEmNoi, 'mỗi em ĐÚNG 5 giây', 'trần thời gian một lượt chốt'],
+  ['takeaway.mjs', TAKEAWAY.bonEmNoi, 'theo thứ tự chỗ ngồi đang dùng cho tầng vai chờ', 'lượt chốt mượn thứ tự vai, không đặt luật xếp hàng mới'],
+  ['takeaway.mjs', TAKEAWAY.bonEmNoi, 'một dòng nhắc "Đến lượt em"', 'dòng nhắc tới lượt'],
+  ['takeaway.mjs', TAKEAWAY.bonEmNoi, 'cô bấm nút "Em đã nói" để chuyển lượt', 'nút khép lượt thuộc về giáo viên'],
+  ['takeaway.mjs', TAKEAWAY.bonEmNoi, 'bấm nút "Em chưa nói được" rồi làm MỘT động tác của mã điều khiển game này thay cho câu nói', 'đường lùi cho em rụt rè'],
+  ['takeaway.mjs', TAKEAWAY.bonEmNoi, 'lượt vẫn tính và CẤM gọi lại lượt đó lần hai', 'em từ chối không bị gọi lại'],
+  ['takeaway.mjs', TAKEAWAY.bonEmNoi, 'CẤM nhắc trước lớp "sao em không nói"', 'không bêu em chọn im lặng'],
+  ['takeaway.mjs', TAKEAWAY.bonEmNoi, 'CẤM in tên em cạnh chữ "chưa chịu nói"', 'không nhãn xấu trên tờ rời'],
+  ['takeaway.mjs', TAKEAWAY.bonEmNoi, 'Bản một học sinh: em chọn MỘT khung, nói một câu, lượt vẫn khép bình thường', 'một em vẫn có khối chốt'],
+  ['takeaway.mjs', TAKEAWAY.tuDanhGia, 'em giơ 1, 2 hay 3 ngón tay trước ngực trong tầm 1 sải tay', 'tự đánh giá bằng ngón tay trong vùng an toàn'],
+  ['takeaway.mjs', TAKEAWAY.tuDanhGia, '1 ngón = "em chưa rõ"', 'nhãn mức 1'],
+  ['takeaway.mjs', TAKEAWAY.tuDanhGia, '2 ngón = "em hiểu rồi"', 'nhãn mức 2'],
+  ['takeaway.mjs', TAKEAWAY.tuDanhGia, '3 ngón = "em giải thích được cho bạn"', 'nhãn mức 3'],
+  ['takeaway.mjs', TAKEAWAY.tuDanhGia, 'game chỉ ghi con số em tự chọn', 'máy không chấm câu, chỉ ghi số em giơ'],
+  ['takeaway.mjs', TAKEAWAY.tuDanhGia, 'Mức tự đánh giá KHÔNG trừ tim, KHÔNG cắt chuỗi đúng, KHÔNG đổi độ khó đang có', 'tự đánh giá không phạt, không đổi độ khó'],
+  ['takeaway.mjs', TAKEAWAY.tuDanhGia, 'KHÔNG hiện lên màn hình như một điểm', 'số ngón không thành điểm trên HUD'],
+  ['takeaway.mjs', TAKEAWAY.tuDanhGia, 'CẤM game chờ nhận diện ngón tay để quay vòng', 'ngón tay không phải cử chỉ điều khiển'],
+  ['takeaway.mjs', TAKEAWAY.tuDanhGia, 'CẤM bắt em nào giơ 3 ngón', 'không ép em tự nhận giải thích được'],
+  ['takeaway.mjs', TAKEAWAY.diemVaSheet, 'cộng +5 điểm vào thanh "Cả nhóm <x>/<mốc>" đang có sẵn', 'điểm chốt vào thang tập thể đang có'],
+  ['takeaway.mjs', TAKEAWAY.diemVaSheet, 'KHÔNG cộng vào "miti-best"', 'điểm chốt không vào xếp hạng cá nhân'],
+  ['takeaway.mjs', TAKEAWAY.diemVaSheet, 'KHÔNG đổi thứ hạng của em đang chơi', 'điểm chốt không đổi hạng'],
+  ['takeaway.mjs', TAKEAWAY.diemVaSheet, 'ĐÚNG MỘT dòng "Em chốt hôm nay: <tên> <n> câu"', 'dòng tổng kết câu chốt'],
+  ['takeaway.mjs', TAKEAWAY.diemVaSheet, 'nằm trong khối mà nút "Copy tờ rời" copy được', 'dòng chốt nằm trong khối copy được'],
+  ['takeaway.mjs', TAKEAWAY.diemVaSheet, 'cùng khối với dòng "Bốn em hôm nay" của tầng vai chờ', 'bốn dòng tổng kết cùng một khối'],
+  ['takeaway.mjs', TAKEAWAY.diemVaSheet, 'dòng "Em đố hôm nay" của tầng đố bạn và dòng "Em dẫn hôm nay" của tầng bạn dẫn', 'dòng chốt phải cùng khối với dòng đố và dòng dẫn'],
+  ['takeaway.mjs', TAKEAWAY.diemVaSheet, 'CẤM xếp hạng câu chốt hay, dở', 'câu chốt không thành bảng xếp hạng thứ hai'],
+  ['takeaway.mjs', TAKEAWAY.diemVaSheet, 'CẤM in chữ "đúng" hay "sai" cạnh câu của em', 'câu nào cũng đáng như câu nào'],
+  ['takeaway.mjs', TAKEAWAY.diemVaSheet, 'CẤM đọc lại nguyên văn câu của em thành lời nhận xét trước lớp', 'câu của em không bị máy nhắc lại trước lớp'],
+  ['takeaway.mjs', TAKEAWAY.guard, '`verifyTakeaway()` chạy MỘT LẦN', 'hàm kiểm tầng câu chốt lúc nạp'],
+  ['takeaway.mjs', TAKEAWAY.guard, 'kiểm đúng bốn điều', 'số điều verifyTakeaway() phải kiểm'],
+  ['takeaway.mjs', TAKEAWAY.guard, 'ĐÚNG MỘT khối "Câu chốt" mỗi phiên ở CUỐI phiên (sau lượt đố thứ ba, trước màn tổng kết), dài ĐÚNG 20 giây, bốn lượt × 5 giây, 12 lượt hỏi bài giữ nguyên', 'điều 1 của verifyTakeaway() phải nêu đủ bốn con số'],
+  ['takeaway.mjs', TAKEAWAY.guard, 'ba khung câu hiện trên ba nút chọn lấy NGUYÊN VĂN từ `tools/data/takeaways.mjs`', 'verifyTakeaway() phải đối chiếu khung câu với đúng bảng takeaways'],
+  ['takeaway.mjs', TAKEAWAY.guard, 'thẻ "Câu chốt" MỘT hàng chữ >= 20px tự tắt sau 6 giây, không bật microphone, không nhận dạng giọng nói, không hiện sẵn đáp án', 'điều 2 của verifyTakeaway()'],
+  ['takeaway.mjs', TAKEAWAY.guard, 'bốn em đều có một lượt 5 giây, em từ chối được làm động tác thay và không bị gọi lại lần hai', 'điều 3 của verifyTakeaway()'],
+  ['takeaway.mjs', TAKEAWAY.guard, 'mỗi em giơ 1–3 ngón tay tự đánh giá và mức đó không trừ tim không đổi độ khó', 'điều 3 của verifyTakeaway() phải phủ cả tự đánh giá'],
+  ['takeaway.mjs', TAKEAWAY.guard, '+5 điểm chốt chỉ vào thanh "Cả nhóm" và dòng "Em chốt hôm nay" nằm trong khối "Copy tờ rời"', 'điều 4 của verifyTakeaway()'],
+  ['takeaway.mjs', TAKEAWAY.guard, 'Bản một học sinh, bản không camera, bản tắt tiếng, bản "dép lê" và bản "lớp mình chật" vẫn bắt buộc kiểm đủ bốn điều', 'bản nào cũng phải kiểm khối chốt'],
 ];
 for (const [file, text, needle, label] of FULL_PINS) {
   if (!text.includes(needle)) bad(`tools/lib/${file} không còn nêu "${needle}" (${label}) — con số nghiệm thu phải sửa cùng tài liệu và bảng kiểm, không đổi âm thầm trong lib.`);
@@ -740,6 +806,7 @@ const SHORT_PINS = {
   PLAYZONE_SHORT: ['"Dẹp chỗ chơi"', '4 dòng <= 12 từ', '60–90 giây', '20 giây', '1 sải tay', '>= 1,2 m', '"miti-foot"', '0/12 lượt nhấc chân cao', 'đứng một chân', '"Lớp mình chật"', '"miti-space"', '>= 12 nhịp/phút', '>= 60%', '90 độ', 'chốt một lần đầu phiên', '"Em mệt / em đau"', '>= 56px', 'hạ nhiệt 45–60 giây', 'không trừ tim', '"miti-stop"', 'verifyPlayzone()'],
   QUIZ_SHORT: ['đúng BA/12 lượt "Đố bạn"', 'cuối mỗi hiệp', 'tools/data/quiz.mjs', 'mạch kiến thức', 'nguyên văn', 'điền MỘT số/từ', 'chín lượt còn lại', 'ngân hàng đề', '>= 20px', 'tự tắt sau 6 giây', 'không bật microphone', 'không hiện sẵn đáp án', 'một động tác của mã điều khiển', '1 sải tay', 'Thư ký đọc lại', 'đề lệch không trừ tim', 'không cắt chuỗi', '<= 6 từ', 'Em chịu, bạn đáp giúp', '+5 điểm', '"Cả nhóm"', 'miti-best', 'Em đố hôm nay', 'Copy tờ rời', 'verifyQuiz()'],
   LEAD_SHORT: ['đúng BA lần "Bạn dẫn"', 'đầu mỗi hiệp', 'mỗi lần 5 giây', 'không tính vào 12 lượt hỏi bài', 'nguyên văn', 'một trong ba động tác', 'tools/data/leads.mjs', 'theo đúng mã điều khiển', 'một hàng ba động tác', '>= 20px', 'tự tắt sau 5 giây', 'không bật microphone', 'không đánh dấu ✓', 'bắt chước', '1 sải tay', '90 độ', 'không chạm nhau', 'Cả nhóm đã làm theo', 'dẫn lệch', 'đứng im', 'không trừ tim', 'mascot làm mẫu lại 3 giây', '+5 điểm', '"Cả nhóm"', 'miti-best', 'Em dẫn hôm nay', 'Copy tờ rời', 'verifyLead()'],
+  TAKEAWAY_SHORT: ['ĐÚNG MỘT khối "Câu chốt"', 'CUỐI phiên', 'sau lượt đố thứ ba', 'trước màn tổng kết', 'dài 20 giây', 'bốn lượt × 5 giây', 'không tính vào 12 lượt hỏi bài', 'nguyên văn', 'tools/data/takeaways.mjs', 'theo đúng mạch kiến thức', 'ba nút chọn một hàng', '>= 20px', 'tự tắt sau 6 giây', 'không bật microphone', 'không nhận dạng giọng nói', 'không hiện sẵn đáp án', 'bốn em cùng chốt', 'một động tác của mã điều khiển', 'không bị gọi lại lần hai', '1–3 ngón tay tự đánh giá', 'không trừ tim', 'không đổi độ khó', '+5 điểm chốt', '"Cả nhóm"', 'miti-best', 'Em chốt hôm nay: <tên> <n> câu', 'Copy tờ rời', 'verifyTakeaway()'],
   FOLK_SHORT: ['trò dân gian dẫn dắt', 'tools/data/folk.mjs', 'tên <= 4 từ', '"Cách chơi"', '>= 18px', 'chant <= 8 tiếng', 'BA lần một phiên', 'vạch nhịp 8 nhịp', 'đồng dao', 'mẫu câu <= 8 từ', 'giọng en-US', 'nhảy lò cò', 'trồng cây chuối', 'bịt mắt bắt dê', 'kéo co dây thật', '1 sải tay', 'tám món FOLK_PROPS', 'alpha <= 0.45', 'đổi vai sau 3 lượt', 'Trò chơi hôm nay', 'không giành góc HUD của tên môn', 'lời đếm cấm gọi là đồng dao', 'cấm đòi cầm vật thật', 'verifyFolk()'],
 };
 for (const seg of chainSegments) {
@@ -1096,6 +1163,19 @@ if (!fs.existsSync(VAR_FILE)) {
         ['game không bật microphone, không chạm nhau và không chấm em nào giống hơn', 'block dẫn không micro, không chạm, không chấm ai giống hơn'],
       ]) {
         if (!b.includes(needle)) bad(`biến thể #${i + 1} (${vid}): thiếu ${label} ("${needle.slice(0, 48)}") — builder phải lấy thẳng tools/data/leads.mjs vào đúng block.`);
+      }
+    }
+    // Block biến thể copy riêng được nên phải mang đủ khung câu của ĐÚNG mạch nó nói tới, kèm nhãn khối.
+    if (vstd) {
+      const tfv = takeawayFrames(vstd.mach);
+      for (const [needle, label] of capsNeo([
+        ['**Câu chốt — bốn em lần lượt nói một câu bằng lời của mình:**', 'dòng khối câu chốt — người copy riêng một block sẽ không biết 20 giây cuối thuộc về ai'],
+        [`Ba khung "Câu chốt" của block ${vcode} này (mạch "${vstd.mach}"`, 'mạch kiến thức đi kèm ba khung câu của block này'],
+        [`"${tfv[0]}" · "${tfv[1]}" · "${tfv[2]}"`, 'ba khung câu nguyên văn của ĐÚNG mạch này'],
+        ['lấy nguyên văn từ `tools/data/takeaways.mjs`', 'block phải trỏ thẳng về bảng khung câu'],
+        ['nói xong giơ 1–3 ngón tay tự đánh giá; game không bật microphone, không nhận dạng giọng nói và không hiện sẵn đáp án.', 'block chốt không micro, không phiên âm, không đáp án in sẵn — lấy cả vế ngón tay vì mục [44] của bảng kiểm cũng nêu ba vế này'],
+      ], 'mục neo block câu chốt')) {
+        if (!b.includes(needle)) bad(`biến thể #${i + 1} (${vid}): thiếu ${label} ("${needle.slice(0, 48)}") — builder phải lấy thẳng tools/data/takeaways.mjs vào đúng block.`);
       }
     }
     // Chuỗi tự kiểm của biến thể cũng phải mang đủ mọi tầng, cùng registry như prompt.
@@ -1597,7 +1677,7 @@ const QUIZ_DOC_NEEDLES = [
   ['người thử số 33', 'việc người thử tương ứng ở prompts/README', 0, 0, 0, 1],
   ['mục `[42]`', 'con trỏ từ prompts/README về đúng dòng bảng kiểm của verifyQuiz()', 0, 0, 0, 1],
   ['folk.mjs + quiz.mjs', 'danh sách file data trong pipeline prompts/README', 0, 0, 0, 1],
-  ['quiz.mjs · lead.mjs · verify.mjs', 'danh sách file lib trong pipeline prompts/README', 0, 0, 0, 1],
+  ['lead.mjs · takeaway.mjs · verify.mjs', 'danh sách file lib trong pipeline prompts/README', 0, 0, 0, 1],
   ['tools/data/quiz.mjs', 'bảng mẫu câu đố bạn', 4, 3, 4, 3],
   ['tools/lib/quiz.mjs', 'tầng quy định đố bạn', 1, 1, 2, 1],
   ['verifyQuiz()', 'hàm kiểm tầng đố bạn lúc nạp', 2, 2, 3, 6],
@@ -1680,6 +1760,65 @@ const LEAD_DOC_NEEDLES = [
   ['| **Điểm dẫn vào "Cả nhóm"** |', 'dòng bảng điểm dẫn ở hai README', 0, 0, 1, 1],
   ['mười bốn mã điều khiển × ba động tác', 'bản chốt bảng động tác dẫn ở hai README', 0, 0, 2, 1],
 ];
+// Vòng 25: tầng "câu chốt". Cùng cách làm với LEAD_DOC_NEEDLES: đo từ tài liệu thật rồi lấy đúng số đo
+// làm sàn. Sáu quy định này sống ở bốn file (master §4.15, template, hai README) nên một lần sửa tay ở
+// chỗ nào cũng làm tầng câu chốt biến mất khỏi chỗ đó mà build vẫn xanh.
+const TAKEAWAY_DOC_NEEDLES = [
+  ['mạch × ba khung', 'kích thước bảng khung câu (8 mạch × 3 khung) ở master, template và hai README', 1, 1, 1, 1],
+  ['ĐÚNG MỘT KHỐI "CÂU CHỐT" MỘT PHIÊN', 'nhãn bullet vị trí khối chốt ở master', 1, 0, 0, 0],
+  ['BA KHUNG CÂU LẤY NGUYÊN VĂN THEO ĐÚNG MẠCH KIẾN THỨC', 'nhãn bullet khung câu ở master', 1, 0, 0, 0],
+  ['BỐN EM CÙNG CHỐT, MỖI EM ĐÚNG 5 GIÂY', 'nhãn bullet bốn em chốt ở master', 1, 0, 0, 0],
+  ['MỖI EM GIƠ 1–3 NGÓN TAY TỰ ĐÁNH GIÁ', 'nhãn bullet tự đánh giá ở master', 1, 0, 0, 0],
+  ['CÂU NÀO CŨNG ĐÁNG NHƯ CÂU NÀO', 'nhãn bullet điểm chốt ở master', 1, 0, 0, 0],
+  ['TỰ KIỂM BẰNG `verifyTakeaway()`', 'nhãn bullet hàm tự kiểm ở master', 1, 0, 0, 0],
+  ['[44] verifyTakeaway()', 'mục 44 của bảng kiểm máy tự kiểm trong master', 1, 0, 0, 0],
+  ['SAU lượt đố thứ ba', 'khối chốt nằm sau lượt đố thứ ba ở master', 1, 0, 0, 0],
+  ['TRƯỚC màn tổng kết', 'khối chốt nằm trước màn tổng kết ở master', 2, 0, 0, 0],
+  ['dài ĐÚNG 20 giây', 'trần 20 giây của khối chốt', 2, 1, 0, 0],
+  ['bốn lượt × 5 giây', 'bốn lượt 5 giây trong một khối chốt', 2, 1, 3, 1],
+  ['KHÔNG tính vào 12 lượt hỏi bài', 'trần 12 lượt ở master', 2, 0, 0, 0],
+  ['CẤM biến thành lượt thứ 13', 'khối chốt không thành lượt thứ 13 ở master', 1, 0, 0, 0],
+  ['CẤM để mascot chốt thay', 'câu chốt phải do một em nói, không phải máy', 1, 0, 0, 0],
+  ['BA nút chọn', 'ba khung câu đặt trên ba nút chọn ở master', 1, 0, 0, 0],
+  ['thẻ "Câu chốt" MỘT hàng', 'thẻ chốt một hàng ở master và template', 2, 1, 0, 0],
+  ['CẤM hiện sẵn đáp án', 'chỗ trống do em nói, không do game điền ở master', 1, 0, 0, 0],
+  ['không nhận dạng giọng nói', 'game không ghi âm hay phiên âm câu của em', 2, 2, 2, 1],
+  ['"Em chưa nói được"', 'nút đường lùi cho em không muốn nói', 1, 1, 1, 1],
+  ['CẤM gọi lại lượt đó lần hai', 'lượt đã khép không bị gọi lại ở master', 1, 0, 0, 0],
+  ['em chưa rõ', 'nhãn mức một ngón ở master và template', 1, 1, 0, 0],
+  ['em giải thích được cho bạn', 'nhãn mức ba ngón ở master và template', 1, 1, 0, 0],
+  ['CẤM bắt em nào giơ 3 ngón', 'tự đánh giá không thành áp lực ở master', 1, 0, 0, 0],
+  ['Bản một học sinh: em chọn MỘT khung', 'bản một em vẫn có khối chốt', 1, 1, 0, 0],
+  ['+5 điểm chốt', 'điểm chốt vào thanh "Cả nhóm" ở master', 2, 0, 0, 0],
+  ['"Em chốt hôm nay: <tên> <n> câu"', 'dòng tổng kết câu chốt', 2, 2, 2, 1],
+  ['- CÂU CHỐT — BỐN EM LẦN LƯỢT NÓI MỘT CÂU BẰNG LỜI CỦA MÌNH (nguồn:', 'nhãn khối câu chốt trong template', 0, 1, 0, 0],
+  ['Phần câu chốt đã điền đủ', 'dòng checklist câu chốt trong template', 0, 1, 0, 0],
+  ['Sáu quy định "câu chốt"', 'heading mục kể chuyện tầng 25 ở README', 0, 0, 1, 0],
+  ['Tầng "câu chốt"', 'heading mục kể chuyện tầng 25 ở prompts/README', 0, 0, 0, 1],
+  ['máy tự kiểm thứ 44', 'số mục của verifyTakeaway() trong bảng kiểm', 0, 0, 1, 0],
+  ['việc người thử thứ 35', 'việc người thử tương ứng ở README', 0, 0, 1, 0],
+  ['người thử số 35', 'việc người thử tương ứng ở prompts/README', 0, 0, 0, 1],
+  ['mục `[44]`', 'con trỏ từ prompts/README về đúng dòng bảng kiểm của verifyTakeaway()', 0, 0, 0, 1],
+  ['quiz.mjs + leads.mjs + takeaways.mjs', 'danh sách file data trong pipeline prompts/README', 0, 0, 0, 1],
+  ['`verifyTakeaway()` chạy', 'hàm kiểm tầng câu chốt ở template và prompts/README', 0, 1, 0, 1],
+  ['tools/data/takeaways.mjs', 'bảng khung câu chốt', 4, 3, 4, 3],
+  ['tools/lib/takeaway.mjs', 'tầng quy định câu chốt', 1, 1, 2, 1],
+  ['verifyTakeaway()', 'hàm kiểm tầng câu chốt lúc nạp', 2, 2, 3, 6],
+  ['Câu chốt', 'chữ "Câu chốt"', 5, 5, 5, 2],
+  ['tám mạch', 'số mạch kiến thức của bảng khung câu', 3, 4, 8, 3],
+  ['một chỗ trống', 'mỗi khung câu chỉ có một chỗ điền', 2, 2, 4, 2],
+  ['1–3 ngón tay', 'thang tự đánh giá bằng ngón tay', 2, 2, 3, 1],
+  ['Em đã nói', 'nút khép lượt chốt do cô bấm', 1, 1, 1, 0],
+  ['Điều em nhớ:', 'mở đầu mọi khung câu chốt', 1, 1, 1, 1],
+  ['| **Đúng MỘT khối "Câu chốt" một phiên** |', 'dòng bảng kể chuyện tầng câu chốt ở README', 0, 0, 1, 0],
+  ['| **Ba khung câu lấy nguyên văn theo đúng mạch** |', 'dòng bảng khung câu ở README', 0, 0, 1, 0],
+  ['| **Câu nào cũng đáng như câu nào** |', 'dòng bảng điểm chốt ở README', 0, 0, 1, 0],
+  ['| Đúng **MỘT khối "Câu chốt"** một phiên |', 'dòng bảng kể chuyện tầng câu chốt ở prompts/README', 0, 0, 0, 1],
+  ['| **Ba khung câu nguyên văn theo đúng mạch** |', 'dòng bảng khung câu ở prompts/README', 0, 0, 0, 1],
+  ['| **Bốn em cùng chốt** |', 'dòng bảng bốn em chốt ở prompts/README', 0, 0, 0, 1],
+  ['| **1–3 ngón tay tự đánh giá** |', 'dòng bảng tự đánh giá ở prompts/README', 0, 0, 0, 1],
+  ['| **Điểm chốt vào "Cả nhóm"** |', 'dòng bảng điểm chốt ở prompts/README', 0, 0, 0, 1],
+];
 const DOC_FILES = [
   ['prompts/00-master-canvas-prompt.md', master],
   ['prompts/templates/game-prompt-template.md', tpl],
@@ -1699,7 +1838,7 @@ for (const [docSlot, [docName, docText]] of DOC_FILES.entries()) {
   for (const [needle, label] of IDENTITY_DOC_NEEDLES) {
     if (!docText.includes(needle)) bad(`${docName} thiếu con số bản sắc riêng (${label}): không thấy "${needle}".`);
   }
-  for (const [needle, label, ...mins] of [...RHYTHM_DOC_NEEDLES, ...VOICE_DOC_NEEDLES, ...QUEUE_DOC_NEEDLES, ...LESSON_DOC_NEEDLES, ...CURRICULUM_DOC_NEEDLES, ...SPORT_DOC_NEEDLES, ...FAMILY_DOC_NEEDLES, ...PACE_DOC_NEEDLES, ...PLAYZONE_DOC_NEEDLES, ...FOLK_DOC_NEEDLES, ...QUIZ_DOC_NEEDLES, ...LEAD_DOC_NEEDLES]) {
+  for (const [needle, label, ...mins] of [...RHYTHM_DOC_NEEDLES, ...VOICE_DOC_NEEDLES, ...QUEUE_DOC_NEEDLES, ...LESSON_DOC_NEEDLES, ...CURRICULUM_DOC_NEEDLES, ...SPORT_DOC_NEEDLES, ...FAMILY_DOC_NEEDLES, ...PACE_DOC_NEEDLES, ...PLAYZONE_DOC_NEEDLES, ...FOLK_DOC_NEEDLES, ...QUIZ_DOC_NEEDLES, ...LEAD_DOC_NEEDLES, ...TAKEAWAY_DOC_NEEDLES]) {
     const want = mins[docSlot];
     const got = docText.split(needle).length - 1;
     if (got < want) bad(`${docName} chỉ còn nêu "${needle}" (${label}) ${got} lần, chuẩn hiện hành là ${want} lần — tài liệu chuẩn phải giữ đủ chỗ nêu ở CẢ phần luật lẫn bảng kiểm tự kiểm, không được để một phần mất số.`);
@@ -2387,6 +2526,115 @@ for (const g of GAMES) {
     ['lấy nguyên văn ba động tác dưới đây từ `tools/data/leads.mjs`', 'prompt phải trỏ thẳng về bảng động tác dẫn'],
   ]) {
     if (!t.includes(needle)) bad(`${g.id}: prompt thiếu ${label} ("${needle.slice(0, 48)}") — builder phải lấy thẳng tools/data/leads.mjs theo mã ${g.gestures[0]}.`);
+  }
+}
+
+
+// Vòng 25: tầng câu chốt nghiệm thu bằng bốn lượt nói thật của bốn em, nên mục bảng kiểm phải nêu lại đủ
+// bốn điều verifyTakeaway() kiểm. Bớt một vế (ví dụ "không nhận dạng giọng nói") thì game bật microphone
+// ghi âm câu của em vẫn báo ĐẠT, và khối chốt biến thành bài kiểm tra miệng có lưu băng.
+if (!MACHINE_ITEMS.some((s) => s.includes('verifyTakeaway()') && s.includes('khối "Câu chốt"'))) bad('Bảng kiểm máy tự kiểm không còn mục nghiệm thu tầng câu chốt (verifyTakeaway() + khối "Câu chốt") — thiếu mục này thì game bỏ hẳn 20 giây bốn em tự nói mà vẫn báo ĐẠT.');
+{
+  const tkItem = MACHINE_ITEMS.find((s) => s.includes('verifyTakeaway()')) || '';
+  for (const clause of ['ĐÚNG MỘT khối', 'CUỐI phiên', 'sau lượt đố thứ ba', 'trước màn tổng kết', '20 giây', 'bốn lượt × 5 giây', '12 lượt hỏi bài', 'tools/data/takeaways.mjs', 'NGUYÊN VĂN', 'mạch kiến thức', '>= 20px', 'tự tắt sau 6 giây', 'không bật microphone', 'không nhận dạng giọng nói', 'không hiện sẵn đáp án', 'một lượt 5 giây', 'động tác của mã điều khiển', 'gọi lại lần hai', '1–3 ngón tay', 'không trừ tim', 'không đổi độ khó', '+5 điểm', 'Cả nhóm', 'Em chốt hôm nay', 'Copy tờ rời']) {
+    if (!tkItem.includes(clause)) bad(`Mục verifyTakeaway() của bảng kiểm không còn nêu "${clause}" — bảng kiểm lỏng hơn quy định trong tools/lib/takeaway.mjs thì game thiếu khối chốt vẫn được đóng dấu ĐẠT.`);
+  }
+  if (!HUMAN_CHECKS.some((s) => s.includes('Em chốt') && s.includes('ngón tay'))) bad('Bảng kiểm hết việc người thử cho tầng câu chốt — không ai ngồi đủ bốn em nghe 20 giây cuối thì không ai biết câu chốt có thật do em nói hay máy đọc hộ.');
+  const tkCheck = HUMAN_CHECKS.find((s) => s.includes('Em chốt')) || '';
+  for (const clause of ['bốn em', '20 giây cuối', 'MỘT câu bằng lời của mình', 'máy tự đọc khung câu', 'màn tổng kết', 'na ná bạn', '"đúng"/"sai"', 'xếp hạng', 'khoanh tay', 'gọi lại lượt thứ hai', 'nhắc trước lớp', 'động tác của mã điều khiển', '2 ngón tay thay vì 3', 'độ khó', 'mất tim', 'Copy tờ rời']) {
+    if (!tkCheck.includes(clause)) bad(`Việc người thử "Em chốt" không còn nêu "${clause}" — người thử phải đi hết bốn điều của verifyTakeaway() bằng tay; thiếu một vế thì lỗi thật ở đúng chỗ đó không ai nhìn thấy.`);
+  }
+}
+
+// Vòng 25: bảng khung câu chốt là DỮ LIỆU theo MẠCH kiến thức. Builder đọc thẳng
+// tools/data/takeaways.mjs nên sửa chữ một khung thì 85 prompt, 425 block và 12 legacy cùng đổi theo im
+// lặng — đối chiếu nguyên văn 24 khung với bản chốt ở đây là cách duy nhất thấy lệch. Kèm kiểm cấu trúc:
+// đủ tám mạch, mỗi mạch đúng ba khung, mọi khung mở đầu "Điều em nhớ:", có đúng một chỗ trống, không phải
+// câu hỏi, <= 12 từ, không CJK, không trùng nhau và không trùng mẫu câu "Đố bạn" (quiz.mjs đã lấy chỗ đó).
+{
+  const TAKEAWAY_FRAMES_EXPECT = {
+    'Số và phép tính': ['Điều em nhớ: quy tắc em vừa dùng là …', 'Điều em nhớ: phép tính em hay nhầm là …', 'Điều em nhớ: em vừa thêm bớt ở hàng …'],
+    'Hình học và đo lường': ['Điều em nhớ: hình này có … cạnh', 'Điều em nhớ: góc vuông lớn hơn góc …', 'Điều em nhớ: em đo bằng đơn vị …'],
+    'Giải toán có lời văn': ['Điều em nhớ: bước đầu ta đi tìm …', 'Điều em nhớ: đáp số của bài là …', 'Điều em nhớ: đề bài hỏi về …'],
+    'Một số yếu tố thống kê và xác suất': ['Điều em nhớ: cột cao nhất chỉ …', 'Điều em nhớ: bảng có … hàng số liệu', 'Điều em nhớ: sự kiện chắc chắn là …'],
+    'Ôn tập tổng hợp': ['Điều em nhớ: câu dễ nhất với em là …', 'Điều em nhớ: em còn nhầm ở chỗ …', 'Điều em nhớ: lần sau em sẽ sửa …'],
+    'Kiến thức ngôn ngữ': ['Điều em nhớ: từ em học hôm nay là …', 'Điều em nhớ: cặp trái ngược là …', 'Điều em nhớ: chữ cái thiếu trong từ …'],
+    'Nghe và nói': ['Điều em nhớ: em nghe thấy số …', 'Điều em nhớ: câu em vừa nói là …', 'Điều em nhớ: bạn em vừa nói từ …'],
+    'Đọc và viết': ['Điều em nhớ: từ em vừa đọc là …', 'Điều em nhớ: em đánh vần từ …', 'Điều em nhớ: chữ cái đầu của từ …'],
+  };
+  const machsTk = new Set(Object.values(STANDARDS).map((std) => std.mach));
+  if (TAKEAWAY_KEYS.length !== Object.keys(TAKEAWAY_FRAMES_EXPECT).length) bad(`tools/data/takeaways.mjs có ${TAKEAWAY_KEYS.length} mạch nhưng bản chốt ở validate là ${Object.keys(TAKEAWAY_FRAMES_EXPECT).length} mạch — thêm hay bớt mạch phải sửa cả STANDARDS và master §4.15.`);
+  for (const m of Object.keys(TAKEAWAY_FRAMES_EXPECT)) {
+    let got;
+    try { got = takeawayFrames(m).join(' · '); } catch { bad(`tools/data/takeaways.mjs thiếu mạch "${m}" — game thuộc mạch này sẽ build lỗi hoặc tự bịa khung câu chốt.`); continue; }
+    const want = TAKEAWAY_FRAMES_EXPECT[m].join(' · ');
+    if (got !== want) bad(`tools/data/takeaways.mjs mạch "${m}" lệch bản chốt:\n    đang là "${got}"\n    chuẩn là "${want}" — đổi khung câu chốt là đổi câu bốn em phải nói trước lớp, phải đổi cùng lúc ở 85 prompt, 425 block, 12 legacy và master §4.15.`);
+    if (!machsTk.has(m)) bad(`validate chốt mạch "${m}" nhưng không cụm kiến thức nào trong standards.mjs mang mạch đó — bảng chốt và SGK đã lệch nhau.`);
+  }
+  for (const m of TAKEAWAY_KEYS) if (!machsTk.has(m)) bad(`tools/data/takeaways.mjs có mạch "${m}" không game nào thuộc mạch đó — bảng khung câu lệch chuẩn SGK thì em chốt một câu ngoài mạch đang học.`);
+  const allTk = [];
+  for (const [m, frames] of Object.entries(TAKEAWAY_BANK)) {
+    if (!Array.isArray(frames) || frames.length !== 3) bad(`tools/data/takeaways.mjs.${m} có ${Array.isArray(frames) ? frames.length : 'không rõ'} khung, chuẩn là ĐÚNG BA — ba khung đặt trên BA nút chọn nên thêm hay bớt đều vỡ bố cục.`);
+    if (Array.isArray(frames) && new Set(frames).size !== frames.length) bad(`tools/data/takeaways.mjs.${m} có khung trùng nhau — ba nút chọn mà hai nút giống nhau thì em chỉ thực sự có hai lựa chọn.`);
+    for (const f of frames) {
+      allTk.push(f);
+      if (!f.startsWith('Điều em nhớ:')) bad(`tools/data/takeaways.mjs.${m}: khung "${f}" không mở đầu bằng "Điều em nhớ:" — cô giáo nhìn một dòng là biết em vừa chốt cái gì, mất mở đầu này thì tờ rời không đối chiếu được.`);
+      if ((f.match(/…/g) || []).length !== 1) bad(`tools/data/takeaways.mjs.${m}: khung "${f}" có ${(f.match(/…/g) || []).length} chỗ trống, chuẩn là ĐÚNG MỘT — hai chỗ trống thì em chốt phải nói hai vế trong 5 giây.`);
+      if (f.includes('?')) bad(`tools/data/takeaways.mjs.${m}: khung "${f}" là câu hỏi — câu chốt phải là câu khẳng định do em tự nối, biến thành hỏi lại là lượt của tầng "đố bạn".`);
+      const w = f.trim().split(/\s+/).length;
+      if (w > 12) bad(`tools/data/takeaways.mjs.${m}: khung "${f}" dài ${w} từ, trần 12 từ — khung dài hơn không nằm vừa nút chọn chữ >= 20px mà em cũng nói không xong trong 5 giây.`);
+      if (/[\u3400-\u9fff\u3040-\u30ff]/.test(f)) bad(`tools/data/takeaways.mjs.${m}: khung "${f}" lẫn ký tự CJK.`);
+      for (const qm of QUIZ_KEYS) for (const q of QUIZ_BANK[qm]) if (q === f) bad(`tools/data/takeaways.mjs.${m}: khung "${f}" trùng nguyên văn một mẫu câu "Đố bạn" — hai tầng sẽ cho em đúng một dòng để nói.`);
+    }
+  }
+  if (new Set(allTk).size !== allTk.length) bad(`tools/data/takeaways.mjs có ${allTk.length} khung nhưng chỉ ${new Set(allTk).size} khác nhau — bốn em hiệp nào chốt lại cũng thấy đúng khung đó thì khối "Câu chốt" không dạy thêm cách diễn đạt nào.`);
+  if (allTk.length !== 24) bad(`tools/data/takeaways.mjs phải có đúng 24 khung (tám mạch × ba khung), hiện có ${allTk.length}.`);
+  for (const m of machsTk) if (!TAKEAWAY_KEYS.includes(m)) bad(`tools/data/takeaways.mjs thiếu mạch ${m} — game thuộc mạch này sẽ build lỗi hoặc tự bịa khung câu chốt ngoài bảng.`);
+}
+
+// Các con số khối chốt MƯỢN từ tầng khác; đổi một bên thì 85 prompt mang hai chuẩn mâu thuẫn.
+{
+  if (!TAKEAWAY.khungChon.includes('>= 20px') || !CURRICULUM.bayTruoc.includes('>= 20px')) bad('Cỡ chữ thẻ >= 20px lệch giữa tools/lib/takeaway.mjs và tools/lib/curriculum.mjs — thẻ "Câu chốt" nhỏ hơn thẻ báo-trước thì em ngồi sau không đọc được khung câu mình chọn.');
+  if (!TAKEAWAY.khungChon.includes('tự tắt sau 6 giây') || !CURRICULUM.bayTruoc.includes('6 giây')) bad('Trần 6 giây của thẻ lệch giữa takeaway.mjs và curriculum.mjs — hai loại thẻ trên cùng một HUD sống hai khoảng thời gian khác nhau.');
+  if (!TAKEAWAY.bonEmNoi.includes('mỗi em ĐÚNG 5 giây') || !LEAD.cachDan.includes('5 giây')) bad('Suất 5 giây một lượt lệch giữa takeaway.mjs và lead.mjs — bốn lượt chốt và ba lần dẫn sẽ chạy hai nhịp khác nhau trên cùng một đồng hồ phiên.');
+  if (!TAKEAWAY.diemVaSheet.includes('+5 điểm') || !QUEUE.teamScore.includes('+5')) bad('Điểm +5 vai phụ lệch giữa takeaway.mjs và queue.mjs — khối chốt và vai chờ sẽ cộng vào thanh "Cả nhóm" theo hai mức khác nhau.');
+  if (!TAKEAWAY.diemVaSheet.includes('miti-best') || !QUEUE.teamScore.includes('miti-best')) bad('Quy ước không cộng vào "miti-best" không còn ở cả takeaway.mjs lẫn queue.mjs — điểm chốt sẽ tràn vào xếp hạng cá nhân.');
+  if (!TAKEAWAY.diemVaSheet.includes('Copy tờ rời') || !QUEUE.teamScore.includes('Copy tờ rời')) bad('Dòng tổng kết câu chốt không còn nằm trong khối "Copy tờ rời" của tầng vai chờ — giáo viên copy một lần sẽ mất phần chốt.');
+  if (!TAKEAWAY.diemVaSheet.includes('Em đố hôm nay') || !QUIZ.diemVai.includes('Em đố hôm nay')) bad('Dòng "Em đố hôm nay" bị lệch giữa takeaway.mjs và quiz.mjs — tờ rời sẽ có các dòng tổng kết không cùng một khối.');
+  if (!TAKEAWAY.diemVaSheet.includes('Em dẫn hôm nay') || !LEAD.diemVai.includes('Em dẫn hôm nay')) bad('Dòng "Em dẫn hôm nay" bị lệch giữa takeaway.mjs và lead.mjs — dòng chốt sẽ nằm ngoài khối của dòng dẫn.');
+  if (!TAKEAWAY.viTri.includes('8–10 phút') || !LESSON.sessionCap.includes('8–10 phút')) bad('Trần phiên 8–10 phút không còn được cả takeaway.mjs lẫn lesson.mjs nêu — 20 giây chốt sẽ kéo phiên ra ngoài trần tiết học.');
+  if (!TAKEAWAY.viTri.includes('khép ở phút thứ 10') || !LESSON.sessionCap.includes('phút thứ 10')) bad('Đồng hồ khép ở phút thứ 10 không còn được hai tầng nêu chung — khối chốt sẽ tự đặt một trần phiên thứ hai.');
+  if (!TAKEAWAY.viTri.includes('12 lượt hỏi bài') || !LESSON.sessionCap.includes('12 lượt chính')) bad('Ngân sách 12 lượt chính lệch giữa takeaway.mjs và lesson.mjs — khối chốt sẽ ăn vào hoặc nới ngân sách lượt của tầng tiết học.');
+  if (!TAKEAWAY.tuDanhGia.includes('1 sải tay') || !PLAYZONE.depCho.includes('1 sải tay')) bad('Khoảng cách an toàn lệch giữa takeaway.mjs và playzone.mjs — vùng giơ ngón tay sẽ vẽ lại một chỗ đứng khác chỗ đã dẹp chơi.');
+  if (!TAKEAWAY.khungChon.includes('chỉ ba game mã VOICE mới có micro') || !QUIZ.cachDo.includes('micro')) bad('Trần microphone chỉ có ở ba game mã VOICE không còn được viện ở cả hai tầng — khối chốt sẽ bật ghi âm ở 82 game không có micro.');
+  if (!TAKEAWAY.khungChon.includes('<= 6 từ') || !IDENTITY.lines.includes('6 từ')) bad('Trần 6 từ một câu mascot lệch giữa takeaway.mjs và identity.mjs — mascot đọc khung câu sẽ vượt ngân sách lời của tầng bản sắc.');
+  if (!TAKEAWAY.viTri.includes('lượt thứ 13') || !LEAD.nguonDan.includes('lượt thứ 13')) bad('Cấm lượt thứ 13 không còn ở cả hai tầng — 20 giây chốt hoặc 5 giây dẫn sẽ âm thầm biến thành lượt hỏi bài thứ mười ba.');
+  if (!TAKEAWAY.viTri.includes('lượt đố thứ ba') || !QUIZ.nguonDe.includes('BA lượt')) bad('Vị trí "sau lượt đố thứ ba" lệch giữa takeaway.mjs và quiz.mjs — khối chốt sẽ móc vào một lượt đố không tồn tại.');
+  if (!TAKEAWAY.bonEmNoi.includes('Bản một học sinh') || !QUEUE.guard.includes('Bản một học sinh')) bad('Bản một học sinh không còn được cả hai tầng câu chốt và vai chờ quy định — game một em sẽ tự chọn bỏ khối chốt hay bỏ HUD vai chờ.');
+  if (!TAKEAWAY.bonEmNoi.includes('tầng vai chờ') || !QUEUE.rotate.includes('bốn em')) bad('Thứ tự lượt chốt không còn viện tầng vai chờ — bốn em sẽ có hai cách xếp hàng khác nhau trong cùng một phiên.');
+  if (!TAKEAWAY.viTri.includes('"giãn cơ"') || !PE.coolDown.includes('giãn cơ')) bad('Phần giãn cơ cuối tiết không còn được cả tầng câu chốt lẫn tầng thể dục nêu — 20 giây chốt sẽ đè lên cửa sổ hạ nhiệt.');
+  if (!TAKEAWAY.khungChon.includes('MẠCH kiến thức') || !CURRICULUM.machNhan.includes('tám mạch')) bad('Khung câu chốt không còn gắn MẠCH kiến thức như tầng chuẩn — bảng 24 khung mất chỗ đối chiếu với 57 cụm SGK.');
+}
+
+// Mỗi prompt game phải mang đúng BA KHUNG CÂU CHỐT của mạch kiến thức mình. Probe vòng 25: builder thay
+// dòng dữ liệu bằng "em nói một câu về bài học" thì khối CÂU CHỐT vẫn nguyên, 85 prompt vẫn xanh, mà không
+// game nào biết khung nào thuộc mạch nào — đúng chỗ hỏng mà tầng này sinh ra để chữa.
+for (const g of GAMES) {
+  const stdTk = STANDARDS[g.cluster];
+  if (!stdTk) continue;
+  const tf = takeawayFrames(stdTk.mach);
+  const rel = PATH_OF.get(g.id);
+  if (!rel || !fs.existsSync(path.join(ROOT, rel))) continue;
+  const t = fs.readFileSync(path.join(ROOT, rel), 'utf8');
+  for (const [needle, label] of [
+    ['- CÂU CHỐT — BỐN EM LẦN LƯỢT NÓI MỘT CÂU BẰNG LỜI CỦA MÌNH (vòng 25:', 'nhãn khối câu chốt kèm khảo sát'],
+    [`- Ba khung "Câu chốt" của game này (mạch "${stdTk.mach}"`, 'dòng dữ liệu khung câu kèm đúng mạch của game'],
+    [`"${tf[0]}" · "${tf[1]}" · "${tf[2]}"`, 'ba khung câu nguyên văn của ĐÚNG mạch này'],
+    ['ĐÚNG MỘT khối 20 giây ở cuối phiên sau lượt đố thứ ba, bốn lượt × 5 giây', 'trần 20 giây và bốn lượt nêu ngay trong prompt game'],
+    ['lấy nguyên văn ba khung dưới đây từ `tools/data/takeaways.mjs`', 'prompt phải trỏ thẳng về bảng khung câu'],
+    ['game không bật microphone, không nhận dạng giọng nói và không hiện sẵn đáp án cạnh chỗ trống', 'prompt game chốt trần micro và trần phiên âm'],
+  ]) {
+    if (!t.includes(needle)) bad(`${g.id}: prompt thiếu ${label} ("${needle.slice(0, 48)}") — builder phải lấy thẳng tools/data/takeaways.mjs theo mạch ${stdTk.mach}.`);
   }
 }
 
