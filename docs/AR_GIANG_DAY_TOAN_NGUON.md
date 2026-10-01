@@ -1,4 +1,4 @@
-# Giáo án AR trên bảng phấn — nguồn cộng đồng và bài học sau 25 vòng
+# Giáo án AR trên bảng phấn — nguồn cộng đồng và bài học sau 26 vòng
 
 Tài liệu này để **người khác tham khảo và nối tiếp**, không phải mô tả tính năng. Phần tính năng nằm ở
 [`prompts/giao-an/README.md`](../prompts/giao-an/README.md); ở đây chỉ ghi: cái gì đã đo được, cái gì đã
@@ -171,12 +171,29 @@ từ 5 lên 14 cụm từ. Kết quả đo: "mất máu" **39/39 → 0/39**, "sp
 arcade đều **0/39**, còn `toScreen` và "NEO VÀO CƠ THỂ" vẫn **39/39** (AR thật không bị cắt). Probe: P100 mất
 `soundToText`, P101 để nó lọt sang game, P102 dán ngược `ACCESS.caption` vào giáo án, P103 dán ngược
 `AR_RENDER` — cả bốn đỏ đúng thông báo.
+Vòng 26 quay lại góc đo vòng 21/22 — **một con số bị quy định ra sau đổi, còn hai quy định ra trước chưa
+theo**. `bigClass` (v11) đặt trần lượt lên bảng = `clamp(round(M/3), 12, 16)` và nâng nó thành tuyên bố
+phủ đầu "mọi con số về lớp phải là hàm của M", nhưng `handover` và `boardEquity` (đều ra TRƯỚC v11) vẫn
+khoá cứng "tối đa **12 lượt**" — boardEquity còn lấy "MỘT TIẾT 12 LƯỢT" làm tiêu đề. Đo trên 39 giáo án
+(needle điều khiển: cả ba quy định đều có mặt, và `bigClass` chính nó 39/39): "12 lượt" xuất hiện **3×/file**,
+đồng thời `clamp(round(M/3), 12, 16)` sống **39/39**, dải điều khiển "/15" **39/39** — nghĩa là HTML được sinh
+ra nhận CÙNG LÚC "quá 12 thì tạm khoá" (handover/boardEquity) và một bộ đếm cho phép tới 15–16 (bigClass).
+Với lớp 45 em: bigClass bảo "9/15", handover bảo khoá ở 12 — hoặc bộ đếm không bao giờ chạm 15, hoặc nút khoá
+phá lời hứa chia đều của quy định sĩ số. Vá theo hướng **một nguồn duy nhất**: giữ nguyên con số của bigClass,
+viết lại `handover` + `boardEquity` (và cả bản tóm tắt `LESSON_SHORT`) để chúng ĐỌC ĐÚNG `clamp(round(M/3),
+12, 16)` và nói rõ "12 chỉ là giá trị tại M=35, không phải hằng số tuyệt đối"; bigClass tuyên bố mình là TRẦN
+DUY NHẤT mà hai quy định kia phải theo. **Vòng này không đổi số nào** — chỉ làm ba chỗ nói cùng một số. Thêm
+một **khoá bắt-cặp** kiểu vòng 22/23: đỏ nếu `handover` hay `boardEquity` còn nhắc trần "lượt lên bảng" mà
+chuỗi đó không chứa `clamp(round(M/3)`. P104 (handover lùi về 12 cứng) và P105 (boardEquity lùi về 12 cứng)
+chứng minh khoá đỏ. Sau vòng: mỗi GA prompt chỉ còn ĐÚNG MỘT chữ "12 lượt" (ví dụ lớp 35 em trong boardEquity)
+thay vì 3, và `clamp(...)` xuất hiện 4×. Đây là vòng NỘI BỘ (đo bằng grep trên 39 giáo án, không trích dẫn
+ngoài — mâu thuẫn nằm ở việc một quy định ra sau đổi số mà quy định ra trước không đổi theo).
 3. **Quy định phải có con số.** "Chữ phải to" không kiểm chứng được; "≥ 40 px **và** ≥ 5.5% chiều cao khung
    hình, ≤ 12 chữ một dòng" thì validator bắt được. Mọi quy định trong `tools/lib/*.mjs` là chuỗi nguyên văn,
    `tools/validate.mjs` so bằng `includes()`, nên lời văn và mắt kiểm không bao giờ lệch nhau.
 4. **Chốt chặn hai chiều.** Cơ chế game lọt vào giáo án và quy định giáo án lọt sang game đều làm build đỏ.
    Thêm một quy định mới là tự động thêm một khoá bị cấm ở phía bên kia (`LESSON_FAMILY_RULES`).
-5. **Probe đột biến là đơn vị kiểm thử thật.** 103 phép, mỗi phép phá đúng một thứ và đòi đúng thông báo.
+5. **Probe đột biến là đơn vị kiểm thử thật.** 105 phép, mỗi phép phá đúng một thứ và đòi đúng thông báo.
    Không có probe thì một quy định chỉ là câu văn đẹp.
 6. **Tách công cụ giảng bài khỏi game.** Cùng một kiến thức, hai động cơ đối lập: game cần hồi hộp,
    tiết giảng cần giáo viên cầm lái. Nhét tim/điểm/combo vào bảng phấn làm em lên bảng sợ sai hơn là muốn hiểu.
@@ -210,6 +227,7 @@ arcade đều **0/39**, còn `toScreen` và "NEO VÀO CƠ THỂ" vẫn **39/39**
 | 23 | **đo TIỀN ĐỀ của hai quy định cách nhau 12 vòng**: `noProjector` (v8) biến "không có máy chiếu" thành chế độ hạng nhất ("MỘT màn hình duy nhất cho cô + học sinh nhìn gần", hoặc in ra), nhưng `privateView` (v20) dựng cả lời hứa "chỉ cô thấy" quanh cái máy chiếu — hỏi "Máy chiếu CHUNG MÀN hay MÀN RIÊNG?" và chữa bằng `window.open` cửa sổ thứ hai "kéo sang máy chiếu"; đo: `privateView` nhắc "máy chiếu" **5 lần**, đối chiếu `noProjector` = **false**, cụm hoà giải ("Ép CHUNG MÀN" · "màn cả lớp đang nhìn") = **0/39** — giao của chúng (cả 45 em vây một màn, rủi ro lộ cao nhất, không có màn hai để kéo đi) chưa từng định nghĩa | SỬA `privateView` (không thêm quy định 48): mệnh đề (0) phân nhánh `noProjector` → ở "Chế độ không màn chiếu" thì **mặc nhiên CHUNG MÀN, không hỏi, không `window.open`**, chỉ giữ-phím-để-xem; đổi câu hỏi thành "Màn mà cả lớp đang nhìn…" (đúng cả với ti vi một màn). **Khoá bắt-cặp** mới: đỏ nếu `privateView` còn `window.open` mà thiếu nhắc `noProjector` HOẶC thiếu "MẶC NHIÊN coi là CHUNG MÀN" — P95 cắt vế đầu, P96 cắt vế sau |
 | 24 | **đo HỆ QUẢ CỦA VIỆC TÁI DÙNG một quy định trái họ**: khung "TIẾP CẬN" của mỗi giáo án dán `ACCESS.flash` + `ACCESS.reducedMotion` — hai quy định **viết cho game** nên chứa "viền HUD theo combo", "mất máu", "hit-stop xuống ~30 ms", "mascot chỉ đổi biểu cảm", "particle và speed lines", "số lượt, điểm" — trong khi `LESSON.noGame` cùng file cấm đúng chúng. Build xanh 23 vòng vì `GAME_ONLY` chỉ so nguyên văn chuỗi `FEEL.*`, còn ACCESS thì bị `ACCESS_RULES` bắt buộc CÓ mặt; đo trên 39 giáo án (needle điều khiển `noGame` **2×/prompt**): mất máu **2×**, combo **4×**, hit-stop **4×**, mascot **6×**, particle **8×**, speed lines **3×**, vệt neon **1×**, "số lượt, điểm" **1×** | THÊM quy định #48 `motionSafety` (khác v22/23 chỉ sửa): cùng hai quan tâm bằng TỪ CỦA LỚP — trần nhấp nháy ≤ 3 lần/giây, không chớp phủ toàn màn, vùng nhấp nháy ≤ 25% khung, mỗi thao tác chỉ fade một lần rồi nằm yên; tự đọc `prefers-reduced-motion`/`prefers-contrast` một lúc khởi động, reduce thì bật sẵn "Giảm hiệu ứng" **nhưng giữ đủ 100% năm bước · bảng · vật thật · sơ đồ · phiếu**, lưu `localStorage` không hỏi lại (tham chiếu `flow`/`pace`/`noGame` thật). `build-lessons` nạp nó THAY hai dòng ACCESS; validator tách `LESSON_ACCESS_RULES` (bỏ flash/reducedMotion) cho giáo án, game giữ nguyên; thêm chốt **cấp cụm từ** `GAME_LEAK` — P97 mất `motionSafety`, P98 lọt sang game, P99 dán ngược `ACCESS.flash` vào giáo án. *Chưa sửa cùng vòng: `ACCESS.caption` (mất máu/mascot/combo/thắng màn) và `AR_RENDER` (speed lines/người chơi/nhịp game) còn **39/39** → việc của vòng 25* |
 | 25 | **đo nốt hai nguồn rò trái họ còn lại** (cùng góc đo v24, nội bộ bằng grep, không trích dẫn ngoài): `ACCESS.caption` mang "mascot nói", "combo, mất máu, thắng màn" và khối `AR_RENDER` của game mang "speed lines", "sát mặt người chơi", "nhịp game nhanh", "spawn", "va chạm", "màn chơi" — tất cả đang nằm nguyên trong 39 giáo án vì `build-lessons` dán thẳng hai chuỗi game-viết; đo trước: "mất máu" **39/39**, "speed lines" **39/39** | THÊM quy định #49 `soundToText` (giữ quan tâm `caption` bằng từ của lớp: mọi âm thanh giờ giảng có bản chữ, tiếng Anh/thuật ngữ kèm nút "Hiện chữ" bật ngay từ đầu, "tách"/"soạt" kèm biểu tượng nhìn thấy, học sinh nghe kém/cuối phòng/lớp ồn vẫn theo 100%, bản chữ **không bao giờ là kênh DUY NHẤT** báo đúng/sai — không mascot/combo/mất máu) và hằng số `AR_LESSON` trong `ar.mjs` (**giữ AR thật**: cover-fit `Math.max`, một lớp rgba 0.45, `toScreen(lx,ly)`, z 1.6→0.35, NEO VÀO CƠ THỂ; bỏ đuôi arcade + đổi nền sang "nền lớp học", nét phấn, con trỏ, vật thật ảo, sơ đồ). `build-lessons` nhập `AR_LESSON`/`soundToText`; validator bỏ `caption` khỏi `LESSON_ACCESS_EXCLUDE`, khoá `soundToText`, `GAME_LEAK` 5→14. Đo sau: "mất máu" **0/39**, "speed lines" **0/39**, 14 needle **0/39**, còn `toScreen` + "NEO VÀO CƠ THỂ" **39/39**. P100 mất `soundToText`, P101 lọt sang game, P102 dán ngược `ACCESS.caption`, P103 dán ngược `AR_RENDER` |
+| 26 | **đo một con số bị quy định ra sau đổi mà hai quy định ra trước không theo** (góc đo v21/22, nội bộ bằng grep): `bigClass` (v11) đặt trần lượt lên bảng = `clamp(round(M/3), 12, 16)` + tuyên bố "mọi con số về lớp là hàm của M", nhưng `handover` và `boardEquity` (ra trước) vẫn khoá cứng "tối đa 12 lượt" (boardEquity lấy "MỘT TIẾT 12 LƯỢT" làm tiêu đề); đo: "12 lượt" **3×/file** *và* `clamp(round(M/3), 12, 16)` **39/39** *và* bộ đếm "/15" **39/39** — HTML sinh ra nhận cùng lúc "quá 12 thì khoá" và "9/15" | HỢP NHẤT VỀ MỘT NGUỒN (không đổi số nào): giữ `bigClass` là trần duy nhất, viết lại `handover` + `boardEquity` + `LESSON_SHORT` để đọc đúng `clamp(round(M/3), 12, 16)` và ghi rõ "12 chỉ là giá trị tại M=35"; bigClass tuyên bố mình là TRẦN DUY NHẤT. **Khoá bắt-cặp** mới (kiểu v22/23): đỏ nếu `handover`/`boardEquity` nhắc "lượt lên bảng" mà thiếu `clamp(round(M/3)` — P104 (handover lùi về 12 cứng), P105 (boardEquity lùi về 12 cứng). Sau: mỗi GA còn đúng **1** chữ "12 lượt" (ví dụ M=35) thay vì 3, `clamp(...)` **4×**, build xanh + deterministic, probe **105/105** |
 
 ## Vì sao chọn những con số đang dùng
 
@@ -784,12 +802,13 @@ thành "tăng X% điểm".
   quy định bằng một cú pháp riêng (`→`ruleName`←`), hoặc để khoá chỉ bắt tên *khớp khuôn quy định* mà không có
   trong danh sách. Cách hiện tại đơn giản và an toàn cho 49 quy định, nhưng cần người sau biết nó là nợ kỹ
   thuật có chủ đích chứ không phải thiếu sót.
-- **Hai "khoá bắt-cặp" (vòng 22, 23) là mã tay, không phải một cơ chế tổng quát.** `validate.mjs` giờ có đúng
-  HAI kiểm tra dạng "nếu quy định A còn cụm X thì buộc phải nhắc quy định B" (detectionEquity→rehearsalBudget,
-  privateView→noProjector). Chúng mạnh hơn khoá `includes()` thông thường vì bắt được mâu thuẫn *tiền đề* mà mắt
-  khó thấy, nhưng mỗi cái viết cho ĐÚNG MỘT cặp tên-hàm-cụ-thể. Thêm quy định mới có cùng dạng rủi ro thì PHẢI
-  viết thêm một `if` nữa — chưa có bảng khai báo cặp nào để mở rộng. Nếu sau này có ≥ 3 cặp, nên trừu tượng hoá
-  thành một danh sách `[[quyDinh, dieuKien, phaiChua]]` và lặp, thay vì nối tiếp vài `if` cứng.
+- **Ba "khoá bắt-cặp" (vòng 22, 23, 26) là mã tay, không phải một cơ chế tổng quát.** `validate.mjs` giờ có đúng
+  BA kiểm tra dạng "nếu quy định A còn cụm X thì buộc phải nhắc quy định/công thức B" (detectionEquity→rehearsalBudget,
+  privateView→noProjector, handover/boardEquity→`clamp(round(M/3)` của bigClass). Chúng mạnh hơn khoá `includes()`
+  thông thường vì bắt được mâu thuẫn *tiền đề* mà mắt khó thấy, nhưng mỗi cái viết cho ĐÚNG MỘT cặp tên-hàm-cụ-thể.
+  Vòng 26 đã viết khoá của nó bằng một vòng lặp nhỏ `for (const name of ['handover','boardEquity'])` thay vì `if`
+  đơn — chính là bước đầu của hướng trừu tượng hoá. Thêm quy định mới có cùng dạng rủi ro thì vẫn phải thêm một
+  `if`/một mẩu bảng; khi có thêm cặp thứ 4 thì gom cả ba vào một danh sách `[[quyDinh, dieuKien, phaiChua]]` và lặp.
 - **`GAME_LEAK` (vòng 24, mở rộng vòng 25) đã đi theo hướng danh-sách-khai-báo mà bullet trên ao ước, nhưng còn CHỈN TAY mức.**
   Nó là một mảng needle — 5 cụm từ vòng 24 (`['vệt neon','HUD theo combo','mascot chỉ đổi biểu cảm','hit-stop xuống','số lượt, điểm']`)
   cộng 9 cụm từ vòng 25 từ `ACCESS.caption`/`AR_RENDER` (`'mất máu','thắng màn','mascot nói','màn chơi','spawn','va chạm','sát mặt người chơi','nhịp game','speed lines'`) = **14** needle —
@@ -808,6 +827,12 @@ thành "tăng X% điểm".
   có cặp thứ 4 thì trừu tượng hoá thành bảng khai báo `[[quyDinh, dieuKien, phaiChua]]` như bullet trên. (c) `bigClass`
   dùng trần `clamp(round(M/3), 12, 16)` nhưng chưa probe nào đổi sĩ số M rồi kiểm trần lượt lên bảng + "mẫu đại diện"
   nhảy đúng nấc — một field-test cho `roomFootprint`/`breakReserve`/`rehearsalBudget` vẫn còn thiếu.
+- **Vòng 26 đã hợp nhất TRẦN LƯỢT LÊN BẢNG về một nguồn.** `handover` + `boardEquity` + `LESSON_SHORT` không còn khoá cứng "12 lượt" mà đọc đúng `clamp(round(M/3), 12, 16)` của `bigClass`; mỗi GA chỉ còn 1 chữ "12 lượt" (ví dụ
+  M=35) thay vì 3, và khoá bắt-cặp thứ ba đỏ nếu ai đó lùi lại hằng số (P104/P105). **Việc còn mở:** vòng này chỉ
+  làm ba chỗ *nói cùng một công thức*, **chưa** kiểm *số học* của công thức — chưa có probe nào cho M=45 rồi xác
+  nhận trần ra đúng 15, M=55 ra 16, M=35 ra 12, hay M < 36 không tụt dưới 12. Đó chính là field-test (c) ở bullet
+  trên, nay càng đáng làm vì cả ba quy định đã cùng trông chờ vào một biểu thức duy nhất: chỉ cần biểu thức đó sai
+  thì sai ở mọi nơi.
 
 ## Muốn đóng góp thì sửa ở đâu
 

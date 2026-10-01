@@ -233,6 +233,15 @@ if (LESSON.detectionEquity.includes('vào trước camera') && !LESSON.detection
 if (LESSON.privateView.includes('window.open') && (!LESSON.privateView.includes('noProjector') || !LESSON.privateView.includes('MẶC NHIÊN coi là CHUNG MÀN')))
   bad('LESSON.privateView: phải tính tới "Chế độ không màn chiếu" của `noProjector` — bỏ hỏi topology và mặc nhiên coi là CHUNG MÀN khi chỉ có một màn duy nhất, không window.open cửa sổ riêng.');
 
+// Vòng 26 — bắt cặp TRẦN LƯỢT LÊN BẢNG: `bigClass` (v11) đặt trần = clamp(round(M/3), 12, 16) và tuyên bố
+// "mọi con số về lớp phải là hàm của M", nhưng `handover` và `boardEquity` (ra TRƯỚC) vẫn khoá cứng "tối đa
+// 12 lượt". Đo trên 39 giáo án: "12 lượt" xuất hiện 3×/file *và* công thức clamp sống 39/39 — HTML sinh ra
+// nhận cùng lúc "quá 12 thì tạm khoá" và một bộ đếm "/15". Nay cả ba khớp ĐÚNG MỘT công thức; để `handover`
+// hoặc `boardEquity` nhắc trần "lượt lên bảng" mà bỏ hàm của M là build đỏ.
+for (const name of ['handover', 'boardEquity'])
+  if (LESSON[name].includes('lượt lên bảng') && !LESSON[name].includes('clamp(round(M/3)'))
+    bad(`LESSON.${name}: trần "lượt lên bảng" phải là hàm của sĩ số theo \`bigClass\` — clamp(round(M/3), 12, 16), không được là hằng số 12 tuyệt đối.`);
+
 for (const g of GAMES) {
   const rel = PATH_OF.get(g.id);
   if (!rel) { bad(`${g.id}: không có đường dẫn prompt trong catalog.`); continue; }
