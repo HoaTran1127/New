@@ -66,7 +66,7 @@ Bốn biến thể đầu dùng **cùng một hợp đồng AR** như prompt gam
 - `04-english5/` — 15 game Tiếng Anh 5.
 - `01-prompt-…` đến `12-prompt-…` — **12 prompt legacy** đời đầu: giữ nguyên cơ chế game, đã thay MediaPipe Legacy/Tailwind CDN/Tone.js bằng chuẩn hiện hành và gắn nhãn `LEGACY`. Không dùng làm khuôn cho game mới.
 - `VARIANTS_425.md` — 425 biến thể (85 game × 5 kiểu điều khiển), do `tools/build-variants.mjs` sinh.
-- `CHECKLIST_NGHIEP_THU.md` — bảng kiểm cầm tay khi nhận file HTML về: 41 mục máy tự kiểm + 32 việc người thử bấm tay (trong đó 6 mục gắn 📷 chỉ có camera mới kiểm được; bản không camera bỏ 6 mục đó và vẫn phải đạt 35 mục còn lại), do `tools/build-acceptance.mjs` sinh từ `tools/lib/acceptance.mjs`.
+- `CHECKLIST_NGHIEP_THU.md` — bảng kiểm cầm tay khi nhận file HTML về: 42 mục máy tự kiểm + 33 việc người thử bấm tay (trong đó 6 mục gắn 📷 chỉ có camera mới kiểm được; bản không camera bỏ 6 mục đó và vẫn phải đạt 36 mục còn lại), do `tools/build-acceptance.mjs` sinh từ `tools/lib/acceptance.mjs`.
 
 ## ✅ Nghiệm thu một game vừa sinh
 
@@ -302,13 +302,29 @@ Việc người thử số 31 ("quay một vòng dang hai tay ngay tại chỗ e
 
 Việc người thử số 32 ("chơi thử một phiên ngay tại chỗ em sẽ đứng — trò chơi dân gian hiện trên màn hình có phải trò em thật sự từng chơi ở sân trường, hay chỉ là cái tên dán lên một cú vung tay? Đọc to lời hô hai lần xem có khớp vạch nhịp, nhìn xuống tay xem game có đòi cầm vật thật, gọi tên năm trò đã loại xem có trò nào được dựng lại dưới tên khác không") là chỗ máy không tự kiểm được: `validate.mjs` so được chuỗi với `tools/data/folk.mjs`, còn **trò đó có thật ở sân trường em không** thì chỉ người lớn lên ở đó mới trả lời được.
 
+## 🎤 Tầng "đố bạn" — `tools/lib/quiz.mjs` + `tools/data/quiz.mjs` (vòng 23)
+
+Đo 85 prompt trước vòng 23: **"đố bạn" 0/85, "người đố" 0/85, "em ra đề" 0/85, "tự đặt đề" 0/85, "hoàn thành câu" 0/85, "em đọc to" 0/85**, micro chỉ **3/85** (đúng ba game mã VOICE) — ngược lại **"ngân hàng câu hỏi" 85/85, "đề bài hiện" 85/85**. Thư viện có tới tầng tự kiểm chứng đề và tầng độ khó thích ứng, nhưng cả hai đều giả định **máy** ra đề: em không bao giờ bị đặt vào mức phải hiểu câu hỏi đủ sâu để tự đặt nó cho bạn. Tầng này cho đúng BA/12 lượt thuộc về em.
+
+| Luật | Con số | Kiểm ở đâu |
+|:---|:---|:---|
+| Đúng **BA lượt "Đố bạn"** một phiên | mỗi hiệp **MỘT lượt** ở **CUỐI hiệp**, **9/12 lượt còn lại vẫn từ ngân hàng đề**; mẫu câu NGUYÊN VĂN từ `tools/data/quiz.mjs` (tám mạch × ba mẫu, mỗi mẫu **<= 8 từ**, đúng **một chỗ trống**), em điền **MỘT số/từ đang hiện trên thẻ** | `verifyQuiz()` điều 1 |
+| Thẻ **"Đố bạn"** một hàng ba mẫu câu | **>= 20px**, **tự tắt sau 6 giây** hoặc khi chạm, **không microphone**, **không in sẵn đáp án**; bấm "Em đố" rồi đọc to **một mẫu trong 3 giây** | `verifyQuiz()` điều 2 |
+| **Bạn đáp bằng một động tác** của mã điều khiển | trong **vòng 1 sải tay** + **hình quạt 90 độ**, cùng **thời gian thẻ của hiệp**; vai "Thư ký" đọc lại cả đề lẫn đáp án | `verifyQuiz()` điều 3 |
+| **Đề lệch không phạt ai** | **không trừ tim, không cắt chuỗi**, mascot **một câu đỡ <= 6 từ**, lượt kế về đề ngân hàng, có nút **"Em chịu, bạn đáp giúp"** | `verifyQuiz()` điều 3 |
+| **Điểm đố vào "Cả nhóm"** | **+5**, **không** vào "miti-best"; tổng kết in **"Em đố hôm nay: <tên> <n> đề"** trong khối "Copy tờ rời" | `verifyQuiz()` điều 4 |
+
+`verifyQuiz()` chạy MỘT LẦN lúc nạp và kiểm **đúng bốn điều**; thiếu thì `console.warn` tiếng Việt nêu đúng phần lệch và bảng kiểm ghi CHƯA ĐẠT ở **mục `[42]`**. Bản một học sinh, bản không camera và bản tắt tiếng vẫn bắt buộc kiểm đủ bốn điều, vì một em đọc mẫu câu và một em đáp bằng động tác không phụ thuộc webcam.
+
+Việc người thử số 33 ("đọc to một mẫu câu "Đố bạn" ở cuối hiệp 1 rồi để bạn bên cạnh đáp bằng động tác — đề có nằm đúng mạch đang học và có đáp án thật trên thẻ không? cố tình điền một số ngoài phạm vi đã học xem game có trừ tim hay chỉ âm thầm đổi sang đề ngân hàng? bấm "Em chịu, bạn đáp giúp" rồi tìm dòng "Em đố hôm nay" trong khối "Copy tờ rời"") là chỗ máy không tự kiểm được: `validate.mjs` so được mẫu câu với `tools/data/quiz.mjs`, còn **đề đó có vừa sức em được đố không** thì chỉ người lớn đứng cạnh em mới trả lời được.
+
 ## 🔁 Pipeline của thư viện
 
 85 prompt game **được sinh tự động**, không sửa tay:
 
 ```
-tools/data/games.mjs + clusters.mjs + gestures.mjs + examples.mjs + error-notes.mjs + identities.mjs + standards.mjs + sports.mjs + folk.mjs
-tools/lib/ar.mjs · rules.mjs · feel.mjs · classroom.mjs · access.mjs · light.mjs · celebrate.mjs · identity.mjs · rhythm.mjs · queue.mjs · lesson.mjs · curriculum.mjs · sport.mjs · family.mjs · pacing.mjs · playzone.mjs · folk.mjs · verify.mjs · pe.mjs · memory.mjs · hype.mjs · anticipation.mjs · acceptance.mjs
+tools/data/games.mjs + clusters.mjs + gestures.mjs + examples.mjs + error-notes.mjs + identities.mjs + standards.mjs + sports.mjs + folk.mjs + quiz.mjs
+tools/lib/ar.mjs · rules.mjs · feel.mjs · classroom.mjs · access.mjs · light.mjs · celebrate.mjs · identity.mjs · rhythm.mjs · queue.mjs · lesson.mjs · curriculum.mjs · sport.mjs · family.mjs · pacing.mjs · playzone.mjs · folk.mjs · quiz.mjs · verify.mjs · pe.mjs · memory.mjs · hype.mjs · anticipation.mjs · acceptance.mjs
         └─ node tools/build.mjs ─→ catalogs/GAME_CATALOG.csv · .md · .js + prompts/0X-*/ + index.html + prompts/CHECKLIST_NGHIEP_THU.md
 ```
 

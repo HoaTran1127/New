@@ -19,6 +19,7 @@ import { FAMILY } from './lib/family.mjs';
 import { PACE } from './lib/pacing.mjs';
 import { PLAYZONE } from './lib/playzone.mjs';
 import { FOLK } from './lib/folk.mjs';
+import { QUIZ } from './lib/quiz.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 
@@ -78,6 +79,7 @@ const REQUIREMENTS = `YÊU CẦU BẮT BUỘC THEO CHUẨN MiTi (áp dụng cho 
 28. TUẦN HỌC — LỚP ĐANG HỌC TỚI TUẦN MẤY: ${PACE.nhanTuan} ${PACE.hoiMotCau} ${PACE.onTheoTuan} ${PACE.nuocRut} ${PACE.tongOn} ${PACE.guard}
 29. CHỖ CHƠI AN TOÀN: ${PLAYZONE.depCho} ${PLAYZONE.giayDep} ${PLAYZONE.lopChat} ${PLAYZONE.locDongTac} ${PLAYZONE.nutMet} ${PLAYZONE.guard}
 30. SÂN CHƠI VIỆT NAM: ${FOLK.chonTro} ${FOLK.dongDao} ${FOLK.banAnToan} ${FOLK.doDung} ${FOLK.doiBan} ${FOLK.guard}
+31. ĐỐ BẠN: ${QUIZ.nguonDe} ${QUIZ.cachDo} ${QUIZ.dapCuaBan} ${QUIZ.xuLyLech} ${QUIZ.diemVai} ${QUIZ.guard}
 31. ĐẦU RA: duy nhất 1 file HTML hoàn chỉnh, CSS nội tuyến trong một khối <style>, không file .css/.js/.json/ảnh/mp3 ngoài, không TODO, không pseudocode, không "...", không phần "bạn tự bổ sung", không lỗi console khi mở trực tiếp bằng trình duyệt.`;
 
 const bannerOf = (l) =>
