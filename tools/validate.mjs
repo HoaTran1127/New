@@ -102,11 +102,12 @@ const ACCESS_RULES = [
   [ACCESS.contrast, 'thiếu ngưỡng tương phản chữ 4.5:1'],
   [ACCESS.handedness, 'thiếu câu hỏi tay thuận lúc calibration'],
 ];
-// Giáo án KHÔNG nạp ACCESS.flash / ACCESS.reducedMotion nguyên văn: hai quy định đó là của game,
-// chứa "mất máu", "viền HUD theo combo", "hit-stop xuống", "mascot chỉ đổi biểu cảm", "speed lines" —
-// đúng vốn từ mà LESSON.noGame cấm trong lớp. Phần tiếp cận thị giác phù hợp lớp do LESSON.motionSafety
-// gánh (đã khoá ở LESSON_RULES). ACCESS_RULES vẫn bắt buộc nguyên bộ với prompt game.
-const LESSON_ACCESS_EXCLUDE = new Set([ACCESS.flash, ACCESS.reducedMotion]);
+// Giáo án KHÔNG nạp ACCESS.flash / ACCESS.reducedMotion / ACCESS.caption nguyên văn: ba quy định đó là của game,
+// chứa "mất máu", "viền HUD theo combo", "hit-stop xuống", "mascot chỉ đổi biểu cảm", "speed lines", và với
+// caption là "nội dung mascot nói", "âm báo combo, mất máu và thắng màn" — đúng vốn từ mà LESSON.noGame cấm trong
+// lớp. Phần tiếp cận phù hợp lớp do LESSON.motionSafety (thay flash/reducedMotion) và LESSON.soundToText (thay
+// caption) gánh (đã khoá ở LESSON_RULES). ACCESS_RULES vẫn bắt buộc nguyên bộ với prompt game.
+const LESSON_ACCESS_EXCLUDE = new Set([ACCESS.flash, ACCESS.reducedMotion, ACCESS.caption]);
 const LESSON_ACCESS_RULES = ACCESS_RULES.filter(([needle]) => !LESSON_ACCESS_EXCLUDE.has(needle));
 
 // Kiểm chứng nội tại + thích ứng: "mỗi mục một đáp án đúng duy nhất" là lời hứa, không phải cơ chế.
@@ -186,6 +187,7 @@ const LESSON_RULES = [
   [LESSON.privateView, 'thiếu quy định dải điều khiển riêng của cô chỉ thật khi máy chiếu không soi gương'],
   [LESSON.rehearsalBudget, 'thiếu quy định chạy thử 5 phút giữ đúng nhánh không-camera và ngân sách bước'],
   [LESSON.motionSafety, 'thiếu quy định trần nhấp nháy và chuyển động dịu của chế độ giảng bài (bản không-từ-vựng-game của ACCESS.flash + ACCESS.reducedMotion)'],
+  [LESSON.soundToText, 'thiếu quy định bản chữ tương đương cho âm thanh của chế độ giảng bài (bản không-từ-vựng-game của ACCESS.caption)'],
 ];
 // Từ bảng ra vở: một tiết giảng chỉ thật sự xong khi các em làm được bài trên giấy.
 const HANDOUT_RULES = [
@@ -395,15 +397,19 @@ if (!fs.existsSync(LESSON_DIR)) {
     MOTION.amplitude, MOTION.breather, FEEL.hitStop, FEEL.combo, FEEL.bonus, FEEL.mascot,
     RULES.antiLuck, RULES.summary, CLASSROOM.mastery, CLASSROOM.twoPlayer,
   ];
-  // GAME_ONLY so nguyên văn cả chuỗi FEEL.*, nên một quy định game bị DÁN XOAY (ACCESS.flash/reducedMotion
-  // vốn là quy định tiếp cận nhưng mang vốn từ arcade) lọt qua khe. Chốt này bắt cấp CỤM TỪ ĐẶC TRƯNG mà
-  // không trùng với các phủ định của LESSON.noGame ("không hit-stop", "không mascot ăn mừng"): chỉ những
-  // cách nói chỉ có trong quy định game mới bị bắt. Vòng 24 nạp đúng LESSON.motionSafety thay hai quy định
-  // đó, nên năm cụm dưới đây phải SẠCH trong mọi giáo án. ('mất máu' của ACCESS.caption và 'speed lines'
-  // của khối AR_RENDER vẫn còn sót — đó là lỗ hổng khác, đo và vá ở vòng 25, chưa đưa vào đây để khỏi chặn build.)
+  // GAME_ONLY so nguyên văn cả chuỗi FEEL.*, nên một quy định game bị DÁN XOAY (ACCESS.flash/reducedMotion/caption,
+  // hay cả khối AR_RENDER của game) lọt qua khe. Chốt này bắt cấp CỤM TỪ ĐẶC TRƯNG mà KHÔNG trùng phủ định của
+  // LESSON.noGame ("không hit-stop", "không mascot ăn mừng") và không chạm quy định dùng-chung hợp lệ (perf nói
+  // "đường tốc độ", autoPause nói "điểm và lượt"). Vòng 24+25 đã thay cả bốn nguồn bằng bản của lớp
+  // (motionSafety, soundToText, AR_LESSON), nên mọi cụm dưới đây phải SẠCH trong cả 39 giáo án; thêm một needle
+  // mới phải grep 39 file trước để khỏi chặn build oan.
   const GAME_LEAK = [
-    'vệt neon', 'HUD theo combo',
-    'mascot chỉ đổi biểu cảm', 'hit-stop xuống', 'số lượt, điểm',
+    // từ ACCESS.flash / ACCESS.reducedMotion (vòng 24):
+    'vệt neon', 'HUD theo combo', 'mascot chỉ đổi biểu cảm', 'hit-stop xuống', 'số lượt, điểm',
+    // từ ACCESS.caption (vòng 25):
+    'mất máu', 'thắng màn', 'mascot nói',
+    // từ khối AR_RENDER của game (vòng 25):
+    'màn chơi', 'spawn', 'va chạm', 'sát mặt người chơi', 'nhịp game', 'speed lines',
   ];
   const files = fs.readdirSync(LESSON_DIR);
   if (!files.includes('README.md')) bad('Thiếu prompts/giao-an/README.md — trang mục lục của bộ giáo án.');

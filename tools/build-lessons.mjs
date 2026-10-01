@@ -7,7 +7,7 @@ import { ERROR_NOTES } from './data/error-notes.mjs';
 import { PROP_KEYS, prop } from './data/props.mjs';
 import { buildLessons } from './data/lessons.mjs';
 import { readCatalog } from './lib/csv.mjs';
-import { AR_RENDER, TASKS_VISION } from './lib/ar.mjs';
+import { AR_LESSON, TASKS_VISION } from './lib/ar.mjs';
 import { RULES } from './lib/rules.mjs';
 import { CLASSROOM } from './lib/classroom.mjs';
 import { ACCESS, ACCESS_SHORT } from './lib/access.mjs';
@@ -134,7 +134,7 @@ ${jsonBlock(EXAMPLES[L.cluster], cl.tags, notes)}
 - ${LESSON.bigClass}
 
 6. NỀN AR, CAMERA VÀ NHẬN DIỆN TAY
-${AR_RENDER}
+${AR_LESSON}
 - MediaPipe Tasks Vision, pin phiên bản: import từ ${TASKS_VISION.bundle}
   wasm: ${TASKS_VISION.wasm}
   model: ${TASKS_VISION.hand} (HandLandmarker) và ${TASKS_VISION.pose} (PoseLandmarker, chỉ dùng để đặt mép trên của bảng theo landmark vai)
@@ -165,7 +165,7 @@ ${AR_RENDER}
 - ${LESSON.noProjector}
 - ${ACCESS.contrast}
 - ${ACCESS.notColorOnly}
-- ${ACCESS.caption}
+- ${LESSON.soundToText}
 - ${LESSON.motionSafety}
 - ${RULES.autoPause} Ở công cụ giảng bài, tự Pause KHÔNG được làm mất nội dung đang có trên bảng: quay lại thì bảng còn nguyên như lúc rời đi.
 - ${RULES.perf} Riêng khi đang viết phấn trên bảng thì ưu tiên nhận diện bàn tay mỗi khung hình và giảm particle, vì độ trễ nét viết quan trọng hơn hiệu ứng.

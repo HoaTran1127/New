@@ -13,6 +13,23 @@ export const AR_RENDER = `- NỀN AR (nguyên tắc gốc): khung hình webcam C
 - CHIỀU SÂU: mỗi vật thể mang z từ 1.6 (xa) về 0.35 (sát mặt người chơi); kích thước vẽ = cỡ gốc / z, vật xa nhỏ và hơi mờ, vật gần to và rực; vẽ ellipse bóng mờ dưới chân vật trên "sàn" ảo; thêm đường tốc độ (speed lines) dọc hai bên mép khi nhịp game nhanh lên.
 - NEO VÀO CƠ THỂ: vật thể ảo phải đeo hoặc buộc vào landmark thật và cập nhật mỗi khung hình — cổ tay tay = landmark 0, khuỷu = 13/14, vai = 11/12, hông = 23/24, mũi = 0, tâm bàn tay = trung bình landmark 5, 9, 13, 17. Mất landmark hoặc confidence tụt thì vật neo biến mất kèm hướng dẫn tiếng Việt, không được nhảy lung tung.`;
 
+// AR cho CHẾ ĐỘ GIẢNG BÀI: cùng bộ cơ chế THẬT (nền webcam + cover-fit + toScreen + chiều sâu + neo cơ thể)
+// nhưng diễn đạt bằng từ của lớp học. AR_RENDER là hợp đồng của GAME nên mang "màn chơi", "vị trí spawn",
+// "va chạm", "sát mặt người chơi", "speed lines khi nhịp game nhanh" — đúng vốn từ arcade mà build-lessons
+// không được dán vào 39 giáo án (LESSON.noGame cấm cơ chế game). build-lessons.mjs nạp AR_LESSON thay AR_RENDER;
+// build-prompts/build-variants vẫn dùng AR_RENDER/AR_SHORT, và validate.mjs KHÔNG áp AR_RULES cho giáo án.
+export const AR_LESSON = `- NỀN THẬT CỦA TIẾT GIẢNG (nguyên tắc gốc): khung hình webcam CHÍNH LÀ nền lớp học, không phải ảnh nền trang trí. Vẽ video vào canvas ở mỗi khung hình, lật gương + cover-fit (cắt viền, không giãn hình):
+    scale = Math.max(W / video.videoWidth, H / video.videoHeight)
+    drawW = video.videoWidth * scale;  drawH = video.videoHeight * scale
+    offX = (W - drawW) / 2;            offY = (H - drawH) / 2
+    ctx.save(); ctx.translate(W, 0); ctx.scale(-1, 1); ctx.drawImage(video, offX, offY, drawW, drawH); ctx.restore();
+  (Hoặc cách 2: thẻ video object-fit:cover phủ kín 100vw/100vh với opacity:1 rồi canvas trong suốt đè khít lên trên. Chọn một cách, không trộn lẫn.)
+- Đọc chữ trên nền thật: phủ ĐÚNG MỘT lớp rgba(8,5,20,0.4) lên khung hình, alpha không vượt 0.45 (vẫn phải nhìn rõ người thật). Mỗi thẻ và đề bài phải tự có nền gradient + viền stroke + bóng, không phụ thuộc lớp phủ này.
+- HÀM CHIẾU DUY NHẤT: toScreen(lx, ly) = { x: offX + (1 - lx) * drawW, y: offY + ly * drawH }, trong đó lx, ly là landmark chuẩn hóa 0..1.
+  Vẽ video, nét phấn, con trỏ bàn tay, vật thật ảo, sơ đồ và mọi đường nối đều đi qua toScreen. CẤM viết lx * W hoặc ly * H: camera bị crop thì nét vẽ lệch khỏi tay học sinh, mất hẳn chất AR.
+- CHIỀU SÂU: mỗi vật thể mang z từ 1.6 (xa) về 0.35 (sát mặt người xem); kích thước vẽ = cỡ gốc / z, vật xa nhỏ và hơi mờ, vật gần to và rõ; vẽ ellipse bóng mờ dưới chân vật trên "sàn" ảo, để vật thật ngồi đúng chỗ trên mặt bàn thật.
+- NEO VÀO CƠ THỂ: vật thể ảo phải đeo hoặc buộc vào landmark thật và cập nhật mỗi khung hình — cổ tay = landmark 0, khuỷu = 13/14, vai = 11/12, hông = 23/24, mũi = 0, tâm bàn tay = trung bình landmark 5, 9, 13, 17. Mất landmark hoặc confidence tụt thì vật neo biến mất kèm hướng dẫn tiếng Việt, không được nhảy lung tung.`;
+
 // Bản rút gọn cho prompt biến thể (viết liền mạch, không xuống dòng code).
 export const AR_SHORT = 'khung hình webcam CHÍNH LÀ màn chơi — vẽ video vào canvas mỗi khung hình theo cover-fit scale = Math.max(W / video.videoWidth, H / video.videoHeight) rồi lật gương; phủ đúng một lớp rgba(8,5,20,0.4) (alpha không vượt 0.45); mọi tọa độ landmark 0..1 đi qua hàm chiếu duy nhất toScreen(lx, ly) = { x: offX + (1 - lx) * drawW, y: offY + ly * drawH }, cấm lx * W; vật thể mang chiều sâu z từ 1.6 về 0.35, vẽ to lên theo 1/z kèm ellipse bóng dưới chân; ít nhất một vật ảo neo vào landmark cơ thể (cổ tay 0, khuỷu 13/14, vai 11/12, tâm bàn tay 5/9/13/17) và cập nhật mỗi khung hình.';
 

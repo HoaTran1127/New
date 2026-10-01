@@ -1,4 +1,4 @@
-// Bốn mươi tám quy định của CÔNG CỤ GIẢNG BÀI: giáo viên trình bày, cả lớp xem.
+// Bốn mươi chín quy định của CÔNG CỤ GIẢNG BÀI: giáo viên trình bày, cả lớp xem.
 // Đây là tầng tách hẳn khỏi tools/lib/feel.mjs (vận động to + cảm giác arcade của game học sinh).
 // validate.mjs so khớp nguyên văn các chuỗi này, nên đổi ở đây phải chạy lại node tools/build.mjs.
 //
@@ -10,7 +10,7 @@
 //   - nhịp game tự chuyển bước sau vài giây, trong khi giáo viên cần dừng lại giảng đúng chỗ đó;
 //   - HandLandmarker bắt pinch của bất kì em nào ngồi dưới, nên bảng bị vẽ bậy từ xa;
 //   - bảng tự lau sau mỗi lượt, mất luôn phần trình bày giáo viên muốn cả lớp nhìn lại.
-// Vì vậy bốn mươi tám quy định này KHÔNG phải bản sao của feel.mjs mà là bản đối lập có chủ đích.
+// Vì vậy bốn mươi chín quy định này KHÔNG phải bản sao của feel.mjs mà là bản đối lập có chủ đích.
 //
 // Ba quy định đầu tiên (teacher, noGame, pace) giữ nhịp của tiết học; năm quy định giữa
 // (flow, handover, strayHands, classVote, retain) lo chuyện 35 em cùng xem một bảng; ba quy định
@@ -155,6 +155,12 @@ export const LESSON = {
   // giảng bài; build-lessons.mjs dán quy định này THAY CHO ACCESS.flash/reducedMotion ở khung giáo án.
   motionSafety:
     'TRẦN NHẤP NHÁY VÀ CHUYỂN ĐỘNG DỊU TRONG TIẾT GIẢNG: không hiệu ứng nào bật–tắt quá 3 lần mỗi giây, không giật sáng trắng hoặc đỏ phủ toàn màn hình, và tổng diện tích vùng đang nhấp nháy không vượt 25% khung hình. Ở chế độ giảng bài thì mỗi thao tác (một dòng phấn mới hiện, một mảnh vật thật tách ra, một sơ đồ tự kẻ) chỉ FADE VÀO MỘT LẦN rồi nằm yên, không chớp theo nhịp, không viền sáng nhấp nháy quanh bảng. Lúc khởi động chạy matchMedia("(prefers-reduced-motion: reduce)") và matchMedia("(prefers-contrast: more)") một lần rồi giữ kết quả: nếu reduce bật thì mặc định BẬT SẴN nút "Giảm hiệu ứng" (tắt mọi fade và chuyển động trang trí, giữ nguyên chữ và sơ đồ đã dựng), nếu không thì vẫn để nút đó cho cô tự bật. "Giảm hiệu ứng" TUYỆT ĐỐI không xoá bớt nội dung — năm bước của `flow`, bài đã viết trên bảng, vật thật, sơ đồ, phiếu in và mọi điều khiển của cô vẫn còn đủ 100%; lựa chọn của cô lưu vào localStorage và không hỏi lại ở tiết sau. Không có hiệu ứng ăn mừng nào khi một bước hoàn thành, vì `noGame` đã cấm, và `pace` đã buộc mọi chuyển động dựng cảnh kéo dài >= 600 ms nên không có cú nhảy giật cục làm loá mắt em ngồi sát máy chiếu. Phòng học sáng hoặc máy chiếu loá thì bảng đã tự có nền tối, viền stroke >= 2 px và bóng đổ theo đúng quy định tương phản, chứ không trông chờ vào một hiệu ứng chớp nào.',
+
+  // Bản chữ tương đương cho mọi âm thanh, diễn đạt bằng từ của lớp học. ACCESS.caption viết cho game nên
+  // kể "nội dung mascot nói", "âm báo combo, mất máu và thắng màn" — đúng vốn từ arcade mà `noGame` cấm.
+  // build-lessons.mjs dán quy định này THAY ACCESS.caption ở khung giáo án; game vẫn giữ ACCESS.caption.
+  soundToText:
+    'Mọi âm thanh trong giờ giảng đều có bản chữ tương đương: từ vựng và câu tiếng Anh hay thuật ngữ đọc to luôn đi kèm nút "Hiện chữ" bật được NGAY TỪ ĐẦU để giáo viên bấm đúng lúc phát âm, chữ hiện trên bảng chứ không chờ học sinh trả lời sai (nguyên tắc nghe-trước vẫn giữ: tiếng phát trước, chữ hiện khi bấm hoặc sau khi chốt); mỗi tín hiệu xác nhận thao tác (tiếng "tách" khi chốt, tiếng "soạt" khi cắt vật theo `noGame`) đều đi kèm một biểu tượng nhìn thấy được; lời nhận xét, gợi ý giảng lại và thông báo lỗi của công cụ luôn có dạng chữ trên màn hình chứ không chỉ là một tiếng beep. Học sinh nghe kém, ngồi cuối phòng, hoặc lớp đông ồn vẫn theo được 100% bài mà không cần nghe rõ; ngược lại học sinh đọc chưa vững vẫn theo bài bằng cách nghe cô đọc. Bản chữ dùng đúng font và cỡ chữ đã quy định cho bảng, không thu nhỏ, và không bao giờ là kênh DUY NHẤT báo đúng/sai (kênh màu do quy định tương phản và biểu tượng ✓/✗ gánh).',
 
   // Một em lên bảng, cả lớp vẫn theo dõi được: chuyển quyền phải nhanh, tường minh và trả lại được.
   handover:
@@ -374,4 +380,5 @@ export const LESSON_SHORT =
   + ' · hỏi một lần máy chiếu CHUNG MÀN hay MÀN RIÊNG (mặc định CHUNG MÀN, không có API đọc topology), nhưng ở "Chế độ không màn chiếu" của noProjector thì BỎ HỎI và ÉP CHUNG MÀN (chỉ một màn duy nhất, không có máy chiếu thứ hai để window.open): khi CHUNG MÀN thì mọi dòng "chỉ cô thấy" (chưa lên 23, FPS, gợi ý giảng lại, cảnh báo, còn Y phút) rút khỏi màn hình và chuyển sang giữ-phím-để-xem ẩn trong <= 0,3 s; khi MÀN RIÊNG thì window.open một cửa sổ chiếu chỉ-bảng-không-dải-điều-khiển, chặn thì tự lùi về chung màn; không in tên hay dãy-ghế thành chữ thường trực, "Kiểm tra riêng tư" cho cô thấy đúng màn máy chiếu đang phát'
   + ' · nghỉ là một dòng CÓ THẬT trên thanh tiến trình (nấc thường 2 phút, phòng chật 3 phút) chứ không phải chỗ thừa cuối tiết, rút đúng thứ timeSlack dôi -> phần VẬN DỤNG trên 2 phút của vé -> LUYỆN TẬP 12 xuống 10, tuyệt đối không rút bước VẬT THẬT hay 2 phút vé; khi "Còn < 3 phút" hoặc cô bấm "Còn 2 phút" thì nhịp tự CO còn 15 giây (ba hơi thở + vươn tay, camera tắt), một nút "Bỏ nhịp nghỉ tiết này", bộ đếm "nghỉ đã dùng / còn lại" ở dải của cô'
   + ' · "Chạy thử 5 phút" giữ đúng hai lời hứa của nó: NHÀNH A mặc định KHÔNG camera và đúng NĂM bước (chạy được cả khi máy không có camera), bước tự kiểm độ phủ bàn tay của `detectionEquity` rơi vào NHÀNH B CÓ camera (bật chủ động + xin phép một dòng + tắt hẳn khi ra), còn "Kiểm tra riêng tư" và mô phỏng "Còn 2 phút" vào NHÀNH C tuỳ chọn; "5 phút" chỉ tính cho Nhành A (B/C mỗi nhành +<= 2 phút), phiếu "10 việc · một trang A4" CỐ ĐỊNH không phình, thêm việc phải THAY việc cũ hoặc ghi "mặt sau", kết quả in ba ô "không camera / nhận diện / nâng cao"'
-  + ' · trần nhấp nháy <= 3 lần/giây, không chớp phủ toàn màn, mỗi thao tác chỉ fade một lần rồi nằm yên; tự đọc prefers-reduced-motion để bật sẵn "Giảm hiệu ứng" nhưng vẫn giữ đủ 100% năm bước, không hiệu ứng ăn mừng nào';
+  + ' · trần nhấp nháy <= 3 lần/giây, không chớp phủ toàn màn, mỗi thao tác chỉ fade một lần rồi nằm yên; tự đọc prefers-reduced-motion để bật sẵn "Giảm hiệu ứng" nhưng vẫn giữ đủ 100% năm bước, không hiệu ứng ăn mừng nào'
+  + ' · mọi âm thanh giờ giảng có bản chữ: tiếng Anh/thuật ngữ đọc to kèm nút "Hiện chữ" bật từ đầu, mỗi tín hiệu "tách"/"soạt" kèm biểu tượng nhìn thấy, học sinh nghe kém hay ngồi cuối phòng vẫn theo đủ 100%';
