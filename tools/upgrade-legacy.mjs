@@ -21,6 +21,7 @@ import { PLAYZONE } from './lib/playzone.mjs';
 import { FOLK } from './lib/folk.mjs';
 import { QUIZ } from './lib/quiz.mjs';
 import { LEAD } from './lib/lead.mjs';
+import { TAKEAWAY } from './lib/takeaway.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 
@@ -82,7 +83,8 @@ const REQUIREMENTS = `YÊU CẦU BẮT BUỘC THEO CHUẨN MiTi (áp dụng cho 
 30. SÂN CHƠI VIỆT NAM: ${FOLK.chonTro} ${FOLK.dongDao} ${FOLK.banAnToan} ${FOLK.doDung} ${FOLK.doiBan} ${FOLK.guard}
 31. ĐỐ BẠN: ${QUIZ.nguonDe} ${QUIZ.cachDo} ${QUIZ.dapCuaBan} ${QUIZ.xuLyLech} ${QUIZ.diemVai} ${QUIZ.guard}
 32. BẠN DẪN: ${LEAD.nguonDan} ${LEAD.cachDan} ${LEAD.lamTheo} ${LEAD.xuLyLech} ${LEAD.diemVai} ${LEAD.guard}
-33. ĐẦU RA: duy nhất 1 file HTML hoàn chỉnh, CSS nội tuyến trong một khối <style>, không file .css/.js/.json/ảnh/mp3 ngoài, không TODO, không pseudocode, không "...", không phần "bạn tự bổ sung", không lỗi console khi mở trực tiếp bằng trình duyệt.`;
+33. CÂU CHỐT — BỐN EM LẦN LƯỢT NÓI MỘT CÂU: ${TAKEAWAY.viTri} ${TAKEAWAY.khungChon} ${TAKEAWAY.bonEmNoi} ${TAKEAWAY.tuDanhGia} ${TAKEAWAY.diemVaSheet} ${TAKEAWAY.guard}
+34. ĐẦU RA: duy nhất 1 file HTML hoàn chỉnh, CSS nội tuyến trong một khối <style>, không file .css/.js/.json/ảnh/mp3 ngoài, không TODO, không pseudocode, không "...", không phần "bạn tự bổ sung", không lỗi console khi mở trực tiếp bằng trình duyệt.`;
 
 const bannerOf = (l) =>
   `> **LEGACY (LEG-${l.id.slice(4)})** — prompt đời đầu, giữ nguyên cơ chế game nhưng đã thay MediaPipe Legacy/Tailwind/Tone.js bằng chuẩn hiện hành. Bản chuẩn để làm game mới: \`prompts/00-master-canvas-prompt.md\`; 85 prompt đặc thù nằm trong \`catalogs/GAME_CATALOG.csv\`.\n`;

@@ -609,6 +609,57 @@ dẫn một động tác không cần một lời nào, không micro, không đ�
   nên sửa gì trong prompt. Bản một học sinh, bản không camera, bản tắt tiếng, bản "dép lê" và bản "lớp mình chật"
   vẫn bắt buộc kiểm đủ bốn điều, vì một em làm mẫu và ba em nhìn theo không phụ thuộc webcam.
 
+4.15 CÂU CHỐT — BỐN EM LẦN LƯỢT NÓI MỘT CÂU BẰNG LỜI CỦA MÌNH (bắt buộc — nguồn: `tools/lib/takeaway.mjs` + `tools/data/takeaways.mjs`, validate chặn nếu thiếu) — phần quyết định cuối tiết em có thật sự mở miệng hay chỉ nghe máy chốt lại
+
+Khảo sát 85 prompt trước khi viết mục này: "điều em nhớ" 0/85 · "một câu chốt" 0/85 · "câu chốt" 0/85 ·
+"hệ thống bài" 0/85 · "bằng lời của em" 0/85 · "lời của em" 0/85 · "cả bốn em cùng" 0/85 · "bốn câu của bốn em"
+0/85 · "tự đánh giá" 0/85 · "ngón tay của em" 0/85 · "nhắc lại bằng lời" 0/85 · "kể lại một câu" 0/85 · "20 giây
+cuối" 0/85. Chiều ngược lại: "thả lỏng" 85/85 và "giãn cơ" 85/85 (mục 4.10 và 4.12 đã phủ phần THỂ chất cuối
+tiết), "vì sao em chọn" 85/85 nhưng lúc nào cũng kèm BA phương án máy viết sẵn. Nghĩa là phần thân thể cuối tiết
+đã đủ mà phần trí tuệ cuối tiết thì không: "Mẹo nhớ" do máy đọc, "Mẹo con mang về" do máy nhắc, "Vì sao đúng?"
+là trắc nghiệm ba lựa chọn — chưa một tầng nào bắt em PHÁT RA MỘT câu do miệng em tự nối, tức là bỏ mất bước
+"hệ thống bài" có thật trong mọi tiết Thể dục lớp 4–5 và bỏ mất phép thử trung thực nhất của việc hiểu bài.
+Bốn mức gắng sức cuối mỗi hiệp cũng chỉ là máy SUY TỪ chuyển động ("ước lượng từ chuyển động, không phải đo
+mạch"), chưa lần nào chính em giơ tay tự báo mình hiểu tới đâu.
+
+- ĐÚNG MỘT KHỐI "CÂU CHỐT" MỘT PHIÊN, Ở CUỐI PHIÊN, DÀI ĐÚNG 20 GIÂY: khối nằm ngay SAU lượt đố thứ ba của hiệp 3
+  (mục 4.13) và TRƯỚC màn tổng kết. Hai mươi giây nằm TRONG trần 8–10 phút của mục 4.10, KHÔNG kéo dài phiên,
+  đồng hồ phiên chỉ khép ở phút thứ 10 SAU khi khối chốt xong. Khối KHÔNG tính vào 12 lượt hỏi bài, CẤM biến thành
+  lượt thứ 13, CẤM rút thời gian đọc đề, CẤM thay phần "thả lỏng" và "giãn cơ" đang có, CẤM để mascot chốt thay
+  khi bản chơi có từ hai học sinh.
+- BA KHUNG CÂU LẤY NGUYÊN VĂN THEO ĐÚNG MẠCH KIẾN THỨC, CHỖ TRỐNG DO EM NÓI: `tools/data/takeaways.mjs` có tám
+  mạch × ba khung, mọi khung mở đầu "Điều em nhớ:", có đúng một chỗ trống "…", không phải câu hỏi và <= 12 từ.
+  Ba khung đặt ở BA nút chọn MỘT hàng, chữ >= 20px; khung em đã chọn hiện trên thẻ "Câu chốt" MỘT hàng, chữ
+  >= 20px, không che đề bài, tự tắt sau 6 giây cùng nhịp trạm — lấy đúng trần thẻ báo-trước của mục 4.9. Chỗ trống
+  do EM nói to bằng lời của chính em: CẤM bật microphone ở khối chốt này (chỉ ba game mã VOICE có micro), CẤM nhận
+  dạng giọng nói hay phiên âm câu của em, CẤM hiện sẵn đáp án cạnh chỗ trống, CẤM bắt em đọc, viết hay gõ câu chốt,
+  CẤM mascot đọc khung câu thành lời (mỗi câu mascot vẫn <= 6 từ của mục 4.11).
+- BỐN EM CÙNG CHỐT, MỖI EM ĐÚNG 5 GIÂY, EM TỪ CHỐI KHÔNG BỊ GỌI LẠI LẦN HAI: cả bốn em đều có MỘT lượt theo thứ tự
+  chỗ ngồi của mục 7.2; tới lượt thì thẻ hiện khung em đã chọn kèm dòng nhắc "Đến lượt em", em nói xong cô bấm
+  "Em đã nói". Em bấm "Em chưa nói được" thì làm MỘT động tác của mã điều khiển game này thay cho câu nói, lượt vẫn
+  tính và CẤM gọi lại lượt đó lần hai; CẤM ép, CẤM nhắc trước lớp "sao em không nói", CẤM in tên em cạnh chữ
+  "chưa chịu nói". Bản một học sinh: em chọn MỘT khung, nói một câu, lượt vẫn khép bình thường.
+- MỖI EM GIƠ 1–3 NGÓN TAY TỰ ĐÁNH GIÁ, CON SỐ ĐÓ KHÔNG PHẠT AI: ngay sau câu chốt, em giơ 1 ("em chưa rõ"), 2
+  ("em hiểu rồi") hay 3 ("em giải thích được cho bạn") ngón tay trong tầm 1 sải tay; cô bấm một trong ba mức ở hồ sơ
+  phiên, game chỉ ghi con số em tự chọn. Mức tự đánh giá KHÔNG trừ tim, KHÔNG cắt chuỗi đúng, KHÔNG đổi độ khó của
+  mục 4.7, không hiện như một điểm số. Số ngón tay không phải cử chỉ điều khiển: CẤM game chờ nhận diện ngón tay để
+  quay vòng, CẤM biến thành lượt hỏi bài thứ 13, CẤM bắt em nào giơ 3 ngón.
+- CÂU NÀO CŨNG ĐÁNG NHƯ CÂU NÀO, CHỈ CÓ MỘT DÒNG ĐẾM ĐƯỢC: đủ bốn lượt trong khối khép lại thì cộng +5 vào thanh
+  "Cả nhóm <x>/<mốc>" đang có, KHÔNG cộng vào "miti-best", KHÔNG đổi thứ hạng. Màn tổng kết in ĐÚNG MỘT dòng
+  "Em chốt hôm nay: <tên> <n> câu" trong khối mà nút "Copy tờ rời" copy được, cùng khối với "Bốn em hôm nay",
+  "Em đố hôm nay", "Em dẫn hôm nay". CẤM xếp hạng câu chốt hay dở, CẤM chấm câu này đúng hơn câu kia, CẤM in chữ
+  "đúng" hay "sai" cạnh câu của em, CẤM đọc lại nguyên văn câu của em thành lời nhận xét trước lớp.
+- TỰ KIỂM BẰNG `verifyTakeaway()`: chạy MỘT LẦN lúc nạp và kiểm đúng bốn điều — đúng MỘT khối "Câu chốt" mỗi phiên
+  ở CUỐI phiên (sau lượt đố thứ ba, trước màn tổng kết), dài ĐÚNG 20 giây = bốn lượt × 5 giây và 12 lượt hỏi bài giữ
+  nguyên · ba khung câu trên ba nút chọn lấy NGUYÊN VĂN từ `tools/data/takeaways.mjs` theo đúng mạch kiến thức của
+  game, thẻ "Câu chốt" MỘT hàng chữ >= 20px tự tắt sau 6 giây, không bật microphone, không nhận dạng giọng nói và
+  không hiện sẵn đáp án · bốn em đều có một lượt 5 giây, em từ chối được làm động tác thay và không bị gọi lại lần
+  hai, mỗi em giơ 1–3 ngón tay tự đánh giá mà không trừ tim không đổi độ khó · +5 điểm chốt chỉ vào thanh "Cả nhóm"
+  và dòng "Em chốt hôm nay" nằm trong khối "Copy tờ rời". Thiếu điều nào thì `console.warn` tiếng Việt nêu đúng phần
+  lệch và bảng kiểm ghi CHƯA ĐẠT kèm câu nên sửa gì trong prompt. Bản một học sinh, bản không camera, bản tắt tiếng,
+  bản "dép lê" và bản "lớp mình chật" vẫn bắt buộc kiểm đủ bốn điều, vì nói một câu bằng lời của mình không phụ thuộc
+  webcam.
+
 ========================
 5. HỌC TẬP DẪN LỐI (LEARNING-FIRST)
 ========================
@@ -1009,7 +1060,7 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
   Bảng liệt kê TỪNG ràng buộc kèm trạng thái ĐẠT / CHƯA ĐẠT. Trạng thái đó phải do code kiểm thật lúc chạy,
   không phải chữ tĩnh kê sẵn. Một bảng báo "ĐẠT" mà không kiểm gì là lỗi nghiêm trọng nhất của game giáo dục.
   Bảng chỉ người lớn mở được: không trừ tim, không chặn chơi, học sinh không nhìn thấy.
-- 43 MỤC MÁY TỰ KIỂM, mỗi mục một hàm trả true/false:
+- 44 MỤC MÁY TỰ KIỂM, mỗi mục một hàm trả true/false:
   [1] QUESTION_DATA đủ số mục và verifyQuestionBank() ĐÃ chạy trước lượt chơi đầu tiên
   [2] mọi mục đang phát hành có answer nằm trong choices đúng một lần
   [3] 📷 drawImage khung hình webcam đi qua toScreen(lx, ly), không còn phép nhân thô với W/H
@@ -1053,14 +1104,15 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
   [41] verifyFolk() đã chạy lúc nạp: trò dân gian dẫn dắt lấy NGUYÊN VĂN từ tools/data/folk.mjs theo đúng mã điều khiển của game (tên <= 4 từ, hiện ở dòng "Cách chơi" và nhãn mini-trạm, không chiếm góc HUD của tên môn) · chant lấy nguyên văn cột `chant` (<= 8 tiếng) hô đúng BA lần một phiên theo vạch nhịp 8 nhịp, bản "miti-mute" hiện chữ trên vạch nhịp, và không lời đếm nào bị gọi là "đồng dao" · đúng MỘT đồ dùng trong tám món FOLK_PROPS vẽ bằng AR alpha <= 0.45 và không một lượt nào trong 12 lượt đòi em cầm vật thật · không có "Nhảy lò cò", "Trồng cây chuối", "Bịt mắt bắt dê", "Rồng rắn chạy vòng", "Kéo co dây thật" dưới bất kỳ tên gọi nào, mọi động tác nằm trong vòng 1 sải tay và bản dép lê / lớp chật giữ nguyên tên trò
   [42] verifyQuiz() đã chạy lúc nạp: đúng BA lượt "Đố bạn" một phiên nằm ở CUỐI mỗi hiệp và chín lượt còn lại vẫn lấy từ ngân hàng đề · mẫu câu đố lấy NGUYÊN VĂN từ tools/data/quiz.mjs theo đúng mạch kiến thức của cụm, thẻ "Đố bạn" một hàng ba mẫu câu chữ >= 20px tự tắt sau 6 giây, game không bật microphone và không hiện sẵn đáp án · lượt đố được trả lời bằng đúng MỘT động tác của mã điều khiển trong vòng 1 sải tay, đề lệch không trừ tim và không cắt chuỗi, nút "Em chịu, bạn đáp giúp" bấm được thật · +5 điểm đố chỉ vào thanh "Cả nhóm" và dòng "Em đố hôm nay: <tên> <n> đề" nằm trong khối "Copy tờ rời"
   [43] verifyLead() đã chạy lúc nạp: đúng BA lần "Bạn dẫn" một phiên ở đầu mỗi hiệp, mỗi lần ĐÚNG 5 giây và 12 lượt hỏi bài giữ nguyên · động tác dẫn lấy NGUYÊN VĂN từ tools/data/leads.mjs theo đúng mã điều khiển của game, thẻ "Bạn dẫn" một hàng ba động tác chữ >= 20px tự tắt sau 5 giây, game không bật microphone và không đánh dấu ✓ động tác nào là đúng · ba em còn lại bắt chước trong vòng 1 sải tay và hình quạt 90 độ của chính mình, không chạm nhau, nút "Cả nhóm đã làm theo" bấm được thật, dẫn lệch hoặc đứng im không trừ tim và mascot làm mẫu lại 3 giây · +5 điểm dẫn chỉ vào thanh "Cả nhóm" và dòng "Em dẫn hôm nay: <tên> <n> hiệp" nằm trong khối "Copy tờ rời"
-  Mục gắn 📷 chỉ áp dụng khi có webcam: bản không camera bỏ 6 mục đó và vẫn phải đạt 37 mục còn lại.
+  [44] verifyTakeaway() đã chạy lúc nạp: ĐÚNG MỘT khối "Câu chốt" mỗi phiên ở CUỐI phiên (sau lượt đố thứ ba, trước màn tổng kết), dài ĐÚNG 20 giây = bốn lượt × 5 giây và 12 lượt hỏi bài giữ nguyên · ba khung câu hiện trên ba nút chọn lấy NGUYÊN VĂN từ tools/data/takeaways.mjs theo đúng mạch kiến thức của game, thẻ "Câu chốt" một hàng chữ >= 20px tự tắt sau 6 giây, game không bật microphone, không nhận dạng giọng nói và không hiện sẵn đáp án · bốn em đều có một lượt 5 giây, em từ chối được làm một động tác của mã điều khiển thay cho câu nói và không bị gọi lại lần hai, mỗi em giơ 1–3 ngón tay tự đánh giá mà không trừ tim, không đổi độ khó · +5 điểm chốt chỉ vào thanh "Cả nhóm" và dòng "Em chốt hôm nay: <tên> <n> câu" nằm trong khối "Copy tờ rời"
+  Mục gắn 📷 chỉ áp dụng khi có webcam: bản không camera bỏ 6 mục đó và vẫn phải đạt 38 mục còn lại.
 - XUẤT BẢN VĂN: bảng có nút "Xuất bản văn" sinh một khối chữ tiếng Việt copy được — tên game, bản chuẩn MiTi,
   ngày giờ, kiểu điều khiển đang chạy, số mục ĐẠT / CHƯA ĐẠT, danh sách mục chưa đạt kèm lý do.
   Khối chữ chỉ hiện trên màn hình và vào clipboard máy đó; không gửi lên máy chủ nào, không xin quyền, không để lại dữ liệu.
 - MỤC CHƯA ĐẠT PHẢI GIẢI THÍCH ĐƯỢC: mỗi dòng kèm một câu nguyên nhân kỹ thuật cho người lớn
   (ví dụ "toScreen không được dùng ở drawImage — vật thể đang tính bằng lx * W") và một câu nên sửa thế nào trong prompt.
   Cấm báo "lỗi" rồi im lặng, cấm chữ chung chung kiểu "hệ thống có vấn đề".
-- 34 VIỆC NGƯỜI THỬ PHẢI BẤM TAY (máy không tự kiểm được, làm theo đúng thứ tự, khoảng 15 phút):
+- 35 VIỆC NGƯỜI THỬ PHẢI BẤM TAY (máy không tự kiểm được, làm theo đúng thứ tự, khoảng 15 phút):
   đứng xa tới mức chỉ còn hai bàn tay · giữ im một tư thế 5 giây · che nửa người bằng tay · tắt camera giữa vòng ·
   rút mạng lúc đang tải model · đổi tay thuận sang Trái giữa chừng · bật reduced-motion ở hệ điều hành rồi mở game ·
   cố tình sai 4 câu liên tiếp · mở bằng điện thoại đặt dọc · đưa một học sinh lớp 4 chưa đọc hướng dẫn chơi thử 60 giây ·
@@ -1202,10 +1254,10 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
 [ ] đạo cụ AR neo landmark bằng toScreen(); bản không camera thì đạo cụ đứng yên ở góc HUD dưới chứ không biến mất
 [ ] ba câu thoại đọc bằng speechSynthesis giọng vi-VN, <= 3 câu mỗi phút, câu khi sai là câu đỡ chứ không chế giễu
 [ ] bảng kiểm ẩn mở bằng 7 lần chạm logo MiTi hoặc Ctrl+Alt+K, trạng thái ĐẠT do code kiểm thật lúc chạy
-[ ] cả 43 mục máy tự kiểm đều có hàm kiểm tương ứng, không mục nào là chữ kê sẵn
+[ ] cả 44 mục máy tự kiểm đều có hàm kiểm tương ứng, không mục nào là chữ kê sẵn
 [ ] mục CHƯA ĐẠT kèm nguyên nhân kỹ thuật + cách sửa trong prompt, không có dòng "lỗi hệ thống"
 [ ] nút "Xuất bản văn" copy được khối chữ tiếng Việt, không gửi lên máy chủ nào
-[ ] bản không camera bỏ đúng 6 mục 📷 và vẫn đạt 37 mục còn lại, không bỏ luôn bảng kiểm
+[ ] bản không camera bỏ đúng 6 mục 📷 và vẫn đạt 38 mục còn lại, không bỏ luôn bảng kiểm
 [ ] fallback chuột/chạm/phím chơi trọn vẹn, tự kích hoạt khi camera lỗi
 [ ] QUESTION_DATA có ít nhất 30 mục (Toán) hoặc 60 mục (Tiếng Anh), mỗi mục có đáp án + lời giải + errorTag + loiViet + dang
 [ ] dữ liệu đặt đầu file, code engine đặt sau, không có chỗ nào rút gọn
@@ -1269,7 +1321,7 @@ Sau khi tự kiểm tra, CHỈ xuất ra file HTML hoàn chỉnh, không kèm gi
   toàn bộ quy định phía trên chỉ là lời mong đợi. Bắt game tự kiểm bằng hàm true/false biến lời hứa thành trạng thái đọc được.
 - **Trạng thái phải do code kiểm, không phải chữ kê sẵn**: một bảng tĩnh in sẵn chữ "ĐẠT" còn hại hơn không có bảng,
   vì người lớn tưởng là đã kiểm. Đây là lý do quy định ghi rõ "không phải một danh sách chữ tĩnh".
-- **Tách 43 mục máy / 34 việc người thử**: cái gì máy kiểm được thì đừng đùn cho giáo viên; cái máy không kiểm được
+- **Tách 43 mục máy / 35 việc người thử**: cái gì máy kiểm được thì đừng đùn cho giáo viên; cái máy không kiểm được
   (cháu có hiểu luật chơi mà không đọc hướng dẫn không, rút mạng thì sao) thì đừng giả vờ kiểm. Con số 15 phút là thời lượng
   một tiết thực tế, không phải danh sách dài vô hạn.
 - **Mục chưa đạt phải nói nguyên nhân và cách sửa**: bảng kiểm chỉ báo "lỗi" sẽ bị bỏ qua; kèm câu "thiếu ở dòng nào,

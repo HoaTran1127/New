@@ -66,7 +66,7 @@ Bốn biến thể đầu dùng **cùng một hợp đồng AR** như prompt gam
 - `04-english5/` — 15 game Tiếng Anh 5.
 - `01-prompt-…` đến `12-prompt-…` — **12 prompt legacy** đời đầu: giữ nguyên cơ chế game, đã thay MediaPipe Legacy/Tailwind CDN/Tone.js bằng chuẩn hiện hành và gắn nhãn `LEGACY`. Không dùng làm khuôn cho game mới.
 - `VARIANTS_425.md` — 425 biến thể (85 game × 5 kiểu điều khiển), do `tools/build-variants.mjs` sinh.
-- `CHECKLIST_NGHIEP_THU.md` — bảng kiểm cầm tay khi nhận file HTML về: 43 mục máy tự kiểm + 34 việc người thử bấm tay (trong đó 6 mục gắn 📷 chỉ có camera mới kiểm được; bản không camera bỏ 6 mục đó và vẫn phải đạt 37 mục còn lại), do `tools/build-acceptance.mjs` sinh từ `tools/lib/acceptance.mjs`.
+- `CHECKLIST_NGHIEP_THU.md` — bảng kiểm cầm tay khi nhận file HTML về: 44 mục máy tự kiểm + 35 việc người thử bấm tay (trong đó 6 mục gắn 📷 chỉ có camera mới kiểm được; bản không camera bỏ 6 mục đó và vẫn phải đạt 38 mục còn lại), do `tools/build-acceptance.mjs` sinh từ `tools/lib/acceptance.mjs`.
 
 ## ✅ Nghiệm thu một game vừa sinh
 
@@ -334,13 +334,29 @@ Việc người thử số 33 ("đọc to một mẫu câu "Đố bạn" ở cu�
 
 Việc người thử số 34 ("để một em bấm "Em dẫn" và làm một động tác trong 5 giây — ba em kia có thật sự nhìn và bắt chước hay vẫn chỉ làm theo mascot? em dẫn làm động tác ngoài thẻ thì game có trừ tim không? dòng "Em dẫn hôm nay" có nằm trong khối "Copy tờ rời" không?") là chỗ máy không tự kiểm được: `validate.mjs` so được động tác với `tools/data/leads.mjs`, còn **ba em có bắt chước thật không** thì chỉ người lớn đứng cạnh mới trả lời được.
 
+## 🗣 Tầng "câu chốt" — `tools/lib/takeaway.mjs` + `tools/data/takeaways.mjs` (vòng 25)
+
+Đo 85 prompt trước vòng 25: **"điều em nhớ" 0/85, "một câu chốt" 0/85, "câu chốt" 0/85, "hệ thống bài" 0/85, "bằng lời của em" 0/85, "tự đánh giá" 0/85, "20 giây cuối" 0/85** — ngược lại **"thả lỏng" 85/85 và "giãn cơ" 85/85**, còn "vì sao em chọn" 85/85 thì lúc nào cũng kèm BA phương án máy viết sẵn. Phần thân thể cuối tiết đã đủ, phần trí tuệ cuối tiết thì không: "Mẹo nhớ" do máy đọc, "Mẹo con mang về" do máy nhắc, "Vì sao đúng?" là trắc nghiệm ba lựa chọn — chưa một tầng nào bắt em tự phát ra MỘT câu do miệng em nối, tức là bỏ mất bước "hệ thống bài" có thật trong mọi tiết Thể dục lớp 4–5. Tầng này cho mỗi em 5 giây nói, và một con số do chính em giơ tay.
+
+| Luật | Con số | Kiểm ở đâu |
+|:---|:---|:---|
+| Đúng **MỘT khối "Câu chốt"** một phiên | ở **CUỐI phiên** (sau lượt đố thứ ba, trước màn tổng kết), dài **ĐÚNG 20 giây = bốn lượt × 5 giây**, **không tính vào 12 lượt hỏi bài**, nằm trong trần 8–10 phút | `verifyTakeaway()` điều 1 |
+| **Ba khung câu nguyên văn theo đúng mạch** | tám mạch × ba khung trong `tools/data/takeaways.mjs`, mọi khung mở đầu "Điều em nhớ:", có **đúng một chỗ trống "…"**, **không phải câu hỏi**, **<= 12 từ**; ba nút chọn **một hàng >= 20px**, thẻ "Câu chốt" **tự tắt sau 6 giây**, **không microphone**, **không nhận dạng giọng nói**, **không hiện sẵn đáp án** | `verifyTakeaway()` điều 2 |
+| **Bốn em cùng chốt** | mỗi em **ĐÚNG 5 giây** theo thứ tự chỗ ngồi; em bấm "Em chưa nói được" thì làm **MỘT động tác của mã điều khiển** thay cho câu nói, lượt vẫn tính và **không bị gọi lại lần hai** | `verifyTakeaway()` điều 3 |
+| **1–3 ngón tay tự đánh giá** | 1 = "chưa rõ", 2 = "hiểu rồi", 3 = "giải thích được cho bạn"; cô ghi mức em tự chọn, **không trừ tim, không cắt chuỗi, không đổi độ khó** | `verifyTakeaway()` điều 3 |
+| **Điểm chốt vào "Cả nhóm"** | **+5**, **không** vào "miti-best", **không** xếp hạng, **không** in "đúng"/"sai" cạnh câu của em; tổng kết in **"Em chốt hôm nay: <tên> <n> câu"** trong khối "Copy tờ rời" | `verifyTakeaway()` điều 4 |
+
+`verifyTakeaway()` chạy MỘT LẦN lúc nạp và kiểm **đúng bốn điều**; thiếu thì `console.warn` tiếng Việt nêu đúng phần lệch và bảng kiểm ghi CHƯA ĐẠT ở **mục `[44]`**. Bản một học sinh, bản không camera, bản tắt tiếng, bản "dép lê" và bản "lớp mình chật" vẫn bắt buộc kiểm đủ bốn điều, vì nói một câu bằng lời của mình không phụ thuộc webcam.
+
+Việc người thử số 35 ("bốn em ngồi thành một hàng chơi tới 20 giây cuối: mỗi em có thật sự nói MỘT câu bằng lời của mình hay máy đọc hộ? em nói câu na ná bạn có bị in chữ \"sai\" cạnh tên không? em khoanh tay không nói có bị gọi lại lượt thứ hai không? giơ 2 ngón thay vì 3 ngón có làm đổi độ khó hay mất tim không?") là chỗ máy không tự kiểm được: `validate.mjs` so được khung câu với `tools/data/takeaways.mjs`, còn **câu em nói có phải bằng lời của em không** thì chỉ người lớn ngồi cạnh mới trả lời được.
+
 ## 🔁 Pipeline của thư viện
 
 85 prompt game **được sinh tự động**, không sửa tay:
 
 ```
-tools/data/games.mjs + clusters.mjs + gestures.mjs + examples.mjs + error-notes.mjs + identities.mjs + standards.mjs + sports.mjs + folk.mjs + quiz.mjs + leads.mjs
-tools/lib/ar.mjs · rules.mjs · feel.mjs · classroom.mjs · access.mjs · light.mjs · celebrate.mjs · identity.mjs · rhythm.mjs · queue.mjs · lesson.mjs · curriculum.mjs · sport.mjs · family.mjs · pacing.mjs · playzone.mjs · folk.mjs · quiz.mjs · lead.mjs · verify.mjs · pe.mjs · memory.mjs · hype.mjs · anticipation.mjs · acceptance.mjs
+tools/data/games.mjs + clusters.mjs + gestures.mjs + examples.mjs + error-notes.mjs + identities.mjs + standards.mjs + sports.mjs + folk.mjs + quiz.mjs + leads.mjs + takeaways.mjs
+tools/lib/ar.mjs · rules.mjs · feel.mjs · classroom.mjs · access.mjs · light.mjs · celebrate.mjs · identity.mjs · rhythm.mjs · queue.mjs · lesson.mjs · curriculum.mjs · sport.mjs · family.mjs · pacing.mjs · playzone.mjs · folk.mjs · quiz.mjs · lead.mjs · takeaway.mjs · verify.mjs · pe.mjs · memory.mjs · hype.mjs · anticipation.mjs · acceptance.mjs
         └─ node tools/build.mjs ─→ catalogs/GAME_CATALOG.csv · .md · .js + prompts/0X-*/ + index.html + prompts/CHECKLIST_NGHIEP_THU.md
 ```
 
