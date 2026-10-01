@@ -246,18 +246,29 @@ for (const { from, when, need, msg } of RULE_LINKS)
 // ví dụ đã tính sẵn ("35 em ra 12, 45 em ra 15, 55 em ra 16"), nhưng chính phép tính đó chưa bao giờ được TRA.
 // Một lần sửa tay làm ví dụ lệch khỏi công thức ("45 em ra 14", "55 em ra 17") sẽ đi nguyên văn vào cả 39 giáo
 // án mà build vẫn xanh — mâu thuẫn ngay trong một quy định, khó thấy bằng mắt. Khoá này bóc ĐÚNG các tham số
-// (số chia, trần, sàn) từ chính chuỗi công thức, rồi đòi mọi ví dụ "S em ra [đúng] T" thoả T === clamp(round(S/sốchia), sàn, trần).
-for (const [name, txt] of Object.entries(LESSON)) {
+// (số chia, trần, sàn) từ chính chuỗi công thức, rồi đòi mọi ví dụ "S em ra [đúng] T" hoặc "S em = T" thoả
+// T === clamp(round(S/sốchia), sàn, trần). Vòng 30 mở rộng phạm vi: gương `LESSON_SHORT` (export riêng, không
+// nằm trong `LESSON`) cũng mang công thức + ví dụ ("(lớp 35 em = 12)") — nếu không lặp nó thì sửa lệch con số
+// trong gương thoát khoá, đúng kiểu drift v29 vừa nêu.
+for (const [name, txt] of [...Object.entries(LESSON).map(([k, v]) => [`LESSON.${k}`, v]), ['LESSON_SHORT', LESSON_SHORT]]) {
   const f = txt.match(/clamp\(round\(M\/(\d+)\),\s*(\d+),\s*(\d+)\)/);
   if (!f) continue;
   const div = Number(f[1]), lo = Number(f[2]), hi = Number(f[3]);
-  for (const ex of txt.matchAll(/(\d+) em ra (?:đúng )?(\d+)/g)) {
+  for (const ex of txt.matchAll(/(\d+) em (?:ra (?:đúng )?|= )(\d+)/g)) {
     const size = Number(ex[1]), claim = Number(ex[2]);
     const want = Math.min(hi, Math.max(lo, Math.round(size / div)));
     if (want !== claim)
-      bad(`LESSON.${name}: ví dụ trần "lớp ${size} em ra ${claim}" sai số học — clamp(round(${size}/${div}), ${lo}, ${hi}) = ${want}.`);
+      bad(`${name}: ví dụ trần "lớp ${size} em → ${claim}" sai số học — clamp(round(${size}/${div}), ${lo}, ${hi}) = ${want}.`);
   }
 }
+
+// Vòng 30 — KHOÁ GƯƠNG cho TRẦN LƯỢT LÊN BẢNG. Hàng RULE_LINKS phía trên bắt `handover`/`boardEquity` đọc đúng
+// clamp(round(M/3)) nhưng `from` không gồm LESSON_SHORT — nên gương SHORT có thể lùi về hằng số "12 lượt" mà
+// không đỏ (đúng regression vòng 26 chặn ở rule dài). KHÔNG dùng `includes('clamp(round(M/3)')` toàn cục vì
+// LESSON_SHORT mentions công thức hai lần (gương handover + gương bigClass), một lần lùi vẫn còn lần kia. Chốt
+// vào đúng cụm mà gương handover tạo ra: "hàm của sĩ số clamp(round(M/3)".
+if (LESSON_SHORT.includes('trần lượt lên bảng') && !LESSON_SHORT.includes('hàm của sĩ số clamp(round(M/3)'))
+  bad('LESSON_SHORT: gương "trần lượt lên bảng" phải ghi "hàm của sĩ số clamp(round(M/3), 12, 16)" của `bigClass` (vòng 26), không được lùi về hằng số 12 tuyệt đối.');
 
 // Vòng 29 — KHOÁ GƯƠNG RÚT GỌN. `LESSON_SHORT` được build-lessons dán NGUYÊN VĂN vào dòng "Tự kiểm tra trước
 // khi xuất" của cả 39 giáo án, nên nó là BẢN GƯƠNG của từng quy định dài. Vòng 27 sửa `classVote` (mẫu số =
