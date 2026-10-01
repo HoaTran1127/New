@@ -30,9 +30,11 @@ import { FAMILY } from './lib/family.mjs';
 import { PACE } from './lib/pacing.mjs';
 import { PLAYZONE } from './lib/playzone.mjs';
 import { FOLK } from './lib/folk.mjs';
+import { QUIZ } from './lib/quiz.mjs';
 import { STANDARDS, STANDARD_KEYS, MACH_TEN, SCHOOL_YEAR, hocKiCua } from './data/standards.mjs';
 import { SPORTS, SPORT_KEYS } from './data/sports.mjs';
 import { FOLK as FOLK_BANK, FOLK_KEYS, FOLK_PROPS, FOLK_BANNED } from './data/folk.mjs';
+import { QUIZ as QUIZ_BANK, QUIZ_KEYS, quizFrames } from './data/quiz.mjs';
 import { IDENTITIES } from './data/identities.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
@@ -82,7 +84,7 @@ const MASTER_LIB = [
   ['6.2', 'verify.mjs'], ['6.3', 'light.mjs'], ['8.1', 'feel.mjs'], ['8.2', 'hype.mjs'], ['8.3', 'anticipation.mjs'], ['8.4', 'celebrate.mjs'],
   ['9.1', 'access.mjs'], ['11.', 'acceptance.mjs'], ['8.5', 'identity.mjs'], ['8.6', 'rhythm.mjs'],
   ['7.2', 'queue.mjs'], ['4.6', 'lesson.mjs'], ['4.7', 'curriculum.mjs'], ['4.8', 'sport.mjs'], ['4.9', 'family.mjs'],
-  ['4.10', 'pacing.mjs'], ['4.11', 'playzone.mjs'], ['4.12', 'folk.mjs'],
+  ['4.10', 'pacing.mjs'], ['4.11', 'playzone.mjs'], ['4.12', 'folk.mjs'], ['4.13', 'quiz.mjs'],
 ];
 
 const rows = readCatalog(path.join(ROOT, 'catalogs', 'GAME_CATALOG.csv'));
@@ -230,6 +232,7 @@ const ANT_RULES = [
 const ZONE_RULES = [
   ['- CHỖ CHƠI AN TOÀN (', 'thiếu khối "CHỖ CHƠI AN TOÀN" nêu nguồn tools/lib/playzone.mjs — sáu quy định chỗ chơi không còn nhãn để người viết prompt đối chiếu'],
   ['- SÂN CHƠI VIỆT NAM (', 'thiếu khối "SÂN CHƠI VIỆT NAM" nêu nguồn tools/lib/folk.mjs — sáu quy định sân chơi không còn nhãn để người viết prompt đối chiếu'],
+  ['- ĐỐ BẠN — EM ĐẶT ĐỀ CHO BẠN ĐÁP (', 'thiếu khối ĐỐ BẠN nêu nguồn tools/lib/quiz.mjs — sáu quy định đố bạn không còn nhãn để người viết prompt đối chiếu'],
 ];
 // Các tầng "phải có MỌI luật, nguyên văn, ở MỌI nơi": bộ kiểm lấy thẳng Object.entries(lib) thay vì
 // gõ tay danh sách. Probe vòng 11 cho thấy danh sách gõ tay là lỗ hổng thật — xóa ${LIGHT.visualShare}
@@ -249,6 +252,7 @@ const FULL_LAYERS = [
   ['tuần học', 'pacing.mjs', 'PACE', PACE],
   ['chỗ chơi an toàn', 'playzone.mjs', 'PLAYZONE', PLAYZONE],
   ['sân chơi Việt Nam', 'folk.mjs', 'FOLK', FOLK],
+  ['đố bạn', 'quiz.mjs', 'QUIZ', QUIZ],
 ];
 const FULL_RULES = FULL_LAYERS.flatMap(([label, file, objName, obj]) =>
   Object.entries(obj).map(([key, text]) => [text, `thiếu quy định ${label} ${objName}.${key} của tools/lib/${file}`]));
@@ -601,6 +605,43 @@ const FULL_PINS = [
   ['folk.mjs', FOLK.doiBan, 'in ĐÚNG MỘT dòng "Trò chơi hôm nay:', 'dòng tổng kết chỉ in khi phiên có cú hô thật'],
   ['folk.mjs', FOLK.guard, '· không trò nào thuộc năm trò đã loại', 'điều 4 của verifyFolk() phải kiểm đủ năm trò'],
   ['folk.mjs', FOLK.guard, '`console.warn` tiếng Việt nêu đúng phần lệch', 'hàm kiểm phải nói được chỗ lệch bằng tiếng Việt'],
+  ['quiz.mjs', QUIZ.nguonDe, 'đúng BA lượt là lượt "Đố bạn"', 'số lượt đố trong một phiên'],
+  ['quiz.mjs', QUIZ.nguonDe, 'mỗi hiệp MỘT lượt, luôn ở vị trí CUỐI hiệp', 'vị trí lượt đố trong hiệp'],
+  ['quiz.mjs', QUIZ.nguonDe, 'NGUYÊN VĂN MỘT trong ba mẫu câu của mạch kiến thức game này', 'đề đố lấy nguyên văn từ bảng mẫu câu, không tự bịa'],
+  ['quiz.mjs', QUIZ.nguonDe, 'điền đúng MỘT số hoặc MỘT từ đang hiện trên thẻ của lượt đó', 'chỗ trống chỉ điền một giá trị đang có trên màn hình'],
+  ['quiz.mjs', QUIZ.nguonDe, 'game không nhận diện tiếng nói', 'lượt đố không bật recognition'],
+  ['quiz.mjs', QUIZ.nguonDe, 'Chín lượt còn lại vẫn lấy từ ngân hàng đề đã có', 'phần còn lại của phiên vẫn là đề máy'],
+  ['quiz.mjs', QUIZ.nguonDe, 'CẤM đảo thành 12/12 lượt đố', 'trần lượt đố không được nới thành cả phiên'],
+  ['quiz.mjs', QUIZ.cachDo, 'MỘT hàng ba mẫu câu đúng mạch, chữ >= 20px', 'cỡ chữ của thẻ đố'],
+  ['quiz.mjs', QUIZ.cachDo, 'tự tắt sau 6 giây hoặc khi em chạm', 'thời gian sống của thẻ đố'],
+  ['quiz.mjs', QUIZ.cachDo, 'đọc to MỘT mẫu câu trong 3 giây', 'cửa sổ đọc đề của em đố'],
+  ['quiz.mjs', QUIZ.cachDo, 'CẤM game bật microphone ở lượt này (chỉ ba game mã VOICE mới có micro)', 'micro chỉ thuộc ba game VOICE'],
+  ['quiz.mjs', QUIZ.cachDo, 'CẤM hiện sẵn đáp án đúng trên thẻ "Đố bạn"', 'thẻ đố không được spoiler'],
+  ['quiz.mjs', QUIZ.dapCuaBan, 'ĐÚNG MỘT động tác thuộc mã điều khiển của game này', 'một động tác duy nhất để đáp'],
+  ['quiz.mjs', QUIZ.dapCuaBan, 'vẫn trong vòng 1 sải tay và hình quạt 90 độ', 'động tác đáp án vẫn trong vùng an toàn'],
+  ['quiz.mjs', QUIZ.dapCuaBan, 'CẤM biến lượt đố thành lượt ngồi xem', 'lượt đố không được thành lượt nghỉ'],
+  ['quiz.mjs', QUIZ.dapCuaBan, 'mẫu câu đố đọc giọng en-US', 'giọng đọc mẫu câu tiếng Anh'],
+  ['quiz.mjs', QUIZ.xuLyLech, 'KHÔNG trừ tim, KHÔNG cắt chuỗi đúng', 'đề lệch không phạt em đố'],
+  ['quiz.mjs', QUIZ.xuLyLech, 'ngân sách 3 câu thoại mỗi phút, <= 6 từ', 'câu đỡ của mascot nằm trong trần giọng'],
+  ['quiz.mjs', QUIZ.xuLyLech, 'thẻ "Đố bạn" tự đổi sang đề ngân hàng ở lượt kế', 'đường lùi khi đề ra ngoài phạm vi'],
+  ['quiz.mjs', QUIZ.xuLyLech, 'nút "Em chịu, bạn đáp giúp"', 'nút nhận thua cho em được đố'],
+  ['quiz.mjs', QUIZ.xuLyLech, 'CẤM phạt em đặt đề sai', 'em đặt đề không bị trừ gì'],
+  ['quiz.mjs', QUIZ.diemVai, '+5 điểm vào thanh "Cả nhóm', 'điểm lượt đố hợp lệ'],
+  ['quiz.mjs', QUIZ.diemVai, 'KHÔNG cộng vào "miti-best"', 'điểm đố không vào bảng xếp hạng cá nhân'],
+  ['quiz.mjs', QUIZ.diemVai, 'ĐÚNG MỘT dòng "Em đố hôm nay: <tên> <n> đề"', 'dòng tổng kết lượt đố'],
+  ['quiz.mjs', QUIZ.diemVai, 'CẤM xếp hạng riêng người đố', 'không lập bảng điểm cho em đặt đề'],
+  ['quiz.mjs', QUIZ.guard, '`verifyQuiz()` chạy MỘT LẦN', 'hàm kiểm tầng đố bạn lúc nạp'],
+  ['quiz.mjs', QUIZ.guard, 'kiểm đúng bốn điều', 'số điều verifyQuiz() phải kiểm'],
+  ['quiz.mjs', QUIZ.guard, 'đúng BA lượt "Đố bạn" một phiên ở cuối mỗi hiệp', 'điều 1 của verifyQuiz() phải nêu đủ số lượt'],
+  ['quiz.mjs', QUIZ.guard, 'không bật microphone và không hiện sẵn đáp án', 'điều 2 của verifyQuiz()'],
+  ['quiz.mjs', QUIZ.guard, 'đề lệch không trừ tim không cắt chuỗi', 'điều 3 của verifyQuiz()'],
+  ['quiz.mjs', QUIZ.guard, 'Bản một học sinh, bản không camera và bản tắt tiếng vẫn bắt buộc kiểm đủ bốn điều', 'lượt đố không phụ thuộc webcam'],
+  ['quiz.mjs', QUIZ.guard, '`console.warn` tiếng Việt nêu đúng phần lệch', 'hàm kiểm phải nói được chỗ lệch bằng tiếng Việt'],
+  ['quiz.mjs', QUIZ.nguonDe, '`tools/data/quiz.mjs`', 'lượt đố phải lấy mẫu câu từ bảng quiz, không phải bảng trò dân gian'],
+  ['quiz.mjs', QUIZ.guard, '`tools/data/quiz.mjs`', 'verifyQuiz() phải đối chiếu mẫu câu với đúng bảng quiz'],
+  ['quiz.mjs', QUIZ.cachDo, 'Bản một học sinh: chính em bấm "Em đố", đọc mẫu câu rồi tự đáp, thẻ vẫn hiện đủ ba mẫu', 'một em vẫn có lượt đố, không được bỏ'],
+  ['quiz.mjs', QUIZ.dapCuaBan, 'vai "Thư ký" đọc to lại cả đề lẫn đáp án đúng theo tầng vai chờ', 'lượt đố có vai chờ thật, không thành lượt ngồi xem'],
+  ['quiz.mjs', QUIZ.xuLyLech, 'CẤM in chữ "đề sai" cạnh tên em', 'đề lệch không biến thành nhãn xấu trước lớp'],
 ];
 for (const [file, text, needle, label] of FULL_PINS) {
   if (!text.includes(needle)) bad(`tools/lib/${file} không còn nêu "${needle}" (${label}) — con số nghiệm thu phải sửa cùng tài liệu và bảng kiểm, không đổi âm thầm trong lib.`);
@@ -628,6 +669,7 @@ const SHORT_PINS = {
   FAMILY_SHORT: ['khối "Gửi bố mẹ" 4 dòng', '<= 20 từ', '>= 20px', '"Copy tờ rời"', 'việc 3 phút ở nhà không màn hình', 'cột `dongTac`', '<= 16 từ', 'cột `meo` <= 12 từ', 'động tác 3 giây', 'không tên bạn khác', 'không xếp hạng', 'không đe dọa', 'verifyFamily()'],
   PACE_SHORT: ['"Tuần <a>–<b> · Học kì <n>"', 'cột tuan', 'tối đa 10 tuần', 'đúng MỘT lần ở phiên đầu', 'lưu "miti-week"', 'không chặn nút "Bắt đầu"', '>= 3/12 lượt', SCHOOL_YEAR.nuocRut + ' tuần trước mốc kiểm tra', 'cấm đổi luật', 'từ tuần ' + SCHOOL_YEAR.tongOnTu, '>= 6/12 lượt ôn', 'cấm cụm mới', 'verifyPacing()'],
   PLAYZONE_SHORT: ['"Dẹp chỗ chơi"', '4 dòng <= 12 từ', '60–90 giây', '20 giây', '1 sải tay', '>= 1,2 m', '"miti-foot"', '0/12 lượt nhấc chân cao', 'đứng một chân', '"Lớp mình chật"', '"miti-space"', '>= 12 nhịp/phút', '>= 60%', '90 độ', 'chốt một lần đầu phiên', '"Em mệt / em đau"', '>= 56px', 'hạ nhiệt 45–60 giây', 'không trừ tim', '"miti-stop"', 'verifyPlayzone()'],
+  QUIZ_SHORT: ['đúng BA/12 lượt "Đố bạn"', 'cuối mỗi hiệp', 'tools/data/quiz.mjs', 'mạch kiến thức', 'nguyên văn', 'điền MỘT số/từ', 'chín lượt còn lại', 'ngân hàng đề', '>= 20px', 'tự tắt sau 6 giây', 'không bật microphone', 'không hiện sẵn đáp án', 'một động tác của mã điều khiển', '1 sải tay', 'Thư ký đọc lại', 'đề lệch không trừ tim', 'không cắt chuỗi', '<= 6 từ', 'Em chịu, bạn đáp giúp', '+5 điểm', '"Cả nhóm"', 'miti-best', 'Em đố hôm nay', 'Copy tờ rời', 'verifyQuiz()'],
   FOLK_SHORT: ['trò dân gian dẫn dắt', 'tools/data/folk.mjs', 'tên <= 4 từ', '"Cách chơi"', '>= 18px', 'chant <= 8 tiếng', 'BA lần một phiên', 'vạch nhịp 8 nhịp', 'đồng dao', 'mẫu câu <= 8 từ', 'giọng en-US', 'nhảy lò cò', 'trồng cây chuối', 'bịt mắt bắt dê', 'kéo co dây thật', '1 sải tay', 'tám món FOLK_PROPS', 'alpha <= 0.45', 'đổi vai sau 3 lượt', 'Trò chơi hôm nay', 'không giành góc HUD của tên môn', 'lời đếm cấm gọi là đồng dao', 'cấm đòi cầm vật thật', 'verifyFolk()'],
 };
 for (const seg of chainSegments) {
@@ -945,6 +987,7 @@ if (!fs.existsSync(VAR_FILE)) {
     // Trò dẫn dắt cũng là dữ liệu theo KIỂU ĐIỀU KHIỂN: block copy riêng được thì phải mang đúng trò
     // của chính nó chứ không phải danh sách mười bốn trò — V1–V4 có mã riêng, V5 mượn mã đầu của game.
     const vfk = vgame && FOLK_BANK[vGesture || (vgame.gestures || [])[0]];
+    const vq = vstd ? quizFrames(vstd.mach) : null;
     if (!vfk || !vsp) {
       bad(`biến thể #${i + 1} (${vid || 'không đọc được id'}): không tra được trò dân gian cho kiểu điều khiển ${vcode || 'lệch nhãn'} — bảng folk của builder và validate đã lệch nhau.`);
     } else {
@@ -959,6 +1002,16 @@ if (!fs.existsSync(VAR_FILE)) {
         [`năm trò đã loại (${FOLK_BANNED.map((x) => x.tro.toLowerCase()).join(', ')})`, 'năm trò bị loại nêu đích danh ngay trong block'],
       ]) {
         if (!b.includes(needle)) bad(`biến thể #${i + 1} (${vid}): thiếu ${label} của trò ${vfk.tro} ("${needle.slice(0, 48)}") — builder phải lấy thẳng tools/data/folk.mjs vào từng block.`);
+      }
+    }
+    if (vstd && vsp && vq) {
+      for (const [needle, label] of [
+        ['**Đố bạn — em đặt đề cho bạn đáp:**', 'dòng khối đố bạn — người copy riêng một block sẽ không biết lượt đố lấy mẫu câu ở đâu'],
+        [`Ba mẫu câu "Đố bạn" của block ${vcode} này (mạch "${vstd.mach}"`, 'mạch kiến thức đi kèm ba mẫu câu của block này'],
+        [`"${vq[0]}" · "${vq[1]}" · "${vq[2]}"`, 'ba mẫu câu nguyên văn của ĐÚNG mạch này'],
+        [`bạn đáp bằng động tác "${vsp.dongTac}"`, 'động tác đặc trưng của môn block này'],
+      ]) {
+        if (!b.includes(needle)) bad(`biến thể #${i + 1} (${vid}): thiếu ${label} ("${needle.slice(0, 48)}") — builder phải lấy thẳng tools/data/quiz.mjs vào đúng block.`);
       }
     }
     // Chuỗi tự kiểm của biến thể cũng phải mang đủ mọi tầng, cùng registry như prompt.
@@ -1440,6 +1493,58 @@ const SUPERSEDED = [
   [/>= 8 động tác lớn mỗi phút/, 'còn dùng con số cường độ cũ (>= 8 động tác lớn mỗi phút) — đã thay bằng >= 12 nhịp chuyển động mỗi phút'],
   [/cách tường một bước/, 'còn dùng "một bước" làm đơn vị khoảng cách an toàn — vòng 21 chuẩn hóa thành "một vòng 1 sải tay" theo tools/lib/playzone.mjs và tools/lib/rules.mjs'],
 ];
+// Vòng 23: tầng "đố bạn". Các mốc dưới ĐO TỪ tài liệu thật rồi hạ một bậc làm sàn, giống cách
+// FOLK_DOC_NEEDLES ở vòng 22. Sáu quy định này sống ở bốn chỗ (master §4.13, template, hai README) nên
+// một lần sửa tay ở chỗ nào cũng làm tầng đố bạn biến mất khỏi chỗ đó mà build vẫn xanh.
+const QUIZ_DOC_NEEDLES = [
+  ['ĐÚNG BA TRÊN MƯỜI HAI LƯỢT LÀ LƯỢT "ĐỐ BẠN"', 'nhãn bullet nguồn đề ở master', 1, 0, 0, 0],
+  ['THẺ "ĐỐ BẠN" MỘT HÀNG BA MẪU CÂU', 'nhãn bullet thẻ đố ở master', 1, 0, 0, 0],
+  ['BẠN ĐÁP BẰNG ĐÚNG MỘT ĐỘNG TÁC CỦA MÃ ĐIỀU KHIỂN', 'nhãn bullet bạn đáp ở master', 1, 0, 0, 0],
+  ['ĐỀ LỆCH KHÔNG PHẠT AI', 'nhãn bullet đề lệch ở master', 1, 0, 0, 0],
+  ['ĐIỂM ĐỐ VÀO "CẢ NHÓM"', 'nhãn bullet điểm đố ở master', 1, 0, 0, 0],
+  ['TỰ KIỂM BẰNG `verifyQuiz()`', 'nhãn bullet hàm tự kiểm ở master', 1, 0, 0, 0],
+  ['[42] verifyQuiz()', 'mục 42 của bảng kiểm máy tự kiểm trong master', 1, 0, 0, 0],
+  ['- ĐỐ BẠN — EM ĐẶT ĐỀ CHO BẠN ĐÁP (nguồn:', 'nhãn khối đố bạn trong template', 0, 1, 0, 0],
+  ['Phần đố bạn đã điền đủ', 'dòng checklist đố bạn trong template', 0, 1, 0, 0],
+  ['Sáu quy định "đố bạn"', 'heading mục kể chuyện tầng 23 ở README', 0, 0, 1, 0],
+  ['Tầng "đố bạn"', 'heading mục kể chuyện tầng 23 ở prompts/README', 0, 0, 0, 1],
+  ['máy tự kiểm thứ 42', 'số mục của verifyQuiz() trong bảng kiểm', 0, 0, 1, 0],
+  ['việc người thử thứ 33', 'việc người thử tương ứng ở README', 0, 0, 1, 0],
+  ['người thử số 33', 'việc người thử tương ứng ở prompts/README', 0, 0, 0, 1],
+  ['mục `[42]`', 'con trỏ từ prompts/README về đúng dòng bảng kiểm của verifyQuiz()', 0, 0, 0, 1],
+  ['folk.mjs + quiz.mjs', 'danh sách file data trong pipeline prompts/README', 0, 0, 0, 1],
+  ['quiz.mjs · verify.mjs', 'danh sách file lib trong pipeline prompts/README', 0, 0, 0, 1],
+  ['tools/data/quiz.mjs', 'bảng mẫu câu đố bạn', 4, 3, 4, 3],
+  ['tools/lib/quiz.mjs', 'tầng quy định đố bạn', 1, 1, 2, 1],
+  ['verifyQuiz()', 'hàm kiểm tầng đố bạn lúc nạp', 2, 2, 3, 6],
+  ['Đố bạn', 'chữ "Đố bạn"', 6, 5, 4, 3],
+  ['BA/12 lượt', 'trần lượt đố trong một phiên', 0, 2, 2, 1],
+  ['Em chịu, bạn đáp giúp', 'nút nhận thua của em được đố', 3, 3, 5, 2],
+  ['Em đố hôm nay', 'dòng tổng kết lượt đố', 1, 2, 2, 1],
+  ['ngân hàng đề', 'chỗ dựa của chín lượt còn lại', 1, 0, 0, 0],
+  ['MỘT hàng ba mẫu câu', 'thẻ đố một hàng ba mẫu', 2, 1, 0, 0],
+  ['mỗi mẫu <= 8 từ', 'trần độ dài một mẫu câu đố', 1, 1, 1, 0],
+  ['một chỗ trống', 'mỗi mẫu câu chỉ có một chỗ điền', 1, 1, 2, 1],
+  ['tám mạch', 'số mạch kiến thức của bảng mẫu câu', 3, 3, 6, 2],
+  ['CUỐI hiệp', 'vị trí lượt đố trong hiệp', 0, 0, 0, 1],
+  ['MỘT hàng ba mẫu câu đúng mạch, chữ >= 20px', 'trần chữ của thẻ đố ở master', 1, 0, 0, 0],
+  ['CẤM bật microphone', 'lượt đố không bật micro ở master', 1, 0, 0, 0],
+  ['thì game KHÔNG trừ tim, KHÔNG cắt chuỗi đúng', 'đề lệch không phạt ai, chốt ở master', 1, 0, 0, 0],
+  ['(tám mạch, mỗi mạch ba mẫu, mỗi mẫu <= 8 từ và có đúng một chỗ trống)', 'bản chốt bảng mẫu câu ở master', 1, 0, 0, 0],
+  ['Thẻ "Đố bạn" hiện MỘT hàng ba mẫu câu, chữ >= 20px', 'trần chữ của thẻ đố ở template', 0, 1, 0, 0],
+  ['Cấm bật microphone ở lượt này', 'lượt đố không bật micro ở template', 0, 1, 0, 0],
+  ['Có nút "Em chịu, bạn đáp giúp"', 'nút nhận thua ở template', 0, 1, 0, 0],
+  ['(mỗi mẫu <= 8 từ, đúng một chỗ trống)', 'bản chốt bảng mẫu câu ở template', 0, 1, 0, 0],
+  ['`verifyQuiz()` chạy', 'hàm kiểm tầng đố bạn ở template', 0, 1, 0, 0],
+  ['| **Đúng BA/12 lượt do em đặt đề** |', 'dòng bảng kể chuyện tầng đố bạn ở README', 0, 0, 1, 0],
+  ['chữ **>= 20px**, **tự tắt sau 6 giây**', 'trần chữ và trần thời gian thẻ ở README', 0, 0, 1, 0],
+  ['**không trừ tim, không cắt chuỗi đúng**', 'đề lệch không phạt ai ở README', 0, 0, 1, 0],
+  ['mỗi mẫu **<= 8 từ**, đúng **một chỗ trống**', 'bản chốt bảng mẫu câu ở hai README', 0, 0, 1, 1],
+  ['có nút **"Em chịu, bạn đáp giúp"**', 'nút nhận thua ở hai README', 0, 0, 1, 1],
+  ['(tám mạch × ba mẫu', 'bản chốt bảng mẫu câu ở hai README', 0, 0, 1, 1],
+  ['Đúng **BA lượt "Đố bạn"** một phiên', 'dòng bảng kể chuyện tầng đố bạn ở prompts/README', 0, 0, 0, 1],
+  ['mỗi hiệp **MỘT lượt** ở **CUỐI hiệp**', 'vị trí lượt đố ở hai README', 0, 0, 1, 1],
+];
 const DOC_FILES = [
   ['prompts/00-master-canvas-prompt.md', master],
   ['prompts/templates/game-prompt-template.md', tpl],
@@ -1459,7 +1564,7 @@ for (const [docSlot, [docName, docText]] of DOC_FILES.entries()) {
   for (const [needle, label] of IDENTITY_DOC_NEEDLES) {
     if (!docText.includes(needle)) bad(`${docName} thiếu con số bản sắc riêng (${label}): không thấy "${needle}".`);
   }
-  for (const [needle, label, ...mins] of [...RHYTHM_DOC_NEEDLES, ...VOICE_DOC_NEEDLES, ...QUEUE_DOC_NEEDLES, ...LESSON_DOC_NEEDLES, ...CURRICULUM_DOC_NEEDLES, ...SPORT_DOC_NEEDLES, ...FAMILY_DOC_NEEDLES, ...PACE_DOC_NEEDLES, ...PLAYZONE_DOC_NEEDLES, ...FOLK_DOC_NEEDLES]) {
+  for (const [needle, label, ...mins] of [...RHYTHM_DOC_NEEDLES, ...VOICE_DOC_NEEDLES, ...QUEUE_DOC_NEEDLES, ...LESSON_DOC_NEEDLES, ...CURRICULUM_DOC_NEEDLES, ...SPORT_DOC_NEEDLES, ...FAMILY_DOC_NEEDLES, ...PACE_DOC_NEEDLES, ...PLAYZONE_DOC_NEEDLES, ...FOLK_DOC_NEEDLES, ...QUIZ_DOC_NEEDLES]) {
     const want = mins[docSlot];
     const got = docText.split(needle).length - 1;
     if (got < want) bad(`${docName} chỉ còn nêu "${needle}" (${label}) ${got} lần, chuẩn hiện hành là ${want} lần — tài liệu chuẩn phải giữ đủ chỗ nêu ở CẢ phần luật lẫn bảng kiểm tự kiểm, không được để một phần mất số.`);
@@ -1776,6 +1881,14 @@ if (!PLAYZONE.depCho.includes('1 sải tay') || !QUEUE.spacing.includes('1 sải
 // bốn điều verifyFolk() kiểm — thiếu một vế (ví dụ "không lời đếm nào bị gọi là đồng dao") thì game bịa
 // một câu đếm vô nghĩa vẫn báo ĐẠT.
 if (!MACHINE_ITEMS.some((s) => s.includes('verifyFolk()') && s.includes('FOLK_PROPS'))) bad('Bảng kiểm máy tự kiểm không còn mục nghiệm thu tầng sân chơi Việt Nam (verifyFolk() + FOLK_PROPS) — thiếu mục này thì game bỏ hẳn trò dân gian, lời hô và đồ dùng mà vẫn báo ĐẠT.');
+if (!MACHINE_ITEMS.some((s) => s.includes("verifyQuiz()") && s.includes('BA lượt "Đố bạn"'))) bad('Bảng kiểm máy tự kiểm không còn mục nghiệm thu tầng đố bạn (verifyQuiz() + BA lượt "Đố bạn") — thiếu mục này thì game bỏ hẳn lượt em đặt đề mà vẫn báo ĐẠT.');
+{
+  const qItem = MACHINE_ITEMS.find((s) => s.includes("verifyQuiz()")) || '';
+  for (const clause of ['tools/data/quiz.mjs', 'NGUYÊN VĂN', 'mạch kiến thức', 'CUỐI mỗi hiệp', 'chín lượt còn lại', 'ngân hàng đề', 'một hàng ba mẫu câu', '>= 20px', '6 giây', 'không bật microphone', 'không hiện sẵn đáp án', 'MỘT động tác', 'mã điều khiển', '1 sải tay', 'đề lệch', 'không trừ tim', 'không cắt chuỗi', 'Em chịu, bạn đáp giúp', '+5 điểm', 'Cả nhóm', 'Em đố hôm nay', 'Copy tờ rời']) {
+    if (!qItem.includes(clause)) bad(`Mục verifyQuiz() của bảng kiểm không còn nêu "${clause}" — bảng kiểm lỏng hơn quy định trong tools/lib/quiz.mjs thì game thiếu lượt đố vẫn được đóng dấu ĐẠT.`);
+  }
+  if (!HUMAN_CHECKS.some((s) => s.includes('Đố bạn') && s.includes('động tác'))) bad('Bảng kiểm hết việc người thử cho tầng đố bạn — cô không bấm thử lượt đố thì không ai biết thẻ "Đố bạn" có thật hay chỉ là chữ trên màn hình.');
+}
 {
   const folkItem = MACHINE_ITEMS.find((s) => s.includes('verifyFolk()'));
   for (const clause of ['tools/data/folk.mjs', 'NGUYÊN VĂN', 'tên <= 4 từ', '"Cách chơi"', 'nhãn mini-trạm', 'không chiếm góc HUD của tên môn', 'cột `chant`', '<= 8 tiếng', 'BA lần một phiên', 'vạch nhịp 8 nhịp', '"miti-mute"', 'không lời đếm nào bị gọi là "đồng dao"', 'tám món FOLK_PROPS', 'alpha <= 0.45', 'không một lượt nào trong 12 lượt đòi em cầm vật thật', '"Nhảy lò cò"', '"Trồng cây chuối"', '"Bịt mắt bắt dê"', '"Rồng rắn chạy vòng"', '"Kéo co dây thật"', '1 sải tay', 'dép lê / lớp chật']) {
@@ -1890,6 +2003,60 @@ if (!FOLK.dongDao.includes('"dong dao"') || !FOLK.dongDao.includes('"dem"')) bad
   if (!FOLK.doDung.includes('<= 0.45') || !SPORT.tiepSuc.includes('<= 0.45')) bad('Trần alpha đạo cụ AR <= 0.45 lệch giữa folk.mjs và sport.mjs — hai lớp đồ họa trong suốt chồng lên nhau sẽ che mất em đang chơi.');
 }
 
+// Vòng 23: bảng mẫu câu "Đố bạn" là DỮ LIỆU theo MẠCH kiến thức (khác bảng trò dân gian, vốn theo mã
+// điều khiển). Sửa nội dung trong tools/data/quiz.mjs — viết dài mẫu câu, thêm chỗ trống thứ hai, bỏ
+// một mạch — thì không quy định nào ở trên bắt được, nên đối chiếu thẳng ở đây.
+{
+  const machs = new Set(Object.values(STANDARDS).map((std) => std.mach));
+  for (const m of machs) {
+    let frames;
+    try { frames = quizFrames(m); } catch { bad(`tools/data/quiz.mjs thiếu mạch "${m}" — game thuộc mạch này sẽ build lỗi hoặc tự bịa mẫu câu đố.`); continue; }
+    if (frames.length !== 3) bad(`tools/data/quiz.mjs: mạch "${m}" có ${frames.length} mẫu câu, chuẩn là 3 — thẻ "Đố bạn" hiển thị MỘT hàng ba mẫu nên thêm hay bớt đều vỡ bố cục.`);
+    for (const q of frames) {
+      if ((q.match(/…/g) || []).length !== 1) bad(`tools/data/quiz.mjs: mẫu "${q}" có ${((q.match(/…/g) || []).length)} chỗ trống, chuẩn là ĐÚNG MỘT — hai chỗ trống thì em đố phải đọc hai đáp án trong một lượt.`);
+      const w = soTu(q);
+      if (w > 8) bad(`tools/data/quiz.mjs: mẫu "${q}" dài ${w} từ, trần 8 từ — mẫu dài hơn không nằm vừa thẻ "Đố bạn" chữ >= 20px mà em đố cũng đọc không xong trong 3 giây.`);
+    }
+  }
+  if (QUIZ_KEYS.length !== machs.size) bad(`tools/data/quiz.mjs có ${QUIZ_KEYS.length} mạch nhưng STANDARDS đang dùng ${machs.size} mạch — bảng mẫu câu phải phủ đủ, không tự thêm mạch lạ.`);
+  for (const m of QUIZ_KEYS) if (!machs.has(m)) bad(`tools/data/quiz.mjs có mạch "${m}" không game nào thuộc mạch đó — bảng mẫu câu lệch chuẩn SGK thì em đố một câu ngoài mạch đang học.`);
+  for (const m of QUIZ_KEYS) if (/[\u3400-\u9fff\u3040-\u30ff]/.test(JSON.stringify(QUIZ_BANK[m]))) bad(`tools/data/quiz.mjs.${m}: lẫn ký tự CJK.`);
+  // Probe vòng 23: sửa chữ một mẫu câu ngay trong tools/data/quiz.mjs thì prompt và biến thể cùng đổi
+  // theo (builder đọc thẳng data), nên không một pin nào ở trên thấy lệch. Đối chiếu nguyên văn cả 24
+  // mẫu câu với bản chốt ở đây — đổi chữ là 85 prompt phải đổi cùng một lần, không đổi âm thầm.
+  const QUIZ_BANK_EXPECT = {
+  'Số và phép tính': ['Kết quả đúng là số …?', 'Số còn thiếu là số …?', 'Ở hàng …, chữ số là mấy?'],
+  'Hình học và đo lường': ['Hình này có … cạnh?', 'Góc này là góc …?', 'Chu vi hình bằng …?'],
+  'Giải toán có lời văn': ['Bước đầu ta tìm …?', 'Đáp số của bài là …?', 'Bài toán hỏi nhiều hơn …?'],
+  'Một số yếu tố thống kê và xác suất': ['Cột cao nhất là …?', 'Bảng có … số liệu?', 'Sự kiện nào chắc chắn …?'],
+  'Đọc và viết': ['Read the word: …?', 'Which letter is missing, …?', 'Spell the word: …?'],
+  'Nghe và nói': ['Can you say it, …?', 'Say the number: …?', 'Listen and repeat: …?'],
+  'Kiến thức ngôn ngữ': ['Choose the correct word, …?', 'What is the opposite of …?', 'Which word comes next, …?'],
+  'Ôn tập tổng hợp': ['Câu này đúng hay …?', 'Bạn chọn đáp án …?', 'Thiếu số nào đây, …?'],
+  };
+  for (const m of Object.keys(QUIZ_BANK_EXPECT)) {
+    const got = (QUIZ_BANK[m] || []).join(" · ");
+    const want = QUIZ_BANK_EXPECT[m].join(" · ");
+    if (got !== want) bad(`tools/data/quiz.mjs mạch "${m}" lệch bản chốt:\n    đang là "${got}"\n    chuẩn là "${want}" — sửa mẫu câu là sửa lời em đọc trước lớp, phải đổi cùng lúc ở 85 prompt, 425 block và bảng kiểm.`);
+  }
+  if (QUIZ_KEYS.length !== Object.keys(QUIZ_BANK_EXPECT).length) bad(`tools/data/quiz.mjs có ${QUIZ_KEYS.length} mạch nhưng bản chốt ở validate là ${Object.keys(QUIZ_BANK_EXPECT).length} mạch — thêm hay bớt mạch phải sửa cả STANDARDS và master §4.13.`);
+  const QBE = Object.keys(QUIZ_BANK_EXPECT);
+  for (const m of QBE) {
+    const inStandards = Object.values(STANDARDS).some((std) => std.mach === m);
+    if (!inStandards) bad(`validate chốt mạch "${m}" nhưng không cụm kiến thức nào trong standards.mjs mang mạch đó — bảng chốt và SGK đã lệch nhau.`);
+  }
+  // Các con số lượt đố MƯỢN từ tầng khác; đổi một bên thì 85 prompt mang hai chuẩn mâu thuẫn.
+  if (!QUIZ.dapCuaBan.includes('1 sải tay') || !PLAYZONE.depCho.includes('1 sải tay')) bad('Khoảng cách an toàn lệch giữa tools/lib/quiz.mjs và tools/lib/playzone.mjs — lượt đố sẽ vẽ lại một vùng đứng khác vùng đã dẹp chỗ chơi.');
+  if (!QUIZ.dapCuaBan.includes('90 độ') || !PE.loadCap.includes('90 độ')) bad('Hình quạt 90 độ lệch giữa quiz.mjs và pe.mjs — động tác đáp án sẽ thoát trần xoay thân mà tầng thể dục đã đặt.');
+  if (!QUIZ.cachDo.includes('>= 20px') || !CURRICULUM.bayTruoc.includes('>= 20px')) bad('Cỡ chữ thẻ >= 20px lệch giữa quiz.mjs và curriculum.mjs — thẻ "Đố bạn" nhỏ hơn thẻ báo-trước thì em ngồi sau không đọc được đề.');
+  if (!QUIZ.cachDo.includes('6 giây') || !CURRICULUM.bayTruoc.includes('6 giây')) bad('Trần 6 giây của thẻ lệch giữa quiz.mjs và curriculum.mjs — hai loại thẻ trên cùng một HUD sống hai khoảng thời gian khác nhau.');
+  if (!QUIZ.diemVai.includes('+5 điểm') || !QUEUE.teamScore.includes('+5')) bad('Điểm +5 vai phụ lệch giữa quiz.mjs và queue.mjs — lượt đố và vai chờ sẽ cộng vào thanh "Cả nhóm" theo hai mức khác nhau.');
+  if (!QUIZ.diemVai.includes('miti-best') || !QUEUE.teamScore.includes('miti-best')) bad('Quy ước không cộng vào "miti-best" không còn ở cả quiz.mjs lẫn queue.mjs — điểm đố sẽ tràn vào xếp hạng cá nhân.');
+  if (!QUIZ.diemVai.includes('Copy tờ rời') || !QUEUE.teamScore.includes('Copy tờ rời')) bad('Dòng tổng kết lượt đố không còn nằm trong khối "Copy tờ rời" của tầng vai chờ — giáo viên copy một lần sẽ mất phần đố bạn.');
+  if (!QUIZ.xuLyLech.includes('3 câu thoại mỗi phút') || !IDENTITY.lines.includes('3 câu thoại mỗi phút')) bad('Ngân sách giọng "3 câu thoại mỗi phút" không còn được cả tầng mascot lẫn tầng đố bạn viện — câu đỡ của mascot sẽ đè lên lời đọc đề.');
+  if (!QUIZ.dapCuaBan.includes('Thư ký') || !QUEUE.roles.includes('Thư ký')) bad('Vai "Thư ký" đọc lại đề bị lệch giữa quiz.mjs và queue.mjs — lượt đố sẽ giao việc cho một vai chờ không tồn tại trên HUD.');
+  if (!QUIZ.guard.includes('Bản một học sinh') || !QUEUE.guard.includes('Bản một học sinh')) bad('Bản một học sinh không còn được cả hai tầng đố bạn và vai chờ quy định — game một em sẽ tự chọn bỏ lượt đố hay bỏ HUD vai chờ.');
+}
 // Vòng 19: tầng gia đình KHÔNG tự đặt con số nào — trần 16 từ mượn của tầng nhẹ đầu, trần 12 từ và
 // động tác 3 giây mượn của tầng chuẩn kiến thức, khối "Copy tờ rời" và dòng "Cả nhóm" mượn của tầng
 // thi đua/chuẩn. Mỗi lib đứng riêng vẫn tự nhất quán nên pin đơn lib không thấy lệch; chỉ đối chiếu
@@ -1961,6 +2128,26 @@ for (const g of GAMES) {
     ['KHÔNG chiếm góc HUD của tên môn', 'câu cấm tên trò giành góc HUD của tên môn'],
   ]) {
     if (!t.includes(needle)) bad(`${g.id}: prompt thiếu ${label} của trò ${f.tro} ("${needle.slice(0, 48)}") — builder phải lấy thẳng tools/data/folk.mjs theo mã ${g.gestures[0]}.`);
+  }
+}
+
+// Mỗi prompt game phải mang đúng BA MẪU CÂU của mạch kiến thức mình. Probe vòng 23: builder thay dòng
+// dữ liệu bằng "em đố bạn một câu hỏi trong mạch" thì khối ĐỐ BẠN vẫn nguyên, 85 prompt vẫn xanh, mà
+// không game nào biết mẫu câu nào thuộc mạch nào — nên neo từng mẫu câu ngay trong prompt đã sinh.
+for (const g of GAMES) {
+  const stdQ = STANDARDS[g.cluster];
+  if (!stdQ) continue;
+  const qf = quizFrames(stdQ.mach);
+  const rel = PATH_OF.get(g.id);
+  if (!rel || !fs.existsSync(path.join(ROOT, rel))) continue;
+  const t = fs.readFileSync(path.join(ROOT, rel), "utf8");
+  for (const [needle, label] of [
+    ['- ĐỐ BẠN — EM ĐẶT ĐỀ CHO BẠN ĐÁP (vòng 23:', 'nhãn khối đố bạn kèm khảo sát'],
+        [`- Mẫu câu "Đố bạn" của game này (mạch "${stdQ.mach}"`, 'dòng dữ liệu mẫu câu kèm đúng mạch của game'],
+        [`"${qf[0]}" · "${qf[1]}" · "${qf[2]}"`, 'ba mẫu câu nguyên văn của ĐÚNG mạch này'],
+    ['đúng BA/12 lượt ở cuối mỗi hiệp', 'trần lượt đố nêu ngay trong prompt game'],
+  ]) {
+    if (!t.includes(needle)) bad(`${g.id}: prompt thiếu ${label} ("${needle.slice(0, 48)}") — builder phải lấy thẳng tools/data/quiz.mjs theo mạch ${stdQ.mach}.`);
   }
 }
 
