@@ -346,6 +346,34 @@ Bốn điểm **chưa xác minh được** và cố ý không đưa vào dữ li
 số `3,6 × 4,5`, việc cắt băng giấy để giới thiệu phép chia phân số, và các danh sách lỗi học sinh (suy từ
 cấu trúc quy tắc và SKKN, chưa có khảo sát lớp 4–5 đọc được).
 
+### 🔍 Vòng 9: checklist tự kiểm chỉ được lắp từ chuỗi canon (`CAC_CAP_SHORT`)
+
+Vòng 7b sửa một vụ lệch bằng tay nhưng để nguyên chỗ sinh ra nó: mục 10 của mỗi giáo án còn một đuôi
+**viết tay** gồm 11 vế, chép lại lời của `LESSON_SHORT`. Đo trên 47 file đã sinh — 47/47 checklist mang
+dòng "bài có khối thì đủ cạnh khuất + xoay + mở hộp, bài có góc hoặc hai đường thì đủ bộ dụng cụ thân
+người", trong khi 44/47 bài thuộc cụm không có khối để xoay và không có góc để dựng bằng vai: đúng loại rác
+vòng 7b vừa dẹp thì quay lại qua cửa viết tay. Một lỗ nữa lộ ra khi lần tìm chuỗi canon không ai dùng:
+`AR_LESSON_SHORT` khai báo trong `tools/lib/ar.mjs` nhưng không file giáo án nào in ra, nên 47/47 checklist
+**không có** dòng tự kiểm cho đúng phần làm nên chất AR của công cụ giảng bài — bảng >= 70% màn chiếu, panel
+soi tay >= 24% ở cột biên và đóng được, landmark đi qua `toScreen` theo chữ nhật panel, phép biến đổi
+tay→mặt bảng hiệu chỉnh bằng bốn góc tầm tay (một điểm tay đúng một điểm bảng, ngoài tầm thì nét dừng ở
+mép), độ trễ < 150 ms có hiện con số. Mô hình cứ thiếu những điều đó và không có dòng nào bắt nó tự soát.
+
+Sửa: bỏ hết vế viết tay đã canon lo, giữ ba vế thật riêng (2 mục mẫu LESSON_DATA còn nguyên văn và cả 6 mục
+đã chạy qua `verifyQuestionBank()` trước bước 5 · chữ ký MiTi ở đủ ba chỗ như mục 9 · file chạy độc lập không
+lỗi console), nối `AR_LESSON_SHORT` vào giữa `chalkShortFor()` và `VERIFY_SHORT`. Bộ kiểm giờ chặn ba đường
+lệch: checklist thiếu một chuỗi canon; checklist nhắc "khối / cạnh khuất / mở hộp" hoặc "ê-ke / thước góc" ở
+bài mà mục 4 không đòi; và `CAC_CAP_SHORT` — mỗi con số trong bảy vế `*_SHORT` của họ giảng bài phải còn có
+mặt trong quy định đầy đủ cùng cặp (so sau khi bỏ ký tự không phải số, nên `0.55` và `0,55` không phá nhau).
+
+Probe `side-giao-an/probe-vong-9/probe-r9.sh` — 4/4 PASS: đổi `CHALK.persist` từ 200 KB thành 180 KB thì báo
+`CHALK_SHORT mang con số 200`; bỏ `AR_LESSON_SHORT` khỏi checklist thì báo thiếu một dòng rút gọn; chép lại
+tay vế hình học thì báo `checklist nhắc hình học khối`; cây sạch vẫn "Xác minh đạt". Sau vòng 9: hai lỗ đo
+đầu vòng về 0/47, vế "khi bài có khối" chỉ còn ở 3 bài cụm khối như vòng 7b, và 85 prompt game không đổi một
+byte. Chiều ngược — mọi quy định đầy đủ có số phải xuất hiện ở checklist — **chưa** siết, vì nhiều quy định
+đầy đủ không thuộc phần tự kiểm và `ADAPT_SHORT` lệch ba con số (`2`, `2`, `4`) thuộc họ game, mà nhánh giáo
+án không được sửa chuỗi dùng chung đó.
+
 ### Vật thật và sơ đồ theo cụm kiến thức (`tools/data/props.mjs`)
 
 46 cụm Toán, mỗi cụm đủ 5 trường `vat · don_vi · ngon_tay · so_do · doc`, không để mô hình tự bịa:

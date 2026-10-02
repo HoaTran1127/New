@@ -7,7 +7,7 @@ import { danhSachNhanLoi, noteChoLoi } from './data/error-tags.mjs';
 import { PROP_KEYS, prop } from './data/props.mjs';
 import { buildLessons, notesCuaGiaoAn, CHUA_CO_GAME_CUM, CHU_DE_CHI_CO_GIAO_AN } from './data/lessons.mjs';
 import { readCatalog } from './lib/csv.mjs';
-import { AR_LESSON, TASKS_VISION } from './lib/ar.mjs';
+import { AR_LESSON, AR_LESSON_SHORT, TASKS_VISION } from './lib/ar.mjs';
 import { RULES } from './lib/rules.mjs';
 import { CLASSROOM } from './lib/classroom.mjs';
 import { ACCESS, ACCESS_SHORT } from './lib/access.mjs';
@@ -177,7 +177,7 @@ ${AR_LESSON}
 10. ĐẦU RA
 - Chỉ xuất toàn bộ file HTML hoàn chỉnh, không kèm giải thích dài.
 - Không TODO, không pseudocode, không "...", không "// code tương tự ở trên", không phần "bạn tự bổ sung".
-- Tự kiểm tra trước khi xuất: ${LESSON_SHORT} · ${chalkShortFor(L.cluster)} · ${VERIFY_SHORT} · ${ACCESS_SHORT} · có đủ năm bước và không bước nào tự chuyển khi giáo viên chưa bấm · LESSON_DATA đủ 6 mục với 2 mục mẫu nguyên văn, mỗi mục có \`ho_tro\` và phân bố đúng 2-2-2, đã chạy qua verifyQuestionBank() trước bước 5 · mọi thẻ đáp án mang nhãn in hoa A-D và bảng đối chiếu ngón tay hiện đủ · panel soi tay có bộ xương 21 khớp cho riêng tay đã gán, có trạng thái bốn mức và độ trễ ms đo thật · một điểm bàn tay chỉ có một điểm trên mặt bảng, ngoài tầm thì nét dừng ở mép · bài có khối thì đủ cạnh khuất + xoay + mở hộp, bài có góc hoặc hai đường thì đủ bộ dụng cụ thân người · cỡ chữ đang phát đạt theo dòng tự kiểm ĐẠT / CHƯA ĐẠT · bảng không tự lau ở bất kì bước nào · in được bản nền trắng chữ đen · chữ ký MiTi ở ba chỗ · file chạy độc lập không lỗi console.
+- Tự kiểm tra trước khi xuất: ${LESSON_SHORT} · ${chalkShortFor(L.cluster)} · ${AR_LESSON_SHORT} · ${VERIFY_SHORT} · ${ACCESS_SHORT} · 2 mục mẫu LESSON_DATA còn nguyên văn và cả 6 mục đã chạy qua verifyQuestionBank() trước bước 5 · chữ ký MiTi ở đủ ba chỗ như mục 9 · file chạy độc lập không lỗi console.
 \`\`\`
 
 ## Ghi chú cho người tạo prompt (không gửi Gemini)
@@ -231,8 +231,18 @@ phải ghi đúng số quy định của chính bài đó.
 Vế rút gọn của hai quy định này trong checklist tự kiểm (mục 10) cũng đi qua cùng hai danh sách, nhờ
 \`chalkShortFor(c)\` trong \`tools/lib/chalk.mjs\` — builder in ra và bộ kiểm đòi cùng một chuỗi nên không
 thể xảy ra chuyện mục 4 bắt xoay khối mà checklist lại không có dòng đó cho học sinh tự kiểm. Trước
-vòng 7 hai vế này nằm thường trực trong \`CHALK_SHORT\`, thành thử ${lessons.length} bài đều mang theo
+vòng 7 hai vế này nằm thường trực trong \`CHALK_SHORT\`, thành thử \${lessons.length} bài đều mang theo
 "xoay khối", kể cả bài chia số và phân số không có khối nào.
+
+checklist mục 10 **chỉ được lắp từ chuỗi canon**, không có vế nào viết tay. Vòng 9 đo được hai thứ
+cùng lúc: \`AR_LESSON_SHORT\` khai báo trong \`tools/lib/ar.mjs\` mà không file giáo án nào in ra
+(47/47 checklist thiếu trọn bộ quy định AR của công cụ giảng bài — bảng >= 70% màn chiếu, panel soi tay
+>= 24%, ánh xạ tay→mặt bảng hiệu chỉnh bằng bốn góc tầm tay, độ trễ < 150 ms), và đuôi checklist viết
+tay lặp lại đúng những gì \`LESSON_SHORT\` đã nói, nên 47/47 bài vẫn mang dòng "bài có khối thì đủ cạnh
+khuất + xoay + mở hộp" dù mục 4 đã thôi đòi điều đó ở 44 bài. Cách sửa: bỏ hết vế trùng, thay bằng
+chuỗi canon. Bộ kiểm giờ chặn cả ba đường lệch — thiếu chuỗi canon, thừa từ khoá hình học, và
+\`*_SHORT\` mang một con số mà quy định đầy đủ cùng cặp không còn (\`CAC_CAP_SHORT\` trong
+\`tools/validate.mjs\`).
 
 ## Cách dùng
 
@@ -327,10 +337,10 @@ ${byLop[5].map(row).join('\n')}
 - Đổi quy định bảng phấn: \`tools/lib/chalk.mjs\` (10 quy định chung + 2 quy định hình học nối theo cụm, danh sách ở \`SOLID_CLUSTERS\` / \`BODY_CLUSTERS\`).
 - Đổi quy định chế độ giảng bài: \`tools/lib/lesson.mjs\` (13 quy định).
 - Đổi quy định tự kiểm đề: \`tools/lib/verify.mjs\` (dùng chung với 85 prompt game).
-- Đổi bố cục AR của tiết học: \`AR_LESSON\` trong \`tools/lib/ar.mjs\`. \`AR_RENDER\` trong cùng file là khối của game — hai khối chiếu tọa độ theo hai hình chữ nhật khác nhau nên không đổi chỗ cho nhau được.
+- Đổi bố cục AR của tiết học: \`AR_LESSON\` trong \`tools/lib/ar.mjs\`, và \`AR_LESSON_SHORT\` ở cùng file là vế checklist tương ứng (từ vòng 9) — sửa một khối mà quên vế kia thì \`CAC_CAP_SHORT\` trong \`tools/validate.mjs\` báo ngay con số đã lệch. \`AR_RENDER\` trong cùng file là khối của game — hai khối chiếu tọa độ theo hai hình chữ nhật khác nhau nên không đổi chỗ cho nhau được.
 - Một \`GA*.md\` báo từ vựng game: **đừng** sửa \`clusters.mjs\` hay \`props.mjs\` — 85 prompt game đang đọc hai file đó — mà thêm khối \`giao_an\` cho cụm bị báo vào \`tools/data/lessons.mjs\`.
 - Câu mẫu mới trong \`examples.mjs\` dùng \`errorTag\` ngoài ba nhãn của cụm: thêm mô tả tiếng Việt vào \`tools/data/error-tags.mjs\`, nếu không builder sẽ dừng và gọi tên đúng nhãn thiếu.
-- \`node tools/validate.mjs\` sẽ chặn nếu thiếu quy định nào, nếu vật thật thiếu trường, nếu quy định hình học lọt vào bài không có hình học, hoặc nếu cơ chế game lọt vào giáo án.
+- \`node tools/validate.mjs\` sẽ chặn nếu thiếu quy định nào, nếu vật thật thiếu trường, nếu quy định hình học lọt vào bài không có hình học, nếu checklist mục 10 thiếu một chuỗi canon hoặc tự tay nhắc lại hình học, nếu một vế \`*_SHORT\` mang con số mà quy định đầy đủ cùng cặp không còn, hoặc nếu cơ chế game lọt vào giáo án.
 `;
 }
 

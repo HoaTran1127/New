@@ -35,8 +35,18 @@ phải ghi đúng số quy định của chính bài đó.
 Vế rút gọn của hai quy định này trong checklist tự kiểm (mục 10) cũng đi qua cùng hai danh sách, nhờ
 `chalkShortFor(c)` trong `tools/lib/chalk.mjs` — builder in ra và bộ kiểm đòi cùng một chuỗi nên không
 thể xảy ra chuyện mục 4 bắt xoay khối mà checklist lại không có dòng đó cho học sinh tự kiểm. Trước
-vòng 7 hai vế này nằm thường trực trong `CHALK_SHORT`, thành thử 47 bài đều mang theo
+vòng 7 hai vế này nằm thường trực trong `CHALK_SHORT`, thành thử ${lessons.length} bài đều mang theo
 "xoay khối", kể cả bài chia số và phân số không có khối nào.
+
+checklist mục 10 **chỉ được lắp từ chuỗi canon**, không có vế nào viết tay. Vòng 9 đo được hai thứ
+cùng lúc: `AR_LESSON_SHORT` khai báo trong `tools/lib/ar.mjs` mà không file giáo án nào in ra
+(47/47 checklist thiếu trọn bộ quy định AR của công cụ giảng bài — bảng >= 70% màn chiếu, panel soi tay
+>= 24%, ánh xạ tay→mặt bảng hiệu chỉnh bằng bốn góc tầm tay, độ trễ < 150 ms), và đuôi checklist viết
+tay lặp lại đúng những gì `LESSON_SHORT` đã nói, nên 47/47 bài vẫn mang dòng "bài có khối thì đủ cạnh
+khuất + xoay + mở hộp" dù mục 4 đã thôi đòi điều đó ở 44 bài. Cách sửa: bỏ hết vế trùng, thay bằng
+chuỗi canon. Bộ kiểm giờ chặn cả ba đường lệch — thiếu chuỗi canon, thừa từ khoá hình học, và
+`*_SHORT` mang một con số mà quy định đầy đủ cùng cặp không còn (`CAC_CAP_SHORT` trong
+`tools/validate.mjs`).
 
 ## Cách dùng
 
@@ -176,7 +186,7 @@ phải dạy trên lớp thì phải có bài giảng, kể cả khi thư viện
 - Đổi quy định bảng phấn: `tools/lib/chalk.mjs` (10 quy định chung + 2 quy định hình học nối theo cụm, danh sách ở `SOLID_CLUSTERS` / `BODY_CLUSTERS`).
 - Đổi quy định chế độ giảng bài: `tools/lib/lesson.mjs` (13 quy định).
 - Đổi quy định tự kiểm đề: `tools/lib/verify.mjs` (dùng chung với 85 prompt game).
-- Đổi bố cục AR của tiết học: `AR_LESSON` trong `tools/lib/ar.mjs`. `AR_RENDER` trong cùng file là khối của game — hai khối chiếu tọa độ theo hai hình chữ nhật khác nhau nên không đổi chỗ cho nhau được.
+- Đổi bố cục AR của tiết học: `AR_LESSON` trong `tools/lib/ar.mjs`, và `AR_LESSON_SHORT` ở cùng file là vế checklist tương ứng (từ vòng 9) — sửa một khối mà quên vế kia thì `CAC_CAP_SHORT` trong `tools/validate.mjs` báo ngay con số đã lệch. `AR_RENDER` trong cùng file là khối của game — hai khối chiếu tọa độ theo hai hình chữ nhật khác nhau nên không đổi chỗ cho nhau được.
 - Một `GA*.md` báo từ vựng game: **đừng** sửa `clusters.mjs` hay `props.mjs` — 85 prompt game đang đọc hai file đó — mà thêm khối `giao_an` cho cụm bị báo vào `tools/data/lessons.mjs`.
 - Câu mẫu mới trong `examples.mjs` dùng `errorTag` ngoài ba nhãn của cụm: thêm mô tả tiếng Việt vào `tools/data/error-tags.mjs`, nếu không builder sẽ dừng và gọi tên đúng nhãn thiếu.
-- `node tools/validate.mjs` sẽ chặn nếu thiếu quy định nào, nếu vật thật thiếu trường, nếu quy định hình học lọt vào bài không có hình học, hoặc nếu cơ chế game lọt vào giáo án.
+- `node tools/validate.mjs` sẽ chặn nếu thiếu quy định nào, nếu vật thật thiếu trường, nếu quy định hình học lọt vào bài không có hình học, nếu checklist mục 10 thiếu một chuỗi canon hoặc tự tay nhắc lại hình học, nếu một vế `*_SHORT` mang con số mà quy định đầy đủ cùng cặp không còn, hoặc nếu cơ chế game lọt vào giáo án.

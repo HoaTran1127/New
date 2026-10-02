@@ -12,9 +12,9 @@ import { MOTION, FEEL } from './lib/feel.mjs';
 import { CLASSROOM } from './lib/classroom.mjs';
 import { ACCESS, ACCESS_SHORT } from './lib/access.mjs';
 import { VERIFY, ADAPT, VERIFY_SHORT } from './lib/verify.mjs';
-import { CHALK, CHALK_SHORT_HINH, CHALK_SHORT_THAN, chalkShortFor, SOLID_CLUSTERS, BODY_CLUSTERS, SO_QUY_DINH, SO_TU_CHUNG } from './lib/chalk.mjs';
+import { CHALK, CHALK_SHORT, CHALK_SHORT_HINH, CHALK_SHORT_THAN, chalkShortFor, SOLID_CLUSTERS, BODY_CLUSTERS, SO_QUY_DINH, SO_TU_CHUNG } from './lib/chalk.mjs';
 import { LESSON, LESSON_SHORT, HO_TRO, LESSON_BAN_WORDS } from './lib/lesson.mjs';
-import { AR_LESSON } from './lib/ar.mjs';
+import { AR_LESSON, AR_LESSON_SHORT } from './lib/ar.mjs';
 import { PROP_KEYS, prop } from './data/props.mjs';
 import { buildLessons, LESSON_EXTRA, LESSON_EXTRA_KEYS, LESSON_FIELDS, OVERRIDE_FIELDS, notesCuaGiaoAn, CHU_DE_CHI_CO_GIAO_AN, CHUA_CO_GAME_CUM } from './data/lessons.mjs';
 import { danhSachNhanLoi, noteChoLoi, ERROR_TAGS, ERROR_TAG_KEYS } from './data/error-tags.mjs';
@@ -144,6 +144,34 @@ const CHALK_COND_SHORT = [
   [CHALK_SHORT_HINH, SOLID_CLUSTERS, 'vế khối 3D của checklist'],
   [CHALK_SHORT_THAN, BODY_CLUSTERS, 'vế thân người làm thước góc của checklist'],
 ];
+// Checklist tự kiểm (mục 10) được lắp từ các chuỗi *_SHORT, còn quy định đầy đủ in ra ở mục 4.
+// Vòng 7b phải bắt bằng tay một vụ lệch đúng loại này: vế "xoay khối" vẫn nằm trong checklist trong
+// khi mục 4 đã thôi không bắt bài phân số xoay khối nữa, thành thử cả lớp tự kiểm một việc tiết học
+// không có. Cửa dưới chặn cùng loại lỗi ở chiều xuôi: mỗi con số trong một vế rút gọn phải còn có
+// mặt trong quy định đầy đủ cùng cặp. Chiều ngược (mọi quy định có số phải vào checklist) chưa siết
+// được vì nhiều quy định đầy đủ không thuộc phần tự kiểm, ADAPT_SHORT lại là của họ game — nhánh
+// giáo án không được sửa chuỗi dùng chung đó.
+const CAC_CAP_SHORT = [
+  ['CHALK_SHORT', CHALK_SHORT, CHALK],
+  ['CHALK_SHORT_HINH', CHALK_SHORT_HINH, CHALK],
+  ['CHALK_SHORT_THAN', CHALK_SHORT_THAN, CHALK],
+  ['LESSON_SHORT', LESSON_SHORT, LESSON],
+  ['AR_LESSON_SHORT', AR_LESSON_SHORT, AR_LESSON],
+  ['VERIFY_SHORT', VERIFY_SHORT, VERIFY],
+  ['ACCESS_SHORT', ACCESS_SHORT, ACCESS],
+];
+// AR_LESSON là một chuỗi liền, các khối kia là object {ten: chui} — quy về một mối trước khi so.
+const loiDayDu = (x) => (typeof x === 'string' ? x : Object.values(x).join(' '));
+// Bỏ hết ký tự không phải số trong từng token để "0.55" và "0,55" so được với nhau.
+const soTrong = (s) => (String(s).match(/\d[\d.,]*/g) || []).map((n) => n.replace(/\D/g, ''));
+for (const [ten, ngan, dayDu] of CAC_CAP_SHORT) {
+  const canon = new Set(soTrong(loiDayDu(dayDu)));
+  for (const ve of String(ngan).split(' · ')) {
+    for (const n of soTrong(ve)) {
+      if (!canon.has(n)) bad(`${ten} mang con số ${n} trong khi quy định đầy đủ cùng cặp không còn số đó (vế: "${ve.trim().slice(0, 70)}") — sửa ${ten} cho khớp vế đầy đủ, hoặc sửa vế đầy đủ rồi chạy lại node tools/build.mjs.`);
+    }
+  }
+}
 const LESSON_RULES = [
   [LESSON.teacher, 'thiếu chế độ giáo viên trình bày trên màn chiếu'],
   [LESSON.boardText, 'thiếu quy định quyền ưu tiên cỡ chữ cỡ bảng khi giảng bài'],
@@ -421,7 +449,13 @@ if (!fs.existsSync(LESSON_DIR)) {
     }
     // Câu mẫu nằm trong file dưới dạng JSON.stringify nên phải so theo đúng dạng đã escape dấu nháy.
     for (const ex of EXAMPLES[L.cluster]) if (!t.includes(JSON.stringify(ex.prompt)) || !t.includes(JSON.stringify(ex.answer))) bad(`${tag}: thiếu câu luyện tập mẫu của cụm ${L.cluster}.`);
-    for (const s of [chalkShortFor(L.cluster), LESSON_SHORT, VERIFY_SHORT, ACCESS_SHORT]) if (!t.includes(s)) bad(`${tag}: checklist tự kiểm thiếu một dòng rút gọn (${s.slice(0, 30)}...).`);
+    for (const s of [chalkShortFor(L.cluster), LESSON_SHORT, VERIFY_SHORT, ACCESS_SHORT, AR_LESSON_SHORT]) if (!t.includes(s)) bad(`${tag}: checklist tự kiểm thiếu một dòng rút gọn (${s.slice(0, 30)}...).`);
+    // Cùng loại rò rỉ vòng 7b nhưng ở vế viết tay: đuôi checklist từng tự nhắc hình học nên bài phân
+    // số cũng bị đòi "xoay khối". Bản canon theo cụm đã lo việc này, nên checklist không được còn từ
+    // khoá hình học khi mục 4 của bài đó không yêu cầu.
+    const check = t.split('\n').find((l) => l.startsWith('- Tự kiểm tra trước khi xuất:')) || '';
+    if (!SOLID_CLUSTERS.includes(L.cluster) && /khối|cạnh khuất|mở hộp/.test(check)) bad(`${tag}: checklist nhắc hình học khối trong khi cụm ${L.cluster} không có quy định đó ở mục 4 — để chalkShortFor() quyết định, đừng viết tay.`);
+    if (!BODY_CLUSTERS.includes(L.cluster) && /ê-ke|thước góc/.test(check)) bad(`${tag}: checklist nhắc dụng cụ thân người làm thước góc trong khi cụm ${L.cluster} không có quy định đó ở mục 4 — để chalkShortFor() quyết định, đừng viết tay.`);
     for (const needle of ['LESSON_DATA', '#FFD84D', 'MiTi • Giảng bài bằng vật thật', 'tasks-vision@1.0.1', 'Không dùng Tailwind Play CDN']) {
       if (!t.includes(needle)) bad(`${tag}: giáo án thiếu ${needle}.`);
     }
