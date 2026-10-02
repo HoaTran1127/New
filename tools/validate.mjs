@@ -233,6 +233,11 @@ const RULE_LINKS = [
     msg: 'trần "lượt lên bảng" phải là hàm của sĩ số theo `bigClass` — clamp(round(M/3), 12, 16), không được là hằng số 12 tuyệt đối.' },
   { from: ['classVote'], when: 'giảng lại bước SƠ ĐỒ', need: ['cận dưới', 'detectionEquity'],
     msg: 'ngưỡng "1/3 … giảng lại" phải so cột đáp án sai với TỔNG SỐ ĐÁP ÁN ĐÃ GHI NHẬN (cùng dân số với tử số) và nhắc `detectionEquity` rằng camera chỉ là cận dưới — không chia mù cho sĩ số.' },
+  // Vòng 31 — lệnh "Cấm in" của `bigClass` hồi v11 cấm MỌI tỉ lệ khi M còn trống, đúng khi classVote còn chia
+  // cho sĩ số; từ v27 classVote tính trên số ĐÃ GHI NHẬN (M-free) nên lệnh cấm mù giờ ĐÈ lên chính quy định ấy,
+  // đưa hai chỉ dẫn mâu thuẫn cho mô hình. Lệnh cấm phải thu về đúng tỉ lệ "có mẫu số là sĩ số" kèm NGOẠI LỆ.
+  { from: ['bigClass'], when: 'Cấm in', need: ['mẫu số là sĩ số', 'NGOẠI LỆ'],
+    msg: 'lệnh "Cấm in" khi M còn trống phải thu hẹp về tỉ lệ "có mẫu số là sĩ số M" và nêu NGOẠI LỆ cho tỉ lệ tính trên số ĐÃ GHI NHẬN (khớp `classVote` v27) — không cấm mù mọi tỉ lệ, vì "1/3 số đáp án đã ghi nhận" là M-free và phải hiện khi chưa nhập sĩ số.' },
 ];
 for (const { from, when, need, msg } of RULE_LINKS)
   for (const name of from) {
@@ -270,13 +275,24 @@ for (const [name, txt] of [...Object.entries(LESSON).map(([k, v]) => [`LESSON.${
 if (LESSON_SHORT.includes('trần lượt lên bảng') && !LESSON_SHORT.includes('hàm của sĩ số clamp(round(M/3)'))
   bad('LESSON_SHORT: gương "trần lượt lên bảng" phải ghi "hàm của sĩ số clamp(round(M/3), 12, 16)" của `bigClass` (vòng 26), không được lùi về hằng số 12 tuyệt đối.');
 
+// Vòng 31 — KHOÁ GƯƠNG cho LỆNH CẤM TỈ LỆ. `bigClass` dài (vòng 31) thu lệnh "Cấm in" về tỉ lệ "có mẫu số là sĩ
+// số" và NGOẠI LỆ cho tỉ lệ trên số ĐÃ GHI NHẬN; RULE_LINKS ở trên chỉ lặp LESSON[name], không chạm SHORT. Gương
+// SHORT phải hẹp tương ứng — hễ nhắc "cấm in tỉ lệ" thì phải ghi "theo sĩ số" chứ không cấm mù, nếu không mô
+// hình đọc bản ngắn cuối cùng sẽ ẩn luôn cột biểu quyết "1/3 số đáp án đã ghi nhận" mà classVote đã hứa M-free.
+if (LESSON_SHORT.includes('cấm in tỉ lệ') && !LESSON_SHORT.includes('theo sĩ số'))
+  bad('LESSON_SHORT: gương "cấm in tỉ lệ" khi chưa có M phải ghi rõ "theo sĩ số" (khớp `bigClass` vòng 31) — không cấm mù cả tỉ lệ M-free trên số ĐÃ GHI NHẬN.');
+
 // Vòng 29 — KHOÁ GƯƠNG RÚT GỌN. `LESSON_SHORT` được build-lessons dán NGUYÊN VĂN vào dòng "Tự kiểm tra trước
 // khi xuất" của cả 39 giáo án, nên nó là BẢN GƯƠNG của từng quy định dài. Vòng 27 sửa `classVote` (mẫu số =
 // TỔNG SỐ ĐÁP ÁN ĐÃ GHI NHẬN) nhưng sót gương: SHORT vẫn ghi "camera thấy N em … sai quá 1/3 thì gợi ý giảng
 // lại" — đúng lỗi mẫu-số-mù vừa gỡ, nằm ở bước kiểm CUỐI nên mô hình dễ theo bản ngắn mà bỏ bản dài. Cùng họ
 // với vòng 26 (lê trần "12 lượt" ở gương). RULE_LINKS ở trên chỉ lặp LESSON[name], không chạm SHORT, nên cần
-// khoá riêng: hễ SHORT nhắc lệnh "giảng lại bước SƠ ĐỒ" thì phải mang qualifier "ĐÃ GHI NHẬN" của bản dài.
-if (LESSON_SHORT.includes('giảng lại bước SƠ ĐỒ') && !LESSON_SHORT.includes('ĐÃ GHI NHẬN'))
+// khoá riêng: hễ SHORT nhắc lệnh "giảng lại bước SƠ ĐỒ" thì gương classVote phải mang ĐÚNG qualifier "1/3 số
+// đáp án ĐÃ GHI NHẬN" của bản dài. KHÔNG dùng `!includes('ĐÃ GHI NHẬN')` toàn cục: vòng 31 thêm một bản "số
+// ĐÃ GHI NHẬN" nữa vào gương bigClass, nên token ấy nay xuất hiện 2 chỗ — gương classVote lùi về mù vẫn còn gương
+// bigClass giữ token, global check thành vô dụng (đúng bẫy needle-chung mà vòng 30 nêu cho `clamp`). Chốt cụm
+// nguyên văn do RIÊNG gương classVote tạo ra.
+if (LESSON_SHORT.includes('giảng lại bước SƠ ĐỒ') && !LESSON_SHORT.includes('1/3 số đáp án ĐÃ GHI NHẬN'))
   bad('LESSON_SHORT: gương "Cả lớp trả lời" phải tính 1/3 trên số đáp án ĐÃ GHI NHẬN (khớp `classVote` vòng 27), không để "camera thấy N em … sai quá 1/3" mù như bản cũ.');
 
 for (const g of GAMES) {

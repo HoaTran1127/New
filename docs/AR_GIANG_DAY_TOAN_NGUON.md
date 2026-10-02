@@ -1,4 +1,4 @@
-# Giáo án AR trên bảng phấn — nguồn cộng đồng và bài học sau 30 vòng
+# Giáo án AR trên bảng phấn — nguồn cộng đồng và bài học sau 31 vòng
 
 Tài liệu này để **người khác tham khảo và nối tiếp**, không phải mô tả tính năng. Phần tính năng nằm ở
 [`prompts/giao-an/README.md`](../prompts/giao-an/README.md); ở đây chỉ ghi: cái gì đã đo được, cái gì đã
@@ -245,12 +245,35 @@ gương handover tạo ra: "hàm của sĩ số clamp(round(M/3)". Probe: P110 l
 `LESSON_SHORT` không đổi chữ nào, 39 giáo án giữ nguyên. Vòng NỘI BỘ, không trích dẫn ngoài. **Còn mở:** gương
 `CHALK_SHORT`/`HANDOUT_SHORT`/`ACCESS_SHORT` và các con số khác của `LESSON_SHORT` (nấc 12 m, ngưỡng "2/3 số
 em", "+1/+5 chặn 60") vẫn chưa có khoá đối chiếu với rule dài.
+
+Vòng 31 đo một kiểu mâu thuẫn chỉ có ở repo-sinh-prompt đã tiến hoá qua nhiều vòng: **một quy định ĐÚNG hồi
+viết, nhưng về sau bị chính quy định mà nó cấm sửa đổi, nên giờ hai bên đè nhau.** `bigClass` (v11) ra lệnh
+"Cấm in '1/3 lớp', '35/35' hay **bất kì tỉ lệ nào** khi M còn trống". Lệnh cấm mù ấy đúng khi `classVote` (v11)
+còn chia mọi tỉ lệ cho chính sĩ số. Nhưng v27 đã đổi `classVote` sang mẫu số = TỔNG SỐ ĐÁP ÁN ĐÃ GHI NHẬN — một
+tỉ lệ **M-free** (tay máy thấy + cô cộng +1/+5, không quy về lớp). Vậy khi sĩ số còn trống, cùng một giáo án
+nhận hai chỉ dẫn trái nhau: `classVote` đòi hiện cột "1/3 số đáp án đã ghi nhận", `bigClass` lại CẤM in "bất kì
+tỉ lệ nào". Đo 39 GA: "cấm in" **39/39**, "bất kì tỉ lệ nào" **39/39**, đúng lúc tỉ lệ M-free của `classVote`
+**39/39** đang bị phủ định. Vá: thu lệnh cấm về đúng tỉ lệ **"có mẫu số là sĩ số M"** + nêu **NGOẠI LỆ** cho tỉ
+lệ trên số ĐÃ GHI NHẬN (thứ cần M thật ra là dòng đối chiếu "mới ghi nhận N/M em", chứ không phải bản thân tỉ lệ
+biểu quyết); gương `LESSON_SHORT` thu tương ứng ("cấm in tỉ lệ **theo sĩ số**"). Hai khoá mới: một **hàng
+RULE_LINKS thứ năm** buộc `bigClass` (còn "Cấm in") phải kèm "mẫu số là sĩ số" + "NGOẠI LỆ", và một **khoá soi
+gương** buộc `LESSON_SHORT` (còn "cấm in tỉ lệ") phải giữ "theo sĩ số". Probe: P112 lùi `bigClass` về cấm mù →
+đỏ RULE_LINKS; P113 lùi gương về cấm mù **nhưng vẫn giữ nguyên cụm "cấm in tỉ lệ"** để lock còn bật — một lỗi
+thiết kế probe từng gặp khi bản thân phép đột biến xoá mất chuỗi kích hoạt của khoá. Vòng này còn trả một món nợ
+do chính nó gây ra: câu gương bigClass mới thêm ("tỉ lệ trên số ĐÃ GHI NHẬN") làm token "ĐÃ GHI NHẬN" xuất hiện
+HAI lần trong `LESSON_SHORT`, nên khoá soi-gương classVote của v29 vốn kiểm `!LESSON_SHORT.includes('ĐÃ GHI
+NHẬN')` TOÀN CỤC thành mù — P109 lùi gương classVote về mù nhưng gương bigClass vẫn giữ token, khoá không đỏ
+(đúng bẫy needle-chung mà v30 đã nêu cho `clamp`). Sửa: khoá v29 nay chốt ĐÚNG cụm do riêng gương classVote tạo
+ra, `!LESSON_SHORT.includes('1/3 số đáp án ĐÃ GHI NHẬN')`. Vòng này ĐỔI prompt (39 GA
+thay chữ `bigClass`/gương). Vòng NỘI BỘ, không trích dẫn ngoài. **Còn mở:** chưa quét hết mọi cặp "lệnh cấm +
+đối-tượng-bị-cấm đã đổi dân số" khác trong `LESSON`; `bigClass` còn giữ nhiều ngưỡng khác (nấc 12 m, "2/3 số
+em", mẫu đại diện) chưa đối chiếu gương.
 3. **Quy định phải có con số.** "Chữ phải to" không kiểm chứng được; "≥ 40 px **và** ≥ 5.5% chiều cao khung
    hình, ≤ 12 chữ một dòng" thì validator bắt được. Mọi quy định trong `tools/lib/*.mjs` là chuỗi nguyên văn,
    `tools/validate.mjs` so bằng `includes()`, nên lời văn và mắt kiểm không bao giờ lệch nhau.
 4. **Chốt chặn hai chiều.** Cơ chế game lọt vào giáo án và quy định giáo án lọt sang game đều làm build đỏ.
    Thêm một quy định mới là tự động thêm một khoá bị cấm ở phía bên kia (`LESSON_FAMILY_RULES`).
-5. **Probe đột biến là đơn vị kiểm thử thật.** 111 phép, mỗi phép phá đúng một thứ và đòi đúng thông báo.
+5. **Probe đột biến là đơn vị kiểm thử thật.** 113 phép, mỗi phép phá đúng một thứ và đòi đúng thông báo.
    Không có probe thì một quy định chỉ là câu văn đẹp.
 6. **Tách công cụ giảng bài khỏi game.** Cùng một kiến thức, hai động cơ đối lập: game cần hồi hộp,
    tiết giảng cần giáo viên cầm lái. Nhét tim/điểm/combo vào bảng phấn làm em lên bảng sợ sai hơn là muốn hiểu.
@@ -289,6 +312,7 @@ em", "+1/+5 chặn 60") vẫn chưa có khoá đối chiếu với rule dài.
 | 28 | **TRA phép tính của trần lượt lên bảng** (field-test (c) mà v26/27 cùng ghi "còn mở"; nội bộ bằng grep): `bigClass`+`handover`+`boardEquity` nêu `clamp(round(M/3), 12, 16)` kèm ba ví dụ **đã tính sẵn** ("35 em ra 12, 45 em ra 15, 55 em ra 16"), nhưng repo sinh PROMPT chứ không sinh HTML — **không chỗ nào chạy `clamp` thật**, nên một lần sửa tay làm ví dụ lệch ("45 em ra 14", hay quên trần → "55 em ra 17") sẽ copy nguyên văn vào **cả 39** giáo án mà build vẫn xanh. Đo: công thức **39/39**, đi kèm **6** ví dụ "S em ra T", nhưng **0** kiểm chứng nối được vế "ra T" với phép tính | THÊM khoá **đọc-chính-nó** trong `validate.mjs`: bóc `số-chia / sàn / trần` ngay từ chuỗi `clamp(round(M/D), LO, HI)` của từng quy định rồi đòi mọi ví dụ `S em ra [đúng] T` thoả `T === min(HI, max(LO, round(S/D)))` — **không nhập tay hằng số thứ hai** nên khoá không thể lệch khỏi công thức. Đây chỉ là khoá thuần (prompt không đổi), không thay được phép thử "nhập M=45 vào HTML xem bộ đếm nhảy 15" (vẫn cần HTML thật, còn mở). P107 ("45 em ra 14", round(45/3)=15), P108 ("55 em ra 17", clamp chặn ở 16) đỏ "sai số học". Probe **108/108**, build xanh + deterministic, game side không đổi |
 | 29 | **đo drift giữa quy định dài và BẢN GƯƠNG rút gọn** (góc đo mới: `LESSON_SHORT` được dán NGUYÊN VĂN vào dòng "Tự kiểm tra trước khi xuất" của 39 GA, mô hình đọc SAU CÙNG): vòng 27 sửa `classVote` bản dài (mẫu số = TỔNG SỐ ĐÁP ÁN ĐÃ GHI NHẬN) nhưng sót gương — SHORT vẫn ghi "camera thấy N em … sai quá 1/3 thì gợi ý giảng lại bước SƠ ĐỒ", đúng lỗi mẫu-số-mù vừa gỡ, nằm ở bước kiểm cuối nên mô hình dễ theo bản ngắn mà bỏ bản dài. Đo (needle điều khiển qualifier bản dài **39/39**): gương mù "sai quá 1/3 thì gợi ý…" **39/39**, `LESSON_SHORT` nhắc "đã ghi nhận" **0** | SỬA gương `classVote` trong `LESSON_SHORT` khớp bản dài ("sai quá 1/3 số đáp án ĐÃ GHI NHẬN (máy + cô cộng)") + THÊM khoá **soi gương** riêng (RULE_LINKS chỉ lặp `LESSON[name]` nên không với tới SHORT): hễ SHORT mang "giảng lại bước SƠ ĐỒ" thì BUỘC chứa "ĐÃ GHI NHẬN". Cùng họ với vòng 26 (lê trần "12 lượt" ở gương). P109 lùi gương về bản mù → đỏ. Probe **109/109**, build xanh + deterministic, game side không đổi. **Còn mở:** mới khoá gương cho đúng `classVote`; chưa có cơ chế tổng quát mọi con số của quy định dài phải có trong gương SHORT |
 | 30 | **đo tiếp chỗ vòng 29 hé ra: gương `LESSON_SHORT` có công thức `clamp(round(M/3), 12, 16)` + ví dụ "(lớp 35 em = 12)" của RIÊNG nó, nhưng cả hai khoá dựng trước đều KHÔNG với tới nó** — v28 lặp `Object.entries(LESSON)` (SHORT là export riêng, nằm ngoài), v26 RULE_LINKS trần `from:['handover','boardEquity']` (bỏ SHORT): vậy "mọi con số về lớp là hàm của M" và "trần là clamp" được GƯƠNG nhắc lại mà không bị GƯƠNG ràng buộc. Đo: ví dụ "= 12" của gương **0** kiểm chứng số học; lùi gương về "12 lượt" cứng **0** khoá đỏ | MỞ RỘNG vòng số học v28 lặp thêm `LESSON_SHORT` và nới regex nhận cả "S em = T" (gương dùng "= 12" chứ không "ra 12"); THÊM khoá gương-trần chốt đúng cụm do gương handover tạo ra "hàm của sĩ số clamp(round(M/3)" (không dùng `includes('clamp(')` toàn cục vì SHORT mentions công thức 2 lần, lùi 1 vẫn còn 1). P110 lùi gương về "12 lượt" cứng → đỏ gương-trần, P111 "(lớp 35 em = 13)" (round(35/3)=12) → đỏ số học. **Vòng KHOÁ THUẦN** — `LESSON_SHORT` không đổi chữ, 39 GA giữ nguyên. Probe **111/111**, build xanh + deterministic, game side không đổi. **Còn mở:** `CHALK/HANDOUT/ACCESS_SHORT` + các con số khác của SHORT (nấc 12 m, "2/3 số em", "+1/+5 chặn 60") chưa có khoá đối chiếu rule dài |
+| 31 | **đo mâu thuẫn `bigClass`↔`classVote` khi sĩ số trống** (góc mới: một quy định ĐÚNG lúc viết nhưng về sau bị chính quy định mà nó CẤM sửa đổi, thành hai chỉ dẫn đè nhau): `bigClass` (v11) "Cấm in '1/3 lớp', '35/35' hay **bất kì tỉ lệ nào** khi M còn trống" — đúng khi `classVote` còn chia mọi tỉ lệ cho sĩ số. Nhưng v27 đổi `classVote` sang mẫu số = TỔNG SỐ ĐÁP ÁN ĐÃ GHI NHẬN (tỉ lệ **M-free**, không quy về lớp), nên khi M trống một giáo án vừa được bảo hiện cột "1/3 số đáp án đã ghi nhận" vừa bị cấm in "bất kì tỉ lệ nào". Đo 39 GA: "cấm in" **39/39**, "bất kì tỉ lệ nào" **39/39**, tỉ lệ M-free của `classVote` **39/39** bị phủ định | THU lệnh cấm về tỉ lệ **"có mẫu số là sĩ số M"** + nêu **NGOẠI LỆ** cho tỉ lệ trên số ĐÃ GHI NHẬN (thứ cần M là dòng "mới ghi nhận N/M em", không phải bản thân tỉ lệ biểu quyết); gương `LESSON_SHORT` thu tương ứng ("cấm in tỉ lệ **theo sĩ số**"). THÊM **hàng RULE_LINKS thứ năm** (bigClass còn "Cấm in" ⇒ phải có "mẫu số là sĩ số" + "NGOẠI LỆ") + một **khoá soi gương** (SHORT còn "cấm in tỉ lệ" ⇒ phải giữ "theo sĩ số"). P112 lùi `bigClass` về cấm mù → đỏ; P113 lùi gương về cấm mù **vẫn giữ cụm "cấm in tỉ lệ"** để lock còn bật (bài học: đừng để phép đột biến xoá mất chuỗi kích hoạt của chính khoá). **Vòng ĐỔI prompt** — 39 GA thay chữ `bigClass`/gương. Probe **113/113**, build xanh + deterministic, game side không đổi. **Còn mở:** chưa quét hết mọi cặp "lệnh cấm + đối-tượng-bị-cấm đã đổi dân số" khác; `bigClass` còn nấc 12 m / "2/3 số em" / mẫu đại diện chưa đối chiếu gương |
 
 ## Vì sao chọn những con số đang dùng
 
@@ -871,7 +895,7 @@ thành "tăng X% điểm".
   quy định bằng một cú pháp riêng (`→`ruleName`←`), hoặc để khoá chỉ bắt tên *khớp khuôn quy định* mà không có
   trong danh sách. Cách hiện tại đơn giản và an toàn cho 49 quy định, nhưng cần người sau biết nó là nợ kỹ
   thuật có chủ đích chứ không phải thiếu sót.
-- **Bốn "khoá bắt-cặp" nay nằm trong một bảng khai báo duy nhất.** Vòng 22/23/26 viết ba `if` tay (detectionEquity→rehearsalBudget, privateView→noProjector, handover/boardEquity→`clamp(round(M/3)` của bigClass). Vòng 27 thêm cặp thứ tư (classVote→`detectionEquity` + "cận dưới") **đúng lúc** trả nợ kỹ thuật mà vòng 26 đã hứa: cả bốn gom vào `RULE_LINKS = [{from, when, need, msg}]` với một vòng lặp ngoài duy nhất. Khoá dạng này mạnh hơn `includes()` thông thường vì bắt được mâu thuẫn *tiền đề* mà mắt khó thấy; thêm cặp thứ 5 chỉ là thêm một hàng bảng, không phải viết `if` mới.
+- **Bốn "khoá bắt-cặp" nay nằm trong một bảng khai báo duy nhất.** Vòng 22/23/26 viết ba `if` tay (detectionEquity→rehearsalBudget, privateView→noProjector, handover/boardEquity→`clamp(round(M/3)` của bigClass). Vòng 27 thêm cặp thứ tư (classVote→`detectionEquity` + "cận dưới") **đúng lúc** trả nợ kỹ thuật mà vòng 26 đã hứa: cả bốn gom vào `RULE_LINKS = [{from, when, need, msg}]` với một vòng lặp ngoài duy nhất. Khoá dạng này mạnh hơn `includes()` thông thường vì bắt được mâu thuẫn *tiền đề* mà mắt khó thấy; thêm cặp thứ 5 chỉ là thêm một hàng bảng, không phải viết `if` mới. **Vòng 31 đúng là hàng thứ năm:** `bigClass`→("Cấm in" ⇒ "mẫu số là sĩ số" + "NGOẠI LỆ"), chặn kiểu lệnh-cấm-đè-lên-quy-định-đã-đổi.
 - **`GAME_LEAK` (vòng 24, mở rộng vòng 25) đã đi theo hướng danh-sách-khai-báo mà bullet trên ao ước, nhưng còn CHỈN TAY mức.**
   Nó là một mảng needle — 5 cụm từ vòng 24 (`['vệt neon','HUD theo combo','mascot chỉ đổi biểu cảm','hit-stop xuống','số lượt, điểm']`)
   cộng 9 cụm từ vòng 25 từ `ACCESS.caption`/`AR_RENDER` (`'mất máu','thắng màn','mascot nói','màn chơi','spawn','va chạm','sát mặt người chơi','nhịp game','speed lines'`) = **14** needle —
@@ -907,8 +931,9 @@ tools/data/props.mjs    vật thật + sơ đồ theo 38 cụm
 tools/data/lessons.mjs  tên bài, câu khởi động, dòng ghi nhớ
 tools/build-lessons.mjs ghép thành 39 file prompts/giao-an/
 tools/validate.mjs      63 khoá của họ giáo án + chốt chặn ngược + chốt cấp cụm từ GAME_LEAK + bảng RULE_LINKS
-                        (4 khoá bắt-cặp) + khoá số học trần lượt lên bảng (đối chiếu ví dụ `clamp`, lặp cả
-                        LESSON_SHORT) + khoá soi gương LESSON_SHORT (classVote v29 + trần lượt v30) + 13 mục
+                        (5 khoá bắt-cặp) + khoá số học trần lượt lên bảng (đối chiếu ví dụ `clamp`, lặp cả
+                        LESSON_SHORT) + khoá soi gương LESSON_SHORT (classVote v29 + trần lượt v30 + phạm vi cấm
+                        tỉ lệ v31) + 13 mục
                         của khung + trần số hàng "Chữa bài" đo thẳng từ clusters.mjs/error-notes.mjs
 ```
 
