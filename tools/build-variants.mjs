@@ -31,6 +31,7 @@ import { FOLK, FOLK_SHORT } from './lib/folk.mjs';
 import { QUIZ, QUIZ_SHORT } from './lib/quiz.mjs';
 import { LEAD, LEAD_SHORT } from './lib/lead.mjs';
 import { TAKEAWAY, TAKEAWAY_SHORT } from './lib/takeaway.mjs';
+import { GOAL, GOAL_SHORT } from './lib/goal.mjs';
 import { standard } from './data/standards.mjs';
 import { identity } from './data/identities.mjs';
 import { sport } from './data/sports.mjs';
@@ -38,6 +39,7 @@ import { folk } from './data/folk.mjs';
 import { quizFrames } from './data/quiz.mjs';
 import { leadMoves } from './data/leads.mjs';
 import { takeawayFrames } from './data/takeaways.mjs';
+import { goalLines } from './data/goals.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const OUT = path.join(ROOT, 'prompts', 'VARIANTS_425.md');
@@ -83,6 +85,7 @@ function block(n, row, g, v) {
   const qf = quizFrames(st.mach);
   const lm = leadMoves(v.gesture || g.gestures[0]);
   const tk = takeawayFrames(st.mach);
+  const gl = goalLines(v.gesture || g.gestures[0]);
   const bank = BANK[row.mon];
   const it = identity(g.id);
   if (!it) throw new Error(`Thiếu bản sắc cho game ${g.id} — bổ sung tools/data/identities.mjs.`);
@@ -96,7 +99,7 @@ function block(n, row, g, v) {
   const calib = camera && !voice ? RULES.calibration : 'Biến thể này không đọc chuyển động tay nên không cần calibration; vẫn phải có một màn hướng dẫn ngắn, không tutorial dài.';
   // Biến thể VOICE chỉ có một micro nên không có chế độ hai người chơi: lấy 3 vế đầu của chuỗi rút gọn.
   const voiceShort = CLASSROOM_SHORT.split(' · ').slice(0, 3).join(' · ');
-  const qCheck = ' · ' + LIGHT_SHORT + ' · ' + CELEBRATE_SHORT + ' · ' + IDENTITY_SHORT + ' · ' + RHYTHM_SHORT + ' · ' + QUEUE_SHORT + ' · ' + LESSON_SHORT + ' · ' + CURRICULUM_SHORT + ' · ' + SPORT_SHORT + ' · ' + FAMILY_SHORT + ' · ' + PACE_SHORT + ' · ' + PLAYZONE_SHORT + ' · ' + FOLK_SHORT + ' · ' + QUIZ_SHORT + ' · ' + LEAD_SHORT + ' · ' + TAKEAWAY_SHORT + ' · ' + PE_SHORT + ' · ' + RETENTION_SHORT + ' · ' + HYPE_SHORT + ' · ' + ANT_SHORT + ' · ' + VERIFY_SHORT + ' · ' + ADAPT_SHORT + ' · ' + ACCEPT_SHORT;
+  const qCheck = ' · ' + LIGHT_SHORT + ' · ' + CELEBRATE_SHORT + ' · ' + IDENTITY_SHORT + ' · ' + RHYTHM_SHORT + ' · ' + QUEUE_SHORT + ' · ' + LESSON_SHORT + ' · ' + CURRICULUM_SHORT + ' · ' + SPORT_SHORT + ' · ' + FAMILY_SHORT + ' · ' + PACE_SHORT + ' · ' + PLAYZONE_SHORT + ' · ' + FOLK_SHORT + ' · ' + QUIZ_SHORT + ' · ' + LEAD_SHORT + ' · ' + TAKEAWAY_SHORT + ' · ' + GOAL_SHORT + ' · ' + PE_SHORT + ' · ' + RETENTION_SHORT + ' · ' + HYPE_SHORT + ' · ' + ANT_SHORT + ' · ' + VERIFY_SHORT + ' · ' + ADAPT_SHORT + ' · ' + ACCEPT_SHORT;
   // Dòng nghiệm thu cho mọi block: game phải tự chứng minh nó đạt, người thử không phải đọc code.
   const accept = ACCEPT.selfReport + ' ' + ACCEPT.printable + ' ' + ACCEPT.failRule + (camera ? '' : ' ' + ACCEPT.noCamera);
   const selfCheck = voice
@@ -157,6 +160,7 @@ ${controlBlock(v, g)}` : controlBlock(v, g)}
 **Đố bạn — em đặt đề cho bạn đáp:** ${QUIZ.nguonDe} ${QUIZ.cachDo} ${QUIZ.dapCuaBan} ${QUIZ.xuLyLech} ${QUIZ.diemVai} ${QUIZ.guard} Ba mẫu câu "Đố bạn" của block ${v.code} này (mạch "${st.mach}", lấy nguyên văn từ \`tools/data/quiz.mjs\`): "${qf[0]}" · "${qf[1]}" · "${qf[2]}" — đúng BA/12 lượt ở cuối mỗi hiệp, em đố đọc to MỘT mẫu và điền MỘT số hoặc MỘT từ đang hiện trên thẻ, bạn đáp bằng động tác "${sp.dongTac}" của môn "${sp.mon}", game không bật microphone và không trừ tim khi đề lệch.
 **Bạn dẫn — một em làm mẫu, ba em bắt chước:** ${LEAD.nguonDan} ${LEAD.cachDan} ${LEAD.lamTheo} ${LEAD.xuLyLech} ${LEAD.diemVai} ${LEAD.guard} Ba động tác "Bạn dẫn" của block ${v.code} này (mã điều khiển ${v.gesture || g.gestures[0]}, lấy nguyên văn từ \`tools/data/leads.mjs\`): "${lm[0]}" · "${lm[1]}" · "${lm[2]}" — đúng BA lần một phiên ở đầu mỗi hiệp, mỗi lần 5 giây, em dẫn làm MỘT động tác và ba em còn lại bắt chước trong vòng 1 sải tay của mình, game không bật microphone, không chạm nhau và không chấm em nào giống hơn.
 **Câu chốt — bốn em lần lượt nói một câu bằng lời của mình:** ${TAKEAWAY.viTri} ${TAKEAWAY.khungChon} ${TAKEAWAY.bonEmNoi} ${TAKEAWAY.tuDanhGia} ${TAKEAWAY.diemVaSheet} ${TAKEAWAY.guard} Ba khung "Câu chốt" của block ${v.code} này (mạch "${st.mach}", lấy nguyên văn từ \`tools/data/takeaways.mjs\`): "${tk[0]}" · "${tk[1]}" · "${tk[2]}" — ĐÚNG MỘT khối 20 giây ở cuối phiên sau lượt đố thứ ba, bốn lượt × 5 giây, em chạm chọn MỘT khung rồi tự nói to phần bỏ trống bằng lời của mình, nói xong giơ 1–3 ngón tay tự đánh giá; game không bật microphone, không nhận dạng giọng nói và không hiện sẵn đáp án.
+**Mục tiêu của em — một ý định tự nói đầu phiên:** ${GOAL.theChon} ${GOAL.bonEmBonMucTieu} ${GOAL.nhacDauHiep} ${GOAL.tuGhiNhan} ${GOAL.luuXuyenPhien} ${GOAL.guard} Ba khung "Mục tiêu của em" của block ${v.code} này (mã điều khiển ${v.gesture || g.gestures[0]}, lấy nguyên văn từ \`tools/data/goals.mjs\`): "${gl[0]}" · "${gl[1]}" · "${gl[2]}" — ĐÚNG MỘT thẻ trong 60–90 giây khởi động, ba nút chọn một hàng, em chạm chọn MỘT rồi tự nói, đầu mỗi hiệp nhắc lại một dòng tối đa ba lần một phiên, cuối phiên em chạm một trong ba nút "Em làm được rồi / Em làm được một phần / Em sẽ làm tiếp"; game không chọn hộ, không nhận dạng giọng nói và không trừ tim khi em chưa đạt.
 **Tiếp cận + an toàn thần kinh:** ${ACCESS.flash} ${ACCESS.reducedMotion} ${ACCESS.notColorOnly} ${ACCESS.caption} ${ACCESS.contrast}
 ${camera && !voice ? `**Chế độ lớp:** ${CLASSROOM.twoPlayer}\n**Tay thuận:** ${ACCESS.handedness}\n` : ''}**Giao diện:** đề bài >= 28px trên desktop và >= 20px trên điện thoại, tương phản chữ >= 4.5:1, responsive cả dọc lẫn ngang; HUD có nhiệm vụ + điểm + chuỗi đúng + tiến độ + trạng thái camera; có Pause, Replay, Giảm hiệu ứng chuyển động${camera ? ' và Tắt camera' : ''}; không leaderboard, không quảng cáo. ${RULES.perf}
 **An toàn + riêng tư + tiếng Việt:** ${RULES.safety} Mỗi động tác đều có phiên bản ngồi tại chỗ; không quay chạy nhảy, không rời vùng camera. Không upload ảnh/video từ camera, chỉ giữ landmark trong bộ nhớ, tiến độ lưu localStorage máy đó. Toàn bộ UI, tên nút, hướng dẫn, thông báo và lời giải bằng TIẾNG VIỆT (chỉ học liệu ${subjectNote}); không để lộ thuật ngữ kỹ thuật confidence / cooldown / fallback cho học sinh.

@@ -66,7 +66,7 @@ Bốn biến thể đầu dùng **cùng một hợp đồng AR** như prompt gam
 - `04-english5/` — 15 game Tiếng Anh 5.
 - `01-prompt-…` đến `12-prompt-…` — **12 prompt legacy** đời đầu: giữ nguyên cơ chế game, đã thay MediaPipe Legacy/Tailwind CDN/Tone.js bằng chuẩn hiện hành và gắn nhãn `LEGACY`. Không dùng làm khuôn cho game mới.
 - `VARIANTS_425.md` — 425 biến thể (85 game × 5 kiểu điều khiển), do `tools/build-variants.mjs` sinh.
-- `CHECKLIST_NGHIEP_THU.md` — bảng kiểm cầm tay khi nhận file HTML về: 44 mục máy tự kiểm + 35 việc người thử bấm tay (trong đó 6 mục gắn 📷 chỉ có camera mới kiểm được; bản không camera bỏ 6 mục đó và vẫn phải đạt 38 mục còn lại), do `tools/build-acceptance.mjs` sinh từ `tools/lib/acceptance.mjs`.
+- `CHECKLIST_NGHIEP_THU.md` — bảng kiểm cầm tay khi nhận file HTML về: 45 mục máy tự kiểm + 36 việc người thử bấm tay (trong đó 6 mục gắn 📷 chỉ có camera mới kiểm được; bản không camera bỏ 6 mục đó và vẫn phải đạt 39 mục còn lại), do `tools/build-acceptance.mjs` sinh từ `tools/lib/acceptance.mjs`.
 
 ## ✅ Nghiệm thu một game vừa sinh
 
@@ -350,13 +350,30 @@ Việc người thử số 34 ("để một em bấm "Em dẫn" và làm một �
 
 Việc người thử số 35 ("bốn em ngồi thành một hàng chơi tới 20 giây cuối: mỗi em có thật sự nói MỘT câu bằng lời của mình hay máy đọc hộ? em nói câu na ná bạn có bị in chữ \"sai\" cạnh tên không? em khoanh tay không nói có bị gọi lại lượt thứ hai không? giơ 2 ngón thay vì 3 ngón có làm đổi độ khó hay mất tim không?") là chỗ máy không tự kiểm được: `validate.mjs` so được khung câu với `tools/data/takeaways.mjs`, còn **câu em nói có phải bằng lời của em không** thì chỉ người lớn ngồi cạnh mới trả lời được.
 
+## 🎯 Tầng "mục tiêu của em" — `tools/lib/goal.mjs` + `tools/data/goals.mjs` (vòng 26)
+
+Đo 85 prompt trước vòng 26: **"hôm nay em sẽ" 0/85, "em sẽ cố" 0/85, "điều em muốn" 0/85, "thẻ mục tiêu" 0/85, "em làm được" 0/85, "làm được một phần" 0/85, `miti-goal` 0/85, "em tiến bộ" 0/85, "so với chính em" 0/85** — ngược lại **"em chọn một" 85/85 và "em tự chọn" 85/85**, nhưng đó là chọn đồ vật hay đáp án trong lượt chơi, chưa lần nào em chọn cái em sẽ cố làm cho chính mình; "tiến bộ" 85/85 lại thuộc hồ sơ `miti-mastery` do MÁY ghi. Máy đang quyết hết: máy chỉnh độ khó, máy ghi thành tích, máy khen em cố gắng. Tầng này trả lại đúng bước mở đầu tiết Thể dục lớp 4–5 — cán sự hô "hôm nay cả lớp ta luyện …" rồi bốn em tự nhẩm phần của mình — và cho em một đường tự nhận cuối phiên chỉ so với chính em.
+
+| Luật | Con số | Kiểm ở đâu |
+|:---|:---|:---|
+| Đúng **MỘT thẻ "Mục tiêu của em"** một phiên | chạy **TRONG 60–90 giây khởi động** đang có, **không thêm thời lượng phiên**, **không trễ nút "Bắt đầu"**, **không thêm màn hình** | `verifyGoal()` điều 1 |
+| **Ba dòng nguyên văn theo đúng mã điều khiển** | mười bốn mã × ba dòng trong `tools/data/goals.mjs`, mọi dòng mở đầu "Hôm nay em sẽ", **<= 8 từ**; **ba nút chọn một hàng >= 20px**, **tự tắt sau 6 giây**, có nút **"Chưa chọn"** và **cấm hiện lại lần hai** | `verifyGoal()` điều 1 |
+| **Game không chọn thay em** | **cấm chọn hộ, cấm chọn ngẫu nhiên, cấm mascot chọn thay, cấm viết lại câu khác với bảng** | `verifyGoal()` điều 1 |
+| **Bốn em bốn mục tiêu, không đem ra so** | mỗi em **ĐÚNG MỘT** mục tiêu trong **vòng 1 sải tay**; **cấm in hai mục tiêu cạnh nhau**, **cấm đọc trước lớp**, **cấm gọi là cao hay thấp**, **cấm thành điểm / tim / chuỗi**, mascot **<= 6 từ MỘT lần** | `verifyGoal()` điều 2 |
+| **Nhắc đầu hiệp tối đa BA lần một phiên** | một dòng **"Mục tiêu: <câu em đã chọn>"** ở **giây đầu tiên** mỗi hiệp, **>= 20px**, **một hàng**, **tắt sau 6 giây**, **không che đề**, **không cắt thời gian đọc đề**, **cấm lần thứ tư** | `verifyGoal()` điều 3 |
+| **Cuối phiên em tự chạm ba nút, một bản ghi duy nhất** | "Em làm được rồi" / "Em làm được một phần" / "Em sẽ làm tiếp", **không trừ tim, không đổi độ khó, không tính vào 12 lượt, không thay khối "Câu chốt" 20 giây**; `miti-goal` **ĐÚNG MỘT bản ghi mỗi phiên**, tổng kết in **tối đa HAI dòng** trong khối "Copy tờ rời", **cấm bịa "Phiên trước em"**, **cấm biểu đồ và tỉ lệ %** | `verifyGoal()` điều 4 |
+
+`verifyGoal()` chạy MỘT LẦN lúc nạp và kiểm **đúng bốn điều**; thiếu thì `console.warn` tiếng Việt nêu đúng phần lệch và bảng kiểm ghi CHƯA ĐẠT ở **mục `[45]`**. Bản một học sinh, bản không camera, bản tắt tiếng, bản "dép lê" và bản "lớp mình chật" vẫn bắt buộc kiểm đủ bốn điều, vì một câu em tự nhủ không phụ thuộc webcam.
+
+Việc người thử số 36 ("bốn em ngồi lại thành một hàng ngay từ màn khởi động: mỗi em có thật sự tự chạm chọn một dòng "Hôm nay em sẽ …" hay máy điền hộ? có em nào bị đọc mục tiêu trước lớp, bị xếp hai mục tiêu cạnh nhau để so, hay bị trừ tim vì chưa đạt không? cuối phiên em chạm "Em sẽ làm tiếp" — trò chơi có phạt em, có in chữ "đạt" cạnh tên em, và tờ rời có bịa dòng "Phiên trước em" khi chưa có bản ghi `miti-goal` không?") là chỗ máy không tự kiểm được: `validate.mjs` so được dòng mục tiêu với `tools/data/goals.mjs`, còn **ý định đó có phải của chính em không** thì chỉ người lớn ngồi cạnh mới trả lời được.
+
 ## 🔁 Pipeline của thư viện
 
 85 prompt game **được sinh tự động**, không sửa tay:
 
 ```
-tools/data/games.mjs + clusters.mjs + gestures.mjs + examples.mjs + error-notes.mjs + identities.mjs + standards.mjs + sports.mjs + folk.mjs + quiz.mjs + leads.mjs + takeaways.mjs
-tools/lib/ar.mjs · rules.mjs · feel.mjs · classroom.mjs · access.mjs · light.mjs · celebrate.mjs · identity.mjs · rhythm.mjs · queue.mjs · lesson.mjs · curriculum.mjs · sport.mjs · family.mjs · pacing.mjs · playzone.mjs · folk.mjs · quiz.mjs · lead.mjs · takeaway.mjs · verify.mjs · pe.mjs · memory.mjs · hype.mjs · anticipation.mjs · acceptance.mjs
+tools/data/games.mjs + clusters.mjs + gestures.mjs + examples.mjs + error-notes.mjs + identities.mjs + standards.mjs + sports.mjs + folk.mjs + quiz.mjs + leads.mjs + takeaways.mjs + goals.mjs
+tools/lib/ar.mjs · rules.mjs · feel.mjs · classroom.mjs · access.mjs · light.mjs · celebrate.mjs · identity.mjs · rhythm.mjs · queue.mjs · lesson.mjs · curriculum.mjs · sport.mjs · family.mjs · pacing.mjs · playzone.mjs · folk.mjs · quiz.mjs · lead.mjs · takeaway.mjs · goal.mjs · verify.mjs · pe.mjs · memory.mjs · hype.mjs · anticipation.mjs · acceptance.mjs
         └─ node tools/build.mjs ─→ catalogs/GAME_CATALOG.csv · .md · .js + prompts/0X-*/ + index.html + prompts/CHECKLIST_NGHIEP_THU.md
 ```
 

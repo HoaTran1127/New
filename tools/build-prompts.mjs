@@ -32,12 +32,14 @@ import { FOLK, FOLK_SHORT } from './lib/folk.mjs';
 import { QUIZ, QUIZ_SHORT } from './lib/quiz.mjs';
 import { LEAD, LEAD_SHORT } from './lib/lead.mjs';
 import { TAKEAWAY, TAKEAWAY_SHORT } from './lib/takeaway.mjs';
+import { GOAL, GOAL_SHORT } from './lib/goal.mjs';
 import { standard } from './data/standards.mjs';
 import { sport } from './data/sports.mjs';
 import { folk } from './data/folk.mjs';
 import { quizFrames } from './data/quiz.mjs';
 import { leadMoves } from './data/leads.mjs';
 import { takeawayFrames } from './data/takeaways.mjs';
+import { goalLines } from './data/goals.mjs';
 import { identity } from './data/identities.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
@@ -90,6 +92,7 @@ function render(c) {
   const qf = quizFrames(st.mach);
   const lm = leadMoves(g.gestures[0]);
   const tk = takeawayFrames(st.mach);
+  const gl = goalLines(g.gestures[0]);
   const ex = EXAMPLES[g.cluster];
   const it = identity(g.id);
   if (!it) throw new Error(`Thiếu bản sắc cho game ${g.id} — bổ sung tools/data/identities.mjs.`);
@@ -121,6 +124,7 @@ Không dùng Tailwind Play CDN, không file .css/.js/.json/ảnh/mp3 ngoài. Ch�
 - Mẫu câu "Đố bạn" của game này (mạch "${st.mach}", lấy nguyên văn ba mẫu dưới đây từ \`tools/data/quiz.mjs\`, đúng BA/12 lượt ở cuối mỗi hiệp em đố đọc to MỘT mẫu và điền MỘT số hoặc MỘT từ đang hiện trên thẻ, game không bật microphone): "${qf[0]}" · "${qf[1]}" · "${qf[2]}".
 - Ba động tác "Bạn dẫn" của game này (mã điều khiển ${g.gestures[0]}, lấy nguyên văn ba động tác dưới đây từ \`tools/data/leads.mjs\`, đúng BA lần một phiên ở đầu mỗi hiệp, mỗi lần 5 giây): "${lm[0]}" · "${lm[1]}" · "${lm[2]}" — em dẫn làm MỘT động tác bằng tay và thân, không cần nói, ba em còn lại nhìn và bắt chước trong vòng 1 sải tay của mình; game không bật microphone và không chấm em nào giống hơn.
 - Ba khung "Câu chốt" của game này (mạch "${st.mach}", lấy nguyên văn ba khung dưới đây từ \`tools/data/takeaways.mjs\`, ĐÚNG MỘT khối 20 giây ở cuối phiên sau lượt đố thứ ba, bốn lượt × 5 giây): "${tk[0]}" · "${tk[1]}" · "${tk[2]}" — em chạm chọn MỘT khung rồi tự nói to phần bỏ trống bằng lời của chính em, nói xong giơ 1–3 ngón tay tự đánh giá; game không bật microphone, không nhận dạng giọng nói và không hiện sẵn đáp án cạnh chỗ trống.
+- Ba khung "Mục tiêu của em" của game này (mã điều khiển ${g.gestures[0]}, lấy nguyên văn ba khung dưới đây từ \`tools/data/goals.mjs\`, ĐÚNG MỘT thẻ trong 60–90 giây khởi động, ba nút chọn một hàng, dòng nhắc đầu hiệp tối đa ba lần): "${gl[0]}" · "${gl[1]}" · "${gl[2]}" — em chạm chọn MỘT khung rồi tự nói câu em đã chọn, cuối phiên em chạm một trong ba nút "Em làm được rồi / Em làm được một phần / Em sẽ làm tiếp", game không chọn hộ, không chọn ngẫu nhiên và không nhận dạng giọng nói.
 - Bốn dòng của khối "Gửi bố mẹ" ở màn tổng kết (in đúng bốn dòng này, chỉ thay chỗ <n>, <k>, <tổng> bằng số thật của phiên): "Hôm nay con tập môn **${sp.mon}** — <n> động tác" · "Con học ${st.ngan}, <k> câu đúng trên <tổng>" · "Mẹo con mang về: ${st.meo}" · "Việc 3 phút ở nhà: cả nhà cùng ${sp.dongTac} rồi hỏi nhau miệng một đề vừa chơi".
 - Lỗi học sinh thường mắc ở chủ đề này (mỗi câu sai ghi đúng một trong các lỗi này): ${ERROR_NOTES[g.cluster]}.
 - Vòng đầu tiên phải dễ để hiểu luật trong vài giây, không cần đọc hướng dẫn dài.
@@ -339,6 +343,13 @@ ${english ? `- ${RULES.listening}\n` : ''}${english ? `- ${RULES.listening}\n- D
 - ${TAKEAWAY.tuDanhGia}
 - ${TAKEAWAY.diemVaSheet}
 - ${TAKEAWAY.guard}
+- MỤC TIÊU CỦA EM — MỖI EM TỰ NÓI MỘT Ý ĐỊNH ĐẦU PHIÊN RỒI TỰ NHẬN CUỐI PHIÊN (vòng 26: khảo sát 85 prompt đếm "hôm nay em sẽ" 0/85, "thẻ mục tiêu" 0/85, "em làm được" 0/85, "miti-goal" 0/85, "em tiến bộ" 0/85, "so với chính em" 0/85 — trong khi "em tự chọn" 85/85 nhưng chỉ dùng để chọn đáp án, còn "tiến bộ" 85/85 lại thuộc hồ sơ "miti-mastery" do MÁY ghi):
+- ${GOAL.theChon}
+- ${GOAL.bonEmBonMucTieu}
+- ${GOAL.nhacDauHiep}
+- ${GOAL.tuGhiNhan}
+- ${GOAL.luuXuyenPhien}
+- ${GOAL.guard}
 - Bộ sưu tập: mỗi màn thắng mở khóa 1 thẻ theo chủ đề ${g.name}, lưu localStorage key "miti-collection", có màn "Sưu tập của em".
 - ${ANT.collectionGap}
 - Ngồi tại chỗ vẫn chơi được; không yêu cầu chạy nhảy hay động tác nguy hiểm; không rời khỏi vùng camera.
@@ -364,7 +375,7 @@ ${english ? `- ${RULES.listening}\n` : ''}${english ? `- ${RULES.listening}\n- D
 10. ĐẦU RA
 - Chỉ xuất toàn bộ file HTML hoàn chỉnh, không kèm giải thích dài.
 - Không TODO, không pseudocode, không "...", không "// code tương tự ở trên", không phần "bạn tự bổ sung".
-- Tự kiểm tra trước khi xuất: camera xin sau nút Bắt đầu · có loading/error/định vị · 640×480 và lật gương · nền AR là khung hình camera với lớp phủ tối không vượt 0.45 · mọi tọa độ đi qua toScreen, không còn phép nhân thô với W/H · vật thể có z và bóng dưới chân · có ít nhất một vật ảo neo vào landmark cơ thể · gesture fire theo lượt chuyển + cooldown + confidence · không tính hover là đã chọn · calibration đo tầm tay và đặt ngưỡng theo đơn vị vừa đo · ${MOTION_SHORT} · ${PE_SHORT} · ${RETENTION_SHORT} · ${FEEL_SHORT} · ${HYPE_SHORT} · ${ANT_SHORT} · ${CLASSROOM_SHORT} · ${ACCESS_SHORT} · ${VERIFY_SHORT} · ${ADAPT_SHORT} · ${LIGHT_SHORT} · ${CELEBRATE_SHORT} · ${IDENTITY_SHORT} · ${RHYTHM_SHORT} · ${QUEUE_SHORT} · ${LESSON_SHORT} · ${CURRICULUM_SHORT} · ${SPORT_SHORT} · ${FAMILY_SHORT} · ${PACE_SHORT} · ${PLAYZONE_SHORT} · ${FOLK_SHORT} · ${QUIZ_SHORT} · ${LEAD_SHORT} · ${TAKEAWAY_SHORT} · ${ACCEPT_SHORT} · tab ẩn hoặc mất tiêu điểm là tự Pause, quay lại đếm 3-2-1 · nhận diện 1 lần mỗi 2–3 khung hình, particle có pool, tự giảm chi tiết khi FPS tụt · tổng kết ba thẻ "Làm tốt / Cần luyện / Động tác lần sau" · ${GESTURES[g.gestures[0]].vi.toLowerCase()} hoạt động đúng cơ chế · fallback chuột/chạm chơi trọn vẹn · QUESTION_DATA đủ ${bank.so} mục, mỗi mục có answer + explanation + loiViet · câu sai vào hàng đợi luyện lại · tổng kết theo nhóm lỗi · bộ sưu tập lưu localStorage · chữ ký MiTi ở ba màn · file chạy độc lập không lỗi console.
+- Tự kiểm tra trước khi xuất: camera xin sau nút Bắt đầu · có loading/error/định vị · 640×480 và lật gương · nền AR là khung hình camera với lớp phủ tối không vượt 0.45 · mọi tọa độ đi qua toScreen, không còn phép nhân thô với W/H · vật thể có z và bóng dưới chân · có ít nhất một vật ảo neo vào landmark cơ thể · gesture fire theo lượt chuyển + cooldown + confidence · không tính hover là đã chọn · calibration đo tầm tay và đặt ngưỡng theo đơn vị vừa đo · ${MOTION_SHORT} · ${PE_SHORT} · ${RETENTION_SHORT} · ${FEEL_SHORT} · ${HYPE_SHORT} · ${ANT_SHORT} · ${CLASSROOM_SHORT} · ${ACCESS_SHORT} · ${VERIFY_SHORT} · ${ADAPT_SHORT} · ${LIGHT_SHORT} · ${CELEBRATE_SHORT} · ${IDENTITY_SHORT} · ${RHYTHM_SHORT} · ${QUEUE_SHORT} · ${LESSON_SHORT} · ${CURRICULUM_SHORT} · ${SPORT_SHORT} · ${FAMILY_SHORT} · ${PACE_SHORT} · ${PLAYZONE_SHORT} · ${FOLK_SHORT} · ${QUIZ_SHORT} · ${LEAD_SHORT} · ${TAKEAWAY_SHORT} · ${GOAL_SHORT} · ${ACCEPT_SHORT} · tab ẩn hoặc mất tiêu điểm là tự Pause, quay lại đếm 3-2-1 · nhận diện 1 lần mỗi 2–3 khung hình, particle có pool, tự giảm chi tiết khi FPS tụt · tổng kết ba thẻ "Làm tốt / Cần luyện / Động tác lần sau" · ${GESTURES[g.gestures[0]].vi.toLowerCase()} hoạt động đúng cơ chế · fallback chuột/chạm chơi trọn vẹn · QUESTION_DATA đủ ${bank.so} mục, mỗi mục có answer + explanation + loiViet · câu sai vào hàng đợi luyện lại · tổng kết theo nhóm lỗi · bộ sưu tập lưu localStorage · chữ ký MiTi ở ba màn · file chạy độc lập không lỗi console.
 \`\`\`
 
 ## Ghi chú cho người tạo prompt (không gửi Gemini)

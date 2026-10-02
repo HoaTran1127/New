@@ -33,12 +33,14 @@ import { FOLK } from './lib/folk.mjs';
 import { QUIZ } from './lib/quiz.mjs';
 import { LEAD } from './lib/lead.mjs';
 import { TAKEAWAY } from './lib/takeaway.mjs';
+import { GOAL, GOAL_SHORT } from './lib/goal.mjs';
 import { STANDARDS, STANDARD_KEYS, MACH_TEN, SCHOOL_YEAR, hocKiCua } from './data/standards.mjs';
 import { SPORTS, SPORT_KEYS } from './data/sports.mjs';
 import { FOLK as FOLK_BANK, FOLK_KEYS, FOLK_PROPS, FOLK_BANNED } from './data/folk.mjs';
 import { QUIZ as QUIZ_BANK, QUIZ_KEYS, quizFrames } from './data/quiz.mjs';
 import { LEADS, LEAD_KEYS, leadMoves } from './data/leads.mjs';
 import { TAKEAWAY as TAKEAWAY_BANK, TAKEAWAY_KEYS, takeawayFrames } from './data/takeaways.mjs';
+import { GOALS as GOAL_BANK, GOAL_KEYS, goalLines } from './data/goals.mjs';
 import { IDENTITIES } from './data/identities.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
@@ -88,7 +90,7 @@ const MASTER_LIB = [
   ['6.2', 'verify.mjs'], ['6.3', 'light.mjs'], ['8.1', 'feel.mjs'], ['8.2', 'hype.mjs'], ['8.3', 'anticipation.mjs'], ['8.4', 'celebrate.mjs'],
   ['9.1', 'access.mjs'], ['11.', 'acceptance.mjs'], ['8.5', 'identity.mjs'], ['8.6', 'rhythm.mjs'],
   ['7.2', 'queue.mjs'], ['4.6', 'lesson.mjs'], ['4.7', 'curriculum.mjs'], ['4.8', 'sport.mjs'], ['4.9', 'family.mjs'],
-  ['4.10', 'pacing.mjs'], ['4.11', 'playzone.mjs'], ['4.12', 'folk.mjs'], ['4.13', 'quiz.mjs'], ['4.14', 'lead.mjs'], ['4.15', 'takeaway.mjs'],
+  ['4.10', 'pacing.mjs'], ['4.11', 'playzone.mjs'], ['4.12', 'folk.mjs'], ['4.13', 'quiz.mjs'], ['4.14', 'lead.mjs'], ['4.15', 'takeaway.mjs'], ['4.16', 'goal.mjs'],
 ];
 
 const rows = readCatalog(path.join(ROOT, 'catalogs', 'GAME_CATALOG.csv'));
@@ -239,6 +241,7 @@ const ZONE_RULES = [
   ['- ĐỐ BẠN — EM ĐẶT ĐỀ CHO BẠN ĐÁP (', 'thiếu khối ĐỐ BẠN nêu nguồn tools/lib/quiz.mjs — sáu quy định đố bạn không còn nhãn để người viết prompt đối chiếu'],
   ['- BẠN DẪN — MỘT EM LÀM MẪU, BA EM BẮT CHƯỚC (', 'thiếu khối BẠN DẪN nêu nguồn tools/lib/lead.mjs — sáu quy định bạn dẫn không còn nhãn để người viết prompt đối chiếu'],
   ['- CÂU CHỐT — BỐN EM LẦN LƯỢT NÓI MỘT CÂU BẰNG LỜI CỦA MÌNH (', 'thiếu khối CÂU CHỐT nêu nguồn tools/lib/takeaway.mjs — sáu quy định câu chốt không còn nhãn để người viết prompt đối chiếu'],
+  ['- MỤC TIÊU CỦA EM — MỖI EM TỰ NÓI MỘT Ý ĐỊNH ĐẦU PHIÊN RỒI TỰ NHẬN CUỐI PHIÊN (', 'thiếu khối MỤC TIÊU CỦA EM nêu nguồn tools/lib/goal.mjs — sáu quy định mục tiêu của em không còn nhãn để người viết prompt đối chiếu'],
 ];
 // Các tầng "phải có MỌI luật, nguyên văn, ở MỌI nơi": bộ kiểm lấy thẳng Object.entries(lib) thay vì
 // gõ tay danh sách. Probe vòng 11 cho thấy danh sách gõ tay là lỗ hổng thật — xóa ${LIGHT.visualShare}
@@ -261,6 +264,7 @@ const FULL_LAYERS = [
   ['đố bạn', 'quiz.mjs', 'QUIZ', QUIZ],
   ['bạn dẫn', 'lead.mjs', 'LEAD', LEAD],
   ['câu chốt', 'takeaway.mjs', 'TAKEAWAY', TAKEAWAY],
+  ['mục tiêu của em', 'goal.mjs', 'GOAL', GOAL],
 ];
 const FULL_RULES = FULL_LAYERS.flatMap(([label, file, objName, obj]) =>
   Object.entries(obj).map(([key, text]) => [text, `thiếu quy định ${label} ${objName}.${key} của tools/lib/${file}`]));
@@ -777,6 +781,67 @@ const FULL_PINS = [
   ['takeaway.mjs', TAKEAWAY.guard, 'mỗi em giơ 1–3 ngón tay tự đánh giá và mức đó không trừ tim không đổi độ khó', 'điều 3 của verifyTakeaway() phải phủ cả tự đánh giá'],
   ['takeaway.mjs', TAKEAWAY.guard, '+5 điểm chốt chỉ vào thanh "Cả nhóm" và dòng "Em chốt hôm nay" nằm trong khối "Copy tờ rời"', 'điều 4 của verifyTakeaway()'],
   ['takeaway.mjs', TAKEAWAY.guard, 'Bản một học sinh, bản không camera, bản tắt tiếng, bản "dép lê" và bản "lớp mình chật" vẫn bắt buộc kiểm đủ bốn điều', 'bản nào cũng phải kiểm khối chốt'],
+  ['goal.mjs', GOAL.theChon, 'một phiên có ĐÚNG MỘT thẻ "Mục tiêu của em"', 'số thẻ mục tiêu trong một phiên'],
+  ['goal.mjs', GOAL.theChon, 'chạy trong 60–90 giây khởi động đang có', 'thẻ mục tiêu mượn giây khởi động, không thêm thời lượng'],
+  ['goal.mjs', GOAL.theChon, 'KHÔNG thêm thời lượng phiên', 'trần 8–10 phút của tầng tiết học phải giữ nguyên'],
+  ['goal.mjs', GOAL.theChon, 'KHÔNG trễ nút "Bắt đầu"', 'khởi động không được lùi nút vào trận'],
+  ['goal.mjs', GOAL.theChon, 'lấy NGUYÊN VĂN từ `tools/data/goals.mjs` theo đúng MÃ ĐIỀU KHIỂN của game', 'ba dòng mục tiêu phải lấy từ bảng theo đúng mã điều khiển'],
+  ['goal.mjs', GOAL.theChon, 'đặt ở BA nút chọn, mỗi nút MỘT hàng, chữ >= 20px', 'bố cục và cỡ chữ của ba nút chọn mục tiêu'],
+  ['goal.mjs', GOAL.theChon, 'Em chạm MỘT nút rồi nói thầm hoặc nói to đúng câu em đã chọn', 'em tự chọn và tự nói, không phải máy chọn'],
+  ['goal.mjs', GOAL.theChon, 'CẤM game chọn hộ, CẤM chọn ngẫu nhiên, CẤM để mascot chọn thay', 'ba đường máy tự điền ý định của em phải bị chặn cả ba'],
+  ['goal.mjs', GOAL.theChon, 'CẤM viết lại câu khác với bảng', 'prompt không được chế câu mục tiêu ngoài bảng goals.mjs'],
+  ['goal.mjs', GOAL.theChon, 'bấm nút "Chưa chọn", thẻ tắt và CẤM hiện lại lần hai trong phiên', 'đường lùi của em chưa muốn đặt mục tiêu'],
+  ['goal.mjs', GOAL.theChon, 'Thẻ tự tắt sau 6 giây cùng nhịp trạm', 'trần thẻ báo-trước của tầng chuẩn kiến thức'],
+  ['goal.mjs', GOAL.theChon, 'không che đề bài', 'thẻ mục tiêu không che đề'],
+  ['goal.mjs', GOAL.bonEmBonMucTieu, 'mỗi em ĐÚNG MỘT mục tiêu cho riêng mình', 'bốn em bốn mục tiêu, không một mục tiêu chung'],
+  ['goal.mjs', GOAL.bonEmBonMucTieu, 'chọn tại chỗ trong vòng 1 sải tay, không cần đứng lên', 'chọn mục tiêu trong vùng an toàn của tầng chỗ chơi'],
+  ['goal.mjs', GOAL.bonEmBonMucTieu, 'CẤM in hai mục tiêu cạnh nhau để so', 'cốt lõi không so sánh giữa các em'],
+  ['goal.mjs', GOAL.bonEmBonMucTieu, 'CẤM đọc mục tiêu của em này trước lớp', 'mục tiêu không bị đọc to trước lớp'],
+  ['goal.mjs', GOAL.bonEmBonMucTieu, 'CẤM gọi mục tiêu nào là cao hay thấp, khó hay dễ hơn', 'không xếp hạng ý định'],
+  ['goal.mjs', GOAL.bonEmBonMucTieu, 'CẤM xếp hàng hay chia nhóm theo mục tiêu', 'mục tiêu không thành tiêu chí chia nhóm'],
+  ['goal.mjs', GOAL.bonEmBonMucTieu, 'CẤM biến mục tiêu thành điểm, thành tim hay thành chuỗi đúng', 'ý định không thành đơn vị điểm'],
+  ['goal.mjs', GOAL.bonEmBonMucTieu, 'Mascot chỉ nói <= 6 từ một lần', 'trần lời mascot của tầng bản sắc'],
+  ['goal.mjs', GOAL.bonEmBonMucTieu, 'Bản một học sinh: em vẫn có ba nút chọn và một lượt tự nhận như bình thường', 'một em vẫn giữ đủ tầng'],
+  ['goal.mjs', GOAL.nhacDauHiep, 'TỐI ĐA BA lần một phiên', 'trần số lần nhắc đầu hiệp (ba hiệp một tiết)'],
+  ['goal.mjs', GOAL.nhacDauHiep, 'đúng một dòng ở GIÂY ĐẦU TIÊN của mỗi hiệp', 'vị trí dòng nhắc trong hiệp'],
+  ['goal.mjs', GOAL.nhacDauHiep, '"Mục tiêu: <đúng câu em đã chọn>"', 'dòng nhắc phải lặp lại đúng câu em đã chọn'],
+  ['goal.mjs', GOAL.nhacDauHiep, 'Dòng nhỏ nằm ở góc HUD, chữ >= 20px, MỘT hàng, tự tắt sau 6 giây', 'cỡ chữ và thời gian sống của dòng nhắc'],
+  ['goal.mjs', GOAL.nhacDauHiep, 'KHÔNG cắt thời gian đọc đề của lượt kế tiếp', 'dòng nhắc không ăn thời gian đọc đề'],
+  ['goal.mjs', GOAL.nhacDauHiep, 'CẤM hiện thêm lần thứ tư trong phiên', 'trần ba lần phải là trần'],
+  ['goal.mjs', GOAL.nhacDauHiep, 'CẤM in chữ "chưa có mục tiêu" cạnh tên em', 'em bấm "Chưa chọn" không bị bêu'],
+  ['goal.mjs', GOAL.tuGhiNhan, 'mỗi em có ĐÚNG MỘT lượt chạm một trong BA nút', 'số lượt tự ghi nhận của mỗi em'],
+  ['goal.mjs', GOAL.tuGhiNhan, '"Em làm được rồi", "Em làm được một phần", "Em sẽ làm tiếp"', 'ba nhãn nút tự ghi nhận'],
+  ['goal.mjs', GOAL.tuGhiNhan, 'Ba nút này KHÔNG phải cử chỉ điều khiển', 'nút chạm không được lẫn vào GESTURES'],
+  ['goal.mjs', GOAL.tuGhiNhan, 'CẤM game chờ nhận diện động tác để ghi nhận', 'tự ghi nhận không cần webcam'],
+  ['goal.mjs', GOAL.tuGhiNhan, 'CẤM bật microphone (chỉ ba game mã VOICE mới có micro)', 'trần micro của tầng điều khiển'],
+  ['goal.mjs', GOAL.tuGhiNhan, 'CẤM nhận dạng giọng nói hay phiên âm câu của em', 'câu em nói không bị máy chuyển thành chữ'],
+  ['goal.mjs', GOAL.tuGhiNhan, 'Trạng thái KHÔNG trừ tim, KHÔNG cắt chuỗi đúng, KHÔNG đổi độ khó đang có', 'tự nhận không phạt và không đổi độ khó'],
+  ['goal.mjs', GOAL.tuGhiNhan, 'KHÔNG hiện thành điểm hay thứ hạng', 'trạng thái không lên bảng điểm'],
+  ['goal.mjs', GOAL.tuGhiNhan, 'CẤM in chữ "đạt" cạnh tên em như một lời phê', 'trạng thái không thành lời phê'],
+  ['goal.mjs', GOAL.tuGhiNhan, 'Lượt chạm không tính vào 12 lượt hỏi bài', '12 lượt của tầng đố bạn phải giữ nguyên'],
+  ['goal.mjs', GOAL.tuGhiNhan, 'CẤM biến thành lượt thứ 13', 'không lượt thứ 13'],
+  ['goal.mjs', GOAL.tuGhiNhan, 'KHÔNG thay khối "Câu chốt" 20 giây đang có', 'tầng mục tiêu không ăn chỗ tầng câu chốt'],
+  ['goal.mjs', GOAL.luuXuyenPhien, 'lưu vào localStorage key "miti-goal" ĐÚNG MỘT bản ghi mỗi phiên', 'một bản ghi mỗi phiên, một key mới duy nhất'],
+  ['goal.mjs', GOAL.luuXuyenPhien, 'dạng "<mã game>|<trạng thái>|<ngày>"', 'cấu trúc bản ghi miti-goal'],
+  ['goal.mjs', GOAL.luuXuyenPhien, 'Màn tổng kết in TỐI ĐA HAI dòng', 'trần số dòng mục tiêu trên màn tổng kết'],
+  ['goal.mjs', GOAL.luuXuyenPhien, 'trong cùng khối mà nút "Copy tờ rời" copy được', 'dòng mục tiêu nằm trong khối copy được'],
+  ['goal.mjs', GOAL.luuXuyenPhien, '"Mục tiêu hôm nay: <tên> <trạng thái>"', 'dòng tổng kết mục tiêu'],
+  ['goal.mjs', GOAL.luuXuyenPhien, 'chỉ khi bản ghi phiên trước CÓ THẬT', 'dòng so với chính mình chỉ hiện khi có dữ liệu thật'],
+  ['goal.mjs', GOAL.luuXuyenPhien, '"Phiên trước em: <trạng thái>"', 'dòng so với chính em phiên trước'],
+  ['goal.mjs', GOAL.luuXuyenPhien, 'Thiếu bản ghi thì CẤM in dòng thứ hai, CẤM bịa "em tiến bộ"', 'cấm bịa tiến bộ khi không có bản ghi'],
+  ['goal.mjs', GOAL.luuXuyenPhien, 'CẤM dựng biểu đồ, CẤM tính tỉ lệ %', 'hồ sơ mục tiêu không thành biểu đồ'],
+  ['goal.mjs', GOAL.luuXuyenPhien, 'bấm nút "Xoá hồ sơ của em"', 'nút xoá hồ sơ của phụ huynh/giáo viên'],
+  ['goal.mjs', GOAL.luuXuyenPhien, 'không đụng "miti-best", "miti-effort", "miti-week", "miti-mastery"', 'xoá đúng một key, không xoá hồ sơ khác'],
+  ['goal.mjs', GOAL.guard, '`verifyGoal()` chạy MỘT LẦN', 'hàm kiểm tầng mục tiêu lúc nạp'],
+  ['goal.mjs', GOAL.guard, 'kiểm đúng bốn điều', 'số điều verifyGoal() phải kiểm'],
+  ['goal.mjs', GOAL.guard, 'ĐÚNG MỘT thẻ "Mục tiêu của em" mỗi phiên trong 60–90 giây khởi động', 'điều 1 của verifyGoal()'],
+  ['goal.mjs', GOAL.guard, 'game không chọn hộ và không chọn ngẫu nhiên', 'điều 1 phải chặn máy điền hộ'],
+  ['goal.mjs', GOAL.guard, 'mỗi em một mục tiêu, không in hai mục tiêu cạnh nhau, không đọc mục tiêu của em khác trước lớp, mascot <= 6 từ', 'điều 2 của verifyGoal()'],
+  ['goal.mjs', GOAL.guard, 'dòng nhắc đầu hiệp tối đa BA lần một phiên, không che đề, không cắt thời gian đọc đề, không thành lượt hỏi bài thứ 13, không trừ tim', 'điều 3 của verifyGoal()'],
+  ['goal.mjs', GOAL.guard, 'màn tổng kết có ba nút tự ghi nhận, đúng MỘT bản ghi "miti-goal" mỗi phiên', 'điều 4 của verifyGoal()'],
+  ['goal.mjs', GOAL.guard, 'dòng "Mục tiêu hôm nay: <tên> <trạng thái>" nằm trong khối "Copy tờ rời"', 'điều 4 phải kiểm cả khối copy'],
+  ['goal.mjs', GOAL.guard, '`console.warn` tiếng Việt nêu đúng phần lệch', 'thiếu thì báo tiếng Việt nêu rõ phần lệch'],
+  ['goal.mjs', GOAL.guard, 'Bản một học sinh, bản không camera, bản tắt tiếng, bản "dép lê" và bản "lớp mình chật" vẫn bắt buộc kiểm đủ bốn điều', 'bản nào cũng phải kiểm thẻ mục tiêu'],
 ];
 for (const [file, text, needle, label] of FULL_PINS) {
   if (!text.includes(needle)) bad(`tools/lib/${file} không còn nêu "${needle}" (${label}) — con số nghiệm thu phải sửa cùng tài liệu và bảng kiểm, không đổi âm thầm trong lib.`);
@@ -807,6 +872,7 @@ const SHORT_PINS = {
   QUIZ_SHORT: ['đúng BA/12 lượt "Đố bạn"', 'cuối mỗi hiệp', 'tools/data/quiz.mjs', 'mạch kiến thức', 'nguyên văn', 'điền MỘT số/từ', 'chín lượt còn lại', 'ngân hàng đề', '>= 20px', 'tự tắt sau 6 giây', 'không bật microphone', 'không hiện sẵn đáp án', 'một động tác của mã điều khiển', '1 sải tay', 'Thư ký đọc lại', 'đề lệch không trừ tim', 'không cắt chuỗi', '<= 6 từ', 'Em chịu, bạn đáp giúp', '+5 điểm', '"Cả nhóm"', 'miti-best', 'Em đố hôm nay', 'Copy tờ rời', 'verifyQuiz()'],
   LEAD_SHORT: ['đúng BA lần "Bạn dẫn"', 'đầu mỗi hiệp', 'mỗi lần 5 giây', 'không tính vào 12 lượt hỏi bài', 'nguyên văn', 'một trong ba động tác', 'tools/data/leads.mjs', 'theo đúng mã điều khiển', 'một hàng ba động tác', '>= 20px', 'tự tắt sau 5 giây', 'không bật microphone', 'không đánh dấu ✓', 'bắt chước', '1 sải tay', '90 độ', 'không chạm nhau', 'Cả nhóm đã làm theo', 'dẫn lệch', 'đứng im', 'không trừ tim', 'mascot làm mẫu lại 3 giây', '+5 điểm', '"Cả nhóm"', 'miti-best', 'Em dẫn hôm nay', 'Copy tờ rời', 'verifyLead()'],
   TAKEAWAY_SHORT: ['ĐÚNG MỘT khối "Câu chốt"', 'CUỐI phiên', 'sau lượt đố thứ ba', 'trước màn tổng kết', 'dài 20 giây', 'bốn lượt × 5 giây', 'không tính vào 12 lượt hỏi bài', 'nguyên văn', 'tools/data/takeaways.mjs', 'theo đúng mạch kiến thức', 'ba nút chọn một hàng', '>= 20px', 'tự tắt sau 6 giây', 'không bật microphone', 'không nhận dạng giọng nói', 'không hiện sẵn đáp án', 'bốn em cùng chốt', 'một động tác của mã điều khiển', 'không bị gọi lại lần hai', '1–3 ngón tay tự đánh giá', 'không trừ tim', 'không đổi độ khó', '+5 điểm chốt', '"Cả nhóm"', 'miti-best', 'Em chốt hôm nay: <tên> <n> câu', 'Copy tờ rời', 'verifyTakeaway()'],
+  GOAL_SHORT: ['ĐÚNG MỘT thẻ "Mục tiêu của em"', '60–90 giây khởi động', '>= 20px', 'nguyên văn từ tools/data/goals.mjs', 'theo đúng mã điều khiển', 'game không chọn hộ', 'không chọn ngẫu nhiên', 'tự tắt sau 6 giây', 'nút "Chưa chọn"', 'không hiện lại lần hai', 'bốn em bốn mục tiêu riêng', 'không in cạnh nhau để so', 'không đọc trước lớp', 'mascot <= 6 từ', 'dòng nhắc đầu hiệp tối đa ba lần', 'không che đề', 'không cắt thời gian đọc đề', 'Em làm được rồi', 'Em làm được một phần', 'Em sẽ làm tiếp', 'không trừ tim', 'không đổi độ khó', 'không tính vào 12 lượt', 'một bản ghi "miti-goal"', 'Mục tiêu hôm nay: <tên> <trạng thái>', 'Copy tờ rời', 'không biểu đồ', 'verifyGoal()'],
   FOLK_SHORT: ['trò dân gian dẫn dắt', 'tools/data/folk.mjs', 'tên <= 4 từ', '"Cách chơi"', '>= 18px', 'chant <= 8 tiếng', 'BA lần một phiên', 'vạch nhịp 8 nhịp', 'đồng dao', 'mẫu câu <= 8 từ', 'giọng en-US', 'nhảy lò cò', 'trồng cây chuối', 'bịt mắt bắt dê', 'kéo co dây thật', '1 sải tay', 'tám món FOLK_PROPS', 'alpha <= 0.45', 'đổi vai sau 3 lượt', 'Trò chơi hôm nay', 'không giành góc HUD của tên môn', 'lời đếm cấm gọi là đồng dao', 'cấm đòi cầm vật thật', 'verifyFolk()'],
 };
 for (const seg of chainSegments) {
@@ -1176,6 +1242,21 @@ if (!fs.existsSync(VAR_FILE)) {
         ['nói xong giơ 1–3 ngón tay tự đánh giá; game không bật microphone, không nhận dạng giọng nói và không hiện sẵn đáp án.', 'block chốt không micro, không phiên âm, không đáp án in sẵn — lấy cả vế ngón tay vì mục [44] của bảng kiểm cũng nêu ba vế này'],
       ], 'mục neo block câu chốt')) {
         if (!b.includes(needle)) bad(`biến thể #${i + 1} (${vid}): thiếu ${label} ("${needle.slice(0, 48)}") — builder phải lấy thẳng tools/data/takeaways.mjs vào đúng block.`);
+      }
+    }
+    // Dòng mục tiêu cũng là dữ liệu theo KIỂU ĐIỀU KHIỂN: người copy riêng một block phải biết block của
+    // mình cho em ba dòng "Hôm nay em sẽ …" nào. V1–V4 có mã riêng, V5 mượn mã đầu của game — cùng quy tắc
+    // với bảng động tác dẫn ở trên.
+    const vgm = vgame ? GOAL_BANK[vGesture || (vgame.gestures || [])[0]] : null;
+    if (vgm) {
+      for (const [needle, label] of capsNeo([
+        ['**Mục tiêu của em — một ý định tự nói đầu phiên:**', 'dòng khối mục tiêu — người copy riêng một block sẽ không biết ý định đầu phiên thuộc về ai'],
+        [`Ba khung "Mục tiêu của em" của block ${vcode} này (mã điều khiển ${vGesture || (vgame.gestures || [])[0]}`, 'mã điều khiển mà ba dòng mục tiêu này gắn theo'],
+        [`"${vgm[0]}" · "${vgm[1]}" · "${vgm[2]}"`, 'ba dòng mục tiêu nguyên văn của ĐÚNG kiểu điều khiển này'],
+        ['lấy nguyên văn từ `tools/data/goals.mjs`', 'block phải trỏ thẳng về bảng dòng mục tiêu'],
+        ['game không chọn hộ, không nhận dạng giọng nói và không trừ tim khi em chưa đạt.', 'block mục tiêu không máy điền hộ, không phiên âm, không phạt — vế này chỉ có ở đoạn mục tiêu nên mục [45] không che được'],
+      ], 'mục neo block mục tiêu của em')) {
+        if (!b.includes(needle)) bad(`biến thể #${i + 1} (${vid}): thiếu ${label} ("${needle.slice(0, 48)}") — builder phải lấy thẳng tools/data/goals.mjs vào đúng block.`);
       }
     }
     // Chuỗi tự kiểm của biến thể cũng phải mang đủ mọi tầng, cùng registry như prompt.
@@ -1677,7 +1758,7 @@ const QUIZ_DOC_NEEDLES = [
   ['người thử số 33', 'việc người thử tương ứng ở prompts/README', 0, 0, 0, 1],
   ['mục `[42]`', 'con trỏ từ prompts/README về đúng dòng bảng kiểm của verifyQuiz()', 0, 0, 0, 1],
   ['folk.mjs + quiz.mjs', 'danh sách file data trong pipeline prompts/README', 0, 0, 0, 1],
-  ['lead.mjs · takeaway.mjs · verify.mjs', 'danh sách file lib trong pipeline prompts/README', 0, 0, 0, 1],
+  ['takeaway.mjs · goal.mjs · verify.mjs', 'danh sách file lib trong pipeline prompts/README', 0, 0, 0, 1],
   ['tools/data/quiz.mjs', 'bảng mẫu câu đố bạn', 4, 3, 4, 3],
   ['tools/lib/quiz.mjs', 'tầng quy định đố bạn', 1, 1, 2, 1],
   ['verifyQuiz()', 'hàm kiểm tầng đố bạn lúc nạp', 2, 2, 3, 6],
@@ -1819,6 +1900,73 @@ const TAKEAWAY_DOC_NEEDLES = [
   ['| **1–3 ngón tay tự đánh giá** |', 'dòng bảng tự đánh giá ở prompts/README', 0, 0, 0, 1],
   ['| **Điểm chốt vào "Cả nhóm"** |', 'dòng bảng điểm chốt ở prompts/README', 0, 0, 0, 1],
 ];
+// Vòng 26: tầng "mục tiêu của em". Cùng cách làm với TAKEAWAY_DOC_NEEDLES — đo số lần nêu thật ở bốn file
+// tài liệu (master §4.16, template, README.md, prompts/README.md) rồi lấy đúng số đo làm sàn. Sáu quy định
+// này sống rải ở cả bốn file nên một lần sửa tay ở chỗ nào cũng làm tầng mục tiêu biến mất khỏi chỗ đó mà
+// build vẫn xanh: 85 prompt vẫn mang đủ GOAL.theChon…guard (FULL_RULES chỉ soi prompt/biến thể/legacy), và
+// bảng kiểm vẫn đếm 45 mục.
+const GOAL_DOC_NEEDLES = [
+  ['ĐÚNG MỘT THẺ "MỤC TIÊU CỦA EM" MỘT PHIÊN', 'nhãn bullet vị trí thẻ mục tiêu ở master', 1, 0, 0, 0],
+  ['BỐN EM BỐN MỤC TIÊU, KHÔNG ĐEM RA SO', 'nhãn bullet không đem ra so ở master', 1, 0, 0, 0],
+  ['DÒNG NHẮC ĐẦU HIỆP TỐI ĐA BA LẦN MỘT PHIÊN', 'nhãn bullet dòng nhắc đầu hiệp ở master', 1, 0, 0, 0],
+  ['CUỐI PHIÊN EM CHẠM MỘT TRONG BA NÚT TỰ GHI NHẬN', 'nhãn bullet tự ghi nhận ở master', 1, 0, 0, 0],
+  ['MỘT BẢN GHI "miti-goal" MỖI PHIÊN, KHÔNG BIỂU ĐỒ KHÔNG TỈ LỆ %', 'nhãn bullet hồ sơ mục tiêu ở master', 1, 0, 0, 0],
+  ['TỰ KIỂM BẰNG `verifyGoal()`', 'nhãn bullet hàm tự kiểm ở master', 1, 0, 0, 0],
+  ['[45] verifyGoal()', 'mục 45 của bảng kiểm máy tự kiểm trong master', 1, 0, 0, 0],
+  ['60–90 GIÂY KHỞI ĐỘNG ĐANG CÓ', 'thẻ mục tiêu nằm trong khung khởi động ở master', 1, 0, 0, 0],
+  ['CẤM game chọn hộ', 'máy không được điền ý định thay em ở master', 1, 0, 0, 0],
+  ['CẤM mascot chọn thay', 'mascot không chọn mục tiêu thay em ở master', 1, 0, 0, 0],
+  ['CẤM hiện lại lần hai', 'nút "Chưa chọn" khép thẻ vĩnh viễn ở master', 1, 0, 0, 0],
+  ['CẤM in hai mục tiêu cạnh nhau để so', 'cốt lõi không so sánh ở master', 1, 0, 0, 0],
+  ['CẤM gọi mục tiêu nào là cao hay thấp', 'không xếp hạng ý định ở master', 1, 0, 0, 0],
+  ['CẤM biến mục tiêu thành điểm, thành tim hay thành chuỗi đúng', 'ý định không thành đơn vị điểm ở master', 1, 0, 0, 0],
+  ['CẤM hiện thêm lần thứ tư', 'trần ba lần nhắc đầu hiệp ở master', 1, 0, 0, 0],
+  ['CẤM in chữ "chưa có mục tiêu"', 'em bấm "Chưa chọn" không bị bêu ở master', 1, 0, 0, 0],
+  ['CẤM thành lượt thứ 13', 'lượt chạm không ăn vào 12 lượt ở master', 1, 0, 0, 0],
+  ['CẤM bịa "em tiến bộ"', 'không có bản ghi thật thì không được bịa ở master', 1, 0, 0, 0],
+  ['Dòng nhỏ ở góc HUD', 'vị trí dòng nhắc đầu hiệp ở master', 1, 0, 0, 0],
+  ['BA nút chọn MỘT hàng, chữ >= 20px', 'bố cục ba nút chọn mục tiêu ở master', 2, 0, 0, 0],
+  ['"Xoá hồ sơ của em"', 'nút xoá hồ sơ mục tiêu ở master và template', 1, 1, 0, 0],
+  ['"Em làm được rồi"', 'nhãn nút tự ghi nhận ở bốn file', 1, 1, 1, 1],
+  ['"Phiên trước em: <trạng thái>"', 'dòng so với chính em ở master và template', 1, 1, 0, 0],
+  ['TỐI ĐA HAI dòng', 'trần số dòng mục tiêu trên màn tổng kết', 1, 1, 0, 0],
+  ['mười bốn mã × ba dòng', 'kích thước bảng mục tiêu ở bốn file', 1, 1, 1, 1],
+  ['"Hôm nay em sẽ"', 'mở đầu mọi dòng mục tiêu của tools/data/goals.mjs', 1, 1, 2, 1],
+  ['dòng mở đầu "Hôm nay em sẽ", <= 8 từ', 'trần 8 từ của một dòng mục tiêu ở master và template', 1, 1, 0, 0],
+  ['mọi dòng mở đầu "Hôm nay em sẽ", **<= 8 từ**', 'trần 8 từ ở bảng kể chuyện hai README', 0, 0, 1, 1],
+  ['Bản một học sinh: em vẫn có', 'bản một em vẫn giữ thẻ mục tiêu ở master và template', 1, 1, 0, 0],
+  ['Lưu localStorage key "miti-goal" ĐÚNG MỘT bản ghi mỗi phiên', 'một bản ghi mỗi phiên ở template', 0, 1, 0, 0],
+  ['- MỤC TIÊU CỦA EM — MỖI EM TỰ NÓI MỘT Ý ĐỊNH ĐẦU PHIÊN RỒI TỰ NHẬN CUỐI PHIÊN (nguồn:', 'nhãn khối mục tiêu trong template', 0, 1, 0, 0],
+  ['Phần mục tiêu của em đã điền đủ', 'dòng checklist mục tiêu trong template', 0, 1, 0, 0],
+  ['Sáu quy định "mục tiêu của em"', 'heading mục kể chuyện tầng 26 ở README', 0, 0, 1, 0],
+  ['Tầng "mục tiêu của em"', 'heading mục kể chuyện tầng 26 ở prompts/README', 0, 0, 0, 1],
+  ['máy tự kiểm thứ 45', 'số mục của verifyGoal() trong bảng kiểm', 0, 0, 1, 0],
+  ['việc người thử thứ 36', 'việc người thử tương ứng ở README', 0, 0, 1, 0],
+  ['người thử số 36', 'việc người thử tương ứng ở prompts/README', 0, 0, 0, 1],
+  ['mục `[45]`', 'con trỏ từ prompts/README về đúng dòng bảng kiểm của verifyGoal()', 0, 0, 0, 1],
+  ['leads.mjs + takeaways.mjs + goals.mjs', 'danh sách file data trong pipeline prompts/README', 0, 0, 0, 1],
+  ['42 dòng "Mục tiêu của em"', 'dòng goals.mjs trong khối pipeline README', 0, 0, 1, 0],
+  ['`verifyGoal()` chạy', 'hàm kiểm tầng mục tiêu ở template và prompts/README', 0, 1, 0, 1],
+  ['tools/data/goals.mjs', 'bảng dòng mục tiêu theo mã điều khiển', 4, 3, 4, 3],
+  ['tools/lib/goal.mjs', 'tầng quy định mục tiêu', 1, 1, 2, 1],
+  ['verifyGoal()', 'hàm kiểm tầng mục tiêu lúc nạp', 2, 2, 3, 7],
+  ['Mục tiêu của em', 'chữ "Mục tiêu của em"', 2, 2, 3, 1],
+  ['miti-goal', 'key hồ sơ mục tiêu', 6, 4, 5, 3],
+  ['60–90 giây khởi động', 'thẻ mục tiêu mượn giây khởi động của tầng chỗ chơi', 5, 7, 5, 2],
+  ['nút "Chưa chọn"', 'đường lùi cho em chưa đặt mục tiêu', 0, 1, 1, 0],
+  ['Mục tiêu hôm nay', 'dòng tổng kết mục tiêu', 3, 3, 2, 0],
+  ['ba nút tự ghi nhận', 'điều 4 của verifyGoal() ở master, template và README', 1, 1, 1, 0],
+  ['| **Đúng MỘT thẻ "Mục tiêu của em" một phiên** |', 'dòng bảng kể chuyện tầng mục tiêu ở README', 0, 0, 1, 0],
+  ['| Đúng **MỘT thẻ "Mục tiêu của em"** một phiên |', 'dòng bảng kể chuyện tầng mục tiêu ở prompts/README', 0, 0, 0, 1],
+  ['| **Ba dòng lấy nguyên văn theo đúng mã điều khiển** |', 'dòng bảng khung mục tiêu ở README', 0, 0, 1, 0],
+  ['| **Ba dòng nguyên văn theo đúng mã điều khiển** |', 'dòng bảng khung mục tiêu ở prompts/README', 0, 0, 0, 1],
+  ['**Game không chọn thay em**', 'dòng bảng cấm máy chọn hộ ở prompts/README', 0, 0, 0, 1],
+  ['| **Bốn em bốn mục tiêu, không đem ra so** |', 'dòng bảng bốn em ở hai README', 0, 0, 1, 1],
+  ['| **Nhắc đầu hiệp tối đa BA lần một phiên** |', 'dòng bảng dòng nhắc ở hai README', 0, 0, 1, 1],
+  ['| **Cuối phiên em tự chạm một trong ba nút, một bản ghi duy nhất** |', 'dòng bảng tự ghi nhận ở README', 0, 0, 1, 0],
+  ['| **Cuối phiên em tự chạm ba nút, một bản ghi duy nhất** |', 'dòng bảng tự ghi nhận ở prompts/README', 0, 0, 0, 1],
+  ['| **Tự kiểm bằng `verifyGoal()`** |', 'dòng bảng hàm tự kiểm ở README', 0, 0, 1, 0],
+];
 const DOC_FILES = [
   ['prompts/00-master-canvas-prompt.md', master],
   ['prompts/templates/game-prompt-template.md', tpl],
@@ -1838,7 +1986,7 @@ for (const [docSlot, [docName, docText]] of DOC_FILES.entries()) {
   for (const [needle, label] of IDENTITY_DOC_NEEDLES) {
     if (!docText.includes(needle)) bad(`${docName} thiếu con số bản sắc riêng (${label}): không thấy "${needle}".`);
   }
-  for (const [needle, label, ...mins] of [...RHYTHM_DOC_NEEDLES, ...VOICE_DOC_NEEDLES, ...QUEUE_DOC_NEEDLES, ...LESSON_DOC_NEEDLES, ...CURRICULUM_DOC_NEEDLES, ...SPORT_DOC_NEEDLES, ...FAMILY_DOC_NEEDLES, ...PACE_DOC_NEEDLES, ...PLAYZONE_DOC_NEEDLES, ...FOLK_DOC_NEEDLES, ...QUIZ_DOC_NEEDLES, ...LEAD_DOC_NEEDLES, ...TAKEAWAY_DOC_NEEDLES]) {
+  for (const [needle, label, ...mins] of [...RHYTHM_DOC_NEEDLES, ...VOICE_DOC_NEEDLES, ...QUEUE_DOC_NEEDLES, ...LESSON_DOC_NEEDLES, ...CURRICULUM_DOC_NEEDLES, ...SPORT_DOC_NEEDLES, ...FAMILY_DOC_NEEDLES, ...PACE_DOC_NEEDLES, ...PLAYZONE_DOC_NEEDLES, ...FOLK_DOC_NEEDLES, ...QUIZ_DOC_NEEDLES, ...LEAD_DOC_NEEDLES, ...TAKEAWAY_DOC_NEEDLES, ...GOAL_DOC_NEEDLES]) {
     const want = mins[docSlot];
     const got = docText.split(needle).length - 1;
     if (got < want) bad(`${docName} chỉ còn nêu "${needle}" (${label}) ${got} lần, chuẩn hiện hành là ${want} lần — tài liệu chuẩn phải giữ đủ chỗ nêu ở CẢ phần luật lẫn bảng kiểm tự kiểm, không được để một phần mất số.`);
@@ -2529,6 +2677,28 @@ for (const g of GAMES) {
   }
 }
 
+// Vòng 26: mỗi prompt game phải mang đúng BA DÒNG MỤC TIÊU của mã điều khiển mình. Probe: builder thay
+// dòng dữ liệu bằng "em tự nói một mục tiêu em muốn" thì khối MỤC TIÊU CỦA EM vẫn nguyên, 85 prompt vẫn
+// xanh, mà không game nào biết ba dòng của mã mình là gì — đúng chỗ hỏng mà bảng goals.mjs sinh ra để chữa
+// (dòng tự bịa thì em đọc một câu không liên quan gì động tác em sẽ thật sự làm).
+for (const g of GAMES) {
+  const gg = GOAL_BANK[g.gestures[0]];
+  if (!gg) continue;
+  const rel = PATH_OF.get(g.id);
+  if (!rel || !fs.existsSync(path.join(ROOT, rel))) continue;
+  const t = fs.readFileSync(path.join(ROOT, rel), 'utf8');
+  for (const [needle, label] of [
+    ['- MỤC TIÊU CỦA EM — MỖI EM TỰ NÓI MỘT Ý ĐỊNH ĐẦU PHIÊN RỒI TỰ NHẬN CUỐI PHIÊN (vòng 26:', 'nhãn khối mục tiêu kèm khảo sát'],
+    [`- Ba khung "Mục tiêu của em" của game này (mã điều khiển ${g.gestures[0]}`, 'dòng dữ liệu mục tiêu kèm đúng mã điều khiển của game'],
+    [`"${gg[0]}" · "${gg[1]}" · "${gg[2]}"`, 'ba dòng mục tiêu nguyên văn của ĐÚNG mã điều khiển này'],
+    ['lấy nguyên văn ba khung dưới đây từ `tools/data/goals.mjs`', 'prompt phải trỏ thẳng về bảng dòng mục tiêu'],
+    ['ĐÚNG MỘT thẻ trong 60–90 giây khởi động, ba nút chọn một hàng, dòng nhắc đầu hiệp tối đa ba lần', 'ba con số của tầng mục tiêu nêu ngay trong prompt game'],
+    ['game không chọn hộ, không chọn ngẫu nhiên và không nhận dạng giọng nói.', 'prompt phải chặn cả ba đường máy điền hộ — vế này chỉ có ở dòng dữ liệu prompt nên không bị mục [45] che'],
+  ]) {
+    if (!t.includes(needle)) bad(`${g.id}: prompt thiếu ${label} ("${needle.slice(0, 48)}") — builder phải lấy thẳng tools/data/goals.mjs theo mã ${g.gestures[0]}.`);
+  }
+}
+
 
 // Vòng 25: tầng câu chốt nghiệm thu bằng bốn lượt nói thật của bốn em, nên mục bảng kiểm phải nêu lại đủ
 // bốn điều verifyTakeaway() kiểm. Bớt một vế (ví dụ "không nhận dạng giọng nói") thì game bật microphone
@@ -2636,6 +2806,93 @@ for (const g of GAMES) {
   ]) {
     if (!t.includes(needle)) bad(`${g.id}: prompt thiếu ${label} ("${needle.slice(0, 48)}") — builder phải lấy thẳng tools/data/takeaways.mjs theo mạch ${stdTk.mach}.`);
   }
+}
+
+// Vòng 26: tầng mục tiêu nghiệm thu bằng một ý định EM tự nói, nên mục bảng kiểm phải nêu lại đủ bốn điều
+// verifyGoal() kiểm. Bớt một vế (ví dụ "không chọn ngẫu nhiên") thì game tự quay ngẫu nhiên một dòng cho đủ
+// thẻ vẫn báo ĐẠT, và tầng này mất đúng thứ nó sinh ra để chữa: ý định của em.
+if (!MACHINE_ITEMS.some((s) => s.includes('verifyGoal()') && s.includes('Mục tiêu của em'))) bad('Bảng kiểm máy tự kiểm không còn mục nghiệm thu tầng mục tiêu của em (verifyGoal() + thẻ "Mục tiêu của em") — thiếu mục này thì game bỏ hẳn thẻ ý định đầu phiên mà vẫn báo ĐẠT.');
+{
+  const goalItem = MACHINE_ITEMS.find((s) => s.includes('verifyGoal()')) || '';
+  for (const clause of ['ĐÚNG MỘT thẻ "Mục tiêu của em"', '60–90 giây khởi động', 'ba nút chọn MỘT hàng', '>= 20px', 'tools/data/goals.mjs', 'NGUYÊN VĂN', 'theo đúng mã điều khiển', 'game không chọn hộ', 'không chọn ngẫu nhiên', 'không in hai mục tiêu cạnh nhau', 'không đọc mục tiêu của em khác trước lớp', 'mascot <= 6 từ', 'dòng nhắc đầu hiệp', 'BA lần một phiên', 'không che đề', 'không cắt thời gian đọc đề', 'lượt hỏi bài thứ 13', 'không trừ tim', 'ba nút "Em làm được rồi', 'Em làm được một phần', 'Em sẽ làm tiếp', 'MỘT bản ghi "miti-goal"', 'Mục tiêu hôm nay: <tên> <trạng thái>', 'Copy tờ rời']) {
+    if (!goalItem.includes(clause)) bad(`Mục verifyGoal() của bảng kiểm không còn nêu "${clause}" — bảng kiểm lỏng hơn quy định trong tools/lib/goal.mjs thì game thiếu thẻ mục tiêu vẫn được đóng dấu ĐẠT.`);
+  }
+  if (!HUMAN_CHECKS.some((s) => s.includes('Em sẽ làm tiếp') && s.includes('màn khởi động'))) bad('Bảng kiểm hết việc người thử cho tầng mục tiêu của em — không ai ngồi đủ bốn em từ màn khởi động thì không ai biết ý định đó do em chạm chọn hay máy điền hộ.');
+  const goalCheck = HUMAN_CHECKS.find((s) => s.includes('Em sẽ làm tiếp')) || '';
+  for (const clause of ['bốn em', 'Hôm nay em sẽ', 'máy điền hộ', 'máy chọn ngẫu nhiên', 'đọc mục tiêu trước lớp', 'hai mục tiêu cạnh nhau để so', 'trừ tim', 'Cuối phiên', 'phạt em', 'in chữ "đạt" cạnh tên em', 'bịa dòng "Phiên trước em"', 'miti-goal']) {
+    if (!goalCheck.includes(clause)) bad(`Việc người thử "Mục tiêu của em" không còn nêu "${clause}" — người thử phải đi hết bốn điều của verifyGoal() bằng tay; thiếu một vế thì lỗi thật ở đúng chỗ đó không ai nhìn thấy.`);
+  }
+}
+
+// Vòng 26: bảng dòng mục tiêu là DỮ LIỆU theo MÃ ĐIỀU KHIỂN. Builder đọc thẳng tools/data/goals.mjs nên sửa
+// chữ một dòng thì 85 prompt, 425 block và 12 legacy cùng đổi theo im lặng — đối chiếu nguyên văn 42 dòng với
+// bản chốt ở đây là cách duy nhất thấy lệch. Kèm kiểm cấu trúc: đủ mười bốn mã khớp SPORT_KEYS, mỗi mã đúng
+// ba dòng, mọi dòng mở đầu "Hôm nay em sẽ", không phải câu hỏi, <= 8 từ, không CJK, không trùng nhau.
+{
+  const GOAL_LINES_EXPECT = {
+    POINT: ['Hôm nay em sẽ chỉ đúng đích', 'Hôm nay em sẽ giữ tay thật vững', 'Hôm nay em sẽ nhắm trước khi chỉ'],
+    SWIPE: ['Hôm nay em sẽ vuốt chậm mà đều', 'Hôm nay em sẽ quệt đủ tầm tay', 'Hôm nay em sẽ nhìn trước rồi vuốt'],
+    PUNCH: ['Hôm nay em sẽ đấm đúng nhịp', 'Hôm nay em sẽ thu tay về nhanh', 'Hôm nay em sẽ giữ vai thả lỏng'],
+    GRAB: ['Hôm nay em sẽ nắm chắc rồi kéo', 'Hôm nay em sẽ kéo hết tầm tay', 'Hôm nay em sẽ chờ bạn làm xong'],
+    DRAG: ['Hôm nay em sẽ kéo đi một đường', 'Hôm nay em sẽ giữ tay không rời', 'Hôm nay em sẽ thả đúng chỗ dừng'],
+    STEP: ['Hôm nay em sẽ bước đều hai chân', 'Hôm nay em sẽ nhấc chân vừa phải', 'Hôm nay em sẽ hạ chân thật nhẹ'],
+    TWO_HAND_STRETCH: ['Hôm nay em sẽ với tay đủ xa', 'Hôm nay em sẽ duỗi thẳng hai khuỷu', 'Hôm nay em sẽ thở đều khi với'],
+    TWO_HAND_BALANCE: ['Hôm nay em sẽ giữ tay cân đối', 'Hôm nay em sẽ đếm ba giây vững', 'Hôm nay em sẽ giữ vòng tay rộng'],
+    ANGLE_POSE: ['Hôm nay em sẽ xoay đúng góc vai', 'Hôm nay em sẽ giữ chắc tư thế', 'Hôm nay em sẽ làm đều hai bên'],
+    VOICE: ['Hôm nay em sẽ đọc rõ một câu', 'Hôm nay em sẽ nói đủ bạn nghe', 'Hôm nay em sẽ nghe hết câu bạn'],
+    CLAP: ['Hôm nay em sẽ vỗ đúng nhịp', 'Hôm nay em sẽ vỗ nhẹ mà đều', 'Hôm nay em sẽ đếm tiếng vỗ'],
+    PINCH: ['Hôm nay em sẽ bóp đủ chặt', 'Hôm nay em sẽ mở tay hết cỡ', 'Hôm nay em sẽ thả tay đúng lúc'],
+    HOLD_POSE: ['Hôm nay em sẽ giữ đến hết nhịp', 'Hôm nay em sẽ thở đều khi giữ', 'Hôm nay em sẽ chưa vội bỏ tay'],
+    FINGER_COUNT: ['Hôm nay em sẽ giơ đúng số ngón', 'Hôm nay em sẽ nhìn bạn rồi giơ', 'Hôm nay em sẽ nói to số ngón'],
+  };
+  if (GOAL_KEYS.length !== Object.keys(GOAL_LINES_EXPECT).length) bad(`tools/data/goals.mjs có ${GOAL_KEYS.length} mã điều khiển nhưng bản chốt ở validate là ${Object.keys(GOAL_LINES_EXPECT).length} mã — thêm hay bớt mã phải sửa cả SPORT_KEYS, master §4.16 và bảng GESTURES.`);
+  for (const c of Object.keys(GOAL_LINES_EXPECT)) {
+    let got;
+    try { got = goalLines(c).join(' · '); } catch { bad(`tools/data/goals.mjs thiếu mã "${c}" — game mang mã này build lỗi hoặc tự bịa dòng mục tiêu ngoài bảng.`); continue; }
+    const want = GOAL_LINES_EXPECT[c].join(' · ');
+    if (got !== want) bad(`tools/data/goals.mjs mã "${c}" lệch bản chốt:\n    đang là "${got}"\n    chuẩn là "${want}" — đổi dòng mục tiêu là đổi câu em tự nói đầu tiết, phải đổi cùng lúc ở 85 prompt, 425 block, 12 legacy và master §4.16.`);
+    if (!SPORT_KEYS.includes(c)) bad(`validate chốt mã "${c}" nhưng sports.mjs không có mã này — bảng mục tiêu và bảng môn thể thao đã lệch nhau.`);
+  }
+  for (const c of GOAL_KEYS) if (!SPORT_KEYS.includes(c)) bad(`tools/data/goals.mjs có mã "${c}" không thuộc SPORT_KEYS — em nhận một ý định cho kiểu điều khiển không game nào dùng.`);
+  const allGoal = [];
+  for (const [c, lines] of Object.entries(GOAL_BANK)) {
+    if (!Array.isArray(lines) || lines.length !== 3) bad(`tools/data/goals.mjs.${c} có ${Array.isArray(lines) ? lines.length : 'không rõ'} dòng, chuẩn là ĐÚNG BA — ba dòng đặt trên BA nút chọn nên thêm hay bớt đều vỡ bố cục.`);
+    if (Array.isArray(lines) && new Set(lines).size !== lines.length) bad(`tools/data/goals.mjs.${c} có dòng trùng nhau — ba nút chọn mà hai nút giống nhau thì em chỉ thực sự có hai lựa chọn.`);
+    for (const line of lines) {
+      allGoal.push(line);
+      if (!line.startsWith('Hôm nay em sẽ')) bad(`tools/data/goals.mjs.${c}: dòng "${line}" không mở đầu "Hôm nay em sẽ" — đây là câu em tự hứa, không phải mệnh lệnh máy giao.`);
+      if (line.includes('?')) bad(`tools/data/goals.mjs.${c}: dòng "${line}" là câu hỏi — mục tiêu phải là câu khẳng định em tự nói, hỏi lại là việc của tầng khác.`);
+      const w = line.trim().split(/\s+/).length;
+      if (w > 8) bad(`tools/data/goals.mjs.${c}: dòng "${line}" dài ${w} từ, trần 8 từ — dòng dài hơn không nằm vừa nút chọn chữ >= 20px và em nói không xong trong khung khởi động 60–90 giây.`);
+      if (/[\u3400-\u9fff\u3040-\u30ff]/.test(line)) bad(`tools/data/goals.mjs.${c}: dòng "${line}" lẫn ký tự CJK.`);
+      if (/\bđiểm\b|thứ hạng|nhất lớp|xếp hạng/.test(line)) bad(`tools/data/goals.mjs.${c}: dòng "${line}" hứa một con số điểm hay một vị trí so với bạn — tầng này cấm biến mục tiêu thành điểm và cấm đem ra so.`);
+      for (const lm of LEAD_KEYS) for (const mv of LEADS[lm]) if (mv === line) bad(`tools/data/goals.mjs.${c}: dòng "${line}" trùng nguyên văn một động tác dẫn — hai tầng sẽ cho em đúng một dòng để nói.`);
+    }
+  }
+  if (new Set(allGoal).size !== allGoal.length) bad(`tools/data/goals.mjs có ${allGoal.length} dòng nhưng chỉ ${new Set(allGoal).size} khác nhau — hiệp nào em cũng thấy đúng dòng đó thì thẻ mục tiêu không dạy thêm cách đặt ý định nào.`);
+  if (allGoal.length !== 42) bad(`tools/data/goals.mjs phải có đúng 42 dòng (mười bốn mã × ba dòng), hiện có ${allGoal.length}.`);
+  for (const c of SPORT_KEYS) if (!GOAL_KEYS.includes(c)) bad(`tools/data/goals.mjs thiếu mã ${c} — game mang mã này sẽ build lỗi hoặc tự bịa dòng mục tiêu ngoài bảng.`);
+}
+
+// Các con số thẻ mục tiêu MƯỢN từ tầng khác; đổi một bên thì 85 prompt mang hai chuẩn mâu thuẫn.
+{
+  if (!GOAL.theChon.includes('60–90 giây khởi động') || !PLAYZONE.depCho.includes('60–90')) bad('Khung khởi động 60–90 giây lệch giữa tools/lib/goal.mjs và tools/lib/playzone.mjs — thẻ mục tiêu nằm ngoài khung dọn chỗ chơi thì em vừa đứng dậy chọn mục tiêu vừa chưa kịp dẹp chỗ chơi.');
+  if (!GOAL.theChon.includes('KHÔNG trễ nút "Bắt đầu"') || !PLAYZONE.depCho.includes('Bắt đầu')) bad('Quy ước không trễ nút "Bắt đầu" không còn được cả hai tầng nêu — thẻ mục tiêu sẽ thành một màn hình chặn trước trận của tầng chỗ chơi.');
+  if (!GOAL.theChon.includes('>= 20px') || !CURRICULUM.bayTruoc.includes('>= 20px')) bad('Cỡ chữ >= 20px lệch giữa goal.mjs và curriculum.mjs — ba nút chọn mục tiêu nhỏ hơn thẻ báo-trước thì em ngồi sau không đọc được ý định mình chọn.');
+  if (!GOAL.theChon.includes('tự tắt sau 6 giây') || !CURRICULUM.bayTruoc.includes('6 giây')) bad('Trần 6 giây của thẻ lệch giữa goal.mjs và curriculum.mjs — hai loại thẻ trên cùng một HUD sống hai khoảng thời gian khác nhau.');
+  if (!GOAL.bonEmBonMucTieu.includes('1 sải tay') || !PLAYZONE.depCho.includes('1 sải tay')) bad('Khoảng cách an toàn lệch giữa goal.mjs và playzone.mjs — vùng chọn mục tiêu sẽ vẽ lại một chỗ đứng khác chỗ đã dẹp chơi.');
+  if (!GOAL.bonEmBonMucTieu.includes('<= 6 từ') || !IDENTITY.lines.includes('6 từ')) bad('Trần 6 từ một câu mascot lệch giữa goal.mjs và identity.mjs — mascot nhắc mục tiêu sẽ vượt ngân sách lời của tầng bản sắc.');
+  if (!GOAL.tuGhiNhan.includes('12 lượt hỏi bài') || !LESSON.sessionCap.includes('12 lượt')) bad('Ngân sách 12 lượt lệch giữa goal.mjs và lesson.mjs — lượt chạm tự ghi nhận sẽ ăn vào hoặc nới ngân sách lượt của tầng tiết học.');
+  if (!GOAL.tuGhiNhan.includes('lượt thứ 13') || !LEAD.nguonDan.includes('lượt thứ 13')) bad('Cấm lượt thứ 13 không còn ở cả hai tầng — lượt chạm tự ghi nhận hoặc 5 giây dẫn sẽ âm thầm biến thành lượt hỏi bài thứ mười ba.');
+  if (!GOAL.tuGhiNhan.includes('khối "Câu chốt" 20 giây') || !TAKEAWAY.viTri.includes('20 giây')) bad('Khối "Câu chốt" 20 giây không còn được cả hai tầng nêu — thẻ tự ghi nhận sẽ đè lên 20 giây bốn em tự nói.');
+  if (!GOAL.tuGhiNhan.includes('chỉ ba game mã VOICE mới có micro') || !QUIZ.cachDo.includes('micro')) bad('Trần microphone chỉ có ở ba game mã VOICE không còn được viện ở cả hai tầng — lượt tự ghi nhận sẽ bật ghi âm ở 82 game không có micro.');
+  if (!GOAL.luuXuyenPhien.includes('không đụng "miti-best"') || !QUEUE.teamScore.includes('miti-best')) bad('Quy ước không đụng hồ sơ "miti-best" không còn ở cả goal.mjs lẫn queue.mjs — bản ghi mục tiêu sẽ tràn vào xếp hạng cá nhân.');
+  if (!GOAL.luuXuyenPhien.includes('"miti-mastery"') || !CLASSROOM.mastery.includes('miti-mastery')) bad('Key "miti-mastery" lệch giữa goal.mjs và classroom.mjs — nút "Xoá hồ sơ của em" sẽ xoá nhầm hoặc bỏ sót hồ sơ do MÁY ghi.');
+  if (!GOAL.luuXuyenPhien.includes('"miti-week"') || !PACE.hoiMotCau.includes('miti-week')) bad('Key "miti-week" lệch giữa goal.mjs và pacing.mjs — nút xoá hồ sơ mục tiêu sẽ đụng lịch tuần học.');
+  if (!GOAL.luuXuyenPhien.includes('"miti-effort"') || !LESSON.rpe.includes('miti-effort')) bad('Key "miti-effort" lệch giữa goal.mjs và lesson.mjs — nút xoá hồ sơ mục tiêu sẽ đụng bản ghi gắng sức.');
+  if (!GOAL.bonEmBonMucTieu.includes('Bản một học sinh') || !QUEUE.guard.includes('Bản một học sinh')) bad('Bản một học sinh không còn được cả hai tầng mục tiêu và vai chờ quy định — game một em sẽ tự chọn bỏ thẻ mục tiêu hay bỏ HUD vai chờ.');
+  if (!GOAL.theChon.includes('tools/data/goals.mjs') || !GOAL.guard.includes('tools/data/goals.mjs')) bad('Thẻ mục tiêu hoặc hàm verifyGoal() không còn trỏ về tools/data/goals.mjs — người sửa prompt không biết ba dòng lấy từ bảng nào mà đối chiếu.');
+  if (!GOAL.guard.includes('verifyGoal()') || !GOAL_SHORT.includes('verifyGoal()')) bad('Hàm verifyGoal() không còn được nêu ở cả quy định lẫn chuỗi tự kiểm — tầng mục tiêu mất cửa nghiệm thu lúc nạp.');
 }
 
 if (errors.length) {

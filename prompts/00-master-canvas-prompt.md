@@ -660,6 +660,62 @@ mạch"), chưa lần nào chính em giơ tay tự báo mình hiểu tới đâu
   bản "dép lê" và bản "lớp mình chật" vẫn bắt buộc kiểm đủ bốn điều, vì nói một câu bằng lời của mình không phụ thuộc
   webcam.
 
+4.16 MỤC TIÊU CỦA EM — MỖI EM TỰ NÓI MỘT Ý ĐỊNH ĐẦU PHIÊN RỒI TỰ NHẬN CUỐI PHIÊN (bắt buộc — nguồn: `tools/lib/goal.mjs` + `tools/data/goals.mjs`, validate chặn nếu thiếu) — phần quyết định người đề ra mục tiêu của tiết học là chính em hay là máy
+
+Khảo sát 85 prompt trước khi viết mục này: "hôm nay em sẽ" 0/85 · "em sẽ cố" 0/85 · "điều em muốn" 0/85 ·
+"em đăng ký" 0/85 · "thẻ mục tiêu" 0/85 · "em làm được" 0/85 · "làm được một phần" 0/85 · "miti-goal" 0/85 ·
+"lần trước em" 0/85 · "em tiến bộ" 0/85 · "so với chính em" 0/85. Chiều ngược lại: "em chọn một" 85/85 và
+"em tự chọn" 85/85 — nhưng cả hai chỗ đó là em chọn ĐỒ VẬT hay ĐÁP ÁN trong lượt chơi, chưa lần nào em chọn
+cái em sẽ cố làm cho chính mình; "tiến bộ" 85/85 nhưng thuộc hồ sơ "miti-mastery" do MÁY ghi theo cụm kiến
+thức. Bốn chỗ hỏng đo được: (1) máy quyết hết — máy chỉnh độ khó (mục 4.7), máy ghi thành tích ("miti-best"),
+máy khen em cố gắng, chưa có một câu nào do em nói ra điều em muốn làm được trong tiết này; (2) thiếu đúng
+bước mở đầu tiết Thể dục lớp 4–5: cán sự hô "hôm nay cả lớp ta luyện …" rồi bốn em tự nhẩm phần của mình,
+sách giáo khoa coi đó là bước định hướng chứ không phải trang trí; (3) chưa có đường nào để em RÚT KHỎI vòng
+chơi một cách chủ động — mục 4.11 cho em nghỉ vì mệt, mục 9.1 cho em giảm nhịp, nhưng chưa nơi nào em tự đặt
+giới hạn cho mình rồi tự nhận mình làm tới đâu; (4) "Cố lên!" của mascot là lời máy khen, còn một ý định em
+tự nói mới là cơ sở để em so với CHÍNH MÌNH thay vì so với ba bạn bên cạnh.
+
+- ĐÚNG MỘT THẺ "MỤC TIÊU CỦA EM" MỘT PHIÊN, NẰM TRONG 60–90 GIÂY KHỞI ĐỘNG ĐANG CÓ: thẻ chạy chung khung khởi
+  động của mục 4.10 và 4.11, KHÔNG thêm thời lượng phiên, KHÔNG trễ nút "Bắt đầu", KHÔNG thêm màn hình. Ba dòng
+  mục tiêu lấy NGUYÊN VĂN từ `tools/data/goals.mjs` theo đúng MÃ ĐIỀU KHIỂN của game (mười bốn mã × ba dòng, mỗi
+  dòng mở đầu "Hôm nay em sẽ", <= 8 từ), đặt ở BA nút chọn MỘT hàng, chữ >= 20px. Em chạm MỘT nút rồi nói thầm
+  hay nói to đúng câu em đã chọn: CẤM game chọn hộ, CẤM chọn ngẫu nhiên, CẤM mascot chọn thay, CẤM viết lại câu
+  khác với bảng. Em chưa muốn chọn thì bấm "Chưa chọn" — thẻ tắt và CẤM hiện lại lần hai trong phiên. Thẻ tự tắt
+  sau 6 giây cùng nhịp trạm, lấy đúng trần thẻ báo-trước của mục 4.9, không che đề bài.
+- BỐN EM BỐN MỤC TIÊU, KHÔNG ĐEM RA SO: mỗi em ĐÚNG MỘT mục tiêu cho riêng mình, chọn tại chỗ trong vòng
+  1 sải tay của mục 4.11, không cần đứng lên. CẤM in hai mục tiêu cạnh nhau để so, CẤM đọc mục tiêu của em này
+  trước lớp, CẤM gọi mục tiêu nào là cao hay thấp, khó hay dễ hơn, CẤM xếp hàng hay chia nhóm theo mục tiêu,
+  CẤM biến mục tiêu thành điểm, thành tim hay thành chuỗi đúng. Mascot chỉ nói <= 6 từ MỘT lần (chữ "Cả nhóm
+  sẵn sàng!" là đủ — vẫn trần thoại của mục 4.11), CẤM nhắc lại mục tiêu của em nào. Bản một học sinh: em vẫn có
+  ba nút chọn và một lượt tự nhận như bình thường.
+- DÒNG NHẮC ĐẦU HIỆP TỐI ĐA BA LẦN MỘT PHIÊN, KHÔNG CẮT THỜI GIAN ĐỌC ĐỀ: đúng MỘT dòng ở GIÂY ĐẦU TIÊN của mỗi
+  hiệp — "Mục tiêu: <đúng câu em đã chọn>". Dòng nhỏ ở góc HUD, chữ >= 20px, MỘT hàng, tự tắt sau 6 giây, KHÔNG
+  che đề bài, KHÔNG bật tiếng, KHÔNG cắt thời gian đọc đề của lượt kế tiếp, CẤM hiện thêm lần thứ tư. Em bấm
+  "Chưa chọn" thì dòng nhắc không hiện và CẤM in chữ "chưa có mục tiêu" cạnh tên em.
+- CUỐI PHIÊN EM CHẠM MỘT TRONG BA NÚT TỰ GHI NHẬN, KHÔNG PHẠT AI: màn tổng kết cho mỗi em ĐÚNG MỘT lượt chạm
+  "Em làm được rồi", "Em làm được một phần" hay "Em sẽ làm tiếp". Ba nút này KHÔNG phải cử chỉ điều khiển: CẤM
+  game chờ nhận diện động tác để ghi nhận, CẤM bật microphone ở lượt này (chỉ ba game mã VOICE có micro), CẤM
+  nhận dạng giọng nói hay phiên âm câu của em. Trạng thái KHÔNG trừ tim, KHÔNG cắt chuỗi đúng, KHÔNG đổi độ khó
+  của mục 4.7, KHÔNG hiện thành điểm hay thứ hạng, CẤM so em này với em khác, CẤM in chữ "đạt" cạnh tên em như
+  một lời phê. Lượt chạm không tính vào 12 lượt hỏi bài, CẤM thành lượt thứ 13, và KHÔNG thay khối "Câu chốt"
+  20 giây của mục 4.15 — tầng chốt đã lấy chỗ tự đánh giá bằng 1–3 ngón tay nên tầng này chỉ dùng nút chạm.
+- MỘT BẢN GHI "miti-goal" MỖI PHIÊN, KHÔNG BIỂU ĐỒ KHÔNG TỈ LỆ %: lưu localStorage key "miti-goal" ĐÚNG MỘT bản
+  ghi mỗi phiên, dạng "<mã game>|<trạng thái>|<ngày>". Màn tổng kết in TỐI ĐA HAI dòng nằm trong khối mà nút
+  "Copy tờ rời" copy được: "Mục tiêu hôm nay: <tên> <trạng thái>" và, CHỈ khi bản ghi phiên trước CÓ
+  THẬT, "Phiên trước em: <trạng thái>". Thiếu bản ghi thì CẤM in dòng thứ hai, CẤM bịa "em tiến bộ". CẤM dựng
+  biểu đồ, CẤM tính tỉ lệ %, CẤM chuỗi ngày, CẤM so với bạn nào — hồ sơ này không phải điểm số và không đụng
+  "miti-best", "miti-effort", "miti-week", "miti-mastery". Muốn xoá thì bấm "Xoá hồ sơ của em", xoá riêng
+  "miti-goal".
+- TỰ KIỂM BẰNG `verifyGoal()`: chạy MỘT LẦN lúc nạp và kiểm đúng bốn điều — ĐÚNG MỘT thẻ "Mục tiêu của em" mỗi
+  phiên trong 60–90 giây khởi động, ba nút chọn MỘT hàng chữ >= 20px lấy NGUYÊN VĂN từ `tools/data/goals.mjs`
+  theo đúng mã điều khiển, game không chọn hộ và không chọn ngẫu nhiên · mỗi em một mục tiêu, không in hai mục
+  tiêu cạnh nhau, không đọc mục tiêu của em khác trước lớp, mascot <= 6 từ · dòng nhắc đầu hiệp tối đa BA lần một
+  phiên, không che đề, không cắt thời gian đọc đề, không thành lượt hỏi bài thứ 13, không trừ tim · màn tổng kết
+  có ba nút tự ghi nhận, đúng MỘT bản ghi "miti-goal" mỗi phiên và dòng "Mục tiêu hôm nay" nằm trong khối "Copy
+  tờ rời". Thiếu điều nào thì `console.warn` tiếng Việt nêu đúng phần lệch và bảng kiểm ghi CHƯA ĐẠT kèm câu nên
+  sửa gì trong prompt. Bản một học sinh, bản không camera, bản tắt tiếng, bản "dép lê" và bản "lớp mình chật" vẫn
+  bắt buộc kiểm đủ bốn điều, vì một câu em tự nhủ không phụ thuộc webcam.
+
 ========================
 5. HỌC TẬP DẪN LỐI (LEARNING-FIRST)
 ========================
@@ -1060,7 +1116,7 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
   Bảng liệt kê TỪNG ràng buộc kèm trạng thái ĐẠT / CHƯA ĐẠT. Trạng thái đó phải do code kiểm thật lúc chạy,
   không phải chữ tĩnh kê sẵn. Một bảng báo "ĐẠT" mà không kiểm gì là lỗi nghiêm trọng nhất của game giáo dục.
   Bảng chỉ người lớn mở được: không trừ tim, không chặn chơi, học sinh không nhìn thấy.
-- 44 MỤC MÁY TỰ KIỂM, mỗi mục một hàm trả true/false:
+- 45 MỤC MÁY TỰ KIỂM, mỗi mục một hàm trả true/false:
   [1] QUESTION_DATA đủ số mục và verifyQuestionBank() ĐÃ chạy trước lượt chơi đầu tiên
   [2] mọi mục đang phát hành có answer nằm trong choices đúng một lần
   [3] 📷 drawImage khung hình webcam đi qua toScreen(lx, ly), không còn phép nhân thô với W/H
@@ -1105,14 +1161,15 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
   [42] verifyQuiz() đã chạy lúc nạp: đúng BA lượt "Đố bạn" một phiên nằm ở CUỐI mỗi hiệp và chín lượt còn lại vẫn lấy từ ngân hàng đề · mẫu câu đố lấy NGUYÊN VĂN từ tools/data/quiz.mjs theo đúng mạch kiến thức của cụm, thẻ "Đố bạn" một hàng ba mẫu câu chữ >= 20px tự tắt sau 6 giây, game không bật microphone và không hiện sẵn đáp án · lượt đố được trả lời bằng đúng MỘT động tác của mã điều khiển trong vòng 1 sải tay, đề lệch không trừ tim và không cắt chuỗi, nút "Em chịu, bạn đáp giúp" bấm được thật · +5 điểm đố chỉ vào thanh "Cả nhóm" và dòng "Em đố hôm nay: <tên> <n> đề" nằm trong khối "Copy tờ rời"
   [43] verifyLead() đã chạy lúc nạp: đúng BA lần "Bạn dẫn" một phiên ở đầu mỗi hiệp, mỗi lần ĐÚNG 5 giây và 12 lượt hỏi bài giữ nguyên · động tác dẫn lấy NGUYÊN VĂN từ tools/data/leads.mjs theo đúng mã điều khiển của game, thẻ "Bạn dẫn" một hàng ba động tác chữ >= 20px tự tắt sau 5 giây, game không bật microphone và không đánh dấu ✓ động tác nào là đúng · ba em còn lại bắt chước trong vòng 1 sải tay và hình quạt 90 độ của chính mình, không chạm nhau, nút "Cả nhóm đã làm theo" bấm được thật, dẫn lệch hoặc đứng im không trừ tim và mascot làm mẫu lại 3 giây · +5 điểm dẫn chỉ vào thanh "Cả nhóm" và dòng "Em dẫn hôm nay: <tên> <n> hiệp" nằm trong khối "Copy tờ rời"
   [44] verifyTakeaway() đã chạy lúc nạp: ĐÚNG MỘT khối "Câu chốt" mỗi phiên ở CUỐI phiên (sau lượt đố thứ ba, trước màn tổng kết), dài ĐÚNG 20 giây = bốn lượt × 5 giây và 12 lượt hỏi bài giữ nguyên · ba khung câu hiện trên ba nút chọn lấy NGUYÊN VĂN từ tools/data/takeaways.mjs theo đúng mạch kiến thức của game, thẻ "Câu chốt" một hàng chữ >= 20px tự tắt sau 6 giây, game không bật microphone, không nhận dạng giọng nói và không hiện sẵn đáp án · bốn em đều có một lượt 5 giây, em từ chối được làm một động tác của mã điều khiển thay cho câu nói và không bị gọi lại lần hai, mỗi em giơ 1–3 ngón tay tự đánh giá mà không trừ tim, không đổi độ khó · +5 điểm chốt chỉ vào thanh "Cả nhóm" và dòng "Em chốt hôm nay: <tên> <n> câu" nằm trong khối "Copy tờ rời"
-  Mục gắn 📷 chỉ áp dụng khi có webcam: bản không camera bỏ 6 mục đó và vẫn phải đạt 38 mục còn lại.
+  [45] verifyGoal() đã chạy lúc nạp: ĐÚNG MỘT thẻ "Mục tiêu của em" mỗi phiên trong 60–90 giây khởi động, ba nút chọn MỘT hàng chữ >= 20px lấy NGUYÊN VĂN từ tools/data/goals.mjs theo đúng mã điều khiển, game không chọn hộ và không chọn ngẫu nhiên · mỗi em một mục tiêu, không in hai mục tiêu cạnh nhau, không đọc mục tiêu của em khác trước lớp, mascot <= 6 từ · dòng nhắc đầu hiệp tối đa BA lần một phiên, không che đề, không cắt thời gian đọc đề, không thành lượt hỏi bài thứ 13, không trừ tim · màn tổng kết có ba nút "Em làm được rồi / Em làm được một phần / Em sẽ làm tiếp", đúng MỘT bản ghi "miti-goal" mỗi phiên và dòng "Mục tiêu hôm nay: <tên> <trạng thái>" nằm trong khối "Copy tờ rời"
+  Mục gắn 📷 chỉ áp dụng khi có webcam: bản không camera bỏ 6 mục đó và vẫn phải đạt 39 mục còn lại.
 - XUẤT BẢN VĂN: bảng có nút "Xuất bản văn" sinh một khối chữ tiếng Việt copy được — tên game, bản chuẩn MiTi,
   ngày giờ, kiểu điều khiển đang chạy, số mục ĐẠT / CHƯA ĐẠT, danh sách mục chưa đạt kèm lý do.
   Khối chữ chỉ hiện trên màn hình và vào clipboard máy đó; không gửi lên máy chủ nào, không xin quyền, không để lại dữ liệu.
 - MỤC CHƯA ĐẠT PHẢI GIẢI THÍCH ĐƯỢC: mỗi dòng kèm một câu nguyên nhân kỹ thuật cho người lớn
   (ví dụ "toScreen không được dùng ở drawImage — vật thể đang tính bằng lx * W") và một câu nên sửa thế nào trong prompt.
   Cấm báo "lỗi" rồi im lặng, cấm chữ chung chung kiểu "hệ thống có vấn đề".
-- 35 VIỆC NGƯỜI THỬ PHẢI BẤM TAY (máy không tự kiểm được, làm theo đúng thứ tự, khoảng 15 phút):
+- 36 VIỆC NGƯỜI THỬ PHẢI BẤM TAY (máy không tự kiểm được, làm theo đúng thứ tự, khoảng 15 phút):
   đứng xa tới mức chỉ còn hai bàn tay · giữ im một tư thế 5 giây · che nửa người bằng tay · tắt camera giữa vòng ·
   rút mạng lúc đang tải model · đổi tay thuận sang Trái giữa chừng · bật reduced-motion ở hệ điều hành rồi mở game ·
   cố tình sai 4 câu liên tiếp · mở bằng điện thoại đặt dọc · đưa một học sinh lớp 4 chưa đọc hướng dẫn chơi thử 60 giây ·
@@ -1254,10 +1311,10 @@ Không có cách nghiệm thu thì toàn bộ quy định phía trên chỉ là 
 [ ] đạo cụ AR neo landmark bằng toScreen(); bản không camera thì đạo cụ đứng yên ở góc HUD dưới chứ không biến mất
 [ ] ba câu thoại đọc bằng speechSynthesis giọng vi-VN, <= 3 câu mỗi phút, câu khi sai là câu đỡ chứ không chế giễu
 [ ] bảng kiểm ẩn mở bằng 7 lần chạm logo MiTi hoặc Ctrl+Alt+K, trạng thái ĐẠT do code kiểm thật lúc chạy
-[ ] cả 44 mục máy tự kiểm đều có hàm kiểm tương ứng, không mục nào là chữ kê sẵn
+[ ] cả 45 mục máy tự kiểm đều có hàm kiểm tương ứng, không mục nào là chữ kê sẵn
 [ ] mục CHƯA ĐẠT kèm nguyên nhân kỹ thuật + cách sửa trong prompt, không có dòng "lỗi hệ thống"
 [ ] nút "Xuất bản văn" copy được khối chữ tiếng Việt, không gửi lên máy chủ nào
-[ ] bản không camera bỏ đúng 6 mục 📷 và vẫn đạt 38 mục còn lại, không bỏ luôn bảng kiểm
+[ ] bản không camera bỏ đúng 6 mục 📷 và vẫn đạt 39 mục còn lại, không bỏ luôn bảng kiểm
 [ ] fallback chuột/chạm/phím chơi trọn vẹn, tự kích hoạt khi camera lỗi
 [ ] QUESTION_DATA có ít nhất 30 mục (Toán) hoặc 60 mục (Tiếng Anh), mỗi mục có đáp án + lời giải + errorTag + loiViet + dang
 [ ] dữ liệu đặt đầu file, code engine đặt sau, không có chỗ nào rút gọn
@@ -1321,7 +1378,7 @@ Sau khi tự kiểm tra, CHỈ xuất ra file HTML hoàn chỉnh, không kèm gi
   toàn bộ quy định phía trên chỉ là lời mong đợi. Bắt game tự kiểm bằng hàm true/false biến lời hứa thành trạng thái đọc được.
 - **Trạng thái phải do code kiểm, không phải chữ kê sẵn**: một bảng tĩnh in sẵn chữ "ĐẠT" còn hại hơn không có bảng,
   vì người lớn tưởng là đã kiểm. Đây là lý do quy định ghi rõ "không phải một danh sách chữ tĩnh".
-- **Tách 43 mục máy / 35 việc người thử**: cái gì máy kiểm được thì đừng đùn cho giáo viên; cái máy không kiểm được
+- **Tách 45 mục máy / 36 việc người thử**: cái gì máy kiểm được thì đừng đùn cho giáo viên; cái máy không kiểm được
   (cháu có hiểu luật chơi mà không đọc hướng dẫn không, rút mạng thì sao) thì đừng giả vờ kiểm. Con số 15 phút là thời lượng
   một tiết thực tế, không phải danh sách dài vô hạn.
 - **Mục chưa đạt phải nói nguyên nhân và cách sửa**: bảng kiểm chỉ báo "lỗi" sẽ bị bỏ qua; kèm câu "thiếu ở dòng nào,
