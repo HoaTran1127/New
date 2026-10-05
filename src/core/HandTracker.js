@@ -10,6 +10,7 @@ class HandTracker {
   constructor(options = {}) {
     this.videoElement = options.videoElement || null;
     this.maxNumHands = options.maxNumHands || 1;
+    this.cdnBase = options.cdnBase || 'https://cdn.jsdelivr.net/npm/@mediapipe/hands/';
     this.minDetectionConfidence = options.minDetectionConfidence || 0.65;
     this.minTrackingConfidence = options.minTrackingConfidence || 0.65;
     this.smoothingFactor = options.smoothingFactor || 0.45; // EMA alpha
@@ -34,13 +35,14 @@ class HandTracker {
 
     if (typeof Hands === 'undefined') {
       const err = new Error("Thư viện MediaPipe Hands chưa được nạp vào trang.");
+      err.name = 'CdnError';
       if (this.onErrorCallback) this.onErrorCallback(err);
       return;
     }
 
     try {
       this.hands = new Hands({
-        locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
+        locateFile: (file) => this.cdnBase + file
       });
 
       this.hands.setOptions({

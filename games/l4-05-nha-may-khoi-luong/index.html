@@ -141,6 +141,16 @@
   #stage.cam-on #hook{display:block}
   #hook.close{transform:scale(.86) rotate(-8deg)}
 
+  /* Bang tinh cam: chung cho em hoc sinh thay camera song va tay da vung duoc */
+  #selfie{position:absolute;right:12px;bottom:12px;z-index:8;width:176px;display:none;overflow:hidden;background:#04141B;
+    border:3px solid var(--line);border-radius:16px;box-shadow:0 6px 0 var(--line),0 14px 26px rgba(0,0,0,.45)}
+  #stage.cam-on #selfie{display:block}
+  #selfieCam{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;transform:scaleX(-1)}
+  #handLamp{position:absolute;left:6px;right:6px;bottom:6px;padding:4px 7px;border-radius:9px;text-align:center;
+    font:800 11px/1.3 var(--display);letter-spacing:.05em;text-transform:uppercase;
+    background:rgba(7,17,31,.78);color:#FF8A8A}
+  #handLamp.on{background:#7BE0B8;color:#04141B}
+
   /* ── Man che ─────────────────────────────────────── */
   .screen{position:absolute;inset:0;z-index:20;display:none;place-items:center;padding:22px;
     background:radial-gradient(1200px 700px at 50% 40%,rgba(6,32,42,.86),rgba(3,14,19,.96))}
@@ -211,6 +221,9 @@
     #railL{display:block;position:absolute;left:8px;bottom:6px;z-index:6;width:112px;pointer-events:none}
     #field{padding-left:126px}
     #howto{display:none}
+    /* Man hep day mascot sang goc trai nen keo bang tinh cam sang goc phai */
+    #selfie{left:auto;right:8px;bottom:6px;width:132px}
+    #qbar{padding-bottom:110px}
     #mascot .pic{border-radius:14px;border-width:2px;box-shadow:0 4px 0 var(--line)}
     #mascot .bubble{font-size:12px;padding:6px 8px;margin-top:7px;border-width:2px;box-shadow:0 3px 0 var(--line)}
     #mascot .bubble:after{left:18px;border-width:6px;border-bottom-color:var(--paper)}
@@ -219,6 +232,9 @@
   @media (max-width:520px){
     #railL{display:none}
     #field{padding-left:0}
+    #selfie{width:96px}
+    /* Doc thanh: tuong phai chut mot dai duoi cho bang tinh cam de khong de len meo va huong dan */
+    #qbar{padding-bottom:104px}
     .pill{padding:4px 7px}
     .pill .stack{flex-direction:row;align-items:baseline;gap:5px}
     #hearts{font-size:13px}
@@ -228,6 +244,7 @@
   @media (min-width:1080px){
     #lane{grid-template-columns:196px minmax(0,1fr) 212px}
     #railL,#railR{display:flex}
+    #railR{padding-bottom:152px}
     #miniHow{display:none}
     .crate{width:clamp(150px,13vw,190px)}
     #platform{width:min(560px,92%)}
@@ -247,6 +264,7 @@
   <div id="scrim"></div>
   <canvas id="fx"></canvas>
   <div id="hook">🪝</div>
+  <div id="selfie"><video id="selfieCam" playsinline muted></video><span id="handLamp">Chưa thấy tay</span></div>
 
   <div id="ui">
     <header id="hud">
@@ -331,9 +349,11 @@
       <div class="step"><div class="n">5</div><div class="tx"><i>12 lượt chính</i>Mỗi đáp án sai trừ 1 tim. Còn 0 tim thì nghỉ, đủ 12 lượt là hoàn thành.</div></div>
     </div>
     <p class="note">Video chỉ xử lý ngay trên máy em, không tải lên mạng. Khởi động 60–90 giây, hạ nhiệt 45–60 giây, một phiên không quá 10 phút.</p>
+    <p class="note" id="camWhy" hidden></p>
     <div class="row cta">
       <button class="btn big" id="btnStart">Bắt đầu · Bật camera</button>
       <button class="btn ghost" id="btnNoCam">Chơi bằng chuột (không phải AR)</button>
+      <button class="btn ghost" id="btnCamRetry" hidden>Thử lại camera</button>
       <span id="camStatus">Camera đang tắt</span>
     </div>
   </div></div>
@@ -604,22 +624,69 @@ function snapBack(el){ el.style.position=''; el.style.left=''; el.style.top=''; 
 
 /* ── Camera + ban tay ── */
 let tracker = null;
+const MP = { hands:'0.4.1675469240', cam:'0.3.1675466862' };
+let mpBase = 'https://cdn.jsdelivr.net/npm/@mediapipe/hands@' + MP.hands + '/';
+
+/* Moi loi camera mot nguyen nhan + mot cach mo khoa, khong gop chung "chơi bằng chuột" */
+const CAM_WHY = {
+  CdnError:            ['Không tải được thư viện nhận diện tay', 'Mạng đang chặn máy chủ nạp thư viện. Kiểm tra kết nối mạng rồi bấm "Thử lại camera".'],
+  NotAllowedError:     ['Camera bị chặn quyền', 'Bấm biểu tượng khóa hoặc cài đặt ở đầu thanh địa chỉ → Camera → Cho phép, rồi bấm "Thử lại camera".'],
+  NotFoundError:       ['Không tìm thấy webcam', 'Cắm webcam hoặc dùng máy có camera trước rồi bấm "Thử lại camera".'],
+  NotReadableError:    ['Webcam đang bị ứng dụng khác chiếm', 'Đóng Zoom, Google Meet hoặc OBS đang mở rồi bấm "Thử lại camera".'],
+  OverconstrainedError:['Webcam không đáp ứng độ phân giải yêu cầu', 'Bấm "Thử lại camera" để xin độ phân giải thấp hơn.'],
+  SecurityError:       ['Phải mở game qua HTTPS', 'Dùng link GitHub Pages (https://…) thay vì mở file index.html trực tiếp từ máy.'],
+  AbortError:          ['Yêu cầu camera bị hủy', 'Bấm "Thử lại camera" lần nữa.']
+};
+function camFail(err) {
+  const w = CAM_WHY[(err && err.name) || 'AbortError'] || CAM_WHY.AbortError;
+  const why = $('#camWhy'); why.hidden = false;
+  why.innerHTML = '<b>' + w[0] + '.</b> ' + w[1];
+  $('#camStatus').textContent = 'Camera lỗi: ' + w[0]; $('#camStatus').className = 'bad';
+  $('#btnCamRetry').hidden = false;
+  const sv = $('#selfieCam'); sv.srcObject = null;
+  S.cam = false; stage.classList.remove('cam-on');
+  return false;
+}
+function loadScript(src) {
+  return new Promise((res, rej) => {
+    const s = document.createElement('script');
+    s.src = src; s.crossOrigin = 'anonymous';
+    s.onload = res; s.onerror = () => rej(new Error(src));
+    document.head.appendChild(s);
+  });
+}
+async function ensureMediaPipe() {
+  if (typeof Hands !== 'undefined' && typeof Camera !== 'undefined') return;
+  for (const b of ['https://unpkg.com/', 'https://fastly.jsdelivr.net/npm/']) {
+    try {
+      if (typeof Camera === 'undefined') await loadScript(b + '@mediapipe/camera_utils@' + MP.cam + '/camera_utils.js');
+      if (typeof Hands === 'undefined') await loadScript(b + '@mediapipe/hands@' + MP.hands + '/hands.js');
+      if (typeof Hands !== 'undefined' && typeof Camera !== 'undefined') { mpBase = b + '@mediapipe/hands@' + MP.hands + '/'; return; }
+    } catch (e) { /* try next base */ }
+  }
+  const err = new Error('MediaPipe CDN blocked'); err.name = 'CdnError'; throw err;
+}
 async function startCamera() {
-  $('#camStatus').textContent = 'Đang tải…'; $('#camStatus').className = '';
-  if (typeof Hands === 'undefined') { $('#camStatus').textContent = 'Không nạp được MediaPipe — chơi bằng chuột'; $('#camStatus').className='bad'; return false; }
+  $('#camStatus').textContent = 'Đang nạp thư viện…'; $('#camStatus').className = '';
+  $('#camWhy').hidden = true; $('#btnCamRetry').hidden = true;
+  try { await ensureMediaPipe(); } catch (e) { return camFail(e); }
+  $('#camStatus').textContent = 'Đợi cho phép camera…';
   try {
-    $('#camStatus').textContent = 'Xin quyền camera…';
-    tracker = new HandTracker({ videoElement: $('#cam'), maxNumHands: 1 });
+    tracker = new HandTracker({ videoElement: $('#cam'), maxNumHands: 1, cdnBase: mpBase });
     await tracker.init(
-      () => { $('#camStatus').textContent = 'Camera sẵn sàng'; $('#camStatus').className='ok'; stage.classList.add('cam-on'); S.cam = true; },
+      () => { $('#camStatus').textContent = 'Camera sẵn sàng'; $('#camStatus').className='ok'; stage.classList.add('cam-on'); S.cam = true; $('#camWhy').hidden = true; $('#btnCamRetry').hidden = true;
+               const sv = $('#selfieCam'); sv.srcObject = $('#cam').srcObject; sv.play().catch(()=>{}); },
       onHands,
-      (err) => { $('#camStatus').textContent = 'Không mở được camera — chơi bằng chuột'; $('#camStatus').className='bad'; S.cam=false; }
+      camFail
     );
-    return true;
-  } catch (e) { $('#camStatus').textContent = 'Không mở được camera — chơi bằng chuột'; $('#camStatus').className='bad'; S.cam = false; return false; }
+    return S.cam;
+  } catch (e) { return camFail(e); }
 }
 let holding = null;
 function onHands(hands) {
+  const lamp = $('#handLamp');
+  if (hands && hands.length) { lamp.textContent = 'Đã thấy tay'; lamp.classList.add('on'); }
+  else { lamp.textContent = 'Chưa thấy tay'; lamp.classList.remove('on'); }
   if (S.phase !== 'play' || S.paused) return;
   const h = hands[0]; const hook = $('#hook');
   if (!h) { hook.style.display='none'; if (holding) { snapBack(holding); holding = null; } return; }
@@ -714,7 +781,8 @@ document.addEventListener('visibilitychange', ()=>{ if (document.hidden) pause()
 addEventListener('blur', pause);
 
 /* ── Noi nut ── */
-$('#btnStart').onclick = async () => { await startCamera(); stepFlow('check'); };
+$('#btnStart').onclick = async () => { if (!await startCamera()) return; stepFlow('check'); };
+$('#btnCamRetry').onclick = async () => { await startCamera(); };
 $('#btnNoCam').onclick = () => { S.cam=false; stage.classList.remove('cam-on'); $('#camStatus').textContent='Chế độ không dùng camera'; stepFlow('check'); };
 $('#btnStepSkip').onclick = () => { clearInterval(S.stepTick); advanceStep(); };
 $('#btnStepGo').onclick = () => { clearInterval(S.stepTick); advanceStep(); };
