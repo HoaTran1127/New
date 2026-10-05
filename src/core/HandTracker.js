@@ -10,7 +10,7 @@ class HandTracker {
   constructor(options = {}) {
     this.videoElement = options.videoElement || null;
     this.maxNumHands = options.maxNumHands || 1;
-    this.cdnBase = options.cdnBase || 'https://cdn.jsdelivr.net/npm/@mediapipe/hands/';
+    this.cdnBase = options.cdnBase || null;
     // 0.5 la mac dinh cua demo HandLandmarker chinh chu; dat cao hon khien tre em de tay
     // lech hoac thieu sang khong duoc nhan va game trong nhu camera chet.
     this.minDetectionConfidence = options.minDetectionConfidence || 0.5;
@@ -30,16 +30,45 @@ class HandTracker {
     this.onErrorCallback = null;
   }
 
+  static loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.crossOrigin = 'anonymous';
+      s.onload = res; s.onerror = () => rej(new Error(src));
+      document.head.appendChild(s);
+    });
+  }
+
+  /* Phien ban co dinh de file WASM nap sau khong lech voi file JS the trang da nap */
+  static handsBase(mirror) { return mirror + '@mediapipe/hands@' + HandTracker.MP.hands + '/'; }
+
+  /* jsDelivr bi chan o mang truong hoc va mot so ISP — thu unpkg, fastly roi moi bao loi.
+     Nam o day thay vi trong tung game de ca 5 game cung duoc huong. */
+  static async ensureLibraries() {
+    const V = HandTracker.MP;
+    const mirrors = ['https://cdn.jsdelivr.net/npm/', 'https://unpkg.com/', 'https://fastly.jsdelivr.net/npm/'];
+    for (const m of mirrors) {
+      try {
+        if (typeof Camera === 'undefined') await HandTracker.loadScript(m + '@mediapipe/camera_utils@' + V.cam + '/camera_utils.js');
+        if (typeof Hands === 'undefined') await HandTracker.loadScript(m + '@mediapipe/hands@' + V.hands + '/hands.js');
+        if (typeof Hands !== 'undefined' && typeof Camera !== 'undefined') return HandTracker.handsBase(m);
+      } catch (e) { /* mirror nay khong voi duoc — thu cai ke tiep */ }
+    }
+    const err = new Error('Không tải được thư viện nhận diện tay từ mọi nguồn.');
+    err.name = 'CdnError';
+    throw err;
+  }
+
   async init(onReady, onResults, onError) {
     this.onReadyCallback = onReady;
     this.onResultsCallback = onResults;
     this.onErrorCallback = onError;
 
-    if (typeof Hands === 'undefined') {
-      const err = new Error("Thư viện MediaPipe Hands chưa được nạp vào trang.");
-      err.name = 'CdnError';
-      if (this.onErrorCallback) this.onErrorCallback(err);
-      return;
+    if (typeof Hands === 'undefined' || typeof Camera === 'undefined') {
+      try { this.cdnBase = await HandTracker.ensureLibraries(); }
+      catch (err) { if (this.onErrorCallback) this.onErrorCallback(err); return; }
+    } else if (!this.cdnBase) {
+      this.cdnBase = HandTracker.handsBase('https://cdn.jsdelivr.net/npm/');
     }
 
     try {
@@ -204,6 +233,8 @@ class HandTracker {
     }
   }
 }
+
+HandTracker.MP = { hands: '0.4.1675469240', cam: '0.3.1675466862' };
 
 if (typeof window !== 'undefined') {
   window.HandTracker = HandTracker;

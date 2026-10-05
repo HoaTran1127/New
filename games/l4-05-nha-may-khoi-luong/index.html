@@ -636,8 +636,6 @@ function snapBack(el){ el.style.position=''; el.style.left=''; el.style.top=''; 
 
 /* ── Camera + ban tay ── */
 let tracker = null;
-const MP = { hands:'0.4.1675469240', cam:'0.3.1675466862' };
-let mpBase = 'https://cdn.jsdelivr.net/npm/@mediapipe/hands@' + MP.hands + '/';
 
 /* Moi loi camera mot nguyen nhan + mot cach mo khoa, khong gop chung "chơi bằng chuột" */
 const CAM_WHY = {
@@ -660,33 +658,14 @@ function camFail(err) {
   S.cam = false; stage.classList.remove('cam-on');
   return false;
 }
-function loadScript(src) {
-  return new Promise((res, rej) => {
-    const s = document.createElement('script');
-    s.src = src; s.crossOrigin = 'anonymous';
-    s.onload = res; s.onerror = () => rej(new Error(src));
-    document.head.appendChild(s);
-  });
-}
-async function ensureMediaPipe() {
-  if (typeof Hands !== 'undefined' && typeof Camera !== 'undefined') return;
-  for (const b of ['https://unpkg.com/', 'https://fastly.jsdelivr.net/npm/']) {
-    try {
-      if (typeof Camera === 'undefined') await loadScript(b + '@mediapipe/camera_utils@' + MP.cam + '/camera_utils.js');
-      if (typeof Hands === 'undefined') await loadScript(b + '@mediapipe/hands@' + MP.hands + '/hands.js');
-      if (typeof Hands !== 'undefined' && typeof Camera !== 'undefined') { mpBase = b + '@mediapipe/hands@' + MP.hands + '/'; return; }
-    } catch (e) { /* try next base */ }
-  }
-  const err = new Error('MediaPipe CDN blocked'); err.name = 'CdnError'; throw err;
-}
+/* HandTracker lo luon chuyen nap thu vien va du phong CDN, o day chi can bao loi cho tre */
 async function startCamera() {
   $('#camStatus').textContent = 'Đang nạp thư viện…'; $('#camStatus').className = '';
   $('#camWhy').hidden = true; $('#btnCamRetry').hidden = true;
-  try { await ensureMediaPipe(); } catch (e) { return camFail(e); }
   $('#camStatus').textContent = 'Đợi cho phép camera…';
   try {
     if (tracker) { tracker.stop(); tracker = null; }
-    tracker = new HandTracker({ videoElement: $('#cam'), maxNumHands: 1, cdnBase: mpBase });
+    tracker = new HandTracker({ videoElement: $('#cam'), maxNumHands: 1 });
     await tracker.init(
       () => { $('#camStatus').textContent = 'Camera sẵn sàng'; $('#camStatus').className='ok'; stage.classList.add('cam-on'); S.cam = true; $('#camWhy').hidden = true; $('#btnCamRetry').hidden = true;
                const sv = $('#selfieCam'); sv.srcObject = $('#cam').srcObject; sv.play().catch(()=>{}); },
