@@ -261,14 +261,14 @@ export const STANDARDS = {
   },
 
   // ---- Tiếng Anh 4 ----
-  'tu-vung-e4': {
-    mach: M('kien_thuc'), ngan: 'Từ vựng lớp 4',
+  'tu-vung': {
+    mach: M('kien_thuc'), ngan: 'Từ vựng Tiếng Anh',
     tuan: [1, 10],
     yc: 'Nhận biết và gọi tên được từ vựng các chủ điểm Animals, School, Family, Jobs, Colours, Hobbies.',
     meo: 'Nhìn tranh, đọc to, nhớ nghĩa tiếng Việt.',
   },
-  'nghe-e4': {
-    mach: M('nghe_noi'), ngan: 'Nghe lớp 4',
+  'nghe': {
+    mach: M('nghe_noi'), ngan: 'Nghe Tiếng Anh',
     tuan: [2, 11],
     yc: 'Nghe và nhận biết được khoảng 10 đến 15 từ, số, màu theo chủ điểm; nghe và chọn được tranh tương ứng.',
     meo: 'Bắt âm đầu trước, nghĩa theo sau.',
@@ -327,8 +327,8 @@ export const STANDARDS = {
     yc: 'Nghe và phân loại được từ vào ba nhóm theo chủ điểm; nghe và chỉ ra được từ khác loại.',
     meo: 'Nghe lần một để chọn, lần hai để kiểm tra.',
   },
-  'dao-kynang-e4': {
-    mach: M('on_tap'), ngan: 'Ôn kỹ năng lớp 4',
+  'dao-kynang': {
+    mach: M('on_tap'), ngan: 'Ôn kỹ năng Tiếng Anh',
     tuan: [30, 35],
     yc: 'Vận dụng tổng hợp từ vựng, nghe, chính tả, đặt câu và phát âm ở mỗi đảo của bản đồ.',
     meo: 'Một đảo một kỹ năng, đừng vội sang đảo sau.',
@@ -341,8 +341,8 @@ export const STANDARDS = {
     yc: 'Đọc hiểu đoạn văn 60 đến 90 từ: tìm được ý chính, chi tiết và suy luận đơn giản có bằng chứng trong bài.',
     meo: 'Ý chính thường nằm ở câu đầu hay câu cuối.',
   },
-  'nguphap-e5': {
-    mach: M('kien_thuc'), ngan: 'Ngữ pháp lớp 5',
+  'nguphap': {
+    mach: M('kien_thuc'), ngan: 'Ngữ pháp Tiếng Anh',
     tuan: [4, 13],
     yc: 'Dùng được hiện tại đơn, hiện tại tiếp diễn, quá khứ đơn; phân biệt danh từ đếm được và không đếm được với some, any.',
     meo: 'Thấy dấu hiệu thời gian thì chia động từ theo thì.',
@@ -371,8 +371,8 @@ export const STANDARDS = {
     yc: 'Nói được câu ngắn theo tình huống với khung câu cho sẵn; phát âm đủ âm đầu và âm cuối.',
     meo: 'Nói chậm, bật đủ âm đầu và âm cuối.',
   },
-  'on-tap-e5': {
-    mach: M('on_tap'), ngan: 'Ôn tập Anh lớp 5',
+  'on-tap': {
+    mach: M('on_tap'), ngan: 'Ôn tập Tiếng Anh',
     tuan: [30, 35],
     yc: 'Ôn tập tổng hợp bốn kỹ năng nghe, nói, đọc, viết cùng từ vựng và ngữ pháp tiếng Anh lớp 5.',
     meo: 'Làm câu chắc trước, câu khó sau.',

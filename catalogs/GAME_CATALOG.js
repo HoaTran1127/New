@@ -18,6 +18,9 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Chỉ ngón tay trỏ (Point)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/01-toan4/L4-01-number-dash.md"
   },
   {
@@ -35,6 +38,9 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Vuốt / chém (Swipe)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/01-toan4/L4-02-million-mountain.md"
   },
   {
@@ -52,6 +58,9 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Vung tay đấm (Punch)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/01-toan4/L4-03-rounding-hoops.md"
   },
   {
@@ -69,6 +78,9 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Nghiêng người / bước sang vùng (Body tilt)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/01-toan4/L4-04-even-odd-dance.md"
   },
   {
@@ -86,6 +98,9 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Nắm và thả (Grab / Catch)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/01-toan4/L4-05-weight-factory.md"
   },
   {
@@ -103,6 +118,9 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Khom hai tay (Two-hand stretch)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/01-toan4/L4-06-area-builder.md"
   },
   {
@@ -122,6 +140,9 @@ window.MITI_CATALOG = {
     "Chỉ ngón tay trỏ (Point)",
     "Khom hai tay (Two-hand stretch)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/01-toan4/L4-07-time-machine.md"
   },
   {
@@ -139,6 +160,9 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Tạo góc bằng cánh tay (Angle pose)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/01-toan4/L4-08-angle-hero.md"
   },
   {
@@ -156,6 +180,9 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Khom hai tay (Two-hand stretch)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/01-toan4/L4-09-laser-architect.md"
   },
   {
@@ -173,6 +200,9 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Vung tay đấm (Punch)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/01-toan4/L4-10-math-boxing.md"
   },
   {
@@ -190,6 +220,9 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Vung tay đấm (Punch)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/01-toan4/L4-11-multiplication-rocket.md"
   },
   {
@@ -207,6 +240,9 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Nắm và thả (Grab / Catch)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/01-toan4/L4-12-division-conveyor.md"
   },
   {
@@ -226,6 +262,9 @@ window.MITI_CATALOG = {
     "Nắm và thả (Grab / Catch)",
     "Chỉ ngón tay trỏ (Point)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/01-toan4/L4-13-balance-lab.md"
   },
   {
@@ -243,6 +282,9 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Chỉ ngón tay trỏ (Point)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/01-toan4/L4-14-delivery-route.md"
   },
   {
@@ -260,6 +302,9 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Nắm và thả (Grab / Catch)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/01-toan4/L4-15-data-catch.md"
   },
   {
@@ -277,6 +322,9 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Kéo thả (Drag)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/01-toan4/L4-16-bar-builder.md"
   },
   {
@@ -294,6 +342,9 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Nắm và thả (Grab / Catch)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/01-toan4/L4-17-picture-market.md"
   },
   {
@@ -311,6 +362,9 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Chỉ ngón tay trỏ (Point)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/01-toan4/L4-18-chance-lab.md"
   },
   {
@@ -328,6 +382,9 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Chỉ ngón tay trỏ (Point)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/01-toan4/L4-19-fraction-pizza.md"
   },
   {
@@ -345,6 +402,9 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Kéo thả (Drag)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/01-toan4/L4-20-fraction-mirror.md"
   },
   {
@@ -362,6 +422,9 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Vuốt / chém (Swipe)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/01-toan4/L4-21-fraction-ninja.md"
   },
   {
@@ -379,6 +442,9 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Kéo thả (Drag)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/01-toan4/L4-22-common-denominator-factory.md"
   },
   {
@@ -396,6 +462,9 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Vuốt / chém (Swipe)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/01-toan4/L4-23-fraction-race.md"
   },
   {
@@ -413,6 +482,9 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Nắm và thả (Grab / Catch)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/01-toan4/L4-24-fraction-fusion.md"
   },
   {
@@ -430,6 +502,9 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Chỉ ngón tay trỏ (Point)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/01-toan4/L4-25-fraction-reactor.md"
   },
   {
@@ -447,6 +522,9 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Nắm và thả (Grab / Catch)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/01-toan4/L4-26-treasure-split.md"
   },
   {
@@ -466,6 +544,9 @@ window.MITI_CATALOG = {
     "Chỉ ngón tay trỏ (Point)",
     "Kéo thả (Drag)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/01-toan4/L4-27-ratio-rescue.md"
   },
   {
@@ -483,6 +564,9 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Vuốt / chém (Swipe)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/01-toan4/L4-28-map-explorer.md"
   },
   {
@@ -500,6 +584,9 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Kéo thả (Drag)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/01-toan4/L4-29-parallelogram-pull.md"
   },
   {
@@ -519,6 +606,9 @@ window.MITI_CATALOG = {
     "Nắm và thả (Grab / Catch)",
     "Kéo thả (Drag)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/01-toan4/L4-30-diamond-builder.md"
   },
   {
@@ -536,6 +626,9 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Vuốt / chém (Swipe)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/01-toan4/L4-31-mixed-sprint.md"
   },
   {
@@ -553,6 +646,9 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Nghiêng người / bước sang vùng (Body tilt)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/01-toan4/L4-32-geometry-arena.md"
   },
   {
@@ -570,6 +666,9 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Nắm và thả (Grab / Catch)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/01-toan4/L4-33-fraction-arena.md"
   },
   {
@@ -587,6 +686,9 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Chỉ ngón tay trỏ (Point)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/01-toan4/L4-34-data-arena.md"
   },
   {
@@ -604,6 +706,9 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Vung tay đấm (Punch)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/01-toan4/L4-35-grand-math-arena.md"
   },
   {
@@ -621,6 +726,9 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Chỉ ngón tay trỏ (Point)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/01-toan4/L4-36-place-value-forge.md"
   },
   {
@@ -638,6 +746,9 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Nắm và thả (Grab / Catch)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/01-toan4/L4-37-fraction-market.md"
   },
   {
@@ -655,6 +766,9 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Chỉ ngón tay trỏ (Point)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/01-toan4/L4-38-angle-rescue.md"
   },
   {
@@ -672,6 +786,9 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Chỉ ngón tay trỏ (Point)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/01-toan4/L4-39-data-detective.md"
   },
   {
@@ -689,6 +806,9 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Vung tay đấm (Punch)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/01-toan4/L4-40-math-boss-lab.md"
   },
   {
@@ -706,6 +826,9 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Vung tay đấm (Punch)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/02-toan5/T5-01-multi-operation-quest.md"
   },
   {
@@ -723,6 +846,9 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Vuốt / chém (Swipe)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/02-toan5/T5-02-decimal-dash.md"
   },
   {
@@ -740,6 +866,9 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Kéo thả (Drag)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/02-toan5/T5-03-fraction-decimal-percentage-memory.md"
   },
   {
@@ -759,6 +888,9 @@ window.MITI_CATALOG = {
     "Nắm và thả (Grab / Catch)",
     "Chỉ ngón tay trỏ (Point)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/02-toan5/T5-04-percentage-shop.md"
   },
   {
@@ -776,6 +908,9 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Kéo thả (Drag)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/02-toan5/T5-05-volume-builder.md"
   },
   {
@@ -793,6 +928,9 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Kéo thả (Drag)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/02-toan5/t5-06.md"
   },
   {
@@ -810,6 +948,9 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Chỉ ngón tay trỏ (Point)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/02-toan5/t5-07.md"
   },
   {
@@ -827,6 +968,9 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Nghiêng người / bước sang vùng (Body tilt)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/02-toan5/t5-08.md"
   },
   {
@@ -844,6 +988,9 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Cân bằng hai tay (Two-hand balance)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/02-toan5/t5-09.md"
   },
   {
@@ -863,6 +1010,9 @@ window.MITI_CATALOG = {
     "Vung tay đấm (Punch)",
     "Chỉ ngón tay trỏ (Point)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/02-toan5/t5-10.md"
   },
   {
@@ -882,6 +1032,9 @@ window.MITI_CATALOG = {
     "Chỉ ngón tay trỏ (Point)",
     "Kéo thả (Drag)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/02-toan5/T5-11-decimal-shop.md"
   },
   {
@@ -901,6 +1054,9 @@ window.MITI_CATALOG = {
     "Chỉ ngón tay trỏ (Point)",
     "Kéo thả (Drag)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/02-toan5/T5-12-percentage-lab.md"
   },
   {
@@ -920,6 +1076,9 @@ window.MITI_CATALOG = {
     "Chỉ ngón tay trỏ (Point)",
     "Kéo thả (Drag)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/02-toan5/T5-13-volume-vault.md"
   },
   {
@@ -937,6 +1096,9 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Chỉ ngón tay trỏ (Point)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/02-toan5/T5-14-motion-word-problem.md"
   },
   {
@@ -956,33 +1118,39 @@ window.MITI_CATALOG = {
     "Nắm và thả (Grab / Catch)",
     "Chỉ ngón tay trỏ (Point)"
    ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
    "prompt": "prompts/02-toan5/T5-15-math-strategy-arena.md"
   },
   {
-   "id": "E4-01",
+   "id": "ST-01",
    "name": "Nhiệm Vụ Từ Vựng",
    "grade": "4",
    "subject": "Tiếng Anh",
-   "objective": "Từ vựng lớp 4: Animals, School, Family, Jobs, Colours, Hobbies; nghĩa tiếng Việt tương ứng",
+   "objective": "Từ vựng Tiếng Anh: Animals, School, Family, Jobs, Colours, Hobbies; nghĩa tiếng Việt tương ứng",
    "mission": "Vuốt chém tấm bảng mang từ tiếng Anh đúng với nghĩa hoặc tranh gợi ý.",
-   "cluster": "tu-vung-e4",
-   "topic": "từ vựng lớp 4: Animals, School, Family, Jobs, Colours, Hobbies; nghĩa tiếng Việt tương ứng",
+   "cluster": "tu-vung",
+   "topic": "từ vựng Tiếng Anh: Animals, School, Family, Jobs, Colours, Hobbies; nghĩa tiếng Việt tương ứng",
    "controls": [
     "SWIPE"
    ],
    "controlLabels": [
     "Vuốt / chém (Swipe)"
    ],
-   "prompt": "prompts/03-english4/E4-01-vocab-quest.md"
+   "band": "ST",
+   "bandName": "Pre A1 Starters",
+   "bandCefr": "Pre-A1",
+   "prompt": "prompts/03-english-starters/ST-01-vocab-quest.md"
   },
   {
-   "id": "E4-02",
+   "id": "ST-02",
    "name": "Chọn Đáp Án Nghe",
    "grade": "4",
    "subject": "Tiếng Anh",
    "objective": "Nghe và chọn từ tranh tương ứng; nghe và chọn số hoặc màu; khoảng 10-15 từ mỗi chủ đề",
    "mission": "Nghe và chỉ ngón tay vào tranh hoặc từ đúng với đoạn nghe.",
-   "cluster": "nghe-e4",
+   "cluster": "nghe",
    "topic": "nghe và chọn từ tranh tương ứng; nghe và chọn số hoặc màu; khoảng 10-15 từ mỗi chủ đề",
    "controls": [
     "POINT"
@@ -990,10 +1158,13 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Chỉ ngón tay trỏ (Point)"
    ],
-   "prompt": "prompts/03-english4/E4-02-listening-pick.md"
+   "band": "ST",
+   "bandName": "Pre A1 Starters",
+   "bandCefr": "Pre-A1",
+   "prompt": "prompts/03-english-starters/ST-02-listen-pick.md"
   },
   {
-   "id": "E4-03",
+   "id": "ST-03",
    "name": "Ghép Tranh – Từ",
    "grade": "4",
    "subject": "Tiếng Anh",
@@ -1007,10 +1178,13 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Kéo thả (Drag)"
    ],
-   "prompt": "prompts/03-english4/E4-03-picture-word-match.md"
+   "band": "ST",
+   "bandName": "Pre A1 Starters",
+   "bandCefr": "Pre-A1",
+   "prompt": "prompts/03-english-starters/ST-03-picture-word-match.md"
   },
   {
-   "id": "E4-04",
+   "id": "ST-04",
    "name": "Ngôi Sao Chính Tả",
    "grade": "4",
    "subject": "Tiếng Anh",
@@ -1024,44 +1198,13 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Vung tay đấm (Punch)"
    ],
-   "prompt": "prompts/03-english4/E4-04-spelling-stars.md"
+   "band": "ST",
+   "bandName": "Pre A1 Starters",
+   "bandCefr": "Pre-A1",
+   "prompt": "prompts/03-english-starters/ST-04-spelling-star.md"
   },
   {
-   "id": "E4-05",
-   "name": "Nhiệm Vụ Điền Chữ",
-   "grade": "4",
-   "subject": "Tiếng Anh",
-   "objective": "Điền chữ cái còn thiếu; sửa lỗi chính tả; chọn cách viết đúng của từ lớp 4-5",
-   "mission": "Chỉ vào chữ cái còn thiếu ở đúng vị trí trong từ.",
-   "cluster": "chinh-ta",
-   "topic": "điền chữ cái còn thiếu; sửa lỗi chính tả; chọn cách viết đúng của từ lớp 4-5",
-   "controls": [
-    "POINT"
-   ],
-   "controlLabels": [
-    "Chỉ ngón tay trỏ (Point)"
-   ],
-   "prompt": "prompts/03-english4/E4-05-missing-letter-mission.md"
-  },
-  {
-   "id": "E4-06",
-   "name": "Xây Từ",
-   "grade": "4",
-   "subject": "Tiếng Anh",
-   "objective": "Bảng chữ cái bị xáo trộn: ghép thành từ đúng; mỗi từ có nghĩa gợi ý",
-   "mission": "Kéo từng chữ cái thả vào ô trống theo đúng thứ tự của từ.",
-   "cluster": "xay-tu",
-   "topic": "bảng chữ cái bị xáo trộn: ghép thành từ đúng; mỗi từ có nghĩa gợi ý",
-   "controls": [
-    "DRAG"
-   ],
-   "controlLabels": [
-    "Kéo thả (Drag)"
-   ],
-   "prompt": "prompts/03-english4/E4-06-word-builder.md"
-  },
-  {
-   "id": "E4-07",
+   "id": "ST-05",
    "name": "Đua Xếp Câu",
    "grade": "4",
    "subject": "Tiếng Anh",
@@ -1075,10 +1218,13 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Kéo thả (Drag)"
    ],
-   "prompt": "prompts/03-english4/E4-07-sentence-race.md"
+   "band": "ST",
+   "bandName": "Pre A1 Starters",
+   "bandCefr": "Pre-A1",
+   "prompt": "prompts/03-english-starters/ST-05-sentence-race.md"
   },
   {
-   "id": "E4-08",
+   "id": "ST-06",
    "name": "Trí Nhớ Từ Vựng",
    "grade": "4",
    "subject": "Tiếng Anh",
@@ -1092,63 +1238,53 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Chỉ ngón tay trỏ (Point)"
    ],
-   "prompt": "prompts/03-english4/E4-08-word-memory.md"
+   "band": "ST",
+   "bandName": "Pre A1 Starters",
+   "bandCefr": "Pre-A1",
+   "prompt": "prompts/03-english-starters/ST-06-word-memory.md"
   },
   {
-   "id": "E4-09",
-   "name": "Đường Đua Nghe",
+   "id": "ST-07",
+   "name": "Bóng Âm",
    "grade": "4",
    "subject": "Tiếng Anh",
-   "objective": "Nghe và chọn từ tranh tương ứng; nghe và chọn số hoặc màu; khoảng 10-15 từ mỗi chủ đề",
-   "mission": "Nghe rồi nghiêng người bước sang làn chứa từ hoặc số đúng.",
-   "cluster": "nghe-e4",
-   "topic": "nghe và chọn từ tranh tương ứng; nghe và chọn số hoặc màu; khoảng 10-15 từ mỗi chủ đề",
+   "objective": "Âm và mẫu chữ thường gặp: sh ch th ph gh ea ee oo ai ay; chọn từ chứa âm mục tiêu",
+   "mission": "Vuốt chém các quả bóng chứa từ có âm hoặc mẫu chữ mục tiêu.",
+   "cluster": "phonics",
+   "topic": "âm và mẫu chữ thường gặp: sh ch th ph gh ea ee oo ai ay; chọn từ chứa âm mục tiêu",
    "controls": [
-    "STEP"
+    "SWIPE"
    ],
    "controlLabels": [
-    "Nghiêng người / bước sang vùng (Body tilt)"
+    "Vuốt / chém (Swipe)"
    ],
-   "prompt": "prompts/03-english4/E4-09-listening-lane.md"
+   "band": "ST",
+   "bandName": "Pre A1 Starters",
+   "bandCefr": "Pre-A1",
+   "prompt": "prompts/03-english-starters/ST-07-shadow-phonic.md"
   },
   {
-   "id": "E4-10",
+   "id": "ST-08",
    "name": "Đập Từ",
    "grade": "4",
    "subject": "Tiếng Anh",
-   "objective": "Từ vựng lớp 4: Animals, School, Family, Jobs, Colours, Hobbies; nghĩa tiếng Việt tương ứng",
+   "objective": "Từ vựng Tiếng Anh: Animals, School, Family, Jobs, Colours, Hobbies; nghĩa tiếng Việt tương ứng",
    "mission": "Đấm trúng bong bóng chứa từ đúng với nghĩa tiếng Việt hiện trên bảng.",
-   "cluster": "tu-vung-e4",
-   "topic": "từ vựng lớp 4: Animals, School, Family, Jobs, Colours, Hobbies; nghĩa tiếng Việt tương ứng",
+   "cluster": "tu-vung",
+   "topic": "từ vựng Tiếng Anh: Animals, School, Family, Jobs, Colours, Hobbies; nghĩa tiếng Việt tương ứng",
    "controls": [
     "PUNCH"
    ],
    "controlLabels": [
     "Vung tay đấm (Punch)"
    ],
-   "prompt": "prompts/03-english4/E4-10-word-whack.md"
+   "band": "ST",
+   "bandName": "Pre A1 Starters",
+   "bandCefr": "Pre-A1",
+   "prompt": "prompts/03-english-starters/ST-08-punch-word.md"
   },
   {
-   "id": "E4-11",
-   "name": "Xây Câu Chuyện Tranh",
-   "grade": "4",
-   "subject": "Tiếng Anh",
-   "objective": "Sắp xếp 3-5 tranh theo trình tự; chọn câu phù hợp với từng tranh",
-   "mission": "Chỉ và kéo các tranh theo đúng trình tự, rồi ghép câu mô tả cho từng tranh.",
-   "cluster": "ke-chuyen",
-   "topic": "sắp xếp 3-5 tranh theo trình tự; chọn câu phù hợp với từng tranh",
-   "controls": [
-    "POINT",
-    "DRAG"
-   ],
-   "controlLabels": [
-    "Chỉ ngón tay trỏ (Point)",
-    "Kéo thả (Drag)"
-   ],
-   "prompt": "prompts/03-english4/E4-11-picture-story-builder.md"
-  },
-  {
-   "id": "E4-12",
+   "id": "ST-09",
    "name": "Nghe Và Phân Loại",
    "grade": "4",
    "subject": "Tiếng Anh",
@@ -1164,27 +1300,153 @@ window.MITI_CATALOG = {
     "Chỉ ngón tay trỏ (Point)",
     "Kéo thả (Drag)"
    ],
-   "prompt": "prompts/03-english4/E4-12-listen-and-sort.md"
+   "band": "ST",
+   "bandName": "Pre A1 Starters",
+   "bandCefr": "Pre-A1",
+   "prompt": "prompts/03-english-starters/ST-09-listen-sort.md"
   },
   {
-   "id": "E4-13",
-   "name": "Bóng Âm",
+   "id": "ST-10",
+   "name": "Bản Đồ Phiêu Lưu Tiếng Anh",
    "grade": "4",
    "subject": "Tiếng Anh",
-   "objective": "Âm và mẫu chữ thường gặp: sh ch th ph gh ea ee oo ai ay; chọn từ chứa âm mục tiêu",
-   "mission": "Vuốt chém các quả bóng chứa từ có âm hoặc mẫu chữ mục tiêu.",
-   "cluster": "phonics",
-   "topic": "âm và mẫu chữ thường gặp: sh ch th ph gh ea ee oo ai ay; chọn từ chứa âm mục tiêu",
+   "objective": "Bản đồ 5 đảo: từ vựng, nghe, chính tả, câu, phát âm; mỗi đảo 3 câu",
+   "mission": "Chỉ tay mở khoá từng bến đảo, hoàn thành ba câu trên đảo để lấy huy hiệu.",
+   "cluster": "dao-kynang",
+   "topic": "bản đồ 5 đảo: từ vựng, nghe, chính tả, câu, phát âm; mỗi đảo 3 câu",
+   "controls": [
+    "POINT"
+   ],
+   "controlLabels": [
+    "Chỉ ngón tay trỏ (Point)"
+   ],
+   "band": "ST",
+   "bandName": "Pre A1 Starters",
+   "bandCefr": "Pre-A1",
+   "prompt": "prompts/03-english-starters/ST-10-skill-map.md"
+  },
+  {
+   "id": "MV-01",
+   "name": "Thợ Săn Từ",
+   "grade": "5",
+   "subject": "Tiếng Anh",
+   "objective": "Từ vựng Tiếng Anh: Animals, School, Family, Jobs, Colours, Hobbies; nghĩa tiếng Việt tương ứng",
+   "mission": "Vuốt chém bụi cây chứa từ đúng với nghĩa và ngữ cảnh câu gợi ý.",
+   "cluster": "tu-vung",
+   "topic": "từ vựng Tiếng Anh: Animals, School, Family, Jobs, Colours, Hobbies; nghĩa tiếng Việt tương ứng",
    "controls": [
     "SWIPE"
    ],
    "controlLabels": [
     "Vuốt / chém (Swipe)"
    ],
-   "prompt": "prompts/03-english4/E4-13-phonics-pop.md"
+   "band": "MV",
+   "bandName": "A1 Movers",
+   "bandCefr": "A1",
+   "prompt": "prompts/04-english-movers/MV-01-word-hunter.md"
   },
   {
-   "id": "E4-14",
+   "id": "MV-02",
+   "name": "Trùm Nghe Hiểu",
+   "grade": "5",
+   "subject": "Tiếng Anh",
+   "objective": "Nghe và chọn từ tranh tương ứng; nghe và chọn số hoặc màu; khoảng 10-15 từ mỗi chủ đề",
+   "mission": "Nghe và chỉ vào đáp án đúng trong ba lựa chọn, mỗi lượt được nghe lại tối đa ba lần.",
+   "cluster": "nghe",
+   "topic": "nghe và chọn từ tranh tương ứng; nghe và chọn số hoặc màu; khoảng 10-15 từ mỗi chủ đề",
+   "controls": [
+    "POINT"
+   ],
+   "controlLabels": [
+    "Chỉ ngón tay trỏ (Point)"
+   ],
+   "band": "MV",
+   "bandName": "A1 Movers",
+   "bandCefr": "A1",
+   "prompt": "prompts/04-english-movers/MV-02-listen-master.md"
+  },
+  {
+   "id": "MV-03",
+   "name": "Nhiệm Vụ Điền Chữ",
+   "grade": "4",
+   "subject": "Tiếng Anh",
+   "objective": "Điền chữ cái còn thiếu; sửa lỗi chính tả; chọn cách viết đúng của từ lớp 4-5",
+   "mission": "Chỉ vào chữ cái còn thiếu ở đúng vị trí trong từ.",
+   "cluster": "chinh-ta",
+   "topic": "điền chữ cái còn thiếu; sửa lỗi chính tả; chọn cách viết đúng của từ lớp 4-5",
+   "controls": [
+    "POINT"
+   ],
+   "controlLabels": [
+    "Chỉ ngón tay trỏ (Point)"
+   ],
+   "band": "MV",
+   "bandName": "A1 Movers",
+   "bandCefr": "A1",
+   "prompt": "prompts/04-english-movers/MV-03-fill-letter.md"
+  },
+  {
+   "id": "MV-04",
+   "name": "Xây Từ",
+   "grade": "4",
+   "subject": "Tiếng Anh",
+   "objective": "Bảng chữ cái bị xáo trộn: ghép thành từ đúng; mỗi từ có nghĩa gợi ý",
+   "mission": "Kéo từng chữ cái thả vào ô trống theo đúng thứ tự của từ.",
+   "cluster": "xay-tu",
+   "topic": "bảng chữ cái bị xáo trộn: ghép thành từ đúng; mỗi từ có nghĩa gợi ý",
+   "controls": [
+    "DRAG"
+   ],
+   "controlLabels": [
+    "Kéo thả (Drag)"
+   ],
+   "band": "MV",
+   "bandName": "A1 Movers",
+   "bandCefr": "A1",
+   "prompt": "prompts/04-english-movers/MV-04-build-word.md"
+  },
+  {
+   "id": "MV-05",
+   "name": "Mê Cung Câu",
+   "grade": "5",
+   "subject": "Tiếng Anh",
+   "objective": "Hiện tại đơn hiện tại tiếp diễn quá khứ; danh từ đếm được không đếm được; lượng từ some any",
+   "mission": "Kéo thẻ ngữ pháp đúng thả vào chỗ trống để mở lối đi tiếp.",
+   "cluster": "nguphap",
+   "topic": "hiện tại đơn hiện tại tiếp diễn quá khứ; danh từ đếm được không đếm được; lượng từ some any",
+   "controls": [
+    "DRAG"
+   ],
+   "controlLabels": [
+    "Kéo thả (Drag)"
+   ],
+   "band": "MV",
+   "bandName": "A1 Movers",
+   "bandCefr": "A1",
+   "prompt": "prompts/04-english-movers/MV-05-maze-sentence.md"
+  },
+  {
+   "id": "MV-06",
+   "name": "Cổng Ngữ Pháp",
+   "grade": "5",
+   "subject": "Tiếng Anh",
+   "objective": "Hiện tại đơn hiện tại tiếp diễn quá khứ; danh từ đếm được không đếm được; lượng từ some any",
+   "mission": "Nghiêng người bước vào cổng chứa dạng động từ đúng với thì của câu.",
+   "cluster": "nguphap",
+   "topic": "hiện tại đơn hiện tại tiếp diễn quá khứ; danh từ đếm được không đếm được; lượng từ some any",
+   "controls": [
+    "STEP"
+   ],
+   "controlLabels": [
+    "Nghiêng người / bước sang vùng (Body tilt)"
+   ],
+   "band": "MV",
+   "bandName": "A1 Movers",
+   "bandCefr": "A1",
+   "prompt": "prompts/04-english-movers/MV-06-grammar-gate.md"
+  },
+  {
+   "id": "MV-07",
    "name": "Xây Câu Hỏi",
    "grade": "4",
    "subject": "Tiếng Anh",
@@ -1200,146 +1462,13 @@ window.MITI_CATALOG = {
     "Chỉ ngón tay trỏ (Point)",
     "Kéo thả (Drag)"
    ],
-   "prompt": "prompts/03-english4/E4-14-question-builder.md"
+   "band": "MV",
+   "bandName": "A1 Movers",
+   "bandCefr": "A1",
+   "prompt": "prompts/04-english-movers/MV-07-build-question.md"
   },
   {
-   "id": "E4-15",
-   "name": "Bản Đồ Phiêu Lưu Tiếng Anh",
-   "grade": "4",
-   "subject": "Tiếng Anh",
-   "objective": "Bản đồ 5 đảo: từ vựng, nghe, chính tả, câu, phát âm; mỗi đảo 3 câu",
-   "mission": "Chỉ tay mở khoá từng bến đảo, hoàn thành ba câu trên đảo để lấy huy hiệu.",
-   "cluster": "dao-kynang-e4",
-   "topic": "bản đồ 5 đảo: từ vựng, nghe, chính tả, câu, phát âm; mỗi đảo 3 câu",
-   "controls": [
-    "POINT"
-   ],
-   "controlLabels": [
-    "Chỉ ngón tay trỏ (Point)"
-   ],
-   "prompt": "prompts/03-english4/E4-15-english-adventure-map.md"
-  },
-  {
-   "id": "E5-01",
-   "name": "Trùm Nghe Hiểu",
-   "grade": "5",
-   "subject": "Tiếng Anh",
-   "objective": "Nghe và chọn từ tranh tương ứng; nghe và chọn số hoặc màu; khoảng 10-15 từ mỗi chủ đề",
-   "mission": "Nghe và chỉ vào đáp án đúng trong ba lựa chọn, mỗi lượt được nghe lại tối đa ba lần.",
-   "cluster": "nghe-e4",
-   "topic": "nghe và chọn từ tranh tương ứng; nghe và chọn số hoặc màu; khoảng 10-15 từ mỗi chủ đề",
-   "controls": [
-    "POINT"
-   ],
-   "controlLabels": [
-    "Chỉ ngón tay trỏ (Point)"
-   ],
-   "prompt": "prompts/04-english5/E5-01-listening-boss.md"
-  },
-  {
-   "id": "E5-02",
-   "name": "Mê Cung Câu",
-   "grade": "5",
-   "subject": "Tiếng Anh",
-   "objective": "Hiện tại đơn hiện tại tiếp diễn quá khứ; danh từ đếm được không đếm được; lượng từ some any",
-   "mission": "Kéo thẻ ngữ pháp đúng thả vào chỗ trống để mở lối đi tiếp.",
-   "cluster": "nguphap-e5",
-   "topic": "hiện tại đơn hiện tại tiếp diễn quá khứ; danh từ đếm được không đếm được; lượng từ some any",
-   "controls": [
-    "DRAG"
-   ],
-   "controlLabels": [
-    "Kéo thả (Drag)"
-   ],
-   "prompt": "prompts/04-english5/E5-02-sentence-maze.md"
-  },
-  {
-   "id": "E5-03",
-   "name": "Thợ Săn Từ",
-   "grade": "5",
-   "subject": "Tiếng Anh",
-   "objective": "Từ vựng lớp 4: Animals, School, Family, Jobs, Colours, Hobbies; nghĩa tiếng Việt tương ứng",
-   "mission": "Vuốt chém bụi cây chứa từ đúng với nghĩa và ngữ cảnh câu gợi ý.",
-   "cluster": "tu-vung-e4",
-   "topic": "từ vựng lớp 4: Animals, School, Family, Jobs, Colours, Hobbies; nghĩa tiếng Việt tương ứng",
-   "controls": [
-    "SWIPE"
-   ],
-   "controlLabels": [
-    "Vuốt / chém (Swipe)"
-   ],
-   "prompt": "prompts/04-english5/E5-03-word-hunter.md"
-  },
-  {
-   "id": "E5-04",
-   "name": "Cổng Ngữ Pháp",
-   "grade": "5",
-   "subject": "Tiếng Anh",
-   "objective": "Hiện tại đơn hiện tại tiếp diễn quá khứ; danh từ đếm được không đếm được; lượng từ some any",
-   "mission": "Nghiêng người bước vào cổng chứa dạng động từ đúng với thì của câu.",
-   "cluster": "nguphap-e5",
-   "topic": "hiện tại đơn hiện tại tiếp diễn quá khứ; danh từ đếm được không đếm được; lượng từ some any",
-   "controls": [
-    "STEP"
-   ],
-   "controlLabels": [
-    "Nghiêng người / bước sang vùng (Body tilt)"
-   ],
-   "prompt": "prompts/04-english5/E5-04-grammar-gates.md"
-  },
-  {
-   "id": "E5-05",
-   "name": "Hẻm Núi Điền Từ",
-   "grade": "5",
-   "subject": "Tiếng Anh",
-   "objective": "Đoạn văn có 5-8 chỗ trống chọn từ trong ngân hàng từ; dựa vào ngữ cảnh suy ra từ",
-   "mission": "Kéo từ trong ngân hàng từ thả vào chỗ trống hợp ngữ cảnh.",
-   "cluster": "dien-tu-trong-doan-van",
-   "topic": "đoạn văn có 5-8 chỗ trống chọn từ trong ngân hàng từ; dựa vào ngữ cảnh suy ra từ",
-   "controls": [
-    "DRAG"
-   ],
-   "controlLabels": [
-    "Kéo thả (Drag)"
-   ],
-   "prompt": "prompts/04-english5/E5-05-cloze-canyon.md"
-  },
-  {
-   "id": "E5-06",
-   "name": "Pháo Đài Chính Tả",
-   "grade": "5",
-   "subject": "Tiếng Anh",
-   "objective": "Điền chữ cái còn thiếu; sửa lỗi chính tả; chọn cách viết đúng của từ lớp 4-5",
-   "mission": "Đấm quả đạn chứa từ viết đúng để bắn hạ loạt đạn sai.",
-   "cluster": "chinh-ta",
-   "topic": "điền chữ cái còn thiếu; sửa lỗi chính tả; chọn cách viết đúng của từ lớp 4-5",
-   "controls": [
-    "PUNCH"
-   ],
-   "controlLabels": [
-    "Vung tay đấm (Punch)"
-   ],
-   "prompt": "prompts/04-english5/E5-06-spelling-blaster.md"
-  },
-  {
-   "id": "E5-07",
-   "name": "Xây Cụm Từ",
-   "grade": "5",
-   "subject": "Tiếng Anh",
-   "objective": "Ghép từ thành cụm a pair of a glass of how many và đặt câu với cụm",
-   "mission": "Kéo các mảnh từ ghép thành cụm hoàn chỉnh rồi đặt câu với cụm đó.",
-   "cluster": "xay-cum-tu",
-   "topic": "ghép từ thành cụm a pair of a glass of how many và đặt câu với cụm",
-   "controls": [
-    "DRAG"
-   ],
-   "controlLabels": [
-    "Kéo thả (Drag)"
-   ],
-   "prompt": "prompts/04-english5/E5-07-phrase-builder.md"
-  },
-  {
-   "id": "E5-08",
+   "id": "MV-08",
    "name": "Bộ Ba Trí Nhớ",
    "grade": "5",
    "subject": "Tiếng Anh",
@@ -1353,10 +1482,93 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Chỉ ngón tay trỏ (Point)"
    ],
-   "prompt": "prompts/04-english5/E5-08-memory-triplet.md"
+   "band": "MV",
+   "bandName": "A1 Movers",
+   "bandCefr": "A1",
+   "prompt": "prompts/04-english-movers/MV-08-triple-memory.md"
   },
   {
-   "id": "E5-09",
+   "id": "MV-09",
+   "name": "Pháo Đài Chính Tả",
+   "grade": "5",
+   "subject": "Tiếng Anh",
+   "objective": "Điền chữ cái còn thiếu; sửa lỗi chính tả; chọn cách viết đúng của từ lớp 4-5",
+   "mission": "Đấm quả đạn chứa từ viết đúng để bắn hạ loạt đạn sai.",
+   "cluster": "chinh-ta",
+   "topic": "điền chữ cái còn thiếu; sửa lỗi chính tả; chọn cách viết đúng của từ lớp 4-5",
+   "controls": [
+    "PUNCH"
+   ],
+   "controlLabels": [
+    "Vung tay đấm (Punch)"
+   ],
+   "band": "MV",
+   "bandName": "A1 Movers",
+   "bandCefr": "A1",
+   "prompt": "prompts/04-english-movers/MV-09-spelling-fort.md"
+  },
+  {
+   "id": "MV-10",
+   "name": "Đảo Ôn Tập",
+   "grade": "5",
+   "subject": "Tiếng Anh",
+   "objective": "Ôn tổng hợp nghe đọc viết nói ngữ pháp từ vựng tiếng Anh",
+   "mission": "Chỉ tay chọn từng câu hỏi trên đảo, đáp án đúng mở đường sang đảo kế tiếp.",
+   "cluster": "on-tap",
+   "topic": "ôn tổng hợp nghe đọc viết nói ngữ pháp từ vựng tiếng Anh",
+   "controls": [
+    "POINT"
+   ],
+   "controlLabels": [
+    "Chỉ ngón tay trỏ (Point)"
+   ],
+   "band": "MV",
+   "bandName": "A1 Movers",
+   "bandCefr": "A1",
+   "prompt": "prompts/04-english-movers/MV-10-revision-island.md"
+  },
+  {
+   "id": "FY-01",
+   "name": "Hẻm Núi Điền Từ",
+   "grade": "5",
+   "subject": "Tiếng Anh",
+   "objective": "Đoạn văn có 5-8 chỗ trống chọn từ trong ngân hàng từ; dựa vào ngữ cảnh suy ra từ",
+   "mission": "Kéo từ trong ngân hàng từ thả vào chỗ trống hợp ngữ cảnh.",
+   "cluster": "dien-tu-trong-doan-van",
+   "topic": "đoạn văn có 5-8 chỗ trống chọn từ trong ngân hàng từ; dựa vào ngữ cảnh suy ra từ",
+   "controls": [
+    "DRAG"
+   ],
+   "controlLabels": [
+    "Kéo thả (Drag)"
+   ],
+   "band": "FY",
+   "bandName": "A2 Flyers",
+   "bandCefr": "A2",
+   "prompt": "prompts/05-english-flyers/FY-01-canyon-cloze.md"
+  },
+  {
+   "id": "FY-02",
+   "name": "Xây Cụm Từ",
+   "grade": "5",
+   "subject": "Tiếng Anh",
+   "objective": "Ghép từ thành cụm a pair of a glass of how many và đặt câu với cụm",
+   "mission": "Kéo các mảnh từ ghép thành cụm hoàn chỉnh rồi đặt câu với cụm đó.",
+   "cluster": "xay-cum-tu",
+   "topic": "ghép từ thành cụm a pair of a glass of how many và đặt câu với cụm",
+   "controls": [
+    "DRAG"
+   ],
+   "controlLabels": [
+    "Kéo thả (Drag)"
+   ],
+   "band": "FY",
+   "bandName": "A2 Flyers",
+   "bandCefr": "A2",
+   "prompt": "prompts/05-english-flyers/FY-02-phrase-garden.md"
+  },
+  {
+   "id": "FY-03",
    "name": "Tuyến Đường Nói",
    "grade": "5",
    "subject": "Tiếng Anh",
@@ -1370,63 +1582,13 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Nói (Voice)"
    ],
-   "prompt": "prompts/04-english5/E5-09-voice-route.md"
+   "band": "FY",
+   "bandName": "A2 Flyers",
+   "bandCefr": "A2",
+   "prompt": "prompts/05-english-flyers/FY-03-speaking-route.md"
   },
   {
-   "id": "E5-10",
-   "name": "Đảo Ôn Tập",
-   "grade": "5",
-   "subject": "Tiếng Anh",
-   "objective": "Ôn tổng hợp nghe đọc viết nói ngữ pháp từ vựng tiếng Anh lớp 5",
-   "mission": "Chỉ tay chọn từng câu hỏi trên đảo, đáp án đúng mở đường sang đảo kế tiếp.",
-   "cluster": "on-tap-e5",
-   "topic": "ôn tổng hợp nghe đọc viết nói ngữ pháp từ vựng tiếng Anh lớp 5",
-   "controls": [
-    "POINT"
-   ],
-   "controlLabels": [
-    "Chỉ ngón tay trỏ (Point)"
-   ],
-   "prompt": "prompts/04-english5/E5-10-island-review.md"
-  },
-  {
-   "id": "E5-11",
-   "name": "Thám Tử Đọc Hiểu",
-   "grade": "5",
-   "subject": "Tiếng Anh",
-   "objective": "Đoạn văn 60-90 từ lớp 5: ý chính, chi tiết, trình tự, suy luận đơn giản; tìm bằng chứng gạch chân",
-   "mission": "Đọc đoạn văn và chỉ tay gạch chân đúng câu chứa bằng chứng cho nghi vấn.",
-   "cluster": "doc-hieu",
-   "topic": "đoạn văn 60-90 từ lớp 5: ý chính, chi tiết, trình tự, suy luận đơn giản; tìm bằng chứng gạch chân",
-   "controls": [
-    "POINT"
-   ],
-   "controlLabels": [
-    "Chỉ ngón tay trỏ (Point)"
-   ],
-   "prompt": "prompts/04-english5/E5-11-reading-detective.md"
-  },
-  {
-   "id": "E5-12",
-   "name": "Xây Ngữ Pháp",
-   "grade": "5",
-   "subject": "Tiếng Anh",
-   "objective": "Hiện tại đơn hiện tại tiếp diễn quá khứ; danh từ đếm được không đếm được; lượng từ some any",
-   "mission": "Chỉ ra chỗ sai trong câu rồi kéo thẻ sửa đúng để cây cầu mở màn tiếp.",
-   "cluster": "nguphap-e5",
-   "topic": "hiện tại đơn hiện tại tiếp diễn quá khứ; danh từ đếm được không đếm được; lượng từ some any",
-   "controls": [
-    "POINT",
-    "DRAG"
-   ],
-   "controlLabels": [
-    "Chỉ ngón tay trỏ (Point)",
-    "Kéo thả (Drag)"
-   ],
-   "prompt": "prompts/04-english5/E5-12-grammar-builder.md"
-  },
-  {
-   "id": "E5-13",
+   "id": "FY-04",
    "name": "Nhiệm Vụ Nói",
    "grade": "5",
    "subject": "Tiếng Anh",
@@ -1440,10 +1602,97 @@ window.MITI_CATALOG = {
    "controlLabels": [
     "Nói (Voice)"
    ],
-   "prompt": "prompts/04-english5/E5-13-speaking-mission.md"
+   "band": "FY",
+   "bandName": "A2 Flyers",
+   "bandCefr": "A2",
+   "prompt": "prompts/05-english-flyers/FY-04-speaking-mission.md"
   },
   {
-   "id": "E5-14",
+   "id": "FY-05",
+   "name": "Thám Tử Đọc Hiểu",
+   "grade": "5",
+   "subject": "Tiếng Anh",
+   "objective": "Đoạn văn 60-90 từ lớp 5: ý chính, chi tiết, trình tự, suy luận đơn giản; tìm bằng chứng gạch chân",
+   "mission": "Đọc đoạn văn và chỉ tay gạch chân đúng câu chứa bằng chứng cho nghi vấn.",
+   "cluster": "doc-hieu",
+   "topic": "đoạn văn 60-90 từ lớp 5: ý chính, chi tiết, trình tự, suy luận đơn giản; tìm bằng chứng gạch chân",
+   "controls": [
+    "POINT"
+   ],
+   "controlLabels": [
+    "Chỉ ngón tay trỏ (Point)"
+   ],
+   "band": "FY",
+   "bandName": "A2 Flyers",
+   "bandCefr": "A2",
+   "prompt": "prompts/05-english-flyers/FY-05-reading-detective.md"
+  },
+  {
+   "id": "FY-06",
+   "name": "Xây Ngữ Pháp",
+   "grade": "5",
+   "subject": "Tiếng Anh",
+   "objective": "Hiện tại đơn hiện tại tiếp diễn quá khứ; danh từ đếm được không đếm được; lượng từ some any",
+   "mission": "Chỉ ra chỗ sai trong câu rồi kéo thẻ sửa đúng để cây cầu mở màn tiếp.",
+   "cluster": "nguphap",
+   "topic": "hiện tại đơn hiện tại tiếp diễn quá khứ; danh từ đếm được không đếm được; lượng từ some any",
+   "controls": [
+    "POINT",
+    "DRAG"
+   ],
+   "controlLabels": [
+    "Chỉ ngón tay trỏ (Point)",
+    "Kéo thả (Drag)"
+   ],
+   "band": "FY",
+   "bandName": "A2 Flyers",
+   "bandCefr": "A2",
+   "prompt": "prompts/05-english-flyers/FY-06-grammar-workshop.md"
+  },
+  {
+   "id": "FY-07",
+   "name": "Xây Câu Chuyện Tranh",
+   "grade": "4",
+   "subject": "Tiếng Anh",
+   "objective": "Sắp xếp 3-5 tranh theo trình tự; chọn câu phù hợp với từng tranh",
+   "mission": "Chỉ và kéo các tranh theo đúng trình tự, rồi ghép câu mô tả cho từng tranh.",
+   "cluster": "ke-chuyen",
+   "topic": "sắp xếp 3-5 tranh theo trình tự; chọn câu phù hợp với từng tranh",
+   "controls": [
+    "POINT",
+    "DRAG"
+   ],
+   "controlLabels": [
+    "Chỉ ngón tay trỏ (Point)",
+    "Kéo thả (Drag)"
+   ],
+   "band": "FY",
+   "bandName": "A2 Flyers",
+   "bandCefr": "A2",
+   "prompt": "prompts/05-english-flyers/FY-07-story-studio.md"
+  },
+  {
+   "id": "FY-08",
+   "name": "Đường Đua Nghe",
+   "grade": "4",
+   "subject": "Tiếng Anh",
+   "objective": "Nghe và chọn từ tranh tương ứng; nghe và chọn số hoặc màu; khoảng 10-15 từ mỗi chủ đề",
+   "mission": "Nghe rồi nghiêng người bước sang làn chứa từ hoặc số đúng.",
+   "cluster": "nghe",
+   "topic": "nghe và chọn từ tranh tương ứng; nghe và chọn số hoặc màu; khoảng 10-15 từ mỗi chủ đề",
+   "controls": [
+    "STEP"
+   ],
+   "controlLabels": [
+    "Nghiêng người / bước sang vùng (Body tilt)"
+   ],
+   "band": "FY",
+   "bandName": "A2 Flyers",
+   "bandCefr": "A2",
+   "prompt": "prompts/05-english-flyers/FY-08-listen-race.md"
+  },
+  {
+   "id": "FY-09",
    "name": "Phòng Thí Nghiệm Tạo Từ",
    "grade": "5",
    "subject": "Tiếng Anh",
@@ -1459,24 +1708,30 @@ window.MITI_CATALOG = {
     "Chỉ ngón tay trỏ (Point)",
     "Kéo thả (Drag)"
    ],
-   "prompt": "prompts/04-english5/E5-14-word-formation-lab.md"
+   "band": "FY",
+   "bandName": "A2 Flyers",
+   "bandCefr": "A2",
+   "prompt": "prompts/05-english-flyers/FY-09-word-lab.md"
   },
   {
-   "id": "E5-15",
+   "id": "FY-10",
    "name": "Cúp Thử Thách Tiếng Anh",
    "grade": "5",
    "subject": "Tiếng Anh",
-   "objective": "Ôn tổng hợp nghe đọc viết nói ngữ pháp từ vựng tiếng Anh lớp 5",
+   "objective": "Ôn tổng hợp nghe đọc viết nói ngữ pháp từ vựng tiếng Anh",
    "mission": "Chỉ tay trả lời ở mỗi trạm, đủ điều kiện thì trạm sau mở khoá độ khó cao hơn.",
-   "cluster": "on-tap-e5",
-   "topic": "ôn tổng hợp nghe đọc viết nói ngữ pháp từ vựng tiếng Anh lớp 5",
+   "cluster": "on-tap",
+   "topic": "ôn tổng hợp nghe đọc viết nói ngữ pháp từ vựng tiếng Anh",
    "controls": [
     "POINT"
    ],
    "controlLabels": [
     "Chỉ ngón tay trỏ (Point)"
    ],
-   "prompt": "prompts/04-english5/E5-15-english-challenge-cup.md"
+   "band": "FY",
+   "bandName": "A2 Flyers",
+   "bandCefr": "A2",
+   "prompt": "prompts/05-english-flyers/FY-10-english-cup.md"
   }
  ],
  "legacy": [
@@ -1731,6 +1986,35 @@ window.MITI_CATALOG = {
    "code": "VOICE",
    "vi": "Nói (Voice)",
    "count": 2
+  }
+ ],
+ "bands": [
+  {
+   "code": "ST",
+   "label": "Starters",
+   "ten": "Pre A1 Starters",
+   "cefr": "Pre-A1",
+   "moTa": "từ nền tảng: danh từ số ít/số nhiều, this/that, There is/are, can, like + V-ing, hiện tại đơn, tính từ sở hữu.",
+   "tu": 541,
+   "count": 10
+  },
+  {
+   "code": "MV",
+   "label": "Movers",
+   "ten": "A1 Movers",
+   "cefr": "A1",
+   "moTa": "Starters + quá khứ đơn, so sánh hơn/nhất, will, must/have to, giới từ nơi chốn, đếm được/không đếm được, hiện tại tiếp diễn.",
+   "tu": 930,
+   "count": 10
+  },
+  {
+   "code": "FY",
+   "label": "Flyers",
+   "ten": "A2 Flyers",
+   "cefr": "A2",
+   "moTa": "Movers + hiện tại hoàn thành, bị động, mệnh đề quan hệ, câu điều kiện 1–2, should/might, danh động từ, tường thuật.",
+   "tu": 1431,
+   "count": 10
   }
  ]
 };

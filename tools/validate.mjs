@@ -9,8 +9,9 @@ import { LEGACY } from './data/legacy.mjs';
 import { GESTURES, BANK } from './data/gestures.mjs';
 import { cluster, CLUSTER_KEYS } from './data/clusters.mjs';
 import { standard } from './data/standards.mjs';
-import { EXAMPLES } from './data/examples.mjs';
+import { EXAMPLES, EXAMPLES_YLE } from './data/examples.mjs';
 import { ERROR_NOTES } from './data/error-notes.mjs';
+import { bandOfId, bandMeta, levelOf, wordsFor, YLE_BANDS } from './data/yle.mjs';
 import { readCatalog } from './lib/csv.mjs';
 import { CORE, CORE_LINES, CORE_TITLE, CORE_SHORT } from './lib/core.mjs';
 import { identity } from './data/identities.mjs';
@@ -53,6 +54,46 @@ if (CORE_LINES.length !== 14) bad(`CORE_LINES phải có đúng 14 dòng, hiện
   if (lech.length) throw new Error('Lệch dữ liệu lỗi (hard-fail) — ' + lech.length + ' vấn đề:\n' + lech.map((x) => '  • ' + x).join('\n'));
 }
 
+// ── 0b. Trần band Cambridge: mọi từ tiếng Anh trong câu mẫu phải thuộc band của game ──
+// Field thuần ASCII = cả câu là tiếng Anh; field có dấu tiếng Việt = chỉ xét phần trong ngoặc kép.
+// Vượt band (từ lần đầu xuất hiện ở band cao hơn) là DỪNG BUILD; từ lạ ngoài wordlist chỉ cảnh báo
+// vì prompt cố ý cài lỗi chính tả và tên riêng làm phương án nhiễu.
+const BAND_ORDER = ['ST', 'MV', 'FY'];
+const BAND_DIR = { ST: 'prompts/03-english-starters', MV: 'prompts/04-english-movers', FY: 'prompts/05-english-flyers' };
+const tokEn = (s) => [...String(s ?? '').matchAll(/[A-Za-z][A-Za-z'\-]*/g)].map((m) => m[0].toLowerCase());
+const engTokens = (s) => (!s ? [] : /[^\0-\x7f]/.test(s) ? [...String(s).matchAll(/"([^"]{2,60})"/g)].flatMap((m) => tokEn(m[1])) : tokEn(s));
+{
+  const lac = [];
+  const vuot = [];
+  const la = [];
+  for (const [key, rows] of Object.entries(EXAMPLES_YLE)) {
+    const [band, cl] = key.split(':');
+    if (!YLE_BANDS[band]) { lac.push(`${key}: band "${band}" không có trong YLE_BANDS.`); continue; }
+    if (!CLUSTER_KEYS.includes(cl)) { lac.push(`${key}: cụm "${cl}" không có trong clusters.mjs.`); continue; }
+    if (!rows || rows.length < 2) { lac.push(`${key}: phải có ít nhất 2 mục mẫu.`); continue; }
+    const tags = cluster(cl).tags;
+    rows.forEach((e, i) => {
+      if (!tags.includes(e.errorTag)) lac.push(`[errorTag lạc] ${key}[${i}]: "${e.errorTag}" không thuộc tags [${tags.join(', ')}].`);
+      const words = new Set([...engTokens(e.prompt), ...(e.choices ?? []).flatMap(engTokens), ...engTokens(e.answer), ...engTokens(e.explanation)]);
+      for (const w of words) {
+        if (w.length < 2) continue;
+        const lv = levelOf(w);
+        if (lv === null) la.push(`${key}: ${w}`);
+        else if (BAND_ORDER.indexOf(lv) > BAND_ORDER.indexOf(band)) vuot.push(`${key}: "${w}" thuộc ${lv} > band ${band}`);
+      }
+    });
+  }
+  for (const g of GAMES) {
+    if (g.band && !BAND_DIR[g.band]) lac.push(`game ${g.id}: band "${g.band}" không hợp lệ.`);
+    if (!g.band && BAND_ORDER.includes(g.id.slice(0, 2))) lac.push(`game ${g.id}: thiếu band trong games.mjs.`);
+  }
+  if (lac.length || vuot.length) {
+    throw new Error('Lệch dữ liệu band Cambridge (hard-fail) — ' + (lac.length + vuot.length) + ' vấn đề:\n'
+      + [...lac, ...vuot].map((x) => '  • ' + x).join('\n'));
+  }
+  if (la.length) alarms.push(`⚠ ${la.length} từ trong câu mẫu không có trong wordlist Cambridge (tên riêng / lỗi chính tả chủ ý): ${[...new Set(la)].slice(0, 8).join(' · ')}`);
+}
+
 // ── 1. Catalog: đúng 85 dòng, khớp id với tools/data/games.mjs, đường dẫn prompt tồn tại ──
 const CAT_REL = 'catalogs/GAME_CATALOG.csv';
 let rows = [];
@@ -66,6 +107,17 @@ if (!exists(CAT_REL)) {
   for (const id of gameIds) if (!catIds.has(id)) bad(`Catalog thiếu game ${id} (có trong games.mjs).`);
   for (const id of catIds) if (!gameIds.has(id)) bad(`Catalog có id ${id} không tồn tại trong games.mjs.`);
   if (GAMES.length !== 85) bad(`games.mjs phải có 85 game, hiện ${GAMES.length}.`);
+  for (const r of rows) {
+    const idBand = bandOfId(r.id);
+    if (r.band !== (idBand ?? '')) bad(`Catalog ${r.id}: cột band "${r.band}" không khớp mã tiền tố id (${idBand ?? 'không có'}).`);
+    if (r.band && !BAND_DIR[r.band]) bad(`Catalog ${r.id}: band "${r.band}" không hợp lệ.`);
+    if (r.band && !r.prompt.startsWith(BAND_DIR[r.band] + '/')) bad(`Catalog ${r.id}: prompt phải nằm trong ${BAND_DIR[r.band]}/, hiện là ${r.prompt}.`);
+    if (!r.band && /^(03|04|05)-english/.test(r.prompt)) bad(`Catalog ${r.id}: game Toán không được nằm trong thư mục tiếng Anh.`);
+    if (r.band && r.mon !== 'Tiếng Anh') bad(`Catalog ${r.id}: game band ${r.band} phải có mon "Tiếng Anh", hiện là "${r.mon}".`);
+    if (!['4', '5'].includes(r.lop)) bad(`Catalog ${r.id}: cột lop phải là 4 hoặc 5, hiện là "${r.lop}".`);
+  }
+  const soBand = BAND_ORDER.map((b) => rows.filter((r) => r.band === b).length);
+  if (soBand.join('/') !== '10/10/10') bad(`Mỗi band phải có đúng 10 game, hiện ST/MV/FY = ${soBand.join('/')}.`);
 }
 
 // ── 2. Kiểm một prompt theo hợp đồng mới: 5 mục + 14 dòng CORE + trường dữ liệu riêng game ──
@@ -123,7 +175,7 @@ for (const g of GAMES) {
   if (!exists(rel)) { bad(`${where}: file không tồn tại — chạy \`node tools/build-prompts.mjs\`.`); continue; }
   const text = read(rel);
   const b = checkLength(rel, text, where);
-  sizeStats.push({ rel, b });
+  sizeStats.push({ rel, b, nhom: row.mon + (g.band ? ' ' + g.band : '') });
 
   // Khung file: # <ID> — <Tên>, 1 khối ```text, khối ghi chú cuối file.
   if (!text.startsWith(`# ${g.id} — `)) bad(`${where}: dòng đầu phải là "# ${g.id} — <Tên game>".`);
@@ -184,6 +236,23 @@ for (const g of GAMES) {
   for (const hex of (it ? it.palette : [])) {
     if (!text.includes(hex)) bad(`${where}: thiếu mã màu riêng game ${hex} (identities.mjs).`);
   }
+
+  // Prompt tiếng Anh phải in band + trần từ + trần ngữ pháp; prompt Toán cấm nhắc tới band.
+  if (g.band) {
+    const bm = bandMeta(g.band);
+    for (const needle of [
+      `Band Cambridge: **${bm.ten}** (${bm.cefr})`,
+      'Trần từ vựng:',
+      'Trần ngữ pháp:',
+      `${wordsFor(g.band).size} từ thuộc ${bm.tukhoa}`,
+      `trong đúng band ${bm.tukhoa}`,
+    ]) {
+      if (!text.includes(needle)) bad(`${where}: thiếu ràng buộc band "${needle.slice(0, 48)}…".`);
+    }
+    if (!/\n  id: "q1", level: 1/.test(text)) bad(`${where}: thiếu mục mẫu QUESTION_DATA in dấu (2 dòng "  id: "q1"…").`);
+  } else if (text.includes('Band Cambridge')) {
+    bad(`${where}: game Toán không được nhắc tới band Cambridge.`);
+  }
 }
 
 // ── 4. Bản sắc riêng: mascot + bảng màu không được trùng giữa 85 game (giữ từ validator cũ) ──
@@ -243,6 +312,10 @@ const max = sizeStats.reduce((m, x) => (x.b > m.b ? x : m), { rel: '-', b: 0 });
 console.log(`Đo 85 prompt game: ${sizeStats.length} file đã đọc, tổng ${total.toLocaleString('vi')} byte, `
   + `trung bình ${sizeStats.length ? Math.round(total / sizeStats.length).toLocaleString('vi') : 0} byte/file, `
   + `lớn nhất ${max.b.toLocaleString('vi')} byte (${max.rel}). Trần ${MAX_BYTES} byte.`);
+console.log('Theo nhóm: ' + [...new Set(sizeStats.map((x) => x.nhom))].map((n) => {
+  const s = sizeStats.filter((x) => x.nhom === n);
+  return `${n} ${s.length} file, lớn nhất ${Math.max(...s.map((x) => x.b)).toLocaleString('vi')} byte`;
+}).join(' · '));
 if (alarms.length) console.warn(alarms.join('\n'));
 
 if (errors.length) {

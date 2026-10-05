@@ -62,21 +62,24 @@ Toàn bộ prompt nằm trong file `.md` riêng, mỗi file một game, copy ngu
 
 | Nhóm | Số lượng | Mở ở đâu |
 |:---|:---:|:---|
-| Prompt game chuẩn (Toán 4 · Toán 5 · Tiếng Anh 4 · Tiếng Anh 5) | **85** | [Dashboard MiTi](https://hoatran1127.github.io/New/) hoặc [catalogs/GAME_CATALOG.md](catalogs/GAME_CATALOG.md) |
+| Prompt game chuẩn (Toán 4 · Toán 5 · Starters · Movers · Flyers) | **85** | [Dashboard MiTi](https://hoatran1127.github.io/New/) hoặc [catalogs/GAME_CATALOG.md](catalogs/GAME_CATALOG.md) |
 | Khung master 5 mục để tự viết prompt mới | 1 | [prompts/00-master-canvas-prompt.md](prompts/00-master-canvas-prompt.md) |
 | Biểu mẫu điền nhanh | 1 | [prompts/templates/game-prompt-template.md](prompts/templates/game-prompt-template.md) |
 | Bảng kiểm nghiệm thu cầm tay (14 mục cốt lõi + 6 việc người thử) | 1 | [prompts/CHECKLIST_NGHIEP_THU.md](prompts/CHECKLIST_NGHIEP_THU.md) |
 | Biến thể điều khiển (Point · Swipe · Drag/Grab · Voice · No Camera) | **425** | [prompts/VARIANTS_425.md](prompts/VARIANTS_425.md) — 85 game × 5 kiểu, sinh tự động |
 | Prompt legacy đời đầu (giữ cơ chế cũ, dùng ràng buộc cốt lõi hiện hành) | **12** | [prompts/README.md](prompts/README.md) |
 
-## 📚 85 GAME CHUẨN THEO MÔN & KHỐI LỚP
+## 📚 85 GAME CHUẨN: TOÁN THEO KHỐI LỚP, TIẾNG ANH THEO BAND CAMBRIDGE
 
 | Môn Học & Khối Lớp | Số Lượng | Nội Dung Trọng Tâm | Link |
 |:---|:---:|:---|:---|
 | 🔢 **Toán Lớp 4** | **40** | Cấu tạo số, 4 phép tính, phân số, hình học, diện tích, góc, đổi đơn vị đo | [prompts/01-toan4/](prompts/01-toan4/) |
 | 📐 **Toán Lớp 5** | **15** | Số thập phân, tỉ số %, chuyển động s = v × t, thể tích khối hộp | [prompts/02-toan5/](prompts/02-toan5/) |
-| 🇬🇧 **Tiếng Anh Lớp 4** | **15** | Từ vựng chủ đề, nghe chọn tranh, chính tả, ghép câu | [prompts/03-english4/](prompts/03-english4/) |
-| 🌍 **Tiếng Anh Lớp 5** | **15** | Đọc hiểu thám tử, ngữ pháp tương tác, bản đồ phiêu lưu | [prompts/04-english5/](prompts/04-english5/) |
+| 🇬🇧 **Tiếng Anh · Pre A1 Starters** | **10** | Từ vựng nền tảng (Animals, School, Family, Colours), nghe chọn tranh, chính tả, ghép câu, phonics | [prompts/03-english-starters/](prompts/03-english-starters/) |
+| 🌍 **Tiếng Anh · A1 Movers** | **10** | Quá khứ đơn, so sánh hơn/nhất, xây từ, đặt câu hỏi, bộ ba trí nhớ, ôn tổng hợp | [prompts/04-english-movers/](prompts/04-english-movers/) |
+| 🎓 **Tiếng Anh · A2 Flyers** | **10** | Điền từ vào đoạn văn, cụm từ, nói mô tả tranh, đọc hiểu thám tử, kể chuyện | [prompts/05-english-flyers/](prompts/05-english-flyers/) |
+
+Trình độ tiếng Anh chia theo **band Cambridge YLE** (wordlist 2025: 515 từ Starters · +379 Movers · +497 Flyers = **1 391 từ**), cộng từ SGK Việt Nam và số đếm trong `tools/data/yle.mjs` → dải từ tích luỹ **541 / 930 / 1 431**. Mỗi prompt in rõ band, trần từ vựng và 8 cấu trúc ngữ pháp của band; `validate.mjs` chặn câu mẫu dùng từ vượt band. Lớp 4/5 vẫn là metadata của từng game và dòng "Yêu cầu cần đạt" SGK vẫn in nguyên văn để giáo viên đối chiếu.
 
 Ngân hàng dữ liệu mỗi prompt: **Toán tối thiểu 30 mục, Tiếng Anh tối thiểu 60 mục**, chia 3 mức độ, mỗi mục có `answer` + `explanation` + `loiViet` kiểm chứng được bằng code.
 
@@ -109,20 +112,22 @@ tools/data/identities.mjs   85 bản sắc riêng: mascot, tính cách, 3 câu t
 tools/data/sports.mjs       14 môn thể thao theo mã điều khiển
 tools/data/folk.mjs         14 trò chơi dân gian theo mã điều khiển
 tools/data/standards.mjs    57 dòng chuẩn SGK: mạch, nhãn HUD, khoảng tuần, yêu cầu cần đạt, mẹo nhớ
-tools/data/examples.mjs     mục QUESTION_DATA mẫu cho từng cụm
+tools/data/examples.mjs     mục QUESTION_DATA mẫu cho từng cụm (Toán) + 25 bộ theo band "ST:cluster" (EXAMPLES_YLE)
+tools/data/yle.mjs          1 391 từ wordlist Cambridge YLE 2025 chia 3 band + 15 chủ đề + 8 cấu trúc/band + levelOf()
 tools/data/error-notes.mjs  nhãn lỗi tiếng Việt (errorTag + loiViet)
 tools/data/legacy.mjs       12 prompt đời đầu
         │
         ├─ node tools/build.mjs
         │    ├─ build-catalog.mjs     → catalogs/GAME_CATALOG.csv + .md
-        │    ├─ build-prompts.mjs     → 85 file prompts/01-toan4 · 02-toan5 · 03-english4 · 04-english5
+        │    ├─ build-prompts.mjs     → 85 file prompts/01-toan4 · 02-toan5 · 03-english-starters · 04-english-movers · 05-english-flyers
         │    ├─ build-variants.mjs    → prompts/VARIANTS_425.md (85 × 5 kiểu điều khiển)
         │    ├─ upgrade-legacy.mjs    → prompts/01..12 legacy (5 mục, ≤15 KB)
         │    ├─ annotate-docs.mjs     → chú thích chuẩn hiện hành vào 5 tài liệu docs/
         │    ├─ build-dashboard.mjs   → catalogs/GAME_CATALOG.js cho index.html
         │    ├─ build-acceptance.mjs  → prompts/CHECKLIST_NGHIEP_THU.md
         │    └─ validate.mjs          → chặn: thiếu 1 mục, thiếu 14 dòng CORE, vượt 15 KB,
-        │                               mascot/màu trùng, chuỗi cấm (${}, Tailwind CDN,
+        │                               mascot/màu trùng, từ tiếng Anh mẫu vượt band Cambridge,
+        │                               chuỗi cấm (${}, Tailwind CDN,
         │                               @mediapipe/hands, camera_utils, chữ Trung Quốc, TODO)
 tools/lib/core.mjs          ★ 14 dòng ràng buộc cốt lõi — nguồn duy nhất của mọi quy định chung
 tools/lib/csv.mjs           đọc/ghi catalog

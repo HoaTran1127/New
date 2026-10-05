@@ -5,6 +5,7 @@ import { LEGACY } from './data/legacy.mjs';
 import { GESTURES } from './data/gestures.mjs';
 import { cluster } from './data/clusters.mjs';
 import { readCatalog } from './lib/csv.mjs';
+import { bandMeta, wordsFor, YLE_BANDS } from './data/yle.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const OUT = path.join(ROOT, 'catalogs', 'GAME_CATALOG.js');
@@ -28,6 +29,9 @@ const games = GAMES.map((g) => {
     topic: cl.noi_dung,
     controls: g.gestures,
     controlLabels: g.gestures.map((c) => GESTURES[c].vi),
+    band: r.band || null,
+    bandName: r.band ? YLE_BANDS[r.band].ten : null,
+    bandCefr: r.band ? YLE_BANDS[r.band].cefr : null,
     prompt: r.prompt,
   };
 });
@@ -49,12 +53,23 @@ const controls = Object.entries(GESTURES)
   .map(([code, g]) => ({ code, vi: g.vi, count: games.filter((x) => x.controls.includes(code)).length }))
   .filter((c) => c.count > 0);
 
+const bands = ['ST', 'MV', 'FY'].map((code) => ({
+  code,
+  label: YLE_BANDS[code].tukhoa,
+  ten: YLE_BANDS[code].ten,
+  cefr: YLE_BANDS[code].cefr,
+  moTa: YLE_BANDS[code].moTa,
+  tu: wordsFor(code).size,
+  count: games.filter((g) => g.band === code).length,
+}));
+
 const banner = '// SINH TỰ ĐỘNG từ catalogs/GAME_CATALOG.csv + tools/data — KHÔNG sửa tay file này.\n// Chạy: node tools/build.mjs\n';
 
 fs.writeFileSync(
   OUT,
-  banner + 'window.MITI_CATALOG = ' + JSON.stringify({ generatedBy: 'tools/build-dashboard.mjs', games, legacy, controls }, null, 1) + ';\n',
+  banner + 'window.MITI_CATALOG = ' + JSON.stringify({ generatedBy: 'tools/build-dashboard.mjs', games, legacy, controls, bands }, null, 1) + ';\n',
   'utf8',
 );
 
-console.log(`Đã sinh catalogs/GAME_CATALOG.js: ${games.length} game chuẩn + ${legacy.length} legacy, ${controls.length} kiểu điều khiển.`);
+console.log(`Đã sinh catalogs/GAME_CATALOG.js: ${games.length} game chuẩn + ${legacy.length} legacy, ${controls.length} kiểu điều khiển, `
+  + 'band ' + bands.map((b) => `${b.label} ${b.count} game/${b.tu} từ`).join(' · ') + '.');

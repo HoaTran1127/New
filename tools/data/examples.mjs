@@ -2,6 +2,7 @@
 // Khuôn: { prompt, choices, answer, explanation, errorTag, dang }.
 // dang = "nhin" (nhìn–chỉ–chọn, không tính) hoặc "tinh" (ĐÚNG MỘT phép tính một bước); chuẩn của vòng "nhẹ đầu".
 // validate.mjs chặn nếu đề dài quá 16 từ hoặc mục "tinh" mang hai dấu phép tính — đổi ở đây rồi chạy node tools/build.mjs.
+// Game Tiếng Anh dùng EXAMPLES_YLE, key "BAND:cluster" (ST|MV|FY) — mọi từ tiếng Anh trong câu mẫu phải thuộc band đó.
 
 export const EXAMPLES = {
   'hang-so': [
@@ -152,84 +153,114 @@ export const EXAMPLES = {
     { prompt: "Tính 3,5 × 4,2.", choices: ["14,7","14,70","1,47"], answer: "14,7", explanation: "Bỏ dấu phẩy: 35 × 42 = 1470; đếm 2 chữ số thập phân → 14,70 = 14,7.", errorTag: "chon_sai_chi_luoc_giai", dang: "tinh" },
     { prompt: "Một lớp 40 bạn, 60% thích toán. Có bao nhiêu bạn?", choices: ["24 bạn","26 bạn","16 bạn"], answer: "24 bạn", explanation: "40 : 100 × 60 = 24. Kiểm tra: 60% của 40 phải nhỏ hơn 40.", errorTag: "quen_thu_thi_giua_chung", dang: "tinh" },
   ],
-  'tu-vung-e4': [
-    { prompt: "Con voi trong tiếng Anh là từ nào?", choices: ["elephant","tiger","zebra"], answer: "elephant", explanation: "elephant = con voi /ˈel.ɪ.fənt/. tiger = con hổ, zebra = ngựa vằn.", errorTag: "nham_gan_nghia", dang: "nhin" },
-    { prompt: "Từ nào chỉ \"bác sĩ\"?", choices: ["doctor","teacher","farmer"], answer: "doctor", explanation: "doctor = bác sĩ; teacher = giáo viên; farmer = nông dân.", errorTag: "nham_gan_nghia", dang: "nhin" },
-  ],
-  'nghe-e4': [
-    { prompt: "Nghe: \"schoolbag\". Chọn tranh đúng.", choices: ["cặp sách","quyển sách","cái bàn"], answer: "cặp sách", explanation: "schoolbag = cặp sách (danh từ ghép school + bag).", errorTag: "bo_lo_tu_dai", dang: "nhin" },
-    { prompt: "Nghe: \"thirteen\". Chọn số.", choices: ["13","30","3"], answer: "13", explanation: "thirteen /ˌθɜːˈtiːn/ = 13; phân biệt với thirty /ˈθɜː.ti/ = 30 ở trọng âm.", errorTag: "phien_am_gan_giong", dang: "nhin" },
-  ],
-  'ghep-tranh-tu': [
-    { prompt: "Ghép tranh \"ngôi trường\" với từ đúng.", choices: ["school","room","book"], answer: "school", explanation: "school = trường học.", errorTag: "nham_cap_gan_chu", dang: "nhin" },
-    { prompt: "Kéo từ vào tranh \"a red pencil\".", choices: ["pencil","ruler","rubber"], answer: "pencil", explanation: "pencil = bút chì; a red pencil = một chiếc bút chì màu đỏ.", errorTag: "hoi_tu_ngan_dai", dang: "nhin" },
-  ],
-  'chinh-ta': [
-    { prompt: "Cách viết đúng của \"ngựa\" trong tiếng Anh?", choices: ["horse","harse","hors"], answer: "horse", explanation: "horse /hɔːs/. Thêm \"a\" là lỗi phổ biến vì nghe gần âm /ɔː/.", errorTag: "nham_v_i_y", dang: "nhin" },
-    { prompt: "Điền chữ còn thiếu: s _ o o l", choices: ["h","c","k"], answer: "h", explanation: "school — cụm \"ch\" đứng đầu, không phải âm đơn.", errorTag: "double_consonant", dang: "nhin" },
-  ],
-  'xay-tu': [
-    { prompt: "Ghép các chữ cái s, c, h, o, o, l thành từ chỉ trường học.", choices: ["school","shcoool","cschool"], answer: "school", explanation: "Dùng đúng 6 chữ đã cho, không thêm không bớt: s-c-h-o-o-l. Có hai chữ o.", errorTag: "sai_thu_tu_chu_cai", dang: "nhin" },
-    { prompt: "Ghép r, u, l, e, r thành đồ dùng học tập.", choices: ["ruler","ruerl","rulr"], answer: "ruler", explanation: "ruler = thước kẻ, 5 chữ cái, thiếu chữ e là lỗi hay gặp.", errorTag: "thieu_chu_cai_cuoi", dang: "nhin" },
-  ],
-  'xep-cau': [
-    { prompt: "Sắp xếp: is / This / my / mother", choices: ["This is my mother","is This my mother","This my is mother"], answer: "This is my mother", explanation: "Trật tự: chủ ngữ (This) + động từ to be (is) + cụm danh từ (my mother).", errorTag: "vi_tri_tru_tu_sai", dang: "nhin" },
-    { prompt: "Chọn đáp án: There ... two cats in the room.", choices: ["are","is","am"], answer: "are", explanation: "two cats là số nhiều nên dùng are.", errorTag: "thieu_to_be", dang: "nhin" },
-  ],
-  'trieu-tu-vung': [
-    { prompt: "Lật thẻ: nối \"hospital\" với tranh.", choices: ["bệnh viện","trường học","cửa hàng"], answer: "bệnh viện", explanation: "hospital = bệnh viện /ˈhɒs.pɪ.təl/.", errorTag: "nho_vi_tri_khong_nho_nghia", dang: "nhin" },
-    { prompt: "Ghép cặp \"strong\" với nghĩa.", choices: ["mạnh mẽ","cao","nhanh"], answer: "mạnh mẽ", explanation: "strong = mạnh mẽ; đối nghĩa với weak.", errorTag: "nham_hinh_anh_tuong_tu", dang: "nhin" },
-  ],
-  'phonics': [
-    { prompt: "Chọn từ chứa âm \"sh\".", choices: ["fish","sit","cup"], answer: "fish", explanation: "\"sh\" trong fish /ʃ/. sit có âm \"s\" /s/ — hai âm dễ lẫn.", errorTag: "mau_chu_gh", dang: "nhin" },
-    { prompt: "Từ nào có mẫu chữ \"ee\"?", choices: ["see","say","so"], answer: "see", explanation: "see /siː/ có \"ee\"; say có \"ay\".", errorTag: "ket_thuc_ed_ung", dang: "nhin" },
-  ],
-  'cau-hoi': [
-    { prompt: "Sắp thành câu hỏi: this / is / What", choices: ["What is this","Is what this","This is what"], answer: "What is this", explanation: "Từ để hỏi What đứng đầu, sau đó là động từ to be rồi chủ ngữ.", errorTag: "thieu_tu_hoi", dang: "nhin" },
-    { prompt: "Câu hỏi đúng cho \"She is ten years old.\"", choices: ["How old are you?","Where are you?","Who are you?"], answer: "How old are you?", explanation: "Hỏi tuổi dùng How old; câu trả lời phải có số tuổi.", errorTag: "tra_loi_dung_truc_tu_hoi", dang: "nhin" },
-  ],
-  'ke-chuyen': [
-    { prompt: "Sắp 3 tranh: (1) Lan ăn kem, (2) Lan mua kem, (3) Vỏ kem trên đất.", choices: ["2 – 1 – 3","1 – 2 – 3","3 – 2 – 1"], answer: "2 – 1 – 3", explanation: "Trình tự hợp lý: mua trước, ăn sau, rồi mới có vỏ kem.", errorTag: "thieu_thu_tu_menh_de", dang: "nhin" },
-    { prompt: "Chọn câu cho tranh \"cậu bé đang đọc sách\".", choices: ["He is reading a book","He plays football","He can swim"], answer: "He is reading a book", explanation: "Tranh diễn tả hành động đang xảy ra nên dùng thì hiện tại tiếp diễn.", errorTag: "nham_dong_tu_qua_khu", dang: "nhin" },
-  ],
-  'nghe-phan-loai': [
-    { prompt: "Nghe \"apple\" → phân loại vào rổ nào?", choices: ["Fruit","Animal","School"], answer: "Fruit", explanation: "apple là quả táo thuộc nhóm Fruit.", errorTag: "nhom_nghia_khong_rang_buoc", dang: "nhin" },
-    { prompt: "Nghe \"ruler\" → rổ đúng.", choices: ["Stationery","Food","Job"], answer: "Stationery", explanation: "ruler (thước kẻ) thuộc nhóm đồ dùng học tập; nhiều bạn nhầm với nhóm Food vì nghe ngắn.", errorTag: "am_tuong_dong", dang: "nhin" },
-  ],
-  'doc-hieu': [
-    { prompt: "Đọc \"Mai gets up at six. She has breakfast, then walks to school.\" Ý chính?", choices: ["Thói quen buổi sáng của Mai","Mai thích đi bộ","Trường của Mai rất xa"], answer: "Thói quen buổi sáng của Mai", explanation: "Ba câu đều mô tả chuỗi việc buổi sáng; chi tiết đi bộ chỉ là một phần.", errorTag: "chi_tiet_khong_phai_y_chinh", dang: "nhin" },
-    { prompt: "Từ nào trong bài là bằng chứng cho \"Mai đi bộ tới trường\"?", choices: ["walks to school","has breakfast","gets up"], answer: "walks to school", explanation: "Bằng chứng phải là cụm gốc trong bài, không phải suy luận.", errorTag: "suy_luan_thieu_bang_chung", dang: "nhin" },
-  ],
-  'nguphap-e5': [
-    { prompt: "Chọn dạng đúng: She ... to school every day.", choices: ["goes","go","going"], answer: "goes", explanation: "Hiện tại đơn với chủ ngữ số ít ngôi 3 thêm -es: goes.", errorTag: "dem_khong_dong_tu_them_s", dang: "nhin" },
-    { prompt: "Chọn: Look! The boys ... football.", choices: ["are playing","play","plays"], answer: "are playing", explanation: "\"Look!\" báo hiệu hành động đang diễn ra → hiện tại tiếp diễn.", errorTag: "thi_hieu_du_lu_lien_quan", dang: "nhin" },
-  ],
-  'dien-tu-trong-doan-van': [
-    { prompt: "Điền: I ... my homework in the evening.", choices: ["do","make","take"], answer: "do", explanation: "Cụm cố định \"do homework\"; \"make\" không dùng với homework.", errorTag: "chon_dong_tu_theo_nghia_viet", dang: "nhin" },
-    { prompt: "Điền: There are ... apples in the basket.", choices: ["some","any","much"], answer: "some", explanation: "Câu khẳng định với danh từ đếm được số nhiều dùng some; any dùng cho câu phủ định/nghi vấn.", errorTag: "ham_duoc_dung_lai", dang: "nhin" },
-  ],
-  'xay-cum-tu': [
-    { prompt: "Ghép cụm: a / of / pair / shoes", choices: ["a pair of shoes","a shoes of pair","pair a of shoes"], answer: "a pair of shoes", explanation: "Cụm số lượng: a pair of + danh từ số nhiều.", errorTag: "cum_tu_thieu_danh_tu", dang: "nhin" },
-    { prompt: "Cụm nào đúng với \"một cốc nước cam\"?", choices: ["a glass of orange juice","a orange juice glass","an glass of juice"], answer: "a glass of orange juice", explanation: "Dùng a glass of cho đồ uống; không lặp mạo từ.", errorTag: "luong_tu_tru_danh_tu", dang: "nhin" },
-  ],
-  'bo-ba-tri-nho': [
-    { prompt: "Ghép bộ ba: \"monkey\" – tranh – nghĩa.", choices: ["con khỉ","con voi","con hổ"], answer: "con khỉ", explanation: "monkey = con khỉ; đọc lại /ˈmʌŋ.ki/ sau khi ghép đúng.", errorTag: "nham_gan_tranh", dang: "nhin" },
-    { prompt: "Bộ ba nào đúng?", choices: ["library – tranh giá sách – thư viện","library – tranh sân chơi – công viên","library – tranh bếp – phòng ăn"], answer: "library – tranh giá sách – thư viện", explanation: "Ba thẻ phải cùng chỉ một khái niệm; tranh sai là nhiễu phổ biến.", errorTag: "nghia_cua_thu_tu_thieu", dang: "nhin" },
-  ],
-  'noi': [
-    { prompt: "Tình huống: bạn hỏi đường tới thư viện. Nói câu:", choices: ["How do I get to the library","Where are you from","What time is it"], answer: "How do I get to the library", explanation: "Khung câu hỏi đường: How do I get to + địa điểm.", errorTag: "thieu_am_dau_cuoi", dang: "nhin" },
-    { prompt: "Nói câu theo tranh: cậu bé đang ăn táo.", choices: ["He is eating an apple","He eats banana","She is drinking milk"], answer: "He is eating an apple", explanation: "Đủ chủ ngữ + hiện tại tiếp diễn + đúng danh từ \"an apple\".", errorTag: "ngat_giua_cau", dang: "nhin" },
-  ],
-  'on-tap-e5': [
-    { prompt: "Chọn từ sai chính tả.", choices: ["beautifull","beautiful","beauty"], answer: "beautifull", explanation: "beautiful chỉ có một chữ l; đây là lỗi hay gặp nhất khi ôn viết.", errorTag: "bo_qua_chua_bai", dang: "nhin" },
-    { prompt: "Sửa câu: She don’t like milk.", choices: ["She doesn’t like milk","She not like milk","She likes not milk"], answer: "She doesn’t like milk", explanation: "Chủ ngữ số ít ngôi 3 dùng doesn’t.", errorTag: "nham_ke_nang_can_hoc", dang: "nhin" },
-  ],
-  'dao-kynang-e4': [
-    { prompt: "Đảo Từ vựng: chọn nghĩa của \"window\".", choices: ["cửa sổ","cánh cửa","mái nhà"], answer: "cửa sổ", explanation: "window = cửa sổ; door = cánh cửa — cặp từ dễ nhầm.", errorTag: "bo_dao_thu", dang: "nhin" },
-    { prompt: "Đảo Chính tả: từ nào viết đúng?", choices: ["yellow","yelow","yellou"], answer: "yellow", explanation: "yellow có hai chữ l và kết thúc \"ow\".", errorTag: "khong_dat_chuan_do_nang", dang: "nhin" },
-  ],
   'boss-cong-thu': [
     { prompt: "Giai đoạn 1: Tính 125 × 8.", choices: ["1 000","1 0000","960"], answer: "1 000", explanation: "125 × 8 = 1000 vì 125 × 4 = 500 rồi × 2.", errorTag: "quen_chi_luoc", dang: "tinh" },
     { prompt: "Giai đoạn 2: Diện tích hình thoi có hai đường chéo 10 cm và 6 cm.", choices: ["30 cm²","60 cm²","16 cm²"], answer: "30 cm²", explanation: "(10 × 6) : 2 = 30 cm²; giai đoạn này kiểm tra việc nhớ chia 2.", errorTag: "quen_chi_luoc", dang: "nhin" },
+  ],
+};
+
+// Hai câu mẫu cho từng (band, cụm) của mạch Tiếng Anh. Từ vựng và cấu trúc phải nằm trong
+// band Cambridge YLE tương ứng (tools/data/yle.mjs): validate.mjs chặn nếu một từ tiếng Anh
+// trong đề thuộc band cao hơn band của game. errorTag vẫn lấy từ cụm kiến thức.
+export const EXAMPLES_YLE = {
+  'ST:tu-vung': [
+    { prompt: "Nghĩa của \"window\" là gì?", choices: ["cửa sổ","cánh cửa","mái nhà"], answer: "cửa sổ", explanation: "window = cửa sổ; door mới là cánh cửa — hai từ cùng chỉ bộ phận ngôi nhà nên rất dễ chọn nhầm.", errorTag: "nham_gan_nghia", dang: "nhin" },
+    { prompt: "Chọn đáp án đúng: I have two ...", choices: ["books","book","box"], answer: "books", explanation: "Danh từ đếm được số nhiều thêm s: two books. 'box' là cái hộp, khác nghĩa và cũng thiếu s.", errorTag: "thieu_s_danh_tu_so_nhieu", dang: "nhin" },
+  ],
+  'ST:nghe': [
+    { prompt: "Nghe: \"ship\". Chọn tranh đúng.", choices: ["con tàu","con cừu","con dê"], answer: "con tàu", explanation: "ship /ʃɪp/ = con tàu; sheep /ʃiːp/ = con cừu — hai từ khác nhau ở độ dài nguyên âm.", errorTag: "phien_am_gan_giong", dang: "nhin" },
+    { prompt: "Nghe: \"cats\". Điều gì đúng?", choices: ["nhiều con mèo","một con mèo","mèo đang ngủ"], answer: "nhiều con mèo", explanation: "Âm cuối /s/ của cats báo danh từ số nhiều: nhiều con mèo.", errorTag: "am_cuoi_s_ed_t", dang: "nhin" },
+  ],
+  'ST:ghep-tranh-tu': [
+    { prompt: "Tranh vẽ một cái thước. Ghép từ nào?", choices: ["ruler","rubber","crayon"], answer: "ruler", explanation: "ruler = thước kẻ; rubber = tẩy. Hai từ cùng bắt đầu bằng 'ru' nên phải đọc hết từ.", errorTag: "nham_cap_gan_chu", dang: "nhin" },
+    { prompt: "Tranh một con voi. Chọn từ nào?", choices: ["elephant","ant","bee"], answer: "elephant", explanation: "elephant = con voi; ant = con kiến, bee = con ong. Đừng chọn từ ngắn nhất chỉ vì quen mặt chữ.", errorTag: "hoi_tu_ngan_dai", dang: "nhin" },
+  ],
+  'ST:chinh-ta': [
+    { prompt: "Từ nào viết đúng nghĩa \"màu xanh lá\"?", choices: ["green","gren","grean"], answer: "green", explanation: "green có hai chữ e liền nhau; 'gren' thiếu một chữ e.", errorTag: "thieu_chu_cai", dang: "nhin" },
+    { prompt: "Chọn cách viết đúng của \"quả táo\".", choices: ["apple","aple","aplle"], answer: "apple", explanation: "apple nhân đôi chữ p nhưng chỉ có một chữ l.", errorTag: "double_consonant", dang: "nhin" },
+  ],
+  'ST:xep-cau': [
+    { prompt: "Xếp thành câu đúng: is / This / a / pencil", answer: "This is a pencil.", explanation: "Câu khẳng định cần động từ to be ngay sau chủ ngữ: This is a pencil.", errorTag: "thieu_to_be", dang: "nhin" },
+    { prompt: "Xếp thành câu đúng: a / has / bag / She", answer: "She has a bag.", explanation: "Chủ ngữ đứng đầu, động từ giữa, cụm danh từ cuối: She has a bag.", errorTag: "vi_tri_tru_tu_sai", dang: "nhin" },
+  ],
+  'ST:trieu-tu-vung': [
+    { prompt: "Lật thẻ tranh con chó. Thẻ từ nào ghép đúng?", choices: ["dog","cat","cow"], answer: "dog", explanation: "dog = con chó; cow = con bò, cat = con mèo. Ghép theo nghĩa của tranh, không theo vị trí đã nhớ.", errorTag: "nho_vi_tri_khong_nho_nghia", dang: "nhin" },
+    { prompt: "Tranh vẽ con cừu. Ghép từ nào?", choices: ["sheep","ship","fish"], answer: "sheep", explanation: "sheep = con cừu; ship = con tàu — hai từ gần giống nhau, nhìn tranh để phân biệt.", errorTag: "nham_hinh_anh_tuong_tu", dang: "nhin" },
+  ],
+  'ST:phonics': [
+    { prompt: "Vuốt từ có âm đầu /ð/.", choices: ["these","zebra","sun"], answer: "these", explanation: "these bắt đầu bằng 'th' hữu thanh /ð/; zebra là /z/, sun là /s/.", errorTag: "am_dau_th_c", dang: "nhin" },
+    { prompt: "Vuốt từ kết thúc bằng âm /ŋ/.", choices: ["sing","ship","cat"], answer: "sing", explanation: "sing kết thúc bằng 'ng' /ŋ/; ship kết thúc /p/, cat kết thúc /t/.", errorTag: "ket_thuc_ed_ung", dang: "nhin" },
+  ],
+  'ST:nghe-phan-loai': [
+    { prompt: "Nghe \"bear\". Thả thẻ vào rổ nào?", choices: ["Động vật","Thức ăn","Quần áo"], answer: "Động vật", explanation: "bear = con gấu thuộc Động vật; 'pear' (quả lê) mới thuộc Thức ăn — hai từ đọc gần giống.", errorTag: "am_tuong_dong", dang: "nhin" },
+    { prompt: "Nghe hai lần: \"classroom\". Từ này thuộc rổ nào?", choices: ["Trường học","Gia đình","Thời tiết"], answer: "Trường học", explanation: "classroom = lớp học, thuộc Trường học. Nghe lần hai để kiểm tra âm cuối /uːm/.", errorTag: "phat_lai_nhieu_lan", dang: "nhin" },
+  ],
+  'ST:dao-kynang': [
+    { prompt: "Bến Từ vựng: chọn nghĩa của \"apple\".", choices: ["quả táo","quả cam","quả chuối"], answer: "quả táo", explanation: "apple = quả táo; orange = quả cam, banana = quả chuối.", errorTag: "bo_dao_thu", dang: "nhin" },
+    { prompt: "Bến Nghe: đảo kế tiếp mở khi đủ 3/3 câu đúng, em mới sai 1 câu. Làm gì?", choices: ["nghe lại và sửa câu còn sai","chuyển ngay sang đảo khác","bỏ luôn đảo này"], answer: "nghe lại và sửa câu còn sai", explanation: "Chuẩn mở đảo là 3/3 câu đúng, nên sửa câu còn sai thay vì bỏ dở.", errorTag: "khong_dat_chuan_do_nang", dang: "nhin" },
+  ],
+  'MV:tu-vung': [
+    { prompt: "Từ nào chỉ \"hiệu sách\"?", choices: ["bookshop","library","station"], answer: "bookshop", explanation: "bookshop = nơi bán sách; library = thư viện để mượn sách — cả hai đều liên quan sách nên dễ nhầm.", errorTag: "nham_gan_nghia", dang: "nhin" },
+    { prompt: "Từ nào viết đúng: \"thứ Bảy\"?", choices: ["Saturday","Saterday","Sabtuday"], answer: "Saturday", explanation: "Saturday đánh vần S-a-t-u-r-d-a-y; 'Saterday' sai nguyên âm ở giữa.", errorTag: "chinh_ta_sai_nguyen_am", dang: "nhin" },
+  ],
+  'MV:nghe': [
+    { prompt: "Nghe: \"yesterday\". Chọn nghĩa đúng.", choices: ["hôm qua","hôm nay","ngày mai"], answer: "hôm qua", explanation: "yesterday = hôm qua. Từ ba âm tiết nên phải nghe trọn từ, không bắt mỗi âm đầu.", errorTag: "bo_lo_tu_dai", dang: "nhin" },
+    { prompt: "Nghe: \"thin\". Từ nào vừa nghe?", choices: ["gầy","dày","con cừu"], answer: "gầy", explanation: "thin /θɪn/ = gầy; thick /θɪk/ = dày — khác nhau ở âm cuối.", errorTag: "phien_am_gan_giong", dang: "nhin" },
+  ],
+  'MV:chinh-ta': [
+    { prompt: "Từ nào viết đúng: \"thành phố\"?", choices: ["city","sity","citys"], answer: "city", explanation: "city bắt đầu bằng 'c' và kết thúc bằng 'ty' với y, không phải 'sity'.", errorTag: "nham_v_i_y", dang: "nhin" },
+    { prompt: "Chọn cách viết đúng của \"giáo viên\".", choices: ["teacher","techer","teatcher"], answer: "teacher", explanation: "teacher = teach + er; 'techer' thiếu chữ a sau 'te'.", errorTag: "thieu_chu_cai", dang: "nhin" },
+  ],
+  'MV:xay-tu': [
+    { prompt: "Xếp chữ cái \"a i n t u o n m\" thành từ chỉ núi.", answer: "mountain", explanation: "Đánh vần từng chữ rồi ghép: m-o-u-n-t-a-i-n.", errorTag: "sai_thu_tu_chu_cai", dang: "nhin" },
+    { prompt: "Từ \"holiday\" ở câu \"We go to the beach in the ...\" cần thêm chữ cái nào?", answer: "s", explanation: "Nhiều ngày nghỉ trong kì nên dùng số nhiều holidays: thiếu s là lỗi chữ cái cuối.", errorTag: "thieu_chu_cai_cuoi", dang: "nhin" },
+  ],
+  'MV:nguphap': [
+    { prompt: "Chọn dạng đúng: Yesterday we ... to the zoo.", choices: ["went","go","goes"], answer: "went", explanation: "Có \"Yesterday\" làm dấu hiệu thì nên động từ phải ở quá khứ đơn: went.", errorTag: "thi_hieu_du_lu_lien_quan", dang: "nhin" },
+    { prompt: "Chọn dạng đúng: My sister ... swimming every day.", choices: ["likes","like","liking"], answer: "likes", explanation: "Chủ ngữ số ít \"My sister\" ở hiện tại đơn thì động từ thêm s: likes.", errorTag: "dem_khong_dong_tu_them_s", dang: "nhin" },
+  ],
+  'MV:cau-hoi': [
+    { prompt: "Xếp thành câu hỏi: you / do / What / like", answer: "What do you like?", explanation: "Câu hỏi phải bắt đầu bằng từ để hỏi What rồi mới đến trợ động từ do.", errorTag: "thieu_tu_hoi", dang: "nhin" },
+    { prompt: "Chọn từ còn thiếu: Where ... you live?", choices: ["do","does","is"], answer: "do", explanation: "Với chủ ngữ \"you\" cần trợ động từ \"do\": Where do you live?", errorTag: "sai_trat_tu_dao_ngu", dang: "nhin" },
+  ],
+  'MV:bo-ba-tri-nho': [
+    { prompt: "Đã lật \"beard\" và tranh người đàn ông có râu. Thẻ nghĩa tiếng Việt thứ ba là?", choices: ["râu","tóc","mũi"], answer: "râu", explanation: "Bộ ba phải cùng một khái niệm: từ beard – tranh – nghĩa \"râu\".", errorTag: "ba_kho_hon_hai", dang: "nhin" },
+    { prompt: "Tìm thẻ nghĩa tiếng Việt của \"shoulder\".", choices: ["vai","gáy","ngực"], answer: "vai", explanation: "shoulder = vai; neck mới là cổ/gáy — hai tranh gần nhau trên cơ thể nên dễ ghép nhầm.", errorTag: "nham_gan_tranh", dang: "nhin" },
+  ],
+  'MV:on-tap': [
+    { prompt: "Còn 2 phút, em chưa chắc câu 10. Cách làm nào đúng?", choices: ["đoán theo nghĩa rồi làm tiếp, quay lại sau","bỏ trắng cả câu 10 và 11","dồn hết thời gian cho câu 10"], answer: "đoán theo nghĩa rồi làm tiếp, quay lại sau", explanation: "Không bỏ trống câu; làm nốt phần chắc tay rồi hãy quay lại câu khó.", errorTag: "bo_qua_chua_bai", dang: "nhin" },
+    { prompt: "Tổng kết: sai 4 câu Ngữ pháp, đúng 5 câu Từ vựng. Em cần luyện gì?", choices: ["Ngữ pháp","Từ vựng","Phát âm"], answer: "Ngữ pháp", explanation: "Nhóm sai nhiều nhất là Ngữ pháp, đó là phần cần luyện thêm, không phải nhóm có ít câu hơn.", errorTag: "nham_ke_nang_can_hoc", dang: "nhin" },
+  ],
+  'FY:nghe': [
+    { prompt: "Nghe: \"I've already finished my homework\". Chọn nghĩa đúng.", choices: ["Tớ làm xong bài tập rồi","Tớ sẽ làm bài tập","Tớ đang làm bài tập"], answer: "Tớ làm xong bài tập rồi", explanation: "\"already\" với hiện tại hoàn thành nói hành động đã kết thúc.", errorTag: "bo_lo_tu_dai", dang: "nhin" },
+    { prompt: "Nghe: \"They visited the museum\". Điều gì đúng?", choices: ["đã thăm (quá khứ)","thường thăm (hiện tại)","sẽ thăm (tương lai)"], answer: "đã thăm (quá khứ)", explanation: "Âm cuối /ɪd/ của visited báo quá khứ đơn; nuốt âm này là nghe thành hiện tại.", errorTag: "am_cuoi_s_ed_t", dang: "nhin" },
+  ],
+  'FY:nguphap': [
+    { prompt: "Chọn giới từ đúng: The cat is ... the table and the chair.", choices: ["between","in","of"], answer: "between", explanation: "\"between ... and ...\" chỉ vị trí ở giữa hai vật; 'in' chỉ ở trong một vật.", errorTag: "gioi_tu_in_on_at", dang: "nhin" },
+    { prompt: "Chọn dạng đúng: If it rains, we ... at home.", choices: ["will stay","stayed","stay already"], answer: "will stay", explanation: "Câu điều kiện loại 1: mệnh đề if ở hiện tại đơn, mệnh đề chính dùng will + động từ nguyên thể.", errorTag: "thi_hieu_du_lu_lien_quan", dang: "nhin" },
+  ],
+  'FY:dien-tu-trong-doan-van': [
+    { prompt: "Điền từ: We had a ... of fish and chips.", choices: ["meal","food","water"], answer: "meal", explanation: "Cụm \"a meal of\" đi với một suất ăn; 'food' là danh từ không đếm được nên không dùng với mạo từ a.", errorTag: "nghia_cua_gan_nghia", dang: "nhin" },
+    { prompt: "Điền từ: My brother ... basketball every Sunday.", choices: ["plays","makes","does"], answer: "plays", explanation: "Thể thao đi với play: play basketball. Dịch word-by-word từ \"chơi/làm\" tiếng Việt là lỗi hay gặp.", errorTag: "chon_dong_tu_theo_nghia_viet", dang: "nhin" },
+  ],
+  'FY:xay-cum-tu': [
+    { prompt: "Ghép lượng từ đúng với \"water\".", choices: ["a little","a few","many"], answer: "a little", explanation: "Danh từ không đếm được dùng a little; a few và many đứng trước danh từ đếm được số nhiều.", errorTag: "luong_tu_tru_danh_tu", dang: "nhin" },
+    { prompt: "Cụm từ nào hoàn chỉnh?", choices: ["a big blue bag","a big blue","big blue"], answer: "a big blue bag", explanation: "Cụm danh từ cần danh từ chính: a big blue bag; hai đáp án còn lại thiếu bag.", errorTag: "cum_tu_thieu_danh_tu", dang: "nhin" },
+  ],
+  'FY:noi': [
+    { prompt: "Câu cần nói: \"I usually get up at seven\". Âm nào dễ bị nuốt nhất?", choices: ["âm cuối của seven","âm đầu của I","âm của at"], answer: "âm cuối của seven", explanation: "seven có phụ âm cuối /n/ dễ bị nuốt khi nói nhanh; âm đầu và at đều rõ, ngắn.", errorTag: "thieu_am_dau_cuoi", dang: "nhin" },
+    { prompt: "Chọn cách ngắt hơi đúng khi nói \"My favourite sport is swimming\".", choices: ["My favourite sport / is swimming","My / favourite sport is swimming","My favourite / sport is swimming"], answer: "My favourite sport / is swimming", explanation: "Ngắt sau cụm chủ ngữ, không cắt đôi cụm \"favourite sport\".", errorTag: "ngat_giua_cau", dang: "nhin" },
+  ],
+  'FY:doc-hieu': [
+    { prompt: "Đoạn văn kể một ngày của bạn nhỏ ở trang trại. Câu nào là ý chính?", choices: ["Bạn nhỏ cùng bố mẹ làm việc đồng áng cả ngày","Bạn nhỏ cho gà ăn lúc bảy giờ","Trang trại có mười con bò"], answer: "Bạn nhỏ cùng bố mẹ làm việc đồng áng cả ngày", explanation: "Ý chính khái quát toàn đoạn; hai câu kia chỉ là chi tiết cụ thể.", errorTag: "chi_tiet_khong_phai_y_chinh", dang: "nhin" },
+    { prompt: "Bài viết \"Mum took an umbrella\". Suy luận nào hợp lí nhất?", choices: ["Trời có thể đang mưa","Mum thích màu xanh","Gia đình sẽ đi biển"], answer: "Trời có thể đang mưa", explanation: "Umbrella là bằng chứng duy nhất trong bài; các đáp án khác không có chi tiết nào nâng đỡ.", errorTag: "suy_luan_thieu_bang_chung", dang: "nhin" },
+  ],
+  'FY:ke-chuyen': [
+    { prompt: "Chuỗi tranh kể việc bạn nhỏ đã làm tuần trước. Câu nào đúng?", choices: ["She visited her grandparents.","She visits her grandparents.","She will visit her grandparents."], answer: "She visited her grandparents.", explanation: "Tranh kể việc đã xảy ra nên động từ chia quá khứ đơn.", errorTag: "nham_dong_tu_qua_khu", dang: "nhin" },
+    { prompt: "Câu chuyện: \"First we picked leaves then we made a kite\". Cần sửa gì?", choices: ["tách thành hai câu và thêm dấu chấm","viết hoa chữ First","đổi picked thành pick"], answer: "tách thành hai câu và thêm dấu chấm", explanation: "Mỗi mệnh đề trọn nghĩa là một câu; thiếu dấu chấm khiến chuyện thành một chuỗi dài.", errorTag: "thieu_dau_cham", dang: "nhin" },
+  ],
+  'FY:on-tap': [
+    { prompt: "Trạm Đọc có 4 câu, em đã dành 2 phút cho câu 1. Cách chia thời gian nào đúng?", choices: ["khoảng 30 giây mỗi câu rồi quay lại câu khó","dồn hết thời gian cho câu 1","làm ba câu sau thật nhanh"], answer: "khoảng 30 giây mỗi câu rồi quay lại câu khó", explanation: "Bài dài cần chia đều thời gian, không dồn một câu rồi bỏ các câu còn lại.", errorTag: "thieu_thoi_gian_lam_bai_dai", dang: "nhin" },
+    { prompt: "Sáu trạm: Nghe sai 3/4 câu, Đọc sai 1/4 câu. Em cần luyện gì nhất?", choices: ["Nghe","Đọc","Viết"], answer: "Nghe", explanation: "So sánh theo tỉ lệ: 3/4 cao hơn 1/4, nên Nghe là phần cần luyện.", errorTag: "nham_ke_nang_can_hoc", dang: "nhin" },
   ],
 };

@@ -1,6 +1,9 @@
 // Đặc thù 85 game: gesture thay cho MIXED, bối cảnh, mục tiêu, nhiệm vụ, cụm kiến thức.
 // Đây là nguồn duy nhất để sinh prompt + catalog + dashboard.
 // Gestures tối đa 2 mã: một mechanic chính, mã thứ hai chỉ là thao tác phụ.
+// Hàng Toán: [id, tên, gesture, cluster, bối cảnh, nhiệm vụ].
+// Hàng Tiếng Anh (3 band Cambridge, 10 game/band): thêm [slug cho tên file prompt, topic keys trong
+// YLE_TOPIC_KEYS để lấy dải từ, lớp 4|5 làm metadata đối chiếu SGK]. Band suy ra từ tiền tố id ST-/MV-/FY-.
 
 const G = [
   // ───────────────── TOÁN 4 (40) ─────────────────
@@ -62,42 +65,44 @@ const G = [
   ['T5-14', 'Đua Bài Toán Chuyển Động', 'POINT', 'chuyen-dong-de', 'Trạm kiểm soát đường đua với bảng quãng đường – thời gian.', 'Chỉ dữ kiện đúng trên trục thời gian để tính vận tốc hoặc quãng đường còn thiếu.'],
   ['T5-15', 'Đấu Trường Chiến Thuật Toán', 'GRAB+POINT', 'on-tap-toan-5', 'Đấu trường chiến thuật, mỗi lượt phải chọn bài tấn công.', 'Nắm thẻ chiến lược (rút về đơn vị, tỉ số, sơ đồ đoạn thẳng) áp vào đề bài rồi chọn đáp án.'],
 
-  // ───────────────── TIẾNG ANH 4 (15) ─────────────────
-  ['E4-01', 'Nhiệm Vụ Từ Vựng', 'SWIPE', 'tu-vung-e4', 'Bảng từ vựng bay lên như kiếm sĩ chém bảng gỗ.', 'Vuốt chém tấm bảng mang từ tiếng Anh đúng với nghĩa hoặc tranh gợi ý.'],
-  ['E4-02', 'Chọn Đáp Án Nghe', 'POINT', 'nghe-e4', 'Loa phát âm thanh, bốn bức tranh ứng bốn lựa chọn.', 'Nghe và chỉ ngón tay vào tranh hoặc từ đúng với đoạn nghe.'],
-  ['E4-03', 'Ghép Tranh – Từ', 'DRAG', 'ghep-tranh-tu', 'Bảng dán ảnh với các thẻ từ rời.', 'Kéo thẻ từ tiếng Anh thả đúng ô tranh tương ứng.'],
-  ['E4-04', 'Ngôi Sao Chính Tả', 'PUNCH', 'chinh-ta', 'Vòm sao, mỗi ngôi sao là một cách viết của từ.', 'Đấm vào ngôi sao chứa cách viết đúng chính tả của từ được đọc.'],
-  ['E4-05', 'Nhiệm Vụ Điền Chữ', 'POINT', 'chinh-ta', 'Bảng chữ cái mất chữ, nhiệm vụ khôi phục mật thư.', 'Chỉ vào chữ cái còn thiếu ở đúng vị trí trong từ.'],
-  ['E4-06', 'Xây Từ', 'DRAG', 'xay-tu', 'Xưởng chữ cái, các khối chữ cái bị xáo trộn.', 'Kéo từng chữ cái thả vào ô trống theo đúng thứ tự của từ.'],
-  ['E4-07', 'Đua Xếp Câu', 'DRAG', 'xep-cau', 'Đường băng tiếp sức, mỗi từ là một toa tàu.', 'Kéo các toa từ vào đúng trật tự để thành câu hoàn chỉnh có nghĩa.'],
-  ['E4-08', 'Trí Nhớ Từ Vựng', 'POINT', 'trieu-tu-vung', 'Vườn thẻ úp, mỗi cặp là một từ và một tranh.', 'Chỉ tay lật thẻ để ghép đúng cặp từ tiếng Anh với tranh nghĩa.'],
-  ['E4-09', 'Đường Đua Nghe', 'STEP', 'nghe-e4', 'Ba làn chạy, mỗi làn mang một đáp án nghe được.', 'Nghe rồi nghiêng người bước sang làn chứa từ hoặc số đúng.'],
-  ['E4-10', 'Đập Từ', 'PUNCH', 'tu-vung-e4', 'Găng đấm bốc đập vào bong bóng từ vựng bay ngang.', 'Đấm trúng bong bóng chứa từ đúng với nghĩa tiếng Việt hiện trên bảng.'],
-  ['E4-11', 'Xây Câu Chuyện Tranh', 'POINT+DRAG', 'ke-chuyen', 'Studio kể chuyện với các khung tranh rời.', 'Chỉ và kéo các tranh theo đúng trình tự, rồi ghép câu mô tả cho từng tranh.'],
-  ['E4-12', 'Nghe Và Phân Loại', 'POINT+DRAG', 'nghe-phan-loai', 'Ba chiếc rổ chủ đề chờ nhận từ bạn vừa nghe.', 'Nghe một từ, chỉ vào rổ chủ đề đúng rồi kéo thẻ từ vào rổ đó.'],
-  ['E4-13', 'Bóng Âm', 'SWIPE', 'phonics', 'Rừng đom đóm, mỗi con mang một mẫu chữ cái.', 'Vuốt chém các quả bóng chứa từ có âm hoặc mẫu chữ mục tiêu.'],
-  ['E4-14', 'Xây Câu Hỏi', 'POINT+DRAG', 'cau-hoi', 'Trạm phỏng vấn, các thẻ từ đang chờ xếp thành câu hỏi.', 'Chọn từ để hỏi trước rồi kéo các từ còn lại về đúng trật tự câu hỏi.'],
-  ['E4-15', 'Bản Đồ Phiêu Lưu Tiếng Anh', 'POINT', 'dao-kynang-e4', 'Quần đảo năm đảo kỹ năng: từ vựng, nghe, chính tả, câu, phát âm.', 'Chỉ tay mở khoá từng bến đảo, hoàn thành ba câu trên đảo để lấy huy hiệu.'],
+  // ───────────────── TIẾNG ANH · PRE A1 STARTERS (10) ─────────────────
+  ['ST-01', 'Nhiệm Vụ Từ Vựng', 'SWIPE', 'tu-vung', 'Bảng từ vựng bay lên như kiếm sĩ chém bảng gỗ.', 'Vuốt chém tấm bảng mang từ tiếng Anh đúng với nghĩa hoặc tranh gợi ý.', 'vocab-quest', ['dong-vat', 'an-uong'], 4],
+  ['ST-02', 'Chọn Đáp Án Nghe', 'POINT', 'nghe', 'Loa phát âm thanh, bốn bức tranh ứng bốn lựa chọn.', 'Nghe và chỉ ngón tay vào tranh hoặc từ đúng với đoạn nghe.', 'listen-pick', ['truong-hoc', 'gia-dinh'], 4],
+  ['ST-03', 'Ghép Tranh – Từ', 'DRAG', 'ghep-tranh-tu', 'Bảng dán ảnh với các thẻ từ rời.', 'Kéo thẻ từ tiếng Anh thả đúng ô tranh tương ứng.', 'picture-word-match', ['mau-sac', 'co-the'], 4],
+  ['ST-04', 'Ngôi Sao Chính Tả', 'PUNCH', 'chinh-ta', 'Vòm sao, mỗi ngôi sao là một cách viết của từ.', 'Đấm vào ngôi sao chứa cách viết đúng chính tả của từ được đọc.', 'spelling-star', ['dong-vat'], 4],
+  ['ST-05', 'Đua Xếp Câu', 'DRAG', 'xep-cau', 'Đường băng tiếp sức, mỗi từ là một toa tàu.', 'Kéo các toa từ vào đúng trật tự để thành câu hoàn chỉnh có nghĩa.', 'sentence-race', ['dong-tac'], 4],
+  ['ST-06', 'Trí Nhớ Từ Vựng', 'POINT', 'trieu-tu-vung', 'Vườn thẻ úp, mỗi cặp là một từ và một tranh.', 'Chỉ tay lật thẻ để ghép đúng cặp từ tiếng Anh với tranh nghĩa.', 'word-memory', ['quan-ao'], 4],
+  ['ST-07', 'Bóng Âm', 'SWIPE', 'phonics', 'Rừng đom đóm, mỗi con mang một mẫu chữ cái.', 'Vuốt chém các quả bóng chứa từ có âm hoặc mẫu chữ mục tiêu.', 'shadow-phonic', ['giao-thong', 'mau-sac'], 4],
+  ['ST-08', 'Đập Từ', 'PUNCH', 'tu-vung', 'Găng đấm bốc đập vào bong bóng từ vựng bay ngang.', 'Đấm trúng bong bóng chứa từ đúng với nghĩa tiếng Việt hiện trên bảng.', 'punch-word', ['an-uong', 'truong-hoc'], 4],
+  ['ST-09', 'Nghe Và Phân Loại', 'POINT+DRAG', 'nghe-phan-loai', 'Ba chiếc rổ chủ đề chờ nhận từ bạn vừa nghe.', 'Nghe một từ, chỉ vào rổ chủ đề đúng rồi kéo thẻ từ vào rổ đó.', 'listen-sort', ['dong-vat', 'mau-sac'], 4],
+  ['ST-10', 'Bản Đồ Phiêu Lưu Tiếng Anh', 'POINT', 'dao-kynang', 'Quần đảo năm đảo kỹ năng: từ vựng, nghe, chính tả, câu, phát âm.', 'Chỉ tay mở khoá từng bến đảo, hoàn thành ba câu trên đảo để lấy huy hiệu.', 'skill-map', ['dong-vat', 'truong-hoc'], 4],
 
-  // ───────────────── TIẾNG ANH 5 (15) ─────────────────
-  ['E5-01', 'Trùm Nghe Hiểu', 'POINT', 'nghe-e4', 'Hang động âm thanh, boss phát chuỗi nghe ngày càng dài.', 'Nghe và chỉ vào đáp án đúng trong ba lựa chọn, mỗi lượt được nghe lại tối đa ba lần.'],
-  ['E5-02', 'Mê Cung Câu', 'DRAG', 'nguphap-e5', 'Mê cung lối đi, mỗi cửa ngăn bởi một câu chưa đúng ngữ pháp.', 'Kéo thẻ ngữ pháp đúng thả vào chỗ trống để mở lối đi tiếp.'],
-  ['E5-03', 'Thợ Săn Từ', 'SWIPE', 'tu-vung-e4', 'Khu rừng từ vựng ẩn trong các bụi cây che phủ.', 'Vuốt chém bụi cây chứa từ đúng với nghĩa và ngữ cảnh câu gợi ý.'],
-  ['E5-04', 'Cổng Ngữ Pháp', 'STEP', 'nguphap-e5', 'Hàng cổng đá, mỗi cổng mang một dạng động từ.', 'Nghiêng người bước vào cổng chứa dạng động từ đúng với thì của câu.'],
-  ['E5-05', 'Hẻm Núi Điền Từ', 'DRAG', 'dien-tu-trong-doan-van', 'Hẻm núi với đoạn văn khắc trên đá còn chỗ trống.', 'Kéo từ trong ngân hàng từ thả vào chỗ trống hợp ngữ cảnh.'],
-  ['E5-06', 'Pháo Đài Chính Tả', 'PUNCH', 'chinh-ta', 'Pháo đài phòng thủ, đạn lỗi chính tả bay tới.', 'Đấm quả đạn chứa từ viết đúng để bắn hạ loạt đạn sai.'],
-  ['E5-07', 'Xây Cụm Từ', 'DRAG', 'xay-cum-tu', 'Vườn ươm ghép các mảnh cây thành cụm từ.', 'Kéo các mảnh từ ghép thành cụm hoàn chỉnh rồi đặt câu với cụm đó.'],
-  ['E5-08', 'Bộ Ba Trí Nhớ', 'POINT', 'bo-ba-tri-nho', 'Ba hàng thẻ úp: từ, tranh, nghĩa tiếng Việt.', 'Lật ba thẻ cùng một bộ bằng ngón tay để ghép thành bộ ba đúng.'],
-  ['E5-09', 'Tuyến Đường Nói', 'VOICE', 'noi', 'Tuyến xe buýt dừng ở năm tình huống giao tiếp.', 'Nói to câu trả lời theo khung câu; micro nhận giọng và chấm từng từ.'],
-  ['E5-10', 'Đảo Ôn Tập', 'POINT', 'on-tap-e5', 'Vòng quanh quần đảo ôn tập tổng hợp kỹ năng tiếng Anh.', 'Chỉ tay chọn từng câu hỏi trên đảo, đáp án đúng mở đường sang đảo kế tiếp.'],
-  ['E5-11', 'Thám Tử Đọc Hiểu', 'POINT', 'doc-hieu', 'Văn phòng thám tử với các hồ sơ đoạn văn tiếng Anh.', 'Đọc đoạn văn và chỉ tay gạch chân đúng câu chứa bằng chứng cho nghi vấn.'],
-  ['E5-12', 'Xây Ngữ Pháp', 'POINT+DRAG', 'nguphap-e5', 'Công trường sửa chữa câu, các cây cầu câu bị sai.', 'Chỉ ra chỗ sai trong câu rồi kéo thẻ sửa đúng để cây cầu mở màn tiếp.'],
-  ['E5-13', 'Nhiệm Vụ Nói', 'VOICE', 'noi', 'Sứ mệnh giao tiếp qua bộ đàm với nhân vật bản xứ.', 'Nghe tình huống và nói câu trả lời ngắn; hệ thống hiện transcript và chấm phát âm.'],
-  ['E5-14', 'Phòng Thí Nghiệm Tạo Từ', 'POINT+DRAG', 'xay-cum-tu', 'Phòng thí nghiệm lắp ráp tiền tố hậu tố vào gốc từ.', 'Chỉ gốc từ rồi kéo mảnh tiền tố hoặc hậu tố thả vào để biến đổi từ loại.'],
-  ['E5-15', 'Cúp Thử Thách Tiếng Anh', 'POINT', 'on-tap-e5', 'Sáu trạm thi đấu tranh cúp: nghe, từ vựng, đọc, ngữ pháp, viết, nói.', 'Chỉ tay trả lời ở mỗi trạm, đủ điều kiện thì trạm sau mở khoá độ khó cao hơn.'],
+  // ───────────────── TIẾNG ANH · A1 MOVERS (10) ─────────────────
+  ['MV-01', 'Thợ Săn Từ', 'SWIPE', 'tu-vung', 'Khu rừng từ vựng ẩn trong các bụi cây che phủ.', 'Vuốt chém bụi cây chứa từ đúng với nghĩa và ngữ cảnh câu gợi ý.', 'word-hunter', ['dia-diem', 'giao-thong'], 5],
+  ['MV-02', 'Trùm Nghe Hiểu', 'POINT', 'nghe', 'Hang động âm thanh, boss phát chuỗi nghe ngày càng dài.', 'Nghe và chỉ vào đáp án đúng trong ba lựa chọn, mỗi lượt được nghe lại tối đa ba lần.', 'listen-master', ['thoi-gian', 'thoi-tiet'], 5],
+  ['MV-03', 'Nhiệm Vụ Điền Chữ', 'POINT', 'chinh-ta', 'Bảng chữ cái mất chữ, nhiệm vụ khôi phục mật thư.', 'Chỉ vào chữ cái còn thiếu ở đúng vị trí trong từ.', 'fill-letter', ['so-thich'], 4],
+  ['MV-04', 'Xây Từ', 'DRAG', 'xay-tu', 'Xưởng chữ cái, các khối chữ cái bị xáo trộn.', 'Kéo từng chữ cái thả vào ô trống theo đúng thứ tự của từ.', 'build-word', ['truong-hoc'], 4],
+  ['MV-05', 'Mê Cung Câu', 'DRAG', 'nguphap', 'Mê cung lối đi, mỗi cửa ngăn bởi một câu chưa đúng ngữ pháp.', 'Kéo thẻ ngữ pháp đúng thả vào chỗ trống để mở lối đi tiếp.', 'maze-sentence', ['thoi-gian'], 5],
+  ['MV-06', 'Cổng Ngữ Pháp', 'STEP', 'nguphap', 'Hàng cổng đá, mỗi cổng mang một dạng động từ.', 'Nghiêng người bước vào cổng chứa dạng động từ đúng với thì của câu.', 'grammar-gate', ['mo-ta'], 5],
+  ['MV-07', 'Xây Câu Hỏi', 'POINT+DRAG', 'cau-hoi', 'Trạm phỏng vấn, các thẻ từ đang chờ xếp thành câu hỏi.', 'Chọn từ để hỏi trước rồi kéo các từ còn lại về đúng trật tự câu hỏi.', 'build-question', ['dong-tac', 'nghe-nghiep'], 4],
+  ['MV-08', 'Bộ Ba Trí Nhớ', 'POINT', 'bo-ba-tri-nho', 'Ba hàng thẻ úp: từ, tranh, nghĩa tiếng Việt.', 'Lật ba thẻ cùng một bộ bằng ngón tay để ghép thành bộ ba đúng.', 'triple-memory', ['co-the', 'quan-ao'], 5],
+  ['MV-09', 'Pháo Đài Chính Tả', 'PUNCH', 'chinh-ta', 'Pháo đài phòng thủ, đạn lỗi chính tả bay tới.', 'Đấm quả đạn chứa từ viết đúng để bắn hạ loạt đạn sai.', 'spelling-fort', ['gia-dinh'], 5],
+  ['MV-10', 'Đảo Ôn Tập', 'POINT', 'on-tap', 'Vòng quanh quần đảo ôn tập tổng hợp kỹ năng tiếng Anh.', 'Chỉ tay chọn từng câu hỏi trên đảo, đáp án đúng mở đường sang đảo kế tiếp.', 'revision-island', ['an-uong', 'thoi-tiet'], 5],
+
+  // ───────────────── TIẾNG ANH · A2 FLYERS (10) ─────────────────
+  ['FY-01', 'Hẻm Núi Điền Từ', 'DRAG', 'dien-tu-trong-doan-van', 'Hẻm núi với đoạn văn khắc trên đá còn chỗ trống.', 'Kéo từ trong ngân hàng từ thả vào chỗ trống hợp ngữ cảnh.', 'canyon-cloze', ['mo-ta', 'dia-diem'], 5],
+  ['FY-02', 'Xây Cụm Từ', 'DRAG', 'xay-cum-tu', 'Vườn ươm ghép các mảnh cây thành cụm từ.', 'Kéo các mảnh từ ghép thành cụm hoàn chỉnh rồi đặt câu với cụm đó.', 'phrase-garden', ['so-thich', 'dong-tac'], 5],
+  ['FY-03', 'Tuyến Đường Nói', 'VOICE', 'noi', 'Tuyến xe buýt dừng ở năm tình huống giao tiếp.', 'Nói to câu trả lời theo khung câu; micro nhận giọng và chấm từng từ.', 'speaking-route', ['thoi-tiet', 'dia-diem'], 5],
+  ['FY-04', 'Nhiệm Vụ Nói', 'VOICE', 'noi', 'Sứ mệnh giao tiếp qua bộ đàm với nhân vật bản xứ.', 'Nghe tình huống và nói câu trả lời ngắn; hệ thống hiện transcript và chấm phát âm.', 'speaking-mission', ['nghe-nghiep', 'gia-dinh'], 5],
+  ['FY-05', 'Thám Tử Đọc Hiểu', 'POINT', 'doc-hieu', 'Văn phòng thám tử với các hồ sơ đoạn văn tiếng Anh.', 'Đọc đoạn văn và chỉ tay gạch chân đúng câu chứa bằng chứng cho nghi vấn.', 'reading-detective', ['thoi-gian', 'dong-vat'], 5],
+  ['FY-06', 'Xây Ngữ Pháp', 'POINT+DRAG', 'nguphap', 'Công trường sửa chữa câu, các cây cầu câu bị sai.', 'Chỉ ra chỗ sai trong câu rồi kéo thẻ sửa đúng để cây cầu mở màn tiếp.', 'grammar-workshop', ['thoi-gian', 'mo-ta'], 5],
+  ['FY-07', 'Xây Câu Chuyện Tranh', 'POINT+DRAG', 'ke-chuyen', 'Studio kể chuyện với các khung tranh rời.', 'Chỉ và kéo các tranh theo đúng trình tự, rồi ghép câu mô tả cho từng tranh.', 'story-studio', ['dong-tac', 'mo-ta'], 4],
+  ['FY-08', 'Đường Đua Nghe', 'STEP', 'nghe', 'Ba làn chạy, mỗi làn mang một đáp án nghe được.', 'Nghe rồi nghiêng người bước sang làn chứa từ hoặc số đúng.', 'listen-race', ['an-uong', 'thoi-tiet'], 4],
+  ['FY-09', 'Phòng Thí Nghiệm Tạo Từ', 'POINT+DRAG', 'xay-cum-tu', 'Phòng thí nghiệm lắp ráp tiền tố hậu tố vào gốc từ.', 'Chỉ gốc từ rồi kéo mảnh tiền tố hoặc hậu tố thả vào để biến đổi từ loại.', 'word-lab', ['dong-tac', 'so-thich'], 5],
+  ['FY-10', 'Cúp Thử Thách Tiếng Anh', 'POINT', 'on-tap', 'Sáu trạm thi đấu tranh cúp: nghe, từ vựng, đọc, ngữ pháp, viết, nói.', 'Chỉ tay trả lời ở mỗi trạm, đủ điều kiện thì trạm sau mở khoá độ khó cao hơn.', 'english-cup', ['truong-hoc', 'nghe-nghiep'], 5],
 ];
 
-export const GAMES = G.map(([id, name, gestures, cluster, setting, mission]) => ({
+export const GAMES = G.map(([id, name, gestures, cluster, setting, mission, slug, topics, lop]) => ({
   id,
   name,
   gestures: gestures.split('+').filter(Boolean),
@@ -105,4 +110,8 @@ export const GAMES = G.map(([id, name, gestures, cluster, setting, mission]) => 
   cluster,
   setting,
   mission,
+  slug: slug ?? null,
+  topics: topics ?? [],
+  lop: lop ?? null,
+  band: (id.match(/^(ST|MV|FY)-/) || [])[1] ?? null,
 }));

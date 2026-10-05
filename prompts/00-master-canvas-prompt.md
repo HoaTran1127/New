@@ -15,7 +15,7 @@ Hãy tạo một WEB GAME GIÁO DỤC HOÀN CHỈNH mà học sinh đứng trư�
 
 1. Ý TƯỞNG
 - Tên game: [GAME NAME]
-- Khối lớp · Môn: [GRADE] · [Toán | Tiếng Anh]
+- Khối lớp · Môn: [GRADE] · [Toán | Tiếng Anh · band Starters / Movers / Flyers]
 - Bối cảnh: [SETTING]
 - Việc của học sinh mỗi lượt: [PLAYER MISSION]
 - Điều khiển: [mã gesture ở bảng tra cuối file] — nêu rõ landmark nào làm con trỏ và biên độ động tác (động tác phải rộng cả tay và thân, không phải nhấc ngón ngay trước ngực).
@@ -28,12 +28,13 @@ Hãy tạo một WEB GAME GIÁO DỤC HOÀN CHỈNH mà học sinh đứng trư�
 
 2. MỤC TIÊU HỌC TẬP
 - Mục tiêu: [nội dung thật của chương trình, không tự bịa].
+- Band Cambridge (chỉ game Tiếng Anh): [Pre A1 Starters · 541 từ | A1 Movers · 930 từ | A2 Flyers · 1.431 từ] — dải từ tích luỹ tới band đó theo wordlist 2025, kèm 8 cấu trúc ngữ pháp của band; từ lần đầu xuất hiện ở band cao hơn là lỗi, kể cả khi học sinh lớp 4–5 đã gặp.
 - Mạch kiến thức: [MẠCH] — nhãn HUD "[NHÃN NGẮN]" · Tuần [a]–[b] · [Học kì I | Học kì II]. In nguyên văn mạch và nhãn tuần ở màn khởi động và màn tổng kết, nằm trong khối nút "Copy tờ rời".
 - Yêu cầu cần đạt (in NGUYÊN VĂN một dòng "Yêu cầu cần đạt: ..." ở màn khởi động và màn tổng kết, cấm viết lại hoặc tóm tắt): "[YÊU CẦU CẦN ĐẠT]"
 - Mẹo nhớ (≤12 từ, bật ở cú đúng câu đầu cụm và sau câu sai cùng lỗi, mascot đọc to kèm một động tác 3 giây làm mẫu): "..."
 - Báo trước "Dễ nhầm" ở câu đầu tiên của cụm (≤16 từ, tắt sau 6 giây, không che đề): "..."
 - Lỗi học sinh thường mắc (mỗi câu sai ghi đúng một lỗi này, viết tiếng Việt có dấu): [2–4 lỗi].
-- Phạm vi: chỉ dùng nội dung [môn] lớp [grade] đã học; cấm số hoặc từ vựng ngoài phạm vi trên.
+- Phạm vi: chỉ dùng nội dung [môn] lớp [grade] đã học; game Tiếng Anh còn phải nằm trong đúng band đã chọn ở trên; cấm số hoặc từ vựng ngoài phạm vi trên.
 - Điều kiện: hết 5 tim (mỗi đáp án sai trừ 1 tim) là thua, đủ 12 lượt là thắng và hiện tổng kết. Chống ăn may: phương án nhiễu phải là kết quả của một lỗi có thật trong danh sách lỗi trên, không phải số ngẫu nhiên; đáp án đúng không nằm cố định một vị trí.
 - Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; thêm bốn dòng "Gửi bố mẹ" (môn con tập và số động tác · mạch con học và số câu đúng · mẹo con mang về · việc 3 phút ở nhà cùng cả nhà).
 - Bộ sưu tập: mỗi màn thắng mở khóa 1 thẻ theo chủ đề game, lưu localStorage key "miti-collection", có màn "Sưu tập của em".
