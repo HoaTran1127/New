@@ -11,8 +11,10 @@ class HandTracker {
     this.videoElement = options.videoElement || null;
     this.maxNumHands = options.maxNumHands || 1;
     this.cdnBase = options.cdnBase || 'https://cdn.jsdelivr.net/npm/@mediapipe/hands/';
-    this.minDetectionConfidence = options.minDetectionConfidence || 0.65;
-    this.minTrackingConfidence = options.minTrackingConfidence || 0.65;
+    // 0.5 la mac dinh cua demo HandLandmarker chinh chu; dat cao hon khien tre em de tay
+    // lech hoac thieu sang khong duoc nhan va game trong nhu camera chet.
+    this.minDetectionConfidence = options.minDetectionConfidence || 0.5;
+    this.minTrackingConfidence = options.minTrackingConfidence || 0.5;
     this.smoothingFactor = options.smoothingFactor || 0.45; // EMA alpha
     this.strikeSpeedThreshold = options.strikeSpeedThreshold || 1.15;
     this.strikeReleaseThreshold = options.strikeReleaseThreshold || 0.55;
@@ -141,11 +143,19 @@ class HandTracker {
         }
 
         // Kiểm tra nắm tay (Fist) hay xòe tay (Open Palm)
-        // Nếu khoảng cách đầu ngón tay tới cổ tay nhỏ hơn khớp gốc -> Nắm đấm
+        // Dem theo 4 ngon: dau ngon nam xa co tay hon khop giua cua no thi tinh la dang.
+        // Chi do ngon tro (ban cu) de lay loi khi nam tay xuyen qua dau nen dem bac ngan.
         const wrist = rawLandmarks[0];
-        const distIndex = Math.hypot(rawLandmarks[8].x - wrist.x, rawLandmarks[8].y - wrist.y);
-        const distKnuckle = Math.hypot(rawLandmarks[5].x - wrist.x, rawLandmarks[5].y - wrist.y);
-        const isFist = distIndex < distKnuckle * 1.15;
+        const dFromWrist = (i) => Math.hypot(rawLandmarks[i].x - wrist.x, rawLandmarks[i].y - wrist.y);
+        let extended = 0;
+        [[8, 6], [12, 10], [16, 14], [20, 18]].forEach(([tip, pip]) => {
+          if (dFromWrist(tip) > dFromWrist(pip) * 1.05) extended++;
+        });
+        // Ngon tro phai gap thi moi la nam tay, neu khong tro nguyen ngon len cung du
+        // extended<=1 va lien boc kien hang nham.
+        const indexCurled = dFromWrist(8) <= dFromWrist(6) * 1.05;
+        const isFist = indexCurled && extended <= 1;
+        const isOpen = extended >= 3;
 
         // Cú vung đấm chém (Strike): Khi tốc độ tay vượt ngưỡng hoặc đang lao tới
         const wasStriking = Boolean(prevHand && prevHand.isStriking);
@@ -164,6 +174,8 @@ class HandTracker {
           indexTip: { x: mirroredIndexX, y: indexTipY },
           speed,
           isFist,
+          isOpen,
+          extended,
           isStriking,
           strikePulse,
           timestamp: now,

@@ -146,6 +146,7 @@
     border:3px solid var(--line);border-radius:16px;box-shadow:0 6px 0 var(--line),0 14px 26px rgba(0,0,0,.45)}
   #stage.cam-on #selfie{display:block}
   #selfieCam{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;transform:scaleX(-1)}
+  #selfieFx{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none}
   #handLamp{position:absolute;left:6px;right:6px;bottom:6px;padding:4px 7px;border-radius:9px;text-align:center;
     font:800 11px/1.3 var(--display);letter-spacing:.05em;text-transform:uppercase;
     background:rgba(7,17,31,.78);color:#FF8A8A}
@@ -264,7 +265,7 @@
   <div id="scrim"></div>
   <canvas id="fx"></canvas>
   <div id="hook">🪝</div>
-  <div id="selfie"><video id="selfieCam" playsinline muted></video><span id="handLamp">Chưa thấy tay</span></div>
+  <div id="selfie"><video id="selfieCam" playsinline muted></video><canvas id="selfieFx"></canvas><span id="handLamp">Chưa thấy tay</span></div>
 
   <div id="ui">
     <header id="hud">
@@ -593,6 +594,14 @@ function burst(el, color) {
 
 /* ── keo tha: chung cho chuột, chạm và bàn tay ── */
 let CURRENT = null;
+/* left/top cua .crate duoc tinh theo offsetParent (#lane, co position:relative),
+   trong khi moi toa do khac cua game (toa do stage) tinh theo #stage.
+   Khong tru lech nay thi kien hang nam lech tay hon 120px va tha xuong khong bao gio vao long can. */
+function stageToParent(el, sx, sy) {
+  const sr = stage.getBoundingClientRect();
+  const op = el.offsetParent ? el.offsetParent.getBoundingClientRect() : sr;
+  return { x: sx + sr.left - op.left, y: sy + sr.top - op.top };
+}
 function bindDrag(el) {
   let drag = false, off = {x:0,y:0};
   const sr = () => stage.getBoundingClientRect();
@@ -613,11 +622,14 @@ function bindDrag(el) {
     if (!drag) return; drag = false; el.classList.remove('dragging');
     overPlatform(el) ? resolve(el) : snapBack(el);
   });
-  function move(x, y){ el.style.left = x+'px'; el.style.top = y+'px'; el.style.right='auto'; hot(el); }
+  function move(x, y){ const q = stageToParent(el, x, y); el.style.left = q.x+'px'; el.style.top = q.y+'px'; el.style.right='auto'; hot(el); }
 }
 function overPlatform(el) {
   const a = el.getBoundingClientRect(), b = $('#platform').getBoundingClientRect();
-  return !(a.right < b.left || a.left > b.right || a.bottom < b.top || a.top > b.bottom);
+  const cx = a.left + a.width / 2;
+  /* Chi tinh khi kien hang that nam tren long can: touching vien ngoai cung chua du */
+  return cx > b.left + b.width * .08 && cx < b.right - b.width * .08 &&
+         a.bottom > b.top + b.height * .35 && a.top < b.bottom;
 }
 function hot(el){ $('#platform').classList.toggle('hot', overPlatform(el)); }
 function snapBack(el){ el.style.position=''; el.style.left=''; el.style.top=''; el.style.zIndex=''; $('#platform').classList.remove('hot'); }
@@ -644,6 +656,7 @@ function camFail(err) {
   $('#camStatus').textContent = 'Camera lỗi: ' + w[0]; $('#camStatus').className = 'bad';
   $('#btnCamRetry').hidden = false;
   const sv = $('#selfieCam'); sv.srcObject = null;
+  releaseHolding();
   S.cam = false; stage.classList.remove('cam-on');
   return false;
 }
@@ -672,6 +685,7 @@ async function startCamera() {
   try { await ensureMediaPipe(); } catch (e) { return camFail(e); }
   $('#camStatus').textContent = 'Đợi cho phép camera…';
   try {
+    if (tracker) { tracker.stop(); tracker = null; }
     tracker = new HandTracker({ videoElement: $('#cam'), maxNumHands: 1, cdnBase: mpBase });
     await tracker.init(
       () => { $('#camStatus').textContent = 'Camera sẵn sàng'; $('#camStatus').className='ok'; stage.classList.add('cam-on'); S.cam = true; $('#camWhy').hidden = true; $('#btnCamRetry').hidden = true;
@@ -683,18 +697,41 @@ async function startCamera() {
   } catch (e) { return camFail(e); }
 }
 let holding = null;
+/* Tat camera giua chung de thi kien hang dang nam bang giua khong — tra no ve gia */
+function releaseHolding() { if (!holding) return; const el = holding; holding = null; el.classList.remove('dragging'); snapBack(el); }
+/* 21 moc 22 canh cua ban tay — giong HAND_CONNECTIONS trong demo HandLandmarker chinh chu */
+const HAND_EDGES = [[0,1],[1,2],[2,3],[3,4],[0,5],[5,6],[6,7],[7,8],[5,9],[9,10],[10,11],[11,12],[9,13],[13,14],[14,15],[15,16],[13,17],[17,18],[18,19],[19,20],[0,17]];
+function drawSelfie(hands) {
+  const cv = $('#selfieFx'), v = $('#selfieCam');
+  if (!cv || !v.videoWidth) return;
+  if (cv.width !== v.videoWidth) { cv.width = v.videoWidth; cv.height = v.videoHeight; }
+  const g = cv.getContext('2d');
+  g.clearRect(0, 0, cv.width, cv.height);
+  g.save(); g.translate(cv.width, 0); g.scale(-1, 1);   // video dang scaleX(-1) nen khung ve cung lat theo
+  (hands || []).forEach(h => {
+    const lm = h.landmarks; if (!lm || lm.length < 21) return;
+    g.strokeStyle = '#7BE0B8'; g.lineWidth = Math.max(2, cv.width * .008); g.beginPath();
+    HAND_EDGES.forEach(([a, b]) => { g.moveTo(lm[a].x * cv.width, lm[a].y * cv.height); g.lineTo(lm[b].x * cv.width, lm[b].y * cv.height); });
+    g.stroke();
+    g.fillStyle = '#FFB703';
+    lm.forEach(p => { g.beginPath(); g.arc(p.x * cv.width, p.y * cv.height, Math.max(2.5, cv.width * .011), 0, 6.284); g.fill(); });
+  });
+  g.restore();
+}
 function onHands(hands) {
+  const seen = !!(hands && hands.length);
   const lamp = $('#handLamp');
-  if (hands && hands.length) { lamp.textContent = 'Đã thấy tay'; lamp.classList.add('on'); }
-  else { lamp.textContent = 'Chưa thấy tay'; lamp.classList.remove('on'); }
-  if (S.phase !== 'play' || S.paused) return;
-  const h = hands[0]; const hook = $('#hook');
+  lamp.textContent = seen ? 'Đã thấy tay' : 'Chưa thấy tay';
+  lamp.classList.toggle('on', seen);
+  drawSelfie(hands);
+  if (!S.cam || S.paused) return;
+  const h = seen ? hands[0] : null; const hook = $('#hook');
   if (!h) { hook.style.display='none'; if (holding) { snapBack(holding); holding = null; } return; }
   const p = toScreen(h.x, h.y);
   hook.style.display='block'; hook.style.left = p.x+'px'; hook.style.top = p.y+'px';
   hook.classList.toggle('close', h.isFist);
-  const conf = h.confidence ?? 1;
-  if (h.isFist && conf > .6) {
+  if (S.phase !== 'play' || S.resolving) return;
+  if (h.isFist) {
     if (!holding) {
       let best=null, bd=130;
       document.querySelectorAll('.crate').forEach(c=>{
@@ -706,7 +743,8 @@ function onHands(hands) {
       if (best) { holding = best; best.classList.add('dragging'); best.style.position='absolute'; best.style.zIndex=9; }
     } else {
       const r = holding.getBoundingClientRect();
-      holding.style.left = (p.x - r.width/2)+'px'; holding.style.top = (p.y - r.height/2)+'px'; hot(holding);
+      const q = stageToParent(holding, p.x - r.width/2, p.y - r.height/2);
+      holding.style.left = q.x+'px'; holding.style.top = q.y+'px'; hot(holding);
     }
   } else if (holding) {
     const el = holding; holding = null; el.classList.remove('dragging');
@@ -745,6 +783,7 @@ function beginPlay() {
   const prac = seededShuffle(lv[1], 5).slice(0, CFG.practice).map(q=>({ ...q }));
   S.queue = [...prac, ...seededShuffle(picked, Date.now()%9973)];
   S.practice = CFG.practice;
+  S.rightByTag = {};
   S.phase = 'play'; show(null); say(SPEECH.start); nextRound();
   if (!S.cam) showWarn('Đây là game AR — vào Tạm dừng rồi bật camera để bốc hàng bằng bàn tay');
 }
@@ -796,7 +835,7 @@ function advanceStep() {
 $('#btnPause').onclick = pause;
 $('#btnResume').onclick = resume;
 $('#btnCamToggle').onclick = async () => {
-  if (S.cam && tracker) { tracker.stop(); S.cam=false; stage.classList.remove('cam-on'); $('#camStatus').textContent='Đã tắt camera — đang chơi bằng chuột'; $('#camStatus').className='bad'; }
+  if (S.cam && tracker) { tracker.stop(); releaseHolding(); S.cam=false; stage.classList.remove('cam-on'); $('#camStatus').textContent='Đã tắt camera — đang chơi bằng chuột'; $('#camStatus').className='bad'; }
   else { await startCamera(); }
   resume();
 };
