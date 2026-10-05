@@ -13,16 +13,16 @@ export const EXAMPLES = {
     { prompt: "Chọn dấu đúng: 1 299 999 ... 1 300 001", choices: [">","<","="], answer: "<", explanation: "So từ trái sang: hàng triệu và trăm nghìn bằng nhau (1, 3), hàng chục nghìn 9 < 0? Không — 1 299 999 có trăm nghìn là 2, còn 1 300 001 có trăm nghìn là 3, nên số trước bé hơn.", errorTag: "dau_lon_hon_be_hon", dang: "nhin" },
   ],
   'lam-tron': [
-    { prompt: "Làm tròn 28 653 đến hàng nghìn.", choices: ["28 000","29 000","28 700"], answer: "29 000", explanation: "Chữ số hàng trăm là 6 (>= 5) nên hàng nghìn tăng 28 lên 29, các chữ số sau thành 0.", errorTag: "quên_lam_tron_khi_bang_5", dang: "nhin" },
-    { prompt: "Số nào trên tia số được làm tròn thành 40 000?", choices: ["34 500","39 480","45 200"], answer: "39 480", explanation: "Vùng làm tròn về 40 000 là từ 35 000 đến 44 999; 34 500 về 30 000, 45 200 về 50 000.", errorTag: "doc_thước_sai_vach", dang: "nhin" },
+    { prompt: "Làm tròn 28 653 đến hàng nghìn.", choices: ["28 000","29 000","28 700"], answer: "29 000", explanation: "Chữ số hàng trăm là 6 (>= 5) nên hàng nghìn tăng 28 lên 29, các chữ số sau thành 0.", errorTag: "quen_lam_tron_khi_bang_5", dang: "nhin" },
+    { prompt: "Số nào trên tia số được làm tròn thành 40 000?", choices: ["34 500","39 480","45 200"], answer: "39 480", explanation: "Vùng làm tròn về 40 000 là từ 35 000 đến 44 999; 34 500 về 30 000, 45 200 về 50 000.", errorTag: "doc_sai_vach_tia_so", dang: "nhin" },
   ],
   'chan-le': [
     { prompt: "Số 487 là số chẵn hay số lẻ?", choices: ["Chẵn","Lẻ"], answer: "Lẻ", explanation: "Chỉ cần nhìn chữ số tận cùng: 7 là số lẻ nên 487 lẻ. Các chữ số phía trước không ảnh hưởng.", errorTag: "xet_hang_chuc_thay_vi_don_vi", dang: "nhin" },
-    { prompt: "Tổng 245 + 348 là chẵn hay lẻ?", choices: ["Chẵn","Lẻ"], answer: "Lẻ", explanation: "Chẵn + lẻ = lẻ. 245 lẻ, 348 chẵn nên tổng lẻ; thử lại: 593.", errorTag: "tinh_chat_chan_le_nham", dang: "tinh" },
+    { prompt: "Tổng 245 + 348 là chẵn hay lẻ?", choices: ["Chẵn","Lẻ"], answer: "Lẻ", explanation: "Chẵn + lẻ = lẻ. 245 lẻ, 348 chẵn nên tổng lẻ; thử lại: 593.", errorTag: "xet_hang_chuc_thay_vi_don_vi", dang: "tinh" },
   ],
   'khoi-luong': [
     { prompt: "3 tấn 5 tạ = ... kg", choices: ["3 500 kg","350 kg","30 500 kg"], answer: "3 500 kg", explanation: "1 tấn = 1000 kg nên 3 tấn = 3000 kg; 1 tạ = 100 kg nên 5 tạ = 500 kg. Cộng lại 3500 kg.", errorTag: "doi_don_vi_thieu_so_0", dang: "tinh" },
-    { prompt: "So sánh: 2 tạ 60 kg ... 260 kg", choices: [">","<","="], answer: "=", explanation: "Đổi về cùng đơn vị trước khi so sánh: 2 tạ = 200 kg, cộng 60 kg = 260 kg.", errorTag: "san_nhau_don_vi_tru_khi_so_sanh", dang: "tinh" },
+    { prompt: "So sánh: 2 tạ 60 kg ... 260 kg", choices: [">","<","="], answer: "=", explanation: "Đổi về cùng đơn vị trước khi so sánh: 2 tạ = 200 kg, cộng 60 kg = 260 kg.", errorTag: "so_sanh_chua_doi_don_vi", dang: "tinh" },
   ],
   'dien-tich-don-vi': [
     { prompt: "Hình chữ nhật 7 cm × 4 cm có diện tích bao nhiêu?", choices: ["28 cm²","22 cm²","28 cm"], answer: "28 cm²", explanation: "7 × 4 = 28 ô vuông 1 cm². 22 cm là chu vi (7+4)×2 — đừng nhầm hai đại lượng.", errorTag: "nham_chu_vi_thanh_dien_tich", dang: "tinh" },
@@ -30,7 +30,7 @@ export const EXAMPLES = {
   ],
   'thoi-gian': [
     { prompt: "Kim ngắn chỉ giữa số 8 và 9, kim dài chỉ số 6. Là mấy giờ?", choices: ["8 giờ 30 phút","6 giờ 40 phút","8 giờ 6 phút"], answer: "8 giờ 30 phút", explanation: "Kim dài chỉ số 6 nghĩa là 30 phút (mỗi số = 5 phút), không phải 6 phút.", errorTag: "kim_ngan_kim_dai_nguoc", dang: "nhin" },
-    { prompt: "Phim bắt đầu 19 giờ 45, chiếu suốt 1 giờ 25 phút. Kết thúc lúc nào?", choices: ["21 giờ 10 phút","20 giờ 10 phút","20 giờ 30 phút"], answer: "21 giờ 10 phút", explanation: "45 + 25 = 70 phút = 1 giờ 10 phút; 19 + 1 + 1 = 21 giờ.", errorTag: "nham_1gio_60_phut", dang: "tinh" },
+    { prompt: "Phim bắt đầu 19 giờ 45, chiếu suốt 1 giờ 25 phút. Kết thúc lúc nào?", choices: ["21 giờ 10 phút","20 giờ 10 phút","20 giờ 30 phút"], answer: "21 giờ 10 phút", explanation: "45 + 25 = 70 phút = 1 giờ 10 phút; 19 + 1 + 1 = 21 giờ.", errorTag: "nham_1gio_100_phut", dang: "tinh" },
   ],
   'goc': [
     { prompt: "Góc có số đo 125° là góc gì?", choices: ["Góc tù","Góc nhọn","Góc bẹt"], answer: "Góc tù", explanation: "Góc nhọn < 90°, vuông = 90°, tù trong khoảng 90°–180°, bẹt = 180°.", errorTag: "nham_goc_tu_goc_nhon", dang: "nhin" },
@@ -42,7 +42,7 @@ export const EXAMPLES = {
   ],
   'cong-tru': [
     { prompt: "Tính 50 003 − 27 846.", choices: ["22 157","23 157","22 257"], answer: "22 157", explanation: "Ở hàng nghìn phải mượn 1 của hàng chục nghìn rồi mới trừ; 10 − 3 = 7, 9 − 4 = 5, 9 − 8 = 1, 4 − 7 không được nên mượn 5 = 10 → 14 − 7 = 7? Kiểm tra lại theo cột dọc, kết quả 22 157.", errorTag: "thieu_muon", dang: "tinh" },
-    { prompt: "Tính 12 000 − 4 000.", choices: ["8 000","11 000","6 000"], answer: "8 000", explanation: "Engine đã dựng sẵn bước trong ngoặc (2 350 + 1 650 = 4 000), em chỉ việc trừ: 12 000 − 4 000 = 8 000. Bỏ quên bước trước là lỗi hay gặp.", errorTag: "tinh_trai_thu_tu_khong_co ngoặc", dang: "tinh" },
+    { prompt: "Tính 12 000 − 4 000.", choices: ["8 000","11 000","6 000"], answer: "8 000", explanation: "Engine đã dựng sẵn bước trong ngoặc (2 350 + 1 650 = 4 000), em chỉ việc trừ: 12 000 − 4 000 = 8 000. Bỏ quên bước trước là lỗi hay gặp.", errorTag: "tinh_sai_thu_tu_co_ngoac", dang: "tinh" },
   ],
   'nhan': [
     { prompt: "Tính nhẩm 24 × 11.", choices: ["264","246","242"], answer: "264", explanation: "24 × 11 = 2 (2+4) 4 = 264: viết tổng hai chữ số vào giữa.", errorTag: "nham_11_sai_quy_tac", dang: "tinh" },
@@ -50,15 +50,15 @@ export const EXAMPLES = {
   ],
   'chia': [
     { prompt: "850 : 4 được thương và số dư là?", choices: ["212 dư 2","213","212 dư 6"], answer: "212 dư 2", explanation: "8 : 4 = 2; 5 : 4 = 1 dư 1; 10 : 4 = 2 dư 2. Số dư bao giờ cũng nhỏ hơn số chia nên \"dư 6\" vô lý.", errorTag: "bo_qua_so_du", dang: "tinh" },
-    { prompt: "Chia đều 47 quyển vở cho 5 bạn. Mỗi bạn mấy quyển, còn mấy quyển?", choices: ["9 quyển, dư 2","10 quyển","7 quyển, dư 12"], answer: "9 quyển, dư 2", explanation: "47 : 5 = 9 dư 2. Không thể chia 10 vì 10 × 5 = 50 > 47; dư 12 vô lý vì 12 > 5.", errorTag: "thuong_khong_nguyen_to", dang: "tinh" },
+    { prompt: "Chia đều 47 quyển vở cho 5 bạn. Mỗi bạn mấy quyển, còn mấy quyển?", choices: ["9 quyển, dư 2","10 quyển","7 quyển, dư 12"], answer: "9 quyển, dư 2", explanation: "47 : 5 = 9 dư 2. Không thể chia 10 vì 10 × 5 = 50 > 47; dư 12 vô lý vì 12 > 5.", errorTag: "thuong_sai_uoc_luong", dang: "tinh" },
   ],
   'tat-ca': [
     { prompt: "25 × (4 + 6) viết theo tính chất phân phối là?", choices: ["25 × 4 + 25 × 6","25 × 4 + 6","(25 + 4) × 6"], answer: "25 × 4 + 25 × 6", explanation: "Tính chất phân phối của phép nhân đối với phép cộng: nhân 25 với từng số hạng rồi cộng lại = 100 + 150 = 250.", errorTag: "doi_tinh_chat_nham", dang: "nhin" },
-    { prompt: "360 : (9 × 4) viết lại thành biểu thức nào?", choices: ["360 : 9 : 4","360 : 9 × 4","360 × 4 : 9"], answer: "360 : 9 : 4", explanation: "Chia một số cho một tích: 360 : (9 × 4) = 360 : 9 : 4. Đổi dấu : thành × ở bước sau là lỗi hay gặp.", errorTag: "nhan_sai_thu_tu_thuc_hien", dang: "nhin" },
+    { prompt: "360 : (9 × 4) viết lại thành biểu thức nào?", choices: ["360 : 9 : 4","360 : 9 × 4","360 × 4 : 9"], answer: "360 : 9 : 4", explanation: "Chia một số cho một tích: 360 : (9 × 4) = 360 : 9 : 4. Đổi dấu : thành × ở bước sau là lỗi hay gặp.", errorTag: "chon_bieu_thuc_tuong_dung_sai", dang: "nhin" },
   ],
   'bai-toan-nhieu-buoc': [
     { prompt: "Một cái bút 9 000 đồng. Mua 8 cái bút hết bao nhiêu tiền?", choices: ["72 000 đồng","56 000 đồng","80 000 đồng"], answer: "72 000 đồng", explanation: "Engine đã dựng sẵn bước rút về đơn vị (45 000 : 5 = 9 000 đồng), em chỉ nhân: 9 000 × 8 = 72 000 đồng.", errorTag: "chon_sai_phep_tinh", dang: "tinh" },
-    { prompt: "Tổng 96 chia thành 8 phần bằng nhau. Một phần bằng bao nhiêu?", choices: ["12","96","8"], answer: "12", explanation: "Sơ đồ đoạn thẳng engine đã chia sẵn 8 phần (3 + 5), em chỉ việc 96 : 8 = 12. Lấy luôn 96 hoặc đếm sai số phần là hai lỗi hay gặp.", errorTag: "thieu_buoc_tinh_tong_so_phan", dang: "tinh" },
+    { prompt: "Tổng 96 chia thành 8 phần bằng nhau. Một phần bằng bao nhiêu?", choices: ["12","96","8"], answer: "12", explanation: "Sơ đồ đoạn thẳng engine đã chia sẵn 8 phần (3 + 5), em chỉ việc 96 : 8 = 12. Lấy luôn 96 hoặc đếm sai số phần là hai lỗi hay gặp.", errorTag: "chon_sai_phep_tinh", dang: "tinh" },
   ],
   'bang-so-lieu': [
     { prompt: "Bảng số cây của 4 lớp: 32, 28, 41, 35. Trung bình cộng?", choices: ["34 cây","35 cây","36 cây"], answer: "34 cây", explanation: "(32 + 28 + 41 + 35) : 4 = 136 : 4 = 34.", errorTag: "tinh_trung_binh_cong_sai", dang: "tinh" },
@@ -86,7 +86,7 @@ export const EXAMPLES = {
   ],
   'quy-dong-mau': [
     { prompt: "Quy đồng mẫu số 1/4 và 2/6 (MSCNN = 12). Kết quả?", choices: ["3/12 và 4/12","2/8 và 4/12","3/12 và 2/12"], answer: "3/12 và 4/12", explanation: "12 : 4 = 3 → 1/4 = 3/12; 12 : 6 = 2 → 2/6 = 4/12. Nhân cả tử lẫn mẫu cùng một số.", errorTag: "doi_mau_quen_doi_tu", dang: "tinh" },
-    { prompt: "Mẫu số chung nhỏ nhất của 1/6 và 1/8 là?", choices: ["24","48","14"], answer: "24", explanation: "MSCNN là BCNN(6, 8) = 24. Dùng 48 vẫn quy đồng được nhưng chưa gọn nhất.", errorTag: "chon_mau_chung_khong_phai_MNBC", dang: "nhin" },
+    { prompt: "Mẫu số chung nhỏ nhất của 1/6 và 1/8 là?", choices: ["24","48","14"], answer: "24", explanation: "MSCNN là BCNN(6, 8) = 24. Dùng 48 vẫn quy đồng được nhưng chưa gọn nhất.", errorTag: "chon_mau_chung_khong_nho_nhat", dang: "nhin" },
   ],
   'cong-tru-phan-so': [
     { prompt: "Tính 3/7 + 2/7.", choices: ["5/7","5/14","6/14"], answer: "5/7", explanation: "Cộng hai phân số cùng mẫu: cộng tử, giữ nguyên mẫu → 5/7. Không được cộng mẫu.", errorTag: "cong_tu_voi_mau", dang: "tinh" },
@@ -105,16 +105,16 @@ export const EXAMPLES = {
     { prompt: "Tỉ lệ 1 : 100 000. 6 km thật vẽ thành bao nhiêu cm?", choices: ["6 cm","60 cm","0,6 cm"], answer: "6 cm", explanation: "6 km = 600 000 cm; 600 000 : 100 000 = 6 cm.", errorTag: "nham_chieu_dai_thuc_te", dang: "tinh" },
   ],
   'hinh-binh-hanh': [
-    { prompt: "Hình bình hành có đáy 8 cm, chiều cao 5 cm. Diện tích?", choices: ["40 cm²","26 cm²","13 cm²"], answer: "40 cm²", explanation: "S = đáy × chiều cao = 8 × 5 = 40 cm². Chiều cao là khoảng cách vuông góc giữa hai đáy, không phải cạnh bên.", errorTag: "dung-canh-ben-lam-chenh-cao", dang: "tinh" },
-    { prompt: "Hình bình hành đáy 12 cm, cạnh bên 7 cm. Chu vi?", choices: ["38 cm","84 cm","19 cm"], answer: "38 cm", explanation: "P = (12 + 7) × 2 = 38 cm.", errorTag: "nham-chu-vi-dien-tich", dang: "nhin" },
+    { prompt: "Hình bình hành có đáy 8 cm, chiều cao 5 cm. Diện tích?", choices: ["40 cm²","26 cm²","13 cm²"], answer: "40 cm²", explanation: "S = đáy × chiều cao = 8 × 5 = 40 cm². Chiều cao là khoảng cách vuông góc giữa hai đáy, không phải cạnh bên.", errorTag: "dung_canh_ben_lam_chieu_cao", dang: "tinh" },
+    { prompt: "Hình bình hành đáy 12 cm, cạnh bên 7 cm. Chu vi?", choices: ["38 cm","84 cm","19 cm"], answer: "38 cm", explanation: "P = (12 + 7) × 2 = 38 cm.", errorTag: "nham_chu_vi_voi_dien_tich", dang: "nhin" },
   ],
   'hinh-thoi': [
-    { prompt: "Hình thoi có hai đường chéo 6 cm và 8 cm. Diện tích?", choices: ["24 cm²","48 cm²","14 cm²"], answer: "24 cm²", explanation: "S = (6 × 8) : 2 = 24 cm². Quên chia 2 là lỗi phổ biến.", errorTag: "quen-chia-2-tich-hai-duong-cheo", dang: "nhin" },
-    { prompt: "Hình thoi có cạnh 5 cm. Chu vi?", choices: ["20 cm","25 cm","10 cm"], answer: "20 cm", explanation: "Bốn cạnh bằng nhau nên P = 5 × 4 = 20 cm.", errorTag: "doi-deu-dai-hai-chenh", dang: "tinh" },
+    { prompt: "Hình thoi có hai đường chéo 6 cm và 8 cm. Diện tích?", choices: ["24 cm²","48 cm²","14 cm²"], answer: "24 cm²", explanation: "S = (6 × 8) : 2 = 24 cm². Quên chia 2 là lỗi phổ biến.", errorTag: "quen_chia_2_tich_hai_duong_cheo", dang: "nhin" },
+    { prompt: "Hình thoi có cạnh 5 cm. Chu vi?", choices: ["20 cm","25 cm","10 cm"], answer: "20 cm", explanation: "Bốn cạnh bằng nhau nên P = 5 × 4 = 20 cm.", errorTag: "quen_chia_2_tich_hai_duong_cheo", dang: "tinh" },
   ],
   'on-tap-toan-4': [
-    { prompt: "Số gồm 4 triệu, 0 trăm nghìn, 7 nghìn, 5 chục?", choices: ["4 007 050","4 070 050","4 700 500"], answer: "4 007 050", explanation: "Viết đủ cả ba lớp, hàng nào thiếu thì ghi 0.", errorTag: "thieu_hang_trong", dang: "nhin" },
-    { prompt: "25 × 9 × 4 nên nhóm cặp nào để tính nhanh?", choices: ["25 × 4","9 × 4","25 × 9"], answer: "25 × 4", explanation: "Nhóm 25 × 4 = 100 rồi nhân 9, dựa vào tính chất giao hoán; chọn 25 × 9 vẫn đúng nhưng phải tính nhẩm dài hơn.", errorTag: "nhan_sai_thu_tu_thuc_hien", dang: "nhin" },
+    { prompt: "Số gồm 4 triệu, 0 trăm nghìn, 7 nghìn, 5 chục?", choices: ["4 007 050","4 070 050","4 700 500"], answer: "4 007 050", explanation: "Viết đủ cả ba lớp, hàng nào thiếu thì ghi 0.", errorTag: "doc_de_thieu_dieu_kien", dang: "nhin" },
+    { prompt: "25 × 9 × 4 nên nhóm cặp nào để tính nhanh?", choices: ["25 × 4","9 × 4","25 × 9"], answer: "25 × 4", explanation: "Nhóm 25 × 4 = 100 rồi nhân 9, dựa vào tính chất giao hoán; chọn 25 × 9 vẫn đúng nhưng phải tính nhẩm dài hơn.", errorTag: "tron_loai_phep_tinh", dang: "nhin" },
   ],
   'thap-phan-khai-niem': [
     { prompt: "Số 3,05 đọc là?", choices: ["ba phẩy không năm","ba phẩy năm","ba mươi lăm phần nghìn"], answer: "ba phẩy không năm", explanation: "Đọc từng chữ số sau dấu phẩy; số 0 ở hàng phần mười phải được đọc.", errorTag: "doc_phan_thap_phan_tram", dang: "nhin" },
@@ -122,7 +122,7 @@ export const EXAMPLES = {
   ],
   'chuyen-dong-f-d-p': [
     { prompt: "Phân số nào bằng 0,25?", choices: ["1/4","2/5","1/2"], answer: "1/4", explanation: "1 : 4 = 0,25 và 25%. Ba cách viết cùng một giá trị.", errorTag: "nham_ty_le_10_100_1000", dang: "nhin" },
-    { prompt: "3/5 viết dưới dạng phần trăm?", choices: ["60%","30%","35%"], answer: "60%", explanation: "3 : 5 = 0,6; 0,6 × 100 = 60%.", errorTag: "them_so_0_ben_phai_sai_gia_tri", dang: "nhin" },
+    { prompt: "3/5 viết dưới dạng phần trăm?", choices: ["60%","30%","35%"], answer: "60%", explanation: "3 : 5 = 0,6; 0,6 × 100 = 60%.", errorTag: "thieu_dau_phay_thap_phan", dang: "nhin" },
   ],
   'phan-tram': [
     { prompt: "Tính 15% của 240 kg.", choices: ["36 kg","34 kg","150 kg"], answer: "36 kg", explanation: "240 : 100 × 15 = 36 kg.", errorTag: "tinh_phan_tram_cua_mot_so_sai_buoc", dang: "tinh" },
@@ -149,8 +149,8 @@ export const EXAMPLES = {
     { prompt: "Số nào bằng 7,20?", choices: ["7,2","7,02","72"], answer: "7,2", explanation: "Bỏ chữ số 0 ở tận cùng bên phải phần thập phân thì giá trị không đổi.", errorTag: "dau_bang_nhau_tru_so_0", dang: "nhin" },
   ],
   'on-tap-toan-5': [
-    { prompt: "Tính 3,5 × 4,2.", choices: ["14,7","14,70","1,47"], answer: "14,7", explanation: "Bỏ dấu phẩy: 35 × 42 = 1470; đếm 2 chữ số thập phân → 14,70 = 14,7.", errorTag: "thieu_dau_phay_thap_phan", dang: "tinh" },
-    { prompt: "Một lớp 40 bạn, 60% thích toán. Có bao nhiêu bạn?", choices: ["24 bạn","26 bạn","16 bạn"], answer: "24 bạn", explanation: "40 : 100 × 60 = 24. Kiểm tra: 60% của 40 phải nhỏ hơn 40.", errorTag: "tinh_phan_tram_cua_mot_so_sai_buoc", dang: "tinh" },
+    { prompt: "Tính 3,5 × 4,2.", choices: ["14,7","14,70","1,47"], answer: "14,7", explanation: "Bỏ dấu phẩy: 35 × 42 = 1470; đếm 2 chữ số thập phân → 14,70 = 14,7.", errorTag: "chon_sai_chi_luoc_giai", dang: "tinh" },
+    { prompt: "Một lớp 40 bạn, 60% thích toán. Có bao nhiêu bạn?", choices: ["24 bạn","26 bạn","16 bạn"], answer: "24 bạn", explanation: "40 : 100 × 60 = 24. Kiểm tra: 60% của 40 phải nhỏ hơn 40.", errorTag: "quen_thu_thi_giua_chung", dang: "tinh" },
   ],
   'tu-vung-e4': [
     { prompt: "Con voi trong tiếng Anh là từ nào?", choices: ["elephant","tiger","zebra"], answer: "elephant", explanation: "elephant = con voi /ˈel.ɪ.fənt/. tiger = con hổ, zebra = ngựa vằn.", errorTag: "nham_gan_nghia", dang: "nhin" },
@@ -170,7 +170,7 @@ export const EXAMPLES = {
   ],
   'xay-tu': [
     { prompt: "Ghép các chữ cái s, c, h, o, o, l thành từ chỉ trường học.", choices: ["school","shcoool","cschool"], answer: "school", explanation: "Dùng đúng 6 chữ đã cho, không thêm không bớt: s-c-h-o-o-l. Có hai chữ o.", errorTag: "sai_thu_tu_chu_cai", dang: "nhin" },
-    { prompt: "Ghép r, u, l, e, r thành đồ dùng học tập.", choices: ["ruler","ruerl","rulr"], answer: "ruler", explanation: "ruler = thước kẻ, 5 chữ cái, thiếu chữ e là lỗi hay gặp.", errorTag: "thieu_chu_cai", dang: "nhin" },
+    { prompt: "Ghép r, u, l, e, r thành đồ dùng học tập.", choices: ["ruler","ruerl","rulr"], answer: "ruler", explanation: "ruler = thước kẻ, 5 chữ cái, thiếu chữ e là lỗi hay gặp.", errorTag: "thieu_chu_cai_cuoi", dang: "nhin" },
   ],
   'xep-cau': [
     { prompt: "Sắp xếp: is / This / my / mother", choices: ["This is my mother","is This my mother","This my is mother"], answer: "This is my mother", explanation: "Trật tự: chủ ngữ (This) + động từ to be (is) + cụm danh từ (my mother).", errorTag: "vi_tri_tru_tu_sai", dang: "nhin" },
@@ -181,7 +181,7 @@ export const EXAMPLES = {
     { prompt: "Ghép cặp \"strong\" với nghĩa.", choices: ["mạnh mẽ","cao","nhanh"], answer: "mạnh mẽ", explanation: "strong = mạnh mẽ; đối nghĩa với weak.", errorTag: "nham_hinh_anh_tuong_tu", dang: "nhin" },
   ],
   'phonics': [
-    { prompt: "Chọn từ chứa âm \"sh\".", choices: ["fish","sit","cup"], answer: "fish", explanation: "\"sh\" trong fish /ʃ/. sit có âm \"s\" /s/ — hai âm dễ lẫn.", errorTag: "mau_chu_sh", dang: "nhin" },
+    { prompt: "Chọn từ chứa âm \"sh\".", choices: ["fish","sit","cup"], answer: "fish", explanation: "\"sh\" trong fish /ʃ/. sit có âm \"s\" /s/ — hai âm dễ lẫn.", errorTag: "mau_chu_gh", dang: "nhin" },
     { prompt: "Từ nào có mẫu chữ \"ee\"?", choices: ["see","say","so"], answer: "see", explanation: "see /siː/ có \"ee\"; say có \"ay\".", errorTag: "ket_thuc_ed_ung", dang: "nhin" },
   ],
   'cau-hoi': [
@@ -205,7 +205,7 @@ export const EXAMPLES = {
     { prompt: "Chọn: Look! The boys ... football.", choices: ["are playing","play","plays"], answer: "are playing", explanation: "\"Look!\" báo hiệu hành động đang diễn ra → hiện tại tiếp diễn.", errorTag: "thi_hieu_du_lu_lien_quan", dang: "nhin" },
   ],
   'dien-tu-trong-doan-van': [
-    { prompt: "Điền: I ... my homework in the evening.", choices: ["do","make","take"], answer: "do", explanation: "Cụm cố định \"do homework\"; \"make\" không dùng với homework.", errorTag: "ngữ_cảnh_dung_dong_tu_dung", dang: "nhin" },
+    { prompt: "Điền: I ... my homework in the evening.", choices: ["do","make","take"], answer: "do", explanation: "Cụm cố định \"do homework\"; \"make\" không dùng với homework.", errorTag: "chon_dong_tu_theo_nghia_viet", dang: "nhin" },
     { prompt: "Điền: There are ... apples in the basket.", choices: ["some","any","much"], answer: "some", explanation: "Câu khẳng định với danh từ đếm được số nhiều dùng some; any dùng cho câu phủ định/nghi vấn.", errorTag: "ham_duoc_dung_lai", dang: "nhin" },
   ],
   'xay-cum-tu': [
@@ -221,15 +221,15 @@ export const EXAMPLES = {
     { prompt: "Nói câu theo tranh: cậu bé đang ăn táo.", choices: ["He is eating an apple","He eats banana","She is drinking milk"], answer: "He is eating an apple", explanation: "Đủ chủ ngữ + hiện tại tiếp diễn + đúng danh từ \"an apple\".", errorTag: "ngat_giua_cau", dang: "nhin" },
   ],
   'on-tap-e5': [
-    { prompt: "Chọn từ sai chính tả.", choices: ["beautifull","beautiful","beauty"], answer: "beautifull", explanation: "beautiful chỉ có một chữ l; đây là lỗi hay gặp nhất khi ôn viết.", errorTag: "double_consonant", dang: "nhin" },
-    { prompt: "Sửa câu: She don’t like milk.", choices: ["She doesn’t like milk","She not like milk","She likes not milk"], answer: "She doesn’t like milk", explanation: "Chủ ngữ số ít ngôi 3 dùng doesn’t.", errorTag: "dem_khong_dong_tu_them_s", dang: "nhin" },
+    { prompt: "Chọn từ sai chính tả.", choices: ["beautifull","beautiful","beauty"], answer: "beautifull", explanation: "beautiful chỉ có một chữ l; đây là lỗi hay gặp nhất khi ôn viết.", errorTag: "bo_qua_chua_bai", dang: "nhin" },
+    { prompt: "Sửa câu: She don’t like milk.", choices: ["She doesn’t like milk","She not like milk","She likes not milk"], answer: "She doesn’t like milk", explanation: "Chủ ngữ số ít ngôi 3 dùng doesn’t.", errorTag: "nham_ke_nang_can_hoc", dang: "nhin" },
   ],
   'dao-kynang-e4': [
-    { prompt: "Đảo Từ vựng: chọn nghĩa của \"window\".", choices: ["cửa sổ","cánh cửa","mái nhà"], answer: "cửa sổ", explanation: "window = cửa sổ; door = cánh cửa — cặp từ dễ nhầm.", errorTag: "nham_gan_nghia", dang: "nhin" },
-    { prompt: "Đảo Chính tả: từ nào viết đúng?", choices: ["yellow","yelow","yellou"], answer: "yellow", explanation: "yellow có hai chữ l và kết thúc \"ow\".", errorTag: "double_consonant", dang: "nhin" },
+    { prompt: "Đảo Từ vựng: chọn nghĩa của \"window\".", choices: ["cửa sổ","cánh cửa","mái nhà"], answer: "cửa sổ", explanation: "window = cửa sổ; door = cánh cửa — cặp từ dễ nhầm.", errorTag: "bo_dao_thu", dang: "nhin" },
+    { prompt: "Đảo Chính tả: từ nào viết đúng?", choices: ["yellow","yelow","yellou"], answer: "yellow", explanation: "yellow có hai chữ l và kết thúc \"ow\".", errorTag: "khong_dat_chuan_do_nang", dang: "nhin" },
   ],
   'boss-cong-thu': [
-    { prompt: "Giai đoạn 1: Tính 125 × 8.", choices: ["1 000","1 0000","960"], answer: "1 000", explanation: "125 × 8 = 1000 vì 125 × 4 = 500 rồi × 2.", errorTag: "nhan_sai_thu_tu_thuc_hien", dang: "tinh" },
-    { prompt: "Giai đoạn 2: Diện tích hình thoi có hai đường chéo 10 cm và 6 cm.", choices: ["30 cm²","60 cm²","16 cm²"], answer: "30 cm²", explanation: "(10 × 6) : 2 = 30 cm²; giai đoạn này kiểm tra việc nhớ chia 2.", errorTag: "quen-chia-2-tich-hai-duong-cheo", dang: "nhin" },
+    { prompt: "Giai đoạn 1: Tính 125 × 8.", choices: ["1 000","1 0000","960"], answer: "1 000", explanation: "125 × 8 = 1000 vì 125 × 4 = 500 rồi × 2.", errorTag: "quen_chi_luoc", dang: "tinh" },
+    { prompt: "Giai đoạn 2: Diện tích hình thoi có hai đường chéo 10 cm và 6 cm.", choices: ["30 cm²","60 cm²","16 cm²"], answer: "30 cm²", explanation: "(10 × 6) : 2 = 30 cm²; giai đoạn này kiểm tra việc nhớ chia 2.", errorTag: "quen_chi_luoc", dang: "nhin" },
   ],
 };

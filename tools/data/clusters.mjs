@@ -5,7 +5,7 @@
 
 const C = {
   'hang-so': {
-    tags: ['thieu_hang_trong', 'doi_chou_hai_hang', 'doc_nham_hang_tram_thousand'],
+    tags: ['thieu_hang_trong', 'doi_chou_hai_hang', 'doc_nham_hang'],
     noi_dung: 'số tự nhiên đến 100000 và 1000000; giá trị theo hàng; viết dưới dạng tổng các hàng; số có chữ số 0 ở hàng trung gian',
     giai_thich: 'phóng to chữ số đang xét trên bảng lớp số (hàng đơn vị → hàng triệu) và tô màu hàng được hỏi',
   },
@@ -15,7 +15,7 @@ const C = {
     giai_thich: 'xếp các số thẳng hàng theo cột hàng đơn vị rồi so sánh từ trái sang phải',
   },
   'lam-tron': {
-    tags: ['quên_lam_tron_khi_bang_5', 'lam_tron_sai_hang', 'doc_thước_sai_vach'],
+    tags: ['quen_lam_tron_khi_bang_5', 'lam_tron_sai_hang', 'doc_sai_vach_tia_so'],
     noi_dung: 'làm tròn đến hàng chục, trăm, nghìn, chục nghìn, trăm nghìn; ước lượng tổng hiệu bằng cách làm tròn trước',
     giai_thich: 'vẽ tia số với hai mốc tròn liền kề và đánh dấu số cần làm tròn ở giữa',
   },
@@ -25,7 +25,7 @@ const C = {
     giai_thich: 'bật đèn LED hai màu sáng ở chữ số tận cùng để học sinh thấy chỉ hàng đơn vị quyết định',
   },
   'khoi-luong': {
-    tags: ['doi_don_vi_thieu_so_0', 'nham_1_tan_100_kg', 'san_nhau_don_vi_tru_khi_tru'],
+    tags: ['doi_don_vi_thieu_so_0', 'nham_1_tan_100_kg', 'so_sanh_chua_doi_don_vi'],
     noi_dung: 'tấn, tạ, kg, g; đổi đơn vị; so sánh khối lượng; tính tổng khối lượng nhiều vật',
     giai_thich: 'vẽ cân hai đĩa và chuỗi nhân chia 10 giữa các đơn vị',
   },
@@ -50,7 +50,7 @@ const C = {
     giai_thich: 'kéo dài hai đường thành dải sáng để thấy chúng cắt nhau hay không cắt nhau',
   },
   'cong-tru': {
-    tags: ['thieu_muon', 'thieu_quan', 'hang_tram_sai_vi_muon_hang_don_vi'],
+    tags: ['thieu_muon', 'thieu_quan', 'tinh_sai_thu_tu_co_ngoac'],
     noi_dung: 'cộng trừ số có đến 6 chữ số; thành phần và giá trị biểu thức; tính giá trị biểu thức có ngoặc',
     giai_thich: 'hiện lại từng cột tính dọc, nháy sáng cột đang nhớ/đang mượn',
   },
@@ -60,12 +60,12 @@ const C = {
     giai_thich: 'tách phép nhân thành từng phần theo hàng rồi cộng lại (decomposition)',
   },
   'chia': {
-    tags: ['thuong_khong_nguyen_to', 'bo_qua_so_du', 'chia_nham_sai_hang'],
+    tags: ['thuong_sai_uoc_luong', 'bo_qua_so_du', 'so_du_lon_hon_so_chia'],
     noi_dung: 'chia số có 2–3 chữ số cho 1–2 chữ số; số chia hết cho 2 3 5 9; chia nhẩm; chia hết và còn dư',
     giai_thich: 'chia đồ vật thành các nhóm bằng nhau trên băng chuyền và hiện phần còn dư',
   },
   'tat-ca': {
-    tags: ['nhan_sai_thu_tu_thuc_hien', 'tinh_trai_khong_co ngoặc', 'doi_tinh_chat_nham'],
+    tags: ['nhan_sai_thu_tu_thuc_hien', 'doi_tinh_chat_nham', 'chon_bieu_thuc_tuong_dung_sai'],
     noi_dung: 'tính chất giao hoán kết hợp; biểu thức có ngoặc; giá trị của biểu thức chữ; hai phép tính tương đương',
     giai_thich: 'cân hai đĩa: mỗi vế là một đĩa, cân bằng khi giá trị bằng nhau',
   },
@@ -75,7 +75,7 @@ const C = {
     giai_thich: 'sơ đồ đoạn thẳng cho từng bước và đánh dấu bước đang làm trên bản đồ tuyến',
   },
   'bang-so-lieu': {
-    tags: ['doc_nham_cot', 'dem_trung_gia_tri', 'bo_qua_gia_tri_lap_lai'],
+    tags: ['doc_nham_cot', 'dem_trung_gia_tri', 'tinh_trung_binh_cong_sai'],
     noi_dung: 'dãy số liệu; bảng thống kê; số trung bình cộng; tìm lớn nhất nhỏ nhất trong bảng',
     giai_thich: 'tô sáng ô bảng đang được hỏi kèm tên cột tên hàng',
   },
@@ -95,7 +95,7 @@ const C = {
     giai_thich: 'đếm số kết quả thuận lợi trên tổng số kết quả và hiện tỉ lệ đó',
   },
   'phan-so-dau': {
-    tags: ['tử_số_mẫu_số_đảo', 'so_sanh_theo_so_phan_tu_thoi', 'bieu_dien_o_khong_bang_nhau'],
+    tags: ['tu_so_mau_so_dao_nguoc', 'so_sanh_theo_so_phan_tu_thoi', 'bieu_dien_o_khong_bang_nhau'],
     noi_dung: 'khái niệm phân số; tử số mẫu số; phân số lớn hơn 1 bé hơn 1 bằng 1; đọc viết phân số; biểu diễn trên hình',
     giai_thich: 'cắt hình thành các phần bằng nhau và tô đúng số phần tử số',
   },
@@ -105,7 +105,7 @@ const C = {
     giai_thich: 'thanh phân số trượt: hai thanh bằng nhau khi tô trùng chiều dài',
   },
   'quy-dong-mau': {
-    tags: ['doi_mau_quen_doi_tu', 'chon_mau_chung_khong_phai_MNBC', 'giu_nguyen_phan_so_le'],
+    tags: ['doi_mau_quen_doi_tu', 'chon_mau_chung_khong_nho_nhat', 'giu_nguyen_phan_so_le'],
     noi_dung: 'quy đồng mẫu số hai phân số; mẫu số chung; so sánh phân số khác mẫu',
     giai_thich: 'nhân cả tử và mẫu cùng một số, hiện mũi tên liên kết hai phân số',
   },
@@ -130,17 +130,17 @@ const C = {
     giai_thich: 'thước kẻ ảo đo trên bản đồ rồi hiện phép tính đổi ra độ dài thật',
   },
   'hinh-binh-hanh': {
-    tags: ['dung-chenh-lem-lam-chenh-cao', 'nham-chu-vi-dien-tich', 'doi-deu-dai-hai-chenh'],
+    tags: ['dung_canh_ben_lam_chieu_cao', 'nham_chu_vi_voi_dien_tich', 'khong_doi_don_vi_hai_dai_luong'],
     noi_dung: 'đặc điểm hình bình hành; diện tích đáy × chiều cao; chu vi',
     giai_thich: 'cắt một phần hình bình hành và ghép lại thành chữ nhật để thấy công thức',
   },
   'hinh-thoi': {
-    tags: ['nham-duong-cheo-thanh-duong-bang-day-chenh', 'quen-chia-2-tich-hai-duong-cheo', 'doi-don-vi'],
+    tags: ['nham_duong_cheo_thanh_canh', 'quen_chia_2_tich_hai_duong_cheo', 'sai_don_vi_dien_tich'],
     noi_dung: 'đặc điểm hình thoi; hai đường chéo vuông góc; diện tích tích hai đường chéo chia 2',
     giai_thich: 'nối hai đường chéo rồi tô 4 tam giác ghép thành hình chữ nhật',
   },
   'on-tap-toan-4': {
-    tags: ['trộn_loai_phep_tinh', 'quen_rut_gon_ket_qua', 'doc_de_thieu_dieu_kien'],
+    tags: ['tron_loai_phep_tinh', 'quen_rut_gon_ket_qua', 'doc_de_thieu_dieu_kien'],
     noi_dung: 'ôn tổng hợp số tự nhiên, bốn phép tính, phân số, hình học và đo lường lớp 4',
     giai_thich: 'gọi lại kiến thức lớp 4 tương ứng với từng cửa ải',
   },
@@ -210,7 +210,7 @@ const C = {
     giai_thich: 'đánh đỏ vị trí sai và hiện từ đúng kèm phiên âm',
   },
   'xay-tu': {
-    tags: ['sai_thu_tu_chu_cai', 'thieu_chu_cai_cuoi', 'dau_sau_khong_duoc_tinh'],
+    tags: ['sai_thu_tu_chu_cai', 'thieu_chu_cai_cuoi', 'dem_sau_chu_cai_thieu'],
     noi_dung: 'bảng chữ cái bị xáo trộn: ghép thành từ đúng; mỗi từ có nghĩa gợi ý',
     giai_thich: 'kéo từng chữ vào ô trống, hiện nghĩa và đọc lại từ ghép đúng',
   },
@@ -255,7 +255,7 @@ const C = {
     giai_thich: 'sửa trực tiếp vị trí sai trong câu và giải thích bằng tiếng Việt',
   },
   'dien-tu-trong-doan-van': {
-    tags: ['ngữ_cảnh_dung_dong_tu_dung', 'nghia_cua_gan_nghia', 'ham_duoc_dung_lai'],
+    tags: ['chon_dong_tu_theo_nghia_viet', 'nghia_cua_gan_nghia', 'ham_duoc_dung_lai'],
     noi_dung: 'đoạn văn có 5-8 chỗ trống chọn từ trong ngân hàng từ; dựa vào ngữ cảnh suy ra từ',
     giai_thich: 'đọc lại cả đoạn sau khi điền đủ và highlight câu chứa từ vừa điền',
   },
@@ -270,7 +270,7 @@ const C = {
     giai_thich: 'sau lượt chơi mở bảng tổng hợp các bộ ba đã ghép đúng',
   },
   'noi': {
-    tags: ['trung_lap_phat_am', 'thieu_am_dau_cuoi', 'ngat_giua_cau'],
+    tags: ['thieu_am_dau_cuoi', 'ngat_giua_cau', 'trung_lap_phat_am'],
     noi_dung: 'nói câu ngắn theo tình huống qua Web Speech recognition; khung câu cho sẵn',
     giai_thich: 'hiện transcript nhận được, gạch chân từ thiếu và cho thử lại 3 lần',
   },
