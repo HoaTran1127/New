@@ -2,10 +2,10 @@
 
 > Điền mọi ô `[...]` rồi copy khối `text` dán vào **Google Gemini (chế độ Canvas)**. Đây là bản gọn (2026-10-05): prompt chỉ còn Ý TƯỞNG + MỤC TIÊU + 14 dòng ràng buộc cốt lõi, trần 15 KB.
 >
-> Thêm game vào thư viện (để hiện trên dashboard): thêm một dòng vào `tools/data/games.mjs` rồi chạy `node tools/build-catalog.mjs && node tools/build-prompts.mjs`, không sửa tay file prompt đã sinh.
+> Thêm game vào thư viện (để hiện trên dashboard): thêm một dòng vào `tools/data/games.mjs` (game Tiếng Anh phải có `id` mở đầu bằng `ST-`/`MV-`/`FY-`, kèm `slug`, danh sách `topics` lấy trong `YLE_TOPIC_KEYS` và `lop` 4 hoặc 5), có `EXAMPLES_YLE['BAND:cluster']` và `identities.mjs`, rồi chạy `node tools/build-catalog.mjs && node tools/build-prompts.mjs`, không sửa tay file prompt đã sinh.
 
 ```text
-Tạo game giáo dục web "[GAME NAME]" cho học sinh Việt Nam lớp [GRADE], môn [Toán | Tiếng Anh].
+Tạo game giáo dục web "[GAME NAME]" cho học sinh Việt Nam lớp [GRADE], môn [Toán | Tiếng Anh] (Tiếng Anh: band Cambridge [Pre A1 Starters | A1 Movers | A2 Flyers]).
 
 1. Ý TƯỞNG
 - Bối cảnh: [SETTING — một cảnh có thật ở sân trường/lớp học Việt Nam, không phải lâu đài xài chung của mọi game]
@@ -21,13 +21,14 @@ Tạo game giáo dục web "[GAME NAME]" cho học sinh Việt Nam lớp [GRADE]
 
 2. MỤC TIÊU HỌC TẬP
 - Mục tiêu: [LEARNING OBJECTIVE — lấy nguyên văn nội dung chương trình].
+- Band Cambridge (chỉ game Tiếng Anh): [Pre A1 Starters · 541 từ | A1 Movers · 930 từ | A2 Flyers · 1.431 từ] — dải từ tích luỹ tới band theo wordlist Cambridge 2025 (`tools/data/yle.mjs`) + 8 cấu trúc ngữ pháp của band; ưu tiên từ thuộc chủ đề [KEY topic trong `tools/data/yle.mjs`].
 - Mạch kiến thức: **[MẠCH]** — nhãn HUD "[NHÃN NGẮN]" · **Tuần [a]–[b] · [Học kì I | Học kì II]**. In nguyên văn hai nhãn này ở màn khởi động và màn tổng kết, nằm trong khối nút "Copy tờ rời".
 - Yêu cầu cần đạt (in NGUYÊN VĂN một dòng "Yêu cầu cần đạt: ..." ở màn khởi động và màn tổng kết, cấm viết lại hoặc tóm tắt): "[YÊU CẦU CẦN ĐẠT]"
 - Mẹo nhớ (≤12 từ, bật ở cú đúng câu đầu cụm và sau câu sai cùng lỗi, mascot đọc to kèm một động tác 3 giây làm mẫu): "[...]"
 - Báo trước "Dễ nhầm" ở câu đầu tiên của cụm (≤16 từ, tắt sau 6 giây, không che đề): "[...]"
 - Lỗi học sinh thường mắc (mỗi câu sai ghi đúng một lỗi này): [2–4 lỗi, tiếng Việt có dấu, ngăn bằng "; "].
 - errorTag của từng lỗi (mã máy viết thường, không dấu, không khoảng trắng): [danh sách mã].
-- Phạm vi: chỉ dùng nội dung [môn] lớp [grade] đã học; cấm số hoặc từ vựng ngoài phạm vi trên.
+- Phạm vi: chỉ dùng nội dung [môn] lớp [grade] đã học; game Tiếng Anh phải nằm trong đúng band đã chọn; cấm số hoặc từ vựng ngoài phạm vi trên.
 - Điều kiện: hết 5 tim (mỗi đáp án sai trừ 1 tim) là thua, đủ 12 lượt là thắng và hiện tổng kết. Chống ăn may: phương án nhiễu phải là kết quả của một lỗi có thật ở trên, không phải số ngẫu nhiên; đáp án đúng không nằm cố định một vị trí.
 - Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; thêm bốn dòng "Gửi bố mẹ".
 - Bộ sưu tập: mỗi màn thắng mở khóa 1 thẻ theo chủ đề [GAME NAME], lưu localStorage key "miti-collection", có màn "Sưu tập của em".

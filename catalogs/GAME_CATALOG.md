@@ -1,8 +1,8 @@
 # 🎮 MiTi — Danh mục game
 
-**85 game có file prompt thật.** Mỗi dòng một game: mục tiêu học tập lấy theo cụm kiến thức, điều khiển là mã gesture cụ thể (không dùng MIXED), link prompt trỏ đúng file.
+**85 game có file prompt thật.** Mỗi dòng một game: mục tiêu học tập lấy theo cụm kiến thức, điều khiển là mã gesture cụ thể (không dùng MIXED), link prompt trỏ đúng file. Mạch Tiếng Anh chia theo band Cambridge YLE (Starters · Movers · Flyers), cột `lop` chỉ còn là chú giải SGK.
 
-Nguồn dữ liệu: `tools/data/games.mjs`. Chạy `node tools/build.mjs` để dựng lại catalog, prompt và dashboard.
+Nguồn dữ liệu: `tools/data/games.mjs` + `tools/data/yle.mjs`. Chạy `node tools/build.mjs` để dựng lại catalog, prompt và dashboard.
 
 ## Toán lớp 4 (40)
 
@@ -69,45 +69,50 @@ Nguồn dữ liệu: `tools/data/games.mjs`. Chạy `node tools/build.mjs` để
 | T5-14 | Đua Bài Toán Chuyển Động | Quãng đường vận tốc thời gian; đơn vị đo thời gian; hai chuyển động ngược chiều cùng khởi hành | Chỉ dữ kiện đúng trên trục thời gian để tính vận tốc hoặc quãng đường còn thiếu. | `POINT` | [Mở prompt](../prompts/02-toan5/T5-14-motion-word-problem.md) |
 | T5-15 | Đấu Trường Chiến Thuật Toán | Ôn tổng hợp số thập phân, phân số, phần trăm, hình học, đo lường và bài toán chuyển động lớp 5 | Nắm thẻ chiến lược (rút về đơn vị, tỉ số, sơ đồ đoạn thẳng) áp vào đề bài rồi chọn đáp án. | `GRAB` + `POINT` | [Mở prompt](../prompts/02-toan5/T5-15-math-strategy-arena.md) |
 
-## Tiếng Anh lớp 4 (15)
+## Tiếng Anh · Pre A1 Starters (Cambridge) (10)
 
 | ID | Tên game | Mục tiêu | Nhiệm vụ | Điều khiển | Prompt |
 |---|---|---|---|---|---|
-| E4-01 | Nhiệm Vụ Từ Vựng | Từ vựng lớp 4: Animals, School, Family, Jobs, Colours, Hobbies; nghĩa tiếng Việt tương ứng | Vuốt chém tấm bảng mang từ tiếng Anh đúng với nghĩa hoặc tranh gợi ý. | `SWIPE` | [Mở prompt](../prompts/03-english4/E4-01-vocab-quest.md) |
-| E4-02 | Chọn Đáp Án Nghe | Nghe và chọn từ tranh tương ứng; nghe và chọn số hoặc màu; khoảng 10-15 từ mỗi chủ đề | Nghe và chỉ ngón tay vào tranh hoặc từ đúng với đoạn nghe. | `POINT` | [Mở prompt](../prompts/03-english4/E4-02-listening-pick.md) |
-| E4-03 | Ghép Tranh – Từ | Nối tranh với từ; kéo thả từ vào chỗ trống theo tranh; nhận diện từ qua hình | Kéo thẻ từ tiếng Anh thả đúng ô tranh tương ứng. | `DRAG` | [Mở prompt](../prompts/03-english4/E4-03-picture-word-match.md) |
-| E4-04 | Ngôi Sao Chính Tả | Điền chữ cái còn thiếu; sửa lỗi chính tả; chọn cách viết đúng của từ lớp 4-5 | Đấm vào ngôi sao chứa cách viết đúng chính tả của từ được đọc. | `PUNCH` | [Mở prompt](../prompts/03-english4/E4-04-spelling-stars.md) |
-| E4-05 | Nhiệm Vụ Điền Chữ | Điền chữ cái còn thiếu; sửa lỗi chính tả; chọn cách viết đúng của từ lớp 4-5 | Chỉ vào chữ cái còn thiếu ở đúng vị trí trong từ. | `POINT` | [Mở prompt](../prompts/03-english4/E4-05-missing-letter-mission.md) |
-| E4-06 | Xây Từ | Bảng chữ cái bị xáo trộn: ghép thành từ đúng; mỗi từ có nghĩa gợi ý | Kéo từng chữ cái thả vào ô trống theo đúng thứ tự của từ. | `DRAG` | [Mở prompt](../prompts/03-english4/E4-06-word-builder.md) |
-| E4-07 | Đua Xếp Câu | Sắp xếp các từ đã cho thành câu có nghĩa; điền động từ to be a/an the | Kéo các toa từ vào đúng trật tự để thành câu hoàn chỉnh có nghĩa. | `DRAG` | [Mở prompt](../prompts/03-english4/E4-07-sentence-race.md) |
-| E4-08 | Trí Nhớ Từ Vựng | Lật thẻ ghép cặp từ với tranh/nghĩa; bộ 8-12 cặp mỗi chủ đề | Chỉ tay lật thẻ để ghép đúng cặp từ tiếng Anh với tranh nghĩa. | `POINT` | [Mở prompt](../prompts/03-english4/E4-08-word-memory.md) |
-| E4-09 | Đường Đua Nghe | Nghe và chọn từ tranh tương ứng; nghe và chọn số hoặc màu; khoảng 10-15 từ mỗi chủ đề | Nghe rồi nghiêng người bước sang làn chứa từ hoặc số đúng. | `STEP` | [Mở prompt](../prompts/03-english4/E4-09-listening-lane.md) |
-| E4-10 | Đập Từ | Từ vựng lớp 4: Animals, School, Family, Jobs, Colours, Hobbies; nghĩa tiếng Việt tương ứng | Đấm trúng bong bóng chứa từ đúng với nghĩa tiếng Việt hiện trên bảng. | `PUNCH` | [Mở prompt](../prompts/03-english4/E4-10-word-whack.md) |
-| E4-11 | Xây Câu Chuyện Tranh | Sắp xếp 3-5 tranh theo trình tự; chọn câu phù hợp với từng tranh | Chỉ và kéo các tranh theo đúng trình tự, rồi ghép câu mô tả cho từng tranh. | `POINT` + `DRAG` | [Mở prompt](../prompts/03-english4/E4-11-picture-story-builder.md) |
-| E4-12 | Nghe Và Phân Loại | Nghe rồi phân loại từ vào 3 nhóm chủ đề; nghe và chọn từ sai khác | Nghe một từ, chỉ vào rổ chủ đề đúng rồi kéo thẻ từ vào rổ đó. | `POINT` + `DRAG` | [Mở prompt](../prompts/03-english4/E4-12-listen-and-sort.md) |
-| E4-13 | Bóng Âm | Âm và mẫu chữ thường gặp: sh ch th ph gh ea ee oo ai ay; chọn từ chứa âm mục tiêu | Vuốt chém các quả bóng chứa từ có âm hoặc mẫu chữ mục tiêu. | `SWIPE` | [Mở prompt](../prompts/03-english4/E4-13-phonics-pop.md) |
-| E4-14 | Xây Câu Hỏi | What is this How much Where is Who are you How old và câu trả lời mẫu | Chọn từ để hỏi trước rồi kéo các từ còn lại về đúng trật tự câu hỏi. | `POINT` + `DRAG` | [Mở prompt](../prompts/03-english4/E4-14-question-builder.md) |
-| E4-15 | Bản Đồ Phiêu Lưu Tiếng Anh | Bản đồ 5 đảo: từ vựng, nghe, chính tả, câu, phát âm; mỗi đảo 3 câu | Chỉ tay mở khoá từng bến đảo, hoàn thành ba câu trên đảo để lấy huy hiệu. | `POINT` | [Mở prompt](../prompts/03-english4/E4-15-english-adventure-map.md) |
+| ST-01 | Nhiệm Vụ Từ Vựng | Từ vựng Tiếng Anh: Animals, School, Family, Jobs, Colours, Hobbies; nghĩa tiếng Việt tương ứng | Vuốt chém tấm bảng mang từ tiếng Anh đúng với nghĩa hoặc tranh gợi ý. | `SWIPE` | [Mở prompt](../prompts/03-english-starters/ST-01-vocab-quest.md) |
+| ST-02 | Chọn Đáp Án Nghe | Nghe và chọn từ tranh tương ứng; nghe và chọn số hoặc màu; khoảng 10-15 từ mỗi chủ đề | Nghe và chỉ ngón tay vào tranh hoặc từ đúng với đoạn nghe. | `POINT` | [Mở prompt](../prompts/03-english-starters/ST-02-listen-pick.md) |
+| ST-03 | Ghép Tranh – Từ | Nối tranh với từ; kéo thả từ vào chỗ trống theo tranh; nhận diện từ qua hình | Kéo thẻ từ tiếng Anh thả đúng ô tranh tương ứng. | `DRAG` | [Mở prompt](../prompts/03-english-starters/ST-03-picture-word-match.md) |
+| ST-04 | Ngôi Sao Chính Tả | Điền chữ cái còn thiếu; sửa lỗi chính tả; chọn cách viết đúng của từ lớp 4-5 | Đấm vào ngôi sao chứa cách viết đúng chính tả của từ được đọc. | `PUNCH` | [Mở prompt](../prompts/03-english-starters/ST-04-spelling-star.md) |
+| ST-05 | Đua Xếp Câu | Sắp xếp các từ đã cho thành câu có nghĩa; điền động từ to be a/an the | Kéo các toa từ vào đúng trật tự để thành câu hoàn chỉnh có nghĩa. | `DRAG` | [Mở prompt](../prompts/03-english-starters/ST-05-sentence-race.md) |
+| ST-06 | Trí Nhớ Từ Vựng | Lật thẻ ghép cặp từ với tranh/nghĩa; bộ 8-12 cặp mỗi chủ đề | Chỉ tay lật thẻ để ghép đúng cặp từ tiếng Anh với tranh nghĩa. | `POINT` | [Mở prompt](../prompts/03-english-starters/ST-06-word-memory.md) |
+| ST-07 | Bóng Âm | Âm và mẫu chữ thường gặp: sh ch th ph gh ea ee oo ai ay; chọn từ chứa âm mục tiêu | Vuốt chém các quả bóng chứa từ có âm hoặc mẫu chữ mục tiêu. | `SWIPE` | [Mở prompt](../prompts/03-english-starters/ST-07-shadow-phonic.md) |
+| ST-08 | Đập Từ | Từ vựng Tiếng Anh: Animals, School, Family, Jobs, Colours, Hobbies; nghĩa tiếng Việt tương ứng | Đấm trúng bong bóng chứa từ đúng với nghĩa tiếng Việt hiện trên bảng. | `PUNCH` | [Mở prompt](../prompts/03-english-starters/ST-08-punch-word.md) |
+| ST-09 | Nghe Và Phân Loại | Nghe rồi phân loại từ vào 3 nhóm chủ đề; nghe và chọn từ sai khác | Nghe một từ, chỉ vào rổ chủ đề đúng rồi kéo thẻ từ vào rổ đó. | `POINT` + `DRAG` | [Mở prompt](../prompts/03-english-starters/ST-09-listen-sort.md) |
+| ST-10 | Bản Đồ Phiêu Lưu Tiếng Anh | Bản đồ 5 đảo: từ vựng, nghe, chính tả, câu, phát âm; mỗi đảo 3 câu | Chỉ tay mở khoá từng bến đảo, hoàn thành ba câu trên đảo để lấy huy hiệu. | `POINT` | [Mở prompt](../prompts/03-english-starters/ST-10-skill-map.md) |
 
-## Tiếng Anh lớp 5 (15)
+## Tiếng Anh · A1 Movers (Cambridge) (10)
 
 | ID | Tên game | Mục tiêu | Nhiệm vụ | Điều khiển | Prompt |
 |---|---|---|---|---|---|
-| E5-01 | Trùm Nghe Hiểu | Nghe và chọn từ tranh tương ứng; nghe và chọn số hoặc màu; khoảng 10-15 từ mỗi chủ đề | Nghe và chỉ vào đáp án đúng trong ba lựa chọn, mỗi lượt được nghe lại tối đa ba lần. | `POINT` | [Mở prompt](../prompts/04-english5/E5-01-listening-boss.md) |
-| E5-02 | Mê Cung Câu | Hiện tại đơn hiện tại tiếp diễn quá khứ; danh từ đếm được không đếm được; lượng từ some any | Kéo thẻ ngữ pháp đúng thả vào chỗ trống để mở lối đi tiếp. | `DRAG` | [Mở prompt](../prompts/04-english5/E5-02-sentence-maze.md) |
-| E5-03 | Thợ Săn Từ | Từ vựng lớp 4: Animals, School, Family, Jobs, Colours, Hobbies; nghĩa tiếng Việt tương ứng | Vuốt chém bụi cây chứa từ đúng với nghĩa và ngữ cảnh câu gợi ý. | `SWIPE` | [Mở prompt](../prompts/04-english5/E5-03-word-hunter.md) |
-| E5-04 | Cổng Ngữ Pháp | Hiện tại đơn hiện tại tiếp diễn quá khứ; danh từ đếm được không đếm được; lượng từ some any | Nghiêng người bước vào cổng chứa dạng động từ đúng với thì của câu. | `STEP` | [Mở prompt](../prompts/04-english5/E5-04-grammar-gates.md) |
-| E5-05 | Hẻm Núi Điền Từ | Đoạn văn có 5-8 chỗ trống chọn từ trong ngân hàng từ; dựa vào ngữ cảnh suy ra từ | Kéo từ trong ngân hàng từ thả vào chỗ trống hợp ngữ cảnh. | `DRAG` | [Mở prompt](../prompts/04-english5/E5-05-cloze-canyon.md) |
-| E5-06 | Pháo Đài Chính Tả | Điền chữ cái còn thiếu; sửa lỗi chính tả; chọn cách viết đúng của từ lớp 4-5 | Đấm quả đạn chứa từ viết đúng để bắn hạ loạt đạn sai. | `PUNCH` | [Mở prompt](../prompts/04-english5/E5-06-spelling-blaster.md) |
-| E5-07 | Xây Cụm Từ | Ghép từ thành cụm a pair of a glass of how many và đặt câu với cụm | Kéo các mảnh từ ghép thành cụm hoàn chỉnh rồi đặt câu với cụm đó. | `DRAG` | [Mở prompt](../prompts/04-english5/E5-07-phrase-builder.md) |
-| E5-08 | Bộ Ba Trí Nhớ | Ghép bộ ba từ tranh nghĩa tiếng Việt; 8 bộ mỗi lượt | Lật ba thẻ cùng một bộ bằng ngón tay để ghép thành bộ ba đúng. | `POINT` | [Mở prompt](../prompts/04-english5/E5-08-memory-triplet.md) |
-| E5-09 | Tuyến Đường Nói | Nói câu ngắn theo tình huống qua Web Speech recognition; khung câu cho sẵn | Nói to câu trả lời theo khung câu; micro nhận giọng và chấm từng từ. | `VOICE` | [Mở prompt](../prompts/04-english5/E5-09-voice-route.md) |
-| E5-10 | Đảo Ôn Tập | Ôn tổng hợp nghe đọc viết nói ngữ pháp từ vựng tiếng Anh lớp 5 | Chỉ tay chọn từng câu hỏi trên đảo, đáp án đúng mở đường sang đảo kế tiếp. | `POINT` | [Mở prompt](../prompts/04-english5/E5-10-island-review.md) |
-| E5-11 | Thám Tử Đọc Hiểu | Đoạn văn 60-90 từ lớp 5: ý chính, chi tiết, trình tự, suy luận đơn giản; tìm bằng chứng gạch chân | Đọc đoạn văn và chỉ tay gạch chân đúng câu chứa bằng chứng cho nghi vấn. | `POINT` | [Mở prompt](../prompts/04-english5/E5-11-reading-detective.md) |
-| E5-12 | Xây Ngữ Pháp | Hiện tại đơn hiện tại tiếp diễn quá khứ; danh từ đếm được không đếm được; lượng từ some any | Chỉ ra chỗ sai trong câu rồi kéo thẻ sửa đúng để cây cầu mở màn tiếp. | `POINT` + `DRAG` | [Mở prompt](../prompts/04-english5/E5-12-grammar-builder.md) |
-| E5-13 | Nhiệm Vụ Nói | Nói câu ngắn theo tình huống qua Web Speech recognition; khung câu cho sẵn | Nghe tình huống và nói câu trả lời ngắn; hệ thống hiện transcript và chấm phát âm. | `VOICE` | [Mở prompt](../prompts/04-english5/E5-13-speaking-mission.md) |
-| E5-14 | Phòng Thí Nghiệm Tạo Từ | Ghép từ thành cụm a pair of a glass of how many và đặt câu với cụm | Chỉ gốc từ rồi kéo mảnh tiền tố hoặc hậu tố thả vào để biến đổi từ loại. | `POINT` + `DRAG` | [Mở prompt](../prompts/04-english5/E5-14-word-formation-lab.md) |
-| E5-15 | Cúp Thử Thách Tiếng Anh | Ôn tổng hợp nghe đọc viết nói ngữ pháp từ vựng tiếng Anh lớp 5 | Chỉ tay trả lời ở mỗi trạm, đủ điều kiện thì trạm sau mở khoá độ khó cao hơn. | `POINT` | [Mở prompt](../prompts/04-english5/E5-15-english-challenge-cup.md) |
+| MV-01 | Thợ Săn Từ | Từ vựng Tiếng Anh: Animals, School, Family, Jobs, Colours, Hobbies; nghĩa tiếng Việt tương ứng | Vuốt chém bụi cây chứa từ đúng với nghĩa và ngữ cảnh câu gợi ý. | `SWIPE` | [Mở prompt](../prompts/04-english-movers/MV-01-word-hunter.md) |
+| MV-02 | Trùm Nghe Hiểu | Nghe và chọn từ tranh tương ứng; nghe và chọn số hoặc màu; khoảng 10-15 từ mỗi chủ đề | Nghe và chỉ vào đáp án đúng trong ba lựa chọn, mỗi lượt được nghe lại tối đa ba lần. | `POINT` | [Mở prompt](../prompts/04-english-movers/MV-02-listen-master.md) |
+| MV-03 | Nhiệm Vụ Điền Chữ | Điền chữ cái còn thiếu; sửa lỗi chính tả; chọn cách viết đúng của từ lớp 4-5 | Chỉ vào chữ cái còn thiếu ở đúng vị trí trong từ. | `POINT` | [Mở prompt](../prompts/04-english-movers/MV-03-fill-letter.md) |
+| MV-04 | Xây Từ | Bảng chữ cái bị xáo trộn: ghép thành từ đúng; mỗi từ có nghĩa gợi ý | Kéo từng chữ cái thả vào ô trống theo đúng thứ tự của từ. | `DRAG` | [Mở prompt](../prompts/04-english-movers/MV-04-build-word.md) |
+| MV-05 | Mê Cung Câu | Hiện tại đơn hiện tại tiếp diễn quá khứ; danh từ đếm được không đếm được; lượng từ some any | Kéo thẻ ngữ pháp đúng thả vào chỗ trống để mở lối đi tiếp. | `DRAG` | [Mở prompt](../prompts/04-english-movers/MV-05-maze-sentence.md) |
+| MV-06 | Cổng Ngữ Pháp | Hiện tại đơn hiện tại tiếp diễn quá khứ; danh từ đếm được không đếm được; lượng từ some any | Nghiêng người bước vào cổng chứa dạng động từ đúng với thì của câu. | `STEP` | [Mở prompt](../prompts/04-english-movers/MV-06-grammar-gate.md) |
+| MV-07 | Xây Câu Hỏi | What is this How much Where is Who are you How old và câu trả lời mẫu | Chọn từ để hỏi trước rồi kéo các từ còn lại về đúng trật tự câu hỏi. | `POINT` + `DRAG` | [Mở prompt](../prompts/04-english-movers/MV-07-build-question.md) |
+| MV-08 | Bộ Ba Trí Nhớ | Ghép bộ ba từ tranh nghĩa tiếng Việt; 8 bộ mỗi lượt | Lật ba thẻ cùng một bộ bằng ngón tay để ghép thành bộ ba đúng. | `POINT` | [Mở prompt](../prompts/04-english-movers/MV-08-triple-memory.md) |
+| MV-09 | Pháo Đài Chính Tả | Điền chữ cái còn thiếu; sửa lỗi chính tả; chọn cách viết đúng của từ lớp 4-5 | Đấm quả đạn chứa từ viết đúng để bắn hạ loạt đạn sai. | `PUNCH` | [Mở prompt](../prompts/04-english-movers/MV-09-spelling-fort.md) |
+| MV-10 | Đảo Ôn Tập | Ôn tổng hợp nghe đọc viết nói ngữ pháp từ vựng tiếng Anh | Chỉ tay chọn từng câu hỏi trên đảo, đáp án đúng mở đường sang đảo kế tiếp. | `POINT` | [Mở prompt](../prompts/04-english-movers/MV-10-revision-island.md) |
+
+## Tiếng Anh · A2 Flyers (Cambridge) (10)
+
+| ID | Tên game | Mục tiêu | Nhiệm vụ | Điều khiển | Prompt |
+|---|---|---|---|---|---|
+| FY-01 | Hẻm Núi Điền Từ | Đoạn văn có 5-8 chỗ trống chọn từ trong ngân hàng từ; dựa vào ngữ cảnh suy ra từ | Kéo từ trong ngân hàng từ thả vào chỗ trống hợp ngữ cảnh. | `DRAG` | [Mở prompt](../prompts/05-english-flyers/FY-01-canyon-cloze.md) |
+| FY-02 | Xây Cụm Từ | Ghép từ thành cụm a pair of a glass of how many và đặt câu với cụm | Kéo các mảnh từ ghép thành cụm hoàn chỉnh rồi đặt câu với cụm đó. | `DRAG` | [Mở prompt](../prompts/05-english-flyers/FY-02-phrase-garden.md) |
+| FY-03 | Tuyến Đường Nói | Nói câu ngắn theo tình huống qua Web Speech recognition; khung câu cho sẵn | Nói to câu trả lời theo khung câu; micro nhận giọng và chấm từng từ. | `VOICE` | [Mở prompt](../prompts/05-english-flyers/FY-03-speaking-route.md) |
+| FY-04 | Nhiệm Vụ Nói | Nói câu ngắn theo tình huống qua Web Speech recognition; khung câu cho sẵn | Nghe tình huống và nói câu trả lời ngắn; hệ thống hiện transcript và chấm phát âm. | `VOICE` | [Mở prompt](../prompts/05-english-flyers/FY-04-speaking-mission.md) |
+| FY-05 | Thám Tử Đọc Hiểu | Đoạn văn 60-90 từ lớp 5: ý chính, chi tiết, trình tự, suy luận đơn giản; tìm bằng chứng gạch chân | Đọc đoạn văn và chỉ tay gạch chân đúng câu chứa bằng chứng cho nghi vấn. | `POINT` | [Mở prompt](../prompts/05-english-flyers/FY-05-reading-detective.md) |
+| FY-06 | Xây Ngữ Pháp | Hiện tại đơn hiện tại tiếp diễn quá khứ; danh từ đếm được không đếm được; lượng từ some any | Chỉ ra chỗ sai trong câu rồi kéo thẻ sửa đúng để cây cầu mở màn tiếp. | `POINT` + `DRAG` | [Mở prompt](../prompts/05-english-flyers/FY-06-grammar-workshop.md) |
+| FY-07 | Xây Câu Chuyện Tranh | Sắp xếp 3-5 tranh theo trình tự; chọn câu phù hợp với từng tranh | Chỉ và kéo các tranh theo đúng trình tự, rồi ghép câu mô tả cho từng tranh. | `POINT` + `DRAG` | [Mở prompt](../prompts/05-english-flyers/FY-07-story-studio.md) |
+| FY-08 | Đường Đua Nghe | Nghe và chọn từ tranh tương ứng; nghe và chọn số hoặc màu; khoảng 10-15 từ mỗi chủ đề | Nghe rồi nghiêng người bước sang làn chứa từ hoặc số đúng. | `STEP` | [Mở prompt](../prompts/05-english-flyers/FY-08-listen-race.md) |
+| FY-09 | Phòng Thí Nghiệm Tạo Từ | Ghép từ thành cụm a pair of a glass of how many và đặt câu với cụm | Chỉ gốc từ rồi kéo mảnh tiền tố hoặc hậu tố thả vào để biến đổi từ loại. | `POINT` + `DRAG` | [Mở prompt](../prompts/05-english-flyers/FY-09-word-lab.md) |
+| FY-10 | Cúp Thử Thách Tiếng Anh | Ôn tổng hợp nghe đọc viết nói ngữ pháp từ vựng tiếng Anh | Chỉ tay trả lời ở mỗi trạm, đủ điều kiện thì trạm sau mở khoá độ khó cao hơn. | `POINT` | [Mở prompt](../prompts/05-english-flyers/FY-10-english-cup.md) |
 
 ## Gesture được dùng
 

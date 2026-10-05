@@ -189,12 +189,12 @@ const C = {
     noi_dung: 'ôn tổng hợp số thập phân, phân số, phần trăm, hình học, đo lường và bài toán chuyển động lớp 5',
     giai_thich: 'chọn chiến lược (rút về đơn vị, tỉ số, sơ đồ đoạn thẳng) rồi mới tính',
   },
-  'tu-vung-e4': {
+  'tu-vung': {
     tags: ['nham_gan_nghia', 'chinh_ta_sai_nguyen_am', 'thieu_s_danh_tu_so_nhieu'],
-    noi_dung: 'từ vựng lớp 4: Animals, School, Family, Jobs, Colours, Hobbies; nghĩa tiếng Việt tương ứng',
+    noi_dung: 'từ vựng Tiếng Anh: Animals, School, Family, Jobs, Colours, Hobbies; nghĩa tiếng Việt tương ứng',
     giai_thich: 'dịch nghĩa + phiên âm + ví dụ minh hoạ + lặp lại bằng speechSynthesis khi đúng',
   },
-  'nghe-e4': {
+  'nghe': {
     tags: ['am_cuoi_s_ed_t', 'phien_am_gan_giong', 'bo_lo_tu_dai'],
     noi_dung: 'nghe và chọn từ tranh tương ứng; nghe và chọn số hoặc màu; khoảng 10-15 từ mỗi chủ đề',
     giai_thich: 'highlight âm nghe được, cho bấm phát lại tối đa 3 lần rồi hiện transcript',
@@ -249,7 +249,7 @@ const C = {
     noi_dung: 'đoạn văn 60-90 từ lớp 5: ý chính, chi tiết, trình tự, suy luận đơn giản; tìm bằng chứng gạch chân',
     giai_thich: 'hiện câu trong bài chứa bằng chứng và highlight đoạn được chọn',
   },
-  'nguphap-e5': {
+  'nguphap': {
     tags: ['thi_hieu_du_lu_lien_quan', 'dem_khong_dong_tu_them_s', 'gioi_tu_in_on_at'],
     noi_dung: 'hiện tại đơn hiện tại tiếp diễn quá khứ; danh từ đếm được không đếm được; lượng từ some any',
     giai_thich: 'sửa trực tiếp vị trí sai trong câu và giải thích bằng tiếng Việt',
@@ -274,12 +274,12 @@ const C = {
     noi_dung: 'nói câu ngắn theo tình huống qua Web Speech recognition; khung câu cho sẵn',
     giai_thich: 'hiện transcript nhận được, gạch chân từ thiếu và cho thử lại 3 lần',
   },
-  'on-tap-e5': {
+  'on-tap': {
     tags: ['nham_ke_nang_can_hoc', 'thieu_thoi_gian_lam_bai_dai', 'bo_qua_chua_bai'],
-    noi_dung: 'ôn tổng hợp nghe đọc viết nói ngữ pháp từ vựng tiếng Anh lớp 5',
+    noi_dung: 'ôn tổng hợp nghe đọc viết nói ngữ pháp từ vựng tiếng Anh',
     giai_thich: 'báo cáo kỹ năng mạnh yếu và gợi ý đảo luyện lại',
   },
-  'dao-kynang-e4': {
+  'dao-kynang': {
     tags: ['xen_ke_ky_nang_gay_nhieu_loi', 'khong_dat_chuan_do_nang', 'bo_dao_thu'],
     noi_dung: 'bản đồ 5 đảo: từ vựng, nghe, chính tả, câu, phát âm; mỗi đảo 3 câu',
     giai_thich: 'sau mỗi đảo hiện huy hiệu và danh sách từ cần luyện lại',

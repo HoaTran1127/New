@@ -38,7 +38,7 @@ Mỗi file là **prompt độc lập** — không cần Gemini biết repository
 
 **85 game × 5 kiểu điều khiển = 425 block**, do `tools/build-variants.mjs` sinh từ `tools/data/games.mjs`: Camera Point · Camera Swipe · Drag & Grab · Voice · No Camera.
 
-Bản file: **4,66 MB** (trước 64,05 MB), mỗi block ≤ **11,3 KB**. Bốn biến thể đầu giữ nguyên hợp đồng AR: khung hình webcam cover-fit làm nền, tọa độ qua `toScreen(lx, ly)`, vật thể có `z` và neo landmark. Muốn đổi nội dung thì sửa dữ liệu rồi chạy `node tools/build.mjs`, đừng sửa tay file sinh ra.
+Bản file: **4,58 MB**, trung bình 11,3 KB/block, block lớn nhất **12,0 KB** (trần 15 KB). Bốn biến thể đầu giữ nguyên hợp đồng AR: khung hình webcam cover-fit làm nền, tọa độ qua `toScreen(lx, ly)`, vật thể có `z` và neo landmark. block tiếng Anh in thêm band Cambridge + trần 541/930/1 431 từ. Muốn đổi nội dung thì sửa dữ liệu rồi chạy `node tools/build.mjs`, đừng sửa tay file sinh ra.
 
 👉 [Mở 425 Prompt Variants](VARIANTS_425.md)
 
@@ -46,7 +46,8 @@ Bản file: **4,66 MB** (trước 64,05 MB), mỗi block ≤ **11,3 KB**. Bốn 
 
 - `00-master-canvas-prompt.md` — khung 5 mục + bảng 14 mã điều khiển, để tự viết prompt mới.
 - `templates/game-prompt-template.md` — biểu mẫu điền ô `[...]` (`template-tao-game-moi.md` cũ chỉ còn trang trỏ tới đây).
-- `01-toan4/` · `02-toan5/` · `03-english4/` · `04-english5/` — 85 prompt game.
+- `01-toan4/` · `02-toan5/` — 55 prompt Toán theo khối lớp.
+- `03-english-starters/` · `04-english-movers/` · `05-english-flyers/` — 30 prompt Tiếng Anh, mỗi band 10 game, ID `ST-01…`, `MV-01…`, `FY-01…`. Trần từ vựng và ngữ pháp của từng prompt lấy theo wordlist Cambridge YLE (`tools/data/yle.mjs`).
 - `01-prompt-…` đến `12-prompt-…` — **12 prompt legacy** (9,8–10,2 KB/file): giữ cơ chế game cũ, dùng ràng buộc cốt lõi hiện hành. Không dùng làm khuôn cho game mới.
 - `VARIANTS_425.md` — 425 biến thể điều khiển.
 - `CHECKLIST_NGHIEP_THU.md` — bảng kiểm cầm tay: **14 mục theo ràng buộc cốt lõi + 6 việc người thử làm tay**, do `tools/build-acceptance.mjs` sinh từ `CORE_LINES`.
