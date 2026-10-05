@@ -4,7 +4,7 @@
 [![Google Gemini](https://img.shields.io/badge/Google_Gemini-Canvas_Ready-8E75FF?style=for-the-badge&logo=googlegemini&logoColor=white)](https://gemini.google.com)
 [![MediaPipe AI](https://img.shields.io/badge/AI_Vision-MediaPipe_Tasks_Vision_1.0.1-00F0FF?style=for-the-badge&logo=google&logoColor=black)](https://developers.google.com/mediapipe)
 [![Web Audio](https://img.shields.io/badge/Audio-Web_Audio_API_tong_hop-FF007A?style=for-the-badge)](https://developer.mozilla.org/docs/Web/API/Web_Audio_API)
-[![Live Studio](https://img.shields.io/badge/Web_Dashboard-Chọn_Game_Ngay-FFE600?style=for-the-badge&logo=githubpages&logoColor=black)](https://hoatran1127.github.io/New/)
+[![Live Studio](https://img.shields.io/badge/Web_Dashboard-Chọn_Game_Ngay-FFE600?style=for-the-badge&logo=githubpages&logoColor=black)](https://hoatran1127.github.io/gemini-canvas-ar-prompts/)
 
 > 🎯 **North Star:** Vào thư viện ➔ Chọn game ➔ **Copy khối `text`** ➔ Dán vào **[Google Gemini](https://gemini.google.com) (bật Canvas)** ➔ Nhận 1 file HTML hoàn chỉnh, bật camera chơi bằng chuyển động.
 
@@ -12,10 +12,10 @@
 
 ## 🚀 Trải Nghiệm Nhanh Trực Tuyến
 
-* 🌐 **[MỞ DASHBOARD MiTi (Chọn Game & Copy Prompt) →](https://hoatran1127.github.io/New/)**
+* 🌐 **[MỞ DASHBOARD MiTi (Chọn Game & Copy Prompt) →](https://hoatran1127.github.io/gemini-canvas-ar-prompts/)**
 * 🕹️ **Chơi thử demo chạy sẵn trên trình duyệt:**
-  * [Demo 1: Subway Math Blitz AR](https://hoatran1127.github.io/New/games/math-blitz/) · [Demo 2: AR Math Catcher](https://hoatran1127.github.io/New/games/math-catcher/)
-  * [Demo 3: Math Ninja Bubble Pop](https://hoatran1127.github.io/New/games/math-bubble/) · [Demo 4: English Word Ninja](https://hoatran1127.github.io/New/games/english-word-ninja/)
+  * [Demo 1: Subway Math Blitz AR](https://hoatran1127.github.io/gemini-canvas-ar-prompts/games/math-blitz/) · [Demo 2: AR Math Catcher](https://hoatran1127.github.io/gemini-canvas-ar-prompts/games/math-catcher/)
+  * [Demo 3: Math Ninja Bubble Pop](https://hoatran1127.github.io/gemini-canvas-ar-prompts/games/math-bubble/) · [Demo 4: English Word Ninja](https://hoatran1127.github.io/gemini-canvas-ar-prompts/games/english-word-ninja/)
   * *Demo trong `games/` là mã nguồn cũ để xem cơ chế; sản phẩm chính của repo là **prompt**, game mới do Gemini Canvas sinh từ prompt.*
 
 ---
@@ -62,7 +62,7 @@ Toàn bộ prompt nằm trong file `.md` riêng, mỗi file một game, copy ngu
 
 | Nhóm | Số lượng | Mở ở đâu |
 |:---|:---:|:---|
-| Prompt game chuẩn (Toán 4 · Toán 5 · Starters · Movers · Flyers) | **85** | [Dashboard MiTi](https://hoatran1127.github.io/New/) hoặc [catalogs/GAME_CATALOG.md](catalogs/GAME_CATALOG.md) |
+| Prompt game chuẩn (Toán 4 · Toán 5 · Starters · Movers · Flyers) | **85** | [Dashboard MiTi](https://hoatran1127.github.io/gemini-canvas-ar-prompts/) hoặc [catalogs/GAME_CATALOG.md](catalogs/GAME_CATALOG.md) |
 | Khung master 5 mục để tự viết prompt mới | 1 | [prompts/00-master-canvas-prompt.md](prompts/00-master-canvas-prompt.md) |
 | Biểu mẫu điền nhanh | 1 | [prompts/templates/game-prompt-template.md](prompts/templates/game-prompt-template.md) |
 | Bảng kiểm nghiệm thu cầm tay (14 mục cốt lõi + 6 việc người thử) | 1 | [prompts/CHECKLIST_NGHIEP_THU.md](prompts/CHECKLIST_NGHIEP_THU.md) |

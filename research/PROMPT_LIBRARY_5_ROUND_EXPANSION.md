@@ -9,7 +9,7 @@ Date: 2026-09-29
 Expand the Gemini Canvas Prompt Library for Grade 4–5 Math and English while keeping the repository focused on standalone prompts, not a game-engine implementation.
 
 ## Round 1 — Inventory audit
-Checked the live GitHub repository HoaTran1127/New.
+Checked the live GitHub repository HoaTran1127/New (tên repo đổi ngày 05/10/2026 thành `HoaTran1127/gemini-canvas-ar-prompts`).
 - Before expansion, catalogs/GAME_CATALOG.csv contained 35 Grade 4 Math rows.
 - Existing English 4, English 5 and Grade 5 Math prompt folders were present in repository history/search, but the catalogue was incomplete.
 - Prompt filenames were not always predictable from earlier notes, so paths must be discovered from GitHub rather than guessed.
