@@ -1,6 +1,8 @@
 # Bài 5: Hiệu Ứng Âm Thanh Arcade Với Tone.js
 
-> **⚠️ Cập nhật chuẩn MiTi (2026-09)** — bài này vẫn đúng về ý tưởng, nhưng ba phụ thuộc đã đổi: **Tone.js → Web Audio API tự tổng hợp**, **MediaPipe Hands legacy → MediaPipe Tasks Vision pin `@1.0.1`** (vision_bundle.mjs + wasm + hand_landmarker.task), **Tailwind Play CDN → CSS nội tuyến một khối `<style>`**. Bản chuẩn để viết prompt cho Gemini Canvas: `prompts/00-master-canvas-prompt.md` §2 (hợp đồng AR: cover-fit, `toScreen(lx, ly)`, lớp phủ alpha ≤ 0.45, chiều sâu z, neo landmark) + `tools/lib/ar.mjs` + `tools/lib/rules.mjs`; 425 prompt biến thể trong `prompts/VARIANTS_425.md`. Mã nguồn demo trong `games/` là bản cũ, chưa theo hợp đồng AR này.
+> **⚠️ Cập nhật chuẩn MiTi (2026-10)** — bài này vẫn đúng về ý tưởng, nhưng ba phụ thuộc đã đổi: **Tone.js → Web Audio API tự tổng hợp**, **MediaPipe Hands legacy → MediaPipe Tasks Vision pin `@1.0.1`** (vision_bundle.mjs + wasm + hand_landmarker.task), **Tailwind Play CDN → CSS nội tuyến một khối `<style>`**.
+> Bản chuẩn để viết prompt cho Gemini Canvas: `prompts/00-master-canvas-prompt.md` — khung 5 mục (Ý TƯỞNG · MỤC TIÊU HỌC TẬP · RÀNG BUỘC CỐT LÕI · NGÂN HÀNG DỮ LIỆU · TỰ KIỂM TRA), trần 15 KB mỗi prompt. Mọi quy định dùng chung nằm trong 14 dòng `CORE_LINES` ở `tools/lib/core.mjs`; 425 biến thể điều khiển ở `prompts/VARIANTS_425.md`.
+> Bài viết dưới đây mô tả kiến trúc cũ (nhiều module `tools/lib/*`, prompt dài hàng trăm KB), nên đọc để hiểu cơ chế chứ không copy cấu trúc. Mã nguồn demo trong `games/` là bản cũ, chưa theo hợp đồng AR này.
 
 
 ## 1. Tại sao không dùng file MP3 tải sẵn?
