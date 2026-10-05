@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="vi"><head><meta charset="UTF-8"><title>Preview harness</title>
+<style>
+  html,body{margin:0;background:#1b1b1b;overflow:hidden}
+  #box{transform-origin:0 0}
+  iframe{border:0;display:block;background:#000}
+</style></head>
+<body><div id="box"><iframe id="f"></iframe></div>
+<script>
+  const p = new URLSearchParams(location.search);
+  const W = +(p.get('w') || 1280), H = +(p.get('h') || 720);
+  const SRC = p.get('src') || '../games/l4-05-nha-may-khoi-luong/index.html';
+  const f = document.getElementById('f');
+  f.src = SRC; f.width = W; f.height = H;
+  const s = Math.min(innerWidth / W, innerHeight / H, 1);
+  document.getElementById('box').style.transform = 'scale(' + s + ')';
+</script></body></html>

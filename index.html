@@ -20,6 +20,7 @@ linear-gradient(180deg,#07111e,#050b14 75%);min-height:100vh}a{color:inherit;tex
 .note code{background:#12263a;border:1px solid var(--line);border-radius:5px;padding:1px 5px;font-size:10px;color:#bce9ff}
 .action[disabled]{opacity:.65;cursor:default}
 footer{padding:35px 0 0;color:#70879d;text-align:center;font-size:11px}@media(max-width:1050px){.hero{grid-template-columns:1fr}.routes{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:700px){.wrap{padding:16px 14px 45px}.top{align-items:flex-start;flex-direction:column}.brandcopy{display:none}.links{width:100%}.heroMain{padding:25px}.hero h1{letter-spacing:-2.5px}.filters{grid-template-columns:1fr 1fr}.filters .input{grid-column:1/-1}.routes{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.sectionHead,.libraryMeta{align-items:flex-start;flex-direction:column}}
+.playGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.playCard{position:relative;border:1px solid var(--line);background:linear-gradient(180deg,#0e2134,#0a1726);border-radius:17px;padding:20px;display:block;text-decoration:none;transition:.18s}.playCard:hover{transform:translateY(-2px);border-color:#356784}.playCard h3{margin:10px 0 6px;font-size:19px;color:var(--cyan)}.playCard p{margin:0;color:var(--muted);font-size:12px;line-height:1.6}.badge{display:inline-block;padding:4px 9px;border-radius:999px;font-size:10px;letter-spacing:.6px;text-transform:uppercase;background:#12324a;color:#8fd0ff}.badge.gold{background:#3a2f10;color:#ffd84d}.playMeta{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}.playMeta span{font-size:10px;color:#9fb6c9;border:1px solid var(--line);border-radius:8px;padding:4px 8px}.playNote{margin:14px 0 0;color:var(--muted);font-size:11px;line-height:1.6}@media(max-width:700px){.playGrid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -66,6 +67,24 @@ footer{padding:35px 0 0;color:#70879d;text-align:center;font-size:11px}@media(ma
       <div class="tinyStat"><strong>425</strong><span>biến thể (85 game × 5 kiểu)</span></div>
     </div>
   </aside>
+</section>
+
+<section class="choose">
+  <div class="sectionHead"><div><h2>Chơi ngay — không cần Gemini</h2><p>Game viết tay, chạy thẳng trên GitHub Pages. Bấm là chơi được luôn, không phải port hay cài gì.</p></div></div>
+  <div class="playGrid">
+    <a class="playCard" href="games/l4-05-nha-may-khoi-luong/">
+      <span class="badge gold">Game chuẩn MiTi</span>
+      <h3>Nhà Máy Khối Lượng</h3>
+      <p>Toán lớp 4 · Đổi đơn vị khối lượng (gam, ki-lô-gam, tạ, tấn). Nắm bàn tay để bốc kiện hàng, xòe tay để thả lên bàn cân. Không có camera thì kéo bằng chuột.</p>
+      <div class="playMeta"><span>📷 Điều khiển: Nắm · Thả</span><span>🎯 12 lượt · 5 tim</span><span>🏭 Hình học và đo lường</span><span>✋ Có 2 lượt luyện mẫu</span></div>
+    </a>
+    <div class="playCard">
+      <span class="badge">4 bản thử nghiệm cũ</span>
+      <h3>Chưa lên trang chủ</h3>
+      <p><code>games/english-word-ninja</code>, <code>games/math-blitz</code>, <code>games/math-bubble</code>, <code>games/math-catcher</code> là bản demo arcade viết sớm. Chúng còn điểm số, bảng xếp hạng và timer thi đua — trái yêu cầu cần đạt của MiTi — nên đang được dựng lại theo xương của Nhà Máy Khối Lượng.</p>
+      <div class="playMeta"><span>🔧 Đang nâng cấp</span><span>📋 9 game tiếp theo: mỗi game một kiểu điều khiển</span></div>
+    </div>
+  </div>
 </section>
 
 <section class="choose">
