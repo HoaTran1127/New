@@ -332,8 +332,8 @@
     </div>
     <p class="note">Video chỉ xử lý ngay trên máy em, không tải lên mạng. Khởi động 60–90 giây, hạ nhiệt 45–60 giây, một phiên không quá 10 phút.</p>
     <div class="row cta">
-      <button class="btn big" id="btnStart">Bắt đầu</button>
-      <button class="btn ghost" id="btnNoCam">Chơi không cần camera</button>
+      <button class="btn big" id="btnStart">Bắt đầu · Bật camera</button>
+      <button class="btn ghost" id="btnNoCam">Chơi bằng chuột (không phải AR)</button>
       <span id="camStatus">Camera đang tắt</span>
     </div>
   </div></div>
@@ -657,7 +657,7 @@ function stepFlow(kind) {
   const map = {
     check:{t:'Bước 1 · Kiểm tra thiết bị',s:'Đảm bảo camera và chỗ đứng an toàn',
       b:'Đứng cách màn hình 1,5–2 m. Dọn chỗ hai bên để với tay rộng mà không chạm bàn ghế. Có thảm hoặc cọc tiêu cảnh báo vùng chơi.',go:60,lab:'giây khởi động'},
-    locate:{t:'Bước 2 · Định vị',s:'Thấy rõ người trong khung hình',b:'Giơ hai tay sang ngang — nếu thấy đủ hai bàn tay là được.',go:8,lab:'giây'},
+    locate:{t:'Bước 2 · Định vị',s:'Thấy rõ bàn tay trong khung hình',b:'Đứng xa màn hình 1,5–2 m, giơ một bàn tay lên ngang ngực trước camera — thấy rõ 5 ngón là điều khiển được móc cẩu.',go:8,lab:'giây'},
     demo:{t:'Bước 3 · Xem cách chuyển động',s:'Nắm để bốc, xòe để thả',b:'✊ Nắm bàn tay khi móc cẩu gần kiện hàng → kéo ra xa người ít nhất 45% tầm với → 🖐️ xòe tay khi kiện hàng nằm trên bàn cân.',go:10,lab:'giây'},
     practice:{t:'Bước 4 · Hai lượt luyện mẫu',s:'Làm thử, không trừ tim',b:'Hai câu đầu là lượt luyện. Sai không sao cả, game sẽ chỉ ra chỗ cần sửa.',go:6,lab:'giây'},
     cool:{t:'Hạ nhiệt',s:'Duỗi cơ trước khi rời màn hình',b:'Duỗi chân sau nhịp ném, xoay vai và cổ tay. Đây là động tác của môn Bóng rổ trong game.',go:CFG.coolSec,lab:'giây'}
@@ -679,6 +679,7 @@ function beginPlay() {
   S.queue = [...prac, ...seededShuffle(picked, Date.now()%9973)];
   S.practice = CFG.practice;
   S.phase = 'play'; show(null); say(SPEECH.start); nextRound();
+  if (!S.cam) showWarn('Đây là game AR — vào Tạm dừng rồi bật camera để bốc hàng bằng bàn tay');
 }
 function finish(win) {
   S.phase = 'end'; clearInterval(S.timerId);
@@ -726,7 +727,11 @@ function advanceStep() {
 }
 $('#btnPause').onclick = pause;
 $('#btnResume').onclick = resume;
-$('#btnCamToggle').onclick = async () => { if (S.cam && tracker) { tracker.stop(); S.cam=false; stage.classList.remove('cam-on'); } else { await startCamera(); } resume(); };
+$('#btnCamToggle').onclick = async () => {
+  if (S.cam && tracker) { tracker.stop(); S.cam=false; stage.classList.remove('cam-on'); $('#camStatus').textContent='Đã tắt camera — đang chơi bằng chuột'; $('#camStatus').className='bad'; }
+  else { await startCamera(); }
+  resume();
+};
 $('#btnSlow').onclick = (e) => { S.slow = !S.slow; e.target.textContent = S.slow ? 'Chơi bình thường' : 'Chơi chậm lại'; e.target.classList.toggle('big', S.slow); };
 $('#btnMotion').onclick = (e) => { S.motion = !S.motion; document.body.classList.toggle('reduce-motion', S.motion); e.target.textContent = S.motion ? 'Bật hiệu ứng' : 'Giảm hiệu ứng'; };
 $('#btnAgain').onclick = () => { S.round=0; S.score=0; S.hearts=CFG.hearts; S.goal=0; S.wrong=[]; S.rightByTag={}; $('#btnStepGo').textContent='Tiếp tục'; stepFlow('check'); };
