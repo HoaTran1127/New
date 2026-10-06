@@ -72,6 +72,28 @@
     </div>
   </main>
 
+  <!-- MAN HINH BAT DAU: camera chi xin khi tre bam nut -->
+  <div id="startOverlay" class="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-sm flex items-center justify-center p-5">
+    <div class="max-w-md w-full text-center">
+      <div class="text-6xl mb-3">🧺</div>
+      <h1 class="font-title font-black text-2xl sm:text-3xl text-emerald-300 mb-3">Giỏ Hứng Táo Toán Học</h1>
+      <p class="text-slate-300 text-sm leading-relaxed mb-1">Đứng dậy, giơ <b>một bàn tay</b> trước camera rồi <b>đưa ngang</b> để di chuyển giỏ hứng quả táo <b>ĐÚNG</b>.</p>
+      <p class="text-slate-400 text-xs mb-6">Tránh táo sai kết quả. Không có camera thì vẫn chơi được bằng chuột.</p>
+      <button id="btnStart" class="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white font-title font-black text-base py-3.5 rounded-2xl shadow-xl transition">
+        <i class="fa-solid fa-video mr-2"></i>BẬT CAMERA ĐỂ CHƠI
+      </button>
+      <button id="btnMouseOnly" class="mt-3 text-xs text-slate-400 underline hover:text-slate-200">Chơi bằng chuột, không bật camera</button>
+    </div>
+  </div>
+
+  <!-- TRANG THAI CAMERA -->
+  <div id="cameraBar" class="fixed bottom-16 left-1/2 -translate-x-1/2 z-40 hidden max-w-[92vw]">
+    <div class="bg-slate-900/90 backdrop-blur-md border border-white/10 rounded-2xl px-4 py-2 flex items-center gap-3 shadow-xl">
+      <span id="cameraNote" class="text-xs leading-relaxed"></span>
+      <button id="btnCamRetry" class="text-[11px] font-bold text-amber-300 underline hover:text-amber-200 hidden">Bật camera lại</button>
+    </div>
+  </div>
+
   <!-- Nạp modules -->
   <script src="../../src/core/AudioManager.js"></script>
   <script src="../../src/core/HandTracker.js"></script>

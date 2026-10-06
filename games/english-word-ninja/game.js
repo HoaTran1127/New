@@ -159,18 +159,34 @@ const EnglishApp = {
       this.strikeAt(e.clientX, e.clientY);
     });
 
-    this.startCamera();
-    requestAnimationFrame((t) => this.loop(t));
+    document.getElementById('btnStart').addEventListener('click', () => this.begin(true));
+    document.getElementById('btnMouseOnly').addEventListener('click', () => this.begin(false));
+    document.getElementById('btnCamRetry').addEventListener('click', () => this.startCamera());
   },
 
-  resize() {
-    this.canvas.width = window.innerWidth;
-    this.canvas.height = window.innerHeight;
-    if (this.crackedEffect) this.crackedEffect.resize(this.canvas.width, this.canvas.height);
+  begin(useCamera) {
+    document.getElementById('startOverlay').classList.add('hidden');
+    if (!this.running) {
+      this.running = true;
+      requestAnimationFrame((t) => this.loop(t));
+    }
+    if (useCamera) this.startCamera();
+    else this.note('Chơi bằng chuột: vung con trỏ qua thẻ từ để chém.', 'ok');
+  },
+
+  note(msg, kind) {
+    document.getElementById('cameraBar').classList.remove('hidden');
+    const el = document.getElementById('cameraNote');
+    el.textContent = msg;
+    el.className = 'text-xs leading-relaxed ' +
+      (kind === 'error' ? 'text-red-300' : kind === 'ok' ? 'text-emerald-300' : 'text-amber-200');
+    document.getElementById('btnCamRetry').classList.toggle('hidden', kind !== 'error');
   },
 
   async startCamera() {
     await this.audio.init();
+    this.note('Đang mở camera, em đưa tay vào khung hình nhé…', 'wait');
+    if (this.tracker) this.tracker.stop();
     this.tracker = new HandTracker({
       videoElement: this.video,
       maxNumHands: 1,
@@ -178,7 +194,7 @@ const EnglishApp = {
     });
 
     this.tracker.init(
-      () => console.log("[EnglishApp] Camera OK"),
+      () => this.note('Camera đã bật — vung tay chém từ theo nhiệm vụ.', 'ok'),
       (hands) => {
         if (hands.length > 0) {
           const h = hands[0];
@@ -187,8 +203,17 @@ const EnglishApp = {
           this.strikeAt(px, py);
         }
       },
-      (err) => console.warn("[EnglishApp] Camera fallback to mouse:", err)
+      (err) => {
+        this.note('Không bật được camera: ' + (err && err.message ? err.message : 'trình duyệt từ chối quyền') +
+          '. Chuột vẫn chém được, em cứ chơi tiếp.', 'error');
+      }
     );
+  },
+
+  resize() {
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
+    if (this.crackedEffect) this.crackedEffect.resize(this.canvas.width, this.canvas.height);
   },
 
   spawnCard() {

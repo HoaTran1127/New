@@ -86,8 +86,28 @@ const CatcherApp = {
       this.basketX = e.clientX;
     });
 
-    this.startCamera();
-    requestAnimationFrame((t) => this.loop(t));
+    document.getElementById('btnStart').addEventListener('click', () => this.begin(true));
+    document.getElementById('btnMouseOnly').addEventListener('click', () => this.begin(false));
+    document.getElementById('btnCamRetry').addEventListener('click', () => this.startCamera());
+  },
+
+  begin(useCamera) {
+    document.getElementById('startOverlay').classList.add('hidden');
+    if (!this.running) {
+      this.running = true;
+      requestAnimationFrame((t) => this.loop(t));
+    }
+    if (useCamera) this.startCamera();
+    else this.note('Chơi bằng chuột: đưa con trỏ ngang để di chuyển giỏ.', 'ok');
+  },
+
+  note(msg, kind) {
+    document.getElementById('cameraBar').classList.remove('hidden');
+    const el = document.getElementById('cameraNote');
+    el.textContent = msg;
+    el.className = 'text-xs leading-relaxed ' +
+      (kind === 'error' ? 'text-red-300' : kind === 'ok' ? 'text-emerald-300' : 'text-amber-200');
+    document.getElementById('btnCamRetry').classList.toggle('hidden', kind !== 'error');
   },
 
   resize() {
@@ -98,6 +118,8 @@ const CatcherApp = {
 
   async startCamera() {
     await this.audio.init();
+    this.note('Đang mở camera, em đưa tay vào khung hình nhé…', 'wait');
+    if (this.tracker) this.tracker.stop();
     this.tracker = new HandTracker({
       videoElement: this.video,
       maxNumHands: 1,
@@ -105,13 +127,16 @@ const CatcherApp = {
     });
 
     this.tracker.init(
-      () => console.log("[CatcherApp] Camera OK"),
+      () => this.note('Camera đã bật — đưa tay ngang để di chuyển giỏ.', 'ok'),
       (hands) => {
         if (hands.length > 0) {
           this.basketX = hands[0].x * this.canvas.width;
         }
       },
-      (err) => console.warn("[CatcherApp] Camera không khả dụng:", err)
+      (err) => {
+        this.note('Không bật được camera: ' + (err && err.message ? err.message : 'trình duyệt từ chối quyền') +
+          '. Chuột vẫn điều khiển được giỏ, em cứ chơi tiếp.', 'error');
+      }
     );
   },
 

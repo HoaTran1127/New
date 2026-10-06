@@ -307,6 +307,16 @@ const GameApp = {
     this.renderTopicList();
   },
 
+  noteCamera(msg, kind) {
+    const bar = document.getElementById('cameraBar');
+    if (!bar) return;
+    bar.classList.remove('hidden');
+    const el = document.getElementById('cameraNote');
+    el.textContent = msg;
+    el.className = 'text-xs leading-relaxed ' +
+      (kind === 'error' ? 'text-red-300' : kind === 'ok' ? 'text-emerald-300' : 'text-amber-200');
+  },
+
   async startGame() {
     await this.audio.init();
 
@@ -320,8 +330,6 @@ const GameApp = {
       this.tracker = new HandTracker({
         videoElement: this.video,
         maxNumHands: 1, // 1 tay duy nhất chống spam
-        minDetectionConfidence: 0.6,
-        minTrackingConfidence: 0.6,
         smoothingFactor: 0.45,
         strikeSpeedThreshold: 1.15,
         strikeReleaseThreshold: 0.55,
@@ -330,7 +338,7 @@ const GameApp = {
 
       this.tracker.init(
         () => {
-          console.log("[GameApp] HandTracker đã sẵn sàng.");
+          this.noteCamera('Camera đã bật — vung tay đấm vào thẻ đáp án đúng.', 'ok');
           // PoseTracker dùng chung chính stream webcam của HandTracker.
           this.poseTracker = new PoseTracker({
             videoElement: this.video,
@@ -352,7 +360,8 @@ const GameApp = {
           });
         },
         (err) => {
-          console.warn("[GameApp] Không thể mở webcam, chuyển sang chế độ chuột/chạm:", err);
+          this.noteCamera('Không bật được camera: ' + (err && err.message ? err.message : 'trình duyệt từ chối quyền') +
+            '. Chuột và phím vẫn điều khiển được, em cứ chơi tiếp.', 'error');
         }
       );
     }
