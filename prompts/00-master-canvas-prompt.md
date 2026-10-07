@@ -93,17 +93,18 @@ Model bắt buộc theo mã: `STEP`, `TWO_HAND_STRETCH`, `TWO_HAND_BALANCE`, `AN
 
 ## Ảnh đồ hoạ — lấy từ Canva, đừng để Gemini tự bịa
 
-Gemini chỉ được tham chiếu file có thật trong `games/<ten-game>/assets/`; prompt không nêu URL ảnh nào khác. Bốn bước:
+Prompt chỉ tham chiếu file có thật trong `games/<ten-game>/assets/`, nêu đúng tên file; không nêu URL ảnh nào khác. Bốn bước:
 
-1. Canva: `mascot` 512×512, `vat-the` 512×512, `nen` 1600×900, cùng bảng màu `--miti-1/2/3` của game.
+1. Canva: `mascot` 512×512, `vat-the` 512×512, `nen` 1600×900, theo bảng màu `--miti-1/2/3`.
 2. Share → Download → PNG nền trong suốt (Canva Free thì xuất nền trắng rồi tách nền sau).
-3. Đổi tên không dấu, convert WebP chất lượng 80: sprite ≤30 KB, nền ≤120 KB. Bản đang chạy `l4-05-nha-may-khoi-luong`: 4 file, 22–116 KB, cả 4 trả về 200 trên Pages.
-4. Upload vào `games/<ten-game>/assets/` trước, rồi dán prompt — tên file phải khớp từng chữ.
+3. Đổi tên không dấu, convert WebP chất lượng 80: sprite ≤30 KB, nền ≤120 KB.
+4. Đặt file vào `assets/` trước khi dán prompt — tên phải khớp từng chữ.
 
-Thiếu ảnh thì game tự thay bằng khối bo góc `--miti-1` kèm chữ nên vẫn chơi được. Đó là lý do phải cấm emoji và cấm URL bịa: hai thứ này không báo lỗi, chỉ làm game trông rẻ tiền.
+Ba tên `nen` · `mascot` · `vat-the` chỉ là quy ước cho game mới; game mẫu `l4-05` chạy 4 file tên riêng (`nen-xuong` · `tho-can` · `ban-can` · `ken-hang`): mở `assets/` của game lấy tên thật, đừng đoán.
+
+Thiếu ảnh thì game tự thay bằng khối bo góc `--miti-1` kèm chữ nên vẫn chơi được. Cấm emoji và cấm URL bịa vì hai thứ này không báo lỗi, chỉ làm game trông rẻ tiền.
 
 ## Vì sao prompt ngắn lại (ghi chú cho tác giả)
 
-- Bản cũ 162 KB/file, ~77% là quy định chung lặp lại nguyên văn giữa 85 file; Gemini ngợp, bỏ mục tiêu học tập, sinh game "linh tinh".
-- Bản nay 12,8 KB/file (khối `text` 57 dòng): 4,3 KB là 14 dòng CORE kỹ thuật, còn lại là mục tiêu học tập của riêng game. Ngay dưới tên game là dòng ƯU TIÊN (học tập → nhận diện chuyển động → phần còn lại); năm dòng trang trí nén thành hai dòng dán nhãn "được phép làm đơn giản".
-- Thêm quy định cho mọi game: một dòng vào `CORE_LINES` ở `tools/lib/core.mjs`. `tools/validate.mjs` bắt mọi prompt chứa đủ các dòng đó, có dòng ƯU TIÊN trong 4 dòng đầu, và báo đỏ nếu vượt 15 KB.
+- Bản cũ 162 KB/file, ~77% là quy định chung lặp lại giữa 85 file; Gemini ngợp nên bỏ mục tiêu học tập, sinh game "linh tinh". Bản nay 12,8 KB/file, 57 dòng: 4,3 KB là 14 dòng CORE kỹ thuật, phần còn lại là mục tiêu của riêng game, mở đầu bằng dòng ƯU TIÊN (học tập → nhận diện chuyển động → còn lại) và trang trí mang nhãn "được phép làm đơn giản".
+- Đổi quy định chung: thêm một dòng vào `CORE_LINES` ở `tools/lib/core.mjs` rồi `node tools/build.mjs`. `validate.mjs` bắt mọi prompt chứa đủ các dòng đó, có dòng ƯU TIÊN trong 4 dòng đầu, và báo đỏ nếu vượt 15 KB.

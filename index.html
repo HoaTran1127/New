@@ -99,12 +99,12 @@ footer{padding:35px 0 0;color:#70879d;text-align:center;font-size:11px}@media(ma
 </section>
 
 <section class="choose">
-  <div class="sectionHead"><div><h2>Đồ hoạ cho game — lấy từ Canva, bốn bước</h2><p>Ảnh thật làm game trông ra trò. Prompt chỉ tham chiếu ba file có thật trong <code>assets/</code>; dán URL ảnh từ mạng là nguồn lỗi "ảnh vỡ" phổ biến nhất.</p></div></div>
+  <div class="sectionHead"><div><h2>Đồ hoạ cho game — lấy từ Canva, bốn bước</h2><p>Ảnh thật làm game trông ra trò. Prompt chỉ tham chiếu các file có thật trong <code>assets/</code> và phải ghi đúng tên từng file; dán URL ảnh từ mạng là nguồn lỗi "ảnh vỡ" phổ biến nhất.</p></div></div>
   <div class="routes steps">
     <div class="route step"><div class="icon">1</div><h3>Vẽ trong Canva</h3><p>Một design cho ba món: <code>mascot</code> 512×512, <code>vat-the</code> 512×512, <code>nen</code> 1600×900, đúng bảng màu <code>--miti-1/2/3</code> in trên card game.</p></div>
     <div class="route step"><div class="icon">2</div><h3>Tải PNG nền trong</h3><p>Share → Download → PNG, chọn Transparent. Canva Free tải nền trắng rồi tách nền bằng Remove Background hoặc một tool tách nền sau.</p></div>
-    <div class="route step"><div class="icon">3</div><h3>Ép WebP, đổi tên</h3><p>Convert WebP chất lượng 80: sprite ≤30 KB, nền ≤120 KB. Tên file không dấu, đúng ba tên <code>nen.webp</code> · <code>mascot.webp</code> · <code>vat-the.webp</code>.</p></div>
-    <div class="route step"><div class="icon">4</div><h3>Đặt file trước, rồi mới dán prompt</h3><p>Thả vào <code>games/&lt;ten-game&gt;/assets/</code>. Thiếu ảnh thì game tự thay bằng khối bo góc <code>--miti-1</code> kèm chữ, học sinh vẫn chơi được.</p></div>
+    <div class="route step"><div class="icon">3</div><h3>Ép WebP, đổi tên</h3><p>Convert WebP chất lượng 80: sprite ≤30 KB, nền ≤120 KB. Tên không dấu. <code>nen.webp</code> · <code>mascot.webp</code> · <code>vat-the.webp</code> là ba tên chuẩn cho game mới.</p></div>
+    <div class="route step"><div class="icon">4</div><h3>Đặt file trước, rồi mới dán prompt</h3><p>Thả vào <code>games/&lt;ten-game&gt;/assets/</code> và chép <b>đúng tên file thật</b> vào prompt — game mẫu <code>l4-05</code> đang dùng 4 tên riêng: <code>nen-xuong</code> · <code>tho-can</code> · <code>ban-can</code> · <code>ken-hang</code>. Thiếu ảnh thì game tự thay bằng khối bo góc <code>--miti-1</code> kèm chữ, học sinh vẫn chơi được.</p></div>
   </div>
 </section>
 
