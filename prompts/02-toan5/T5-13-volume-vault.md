@@ -6,29 +6,28 @@
 ```text
 Tạo game giáo dục web "KHO BÁU THỂ TÍCH" cho học sinh Việt Nam lớp 5, môn Toán.
 
+ƯU TIÊN theo đúng thứ tự: (1) học sinh đạt mục tiêu học tập ở mục 2; (2) điều khiển AR ở mục 1 nhận diện được thật và fallback chuột chơi đủ 100%; (3) phần còn lại. File chật thì làm đơn giản chi tiết trang trí, không cắt mục 2 và mục 3.
+
 1. Ý TƯỞNG
 - Bối cảnh: Kho báu phong ấn bằng mật mã thể tích.
 - Việc của học sinh mỗi lượt: Chỉ vào kích thước đo được rồi kéo khối lập phương kiểm chứng thể tích trước khi mở kho.
 - Điều khiển: Chỉ ngón tay trỏ (Point). MediaPipe Tasks Vision HandLandmarker, đầu ngón trỏ landmark 8 làm con trỏ. Biên độ động tác: Ngón trỏ đi bằng cả cẳng tay: đáp án đặt ở bốn góc khác nhau của khung hình nên mỗi lượt là một lần duỗi khuỷu đổi hướng, không phải nhấc ngón ngay trước ngực.
 - Không có camera thì chạm hoặc click vào đáp án thay cho con trỏ ngón tay, giữ 400ms để chốt như khi giữ tay.
-- Mascot: **Mật Mã** — bí ẩn, ít nói. Ba câu thoại: khen "Mật số đúng rồi!" · đỡ khi sai "Đo lại chiều cao nhé" · hô mở đầu "Tìm ba kích thước!".
-- Bảng màu riêng: `--miti-1: #FFD60A` (vật thể AR chính), `--miti-2: #14213D` (particle và viền hit), `--miti-3: #FFC30F` (điểm nhấn HUD).
-- Khoảnh khắc chữ ký: cánh kho xoay theo khối em xếp và vàng bên trong sáng một nhịp rồi tắt. Đạo cụ AR neo vào người chơi: thước kẹp đeo hông, mở theo tay em kéo.
-- Môn thể thao của game: **Bắn cung** — động tác đặc trưng "Giương tay chỉ đích", hiệu lệnh "Ngắm — phóng!", lời hay khi bạn sai "Bạn ngắm chuẩn quá!", duỗi cơ cuối buổi "Duỗi vai và cổ tay".
-- Trò chơi dân gian dẫn dắt: **Chi chi chành chành** — cách chơi "Ngón trỏ chạm ô rồi rút theo nhịp", lời hô "Chi chi chành chành", đồ dùng AR "vạch phấn".
+- Mascot **Mật Mã** (bí ẩn, ít nói) — khen "Mật số đúng rồi!", hô mở đầu "Tìm ba kích thước!". Bảng màu: `--miti-1: #FFD60A` (vật thể AR), `--miti-2: #14213D` (particle, viền hit), `--miti-3: #FFC30F` (HUD).
+- Không khí giờ chơi (trang trí, được phép làm đơn giản): thể thao **Bắn cung** ("Giương tay chỉ đích", hạ nhiệt "Duỗi vai và cổ tay") · dân gian **Chi chi chành chành** (đồ dùng AR "vạch phấn") · khoảnh khắc chữ ký cánh kho xoay theo khối em xếp và vàng bên trong sáng một nhịp rồi tắt · đạo cụ AR neo vào người chơi "thước kẹp đeo hông, mở theo tay em kéo".
 - Vòng đầu tiên phải dễ để hiểu luật trong vài giây, không cần đọc hướng dẫn dài.
 
 2. MỤC TIÊU HỌC TẬP
 - Mục tiêu: xăng-ti-mét khối, mét khối; thể tích hình hộp chữ nhật và lập phương; đếm khối lập phương 1cm³.
 - Mạch kiến thức: **Hình học và đo lường** — nhãn HUD "Thể tích" · **Tuần 17–22 · Học kì I**. In nguyên văn mạch và nhãn tuần ở màn khởi động và màn tổng kết, nằm trong khối nút "Copy tờ rời".
 - Yêu cầu cần đạt (in NGUYÊN VĂN một dòng "Yêu cầu cần đạt: ..." ở màn khởi động và màn tổng kết, cấm viết lại hoặc tóm tắt): "Nhận biết được xăng-ti-mét khối, mét khối; tính được thể tích hình hộp chữ nhật và hình lập phương."
-- Mẹo nhớ (≤12 từ, bật ở cú đúng câu đầu cụm và sau câu sai cùng lỗi, mascot đọc to kèm một động tác 3 giây làm mẫu): "Dài nhân rộng nhân cao, đơn vị là lập phương."
+- Mẹo nhớ (bật ở cú đúng đầu cụm và sau câu sai cùng lỗi, mascot đọc to + làm mẫu 3 giây): "Dài nhân rộng nhân cao, đơn vị là lập phương."
 - Báo trước "Dễ nhầm" ở câu đầu tiên của cụm (≤16 từ, tắt sau 6 giây, không che đề): "đếm thiếu lớp khối lập phương".
 - Lỗi học sinh thường mắc (mỗi câu sai ghi đúng một lỗi này): đếm thiếu lớp khối lập phương; lẫn thể tích với diện tích xung quanh; đổi sai đơn vị mét khối.
 - Phạm vi: chỉ dùng nội dung Toán lớp 5 đã học; cấm số hoặc từ vựng ngoài phạm vi trên.
 - Toàn bộ lời giải phải dùng đúng thuật ngữ Toán của SGK Toán lớp 5; hiện lại phép tính theo cột dọc hoặc sơ đồ đoạn thẳng cho đúng dạng bài.
 - Điều kiện: hết 5 tim (mỗi đáp án sai trừ 1 tim) là thua, đủ 12 lượt là thắng và hiện tổng kết. Chống ăn may: phương án nhiễu phải là kết quả của một lỗi có thật trong danh sách lỗi trên, không phải số ngẫu nhiên; đáp án đúng không nằm cố định một vị trí.
-- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; thêm bốn dòng "Gửi bố mẹ": "Hôm nay con tập môn Bắn cung — <n> động tác" · "Con học Thể tích, <k> câu đúng trên <tổng>" · "Mẹo con mang về: Dài nhân rộng nhân cao, đơn vị là lập phương." · "Việc 3 phút ở nhà: cả nhà cùng Giương tay chỉ đích rồi hỏi nhau miệng một đề vừa chơi" (thay <n>, <k>, <tổng> bằng số thật).
+- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; khối "Gửi bố mẹ" bốn dòng điền số thật: "<n> động tác môn Bắn cung" · "Thể tích: <k>/<tổng> câu đúng" · "Mẹo con mang về: Dài nhân rộng nhân cao, đơn vị là lập phương." · "Việc 3 phút ở nhà: cả nhà cùng Giương tay chỉ đích".
 - Bộ sưu tập: mỗi màn thắng mở khóa 1 thẻ theo chủ đề Kho Báu Thể Tích, lưu localStorage key "miti-collection", có màn "Sưu tập của em".
 
 3. RÀNG BUỘC CỐT LÕI (thiếu bất kỳ dòng nào là hỏng)
@@ -52,7 +51,7 @@ Tạo game giáo dục web "KHO BÁU THỂ TÍCH" cho học sinh Việt Nam lớ
 - Mỗi mục theo đúng khuôn: { id, level, prompt, choices, answer, explanation, errorTag, loiViet, dang }.
 - Tối thiểu 30 mục, chia 3 mức độ (level 1/2/3), mỗi mục một đáp án đúng duy nhất kiểm chứng được bằng code.
 - Mục `dang: "tinh"` phải tính lại được bằng ĐÚNG MỘT phép số học trong code, mục `dang: "nhin"` kiểm bằng số học hoặc số đo hình học, không so khớp chuỗi tự do; mỗi phương án nhiễu là một kết quả thật của lỗi đã nêu, không phải số ngẫu nhiên.
-- errorTag là mã máy của lỗi, lấy đúng một trong: dem_lap_phuong_thieu_lo, nham_the_tich_voi_dien_tich_mat, doi_don_vi_thieu_lap_phuong. loiViet là cụm tiếng Việt có dấu in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, cùng chỉ lỗi đó và là thứ hiển thị cho học sinh. Mỗi câu sai lưu cả hai trường.
+- errorTag là mã máy của lỗi, lấy đúng một trong: dem_lap_phuong_thieu_lo, nham_the_tich_voi_dien_tich_mat, doi_don_vi_thieu_lap_phuong. loiViet là cụm tiếng Việt in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, là thứ hiển thị cho học sinh; mỗi câu sai lưu cả hai trường.
 - Gợi ý hiển thị khi sai: xếp khối lập phương theo từng lớp rồi nhân số lớp.
 - xáo trộn vị trí đáp án bằng thuật toán có seed theo lượt.
 - Hai mục mẫu để bám theo khuôn (viết tiếp 28 mục nữa, không được ít hơn):

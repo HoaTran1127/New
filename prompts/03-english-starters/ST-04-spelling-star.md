@@ -6,32 +6,31 @@
 ```text
 Tạo game giáo dục web "NGÔI SAO CHÍNH TẢ" cho học sinh Việt Nam lớp 4, môn Tiếng Anh, chuẩn Pre A1 Starters (Pre-A1) của Cambridge.
 
+ƯU TIÊN theo đúng thứ tự: (1) học sinh đạt mục tiêu học tập ở mục 2; (2) điều khiển AR ở mục 1 nhận diện được thật và fallback chuột chơi đủ 100%; (3) phần còn lại. File chật thì làm đơn giản chi tiết trang trí, không cắt mục 2 và mục 3.
+
 1. Ý TƯỞNG
 - Bối cảnh: Vòm sao, mỗi ngôi sao là một cách viết của từ.
 - Việc của học sinh mỗi lượt: Đấm vào ngôi sao chứa cách viết đúng chính tả của từ được đọc.
 - Điều khiển: Vung tay đấm (Punch). HandLandmarker: vị trí cổ tay (landmark 0) và mũi (landmark 15) để tính hướng đấm; độ gập các ngón để xác nhận nắm tay. Biên độ động tác: Đấm đổi tầm liên tục (trên vai – ngang ngực – dưới thắt lưng); cú đấm đi hết tay từ thế thủ trước ngực tới vật nằm sát mép khung.
 - Không có camera thì click vào vật để mô phỏng cú đấm; rê chuột lên vật không được tính.
-- Mascot: **Sao Mai** — lung linh, nhắc em đếm chữ. Ba câu thoại: khen "Đúng chữ rồi!" · đỡ khi sai "Thiếu một chữ cái kia" · hô mở đầu "Đếm sao nào!".
-- Bảng màu riêng: `--miti-1: #FFEA00` (vật thể AR chính), `--miti-2: #0D1B2A` (particle và viền hit), `--miti-3: #6A0DAD` (điểm nhấn HUD).
-- Khoảnh khắc chữ ký: chòm sao nối thành đúng từ rồi một vệt sao băng vạch ngang trong hai giây. Đạo cụ AR neo vào người chơi: vương miện sao trên đầu em, thêm một sao mỗi chuỗi đúng.
-- Môn thể thao của game: **Boxing** — động tác đặc trưng "Đấm về phía trước", hiệu lệnh "Một — hai!", lời hay khi bạn sai "Bạn ra đòn gọn!", duỗi cơ cuối buổi "Duỗi ngực và vai mở".
-- Trò chơi dân gian dẫn dắt: **Ném còn** — cách chơi "Đẩy tay hất quả còn qua vòng", lời hô "Một hai ba, ném!", đồ dùng AR "vòng tròn".
+- Mascot **Sao Mai** (lung linh, nhắc em đếm chữ) — khen "Đúng chữ rồi!", hô mở đầu "Đếm sao nào!". Bảng màu: `--miti-1: #FFEA00` (vật thể AR), `--miti-2: #0D1B2A` (particle, viền hit), `--miti-3: #6A0DAD` (HUD).
+- Không khí giờ chơi (trang trí, được phép làm đơn giản): thể thao **Boxing** ("Đấm về phía trước", hạ nhiệt "Duỗi ngực và vai mở") · dân gian **Ném còn** (đồ dùng AR "vòng tròn") · khoảnh khắc chữ ký chòm sao nối thành đúng từ rồi một vệt sao băng vạch ngang trong hai giây · đạo cụ AR neo vào người chơi "vương miện sao trên đầu em, thêm một sao mỗi chuỗi đúng".
 - Vòng đầu tiên phải dễ để hiểu luật trong vài giây, không cần đọc hướng dẫn dài.
 
 2. MỤC TIÊU HỌC TẬP
 - Mục tiêu: điền chữ cái còn thiếu; sửa lỗi chính tả; chọn cách viết đúng của từ lớp 4-5.
 - Band Cambridge: **Pre A1 Starters** (Pre-A1) — từ nền tảng: danh từ số ít/số nhiều, this/that, There is/are, can, like + V-ing, hiện tại đơn, tính từ sở hữu.
-- Trần từ vựng: chỉ dùng 541 từ thuộc Starters trở xuống, ưu tiên 27 từ của chủ đề động vật: animal, bee, bird, cat, chicken, cow, crocodile, dog, duck, elephant, fish, fly, frog, giraffe, goat, horse, lizard, monkey, mouse, pet, polar bear, sheep, snake, spider, tail, tiger, zebra. Cấm mọi từ lần đầu xuất hiện ở band cao hơn; từ SGK Việt Nam ngoài danh sách trên chỉ được dùng nếu đã học ở Tiếng Anh lớp 4.
-- Trần ngữ pháp: chỉ dùng 8 cấu trúc của Starters — Hiện tại đơn với like / love / hate ("I like swimming. / She likes cats.") · can chỉ năng lực ("I can ride a bike. / Can you swim?") · There is / There are ("There is a book on the desk. / There are two chairs.") · this / that, these / those ("What's this? — It's a pen.") · Danh từ số ít – số nhiều ("one cat – three cats / one box – two boxes") · Tính từ sở hữu ("my, your, his, her, our, their + bag") · Câu hỏi What / Where / Who / How many ("Where is the dog? — It’s under the table.") · a / an và giới từ in / on / under ("an apple, a ball, in the box, under the chair").
+- Trần từ vựng: chỉ dùng 541 từ thuộc Starters trở xuống, ưu tiên 27 từ của chủ đề động vật: animal, bee, bird, cat, chicken, cow, crocodile, dog, duck, elephant, fish, fly, frog, giraffe, goat, horse, lizard, monkey, mouse, pet, …. Cấm mọi từ lần đầu xuất hiện ở band cao hơn; từ SGK Việt Nam ngoài danh sách trên chỉ được dùng nếu đã học ở Tiếng Anh lớp 4.
+- Trần ngữ pháp: chỉ dùng 8 cấu trúc của Starters — Hiện tại đơn với like / love / hate ("I like swimming.") · can chỉ năng lực ("I can ride a bike.") · There is / There are ("There is a book on the desk.") · this / that, these / those ("What's this? — It's a pen.") · Danh từ số ít – số nhiều ("one cat – three cats") · Tính từ sở hữu ("my, your, his, her, our, their + bag") · Câu hỏi What / Where / Who / How many ("Where is the dog? — It’s under the table.") · a / an và giới từ in / on / under ("an apple, a ball, in the box, under the chair").
 - Mạch kiến thức: **Đọc và viết** — nhãn HUD "Chính tả" · **Tuần 5–14 · Học kì I**. In nguyên văn mạch và nhãn tuần ở màn khởi động và màn tổng kết, nằm trong khối nút "Copy tờ rời".
 - Yêu cầu cần đạt (in NGUYÊN VĂN một dòng "Yêu cầu cần đạt: ..." ở màn khởi động và màn tổng kết, cấm viết lại hoặc tóm tắt): "Viết đúng chính tả các từ đã học; điền được chữ cái còn thiếu và sửa được lỗi trong từ."
-- Mẹo nhớ (≤12 từ, bật ở cú đúng câu đầu cụm và sau câu sai cùng lỗi, mascot đọc to kèm một động tác 3 giây làm mẫu): "Đọc chậm, đánh vần từng chữ cái."
+- Mẹo nhớ (bật ở cú đúng đầu cụm và sau câu sai cùng lỗi, mascot đọc to + làm mẫu 3 giây): "Đọc chậm, đánh vần từng chữ cái."
 - Báo trước "Dễ nhầm" ở câu đầu tiên của cụm (≤16 từ, tắt sau 6 giây, không che đề): "thiếu chữ cái giữa từ".
 - Lỗi học sinh thường mắc (mỗi câu sai ghi đúng một lỗi này): thiếu chữ cái giữa từ; nhầm i với y; viết nhầm phụ âm đôi.
 - Phạm vi: chỉ dùng nội dung Tiếng Anh lớp 4 đã học và trong đúng band Starters; cấm số hoặc từ vựng ngoài phạm vi trên.
 - Từ và câu tiếng Anh là học liệu, giữ nguyên tiếng Anh; mọi hướng dẫn, nút bấm, lời giải thích bằng tiếng Việt. Dùng window.speechSynthesis (en-US hoặc en-GB) đọc to từ/câu khi trả lời đúng, có nút phát lại.
 - Điều kiện: hết 5 tim (mỗi đáp án sai trừ 1 tim) là thua, đủ 12 lượt là thắng và hiện tổng kết. Chống ăn may: phương án nhiễu phải là kết quả của một lỗi có thật trong danh sách lỗi trên, không phải số ngẫu nhiên; đáp án đúng không nằm cố định một vị trí.
-- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; thêm bốn dòng "Gửi bố mẹ": "Hôm nay con tập môn Boxing — <n> động tác" · "Con học Chính tả, <k> câu đúng trên <tổng>" · "Mẹo con mang về: Đọc chậm, đánh vần từng chữ cái." · "Việc 3 phút ở nhà: cả nhà cùng Đấm về phía trước rồi hỏi nhau miệng một đề vừa chơi" (thay <n>, <k>, <tổng> bằng số thật).
+- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; khối "Gửi bố mẹ" bốn dòng điền số thật: "<n> động tác môn Boxing" · "Chính tả: <k>/<tổng> câu đúng" · "Mẹo con mang về: Đọc chậm, đánh vần từng chữ cái." · "Việc 3 phút ở nhà: cả nhà cùng Đấm về phía trước".
 - Bộ sưu tập: mỗi màn thắng mở khóa 1 thẻ theo chủ đề Ngôi Sao Chính Tả, lưu localStorage key "miti-collection", có màn "Sưu tập của em".
 
 3. RÀNG BUỘC CỐT LÕI (thiếu bất kỳ dòng nào là hỏng)
@@ -56,7 +55,7 @@ Tạo game giáo dục web "NGÔI SAO CHÍNH TẢ" cho học sinh Việt Nam l�
 - Tối thiểu 60 mục, chia 3 mức độ (level 1/2/3), mỗi mục một đáp án đúng duy nhất kiểm chứng được bằng code.
 - Mỗi mục có từ hoặc câu tiếng Anh, gợi nghĩa tiếng Việt, phiên âm khi phù hợp, và audio bằng window.speechSynthesis; đáp án là chuỗi cố định.
 - Chia mức theo band: level 1 lấy từ và cấu trúc cơ bản nhất của Starters; level 3 vẫn nằm trong Starters, tăng độ khó bằng câu dài hơn và phương án gần nghĩa hơn, không tăng bằng từ ngoài band.
-- errorTag là mã máy của lỗi, lấy đúng một trong: thieu_chu_cai, nham_v_i_y, double_consonant. loiViet là cụm tiếng Việt có dấu in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, cùng chỉ lỗi đó và là thứ hiển thị cho học sinh. Mỗi câu sai lưu cả hai trường.
+- errorTag là mã máy của lỗi, lấy đúng một trong: thieu_chu_cai, nham_v_i_y, double_consonant. loiViet là cụm tiếng Việt in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, là thứ hiển thị cho học sinh; mỗi câu sai lưu cả hai trường.
 - Gợi ý hiển thị khi sai: đánh đỏ vị trí sai và hiện từ đúng kèm phiên âm.
 - xáo trộn vị trí đáp án bằng thuật toán có seed theo lượt.
 - Hai mục mẫu để bám theo khuôn (viết tiếp 58 mục nữa, không được ít hơn):

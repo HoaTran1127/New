@@ -6,29 +6,28 @@
 ```text
 Tạo game giáo dục web "PHÒNG THÍ NGHIỆM PHẦN TRĂM" cho học sinh Việt Nam lớp 5, môn Toán.
 
+ƯU TIÊN theo đúng thứ tự: (1) học sinh đạt mục tiêu học tập ở mục 2; (2) điều khiển AR ở mục 1 nhận diện được thật và fallback chuột chơi đủ 100%; (3) phần còn lại. File chật thì làm đơn giản chi tiết trang trí, không cắt mục 2 và mục 3.
+
 1. Ý TƯỞNG
 - Bối cảnh: Phòng thí nghiệm lưới trăm ô đổi màu theo tỉ lệ.
 - Việc của học sinh mỗi lượt: Chỉ và kéo số ô tô màu đúng số phần trăm, sau đó đổi sang phân số và số thập phân.
 - Điều khiển: Chỉ ngón tay trỏ (Point). MediaPipe Tasks Vision HandLandmarker, đầu ngón trỏ landmark 8 làm con trỏ. Biên độ động tác: Ngón trỏ đi bằng cả cẳng tay: đáp án đặt ở bốn góc khác nhau của khung hình nên mỗi lượt là một lần duỗi khuỷu đổi hướng, không phải nhấc ngón ngay trước ngực.
 - Không có camera thì chạm hoặc click vào đáp án thay cho con trỏ ngón tay, giữ 400ms để chốt như khi giữ tay.
-- Mascot: **Trăm Ô** — say màu, hay đếm ô. Ba câu thoại: khen "Đúng số ô rồi!" · đỡ khi sai "Thiếu ô nữa em ơi" · hô mở đầu "Tô một phần!".
-- Bảng màu riêng: `--miti-1: #240046` (vật thể AR chính), `--miti-2: #E0AAFF` (particle và viền hit), `--miti-3: #7B2CBF` (điểm nhấn HUD).
-- Khoảnh khắc chữ ký: lưới trăm ô tự sơn một mạch và mascot giơ bảng phân số tương ứng. Đạo cụ AR neo vào người chơi: cọ sơn gắn tay phải, vệt màu theo nét em kéo.
-- Môn thể thao của game: **Bắn cung** — động tác đặc trưng "Giương tay chỉ đích", hiệu lệnh "Ngắm — phóng!", lời hay khi bạn sai "Bạn ngắm chuẩn quá!", duỗi cơ cuối buổi "Duỗi vai và cổ tay".
-- Trò chơi dân gian dẫn dắt: **Chi chi chành chành** — cách chơi "Ngón trỏ chạm ô rồi rút theo nhịp", lời hô "Chi chi chành chành", đồ dùng AR "vạch phấn".
+- Mascot **Trăm Ô** (say màu, hay đếm ô) — khen "Đúng số ô rồi!", hô mở đầu "Tô một phần!". Bảng màu: `--miti-1: #240046` (vật thể AR), `--miti-2: #E0AAFF` (particle, viền hit), `--miti-3: #7B2CBF` (HUD).
+- Không khí giờ chơi (trang trí, được phép làm đơn giản): thể thao **Bắn cung** ("Giương tay chỉ đích", hạ nhiệt "Duỗi vai và cổ tay") · dân gian **Chi chi chành chành** (đồ dùng AR "vạch phấn") · khoảnh khắc chữ ký lưới trăm ô tự sơn một mạch và mascot giơ bảng phân số tương ứng · đạo cụ AR neo vào người chơi "cọ sơn gắn tay phải, vệt màu theo nét em kéo".
 - Vòng đầu tiên phải dễ để hiểu luật trong vài giây, không cần đọc hướng dẫn dài.
 
 2. MỤC TIÊU HỌC TẬP
 - Mục tiêu: tỉ số phần trăm; đọc viết phần trăm; tính phần trăm của một số; bài toán mua bán giảm giá lãi suất đơn giản.
 - Mạch kiến thức: **Số và phép tính** — nhãn HUD "Phần trăm" · **Tuần 8–12 · Học kì I**. In nguyên văn mạch và nhãn tuần ở màn khởi động và màn tổng kết, nằm trong khối nút "Copy tờ rời".
 - Yêu cầu cần đạt (in NGUYÊN VĂN một dòng "Yêu cầu cần đạt: ..." ở màn khởi động và màn tổng kết, cấm viết lại hoặc tóm tắt): "Nhận biết được tỉ số phần trăm; tính được phần trăm của một số và vận dụng vào bài toán mua bán, giảm giá."
-- Mẹo nhớ (≤12 từ, bật ở cú đúng câu đầu cụm và sau câu sai cùng lỗi, mascot đọc to kèm một động tác 3 giây làm mẫu): "Chia cho trăm rồi nhân số phần trăm."
+- Mẹo nhớ (bật ở cú đúng đầu cụm và sau câu sai cùng lỗi, mascot đọc to + làm mẫu 3 giây): "Chia cho trăm rồi nhân số phần trăm."
 - Báo trước "Dễ nhầm" ở câu đầu tiên của cụm (≤16 từ, tắt sau 6 giây, không che đề): "coi 100% bằng 100 thay vì bằng 1".
 - Lỗi học sinh thường mắc (mỗi câu sai ghi đúng một lỗi này): coi 100% bằng 100 thay vì bằng 1; tính phần trăm của một số sai bước; nhầm số phần trăm với số tiền đã giảm.
 - Phạm vi: chỉ dùng nội dung Toán lớp 5 đã học; cấm số hoặc từ vựng ngoài phạm vi trên.
 - Toàn bộ lời giải phải dùng đúng thuật ngữ Toán của SGK Toán lớp 5; hiện lại phép tính theo cột dọc hoặc sơ đồ đoạn thẳng cho đúng dạng bài.
 - Điều kiện: hết 5 tim (mỗi đáp án sai trừ 1 tim) là thua, đủ 12 lượt là thắng và hiện tổng kết. Chống ăn may: phương án nhiễu phải là kết quả của một lỗi có thật trong danh sách lỗi trên, không phải số ngẫu nhiên; đáp án đúng không nằm cố định một vị trí.
-- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; thêm bốn dòng "Gửi bố mẹ": "Hôm nay con tập môn Bắn cung — <n> động tác" · "Con học Phần trăm, <k> câu đúng trên <tổng>" · "Mẹo con mang về: Chia cho trăm rồi nhân số phần trăm." · "Việc 3 phút ở nhà: cả nhà cùng Giương tay chỉ đích rồi hỏi nhau miệng một đề vừa chơi" (thay <n>, <k>, <tổng> bằng số thật).
+- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; khối "Gửi bố mẹ" bốn dòng điền số thật: "<n> động tác môn Bắn cung" · "Phần trăm: <k>/<tổng> câu đúng" · "Mẹo con mang về: Chia cho trăm rồi nhân số phần trăm." · "Việc 3 phút ở nhà: cả nhà cùng Giương tay chỉ đích".
 - Bộ sưu tập: mỗi màn thắng mở khóa 1 thẻ theo chủ đề Phòng Thí Nghiệm Phần Trăm, lưu localStorage key "miti-collection", có màn "Sưu tập của em".
 
 3. RÀNG BUỘC CỐT LÕI (thiếu bất kỳ dòng nào là hỏng)
@@ -52,7 +51,7 @@ Tạo game giáo dục web "PHÒNG THÍ NGHIỆM PHẦN TRĂM" cho học sinh Vi
 - Mỗi mục theo đúng khuôn: { id, level, prompt, choices, answer, explanation, errorTag, loiViet, dang }.
 - Tối thiểu 30 mục, chia 3 mức độ (level 1/2/3), mỗi mục một đáp án đúng duy nhất kiểm chứng được bằng code.
 - Mục `dang: "tinh"` phải tính lại được bằng ĐÚNG MỘT phép số học trong code, mục `dang: "nhin"` kiểm bằng số học hoặc số đo hình học, không so khớp chuỗi tự do; mỗi phương án nhiễu là một kết quả thật của lỗi đã nêu, không phải số ngẫu nhiên.
-- errorTag là mã máy của lỗi, lấy đúng một trong: nham_100_phan_tram_bang_1, tinh_phan_tram_cua_mot_so_sai_buoc, tru_giam_gia_nham_cong_tru. loiViet là cụm tiếng Việt có dấu in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, cùng chỉ lỗi đó và là thứ hiển thị cho học sinh. Mỗi câu sai lưu cả hai trường.
+- errorTag là mã máy của lỗi, lấy đúng một trong: nham_100_phan_tram_bang_1, tinh_phan_tram_cua_mot_so_sai_buoc, tru_giam_gia_nham_cong_tru. loiViet là cụm tiếng Việt in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, là thứ hiển thị cho học sinh; mỗi câu sai lưu cả hai trường.
 - Gợi ý hiển thị khi sai: lưới 100 ô tô màu đúng số ô tương ứng với tỉ lệ phần trăm.
 - xáo trộn vị trí đáp án bằng thuật toán có seed theo lượt.
 - Hai mục mẫu để bám theo khuôn (viết tiếp 28 mục nữa, không được ít hơn):

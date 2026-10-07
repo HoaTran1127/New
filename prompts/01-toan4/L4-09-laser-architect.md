@@ -6,29 +6,28 @@
 ```text
 Tạo game giáo dục web "KIẾN TRÚC SƯ LASER" cho học sinh Việt Nam lớp 4, môn Toán.
 
+ƯU TIÊN theo đúng thứ tự: (1) học sinh đạt mục tiêu học tập ở mục 2; (2) điều khiển AR ở mục 1 nhận diện được thật và fallback chuột chơi đủ 100%; (3) phần còn lại. File chật thì làm đơn giản chi tiết trang trí, không cắt mục 2 và mục 3.
+
 1. Ý TƯỞNG
 - Bối cảnh: Công trường laser nơi các tia sáng cắt nhau tạo thành công trình.
 - Việc của học sinh mỗi lượt: Kéo giãn hai tay để chỉnh hai tia laser vuông góc hoặc song song theo nhiệm vụ.
 - Điều khiển: Khom hai tay (Two-hand stretch). HandLandmarker hai tay hoặc PoseLandmarker hai cổ tay (15, 16) để đo khoảng cách và góc giữa hai tay. Biên độ động tác: Khoảng cách hai tay mục tiêu trải từ 40% đến 100% tầm sải đã đo, mỗi lượt đổi mốc để học sinh dang hết tay rồi khép lại.
 - Không có camera thì kéo hai điểm neo bằng chuột hoặc hai ngón trên màn cảm ứng.
-- Mascot: **Tia Laser** — tỉ mỉ, hay nheo mắt. Ba câu thoại: khen "Tia thẳng hàng!" · đỡ khi sai "Vuông góc hơn chút đi" · hô mở đầu "Giăng hai tay ra!".
-- Bảng màu riêng: `--miti-1: #EF476F` (vật thể AR chính), `--miti-2: #06D6A0` (particle và viền hit), `--miti-3: #118AB2` (điểm nhấn HUD).
-- Khoảnh khắc chữ ký: hai tia laser cắt nhau thành khung nhà hoàn chỉnh rồi bật đèn trong hai giây. Đạo cụ AR neo vào người chơi: găng phát tia gắn mu bàn tay, sáng khi hai tay cách nhau.
-- Môn thể thao của game: **Bơi lội** — động tác đặc trưng "Khai tay bơi tại chỗ", hiệu lệnh "Bơi nào!", lời hay khi bạn sai "Bạn bơi đều tay!", duỗi cơ cuối buổi "Duỗi lưng bơi ếch đứng".
-- Trò chơi dân gian dẫn dắt: **Chim bay cò bay** — cách chơi "Dang hai tay làm cánh đưa lên cao", lời hô "Chim bay cò bay", đồ dùng AR "vạch phấn".
+- Mascot **Tia Laser** (tỉ mỉ, hay nheo mắt) — khen "Tia thẳng hàng!", hô mở đầu "Giăng hai tay ra!". Bảng màu: `--miti-1: #EF476F` (vật thể AR), `--miti-2: #06D6A0` (particle, viền hit), `--miti-3: #118AB2` (HUD).
+- Không khí giờ chơi (trang trí, được phép làm đơn giản): thể thao **Bơi lội** ("Khai tay bơi tại chỗ", hạ nhiệt "Duỗi lưng bơi ếch đứng") · dân gian **Chim bay cò bay** (đồ dùng AR "vạch phấn") · khoảnh khắc chữ ký hai tia laser cắt nhau thành khung nhà hoàn chỉnh rồi bật đèn trong hai giây · đạo cụ AR neo vào người chơi "găng phát tia gắn mu bàn tay, sáng khi hai tay cách nhau".
 - Vòng đầu tiên phải dễ để hiểu luật trong vài giây, không cần đọc hướng dẫn dài.
 
 2. MỤC TIÊU HỌC TẬP
 - Mục tiêu: hai đường thẳng vuông góc, song song; kẻ đường vuông góc; nhận diện trong thực tế.
 - Mạch kiến thức: **Hình học và đo lường** — nhãn HUD "Hai đường thẳng" · **Tuần 9–10 · Học kì I**. In nguyên văn mạch và nhãn tuần ở màn khởi động và màn tổng kết, nằm trong khối nút "Copy tờ rời".
 - Yêu cầu cần đạt (in NGUYÊN VĂN một dòng "Yêu cầu cần đạt: ..." ở màn khởi động và màn tổng kết, cấm viết lại hoặc tóm tắt): "Nhận biết được hai đường thẳng vuông góc, song song; kẻ được đường thẳng vuông góc qua một điểm."
-- Mẹo nhớ (≤12 từ, bật ở cú đúng câu đầu cụm và sau câu sai cùng lỗi, mascot đọc to kèm một động tác 3 giây làm mẫu): "Song song không gặp nhau dù kéo dài."
+- Mẹo nhớ (bật ở cú đúng đầu cụm và sau câu sai cùng lỗi, mascot đọc to + làm mẫu 3 giây): "Song song không gặp nhau dù kéo dài."
 - Báo trước "Dễ nhầm" ở câu đầu tiên của cụm (≤16 từ, tắt sau 6 giây, không che đề): "kết luận song song khi chưa kéo dài hai đường".
 - Lỗi học sinh thường mắc (mỗi câu sai ghi đúng một lỗi này): kết luận song song khi chưa kéo dài hai đường; kẻ đường đi lệch đỉnh; lẫn vuông góc với thẳng hàng.
 - Phạm vi: chỉ dùng nội dung Toán lớp 4 đã học; cấm số hoặc từ vựng ngoài phạm vi trên.
 - Toàn bộ lời giải phải dùng đúng thuật ngữ Toán của SGK Toán lớp 4; hiện lại phép tính theo cột dọc hoặc sơ đồ đoạn thẳng cho đúng dạng bài.
 - Điều kiện: hết 5 tim (mỗi đáp án sai trừ 1 tim) là thua, đủ 12 lượt là thắng và hiện tổng kết. Chống ăn may: phương án nhiễu phải là kết quả của một lỗi có thật trong danh sách lỗi trên, không phải số ngẫu nhiên; đáp án đúng không nằm cố định một vị trí.
-- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; thêm bốn dòng "Gửi bố mẹ": "Hôm nay con tập môn Bơi lội — <n> động tác" · "Con học Hai đường thẳng, <k> câu đúng trên <tổng>" · "Mẹo con mang về: Song song không gặp nhau dù kéo dài." · "Việc 3 phút ở nhà: cả nhà cùng Khai tay bơi tại chỗ rồi hỏi nhau miệng một đề vừa chơi" (thay <n>, <k>, <tổng> bằng số thật).
+- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; khối "Gửi bố mẹ" bốn dòng điền số thật: "<n> động tác môn Bơi lội" · "Hai đường thẳng: <k>/<tổng> câu đúng" · "Mẹo con mang về: Song song không gặp nhau dù kéo dài." · "Việc 3 phút ở nhà: cả nhà cùng Khai tay bơi tại chỗ".
 - Bộ sưu tập: mỗi màn thắng mở khóa 1 thẻ theo chủ đề Kiến Trúc Sư Laser, lưu localStorage key "miti-collection", có màn "Sưu tập của em".
 
 3. RÀNG BUỘC CỐT LÕI (thiếu bất kỳ dòng nào là hỏng)
@@ -52,7 +51,7 @@ Tạo game giáo dục web "KIẾN TRÚC SƯ LASER" cho học sinh Việt Nam l�
 - Mỗi mục theo đúng khuôn: { id, level, prompt, choices, answer, explanation, errorTag, loiViet, dang }.
 - Tối thiểu 30 mục, chia 3 mức độ (level 1/2/3), mỗi mục một đáp án đúng duy nhất kiểm chứng được bằng code.
 - Mục `dang: "tinh"` phải tính lại được bằng ĐÚNG MỘT phép số học trong code, mục `dang: "nhin"` kiểm bằng số học hoặc số đo hình học, không so khớp chuỗi tự do; mỗi phương án nhiễu là một kết quả thật của lỗi đã nêu, không phải số ngẫu nhiên.
-- errorTag là mã máy của lỗi, lấy đúng một trong: keo_dai_nghi_la_song_song, qua_tam_dinh_khi_ke, nham_vuong_goc_voi_thang. loiViet là cụm tiếng Việt có dấu in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, cùng chỉ lỗi đó và là thứ hiển thị cho học sinh. Mỗi câu sai lưu cả hai trường.
+- errorTag là mã máy của lỗi, lấy đúng một trong: keo_dai_nghi_la_song_song, qua_tam_dinh_khi_ke, nham_vuong_goc_voi_thang. loiViet là cụm tiếng Việt in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, là thứ hiển thị cho học sinh; mỗi câu sai lưu cả hai trường.
 - Gợi ý hiển thị khi sai: kéo dài hai đường thành dải sáng để thấy chúng cắt nhau hay không cắt nhau.
 - xáo trộn vị trí đáp án bằng thuật toán có seed theo lượt.
 - Hai mục mẫu để bám theo khuôn (viết tiếp 28 mục nữa, không được ít hơn):

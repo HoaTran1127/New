@@ -7,6 +7,8 @@
 ```text
 Tạo game giáo dục web AR một file HTML "THẦN SĂN GIẢM GIÁ" cho học sinh Việt Nam lớp 5, môn Toán, điều khiển bằng webcam.
 
+ƯU TIÊN theo đúng thứ tự: (1) học sinh đạt mục tiêu học tập ở mục 2; (2) điều khiển AR ở mục 1 nhận diện được thật và fallback chuột chơi đủ 100%; (3) phần còn lại. File chật thì làm đơn giản chi tiết trang trí, không cắt mục 2 và mục 3.
+
 1. Ý TƯỞNG
 - Cơ chế gốc (giữ nguyên): Kéo thanh trượt phần trăm, chém mức giá sau giảm giá.
 - Siêu thị tương lai: mỗi màn một quầy hàng với thẻ Sale (ví dụ balo 200.000đ giảm 20%); thanh thước 100% chia vạch — mỗi vạch 10% sáng đỏ (phần giảm) và xanh (phần trả).

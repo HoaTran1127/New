@@ -6,29 +6,28 @@
 ```text
 Tạo game giáo dục web "VŨ ĐIỆU CHẴN LẺ" cho học sinh Việt Nam lớp 4, môn Toán.
 
+ƯU TIÊN theo đúng thứ tự: (1) học sinh đạt mục tiêu học tập ở mục 2; (2) điều khiển AR ở mục 1 nhận diện được thật và fallback chuột chơi đủ 100%; (3) phần còn lại. File chật thì làm đơn giản chi tiết trang trí, không cắt mục 2 và mục 3.
+
 1. Ý TƯỞNG
 - Bối cảnh: Sàn nhảy neon hai vùng CHẴN và LẺ theo nhịp nhạc.
 - Việc của học sinh mỗi lượt: Nghiêng người bước sang vùng chẵn hoặc vùng lẻ theo thẻ số hiện trên đầu.
 - Điều khiển: Nghiêng người / bước sang vùng (Body tilt). PoseLandmarker: hai vai (landmark 11, 12) và mũi (0) để tính góc nghiêng thân người so với phương thẳng đứng. Biên độ động tác: Nghiêng cả thân và chuyển trọng tâm hai chân: hai vùng nằm sát mép nên vai phải nghiêng rõ, không lách bằng cái xoay cổ tay.
 - Không có camera thì phím mũi tên trái hoặc phải, hoặc chạm vào vùng, để đổi làn.
-- Mascot: **DJ Nhịp** — bật nhạc trước, nói sau. Ba câu thoại: khen "Đúng nhịp rồi!" · đỡ khi sai "Sai nhịp, bước lại nha" · hô mở đầu "Nhạc lên, hai ba bốn!".
-- Bảng màu riêng: `--miti-1: #FF2E63` (vật thể AR chính), `--miti-2: #08D9D3` (particle và viền hit), `--miti-3: #FFEEAD` (điểm nhấn HUD).
-- Khoảnh khắc chữ ký: sàn nhảy đổi màu toàn bộ theo đúng hai nhịp và đèn rọi đuổi theo bóng em. Đạo cụ AR neo vào người chơi: đèn neon đeo vai, nhấp nháy theo vùng chẵn lẻ.
-- Môn thể thao của game: **Điền kinh** — động tác đặc trưng "Bước dài sang làn kế", hiệu lệnh "Vào chỗ — chạy!", lời hay khi bạn sai "Bạn chạy nhanh!", duỗi cơ cuối buổi "Duỗi chân và bắp chuối".
-- Trò chơi dân gian dẫn dắt: **Nhảy dây** — cách chơi "Nhún hai chân theo vạch nhịp", lời hô "Một hai, một hai, nhảy đều", đồ dùng AR "dây nhảy".
+- Mascot **DJ Nhịp** (bật nhạc trước, nói sau) — khen "Đúng nhịp rồi!", hô mở đầu "Nhạc lên, hai ba bốn!". Bảng màu: `--miti-1: #FF2E63` (vật thể AR), `--miti-2: #08D9D3` (particle, viền hit), `--miti-3: #FFEEAD` (HUD).
+- Không khí giờ chơi (trang trí, được phép làm đơn giản): thể thao **Điền kinh** ("Bước dài sang làn kế", hạ nhiệt "Duỗi chân và bắp chuối") · dân gian **Nhảy dây** (đồ dùng AR "dây nhảy") · khoảnh khắc chữ ký sàn nhảy đổi màu toàn bộ theo đúng hai nhịp và đèn rọi đuổi theo bóng em · đạo cụ AR neo vào người chơi "đèn neon đeo vai, nhấp nháy theo vùng chẵn lẻ".
 - Vòng đầu tiên phải dễ để hiểu luật trong vài giây, không cần đọc hướng dẫn dài.
 
 2. MỤC TIÊU HỌC TẬP
 - Mục tiêu: nhận biết số chẵn số lẻ qua chữ số tận cùng; dãy số chẵn liên tiếp; tổng hiệu tính chẵn lẻ.
 - Mạch kiến thức: **Số và phép tính** — nhãn HUD "Chẵn lẻ" · **Tuần 4–5 · Học kì I**. In nguyên văn mạch và nhãn tuần ở màn khởi động và màn tổng kết, nằm trong khối nút "Copy tờ rời".
 - Yêu cầu cần đạt (in NGUYÊN VĂN một dòng "Yêu cầu cần đạt: ..." ở màn khởi động và màn tổng kết, cấm viết lại hoặc tóm tắt): "Nhận biết được số chẵn, số lẻ dựa vào chữ số tận cùng; lập được dãy số chẵn, số lẻ liên tiếp."
-- Mẹo nhớ (≤12 từ, bật ở cú đúng câu đầu cụm và sau câu sai cùng lỗi, mascot đọc to kèm một động tác 3 giây làm mẫu): "Chỉ nhìn chữ cuối, các hàng kia bỏ qua."
+- Mẹo nhớ (bật ở cú đúng đầu cụm và sau câu sai cùng lỗi, mascot đọc to + làm mẫu 3 giây): "Chỉ nhìn chữ cuối, các hàng kia bỏ qua."
 - Báo trước "Dễ nhầm" ở câu đầu tiên của cụm (≤16 từ, tắt sau 6 giây, không che đề): "xét chữ số hàng chục thay vì hàng đơn vị".
 - Lỗi học sinh thường mắc (mỗi câu sai ghi đúng một lỗi này): xét chữ số hàng chục thay vì hàng đơn vị; nhầm số tận cùng 0 là lẻ.
 - Phạm vi: chỉ dùng nội dung Toán lớp 4 đã học; cấm số hoặc từ vựng ngoài phạm vi trên.
 - Toàn bộ lời giải phải dùng đúng thuật ngữ Toán của SGK Toán lớp 4; hiện lại phép tính theo cột dọc hoặc sơ đồ đoạn thẳng cho đúng dạng bài.
 - Điều kiện: hết 5 tim (mỗi đáp án sai trừ 1 tim) là thua, đủ 12 lượt là thắng và hiện tổng kết. Chống ăn may: phương án nhiễu phải là kết quả của một lỗi có thật trong danh sách lỗi trên, không phải số ngẫu nhiên; đáp án đúng không nằm cố định một vị trí.
-- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; thêm bốn dòng "Gửi bố mẹ": "Hôm nay con tập môn Điền kinh — <n> động tác" · "Con học Chẵn lẻ, <k> câu đúng trên <tổng>" · "Mẹo con mang về: Chỉ nhìn chữ cuối, các hàng kia bỏ qua." · "Việc 3 phút ở nhà: cả nhà cùng Bước dài sang làn kế rồi hỏi nhau miệng một đề vừa chơi" (thay <n>, <k>, <tổng> bằng số thật).
+- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; khối "Gửi bố mẹ" bốn dòng điền số thật: "<n> động tác môn Điền kinh" · "Chẵn lẻ: <k>/<tổng> câu đúng" · "Mẹo con mang về: Chỉ nhìn chữ cuối, các hàng kia bỏ qua." · "Việc 3 phút ở nhà: cả nhà cùng Bước dài sang làn kế".
 - Bộ sưu tập: mỗi màn thắng mở khóa 1 thẻ theo chủ đề Vũ Điệu Chẵn Lẻ, lưu localStorage key "miti-collection", có màn "Sưu tập của em".
 
 3. RÀNG BUỘC CỐT LÕI (thiếu bất kỳ dòng nào là hỏng)
@@ -52,7 +51,7 @@ Tạo game giáo dục web "VŨ ĐIỆU CHẴN LẺ" cho học sinh Việt Nam l
 - Mỗi mục theo đúng khuôn: { id, level, prompt, choices, answer, explanation, errorTag, loiViet, dang }.
 - Tối thiểu 30 mục, chia 3 mức độ (level 1/2/3), mỗi mục một đáp án đúng duy nhất kiểm chứng được bằng code.
 - Mục `dang: "tinh"` phải tính lại được bằng ĐÚNG MỘT phép số học trong code, mục `dang: "nhin"` kiểm bằng số học hoặc số đo hình học, không so khớp chuỗi tự do; mỗi phương án nhiễu là một kết quả thật của lỗi đã nêu, không phải số ngẫu nhiên.
-- errorTag là mã máy của lỗi, lấy đúng một trong: xet_hang_chuc_thay_vi_don_vi, nham_so_ket_thuc_bang_0. loiViet là cụm tiếng Việt có dấu in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, cùng chỉ lỗi đó và là thứ hiển thị cho học sinh. Mỗi câu sai lưu cả hai trường.
+- errorTag là mã máy của lỗi, lấy đúng một trong: xet_hang_chuc_thay_vi_don_vi, nham_so_ket_thuc_bang_0. loiViet là cụm tiếng Việt in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, là thứ hiển thị cho học sinh; mỗi câu sai lưu cả hai trường.
 - Gợi ý hiển thị khi sai: bật đèn LED hai màu sáng ở chữ số tận cùng để học sinh thấy chỉ hàng đơn vị quyết định.
 - xáo trộn vị trí đáp án bằng thuật toán có seed theo lượt.
 - Hai mục mẫu để bám theo khuôn (viết tiếp 28 mục nữa, không được ít hơn):

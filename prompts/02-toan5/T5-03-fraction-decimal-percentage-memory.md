@@ -6,29 +6,28 @@
 ```text
 Tạo game giáo dục web "GHÉP PHÂN SỐ – THẬP PHÂN – PHẦN TRĂM" cho học sinh Việt Nam lớp 5, môn Toán.
 
+ƯU TIÊN theo đúng thứ tự: (1) học sinh đạt mục tiêu học tập ở mục 2; (2) điều khiển AR ở mục 1 nhận diện được thật và fallback chuột chơi đủ 100%; (3) phần còn lại. File chật thì làm đơn giản chi tiết trang trí, không cắt mục 2 và mục 3.
+
 1. Ý TƯỞNG
 - Bối cảnh: Bảng xếp hình ba cột: phân số, số thập phân, phần trăm.
 - Việc của học sinh mỗi lượt: Kéo thẻ ở hai cột còn lại ghép vào cùng một giá trị với thẻ neo.
 - Điều khiển: Kéo thả (Drag). HandLandmarker, đầu ngón trỏ làm điểm kéo; có thể thêm landmark 8 giữ vật. Biên độ động tác: Đường kéo dài >= 50% bề rộng khung hình và luôn cắt qua vạch ngang thân; ô đích đặt hai bên trái phải chứ không xếp cạnh nhau.
 - Không có camera thì kéo thả bằng chuột hoặc chạm màn hình rồi thả vào ô đích.
-- Mascot: **Ba Cột** — ngăn nắp, hay xếp ô. Ba câu thoại: khen "Ghép cùng giá trị!" · đỡ khi sai "Cột này chưa khớp" · hô mở đầu "Nhìn rồi kéo!".
-- Bảng màu riêng: `--miti-1: #FFD400` (vật thể AR chính), `--miti-2: #0466C8` (particle và viền hit), `--miti-3: #031D44` (điểm nhấn HUD).
-- Khoảnh khắc chữ ký: ba cột đổ xuống thành một hàng ngang sáng và mascot gật gù đúng một nhịp. Đạo cụ AR neo vào người chơi: bảng ghim trước ngực em, thẻ vừa kéo dính vào bảng.
-- Môn thể thao của game: **Kéo co** — động tác đặc trưng "Kéo dây về phía mình", hiệu lệnh "Kéo nào!", lời hay khi bạn sai "Bạn kéo khỏe lắm!", duỗi cơ cuối buổi "Duỗi lưng khi buông dây".
-- Trò chơi dân gian dẫn dắt: **Kéo co** — cách chơi "Hai tay kéo dải dây về vạch", lời hô "Một hai kéo, một hai kéo", đồ dùng AR "khăn vải".
+- Mascot **Ba Cột** (ngăn nắp, hay xếp ô) — khen "Ghép cùng giá trị!", hô mở đầu "Nhìn rồi kéo!". Bảng màu: `--miti-1: #FFD400` (vật thể AR), `--miti-2: #0466C8` (particle, viền hit), `--miti-3: #031D44` (HUD).
+- Không khí giờ chơi (trang trí, được phép làm đơn giản): thể thao **Kéo co** ("Kéo dây về phía mình", hạ nhiệt "Duỗi lưng khi buông dây") · dân gian **Kéo co** (đồ dùng AR "khăn vải") · khoảnh khắc chữ ký ba cột đổ xuống thành một hàng ngang sáng và mascot gật gù đúng một nhịp · đạo cụ AR neo vào người chơi "bảng ghim trước ngực em, thẻ vừa kéo dính vào bảng".
 - Vòng đầu tiên phải dễ để hiểu luật trong vài giây, không cần đọc hướng dẫn dài.
 
 2. MỤC TIÊU HỌC TẬP
 - Mục tiêu: chuyển đổi phân số thập phân – số thập phân – phần trăm; so sánh ba dạng; xếp cặp bằng giá trị.
 - Mạch kiến thức: **Số và phép tính** — nhãn HUD "Ba dạng số" · **Tuần 5–9 · Học kì I**. In nguyên văn mạch và nhãn tuần ở màn khởi động và màn tổng kết, nằm trong khối nút "Copy tờ rời".
 - Yêu cầu cần đạt (in NGUYÊN VĂN một dòng "Yêu cầu cần đạt: ..." ở màn khởi động và màn tổng kết, cấm viết lại hoặc tóm tắt): "Chuyển đổi được giữa phân số thập phân, số thập phân và tỉ số phần trăm; xếp cặp được các dạng bằng giá trị."
-- Mẹo nhớ (≤12 từ, bật ở cú đúng câu đầu cụm và sau câu sai cùng lỗi, mascot đọc to kèm một động tác 3 giây làm mẫu): "Một phần hai bằng không phẩy năm."
+- Mẹo nhớ (bật ở cú đúng đầu cụm và sau câu sai cùng lỗi, mascot đọc to + làm mẫu 3 giây): "Một phần hai bằng không phẩy năm."
 - Báo trước "Dễ nhầm" ở câu đầu tiên của cụm (≤16 từ, tắt sau 6 giây, không che đề): "nhầm tỉ lệ 10, 100, 1000 khi chuyển dạng".
 - Lỗi học sinh thường mắc (mỗi câu sai ghi đúng một lỗi này): nhầm tỉ lệ 10, 100, 1000 khi chuyển dạng; thiếu dấu phẩy thập phân; ghép nhầm cặp không cùng giá trị.
 - Phạm vi: chỉ dùng nội dung Toán lớp 5 đã học; cấm số hoặc từ vựng ngoài phạm vi trên.
 - Toàn bộ lời giải phải dùng đúng thuật ngữ Toán của SGK Toán lớp 5; hiện lại phép tính theo cột dọc hoặc sơ đồ đoạn thẳng cho đúng dạng bài.
 - Điều kiện: hết 5 tim (mỗi đáp án sai trừ 1 tim) là thua, đủ 12 lượt là thắng và hiện tổng kết. Chống ăn may: phương án nhiễu phải là kết quả của một lỗi có thật trong danh sách lỗi trên, không phải số ngẫu nhiên; đáp án đúng không nằm cố định một vị trí.
-- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; thêm bốn dòng "Gửi bố mẹ": "Hôm nay con tập môn Kéo co — <n> động tác" · "Con học Ba dạng số, <k> câu đúng trên <tổng>" · "Mẹo con mang về: Một phần hai bằng không phẩy năm." · "Việc 3 phút ở nhà: cả nhà cùng Kéo dây về phía mình rồi hỏi nhau miệng một đề vừa chơi" (thay <n>, <k>, <tổng> bằng số thật).
+- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; khối "Gửi bố mẹ" bốn dòng điền số thật: "<n> động tác môn Kéo co" · "Ba dạng số: <k>/<tổng> câu đúng" · "Mẹo con mang về: Một phần hai bằng không phẩy năm." · "Việc 3 phút ở nhà: cả nhà cùng Kéo dây về phía mình".
 - Bộ sưu tập: mỗi màn thắng mở khóa 1 thẻ theo chủ đề Ghép Phân Số – Thập Phân – Phần Trăm, lưu localStorage key "miti-collection", có màn "Sưu tập của em".
 
 3. RÀNG BUỘC CỐT LÕI (thiếu bất kỳ dòng nào là hỏng)
@@ -52,7 +51,7 @@ Tạo game giáo dục web "GHÉP PHÂN SỐ – THẬP PHÂN – PHẦN TRĂM" 
 - Mỗi mục theo đúng khuôn: { id, level, prompt, choices, answer, explanation, errorTag, loiViet, dang }.
 - Tối thiểu 30 mục, chia 3 mức độ (level 1/2/3), mỗi mục một đáp án đúng duy nhất kiểm chứng được bằng code.
 - Mục `dang: "tinh"` phải tính lại được bằng ĐÚNG MỘT phép số học trong code, mục `dang: "nhin"` kiểm bằng số học hoặc số đo hình học, không so khớp chuỗi tự do; mỗi phương án nhiễu là một kết quả thật của lỗi đã nêu, không phải số ngẫu nhiên.
-- errorTag là mã máy của lỗi, lấy đúng một trong: nham_ty_le_10_100_1000, thieu_dau_phay_thap_phan, doi_phan_so_thap_phan_sai. loiViet là cụm tiếng Việt có dấu in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, cùng chỉ lỗi đó và là thứ hiển thị cho học sinh. Mỗi câu sai lưu cả hai trường.
+- errorTag là mã máy của lỗi, lấy đúng một trong: nham_ty_le_10_100_1000, thieu_dau_phay_thap_phan, doi_phan_so_thap_phan_sai. loiViet là cụm tiếng Việt in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, là thứ hiển thị cho học sinh; mỗi câu sai lưu cả hai trường.
 - Gợi ý hiển thị khi sai: thanh băng ba ô: phân số, số thập phân, phần trăm cùng độ dài khi bằng nhau.
 - xáo trộn vị trí đáp án bằng thuật toán có seed theo lượt.
 - Hai mục mẫu để bám theo khuôn (viết tiếp 28 mục nữa, không được ít hơn):

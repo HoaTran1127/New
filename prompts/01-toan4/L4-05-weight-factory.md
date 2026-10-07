@@ -6,29 +6,28 @@
 ```text
 Tạo game giáo dục web "NHÀ MÁY KHỐI LƯỢNG" cho học sinh Việt Nam lớp 4, môn Toán.
 
+ƯU TIÊN theo đúng thứ tự: (1) học sinh đạt mục tiêu học tập ở mục 2; (2) điều khiển AR ở mục 1 nhận diện được thật và fallback chuột chơi đủ 100%; (3) phần còn lại. File chật thì làm đơn giản chi tiết trang trí, không cắt mục 2 và mục 3.
+
 1. Ý TƯỞNG
 - Bối cảnh: Dây chuyền nhà máy với các kiện hàng tấn, tạ, kg, g.
 - Việc của học sinh mỗi lượt: Nắm và kéo kiện hàng thả đúng toa ghi đơn vị tương ứng.
 - Điều khiển: Nắm và thả (Grab / Catch). HandLandmarker: tâm bàn tay = trung bình các landmark 5, 9, 13, 17; trạng thái nắm/xòe từ khoảng cách đầu ngón tới tâm. Biên độ động tác: Bốc và kéo: vật tới sát mép khung, học sinh với tay ra >= 45% tầm với để bốc rồi kéo về vị trí thả ở mép đối diện.
 - Không có camera thì kéo vật bằng chuột hoặc một ngón tay, nhả ra để mô phỏng xòe tay.
-- Mascot: **Thợ Búa** — nghiêm ngắn, cân trước khi nói. Ba câu thoại: khen "Khớp cân rồi!" · đỡ khi sai "Nặng hơn một tạ kìa" · hô mở đầu "Ca một, bắt đầu!".
-- Bảng màu riêng: `--miti-1: #FFB703` (vật thể AR chính), `--miti-2: #8D99AE` (particle và viền hit), `--miti-3: #073B4C` (điểm nhấn HUD).
-- Khoảnh khắc chữ ký: cần trục nhấc cả toa hàng lên cao rồi hiện khối lượng bằng chữ nổi giữa nhà máy. Đạo cụ AR neo vào người chơi: móc cẩu nhỏ đeo khuỷu tay, đung đưa theo tay em nắm.
-- Môn thể thao của game: **Bóng rổ** — động tác đặc trưng "Bắt bóng rồi đưa lên rổ", hiệu lệnh "Lên rổ!", lời hay khi bạn sai "Bạn bắt bóng chắc!", duỗi cơ cuối buổi "Duỗi chân sau nhịp ném".
-- Trò chơi dân gian dẫn dắt: **Ô ăn quan** — cách chơi "Vốc đều tay rải quan xuống ô", lời hô "Rải một rải hai, đều tay", đồ dùng AR "viên sỏi".
+- Mascot **Thợ Búa** (nghiêm ngắn, cân trước khi nói) — khen "Khớp cân rồi!", hô mở đầu "Ca một, bắt đầu!". Bảng màu: `--miti-1: #FFB703` (vật thể AR), `--miti-2: #8D99AE` (particle, viền hit), `--miti-3: #073B4C` (HUD).
+- Không khí giờ chơi (trang trí, được phép làm đơn giản): thể thao **Bóng rổ** ("Bắt bóng rồi đưa lên rổ", hạ nhiệt "Duỗi chân sau nhịp ném") · dân gian **Ô ăn quan** (đồ dùng AR "viên sỏi") · khoảnh khắc chữ ký cần trục nhấc cả toa hàng lên cao rồi hiện khối lượng bằng chữ nổi giữa nhà máy · đạo cụ AR neo vào người chơi "móc cẩu nhỏ đeo khuỷu tay, đung đưa theo tay em nắm".
 - Vòng đầu tiên phải dễ để hiểu luật trong vài giây, không cần đọc hướng dẫn dài.
 
 2. MỤC TIÊU HỌC TẬP
 - Mục tiêu: tấn, tạ, kg, g; đổi đơn vị; so sánh khối lượng; tính tổng khối lượng nhiều vật.
 - Mạch kiến thức: **Hình học và đo lường** — nhãn HUD "Khối lượng" · **Tuần 5–6 · Học kì I**. In nguyên văn mạch và nhãn tuần ở màn khởi động và màn tổng kết, nằm trong khối nút "Copy tờ rời".
 - Yêu cầu cần đạt (in NGUYÊN VĂN một dòng "Yêu cầu cần đạt: ..." ở màn khởi động và màn tổng kết, cấm viết lại hoặc tóm tắt): "Nhận biết được gam, ki-lô-gam, tạ, tấn; đổi được đơn vị khối lượng và so sánh được khối lượng."
-- Mẹo nhớ (≤12 từ, bật ở cú đúng câu đầu cụm và sau câu sai cùng lỗi, mascot đọc to kèm một động tác 3 giây làm mẫu): "Xuống hàng thêm 0, lên hàng bớt 0."
+- Mẹo nhớ (bật ở cú đúng đầu cụm và sau câu sai cùng lỗi, mascot đọc to + làm mẫu 3 giây): "Xuống hàng thêm 0, lên hàng bớt 0."
 - Báo trước "Dễ nhầm" ở câu đầu tiên của cụm (≤16 từ, tắt sau 6 giây, không che đề): "quên bớt hoặc thêm chữ số 0 khi đổi đơn vị".
 - Lỗi học sinh thường mắc (mỗi câu sai ghi đúng một lỗi này): quên bớt hoặc thêm chữ số 0 khi đổi đơn vị; nhớ sai 1 tấn bằng bao nhiêu kg; so sánh khi chưa đổi về cùng đơn vị.
 - Phạm vi: chỉ dùng nội dung Toán lớp 4 đã học; cấm số hoặc từ vựng ngoài phạm vi trên.
 - Toàn bộ lời giải phải dùng đúng thuật ngữ Toán của SGK Toán lớp 4; hiện lại phép tính theo cột dọc hoặc sơ đồ đoạn thẳng cho đúng dạng bài.
 - Điều kiện: hết 5 tim (mỗi đáp án sai trừ 1 tim) là thua, đủ 12 lượt là thắng và hiện tổng kết. Chống ăn may: phương án nhiễu phải là kết quả của một lỗi có thật trong danh sách lỗi trên, không phải số ngẫu nhiên; đáp án đúng không nằm cố định một vị trí.
-- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; thêm bốn dòng "Gửi bố mẹ": "Hôm nay con tập môn Bóng rổ — <n> động tác" · "Con học Khối lượng, <k> câu đúng trên <tổng>" · "Mẹo con mang về: Xuống hàng thêm 0, lên hàng bớt 0." · "Việc 3 phút ở nhà: cả nhà cùng Bắt bóng rồi đưa lên rổ rồi hỏi nhau miệng một đề vừa chơi" (thay <n>, <k>, <tổng> bằng số thật).
+- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; khối "Gửi bố mẹ" bốn dòng điền số thật: "<n> động tác môn Bóng rổ" · "Khối lượng: <k>/<tổng> câu đúng" · "Mẹo con mang về: Xuống hàng thêm 0, lên hàng bớt 0." · "Việc 3 phút ở nhà: cả nhà cùng Bắt bóng rồi đưa lên rổ".
 - Bộ sưu tập: mỗi màn thắng mở khóa 1 thẻ theo chủ đề Nhà Máy Khối Lượng, lưu localStorage key "miti-collection", có màn "Sưu tập của em".
 
 3. RÀNG BUỘC CỐT LÕI (thiếu bất kỳ dòng nào là hỏng)
@@ -52,7 +51,7 @@ Tạo game giáo dục web "NHÀ MÁY KHỐI LƯỢNG" cho học sinh Việt Nam
 - Mỗi mục theo đúng khuôn: { id, level, prompt, choices, answer, explanation, errorTag, loiViet, dang }.
 - Tối thiểu 30 mục, chia 3 mức độ (level 1/2/3), mỗi mục một đáp án đúng duy nhất kiểm chứng được bằng code.
 - Mục `dang: "tinh"` phải tính lại được bằng ĐÚNG MỘT phép số học trong code, mục `dang: "nhin"` kiểm bằng số học hoặc số đo hình học, không so khớp chuỗi tự do; mỗi phương án nhiễu là một kết quả thật của lỗi đã nêu, không phải số ngẫu nhiên.
-- errorTag là mã máy của lỗi, lấy đúng một trong: doi_don_vi_thieu_so_0, nham_1_tan_100_kg, so_sanh_chua_doi_don_vi. loiViet là cụm tiếng Việt có dấu in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, cùng chỉ lỗi đó và là thứ hiển thị cho học sinh. Mỗi câu sai lưu cả hai trường.
+- errorTag là mã máy của lỗi, lấy đúng một trong: doi_don_vi_thieu_so_0, nham_1_tan_100_kg, so_sanh_chua_doi_don_vi. loiViet là cụm tiếng Việt in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, là thứ hiển thị cho học sinh; mỗi câu sai lưu cả hai trường.
 - Gợi ý hiển thị khi sai: vẽ cân hai đĩa và chuỗi nhân chia 10 giữa các đơn vị.
 - xáo trộn vị trí đáp án bằng thuật toán có seed theo lượt.
 - Hai mục mẫu để bám theo khuôn (viết tiếp 28 mục nữa, không được ít hơn):

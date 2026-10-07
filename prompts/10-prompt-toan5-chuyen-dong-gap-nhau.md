@@ -7,6 +7,8 @@
 ```text
 Tạo game giáo dục web AR một file HTML "CAO TỐC TỐC ĐỘ" cho học sinh Việt Nam lớp 5, môn Toán, điều khiển bằng webcam.
 
+ƯU TIÊN theo đúng thứ tự: (1) học sinh đạt mục tiêu học tập ở mục 2; (2) điều khiển AR ở mục 1 nhận diện được thật và fallback chuột chơi đủ 100%; (3) phần còn lại. File chật thì làm đơn giản chi tiết trang trí, không cắt mục 2 và mục 3.
+
 1. Ý TƯỞNG
 - Cơ chế gốc (giữ nguyên): Hai xe chuyển động đều, chạm tay đúng thời điểm gặp nhau.
 - Đường cao tốc AR nối thành phố A và B: ô tô đỏ khởi hành từ A, xe xanh từ B ngược chiều; đồng hồ mô phỏng quay từng giờ, quãng đường hai xe rút ngắn bằng tổng vận tốc.

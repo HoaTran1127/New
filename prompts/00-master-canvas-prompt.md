@@ -13,17 +13,16 @@ Bạn là chuyên gia thiết kế và lập trình game giáo dục HTML5 Canva
 
 Hãy tạo một WEB GAME GIÁO DỤC HOÀN CHỈNH mà học sinh đứng trước camera, dùng chính cơ thể mình để chơi.
 
+ƯU TIÊN theo đúng thứ tự: (1) học sinh đạt mục tiêu học tập ở mục 2; (2) điều khiển AR ở mục 1 nhận diện được thật và fallback chuột chơi đủ 100%; (3) phần còn lại. File chật thì làm đơn giản chi tiết trang trí, không cắt mục 2 và mục 3.
+
 1. Ý TƯỞNG
 - Tên game: [GAME NAME]
 - Khối lớp · Môn: [GRADE] · [Toán | Tiếng Anh · band Starters / Movers / Flyers]
 - Bối cảnh: [SETTING]
 - Việc của học sinh mỗi lượt: [PLAYER MISSION]
 - Điều khiển: [mã gesture ở bảng tra cuối file] — nêu rõ landmark nào làm con trỏ và biên độ động tác (động tác phải rộng cả tay và thân, không phải nhấc ngón ngay trước ngực).
-- Mascot: [TÊN MASCOT] — [tính cách một dòng]. Ba câu thoại: khen "..." · đỡ khi sai "..." · hô mở đầu "...".
-- Bảng màu riêng: `--miti-1` (vật thể AR chính), `--miti-2` (particle và viền hit), `--miti-3` (điểm nhấn HUD) — ba mã hex tự chọn, nhất quán suốt game.
-- Khoảnh khắc chữ ký: [một hiệu ứng chỉ có ở game này]. Đạo cụ AR neo vào người chơi: [một vật ảo gắn vào landmark cơ thể].
-- Môn thể thao của game: [TÊN MÔN] — động tác đặc trưng "...", hiệu lệnh "...", lời hay khi bạn sai "...", duỗi cơ cuối buổi "...".
-- Trò chơi dân gian dẫn dắt: [TÊN TRÒ] — cách chơi "...", lời hô "...", đồ dùng AR "..." (chỉ đồ dùng có sẵn ở sân trường).
+- Mascot [TÊN MASCOT] ([tính cách một dòng]) — khen "..." · hô mở đầu "...". Bảng màu riêng: `--miti-1` (vật thể AR chính), `--miti-2` (particle và viền hit), `--miti-3` (HUD) — ba mã hex tự chọn, nhất quán suốt game.
+- Không khí giờ chơi (trang trí, được phép làm đơn giản): thể thao **[TÊN MÔN]** (động tác đặc trưng "...", duỗi cơ hạ nhiệt "...") · dân gian **[TÊN TRÒ]** (đồ dùng AR "...", chỉ đồ dùng có sẵn ở sân trường) · khoảnh khắc chữ ký [một hiệu ứng chỉ có ở game này] · đạo cụ AR neo vào người chơi [một vật ảo gắn vào landmark cơ thể].
 - Vòng đầu tiên phải dễ để hiểu luật trong vài giây, không cần đọc hướng dẫn dài.
 
 2. MỤC TIÊU HỌC TẬP
@@ -31,7 +30,7 @@ Hãy tạo một WEB GAME GIÁO DỤC HOÀN CHỈNH mà học sinh đứng trư�
 - Band Cambridge (chỉ game Tiếng Anh): [Pre A1 Starters · 541 từ | A1 Movers · 930 từ | A2 Flyers · 1.431 từ] — dải từ tích luỹ tới band đó theo wordlist 2025, kèm 8 cấu trúc ngữ pháp của band; từ lần đầu xuất hiện ở band cao hơn là lỗi, kể cả khi học sinh lớp 4–5 đã gặp.
 - Mạch kiến thức: [MẠCH] — nhãn HUD "[NHÃN NGẮN]" · Tuần [a]–[b] · [Học kì I | Học kì II]. In nguyên văn mạch và nhãn tuần ở màn khởi động và màn tổng kết, nằm trong khối nút "Copy tờ rời".
 - Yêu cầu cần đạt (in NGUYÊN VĂN một dòng "Yêu cầu cần đạt: ..." ở màn khởi động và màn tổng kết, cấm viết lại hoặc tóm tắt): "[YÊU CẦU CẦN ĐẠT]"
-- Mẹo nhớ (≤12 từ, bật ở cú đúng câu đầu cụm và sau câu sai cùng lỗi, mascot đọc to kèm một động tác 3 giây làm mẫu): "..."
+- Mẹo nhớ ≤12 từ (bật ở cú đúng đầu cụm và sau câu sai cùng lỗi, mascot đọc to + làm mẫu 3 giây): "..."
 - Báo trước "Dễ nhầm" ở câu đầu tiên của cụm (≤16 từ, tắt sau 6 giây, không che đề): "..."
 - Lỗi học sinh thường mắc (mỗi câu sai ghi đúng một lỗi này, viết tiếng Việt có dấu): [2–4 lỗi].
 - Phạm vi: chỉ dùng nội dung [môn] lớp [grade] đã học; game Tiếng Anh còn phải nằm trong đúng band đã chọn ở trên; cấm số hoặc từ vựng ngoài phạm vi trên.
@@ -105,7 +104,6 @@ Thiếu ảnh thì game tự thay bằng khối bo góc `--miti-1` kèm chữ n�
 
 ## Vì sao prompt ngắn lại (ghi chú cho tác giả)
 
-- Prompt 162 KB tương đương cỡ 40.000 token quy định; Gemini Canvas dồn chú ý vào kỹ thuật AR rồi bỏ mục tiêu học tập, sinh game "linh tinh" như người dùng phản ánh.
-- Đo trên 85 file cũ: 77% dung lượng (128,8 KB/file) là chữ quy định chung lặp lại nguyên văn, riêng bảng nghiệm thu cũ 25,8 KB; phần đặc thù game chỉ 2,5% (~4 KB).
-- Cấu trúc mới đưa Ý TƯỞNG và MỤC TIÊU HỌC TẬP lên đầu, quy định chung xuống sau với đúng 14 dòng, tổng 12,4 KB/file.
-- Muốn bổ sung quy định mới cho mọi game: thêm một dòng vào `CORE_LINES` trong `tools/lib/core.mjs`. `tools/validate.mjs` bắt mọi prompt chứa đủ các dòng đó và báo đỏ nếu file nào vượt 15 KB.
+- Bản cũ 162 KB/file, ~77% là quy định chung lặp lại nguyên văn giữa 85 file; Gemini ngợp, bỏ mục tiêu học tập, sinh game "linh tinh".
+- Bản nay 12,8 KB/file (khối `text` 57 dòng): 4,3 KB là 14 dòng CORE kỹ thuật, còn lại là mục tiêu học tập của riêng game. Ngay dưới tên game là dòng ƯU TIÊN (học tập → nhận diện chuyển động → phần còn lại); năm dòng trang trí nén thành hai dòng dán nhãn "được phép làm đơn giản".
+- Thêm quy định cho mọi game: một dòng vào `CORE_LINES` ở `tools/lib/core.mjs`. `tools/validate.mjs` bắt mọi prompt chứa đủ các dòng đó, có dòng ƯU TIÊN trong 4 dòng đầu, và báo đỏ nếu vượt 15 KB.

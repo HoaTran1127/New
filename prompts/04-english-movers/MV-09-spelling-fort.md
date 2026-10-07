@@ -6,32 +6,31 @@
 ```text
 Tạo game giáo dục web "PHÁO ĐÀI CHÍNH TẢ" cho học sinh Việt Nam lớp 5, môn Tiếng Anh, chuẩn A1 Movers (A1) của Cambridge.
 
+ƯU TIÊN theo đúng thứ tự: (1) học sinh đạt mục tiêu học tập ở mục 2; (2) điều khiển AR ở mục 1 nhận diện được thật và fallback chuột chơi đủ 100%; (3) phần còn lại. File chật thì làm đơn giản chi tiết trang trí, không cắt mục 2 và mục 3.
+
 1. Ý TƯỞNG
 - Bối cảnh: Pháo đài phòng thủ, đạn lỗi chính tả bay tới.
 - Việc của học sinh mỗi lượt: Đấm quả đạn chứa từ viết đúng để bắn hạ loạt đạn sai.
 - Điều khiển: Vung tay đấm (Punch). HandLandmarker: vị trí cổ tay (landmark 0) và mũi (landmark 15) để tính hướng đấm; độ gập các ngón để xác nhận nắm tay. Biên độ động tác: Đấm đổi tầm liên tục (trên vai – ngang ngực – dưới thắt lưng); cú đấm đi hết tay từ thế thủ trước ngực tới vật nằm sát mép khung.
 - Không có camera thì click vào vật để mô phỏng cú đấm; rê chuột lên vật không được tính.
-- Mascot: **Pháo Thủ** — nóng tính, hay nhắc. Ba câu thoại: khen "Bắn trúng rồi!" · đỡ khi sai "Quả đó sai chính tả" · hô mở đầu "Nạp đạn, bắn!".
-- Bảng màu riêng: `--miti-1: #22223B` (vật thể AR chính), `--miti-2: #9A8C98` (particle và viền hit), `--miti-3: #4E4C66` (điểm nhấn HUD).
-- Khoảnh khắc chữ ký: loạt đạn sai vỡ giữa không trung và pháo đài bắn lên một cờ hiệu. Đạo cụ AR neo vào người chơi: ống nhòm pháo đài trước ngực em, nòng quay khi em đấm.
-- Môn thể thao của game: **Boxing** — động tác đặc trưng "Đấm về phía trước", hiệu lệnh "Một — hai!", lời hay khi bạn sai "Bạn ra đòn gọn!", duỗi cơ cuối buổi "Duỗi ngực và vai mở".
-- Trò chơi dân gian dẫn dắt: **Ném còn** — cách chơi "Đẩy tay hất quả còn qua vòng", lời hô "Một hai ba, ném!", đồ dùng AR "vòng tròn".
+- Mascot **Pháo Thủ** (nóng tính, hay nhắc) — khen "Bắn trúng rồi!", hô mở đầu "Nạp đạn, bắn!". Bảng màu: `--miti-1: #22223B` (vật thể AR), `--miti-2: #9A8C98` (particle, viền hit), `--miti-3: #4E4C66` (HUD).
+- Không khí giờ chơi (trang trí, được phép làm đơn giản): thể thao **Boxing** ("Đấm về phía trước", hạ nhiệt "Duỗi ngực và vai mở") · dân gian **Ném còn** (đồ dùng AR "vòng tròn") · khoảnh khắc chữ ký loạt đạn sai vỡ giữa không trung và pháo đài bắn lên một cờ hiệu · đạo cụ AR neo vào người chơi "ống nhòm pháo đài trước ngực em, nòng quay khi em đấm".
 - Vòng đầu tiên phải dễ để hiểu luật trong vài giây, không cần đọc hướng dẫn dài.
 
 2. MỤC TIÊU HỌC TẬP
 - Mục tiêu: điền chữ cái còn thiếu; sửa lỗi chính tả; chọn cách viết đúng của từ lớp 4-5.
 - Band Cambridge: **A1 Movers** (A1) — Starters + quá khứ đơn, so sánh hơn/nhất, will, must/have to, giới từ nơi chốn, đếm được/không đếm được, hiện tại tiếp diễn.
-- Trần từ vựng: chỉ dùng 930 từ thuộc Movers trở xuống, ưu tiên 26 từ của chủ đề gia đình: baby, boy, brother, child, children, cousin, dad, family, father, friend, girl, grandfather, grandma, grandmother, grandpa, man, mother, mum, name, people, sister, woman, aunt, daughter, son, uncle. Cấm mọi từ lần đầu xuất hiện ở band cao hơn; từ SGK Việt Nam ngoài danh sách trên chỉ được dùng nếu đã học ở Tiếng Anh lớp 5.
-- Trần ngữ pháp: chỉ dùng 8 cấu trúc của Movers — Quá khứ đơn (có quy tắc + bất quy tắc) ("I visited my grandma. / We went to the zoo yesterday.") · So sánh hơn và so sánh nhất ("A whale is bigger than a dolphin. / He is the fastest runner.") · will cho dự đoán và tương lai ("It will rain tomorrow. / I’ll be ten next year.") · must / have to / can’t (nghiêm cấm, buộc) ("You must be quiet in class. / You can’t run in the corridor.") · Đếm được – không đếm được, some / any ("some water, any eggs, a few apples, a little milk") · Giới từ nơi chốn – phương hướng ("next to, between, behind, in front of, opposite") · Hiện tại tiếp diễn đối chiếu hiện tại đơn ("Look! He is swimming. / He usually swims at weekends.") · because / but / and nối câu ("I like summer because I can go swimming.").
+- Trần từ vựng: chỉ dùng 930 từ thuộc Movers trở xuống, ưu tiên 26 từ của chủ đề gia đình: baby, boy, brother, child, children, cousin, dad, family, father, friend, girl, grandfather, grandma, grandmother, grandpa, man, mother, mum, name, people, …. Cấm mọi từ lần đầu xuất hiện ở band cao hơn; từ SGK Việt Nam ngoài danh sách trên chỉ được dùng nếu đã học ở Tiếng Anh lớp 5.
+- Trần ngữ pháp: chỉ dùng 8 cấu trúc của Movers — Quá khứ đơn (có quy tắc + bất quy tắc) ("I visited my grandma.") · So sánh hơn và so sánh nhất ("A whale is bigger than a dolphin.") · will cho dự đoán và tương lai ("It will rain tomorrow.") · must / have to / can’t (nghiêm cấm, buộc) ("You must be quiet in class.") · Đếm được – không đếm được, some / any ("some water, any eggs, a few apples, a little milk") · Giới từ nơi chốn – phương hướng ("next to, between, behind, in front of, opposite") · Hiện tại tiếp diễn đối chiếu hiện tại đơn ("Look! He is swimming.") · because / but / and nối câu ("I like summer because I can go swimming.").
 - Mạch kiến thức: **Đọc và viết** — nhãn HUD "Chính tả" · **Tuần 5–14 · Học kì I**. In nguyên văn mạch và nhãn tuần ở màn khởi động và màn tổng kết, nằm trong khối nút "Copy tờ rời".
 - Yêu cầu cần đạt (in NGUYÊN VĂN một dòng "Yêu cầu cần đạt: ..." ở màn khởi động và màn tổng kết, cấm viết lại hoặc tóm tắt): "Viết đúng chính tả các từ đã học; điền được chữ cái còn thiếu và sửa được lỗi trong từ."
-- Mẹo nhớ (≤12 từ, bật ở cú đúng câu đầu cụm và sau câu sai cùng lỗi, mascot đọc to kèm một động tác 3 giây làm mẫu): "Đọc chậm, đánh vần từng chữ cái."
+- Mẹo nhớ (bật ở cú đúng đầu cụm và sau câu sai cùng lỗi, mascot đọc to + làm mẫu 3 giây): "Đọc chậm, đánh vần từng chữ cái."
 - Báo trước "Dễ nhầm" ở câu đầu tiên của cụm (≤16 từ, tắt sau 6 giây, không che đề): "thiếu chữ cái giữa từ".
 - Lỗi học sinh thường mắc (mỗi câu sai ghi đúng một lỗi này): thiếu chữ cái giữa từ; nhầm i với y; viết nhầm phụ âm đôi.
 - Phạm vi: chỉ dùng nội dung Tiếng Anh lớp 5 đã học và trong đúng band Movers; cấm số hoặc từ vựng ngoài phạm vi trên.
 - Từ và câu tiếng Anh là học liệu, giữ nguyên tiếng Anh; mọi hướng dẫn, nút bấm, lời giải thích bằng tiếng Việt. Dùng window.speechSynthesis (en-US hoặc en-GB) đọc to từ/câu khi trả lời đúng, có nút phát lại.
 - Điều kiện: hết 5 tim (mỗi đáp án sai trừ 1 tim) là thua, đủ 12 lượt là thắng và hiện tổng kết. Chống ăn may: phương án nhiễu phải là kết quả của một lỗi có thật trong danh sách lỗi trên, không phải số ngẫu nhiên; đáp án đúng không nằm cố định một vị trí.
-- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; thêm bốn dòng "Gửi bố mẹ": "Hôm nay con tập môn Boxing — <n> động tác" · "Con học Chính tả, <k> câu đúng trên <tổng>" · "Mẹo con mang về: Đọc chậm, đánh vần từng chữ cái." · "Việc 3 phút ở nhà: cả nhà cùng Đấm về phía trước rồi hỏi nhau miệng một đề vừa chơi" (thay <n>, <k>, <tổng> bằng số thật).
+- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; khối "Gửi bố mẹ" bốn dòng điền số thật: "<n> động tác môn Boxing" · "Chính tả: <k>/<tổng> câu đúng" · "Mẹo con mang về: Đọc chậm, đánh vần từng chữ cái." · "Việc 3 phút ở nhà: cả nhà cùng Đấm về phía trước".
 - Bộ sưu tập: mỗi màn thắng mở khóa 1 thẻ theo chủ đề Pháo Đài Chính Tả, lưu localStorage key "miti-collection", có màn "Sưu tập của em".
 
 3. RÀNG BUỘC CỐT LÕI (thiếu bất kỳ dòng nào là hỏng)
@@ -56,7 +55,7 @@ Tạo game giáo dục web "PHÁO ĐÀI CHÍNH TẢ" cho học sinh Việt Nam l
 - Tối thiểu 60 mục, chia 3 mức độ (level 1/2/3), mỗi mục một đáp án đúng duy nhất kiểm chứng được bằng code.
 - Mỗi mục có từ hoặc câu tiếng Anh, gợi nghĩa tiếng Việt, phiên âm khi phù hợp, và audio bằng window.speechSynthesis; đáp án là chuỗi cố định.
 - Chia mức theo band: level 1 lấy từ và cấu trúc cơ bản nhất của Movers; level 3 vẫn nằm trong Movers, tăng độ khó bằng câu dài hơn và phương án gần nghĩa hơn, không tăng bằng từ ngoài band.
-- errorTag là mã máy của lỗi, lấy đúng một trong: thieu_chu_cai, nham_v_i_y, double_consonant. loiViet là cụm tiếng Việt có dấu in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, cùng chỉ lỗi đó và là thứ hiển thị cho học sinh. Mỗi câu sai lưu cả hai trường.
+- errorTag là mã máy của lỗi, lấy đúng một trong: thieu_chu_cai, nham_v_i_y, double_consonant. loiViet là cụm tiếng Việt in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, là thứ hiển thị cho học sinh; mỗi câu sai lưu cả hai trường.
 - Gợi ý hiển thị khi sai: đánh đỏ vị trí sai và hiện từ đúng kèm phiên âm.
 - xáo trộn vị trí đáp án bằng thuật toán có seed theo lượt.
 - Hai mục mẫu để bám theo khuôn (viết tiếp 58 mục nữa, không được ít hơn):

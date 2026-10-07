@@ -6,29 +6,28 @@
 ```text
 Tạo game giáo dục web "KÉO HÌNH BÌNH HÀNH" cho học sinh Việt Nam lớp 4, môn Toán.
 
+ƯU TIÊN theo đúng thứ tự: (1) học sinh đạt mục tiêu học tập ở mục 2; (2) điều khiển AR ở mục 1 nhận diện được thật và fallback chuột chơi đủ 100%; (3) phần còn lại. File chật thì làm đơn giản chi tiết trang trí, không cắt mục 2 và mục 3.
+
 1. Ý TƯỞNG
 - Bối cảnh: Sân khấu ảo thuật biến hình, các mảnh hình cắt rời.
 - Việc của học sinh mỗi lượt: Kéo mảnh tam giác của hình bình hành ghép lại thành chữ nhật cùng diện tích.
 - Điều khiển: Kéo thả (Drag). HandLandmarker, đầu ngón trỏ làm điểm kéo; có thể thêm landmark 8 giữ vật. Biên độ động tác: Đường kéo dài >= 50% bề rộng khung hình và luôn cắt qua vạch ngang thân; ô đích đặt hai bên trái phải chứ không xếp cạnh nhau.
 - Không có camera thì kéo thả bằng chuột hoặc chạm màn hình rồi thả vào ô đích.
-- Mascot: **Mảnh** — nhanh nhảu, thích biến hình. Ba câu thoại: khen "Thành chữ nhật rồi!" · đỡ khi sai "Mảnh này chưa khớp" · hô mở đầu "Ảo thuật, bắt đầu!".
-- Bảng màu riêng: `--miti-1: #6A0572` (vật thể AR chính), `--miti-2: #F6FF71` (particle và viền hit), `--miti-3: #AB83A1` (điểm nhấn HUD).
-- Khoảnh khắc chữ ký: mảnh tam giác bay ngang hình và cả hình tự kéo thành chữ nhật cùng diện tích. Đạo cụ AR neo vào người chơi: đôi găng ảo thuật gia trên hai bàn tay, loáng sáng khi em kéo.
-- Môn thể thao của game: **Kéo co** — động tác đặc trưng "Kéo dây về phía mình", hiệu lệnh "Kéo nào!", lời hay khi bạn sai "Bạn kéo khỏe lắm!", duỗi cơ cuối buổi "Duỗi lưng khi buông dây".
-- Trò chơi dân gian dẫn dắt: **Kéo co** — cách chơi "Hai tay kéo dải dây về vạch", lời hô "Một hai kéo, một hai kéo", đồ dùng AR "khăn vải".
+- Mascot **Mảnh** (nhanh nhảu, thích biến hình) — khen "Thành chữ nhật rồi!", hô mở đầu "Ảo thuật, bắt đầu!". Bảng màu: `--miti-1: #6A0572` (vật thể AR), `--miti-2: #F6FF71` (particle, viền hit), `--miti-3: #AB83A1` (HUD).
+- Không khí giờ chơi (trang trí, được phép làm đơn giản): thể thao **Kéo co** ("Kéo dây về phía mình", hạ nhiệt "Duỗi lưng khi buông dây") · dân gian **Kéo co** (đồ dùng AR "khăn vải") · khoảnh khắc chữ ký mảnh tam giác bay ngang hình và cả hình tự kéo thành chữ nhật cùng diện tích · đạo cụ AR neo vào người chơi "đôi găng ảo thuật gia trên hai bàn tay, loáng sáng khi em kéo".
 - Vòng đầu tiên phải dễ để hiểu luật trong vài giây, không cần đọc hướng dẫn dài.
 
 2. MỤC TIÊU HỌC TẬP
 - Mục tiêu: đặc điểm hình bình hành; diện tích đáy × chiều cao; chu vi.
 - Mạch kiến thức: **Hình học và đo lường** — nhãn HUD "Hình bình hành" · **Tuần 32–33 · Học kì II**. In nguyên văn mạch và nhãn tuần ở màn khởi động và màn tổng kết, nằm trong khối nút "Copy tờ rời".
 - Yêu cầu cần đạt (in NGUYÊN VĂN một dòng "Yêu cầu cần đạt: ..." ở màn khởi động và màn tổng kết, cấm viết lại hoặc tóm tắt): "Nhận biết được đặc điểm hình bình hành; tính được chu vi và diện tích hình bình hành."
-- Mẹo nhớ (≤12 từ, bật ở cú đúng câu đầu cụm và sau câu sai cùng lỗi, mascot đọc to kèm một động tác 3 giây làm mẫu): "Đáy nhân chiều cao vuông góc, đừng dùng cạnh xiên."
+- Mẹo nhớ (bật ở cú đúng đầu cụm và sau câu sai cùng lỗi, mascot đọc to + làm mẫu 3 giây): "Đáy nhân chiều cao vuông góc, đừng dùng cạnh xiên."
 - Báo trước "Dễ nhầm" ở câu đầu tiên của cụm (≤16 từ, tắt sau 6 giây, không che đề): "dùng cạnh bên làm chiều cao".
 - Lỗi học sinh thường mắc (mỗi câu sai ghi đúng một lỗi này): dùng cạnh bên làm chiều cao; lẫn chu vi với diện tích; không đổi đơn vị hai đại lượng.
 - Phạm vi: chỉ dùng nội dung Toán lớp 4 đã học; cấm số hoặc từ vựng ngoài phạm vi trên.
 - Toàn bộ lời giải phải dùng đúng thuật ngữ Toán của SGK Toán lớp 4; hiện lại phép tính theo cột dọc hoặc sơ đồ đoạn thẳng cho đúng dạng bài.
 - Điều kiện: hết 5 tim (mỗi đáp án sai trừ 1 tim) là thua, đủ 12 lượt là thắng và hiện tổng kết. Chống ăn may: phương án nhiễu phải là kết quả của một lỗi có thật trong danh sách lỗi trên, không phải số ngẫu nhiên; đáp án đúng không nằm cố định một vị trí.
-- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; thêm bốn dòng "Gửi bố mẹ": "Hôm nay con tập môn Kéo co — <n> động tác" · "Con học Hình bình hành, <k> câu đúng trên <tổng>" · "Mẹo con mang về: Đáy nhân chiều cao vuông góc, đừng dùng cạnh xiên." · "Việc 3 phút ở nhà: cả nhà cùng Kéo dây về phía mình rồi hỏi nhau miệng một đề vừa chơi" (thay <n>, <k>, <tổng> bằng số thật).
+- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; khối "Gửi bố mẹ" bốn dòng điền số thật: "<n> động tác môn Kéo co" · "Hình bình hành: <k>/<tổng> câu đúng" · "Mẹo con mang về: Đáy nhân chiều cao vuông góc, đừng dùng cạnh xiên." · "Việc 3 phút ở nhà: cả nhà cùng Kéo dây về phía mình".
 - Bộ sưu tập: mỗi màn thắng mở khóa 1 thẻ theo chủ đề Kéo Hình Bình Hành, lưu localStorage key "miti-collection", có màn "Sưu tập của em".
 
 3. RÀNG BUỘC CỐT LÕI (thiếu bất kỳ dòng nào là hỏng)
@@ -52,7 +51,7 @@ Tạo game giáo dục web "KÉO HÌNH BÌNH HÀNH" cho học sinh Việt Nam l�
 - Mỗi mục theo đúng khuôn: { id, level, prompt, choices, answer, explanation, errorTag, loiViet, dang }.
 - Tối thiểu 30 mục, chia 3 mức độ (level 1/2/3), mỗi mục một đáp án đúng duy nhất kiểm chứng được bằng code.
 - Mục `dang: "tinh"` phải tính lại được bằng ĐÚNG MỘT phép số học trong code, mục `dang: "nhin"` kiểm bằng số học hoặc số đo hình học, không so khớp chuỗi tự do; mỗi phương án nhiễu là một kết quả thật của lỗi đã nêu, không phải số ngẫu nhiên.
-- errorTag là mã máy của lỗi, lấy đúng một trong: dung_canh_ben_lam_chieu_cao, nham_chu_vi_voi_dien_tich, khong_doi_don_vi_hai_dai_luong. loiViet là cụm tiếng Việt có dấu in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, cùng chỉ lỗi đó và là thứ hiển thị cho học sinh. Mỗi câu sai lưu cả hai trường.
+- errorTag là mã máy của lỗi, lấy đúng một trong: dung_canh_ben_lam_chieu_cao, nham_chu_vi_voi_dien_tich, khong_doi_don_vi_hai_dai_luong. loiViet là cụm tiếng Việt in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, là thứ hiển thị cho học sinh; mỗi câu sai lưu cả hai trường.
 - Gợi ý hiển thị khi sai: cắt một phần hình bình hành và ghép lại thành chữ nhật để thấy công thức.
 - xáo trộn vị trí đáp án bằng thuật toán có seed theo lượt.
 - Hai mục mẫu để bám theo khuôn (viết tiếp 28 mục nữa, không được ít hơn):

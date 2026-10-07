@@ -7,16 +7,15 @@
 ```text
 Tạo game giáo dục web "[GAME NAME]" cho học sinh Việt Nam lớp [GRADE], môn [Toán | Tiếng Anh] (Tiếng Anh: band Cambridge [Pre A1 Starters | A1 Movers | A2 Flyers]).
 
+ƯU TIÊN theo đúng thứ tự: (1) học sinh đạt mục tiêu học tập ở mục 2; (2) điều khiển AR ở mục 1 nhận diện được thật và fallback chuột chơi đủ 100%; (3) phần còn lại. File chật thì làm đơn giản chi tiết trang trí, không cắt mục 2 và mục 3.
+
 1. Ý TƯỞNG
 - Bối cảnh: [SETTING — một cảnh có thật ở sân trường/lớp học Việt Nam, không phải lâu đài xài chung của mọi game]
 - Việc của học sinh mỗi lượt: [PLAYER MISSION — một hành động, một quyết định]
 - Điều khiển: [GESTURE VI] — [landmark nào làm con trỏ]; biên độ: [động tác rộng cả tay và thân]
 - Không có camera thì [FALLBACK — mô phỏng đúng hành động chính]
-- Mascot: **[MASCOT]** — [tính cách]. Ba câu thoại: khen "[...]" · đỡ khi sai "[...]" · hô mở đầu "[...]".
-- Bảng màu riêng: `--miti-1: [#hex]` (vật thể AR chính), `--miti-2: [#hex]` (particle và viền hit), `--miti-3: [#hex]` (điểm nhấn HUD).
-- Khoảnh khắc chữ ký: [hiệu ứng chỉ có ở game này]. Đạo cụ AR neo vào người chơi: [vật ảo gắn vào landmark cơ thể].
-- Môn thể thao của game: **[MÔN]** — động tác đặc trưng "[...]", hiệu lệnh "[...]", lời hay khi bạn sai "[...]", duỗi cơ cuối buổi "[...]".
-- Trò chơi dân gian dẫn dắt: **[TRÒ]** — cách chơi "[...]", lời hô "[...]", đồ dùng AR "[...]".
+- Mascot **[MASCOT]** ([tính cách]) — khen "[...]" · hô mở đầu "[...]". Bảng màu riêng: `--miti-1: [#hex]` (vật thể AR chính), `--miti-2: [#hex]` (particle và viền hit), `--miti-3: [#hex]` (HUD).
+- Không khí giờ chơi (trang trí, được phép làm đơn giản): thể thao **[MÔN]** (động tác đặc trưng "[...]", duỗi cơ hạ nhiệt "[...]") · dân gian **[TRÒ]** (đồ dùng AR "[...]") · khoảnh khắc chữ ký [hiệu ứng chỉ có ở game này] · đạo cụ AR neo vào người chơi [vật ảo gắn vào landmark cơ thể].
 - Vòng đầu tiên phải dễ để hiểu luật trong vài giây, không cần đọc hướng dẫn dài.
 
 2. MỤC TIÊU HỌC TẬP

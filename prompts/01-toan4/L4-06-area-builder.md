@@ -6,29 +6,28 @@
 ```text
 Tạo game giáo dục web "XƯỞNG DIỆN TÍCH" cho học sinh Việt Nam lớp 4, môn Toán.
 
+ƯU TIÊN theo đúng thứ tự: (1) học sinh đạt mục tiêu học tập ở mục 2; (2) điều khiển AR ở mục 1 nhận diện được thật và fallback chuột chơi đủ 100%; (3) phần còn lại. File chật thì làm đơn giản chi tiết trang trí, không cắt mục 2 và mục 3.
+
 1. Ý TƯỞNG
 - Bối cảnh: Xưởng xây dựng với lưới ô vuông 1cm.
 - Việc của học sinh mỗi lượt: Khom hai tay để căng một hình chữ nhật có đúng số ô vuông yêu cầu.
 - Điều khiển: Khom hai tay (Two-hand stretch). HandLandmarker hai tay hoặc PoseLandmarker hai cổ tay (15, 16) để đo khoảng cách và góc giữa hai tay. Biên độ động tác: Khoảng cách hai tay mục tiêu trải từ 40% đến 100% tầm sải đã đo, mỗi lượt đổi mốc để học sinh dang hết tay rồi khép lại.
 - Không có camera thì kéo hai điểm neo bằng chuột hoặc hai ngón trên màn cảm ứng.
-- Mascot: **Kiến Vuông** — say mê đo nắn. Ba câu thoại: khen "Đủ số ô rồi!" · đỡ khi sai "Căng tay thêm chút nữa" · hô mở đầu "Đo nền, căng, đúng!".
-- Bảng màu riêng: `--miti-1: #606C38` (vật thể AR chính), `--miti-2: #DDA15E` (particle và viền hit), `--miti-3: #283618` (điểm nhấn HUD).
-- Khoảnh khắc chữ ký: sàn bê tông hiện lưới ô vuông ngay dưới chân em đúng lúc hình chữ nhật căng xong. Đạo cụ AR neo vào người chơi: thước dây nối hai bàn tay, dài ra khi hai tay xa nhau.
-- Môn thể thao của game: **Bơi lội** — động tác đặc trưng "Khai tay bơi tại chỗ", hiệu lệnh "Bơi nào!", lời hay khi bạn sai "Bạn bơi đều tay!", duỗi cơ cuối buổi "Duỗi lưng bơi ếch đứng".
-- Trò chơi dân gian dẫn dắt: **Chim bay cò bay** — cách chơi "Dang hai tay làm cánh đưa lên cao", lời hô "Chim bay cò bay", đồ dùng AR "vạch phấn".
+- Mascot **Kiến Vuông** (say mê đo nắn) — khen "Đủ số ô rồi!", hô mở đầu "Đo nền, căng, đúng!". Bảng màu: `--miti-1: #606C38` (vật thể AR), `--miti-2: #DDA15E` (particle, viền hit), `--miti-3: #283618` (HUD).
+- Không khí giờ chơi (trang trí, được phép làm đơn giản): thể thao **Bơi lội** ("Khai tay bơi tại chỗ", hạ nhiệt "Duỗi lưng bơi ếch đứng") · dân gian **Chim bay cò bay** (đồ dùng AR "vạch phấn") · khoảnh khắc chữ ký sàn bê tông hiện lưới ô vuông ngay dưới chân em đúng lúc hình chữ nhật căng xong · đạo cụ AR neo vào người chơi "thước dây nối hai bàn tay, dài ra khi hai tay xa nhau".
 - Vòng đầu tiên phải dễ để hiểu luật trong vài giây, không cần đọc hướng dẫn dài.
 
 2. MỤC TIÊU HỌC TẬP
 - Mục tiêu: cm², dm², m²; đếm ô vuông để tính diện tích; diện tích hình chữ nhật, vuông.
 - Mạch kiến thức: **Hình học và đo lường** — nhãn HUD "Diện tích" · **Tuần 6–7 · Học kì I**. In nguyên văn mạch và nhãn tuần ở màn khởi động và màn tổng kết, nằm trong khối nút "Copy tờ rời".
 - Yêu cầu cần đạt (in NGUYÊN VĂN một dòng "Yêu cầu cần đạt: ..." ở màn khởi động và màn tổng kết, cấm viết lại hoặc tóm tắt): "Biết dùng xăng-ti-mét vuông, đề-xi-mét vuông, mét vuông; đếm ô vuông và tính được diện tích hình chữ nhật."
-- Mẹo nhớ (≤12 từ, bật ở cú đúng câu đầu cụm và sau câu sai cùng lỗi, mascot đọc to kèm một động tác 3 giây làm mẫu): "Đếm ô trước, nhân sau; đơn vị có mũ hai."
+- Mẹo nhớ (bật ở cú đúng đầu cụm và sau câu sai cùng lỗi, mascot đọc to + làm mẫu 3 giây): "Đếm ô trước, nhân sau; đơn vị có mũ hai."
 - Báo trước "Dễ nhầm" ở câu đầu tiên của cụm (≤16 từ, tắt sau 6 giây, không che đề): "đếm ô dang dở sai".
 - Lỗi học sinh thường mắc (mỗi câu sai ghi đúng một lỗi này): đếm ô dang dở sai; lẫn diện tích với chu vi; thiếu đơn vị mét vuông.
 - Phạm vi: chỉ dùng nội dung Toán lớp 4 đã học; cấm số hoặc từ vựng ngoài phạm vi trên.
 - Toàn bộ lời giải phải dùng đúng thuật ngữ Toán của SGK Toán lớp 4; hiện lại phép tính theo cột dọc hoặc sơ đồ đoạn thẳng cho đúng dạng bài.
 - Điều kiện: hết 5 tim (mỗi đáp án sai trừ 1 tim) là thua, đủ 12 lượt là thắng và hiện tổng kết. Chống ăn may: phương án nhiễu phải là kết quả của một lỗi có thật trong danh sách lỗi trên, không phải số ngẫu nhiên; đáp án đúng không nằm cố định một vị trí.
-- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; thêm bốn dòng "Gửi bố mẹ": "Hôm nay con tập môn Bơi lội — <n> động tác" · "Con học Diện tích, <k> câu đúng trên <tổng>" · "Mẹo con mang về: Đếm ô trước, nhân sau; đơn vị có mũ hai." · "Việc 3 phút ở nhà: cả nhà cùng Khai tay bơi tại chỗ rồi hỏi nhau miệng một đề vừa chơi" (thay <n>, <k>, <tổng> bằng số thật).
+- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; khối "Gửi bố mẹ" bốn dòng điền số thật: "<n> động tác môn Bơi lội" · "Diện tích: <k>/<tổng> câu đúng" · "Mẹo con mang về: Đếm ô trước, nhân sau; đơn vị có mũ hai." · "Việc 3 phút ở nhà: cả nhà cùng Khai tay bơi tại chỗ".
 - Bộ sưu tập: mỗi màn thắng mở khóa 1 thẻ theo chủ đề Xưởng Diện Tích, lưu localStorage key "miti-collection", có màn "Sưu tập của em".
 
 3. RÀNG BUỘC CỐT LÕI (thiếu bất kỳ dòng nào là hỏng)
@@ -52,7 +51,7 @@ Tạo game giáo dục web "XƯỞNG DIỆN TÍCH" cho học sinh Việt Nam l�
 - Mỗi mục theo đúng khuôn: { id, level, prompt, choices, answer, explanation, errorTag, loiViet, dang }.
 - Tối thiểu 30 mục, chia 3 mức độ (level 1/2/3), mỗi mục một đáp án đúng duy nhất kiểm chứng được bằng code.
 - Mục `dang: "tinh"` phải tính lại được bằng ĐÚNG MỘT phép số học trong code, mục `dang: "nhin"` kiểm bằng số học hoặc số đo hình học, không so khớp chuỗi tự do; mỗi phương án nhiễu là một kết quả thật của lỗi đã nêu, không phải số ngẫu nhiên.
-- errorTag là mã máy của lỗi, lấy đúng một trong: dem_o_chuong_lac, nham_chu_vi_thanh_dien_tich, thieu_don_vi_vuong. loiViet là cụm tiếng Việt có dấu in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, cùng chỉ lỗi đó và là thứ hiển thị cho học sinh. Mỗi câu sai lưu cả hai trường.
+- errorTag là mã máy của lỗi, lấy đúng một trong: dem_o_chuong_lac, nham_chu_vi_thanh_dien_tich, thieu_don_vi_vuong. loiViet là cụm tiếng Việt in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, là thứ hiển thị cho học sinh; mỗi câu sai lưu cả hai trường.
 - Gợi ý hiển thị khi sai: tô màu từng ô vuông 1cm² rồi mới chuyển sang công thức dài × rộng.
 - xáo trộn vị trí đáp án bằng thuật toán có seed theo lượt.
 - Hai mục mẫu để bám theo khuôn (viết tiếp 28 mục nữa, không được ít hơn):

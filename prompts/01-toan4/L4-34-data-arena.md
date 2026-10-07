@@ -6,29 +6,28 @@
 ```text
 Tạo game giáo dục web "ĐẤU TRƯỜNG DỮ LIỆU" cho học sinh Việt Nam lớp 4, môn Toán.
 
+ƯU TIÊN theo đúng thứ tự: (1) học sinh đạt mục tiêu học tập ở mục 2; (2) điều khiển AR ở mục 1 nhận diện được thật và fallback chuột chơi đủ 100%; (3) phần còn lại. File chật thì làm đơn giản chi tiết trang trí, không cắt mục 2 và mục 3.
+
 1. Ý TƯỞNG
 - Bối cảnh: Bảng tin đấu trường hiển thị bảng số liệu và biểu đồ.
 - Việc của học sinh mỗi lượt: Chỉ tay vào giá trị trả lời cho câu hỏi đọc bảng, biểu đồ trong thời gian giới hạn.
 - Điều khiển: Chỉ ngón tay trỏ (Point). MediaPipe Tasks Vision HandLandmarker, đầu ngón trỏ landmark 8 làm con trỏ. Biên độ động tác: Ngón trỏ đi bằng cả cẳng tay: đáp án đặt ở bốn góc khác nhau của khung hình nên mỗi lượt là một lần duỗi khuỷu đổi hướng, không phải nhấc ngón ngay trước ngực.
 - Không có camera thì chạm hoặc click vào đáp án thay cho con trỏ ngón tay, giữ 400ms để chốt như khi giữ tay.
-- Mascot: **Bia** — nói gọn, chỉ một lần. Ba câu thoại: khen "Đọc đúng bảng rồi!" · đỡ khi sai "Dòng khác kia kìa" · hô mở đầu "Bảng sáng rồi!".
-- Bảng màu riêng: `--miti-1: #00A8E8` (vật thể AR chính), `--miti-2: #003554` (particle và viền hit), `--miti-3: #007EA7` (điểm nhấn HUD).
-- Khoảnh khắc chữ ký: dòng dữ liệu em chỉ nhấc khỏi bảng rồi bay vào đúng khung câu trả lời. Đạo cụ AR neo vào người chơi: bảng chỉ số trước ngực em, dòng được chỉ sáng lên.
-- Môn thể thao của game: **Bắn cung** — động tác đặc trưng "Giương tay chỉ đích", hiệu lệnh "Ngắm — phóng!", lời hay khi bạn sai "Bạn ngắm chuẩn quá!", duỗi cơ cuối buổi "Duỗi vai và cổ tay".
-- Trò chơi dân gian dẫn dắt: **Chi chi chành chành** — cách chơi "Ngón trỏ chạm ô rồi rút theo nhịp", lời hô "Chi chi chành chành", đồ dùng AR "vạch phấn".
+- Mascot **Bia** (nói gọn, chỉ một lần) — khen "Đọc đúng bảng rồi!", hô mở đầu "Bảng sáng rồi!". Bảng màu: `--miti-1: #00A8E8` (vật thể AR), `--miti-2: #003554` (particle, viền hit), `--miti-3: #007EA7` (HUD).
+- Không khí giờ chơi (trang trí, được phép làm đơn giản): thể thao **Bắn cung** ("Giương tay chỉ đích", hạ nhiệt "Duỗi vai và cổ tay") · dân gian **Chi chi chành chành** (đồ dùng AR "vạch phấn") · khoảnh khắc chữ ký dòng dữ liệu em chỉ nhấc khỏi bảng rồi bay vào đúng khung câu trả lời · đạo cụ AR neo vào người chơi "bảng chỉ số trước ngực em, dòng được chỉ sáng lên".
 - Vòng đầu tiên phải dễ để hiểu luật trong vài giây, không cần đọc hướng dẫn dài.
 
 2. MỤC TIÊU HỌC TẬP
 - Mục tiêu: dãy số liệu; bảng thống kê; số trung bình cộng; tìm lớn nhất nhỏ nhất trong bảng.
 - Mạch kiến thức: **Một số yếu tố thống kê và xác suất** — nhãn HUD "Bảng số liệu" · **Tuần 18–19 · Học kì II**. In nguyên văn mạch và nhãn tuần ở màn khởi động và màn tổng kết, nằm trong khối nút "Copy tờ rời".
 - Yêu cầu cần đạt (in NGUYÊN VĂN một dòng "Yêu cầu cần đạt: ..." ở màn khởi động và màn tổng kết, cấm viết lại hoặc tóm tắt): "Nhận biết và đọc được bảng số liệu; tìm được số lớn nhất, nhỏ nhất và số trung bình cộng."
-- Mẹo nhớ (≤12 từ, bật ở cú đúng câu đầu cụm và sau câu sai cùng lỗi, mascot đọc to kèm một động tác 3 giây làm mẫu): "Cộng hết rồi chia cho số lượng."
+- Mẹo nhớ (bật ở cú đúng đầu cụm và sau câu sai cùng lỗi, mascot đọc to + làm mẫu 3 giây): "Cộng hết rồi chia cho số lượng."
 - Báo trước "Dễ nhầm" ở câu đầu tiên của cụm (≤16 từ, tắt sau 6 giây, không che đề): "đọc nhầm cột".
 - Lỗi học sinh thường mắc (mỗi câu sai ghi đúng một lỗi này): đọc nhầm cột; đếm cả giá trị lặp lại; tính trung bình cộng sai số phần.
 - Phạm vi: chỉ dùng nội dung Toán lớp 4 đã học; cấm số hoặc từ vựng ngoài phạm vi trên.
 - Toàn bộ lời giải phải dùng đúng thuật ngữ Toán của SGK Toán lớp 4; hiện lại phép tính theo cột dọc hoặc sơ đồ đoạn thẳng cho đúng dạng bài.
 - Điều kiện: hết 5 tim (mỗi đáp án sai trừ 1 tim) là thua, đủ 12 lượt là thắng và hiện tổng kết. Chống ăn may: phương án nhiễu phải là kết quả của một lỗi có thật trong danh sách lỗi trên, không phải số ngẫu nhiên; đáp án đúng không nằm cố định một vị trí.
-- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; thêm bốn dòng "Gửi bố mẹ": "Hôm nay con tập môn Bắn cung — <n> động tác" · "Con học Bảng số liệu, <k> câu đúng trên <tổng>" · "Mẹo con mang về: Cộng hết rồi chia cho số lượng." · "Việc 3 phút ở nhà: cả nhà cùng Giương tay chỉ đích rồi hỏi nhau miệng một đề vừa chơi" (thay <n>, <k>, <tổng> bằng số thật).
+- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; khối "Gửi bố mẹ" bốn dòng điền số thật: "<n> động tác môn Bắn cung" · "Bảng số liệu: <k>/<tổng> câu đúng" · "Mẹo con mang về: Cộng hết rồi chia cho số lượng." · "Việc 3 phút ở nhà: cả nhà cùng Giương tay chỉ đích".
 - Bộ sưu tập: mỗi màn thắng mở khóa 1 thẻ theo chủ đề Đấu Trường Dữ Liệu, lưu localStorage key "miti-collection", có màn "Sưu tập của em".
 
 3. RÀNG BUỘC CỐT LÕI (thiếu bất kỳ dòng nào là hỏng)
@@ -52,7 +51,7 @@ Tạo game giáo dục web "ĐẤU TRƯỜNG DỮ LIỆU" cho học sinh Việt 
 - Mỗi mục theo đúng khuôn: { id, level, prompt, choices, answer, explanation, errorTag, loiViet, dang }.
 - Tối thiểu 30 mục, chia 3 mức độ (level 1/2/3), mỗi mục một đáp án đúng duy nhất kiểm chứng được bằng code.
 - Mục `dang: "tinh"` phải tính lại được bằng ĐÚNG MỘT phép số học trong code, mục `dang: "nhin"` kiểm bằng số học hoặc số đo hình học, không so khớp chuỗi tự do; mỗi phương án nhiễu là một kết quả thật của lỗi đã nêu, không phải số ngẫu nhiên.
-- errorTag là mã máy của lỗi, lấy đúng một trong: doc_nham_cot, dem_trung_gia_tri, tinh_trung_binh_cong_sai. loiViet là cụm tiếng Việt có dấu in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, cùng chỉ lỗi đó và là thứ hiển thị cho học sinh. Mỗi câu sai lưu cả hai trường.
+- errorTag là mã máy của lỗi, lấy đúng một trong: doc_nham_cot, dem_trung_gia_tri, tinh_trung_binh_cong_sai. loiViet là cụm tiếng Việt in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, là thứ hiển thị cho học sinh; mỗi câu sai lưu cả hai trường.
 - Gợi ý hiển thị khi sai: tô sáng ô bảng đang được hỏi kèm tên cột tên hàng.
 - xáo trộn vị trí đáp án bằng thuật toán có seed theo lượt.
 - Hai mục mẫu để bám theo khuôn (viết tiếp 28 mục nữa, không được ít hơn):

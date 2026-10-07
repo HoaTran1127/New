@@ -8,7 +8,7 @@
 
 Đo trên bản trước khi rút: 85 file prompt nặng **13,49 MB**, trung bình **162 KB/file**, trong đó **~77% là chữ quy định chung lặp lại y hệt giữa 85 file** (riêng khối nghiệm thu 25,8 KB), còn **ý tưởng + mục tiêu học tập của từng game chỉ ~2,5%**. Prompt dài như vậy làm Gemini Canvas "ngợp": model vật sang code vụn, bỏ quy định ở giữa file, game sinh ra lộn xộn.
 
-Bản hiện hành: **1,03 MB cho 85 file, trung bình 12 KB/file (~70 dòng)**, tức giảm ~92%. Toàn bộ quy định dùng chung được nén thành **14 dòng `CORE_LINES` trong `tools/lib/core.mjs`** và in nguyên văn vào mọi prompt; mỗi prompt chỉ còn phần riêng của game mình.
+Bản hiện hành: **1,09 MB cho 85 file, trung bình 12,8 KB/file (khối `text` 57 dòng)**, tức giảm ~92%. Toàn bộ quy định dùng chung được nén thành **14 dòng `CORE_LINES` trong `tools/lib/core.mjs`** và in nguyên văn vào mọi prompt; mỗi prompt chỉ còn phần riêng của game mình. Ngay dưới tên game là một dòng **ƯU TIÊN** bắt Gemini giữ thứ tự *mục tiêu học tập → nhận diện chuyển động → phần còn lại*, và năm dòng trang trí đã nén thành hai dòng dán nhãn "trang trí, được phép làm đơn giản".
 
 ## 🚀 Luồng chuẩn
 
@@ -22,7 +22,8 @@ Mỗi file là **prompt độc lập** — không cần Gemini biết repository
 
 | Mục | Nội dung | Nguồn dữ liệu |
 |:---|:---|:---|
-| **1. Ý TƯỞNG** | bối cảnh, nhiệm vụ mỗi lượt, cơ chế + cử chỉ, biên độ động tác, mascot + ba câu thoại, bảng màu, khoảnh khắc chữ ký, đạo cụ AR, môn thể thao, trò chơi dân gian | `tools/data/games.mjs`, `gestures.mjs`, `identities.mjs`, `sports.mjs`, `folk.mjs` |
+| Dòng mở đầu | thứ tự ưu tiên: mục tiêu học tập → nhận diện chuyển động + fallback → phần còn lại; chi tiết trang trí được phép giản tiện | `tools/build-prompts.mjs`, `tools/build-variants.mjs` |
+| **1. Ý TƯỞNG** | bối cảnh, nhiệm vụ mỗi lượt, cơ chế + cử chỉ, biên độ động tác, fallback không camera, mascot + bảng màu, một dòng "không khí giờ chơi" gộp thể thao · dân gian · khoảnh khắc chữ ký · đạo cụ AR | `tools/data/games.mjs`, `gestures.mjs`, `identities.mjs`, `sports.mjs`, `folk.mjs` |
 | **2. MỤC TIÊU HỌC TẬP** | mục tiêu, mạch kiến thức + nhãn HUD, tuần học, "Yêu cầu cần đạt" nguyên văn, mẹo nhớ, "Dễ nhầm", lỗi thường mắc, phạm vi, điều kiện thắng/thua, chống ăn may, màn tổng kết + bốn dòng "Gửi bố mẹ", bộ sưu tập | `tools/data/clusters.mjs`, `standards.mjs`, `error-notes.mjs` |
 | **3. RÀNG BUỘC CỐT LÕI** | 14 dòng: 1 file HTML + 3 ảnh `.webp` trong `assets/` (Canva) · camera tắt mặc định · MediaPipe Tasks Vision `@1.0.1` + `toScreen` · gesture chống spam · fallback chuột · không điểm/xếp hạng/timer · vận động thật + 5 bước · luân phiên 4 em · accessibility · tự Pause · chữ ký MiTi · không TODO | `tools/lib/core.mjs` (nơi **duy nhất** để đổi quy định chung) |
 | **4. NGÂN HÀNG DỮ LIỆU** | khuôn `QUESTION_DATA` `{ id, level, prompt, choices, answer, explanation, errorTag, loiViet, dang }`, số mục tối thiểu, hai mục mẫu, ràng buộc phương án nhiễu | `tools/data/examples.mjs`, `gestures.mjs` (`BANK`) |

@@ -6,29 +6,28 @@
 ```text
 Tạo game giáo dục web "BỨT TỐC TỔNG HỢP" cho học sinh Việt Nam lớp 4, môn Toán.
 
+ƯU TIÊN theo đúng thứ tự: (1) học sinh đạt mục tiêu học tập ở mục 2; (2) điều khiển AR ở mục 1 nhận diện được thật và fallback chuột chơi đủ 100%; (3) phần còn lại. File chật thì làm đơn giản chi tiết trang trí, không cắt mục 2 và mục 3.
+
 1. Ý TƯỞNG
 - Bối cảnh: Đường chạy vượt chướng ngại mang nhãn các chủ đề số và phép tính.
 - Việc của học sinh mỗi lượt: Vuốt né chướng ngại mang đáp án sai, vượt qua cổng mang đáp án đúng.
 - Điều khiển: Vuốt / chém (Swipe). HandLandmarker, đường đi của đầu ngón trỏ (landmark 8) trong 5–8 khung hình gần nhất tạo thành vệt kiếm. Biên độ động tác: Chém từ vai bằng cả cánh tay, vệt cắt dài >= 60% tầm với và đổi độ cao nhát chém giữa các lượt; nhát hất bằng cổ tay không đủ ngưỡng tốc độ.
 - Không có camera thì kéo chuột hoặc vuốt màn hình nhanh qua vật để tạo nhát chém.
-- Mascot: **Cổng Xanh** — dẻo dai, đếm cổng giúp em. Ba câu thoại: khen "Qua cổng an toàn!" · đỡ khi sai "Cổng đó sai đáp án" · hô mở đầu "Chạy, ba hai một!".
-- Bảng màu riêng: `--miti-1: #38B000` (vật thể AR chính), `--miti-2: #CCFF33` (particle và viền hit), `--miti-3: #004B23` (điểm nhấn HUD).
-- Khoảnh khắc chữ ký: chướng ngại né hết một loạt rồi cả tuyến chạy hóa vệt xanh vượt trước mặt em. Đạo cụ AR neo vào người chơi: băng đội trưởng cổ tay trái, đổi màu theo cổng em chọn.
-- Môn thể thao của game: **Bóng bàn** — động tác đặc trưng "Quét vợt sang hai bên", hiệu lệnh "Giao bóng!", lời hay khi bạn sai "Bạn đánh bóng mạnh!", duỗi cơ cuối buổi "Xoay cổ tay nhẹ nhàng".
-- Trò chơi dân gian dẫn dắt: **Kéo cưa lừa xẻ** — cách chơi "Hai tay đẩy kéo đều theo vạch", lời hô "Kéo cưa lừa xẻ, ông thợ nào khỏe", đồ dùng AR "gậy tre".
+- Mascot **Cổng Xanh** (dẻo dai, đếm cổng giúp em) — khen "Qua cổng an toàn!", hô mở đầu "Chạy, ba hai một!". Bảng màu: `--miti-1: #38B000` (vật thể AR), `--miti-2: #CCFF33` (particle, viền hit), `--miti-3: #004B23` (HUD).
+- Không khí giờ chơi (trang trí, được phép làm đơn giản): thể thao **Bóng bàn** ("Quét vợt sang hai bên", hạ nhiệt "Xoay cổ tay nhẹ nhàng") · dân gian **Kéo cưa lừa xẻ** (đồ dùng AR "gậy tre") · khoảnh khắc chữ ký chướng ngại né hết một loạt rồi cả tuyến chạy hóa vệt xanh vượt trước mặt em · đạo cụ AR neo vào người chơi "băng đội trưởng cổ tay trái, đổi màu theo cổng em chọn".
 - Vòng đầu tiên phải dễ để hiểu luật trong vài giây, không cần đọc hướng dẫn dài.
 
 2. MỤC TIÊU HỌC TẬP
 - Mục tiêu: ôn tổng hợp số tự nhiên, bốn phép tính, phân số, hình học và đo lường lớp 4.
 - Mạch kiến thức: **Ôn tập tổng hợp** — nhãn HUD "Ôn tập Toán lớp 4" · **Tuần 34–35 · Học kì II**. In nguyên văn mạch và nhãn tuần ở màn khởi động và màn tổng kết, nằm trong khối nút "Copy tờ rời".
 - Yêu cầu cần đạt (in NGUYÊN VĂN một dòng "Yêu cầu cần đạt: ..." ở màn khởi động và màn tổng kết, cấm viết lại hoặc tóm tắt): "Ôn tập, củng cố số tự nhiên, bốn phép tính, phân số, hình học và đo lường đã học ở lớp 4."
-- Mẹo nhớ (≤12 từ, bật ở cú đúng câu đầu cụm và sau câu sai cùng lỗi, mascot đọc to kèm một động tác 3 giây làm mẫu): "Nhận ra dạng bài trước, tính sau."
+- Mẹo nhớ (bật ở cú đúng đầu cụm và sau câu sai cùng lỗi, mascot đọc to + làm mẫu 3 giây): "Nhận ra dạng bài trước, tính sau."
 - Báo trước "Dễ nhầm" ở câu đầu tiên của cụm (≤16 từ, tắt sau 6 giây, không che đề): "nhầm loại phép tính khi ôn".
 - Lỗi học sinh thường mắc (mỗi câu sai ghi đúng một lỗi này): nhầm loại phép tính khi ôn; quên rút gọn kết quả; đọc đề bỏ sót điều kiện.
 - Phạm vi: chỉ dùng nội dung Toán lớp 4 đã học; cấm số hoặc từ vựng ngoài phạm vi trên.
 - Toàn bộ lời giải phải dùng đúng thuật ngữ Toán của SGK Toán lớp 4; hiện lại phép tính theo cột dọc hoặc sơ đồ đoạn thẳng cho đúng dạng bài.
 - Điều kiện: hết 5 tim (mỗi đáp án sai trừ 1 tim) là thua, đủ 12 lượt là thắng và hiện tổng kết. Chống ăn may: phương án nhiễu phải là kết quả của một lỗi có thật trong danh sách lỗi trên, không phải số ngẫu nhiên; đáp án đúng không nằm cố định một vị trí.
-- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; thêm bốn dòng "Gửi bố mẹ": "Hôm nay con tập môn Bóng bàn — <n> động tác" · "Con học Ôn tập Toán lớp 4, <k> câu đúng trên <tổng>" · "Mẹo con mang về: Nhận ra dạng bài trước, tính sau." · "Việc 3 phút ở nhà: cả nhà cùng Quét vợt sang hai bên rồi hỏi nhau miệng một đề vừa chơi" (thay <n>, <k>, <tổng> bằng số thật).
+- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; khối "Gửi bố mẹ" bốn dòng điền số thật: "<n> động tác môn Bóng bàn" · "Ôn tập Toán lớp 4: <k>/<tổng> câu đúng" · "Mẹo con mang về: Nhận ra dạng bài trước, tính sau." · "Việc 3 phút ở nhà: cả nhà cùng Quét vợt sang hai bên".
 - Bộ sưu tập: mỗi màn thắng mở khóa 1 thẻ theo chủ đề Bứt Tốc Tổng Hợp, lưu localStorage key "miti-collection", có màn "Sưu tập của em".
 
 3. RÀNG BUỘC CỐT LÕI (thiếu bất kỳ dòng nào là hỏng)
@@ -52,7 +51,7 @@ Tạo game giáo dục web "BỨT TỐC TỔNG HỢP" cho học sinh Việt Nam 
 - Mỗi mục theo đúng khuôn: { id, level, prompt, choices, answer, explanation, errorTag, loiViet, dang }.
 - Tối thiểu 30 mục, chia 3 mức độ (level 1/2/3), mỗi mục một đáp án đúng duy nhất kiểm chứng được bằng code.
 - Mục `dang: "tinh"` phải tính lại được bằng ĐÚNG MỘT phép số học trong code, mục `dang: "nhin"` kiểm bằng số học hoặc số đo hình học, không so khớp chuỗi tự do; mỗi phương án nhiễu là một kết quả thật của lỗi đã nêu, không phải số ngẫu nhiên.
-- errorTag là mã máy của lỗi, lấy đúng một trong: tron_loai_phep_tinh, quen_rut_gon_ket_qua, doc_de_thieu_dieu_kien. loiViet là cụm tiếng Việt có dấu in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, cùng chỉ lỗi đó và là thứ hiển thị cho học sinh. Mỗi câu sai lưu cả hai trường.
+- errorTag là mã máy của lỗi, lấy đúng một trong: tron_loai_phep_tinh, quen_rut_gon_ket_qua, doc_de_thieu_dieu_kien. loiViet là cụm tiếng Việt in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, là thứ hiển thị cho học sinh; mỗi câu sai lưu cả hai trường.
 - Gợi ý hiển thị khi sai: gọi lại kiến thức lớp 4 tương ứng với từng cửa ải.
 - xáo trộn vị trí đáp án bằng thuật toán có seed theo lượt.
 - Hai mục mẫu để bám theo khuôn (viết tiếp 28 mục nữa, không được ít hơn):

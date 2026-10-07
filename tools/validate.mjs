@@ -192,6 +192,10 @@ for (const g of GAMES) {
     if (!text.includes(s)) bad(`${where}: thiếu chữ ký MiTi "${s}".`);
   }
 
+  // Dòng ưu tiên: không có nó Gemini dàn đều chú ý sang trang trí rồi sinh game lộn xộn.
+  if (!fence[1].includes('ƯU TIÊN theo đúng thứ tự:')) bad(`${where}: thiếu dòng "ƯU TIÊN theo đúng thứ tự" ngay dưới tên game.`);
+  if (fence[1].split('\n').findIndex((l) => l.startsWith('ƯU TIÊN')) > 4) bad(`${where}: dòng "ƯU TIÊN" phải nằm trong 4 dòng đầu khối text.`);
+
   // Chuỗi cấm: ${, CJK, TODO/pseudocode (ngoài trừ 14 dòng CORE đã nêu chúng trong câu cấm).
   if (text.includes('${')) bad(`${where}: chứa chuỗi cấm "\${" (placeholder lọt từ template — Gemini sẽ đổ lỗi cú pháp).`);
   const cjk = text.match(CJK_RE);

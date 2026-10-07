@@ -6,29 +6,28 @@
 ```text
 Tạo game giáo dục web "XÂY BIỂU ĐỒ CỘT" cho học sinh Việt Nam lớp 4, môn Toán.
 
+ƯU TIÊN theo đúng thứ tự: (1) học sinh đạt mục tiêu học tập ở mục 2; (2) điều khiển AR ở mục 1 nhận diện được thật và fallback chuột chơi đủ 100%; (3) phần còn lại. File chật thì làm đơn giản chi tiết trang trí, không cắt mục 2 và mục 3.
+
 1. Ý TƯỞNG
 - Bối cảnh: Công trường dựng cột, mỗi cột là một số liệu được hỏi.
 - Việc của học sinh mỗi lượt: Kéo dần các cột lên đúng chiều cao tương ứng số liệu, bám vào lưới ô.
 - Điều khiển: Kéo thả (Drag). HandLandmarker, đầu ngón trỏ làm điểm kéo; có thể thêm landmark 8 giữ vật. Biên độ động tác: Đường kéo dài >= 50% bề rộng khung hình và luôn cắt qua vạch ngang thân; ô đích đặt hai bên trái phải chứ không xếp cạnh nhau.
 - Không có camera thì kéo thả bằng chuột hoặc chạm màn hình rồi thả vào ô đích.
-- Mascot: **Cẩu** — chậm rãi, nhắc kéo chắc. Ba câu thoại: khen "Cột đúng chiều cao!" · đỡ khi sai "Kéo lên thêm một ô" · hô mở đầu "Móc cẩu, giăng lên!".
-- Bảng màu riêng: `--miti-1: #FFD60A` (vật thể AR chính), `--miti-2: #E07A5F` (particle và viền hit), `--miti-3: #0D3B66` (điểm nhấn HUD).
-- Khoảnh khắc chữ ký: bốn cột cùng vươn lên thành một dãy phố có cửa sổ sáng đúng số liệu. Đạo cụ AR neo vào người chơi: cần cẩu neo vai trái, móc câu đung đưa theo tay em kéo.
-- Môn thể thao của game: **Kéo co** — động tác đặc trưng "Kéo dây về phía mình", hiệu lệnh "Kéo nào!", lời hay khi bạn sai "Bạn kéo khỏe lắm!", duỗi cơ cuối buổi "Duỗi lưng khi buông dây".
-- Trò chơi dân gian dẫn dắt: **Kéo co** — cách chơi "Hai tay kéo dải dây về vạch", lời hô "Một hai kéo, một hai kéo", đồ dùng AR "khăn vải".
+- Mascot **Cẩu** (chậm rãi, nhắc kéo chắc) — khen "Cột đúng chiều cao!", hô mở đầu "Móc cẩu, giăng lên!". Bảng màu: `--miti-1: #FFD60A` (vật thể AR), `--miti-2: #E07A5F` (particle, viền hit), `--miti-3: #0D3B66` (HUD).
+- Không khí giờ chơi (trang trí, được phép làm đơn giản): thể thao **Kéo co** ("Kéo dây về phía mình", hạ nhiệt "Duỗi lưng khi buông dây") · dân gian **Kéo co** (đồ dùng AR "khăn vải") · khoảnh khắc chữ ký bốn cột cùng vươn lên thành một dãy phố có cửa sổ sáng đúng số liệu · đạo cụ AR neo vào người chơi "cần cẩu neo vai trái, móc câu đung đưa theo tay em kéo".
 - Vòng đầu tiên phải dễ để hiểu luật trong vài giây, không cần đọc hướng dẫn dài.
 
 2. MỤC TIÊU HỌC TẬP
 - Mục tiêu: đọc biểu đồ cột; biểu đồ cột đôi; tạo cột theo số liệu; câu hỏi so sánh trên biểu đồ.
 - Mạch kiến thức: **Một số yếu tố thống kê và xác suất** — nhãn HUD "Biểu đồ cột" · **Tuần 19–20 · Học kì II**. In nguyên văn mạch và nhãn tuần ở màn khởi động và màn tổng kết, nằm trong khối nút "Copy tờ rời".
 - Yêu cầu cần đạt (in NGUYÊN VĂN một dòng "Yêu cầu cần đạt: ..." ở màn khởi động và màn tổng kết, cấm viết lại hoặc tóm tắt): "Đọc, mô tả và bổ sung được số liệu trên biểu đồ cột và biểu đồ cột đôi; trả lời câu hỏi so sánh."
-- Mẹo nhớ (≤12 từ, bật ở cú đúng câu đầu cụm và sau câu sai cùng lỗi, mascot đọc to kèm một động tác 3 giây làm mẫu): "Kẻ ngang từ đỉnh cột xuống trục số."
+- Mẹo nhớ (bật ở cú đúng đầu cụm và sau câu sai cùng lỗi, mascot đọc to + làm mẫu 3 giây): "Kẻ ngang từ đỉnh cột xuống trục số."
 - Báo trước "Dễ nhầm" ở câu đầu tiên của cụm (≤16 từ, tắt sau 6 giây, không che đề): "đọc số ô mà quên nhân theo tỉ lệ chú giải".
 - Lỗi học sinh thường mắc (mỗi câu sai ghi đúng một lỗi này): đọc số ô mà quên nhân theo tỉ lệ chú giải; so sánh hai cột không cùng gốc; thiếu đơn vị trục.
 - Phạm vi: chỉ dùng nội dung Toán lớp 4 đã học; cấm số hoặc từ vựng ngoài phạm vi trên.
 - Toàn bộ lời giải phải dùng đúng thuật ngữ Toán của SGK Toán lớp 4; hiện lại phép tính theo cột dọc hoặc sơ đồ đoạn thẳng cho đúng dạng bài.
 - Điều kiện: hết 5 tim (mỗi đáp án sai trừ 1 tim) là thua, đủ 12 lượt là thắng và hiện tổng kết. Chống ăn may: phương án nhiễu phải là kết quả của một lỗi có thật trong danh sách lỗi trên, không phải số ngẫu nhiên; đáp án đúng không nằm cố định một vị trí.
-- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; thêm bốn dòng "Gửi bố mẹ": "Hôm nay con tập môn Kéo co — <n> động tác" · "Con học Biểu đồ cột, <k> câu đúng trên <tổng>" · "Mẹo con mang về: Kẻ ngang từ đỉnh cột xuống trục số." · "Việc 3 phút ở nhà: cả nhà cùng Kéo dây về phía mình rồi hỏi nhau miệng một đề vừa chơi" (thay <n>, <k>, <tổng> bằng số thật).
+- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; khối "Gửi bố mẹ" bốn dòng điền số thật: "<n> động tác môn Kéo co" · "Biểu đồ cột: <k>/<tổng> câu đúng" · "Mẹo con mang về: Kẻ ngang từ đỉnh cột xuống trục số." · "Việc 3 phút ở nhà: cả nhà cùng Kéo dây về phía mình".
 - Bộ sưu tập: mỗi màn thắng mở khóa 1 thẻ theo chủ đề Xây Biểu Đồ Cột, lưu localStorage key "miti-collection", có màn "Sưu tập của em".
 
 3. RÀNG BUỘC CỐT LÕI (thiếu bất kỳ dòng nào là hỏng)
@@ -52,7 +51,7 @@ Tạo game giáo dục web "XÂY BIỂU ĐỒ CỘT" cho học sinh Việt Nam l
 - Mỗi mục theo đúng khuôn: { id, level, prompt, choices, answer, explanation, errorTag, loiViet, dang }.
 - Tối thiểu 30 mục, chia 3 mức độ (level 1/2/3), mỗi mục một đáp án đúng duy nhất kiểm chứng được bằng code.
 - Mục `dang: "tinh"` phải tính lại được bằng ĐÚNG MỘT phép số học trong code, mục `dang: "nhin"` kiểm bằng số học hoặc số đo hình học, không so khớp chuỗi tự do; mỗi phương án nhiễu là một kết quả thật của lỗi đã nêu, không phải số ngẫu nhiên.
-- errorTag là mã máy của lỗi, lấy đúng một trong: dem_o_sai_ty_le, so_sanh_chieu_cao_khong_cung_goc, thieu_don_vi_truc. loiViet là cụm tiếng Việt có dấu in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, cùng chỉ lỗi đó và là thứ hiển thị cho học sinh. Mỗi câu sai lưu cả hai trường.
+- errorTag là mã máy của lỗi, lấy đúng một trong: dem_o_sai_ty_le, so_sanh_chieu_cao_khong_cung_goc, thieu_don_vi_truc. loiViet là cụm tiếng Việt in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, là thứ hiển thị cho học sinh; mỗi câu sai lưu cả hai trường.
 - Gợi ý hiển thị khi sai: kẻ đường ngang từ đỉnh cột tới trục số để đọc đúng giá trị.
 - xáo trộn vị trí đáp án bằng thuật toán có seed theo lượt.
 - Hai mục mẫu để bám theo khuôn (viết tiếp 28 mục nữa, không được ít hơn):

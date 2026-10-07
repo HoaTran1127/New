@@ -6,29 +6,28 @@
 ```text
 Tạo game giáo dục web "NHÀ THÁM HIỂM BẢN ĐỒ" cho học sinh Việt Nam lớp 4, môn Toán.
 
+ƯU TIÊN theo đúng thứ tự: (1) học sinh đạt mục tiêu học tập ở mục 2; (2) điều khiển AR ở mục 1 nhận diện được thật và fallback chuột chơi đủ 100%; (3) phần còn lại. File chật thì làm đơn giản chi tiết trang trí, không cắt mục 2 và mục 3.
+
 1. Ý TƯỞNG
 - Bối cảnh: Hoàng hôn sa mạc với tấm bản đồ có tỉ lệ 1:100000.
 - Việc của học sinh mỗi lượt: Vuốt chọn con đường có độ dài thực đúng với khoảng cách trên bản đồ.
 - Điều khiển: Vuốt / chém (Swipe). HandLandmarker, đường đi của đầu ngón trỏ (landmark 8) trong 5–8 khung hình gần nhất tạo thành vệt kiếm. Biên độ động tác: Chém từ vai bằng cả cánh tay, vệt cắt dài >= 60% tầm với và đổi độ cao nhát chém giữa các lượt; nhát hất bằng cổ tay không đủ ngưỡng tốc độ.
 - Không có camera thì kéo chuột hoặc vuốt màn hình nhanh qua vật để tạo nhát chém.
-- Mascot: **Cô La** — biết tuốt, hay gợi ý. Ba câu thoại: khen "Đi đúng đường rồi!" · đỡ khi sai "Tỉ lệ khác rồi kìa" · hô mở đầu "Giở bản đồ ra!".
-- Bảng màu riêng: `--miti-1: #E9C46A` (vật thể AR chính), `--miti-2: #F4A261` (particle và viền hit), `--miti-3: #264653` (điểm nhấn HUD).
-- Khoảnh khắc chữ ký: cát sa mạc dạt sang hai bên để lộ con đường thật ngay chỗ em vuốt. Đạo cụ AR neo vào người chơi: la bàn đeo cổ tay phải, quay mũi về hướng em vuốt.
-- Môn thể thao của game: **Bóng bàn** — động tác đặc trưng "Quét vợt sang hai bên", hiệu lệnh "Giao bóng!", lời hay khi bạn sai "Bạn đánh bóng mạnh!", duỗi cơ cuối buổi "Xoay cổ tay nhẹ nhàng".
-- Trò chơi dân gian dẫn dắt: **Kéo cưa lừa xẻ** — cách chơi "Hai tay đẩy kéo đều theo vạch", lời hô "Kéo cưa lừa xẻ, ông thợ nào khỏe", đồ dùng AR "gậy tre".
+- Mascot **Cô La** (biết tuốt, hay gợi ý) — khen "Đi đúng đường rồi!", hô mở đầu "Giở bản đồ ra!". Bảng màu: `--miti-1: #E9C46A` (vật thể AR), `--miti-2: #F4A261` (particle, viền hit), `--miti-3: #264653` (HUD).
+- Không khí giờ chơi (trang trí, được phép làm đơn giản): thể thao **Bóng bàn** ("Quét vợt sang hai bên", hạ nhiệt "Xoay cổ tay nhẹ nhàng") · dân gian **Kéo cưa lừa xẻ** (đồ dùng AR "gậy tre") · khoảnh khắc chữ ký cát sa mạc dạt sang hai bên để lộ con đường thật ngay chỗ em vuốt · đạo cụ AR neo vào người chơi "la bàn đeo cổ tay phải, quay mũi về hướng em vuốt".
 - Vòng đầu tiên phải dễ để hiểu luật trong vài giây, không cần đọc hướng dẫn dài.
 
 2. MỤC TIÊU HỌC TẬP
 - Mục tiêu: tỉ lệ bản đồ; độ dài thật trên bản đồ; đọc phương hướng và khoảng cách.
 - Mạch kiến thức: **Hình học và đo lường** — nhãn HUD "Tỉ lệ bản đồ" · **Tuần 31–32 · Học kì II**. In nguyên văn mạch và nhãn tuần ở màn khởi động và màn tổng kết, nằm trong khối nút "Copy tờ rời".
 - Yêu cầu cần đạt (in NGUYÊN VĂN một dòng "Yêu cầu cần đạt: ..." ở màn khởi động và màn tổng kết, cấm viết lại hoặc tóm tắt): "Sử dụng được tỉ lệ bản đồ để tính độ dài thật hoặc độ dài thu nhỏ; đọc được phương hướng, khoảng cách."
-- Mẹo nhớ (≤12 từ, bật ở cú đúng câu đầu cụm và sau câu sai cùng lỗi, mascot đọc to kèm một động tác 3 giây làm mẫu): "Đo trên bản đồ rồi nhân theo hệ số."
+- Mẹo nhớ (bật ở cú đúng đầu cụm và sau câu sai cùng lỗi, mascot đọc to + làm mẫu 3 giây): "Đo trên bản đồ rồi nhân theo hệ số."
 - Báo trước "Dễ nhầm" ở câu đầu tiên của cụm (≤16 từ, tắt sau 6 giây, không che đề): "đo độ dài trên bản đồ sai".
 - Lỗi học sinh thường mắc (mỗi câu sai ghi đúng một lỗi này): đo độ dài trên bản đồ sai; quên đổi cm sang m hoặc km; nhân nhầm hệ số tỉ lệ.
 - Phạm vi: chỉ dùng nội dung Toán lớp 4 đã học; cấm số hoặc từ vựng ngoài phạm vi trên.
 - Toàn bộ lời giải phải dùng đúng thuật ngữ Toán của SGK Toán lớp 4; hiện lại phép tính theo cột dọc hoặc sơ đồ đoạn thẳng cho đúng dạng bài.
 - Điều kiện: hết 5 tim (mỗi đáp án sai trừ 1 tim) là thua, đủ 12 lượt là thắng và hiện tổng kết. Chống ăn may: phương án nhiễu phải là kết quả của một lỗi có thật trong danh sách lỗi trên, không phải số ngẫu nhiên; đáp án đúng không nằm cố định một vị trí.
-- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; thêm bốn dòng "Gửi bố mẹ": "Hôm nay con tập môn Bóng bàn — <n> động tác" · "Con học Tỉ lệ bản đồ, <k> câu đúng trên <tổng>" · "Mẹo con mang về: Đo trên bản đồ rồi nhân theo hệ số." · "Việc 3 phút ở nhà: cả nhà cùng Quét vợt sang hai bên rồi hỏi nhau miệng một đề vừa chơi" (thay <n>, <k>, <tổng> bằng số thật).
+- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; khối "Gửi bố mẹ" bốn dòng điền số thật: "<n> động tác môn Bóng bàn" · "Tỉ lệ bản đồ: <k>/<tổng> câu đúng" · "Mẹo con mang về: Đo trên bản đồ rồi nhân theo hệ số." · "Việc 3 phút ở nhà: cả nhà cùng Quét vợt sang hai bên".
 - Bộ sưu tập: mỗi màn thắng mở khóa 1 thẻ theo chủ đề Nhà Thám Hiểm Bản Đồ, lưu localStorage key "miti-collection", có màn "Sưu tập của em".
 
 3. RÀNG BUỘC CỐT LÕI (thiếu bất kỳ dòng nào là hỏng)
@@ -52,7 +51,7 @@ Tạo game giáo dục web "NHÀ THÁM HIỂM BẢN ĐỒ" cho học sinh Việt
 - Mỗi mục theo đúng khuôn: { id, level, prompt, choices, answer, explanation, errorTag, loiViet, dang }.
 - Tối thiểu 30 mục, chia 3 mức độ (level 1/2/3), mỗi mục một đáp án đúng duy nhất kiểm chứng được bằng code.
 - Mục `dang: "tinh"` phải tính lại được bằng ĐÚNG MỘT phép số học trong code, mục `dang: "nhin"` kiểm bằng số học hoặc số đo hình học, không so khớp chuỗi tự do; mỗi phương án nhiễu là một kết quả thật của lỗi đã nêu, không phải số ngẫu nhiên.
-- errorTag là mã máy của lỗi, lấy đúng một trong: nham_chieu_dai_thuc_te, doi_don_vi_cm_km, do_dai_on_giay_sai. loiViet là cụm tiếng Việt có dấu in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, cùng chỉ lỗi đó và là thứ hiển thị cho học sinh. Mỗi câu sai lưu cả hai trường.
+- errorTag là mã máy của lỗi, lấy đúng một trong: nham_chieu_dai_thuc_te, doi_don_vi_cm_km, do_dai_on_giay_sai. loiViet là cụm tiếng Việt in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, là thứ hiển thị cho học sinh; mỗi câu sai lưu cả hai trường.
 - Gợi ý hiển thị khi sai: thước kẻ ảo đo trên bản đồ rồi hiện phép tính đổi ra độ dài thật.
 - xáo trộn vị trí đáp án bằng thuật toán có seed theo lượt.
 - Hai mục mẫu để bám theo khuôn (viết tiếp 28 mục nữa, không được ít hơn):

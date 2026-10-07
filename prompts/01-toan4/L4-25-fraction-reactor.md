@@ -6,29 +6,28 @@
 ```text
 Tạo game giáo dục web "LÒ PHẢN ỨNG PHÂN SỐ" cho học sinh Việt Nam lớp 4, môn Toán.
 
+ƯU TIÊN theo đúng thứ tự: (1) học sinh đạt mục tiêu học tập ở mục 2; (2) điều khiển AR ở mục 1 nhận diện được thật và fallback chuột chơi đủ 100%; (3) phần còn lại. File chật thì làm đơn giản chi tiết trang trí, không cắt mục 2 và mục 3.
+
 1. Ý TƯỞNG
 - Bối cảnh: Lò phản ứng cần rút đúng liều nhiên liệu phân số.
 - Việc của học sinh mỗi lượt: Chỉ tay chọn đáp án là hiệu của hai phân số cùng mẫu để khởi động lò.
 - Điều khiển: Chỉ ngón tay trỏ (Point). MediaPipe Tasks Vision HandLandmarker, đầu ngón trỏ landmark 8 làm con trỏ. Biên độ động tác: Ngón trỏ đi bằng cả cẳng tay: đáp án đặt ở bốn góc khác nhau của khung hình nên mỗi lượt là một lần duỗi khuỷu đổi hướng, không phải nhấc ngón ngay trước ngực.
 - Không có camera thì chạm hoặc click vào đáp án thay cho con trỏ ngón tay, giữ 400ms để chốt như khi giữ tay.
-- Mascot: **Ông Lò** — lạnh lùng, coi trọng an toàn. Ba câu thoại: khen "Lò đã chạy!" · đỡ khi sai "Liều này chưa đúng đâu" · hô mở đầu "Khởi động, ba hai!".
-- Bảng màu riêng: `--miti-1: #FFB703` (vật thể AR chính), `--miti-2: #03045E` (particle và viền hit), `--miti-3: #FB8500` (điểm nhấn HUD).
-- Khoảnh khắc chữ ký: lò bật sáng thành một cột lửa mềm cao ba phần tư màn hình, mascot che mắt. Đạo cụ AR neo vào người chơi: van xoay ngay trước ngực em, quay khi em chỉ đáp án.
-- Môn thể thao của game: **Bắn cung** — động tác đặc trưng "Giương tay chỉ đích", hiệu lệnh "Ngắm — phóng!", lời hay khi bạn sai "Bạn ngắm chuẩn quá!", duỗi cơ cuối buổi "Duỗi vai và cổ tay".
-- Trò chơi dân gian dẫn dắt: **Chi chi chành chành** — cách chơi "Ngón trỏ chạm ô rồi rút theo nhịp", lời hô "Chi chi chành chành", đồ dùng AR "vạch phấn".
+- Mascot **Ông Lò** (lạnh lùng, coi trọng an toàn) — khen "Lò đã chạy!", hô mở đầu "Khởi động, ba hai!". Bảng màu: `--miti-1: #FFB703` (vật thể AR), `--miti-2: #03045E` (particle, viền hit), `--miti-3: #FB8500` (HUD).
+- Không khí giờ chơi (trang trí, được phép làm đơn giản): thể thao **Bắn cung** ("Giương tay chỉ đích", hạ nhiệt "Duỗi vai và cổ tay") · dân gian **Chi chi chành chành** (đồ dùng AR "vạch phấn") · khoảnh khắc chữ ký lò bật sáng thành một cột lửa mềm cao ba phần tư màn hình, mascot che mắt · đạo cụ AR neo vào người chơi "van xoay ngay trước ngực em, quay khi em chỉ đáp án".
 - Vòng đầu tiên phải dễ để hiểu luật trong vài giây, không cần đọc hướng dẫn dài.
 
 2. MỤC TIÊU HỌC TẬP
 - Mục tiêu: cộng trừ hai phân số cùng mẫu số; hỗn số; phần nguyên phần phân số.
 - Mạch kiến thức: **Số và phép tính** — nhãn HUD "Cộng trừ phân số" · **Tuần 26–28 · Học kì II**. In nguyên văn mạch và nhãn tuần ở màn khởi động và màn tổng kết, nằm trong khối nút "Copy tờ rời".
 - Yêu cầu cần đạt (in NGUYÊN VĂN một dòng "Yêu cầu cần đạt: ..." ở màn khởi động và màn tổng kết, cấm viết lại hoặc tóm tắt): "Cộng, trừ được hai phân số cùng mẫu số; nhận biết được hỗn số, phần nguyên và phần phân số."
-- Mẹo nhớ (≤12 từ, bật ở cú đúng câu đầu cụm và sau câu sai cùng lỗi, mascot đọc to kèm một động tác 3 giây làm mẫu): "Cộng tử giữ mẫu; mẫu khác thì quy đồng."
+- Mẹo nhớ (bật ở cú đúng đầu cụm và sau câu sai cùng lỗi, mascot đọc to + làm mẫu 3 giây): "Cộng tử giữ mẫu; mẫu khác thì quy đồng."
 - Báo trước "Dễ nhầm" ở câu đầu tiên của cụm (≤16 từ, tắt sau 6 giây, không che đề): "cộng cả tử lẫn mẫu".
 - Lỗi học sinh thường mắc (mỗi câu sai ghi đúng một lỗi này): cộng cả tử lẫn mẫu; kết quả không rút gọn; tách phần nguyên của hỗn số sai.
 - Phạm vi: chỉ dùng nội dung Toán lớp 4 đã học; cấm số hoặc từ vựng ngoài phạm vi trên.
 - Toàn bộ lời giải phải dùng đúng thuật ngữ Toán của SGK Toán lớp 4; hiện lại phép tính theo cột dọc hoặc sơ đồ đoạn thẳng cho đúng dạng bài.
 - Điều kiện: hết 5 tim (mỗi đáp án sai trừ 1 tim) là thua, đủ 12 lượt là thắng và hiện tổng kết. Chống ăn may: phương án nhiễu phải là kết quả của một lỗi có thật trong danh sách lỗi trên, không phải số ngẫu nhiên; đáp án đúng không nằm cố định một vị trí.
-- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; thêm bốn dòng "Gửi bố mẹ": "Hôm nay con tập môn Bắn cung — <n> động tác" · "Con học Cộng trừ phân số, <k> câu đúng trên <tổng>" · "Mẹo con mang về: Cộng tử giữ mẫu; mẫu khác thì quy đồng." · "Việc 3 phút ở nhà: cả nhà cùng Giương tay chỉ đích rồi hỏi nhau miệng một đề vừa chơi" (thay <n>, <k>, <tổng> bằng số thật).
+- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; khối "Gửi bố mẹ" bốn dòng điền số thật: "<n> động tác môn Bắn cung" · "Cộng trừ phân số: <k>/<tổng> câu đúng" · "Mẹo con mang về: Cộng tử giữ mẫu; mẫu khác thì quy đồng." · "Việc 3 phút ở nhà: cả nhà cùng Giương tay chỉ đích".
 - Bộ sưu tập: mỗi màn thắng mở khóa 1 thẻ theo chủ đề Lò Phản Ứng Phân Số, lưu localStorage key "miti-collection", có màn "Sưu tập của em".
 
 3. RÀNG BUỘC CỐT LÕI (thiếu bất kỳ dòng nào là hỏng)
@@ -52,7 +51,7 @@ Tạo game giáo dục web "LÒ PHẢN ỨNG PHÂN SỐ" cho học sinh Việt N
 - Mỗi mục theo đúng khuôn: { id, level, prompt, choices, answer, explanation, errorTag, loiViet, dang }.
 - Tối thiểu 30 mục, chia 3 mức độ (level 1/2/3), mỗi mục một đáp án đúng duy nhất kiểm chứng được bằng code.
 - Mục `dang: "tinh"` phải tính lại được bằng ĐÚNG MỘT phép số học trong code, mục `dang: "nhin"` kiểm bằng số học hoặc số đo hình học, không so khớp chuỗi tự do; mỗi phương án nhiễu là một kết quả thật của lỗi đã nêu, không phải số ngẫu nhiên.
-- errorTag là mã máy của lỗi, lấy đúng một trong: cong_tu_voi_mau, ket_qua_khong_rut_gon, hung_so_tach_roi_sai. loiViet là cụm tiếng Việt có dấu in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, cùng chỉ lỗi đó và là thứ hiển thị cho học sinh. Mỗi câu sai lưu cả hai trường.
+- errorTag là mã máy của lỗi, lấy đúng một trong: cong_tu_voi_mau, ket_qua_khong_rut_gon, hung_so_tach_roi_sai. loiViet là cụm tiếng Việt in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, là thứ hiển thị cho học sinh; mỗi câu sai lưu cả hai trường.
 - Gợi ý hiển thị khi sai: ghép thanh phân số trên cùng trục để thấy chỉ cộng phần bằng nhau.
 - xáo trộn vị trí đáp án bằng thuật toán có seed theo lượt.
 - Hai mục mẫu để bám theo khuôn (viết tiếp 28 mục nữa, không được ít hơn):

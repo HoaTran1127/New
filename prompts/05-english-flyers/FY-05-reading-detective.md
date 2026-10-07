@@ -6,32 +6,31 @@
 ```text
 Tạo game giáo dục web "THÁM TỬ ĐỌC HIỂU" cho học sinh Việt Nam lớp 5, môn Tiếng Anh, chuẩn A2 Flyers (A2) của Cambridge.
 
+ƯU TIÊN theo đúng thứ tự: (1) học sinh đạt mục tiêu học tập ở mục 2; (2) điều khiển AR ở mục 1 nhận diện được thật và fallback chuột chơi đủ 100%; (3) phần còn lại. File chật thì làm đơn giản chi tiết trang trí, không cắt mục 2 và mục 3.
+
 1. Ý TƯỞNG
 - Bối cảnh: Văn phòng thám tử với các hồ sơ đoạn văn tiếng Anh.
 - Việc của học sinh mỗi lượt: Đọc đoạn văn và chỉ tay gạch chân đúng câu chứa bằng chứng cho nghi vấn.
 - Điều khiển: Chỉ ngón tay trỏ (Point). MediaPipe Tasks Vision HandLandmarker, đầu ngón trỏ landmark 8 làm con trỏ. Biên độ động tác: Ngón trỏ đi bằng cả cẳng tay: đáp án đặt ở bốn góc khác nhau của khung hình nên mỗi lượt là một lần duỗi khuỷu đổi hướng, không phải nhấc ngón ngay trước ngực.
 - Không có camera thì chạm hoặc click vào đáp án thay cho con trỏ ngón tay, giữ 400ms để chốt như khi giữ tay.
-- Mascot: **Sổ Tay** — ghi chép tất cả. Ba câu thoại: khen "Bằng chứng đây!" · đỡ khi sai "Câu đó không liên quan" · hô mở đầu "Đọc rồi gạch!".
-- Bảng màu riêng: `--miti-1: #606990` (vật thể AR chính), `--miti-2: #C5404B` (particle và viền hit), `--miti-3: #13151B` (điểm nhấn HUD).
-- Khoảnh khắc chữ ký: dòng em gạch chân phóng to giữa màn hình còn mascot gật gù ghi sổ. Đạo cụ AR neo vào người chơi: bút dạ quang gắn ngón trỏ, vạch sáng khi em chỉ.
-- Môn thể thao của game: **Bắn cung** — động tác đặc trưng "Giương tay chỉ đích", hiệu lệnh "Ngắm — phóng!", lời hay khi bạn sai "Bạn ngắm chuẩn quá!", duỗi cơ cuối buổi "Duỗi vai và cổ tay".
-- Trò chơi dân gian dẫn dắt: **Chi chi chành chành** — cách chơi "Ngón trỏ chạm ô rồi rút theo nhịp", lời hô "Chi chi chành chành", đồ dùng AR "vạch phấn".
+- Mascot **Sổ Tay** (ghi chép tất cả) — khen "Bằng chứng đây!", hô mở đầu "Đọc rồi gạch!". Bảng màu: `--miti-1: #606990` (vật thể AR), `--miti-2: #C5404B` (particle, viền hit), `--miti-3: #13151B` (HUD).
+- Không khí giờ chơi (trang trí, được phép làm đơn giản): thể thao **Bắn cung** ("Giương tay chỉ đích", hạ nhiệt "Duỗi vai và cổ tay") · dân gian **Chi chi chành chành** (đồ dùng AR "vạch phấn") · khoảnh khắc chữ ký dòng em gạch chân phóng to giữa màn hình còn mascot gật gù ghi sổ · đạo cụ AR neo vào người chơi "bút dạ quang gắn ngón trỏ, vạch sáng khi em chỉ".
 - Vòng đầu tiên phải dễ để hiểu luật trong vài giây, không cần đọc hướng dẫn dài.
 
 2. MỤC TIÊU HỌC TẬP
 - Mục tiêu: đoạn văn 60-90 từ lớp 5: ý chính, chi tiết, trình tự, suy luận đơn giản; tìm bằng chứng gạch chân.
 - Band Cambridge: **A2 Flyers** (A2) — Movers + hiện tại hoàn thành, bị động, mệnh đề quan hệ, câu điều kiện 1–2, should/might, danh động từ, tường thuật.
-- Trần từ vựng: chỉ dùng 1431 từ thuộc Flyers trở xuống, ưu tiên 91 từ của chủ đề thời gian, động vật: May, afternoon, birthday, day, evening, morning, night, now, today, year, Friday, Monday, Saturday, Sunday, Thursday, Tuesday, Wednesday, always, holiday, never, o'clock, often, second, sometimes, week, weekend, yesterday, April, …. Cấm mọi từ lần đầu xuất hiện ở band cao hơn; từ SGK Việt Nam ngoài danh sách trên chỉ được dùng nếu đã học ở Tiếng Anh lớp 5.
-- Trần ngữ pháp: chỉ dùng 8 cấu trúc của Flyers — Hiện tại hoàn thành với already / yet / just / ever ("I've already finished my homework. / Have you ever seen a whale?") · Câu bị động ("The kite was made by my brother. / English is spoken here.") · Mệnh đề quan hệ who / which / where ("The girl who is singing is my sister.") · Câu điều kiện loại 1 và loại 2 ("If it rains, we'll stay at home. / If I were a bird, I'd fly.") · should / shouldn’t, might / could ("You should drink more water. / It might snow tonight.") · Danh động từ và động từ nguyên thể ("enjoy camping, decide to stay, learn to swim, stop smoking") · Câu hỏi đuôi, liên từ when / while / so that ("It's hot, isn't it? / While Mum was cooking, I did my homework.") · Tường thuật (reported speech) ("He said (that) he was tired. / She asked me where I lived.").
+- Trần từ vựng: chỉ dùng 1431 từ thuộc Flyers trở xuống, ưu tiên 91 từ của chủ đề thời gian, động vật: May, afternoon, birthday, day, evening, morning, night, now, today, year, Friday, Monday, Saturday, Sunday, Thursday, Tuesday, Wednesday, always, holiday, never, …. Cấm mọi từ lần đầu xuất hiện ở band cao hơn; từ SGK Việt Nam ngoài danh sách trên chỉ được dùng nếu đã học ở Tiếng Anh lớp 5.
+- Trần ngữ pháp: chỉ dùng 8 cấu trúc của Flyers — Hiện tại hoàn thành với already / yet / just / ever ("I've already finished my homework.") · Câu bị động ("The kite was made by my brother.") · Mệnh đề quan hệ who / which / where ("The girl who is singing is my sister.") · Câu điều kiện loại 1 và loại 2 ("If it rains, we'll stay at home.") · should / shouldn’t, might / could ("You should drink more water.") · Danh động từ và động từ nguyên thể ("enjoy camping, decide to stay, learn to swim, stop smoking") · Câu hỏi đuôi, liên từ when / while / so that ("It's hot, isn't it?") · Tường thuật (reported speech) ("He said (that) he was tired.").
 - Mạch kiến thức: **Đọc và viết** — nhãn HUD "Đọc hiểu" · **Tuần 1–10 · Học kì I**. In nguyên văn mạch và nhãn tuần ở màn khởi động và màn tổng kết, nằm trong khối nút "Copy tờ rời".
 - Yêu cầu cần đạt (in NGUYÊN VĂN một dòng "Yêu cầu cần đạt: ..." ở màn khởi động và màn tổng kết, cấm viết lại hoặc tóm tắt): "Đọc hiểu đoạn văn 60 đến 90 từ: tìm được ý chính, chi tiết và suy luận đơn giản có bằng chứng trong bài."
-- Mẹo nhớ (≤12 từ, bật ở cú đúng câu đầu cụm và sau câu sai cùng lỗi, mascot đọc to kèm một động tác 3 giây làm mẫu): "Ý chính thường nằm ở câu đầu hay câu cuối."
+- Mẹo nhớ (bật ở cú đúng đầu cụm và sau câu sai cùng lỗi, mascot đọc to + làm mẫu 3 giây): "Ý chính thường nằm ở câu đầu hay câu cuối."
 - Báo trước "Dễ nhầm" ở câu đầu tiên của cụm (≤16 từ, tắt sau 6 giây, không che đề): "lấy chi tiết làm ý chính".
 - Lỗi học sinh thường mắc (mỗi câu sai ghi đúng một lỗi này): lấy chi tiết làm ý chính; suy luận không có bằng chứng trong bài; đoán nghĩa từ ngoài ngữ cảnh.
 - Phạm vi: chỉ dùng nội dung Tiếng Anh lớp 5 đã học và trong đúng band Flyers; cấm số hoặc từ vựng ngoài phạm vi trên.
 - Từ và câu tiếng Anh là học liệu, giữ nguyên tiếng Anh; mọi hướng dẫn, nút bấm, lời giải thích bằng tiếng Việt. Dùng window.speechSynthesis (en-US hoặc en-GB) đọc to từ/câu khi trả lời đúng, có nút phát lại.
 - Điều kiện: hết 5 tim (mỗi đáp án sai trừ 1 tim) là thua, đủ 12 lượt là thắng và hiện tổng kết. Chống ăn may: phương án nhiễu phải là kết quả của một lỗi có thật trong danh sách lỗi trên, không phải số ngẫu nhiên; đáp án đúng không nằm cố định một vị trí.
-- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; thêm bốn dòng "Gửi bố mẹ": "Hôm nay con tập môn Bắn cung — <n> động tác" · "Con học Đọc hiểu, <k> câu đúng trên <tổng>" · "Mẹo con mang về: Ý chính thường nằm ở câu đầu hay câu cuối." · "Việc 3 phút ở nhà: cả nhà cùng Giương tay chỉ đích rồi hỏi nhau miệng một đề vừa chơi" (thay <n>, <k>, <tổng> bằng số thật).
+- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; khối "Gửi bố mẹ" bốn dòng điền số thật: "<n> động tác môn Bắn cung" · "Đọc hiểu: <k>/<tổng> câu đúng" · "Mẹo con mang về: Ý chính thường nằm ở câu đầu hay câu cuối." · "Việc 3 phút ở nhà: cả nhà cùng Giương tay chỉ đích".
 - Bộ sưu tập: mỗi màn thắng mở khóa 1 thẻ theo chủ đề Thám Tử Đọc Hiểu, lưu localStorage key "miti-collection", có màn "Sưu tập của em".
 
 3. RÀNG BUỘC CỐT LÕI (thiếu bất kỳ dòng nào là hỏng)
@@ -56,7 +55,7 @@ Tạo game giáo dục web "THÁM TỬ ĐỌC HIỂU" cho học sinh Việt Nam 
 - Tối thiểu 60 mục, chia 3 mức độ (level 1/2/3), mỗi mục một đáp án đúng duy nhất kiểm chứng được bằng code.
 - Mỗi mục có từ hoặc câu tiếng Anh, gợi nghĩa tiếng Việt, phiên âm khi phù hợp, và audio bằng window.speechSynthesis; đáp án là chuỗi cố định.
 - Chia mức theo band: level 1 lấy từ và cấu trúc cơ bản nhất của Flyers; level 3 vẫn nằm trong Flyers, tăng độ khó bằng câu dài hơn và phương án gần nghĩa hơn, không tăng bằng từ ngoài band.
-- errorTag là mã máy của lỗi, lấy đúng một trong: chi_tiet_khong_phai_y_chinh, suy_luan_thieu_bang_chung, doan_sai_trat_tu. loiViet là cụm tiếng Việt có dấu in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, cùng chỉ lỗi đó và là thứ hiển thị cho học sinh. Mỗi câu sai lưu cả hai trường.
+- errorTag là mã máy của lỗi, lấy đúng một trong: chi_tiet_khong_phai_y_chinh, suy_luan_thieu_bang_chung, doan_sai_trat_tu. loiViet là cụm tiếng Việt in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, là thứ hiển thị cho học sinh; mỗi câu sai lưu cả hai trường.
 - Gợi ý hiển thị khi sai: hiện câu trong bài chứa bằng chứng và highlight đoạn được chọn.
 - xáo trộn vị trí đáp án bằng thuật toán có seed theo lượt.
 - Hai mục mẫu để bám theo khuôn (viết tiếp 58 mục nữa, không được ít hơn):

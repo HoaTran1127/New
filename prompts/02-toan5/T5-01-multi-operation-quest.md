@@ -6,29 +6,28 @@
 ```text
 Tạo game giáo dục web "NHIỆM VỤ PHÉP TÍNH" cho học sinh Việt Nam lớp 5, môn Toán.
 
+ƯU TIÊN theo đúng thứ tự: (1) học sinh đạt mục tiêu học tập ở mục 2; (2) điều khiển AR ở mục 1 nhận diện được thật và fallback chuột chơi đủ 100%; (3) phần còn lại. File chật thì làm đơn giản chi tiết trang trí, không cắt mục 2 và mục 3.
+
 1. Ý TƯỞNG
 - Bối cảnh: Đội đặc nhiệm phá khoá bằng biểu thức nhiều phép tính.
 - Việc của học sinh mỗi lượt: Đấm vào bảng khoá mang giá trị đúng của biểu thức, tính theo thứ tự ưu tiên.
 - Điều khiển: Vung tay đấm (Punch). HandLandmarker: vị trí cổ tay (landmark 0) và mũi (landmark 15) để tính hướng đấm; độ gập các ngón để xác nhận nắm tay. Biên độ động tác: Đấm đổi tầm liên tục (trên vai – ngang ngực – dưới thắt lưng); cú đấm đi hết tay từ thế thủ trước ngực tới vật nằm sát mép khung.
 - Không có camera thì click vào vật để mô phỏng cú đấm; rê chuột lên vật không được tính.
-- Mascot: **Đặc Vụ** — lạnh, nói rất ngắn. Ba câu thoại: khen "Két mở rồi!" · đỡ khi sai "Làm nhân trước nhé" · hô mở đầu "Phá khóa, ba hai!".
-- Bảng màu riêng: `--miti-1: #0B132B` (vật thể AR chính), `--miti-2: #FE5F55` (particle và viền hit), `--miti-3: #3C1642` (điểm nhấn HUD).
-- Khoảnh khắc chữ ký: bốn ổ khóa bật cùng lúc thành một tiếng và cánh cửa bí mật mở hé. Đạo cụ AR neo vào người chơi: máy bộ đàm đeo tai trái, nhấp nháy mỗi cú đấm.
-- Môn thể thao của game: **Boxing** — động tác đặc trưng "Đấm về phía trước", hiệu lệnh "Một — hai!", lời hay khi bạn sai "Bạn ra đòn gọn!", duỗi cơ cuối buổi "Duỗi ngực và vai mở".
-- Trò chơi dân gian dẫn dắt: **Ném còn** — cách chơi "Đẩy tay hất quả còn qua vòng", lời hô "Một hai ba, ném!", đồ dùng AR "vòng tròn".
+- Mascot **Đặc Vụ** (lạnh, nói rất ngắn) — khen "Két mở rồi!", hô mở đầu "Phá khóa, ba hai!". Bảng màu: `--miti-1: #0B132B` (vật thể AR), `--miti-2: #FE5F55` (particle, viền hit), `--miti-3: #3C1642` (HUD).
+- Không khí giờ chơi (trang trí, được phép làm đơn giản): thể thao **Boxing** ("Đấm về phía trước", hạ nhiệt "Duỗi ngực và vai mở") · dân gian **Ném còn** (đồ dùng AR "vòng tròn") · khoảnh khắc chữ ký bốn ổ khóa bật cùng lúc thành một tiếng và cánh cửa bí mật mở hé · đạo cụ AR neo vào người chơi "máy bộ đàm đeo tai trái, nhấp nháy mỗi cú đấm".
 - Vòng đầu tiên phải dễ để hiểu luật trong vài giây, không cần đọc hướng dẫn dài.
 
 2. MỤC TIÊU HỌC TẬP
 - Mục tiêu: cộng trừ số có đến 6 chữ số; thành phần và giá trị biểu thức; tính giá trị biểu thức có ngoặc.
 - Mạch kiến thức: **Số và phép tính** — nhãn HUD "Cộng trừ" · **Tuần 11–13 · Học kì I**. In nguyên văn mạch và nhãn tuần ở màn khởi động và màn tổng kết, nằm trong khối nút "Copy tờ rời".
 - Yêu cầu cần đạt (in NGUYÊN VĂN một dòng "Yêu cầu cần đạt: ..." ở màn khởi động và màn tổng kết, cấm viết lại hoặc tóm tắt): "Đặt tính và tính được cộng, trừ các số có đến sáu chữ số; tính được giá trị biểu thức có ngoặc."
-- Mẹo nhớ (≤12 từ, bật ở cú đúng câu đầu cụm và sau câu sai cùng lỗi, mascot đọc to kèm một động tác 3 giây làm mẫu): "Mượn một ở hàng trên thì trừ lại một ngay."
+- Mẹo nhớ (bật ở cú đúng đầu cụm và sau câu sai cùng lỗi, mascot đọc to + làm mẫu 3 giây): "Mượn một ở hàng trên thì trừ lại một ngay."
 - Báo trước "Dễ nhầm" ở câu đầu tiên của cụm (≤16 từ, tắt sau 6 giây, không che đề): "quên mượn hàng trên".
 - Lỗi học sinh thường mắc (mỗi câu sai ghi đúng một lỗi này): quên mượn hàng trên; trừ nhầm sau khi đã mượn; tính sai thứ tự với biểu thức có ngoặc.
 - Phạm vi: chỉ dùng nội dung Toán lớp 5 đã học; cấm số hoặc từ vựng ngoài phạm vi trên.
 - Toàn bộ lời giải phải dùng đúng thuật ngữ Toán của SGK Toán lớp 5; hiện lại phép tính theo cột dọc hoặc sơ đồ đoạn thẳng cho đúng dạng bài.
 - Điều kiện: hết 5 tim (mỗi đáp án sai trừ 1 tim) là thua, đủ 12 lượt là thắng và hiện tổng kết. Chống ăn may: phương án nhiễu phải là kết quả của một lỗi có thật trong danh sách lỗi trên, không phải số ngẫu nhiên; đáp án đúng không nằm cố định một vị trí.
-- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; thêm bốn dòng "Gửi bố mẹ": "Hôm nay con tập môn Boxing — <n> động tác" · "Con học Cộng trừ, <k> câu đúng trên <tổng>" · "Mẹo con mang về: Mượn một ở hàng trên thì trừ lại một ngay." · "Việc 3 phút ở nhà: cả nhà cùng Đấm về phía trước rồi hỏi nhau miệng một đề vừa chơi" (thay <n>, <k>, <tổng> bằng số thật).
+- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; khối "Gửi bố mẹ" bốn dòng điền số thật: "<n> động tác môn Boxing" · "Cộng trừ: <k>/<tổng> câu đúng" · "Mẹo con mang về: Mượn một ở hàng trên thì trừ lại một ngay." · "Việc 3 phút ở nhà: cả nhà cùng Đấm về phía trước".
 - Bộ sưu tập: mỗi màn thắng mở khóa 1 thẻ theo chủ đề Nhiệm Vụ Phép Tính, lưu localStorage key "miti-collection", có màn "Sưu tập của em".
 
 3. RÀNG BUỘC CỐT LÕI (thiếu bất kỳ dòng nào là hỏng)
@@ -52,7 +51,7 @@ Tạo game giáo dục web "NHIỆM VỤ PHÉP TÍNH" cho học sinh Việt Nam 
 - Mỗi mục theo đúng khuôn: { id, level, prompt, choices, answer, explanation, errorTag, loiViet, dang }.
 - Tối thiểu 30 mục, chia 3 mức độ (level 1/2/3), mỗi mục một đáp án đúng duy nhất kiểm chứng được bằng code.
 - Mục `dang: "tinh"` phải tính lại được bằng ĐÚNG MỘT phép số học trong code, mục `dang: "nhin"` kiểm bằng số học hoặc số đo hình học, không so khớp chuỗi tự do; mỗi phương án nhiễu là một kết quả thật của lỗi đã nêu, không phải số ngẫu nhiên.
-- errorTag là mã máy của lỗi, lấy đúng một trong: thieu_muon, thieu_quan, tinh_sai_thu_tu_co_ngoac. loiViet là cụm tiếng Việt có dấu in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, cùng chỉ lỗi đó và là thứ hiển thị cho học sinh. Mỗi câu sai lưu cả hai trường.
+- errorTag là mã máy của lỗi, lấy đúng một trong: thieu_muon, thieu_quan, tinh_sai_thu_tu_co_ngoac. loiViet là cụm tiếng Việt in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, là thứ hiển thị cho học sinh; mỗi câu sai lưu cả hai trường.
 - Gợi ý hiển thị khi sai: hiện lại từng cột tính dọc, nháy sáng cột đang nhớ/đang mượn.
 - xáo trộn vị trí đáp án bằng thuật toán có seed theo lượt.
 - Hai mục mẫu để bám theo khuôn (viết tiếp 28 mục nữa, không được ít hơn):

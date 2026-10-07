@@ -6,29 +6,28 @@
 ```text
 Tạo game giáo dục web "ĐƯỜNG ĐUA SỐ THẬP PHÂN" cho học sinh Việt Nam lớp 5, môn Toán.
 
+ƯU TIÊN theo đúng thứ tự: (1) học sinh đạt mục tiêu học tập ở mục 2; (2) điều khiển AR ở mục 1 nhận diện được thật và fallback chuột chơi đủ 100%; (3) phần còn lại. File chật thì làm đơn giản chi tiết trang trí, không cắt mục 2 và mục 3.
+
 1. Ý TƯỞNG
 - Bối cảnh: Đường đua trên cầu phao, mỗi làn là một số thập phân.
 - Việc của học sinh mỗi lượt: Vuốt sang làn chứa số thập phân lớn hơn hoặc bé hơn theo yêu cầu.
 - Điều khiển: Vuốt / chém (Swipe). HandLandmarker, đường đi của đầu ngón trỏ (landmark 8) trong 5–8 khung hình gần nhất tạo thành vệt kiếm. Biên độ động tác: Chém từ vai bằng cả cánh tay, vệt cắt dài >= 60% tầm với và đổi độ cao nhát chém giữa các lượt; nhát hất bằng cổ tay không đủ ngưỡng tốc độ.
 - Không có camera thì kéo chuột hoặc vuốt màn hình nhanh qua vật để tạo nhát chém.
-- Mascot: **Út Phao** — hay trêu, luôn chờ em. Ba câu thoại: khen "Làn đúng rồi!" · đỡ khi sai "So hàng phần mười nhé" · hô mở đầu "Lướt nào, ba!".
-- Bảng màu riêng: `--miti-1: #219EBC` (vật thể AR chính), `--miti-2: #8ECAE6` (particle và viền hit), `--miti-3: #023047` (điểm nhấn HUD).
-- Khoảnh khắc chữ ký: cầu phao rung lên, nước bắn thành các chữ số thập phân rồi dồn về một làn. Đạo cụ AR neo vào người chơi: chiếc phao neo hông trái, nghiêng khi em so hai số.
-- Môn thể thao của game: **Bóng bàn** — động tác đặc trưng "Quét vợt sang hai bên", hiệu lệnh "Giao bóng!", lời hay khi bạn sai "Bạn đánh bóng mạnh!", duỗi cơ cuối buổi "Xoay cổ tay nhẹ nhàng".
-- Trò chơi dân gian dẫn dắt: **Kéo cưa lừa xẻ** — cách chơi "Hai tay đẩy kéo đều theo vạch", lời hô "Kéo cưa lừa xẻ, ông thợ nào khỏe", đồ dùng AR "gậy tre".
+- Mascot **Út Phao** (hay trêu, luôn chờ em) — khen "Làn đúng rồi!", hô mở đầu "Lướt nào, ba!". Bảng màu: `--miti-1: #219EBC` (vật thể AR), `--miti-2: #8ECAE6` (particle, viền hit), `--miti-3: #023047` (HUD).
+- Không khí giờ chơi (trang trí, được phép làm đơn giản): thể thao **Bóng bàn** ("Quét vợt sang hai bên", hạ nhiệt "Xoay cổ tay nhẹ nhàng") · dân gian **Kéo cưa lừa xẻ** (đồ dùng AR "gậy tre") · khoảnh khắc chữ ký cầu phao rung lên, nước bắn thành các chữ số thập phân rồi dồn về một làn · đạo cụ AR neo vào người chơi "chiếc phao neo hông trái, nghiêng khi em so hai số".
 - Vòng đầu tiên phải dễ để hiểu luật trong vài giây, không cần đọc hướng dẫn dài.
 
 2. MỤC TIÊU HỌC TẬP
 - Mục tiêu: khái niệm số thập phân; hàng phần mười phần trăm phần nghìn; đọc viết số thập phân; so sánh; làm tròn.
 - Mạch kiến thức: **Số và phép tính** — nhãn HUD "Số thập phân" · **Tuần 1–4 · Học kì I**. In nguyên văn mạch và nhãn tuần ở màn khởi động và màn tổng kết, nằm trong khối nút "Copy tờ rời".
 - Yêu cầu cần đạt (in NGUYÊN VĂN một dòng "Yêu cầu cần đạt: ..." ở màn khởi động và màn tổng kết, cấm viết lại hoặc tóm tắt): "Nhận biết được khái niệm số thập phân, hàng phần mười, phần trăm, phần nghìn; đọc, viết và so sánh được."
-- Mẹo nhớ (≤12 từ, bật ở cú đúng câu đầu cụm và sau câu sai cùng lỗi, mascot đọc to kèm một động tác 3 giây làm mẫu): "Sau dấu phẩy: phần mười, rồi trăm, rồi nghìn."
+- Mẹo nhớ (bật ở cú đúng đầu cụm và sau câu sai cùng lỗi, mascot đọc to + làm mẫu 3 giây): "Sau dấu phẩy: phần mười, rồi trăm, rồi nghìn."
 - Báo trước "Dễ nhầm" ở câu đầu tiên của cụm (≤16 từ, tắt sau 6 giây, không che đề): "gán sai giá trị hàng phần mười và phần trăm".
 - Lỗi học sinh thường mắc (mỗi câu sai ghi đúng một lỗi này): gán sai giá trị hàng phần mười và phần trăm; đọc thiếu chữ số 0 sau dấu phẩy; thêm số 0 làm đổi giá trị.
 - Phạm vi: chỉ dùng nội dung Toán lớp 5 đã học; cấm số hoặc từ vựng ngoài phạm vi trên.
 - Toàn bộ lời giải phải dùng đúng thuật ngữ Toán của SGK Toán lớp 5; hiện lại phép tính theo cột dọc hoặc sơ đồ đoạn thẳng cho đúng dạng bài.
 - Điều kiện: hết 5 tim (mỗi đáp án sai trừ 1 tim) là thua, đủ 12 lượt là thắng và hiện tổng kết. Chống ăn may: phương án nhiễu phải là kết quả của một lỗi có thật trong danh sách lỗi trên, không phải số ngẫu nhiên; đáp án đúng không nằm cố định một vị trí.
-- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; thêm bốn dòng "Gửi bố mẹ": "Hôm nay con tập môn Bóng bàn — <n> động tác" · "Con học Số thập phân, <k> câu đúng trên <tổng>" · "Mẹo con mang về: Sau dấu phẩy: phần mười, rồi trăm, rồi nghìn." · "Việc 3 phút ở nhà: cả nhà cùng Quét vợt sang hai bên rồi hỏi nhau miệng một đề vừa chơi" (thay <n>, <k>, <tổng> bằng số thật).
+- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; khối "Gửi bố mẹ" bốn dòng điền số thật: "<n> động tác môn Bóng bàn" · "Số thập phân: <k>/<tổng> câu đúng" · "Mẹo con mang về: Sau dấu phẩy: phần mười, rồi trăm, rồi nghìn." · "Việc 3 phút ở nhà: cả nhà cùng Quét vợt sang hai bên".
 - Bộ sưu tập: mỗi màn thắng mở khóa 1 thẻ theo chủ đề Đường Đua Số Thập Phân, lưu localStorage key "miti-collection", có màn "Sưu tập của em".
 
 3. RÀNG BUỘC CỐT LÕI (thiếu bất kỳ dòng nào là hỏng)
@@ -52,7 +51,7 @@ Tạo game giáo dục web "ĐƯỜNG ĐUA SỐ THẬP PHÂN" cho học sinh Vi�
 - Mỗi mục theo đúng khuôn: { id, level, prompt, choices, answer, explanation, errorTag, loiViet, dang }.
 - Tối thiểu 30 mục, chia 3 mức độ (level 1/2/3), mỗi mục một đáp án đúng duy nhất kiểm chứng được bằng code.
 - Mục `dang: "tinh"` phải tính lại được bằng ĐÚNG MỘT phép số học trong code, mục `dang: "nhin"` kiểm bằng số học hoặc số đo hình học, không so khớp chuỗi tự do; mỗi phương án nhiễu là một kết quả thật của lỗi đã nêu, không phải số ngẫu nhiên.
-- errorTag là mã máy của lỗi, lấy đúng một trong: gia_tri_tuong_ung_hang_thap_phan, doc_phan_thap_phan_tram, them_so_0_ben_phai_sai_gia_tri. loiViet là cụm tiếng Việt có dấu in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, cùng chỉ lỗi đó và là thứ hiển thị cho học sinh. Mỗi câu sai lưu cả hai trường.
+- errorTag là mã máy của lỗi, lấy đúng một trong: gia_tri_tuong_ung_hang_thap_phan, doc_phan_thap_phan_tram, them_so_0_ben_phai_sai_gia_tri. loiViet là cụm tiếng Việt in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, là thứ hiển thị cho học sinh; mỗi câu sai lưu cả hai trường.
 - Gợi ý hiển thị khi sai: kéo vạch phần thập phân trên lưới 100 ô cạnh hình vuông đơn vị.
 - xáo trộn vị trí đáp án bằng thuật toán có seed theo lượt.
 - Hai mục mẫu để bám theo khuôn (viết tiếp 28 mục nữa, không được ít hơn):

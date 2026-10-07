@@ -6,32 +6,31 @@
 ```text
 Tạo game giáo dục web "BỘ BA TRÍ NHỚ" cho học sinh Việt Nam lớp 5, môn Tiếng Anh, chuẩn A1 Movers (A1) của Cambridge.
 
+ƯU TIÊN theo đúng thứ tự: (1) học sinh đạt mục tiêu học tập ở mục 2; (2) điều khiển AR ở mục 1 nhận diện được thật và fallback chuột chơi đủ 100%; (3) phần còn lại. File chật thì làm đơn giản chi tiết trang trí, không cắt mục 2 và mục 3.
+
 1. Ý TƯỞNG
 - Bối cảnh: Ba hàng thẻ úp: từ, tranh, nghĩa tiếng Việt.
 - Việc của học sinh mỗi lượt: Lật ba thẻ cùng một bộ bằng ngón tay để ghép thành bộ ba đúng.
 - Điều khiển: Chỉ ngón tay trỏ (Point). MediaPipe Tasks Vision HandLandmarker, đầu ngón trỏ landmark 8 làm con trỏ. Biên độ động tác: Ngón trỏ đi bằng cả cẳng tay: đáp án đặt ở bốn góc khác nhau của khung hình nên mỗi lượt là một lần duỗi khuỷu đổi hướng, không phải nhấc ngón ngay trước ngực.
 - Không có camera thì chạm hoặc click vào đáp án thay cho con trỏ ngón tay, giữ 400ms để chốt như khi giữ tay.
-- Mascot: **Ba Lá** — hay hồi hộp. Ba câu thoại: khen "Đúng bộ ba!" · đỡ khi sai "Lá này chưa phải đâu" · hô mở đầu "Lật ba lá nào!".
-- Bảng màu riêng: `--miti-1: #0D3B66` (vật thể AR chính), `--miti-2: #F0F3EE` (particle và viền hit), `--miti-3: #FAA307` (điểm nhấn HUD).
-- Khoảnh khắc chữ ký: ba lá cùng dựng đứng, mascot xếp thành chồng gọn rồi giơ ngón cái. Đạo cụ AR neo vào người chơi: ba lá bài sau lưng em, sáng dần theo từng cặp đúng.
-- Môn thể thao của game: **Bắn cung** — động tác đặc trưng "Giương tay chỉ đích", hiệu lệnh "Ngắm — phóng!", lời hay khi bạn sai "Bạn ngắm chuẩn quá!", duỗi cơ cuối buổi "Duỗi vai và cổ tay".
-- Trò chơi dân gian dẫn dắt: **Chi chi chành chành** — cách chơi "Ngón trỏ chạm ô rồi rút theo nhịp", lời hô "Chi chi chành chành", đồ dùng AR "vạch phấn".
+- Mascot **Ba Lá** (hay hồi hộp) — khen "Đúng bộ ba!", hô mở đầu "Lật ba lá nào!". Bảng màu: `--miti-1: #0D3B66` (vật thể AR), `--miti-2: #F0F3EE` (particle, viền hit), `--miti-3: #FAA307` (HUD).
+- Không khí giờ chơi (trang trí, được phép làm đơn giản): thể thao **Bắn cung** ("Giương tay chỉ đích", hạ nhiệt "Duỗi vai và cổ tay") · dân gian **Chi chi chành chành** (đồ dùng AR "vạch phấn") · khoảnh khắc chữ ký ba lá cùng dựng đứng, mascot xếp thành chồng gọn rồi giơ ngón cái · đạo cụ AR neo vào người chơi "ba lá bài sau lưng em, sáng dần theo từng cặp đúng".
 - Vòng đầu tiên phải dễ để hiểu luật trong vài giây, không cần đọc hướng dẫn dài.
 
 2. MỤC TIÊU HỌC TẬP
 - Mục tiêu: ghép bộ ba từ tranh nghĩa tiếng Việt; 8 bộ mỗi lượt.
 - Band Cambridge: **A1 Movers** (A1) — Starters + quá khứ đơn, so sánh hơn/nhất, will, must/have to, giới từ nơi chốn, đếm được/không đếm được, hiện tại tiếp diễn.
-- Trần từ vựng: chỉ dùng 930 từ thuộc Movers trở xuống, ưu tiên 47 từ của chủ đề cơ thể, quần áo: arm, body, ear, eye, face, feet, foot, hair, hand, head, leg, long, mouth, nose, short, smile, back, beard, blond, curly, fair, fat, moustache, neck, shoulder, stomach, strong, teeth, …. Cấm mọi từ lần đầu xuất hiện ở band cao hơn; từ SGK Việt Nam ngoài danh sách trên chỉ được dùng nếu đã học ở Tiếng Anh lớp 5.
-- Trần ngữ pháp: chỉ dùng 8 cấu trúc của Movers — Quá khứ đơn (có quy tắc + bất quy tắc) ("I visited my grandma. / We went to the zoo yesterday.") · So sánh hơn và so sánh nhất ("A whale is bigger than a dolphin. / He is the fastest runner.") · will cho dự đoán và tương lai ("It will rain tomorrow. / I’ll be ten next year.") · must / have to / can’t (nghiêm cấm, buộc) ("You must be quiet in class. / You can’t run in the corridor.") · Đếm được – không đếm được, some / any ("some water, any eggs, a few apples, a little milk") · Giới từ nơi chốn – phương hướng ("next to, between, behind, in front of, opposite") · Hiện tại tiếp diễn đối chiếu hiện tại đơn ("Look! He is swimming. / He usually swims at weekends.") · because / but / and nối câu ("I like summer because I can go swimming.").
+- Trần từ vựng: chỉ dùng 930 từ thuộc Movers trở xuống, ưu tiên 47 từ của chủ đề cơ thể, quần áo: arm, body, ear, eye, face, feet, foot, hair, hand, head, leg, long, mouth, nose, short, smile, back, beard, blond, curly, …. Cấm mọi từ lần đầu xuất hiện ở band cao hơn; từ SGK Việt Nam ngoài danh sách trên chỉ được dùng nếu đã học ở Tiếng Anh lớp 5.
+- Trần ngữ pháp: chỉ dùng 8 cấu trúc của Movers — Quá khứ đơn (có quy tắc + bất quy tắc) ("I visited my grandma.") · So sánh hơn và so sánh nhất ("A whale is bigger than a dolphin.") · will cho dự đoán và tương lai ("It will rain tomorrow.") · must / have to / can’t (nghiêm cấm, buộc) ("You must be quiet in class.") · Đếm được – không đếm được, some / any ("some water, any eggs, a few apples, a little milk") · Giới từ nơi chốn – phương hướng ("next to, between, behind, in front of, opposite") · Hiện tại tiếp diễn đối chiếu hiện tại đơn ("Look! He is swimming.") · because / but / and nối câu ("I like summer because I can go swimming.").
 - Mạch kiến thức: **Kiến thức ngôn ngữ** — nhãn HUD "Bộ ba ghi nhớ" · **Tuần 14–23 · Học kì I**. In nguyên văn mạch và nhãn tuần ở màn khởi động và màn tổng kết, nằm trong khối nút "Copy tờ rời".
 - Yêu cầu cần đạt (in NGUYÊN VĂN một dòng "Yêu cầu cần đạt: ..." ở màn khởi động và màn tổng kết, cấm viết lại hoặc tóm tắt): "Ghi nhớ được bộ ba từ, tranh và nghĩa tiếng Việt cho 8 cặp trong mỗi lượt."
-- Mẹo nhớ (≤12 từ, bật ở cú đúng câu đầu cụm và sau câu sai cùng lỗi, mascot đọc to kèm một động tác 3 giây làm mẫu): "Khớp hai thẻ rồi mới tin thẻ thứ ba."
+- Mẹo nhớ (bật ở cú đúng đầu cụm và sau câu sai cùng lỗi, mascot đọc to + làm mẫu 3 giây): "Khớp hai thẻ rồi mới tin thẻ thứ ba."
 - Báo trước "Dễ nhầm" ở câu đầu tiên của cụm (≤16 từ, tắt sau 6 giây, không che đề): "chọn bừa thẻ thứ ba khi mới khớp hai thẻ".
 - Lỗi học sinh thường mắc (mỗi câu sai ghi đúng một lỗi này): chọn bừa thẻ thứ ba khi mới khớp hai thẻ; ghép nhầm tranh với từ; nhớ hình mà quên nghĩa tiếng Việt.
 - Phạm vi: chỉ dùng nội dung Tiếng Anh lớp 5 đã học và trong đúng band Movers; cấm số hoặc từ vựng ngoài phạm vi trên.
 - Từ và câu tiếng Anh là học liệu, giữ nguyên tiếng Anh; mọi hướng dẫn, nút bấm, lời giải thích bằng tiếng Việt. Dùng window.speechSynthesis (en-US hoặc en-GB) đọc to từ/câu khi trả lời đúng, có nút phát lại.
 - Điều kiện: hết 5 tim (mỗi đáp án sai trừ 1 tim) là thua, đủ 12 lượt là thắng và hiện tổng kết. Chống ăn may: phương án nhiễu phải là kết quả của một lỗi có thật trong danh sách lỗi trên, không phải số ngẫu nhiên; đáp án đúng không nằm cố định một vị trí.
-- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; thêm bốn dòng "Gửi bố mẹ": "Hôm nay con tập môn Bắn cung — <n> động tác" · "Con học Bộ ba ghi nhớ, <k> câu đúng trên <tổng>" · "Mẹo con mang về: Khớp hai thẻ rồi mới tin thẻ thứ ba." · "Việc 3 phút ở nhà: cả nhà cùng Giương tay chỉ đích rồi hỏi nhau miệng một đề vừa chơi" (thay <n>, <k>, <tổng> bằng số thật).
+- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; khối "Gửi bố mẹ" bốn dòng điền số thật: "<n> động tác môn Bắn cung" · "Bộ ba ghi nhớ: <k>/<tổng> câu đúng" · "Mẹo con mang về: Khớp hai thẻ rồi mới tin thẻ thứ ba." · "Việc 3 phút ở nhà: cả nhà cùng Giương tay chỉ đích".
 - Bộ sưu tập: mỗi màn thắng mở khóa 1 thẻ theo chủ đề Bộ Ba Trí Nhớ, lưu localStorage key "miti-collection", có màn "Sưu tập của em".
 
 3. RÀNG BUỘC CỐT LÕI (thiếu bất kỳ dòng nào là hỏng)
@@ -56,7 +55,7 @@ Tạo game giáo dục web "BỘ BA TRÍ NHỚ" cho học sinh Việt Nam lớp 
 - Tối thiểu 60 mục, chia 3 mức độ (level 1/2/3), mỗi mục một đáp án đúng duy nhất kiểm chứng được bằng code.
 - Mỗi mục có từ hoặc câu tiếng Anh, gợi nghĩa tiếng Việt, phiên âm khi phù hợp, và audio bằng window.speechSynthesis; đáp án là chuỗi cố định.
 - Chia mức theo band: level 1 lấy từ và cấu trúc cơ bản nhất của Movers; level 3 vẫn nằm trong Movers, tăng độ khó bằng câu dài hơn và phương án gần nghĩa hơn, không tăng bằng từ ngoài band.
-- errorTag là mã máy của lỗi, lấy đúng một trong: ba_kho_hon_hai, nham_gan_tranh, nghia_cua_thu_tu_thieu. loiViet là cụm tiếng Việt có dấu in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, cùng chỉ lỗi đó và là thứ hiển thị cho học sinh. Mỗi câu sai lưu cả hai trường.
+- errorTag là mã máy của lỗi, lấy đúng một trong: ba_kho_hon_hai, nham_gan_tranh, nghia_cua_thu_tu_thieu. loiViet là cụm tiếng Việt in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, là thứ hiển thị cho học sinh; mỗi câu sai lưu cả hai trường.
 - Gợi ý hiển thị khi sai: sau lượt chơi mở bảng tổng hợp các bộ ba đã ghép đúng.
 - xáo trộn vị trí đáp án bằng thuật toán có seed theo lượt.
 - Hai mục mẫu để bám theo khuôn (viết tiếp 58 mục nữa, không được ít hơn):

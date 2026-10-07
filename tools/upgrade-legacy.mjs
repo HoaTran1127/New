@@ -261,6 +261,8 @@ const render = (l) => {
 \`\`\`text
 Tạo game giáo dục web AR một file HTML "${l.name.toUpperCase()}" cho học sinh Việt Nam lớp ${l.lop}, môn ${l.mon}, điều khiển bằng webcam.
 
+ƯU TIÊN theo đúng thứ tự: (1) học sinh đạt mục tiêu học tập ở mục 2; (2) điều khiển AR ở mục 1 nhận diện được thật và fallback chuột chơi đủ 100%; (3) phần còn lại. File chật thì làm đơn giản chi tiết trang trí, không cắt mục 2 và mục 3.
+
 1. Ý TƯỞNG
 - Cơ chế gốc (giữ nguyên): ${l.mo_ta}
 ${g.y.map((x) => `- ${x}`).join('\n')}

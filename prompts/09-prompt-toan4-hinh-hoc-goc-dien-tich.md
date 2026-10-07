@@ -7,6 +7,8 @@
 ```text
 Tạo game giáo dục web AR một file HTML "CÁNH TAY Ê-KE & PHÁO ĐÀI GÓC" cho học sinh Việt Nam lớp 4, môn Toán, điều khiển bằng webcam.
 
+ƯU TIÊN theo đúng thứ tự: (1) học sinh đạt mục tiêu học tập ở mục 2; (2) điều khiển AR ở mục 1 nhận diện được thật và fallback chuột chơi đủ 100%; (3) phần còn lại. File chật thì làm đơn giản chi tiết trang trí, không cắt mục 2 và mục 3.
+
 1. Ý TƯỞNG
 - Cơ chế gốc (giữ nguyên): Hai cánh tay tạo góc và diện tích theo yêu cầu.
 - Hai cánh tay em là hai cạnh của một góc: cổ tay trái làm đỉnh, tia laser AR nối hai bàn tay, thước đo độ ảo hiện số đo thời gian thực.

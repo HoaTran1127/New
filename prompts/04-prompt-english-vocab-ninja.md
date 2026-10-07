@@ -7,6 +7,8 @@
 ```text
 Tạo game giáo dục web AR một file HTML "ENGLISH VOCABULARY NINJA AR" cho học sinh Việt Nam lớp 4-5, môn Tiếng Anh, điều khiển bằng webcam.
 
+ƯU TIÊN theo đúng thứ tự: (1) học sinh đạt mục tiêu học tập ở mục 2; (2) điều khiển AR ở mục 1 nhận diện được thật và fallback chuột chơi đủ 100%; (3) phần còn lại. File chật thì làm đơn giản chi tiết trang trí, không cắt mục 2 và mục 3.
+
 1. Ý TƯỞNG
 - Cơ chế gốc (giữ nguyên): Chém từ vựng tiếng Anh theo chủ đề hoặc từ đồng nghĩa.
 - Thẻ từ vựng tiếng Anh rơi theo ba làn trong siêu thị Neon; một bảng nhiệm vụ trên đầu, ví dụ "Chém các loài động vật (Animals)".

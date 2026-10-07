@@ -6,29 +6,28 @@
 ```text
 Tạo game giáo dục web "CỨU HỘ TỈ SỐ" cho học sinh Việt Nam lớp 4, môn Toán.
 
+ƯU TIÊN theo đúng thứ tự: (1) học sinh đạt mục tiêu học tập ở mục 2; (2) điều khiển AR ở mục 1 nhận diện được thật và fallback chuột chơi đủ 100%; (3) phần còn lại. File chật thì làm đơn giản chi tiết trang trí, không cắt mục 2 và mục 3.
+
 1. Ý TƯỞNG
 - Bối cảnh: Đội cứu hộ kéo dây theo sơ đồ đoạn trắng và đỏ.
 - Việc của học sinh mỗi lượt: Chỉ và kéo các đoạn sơ đồ đúng tỉ số, tính ra số cần tìm để giải cứu.
 - Điều khiển: Chỉ ngón tay trỏ (Point). MediaPipe Tasks Vision HandLandmarker, đầu ngón trỏ landmark 8 làm con trỏ. Biên độ động tác: Ngón trỏ đi bằng cả cẳng tay: đáp án đặt ở bốn góc khác nhau của khung hình nên mỗi lượt là một lần duỗi khuỷu đổi hướng, không phải nhấc ngón ngay trước ngực.
 - Không có camera thì chạm hoặc click vào đáp án thay cho con trỏ ngón tay, giữ 400ms để chốt như khi giữ tay.
-- Mascot: **Chú Tời** — gấp gáp, đếm từng cú giật. Ba câu thoại: khen "Kéo lên được rồi!" · đỡ khi sai "Đoạn trắng dài hơn nha" · hô mở đầu "Một hai, kéo!".
-- Bảng màu riêng: `--miti-1: #E63946` (vật thể AR chính), `--miti-2: #457B9D` (particle và viền hit), `--miti-3: #F1FAEE` (điểm nhấn HUD).
-- Khoảnh khắc chữ ký: dây tời kéo nạn nhân lên ngang tầm mắt em và cả đội vỗ vai mascot. Đạo cụ AR neo vào người chơi: sợi dây neo hai tay, căng ra khi hai tay em cách nhau.
-- Môn thể thao của game: **Bắn cung** — động tác đặc trưng "Giương tay chỉ đích", hiệu lệnh "Ngắm — phóng!", lời hay khi bạn sai "Bạn ngắm chuẩn quá!", duỗi cơ cuối buổi "Duỗi vai và cổ tay".
-- Trò chơi dân gian dẫn dắt: **Chi chi chành chành** — cách chơi "Ngón trỏ chạm ô rồi rút theo nhịp", lời hô "Chi chi chành chành", đồ dùng AR "vạch phấn".
+- Mascot **Chú Tời** (gấp gáp, đếm từng cú giật) — khen "Kéo lên được rồi!", hô mở đầu "Một hai, kéo!". Bảng màu: `--miti-1: #E63946` (vật thể AR), `--miti-2: #457B9D` (particle, viền hit), `--miti-3: #F1FAEE` (HUD).
+- Không khí giờ chơi (trang trí, được phép làm đơn giản): thể thao **Bắn cung** ("Giương tay chỉ đích", hạ nhiệt "Duỗi vai và cổ tay") · dân gian **Chi chi chành chành** (đồ dùng AR "vạch phấn") · khoảnh khắc chữ ký dây tời kéo nạn nhân lên ngang tầm mắt em và cả đội vỗ vai mascot · đạo cụ AR neo vào người chơi "sợi dây neo hai tay, căng ra khi hai tay em cách nhau".
 - Vòng đầu tiên phải dễ để hiểu luật trong vài giây, không cần đọc hướng dẫn dài.
 
 2. MỤC TIÊU HỌC TẬP
 - Mục tiêu: tỉ số; bài toán tìm hai số khi biết tổng và tỉ số; hiệu và tỉ số.
 - Mạch kiến thức: **Giải toán có lời văn** — nhãn HUD "Tổng, hiệu, tỉ số" · **Tuần 29–31 · Học kì II**. In nguyên văn mạch và nhãn tuần ở màn khởi động và màn tổng kết, nằm trong khối nút "Copy tờ rời".
 - Yêu cầu cần đạt (in NGUYÊN VĂN một dòng "Yêu cầu cần đạt: ..." ở màn khởi động và màn tổng kết, cấm viết lại hoặc tóm tắt): "Giải được bài toán tìm hai số khi biết tổng và tỉ số hoặc hiệu và tỉ số của hai số đó."
-- Mẹo nhớ (≤12 từ, bật ở cú đúng câu đầu cụm và sau câu sai cùng lỗi, mascot đọc to kèm một động tác 3 giây làm mẫu): "Vẽ đủ số phần rồi mới tìm một phần."
+- Mẹo nhớ (bật ở cú đúng đầu cụm và sau câu sai cùng lỗi, mascot đọc to + làm mẫu 3 giây): "Vẽ đủ số phần rồi mới tìm một phần."
 - Báo trước "Dễ nhầm" ở câu đầu tiên của cụm (≤16 từ, tắt sau 6 giây, không che đề): "thiếu bước tính tổng hoặc hiệu số phần bằng nhau".
 - Lỗi học sinh thường mắc (mỗi câu sai ghi đúng một lỗi này): thiếu bước tính tổng hoặc hiệu số phần bằng nhau; nhầm tỉ số thành hiệu số; lời giải thiếu đơn vị.
 - Phạm vi: chỉ dùng nội dung Toán lớp 4 đã học; cấm số hoặc từ vựng ngoài phạm vi trên.
 - Toàn bộ lời giải phải dùng đúng thuật ngữ Toán của SGK Toán lớp 4; hiện lại phép tính theo cột dọc hoặc sơ đồ đoạn thẳng cho đúng dạng bài.
 - Điều kiện: hết 5 tim (mỗi đáp án sai trừ 1 tim) là thua, đủ 12 lượt là thắng và hiện tổng kết. Chống ăn may: phương án nhiễu phải là kết quả của một lỗi có thật trong danh sách lỗi trên, không phải số ngẫu nhiên; đáp án đúng không nằm cố định một vị trí.
-- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; thêm bốn dòng "Gửi bố mẹ": "Hôm nay con tập môn Bắn cung — <n> động tác" · "Con học Tổng, hiệu, tỉ số, <k> câu đúng trên <tổng>" · "Mẹo con mang về: Vẽ đủ số phần rồi mới tìm một phần." · "Việc 3 phút ở nhà: cả nhà cùng Giương tay chỉ đích rồi hỏi nhau miệng một đề vừa chơi" (thay <n>, <k>, <tổng> bằng số thật).
+- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; khối "Gửi bố mẹ" bốn dòng điền số thật: "<n> động tác môn Bắn cung" · "Tổng, hiệu, tỉ số: <k>/<tổng> câu đúng" · "Mẹo con mang về: Vẽ đủ số phần rồi mới tìm một phần." · "Việc 3 phút ở nhà: cả nhà cùng Giương tay chỉ đích".
 - Bộ sưu tập: mỗi màn thắng mở khóa 1 thẻ theo chủ đề Cứu Hộ Tỉ Số, lưu localStorage key "miti-collection", có màn "Sưu tập của em".
 
 3. RÀNG BUỘC CỐT LÕI (thiếu bất kỳ dòng nào là hỏng)
@@ -52,7 +51,7 @@ Tạo game giáo dục web "CỨU HỘ TỈ SỐ" cho học sinh Việt Nam lớ
 - Mỗi mục theo đúng khuôn: { id, level, prompt, choices, answer, explanation, errorTag, loiViet, dang }.
 - Tối thiểu 30 mục, chia 3 mức độ (level 1/2/3), mỗi mục một đáp án đúng duy nhất kiểm chứng được bằng code.
 - Mục `dang: "tinh"` phải tính lại được bằng ĐÚNG MỘT phép số học trong code, mục `dang: "nhin"` kiểm bằng số học hoặc số đo hình học, không so khớp chuỗi tự do; mỗi phương án nhiễu là một kết quả thật của lỗi đã nêu, không phải số ngẫu nhiên.
-- errorTag là mã máy của lỗi, lấy đúng một trong: thieu_buoc_tinh_tong_so_phan, nham_ti_so_thanh_hieu_so, tra_loi_thieu_don_vi. loiViet là cụm tiếng Việt có dấu in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, cùng chỉ lỗi đó và là thứ hiển thị cho học sinh. Mỗi câu sai lưu cả hai trường.
+- errorTag là mã máy của lỗi, lấy đúng một trong: thieu_buoc_tinh_tong_so_phan, nham_ti_so_thanh_hieu_so, tra_loi_thieu_don_vi. loiViet là cụm tiếng Việt in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, là thứ hiển thị cho học sinh; mỗi câu sai lưu cả hai trường.
 - Gợi ý hiển thị khi sai: sơ đồ đoạn thẳng chia đúng số phần bằng nhau của tỉ số.
 - xáo trộn vị trí đáp án bằng thuật toán có seed theo lượt.
 - Hai mục mẫu để bám theo khuôn (viết tiếp 28 mục nữa, không được ít hơn):

@@ -6,29 +6,28 @@
 ```text
 Tạo game giáo dục web "ĐẤU TRƯỜNG HÌNH HỌC" cho học sinh Việt Nam lớp 4, môn Toán.
 
+ƯU TIÊN theo đúng thứ tự: (1) học sinh đạt mục tiêu học tập ở mục 2; (2) điều khiển AR ở mục 1 nhận diện được thật và fallback chuột chơi đủ 100%; (3) phần còn lại. File chật thì làm đơn giản chi tiết trang trí, không cắt mục 2 và mục 3.
+
 1. Ý TƯỞNG
 - Bối cảnh: Đấu trường La Mã với các vòm cổng hình học.
 - Việc của học sinh mỗi lượt: Bước nghiêng người vào vòm cổng chứa khẳng định đúng về góc, đường, diện tích.
 - Điều khiển: Nghiêng người / bước sang vùng (Body tilt). PoseLandmarker: hai vai (landmark 11, 12) và mũi (0) để tính góc nghiêng thân người so với phương thẳng đứng. Biên độ động tác: Nghiêng cả thân và chuyển trọng tâm hai chân: hai vùng nằm sát mép nên vai phải nghiêng rõ, không lách bằng cái xoay cổ tay.
 - Không có camera thì phím mũi tên trái hoặc phải, hoặc chạm vào vùng, để đổi làn.
-- Mascot: **Hùng Vòm** — điềm đạm, nhắc nhìn cả hình. Ba câu thoại: khen "Vòm cổng đúng!" · đỡ khi sai "Cổng kia sai rồi em" · hô mở đầu "Vào đấu trường!".
-- Bảng màu riêng: `--miti-1: #9B2226` (vật thể AR chính), `--miti-2: #C9ADA7` (particle và viền hit), `--miti-3: #BB9457` (điểm nhấn HUD).
-- Khoảnh khắc chữ ký: vòm cổng đúng đổ ánh sáng hình học xuống sàn và đấu trường hô tên em một lần. Đạo cụ AR neo vào người chơi: tấm áo giáp khắc hình học đeo vai phải.
-- Môn thể thao của game: **Điền kinh** — động tác đặc trưng "Bước dài sang làn kế", hiệu lệnh "Vào chỗ — chạy!", lời hay khi bạn sai "Bạn chạy nhanh!", duỗi cơ cuối buổi "Duỗi chân và bắp chuối".
-- Trò chơi dân gian dẫn dắt: **Nhảy dây** — cách chơi "Nhún hai chân theo vạch nhịp", lời hô "Một hai, một hai, nhảy đều", đồ dùng AR "dây nhảy".
+- Mascot **Hùng Vòm** (điềm đạm, nhắc nhìn cả hình) — khen "Vòm cổng đúng!", hô mở đầu "Vào đấu trường!". Bảng màu: `--miti-1: #9B2226` (vật thể AR), `--miti-2: #C9ADA7` (particle, viền hit), `--miti-3: #BB9457` (HUD).
+- Không khí giờ chơi (trang trí, được phép làm đơn giản): thể thao **Điền kinh** ("Bước dài sang làn kế", hạ nhiệt "Duỗi chân và bắp chuối") · dân gian **Nhảy dây** (đồ dùng AR "dây nhảy") · khoảnh khắc chữ ký vòm cổng đúng đổ ánh sáng hình học xuống sàn và đấu trường hô tên em một lần · đạo cụ AR neo vào người chơi "tấm áo giáp khắc hình học đeo vai phải".
 - Vòng đầu tiên phải dễ để hiểu luật trong vài giây, không cần đọc hướng dẫn dài.
 
 2. MỤC TIÊU HỌC TẬP
 - Mục tiêu: ôn tổng hợp số tự nhiên, bốn phép tính, phân số, hình học và đo lường lớp 4.
 - Mạch kiến thức: **Ôn tập tổng hợp** — nhãn HUD "Ôn tập Toán lớp 4" · **Tuần 34–35 · Học kì II**. In nguyên văn mạch và nhãn tuần ở màn khởi động và màn tổng kết, nằm trong khối nút "Copy tờ rời".
 - Yêu cầu cần đạt (in NGUYÊN VĂN một dòng "Yêu cầu cần đạt: ..." ở màn khởi động và màn tổng kết, cấm viết lại hoặc tóm tắt): "Ôn tập, củng cố số tự nhiên, bốn phép tính, phân số, hình học và đo lường đã học ở lớp 4."
-- Mẹo nhớ (≤12 từ, bật ở cú đúng câu đầu cụm và sau câu sai cùng lỗi, mascot đọc to kèm một động tác 3 giây làm mẫu): "Nhận ra dạng bài trước, tính sau."
+- Mẹo nhớ (bật ở cú đúng đầu cụm và sau câu sai cùng lỗi, mascot đọc to + làm mẫu 3 giây): "Nhận ra dạng bài trước, tính sau."
 - Báo trước "Dễ nhầm" ở câu đầu tiên của cụm (≤16 từ, tắt sau 6 giây, không che đề): "nhầm loại phép tính khi ôn".
 - Lỗi học sinh thường mắc (mỗi câu sai ghi đúng một lỗi này): nhầm loại phép tính khi ôn; quên rút gọn kết quả; đọc đề bỏ sót điều kiện.
 - Phạm vi: chỉ dùng nội dung Toán lớp 4 đã học; cấm số hoặc từ vựng ngoài phạm vi trên.
 - Toàn bộ lời giải phải dùng đúng thuật ngữ Toán của SGK Toán lớp 4; hiện lại phép tính theo cột dọc hoặc sơ đồ đoạn thẳng cho đúng dạng bài.
 - Điều kiện: hết 5 tim (mỗi đáp án sai trừ 1 tim) là thua, đủ 12 lượt là thắng và hiện tổng kết. Chống ăn may: phương án nhiễu phải là kết quả của một lỗi có thật trong danh sách lỗi trên, không phải số ngẫu nhiên; đáp án đúng không nằm cố định một vị trí.
-- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; thêm bốn dòng "Gửi bố mẹ": "Hôm nay con tập môn Điền kinh — <n> động tác" · "Con học Ôn tập Toán lớp 4, <k> câu đúng trên <tổng>" · "Mẹo con mang về: Nhận ra dạng bài trước, tính sau." · "Việc 3 phút ở nhà: cả nhà cùng Bước dài sang làn kế rồi hỏi nhau miệng một đề vừa chơi" (thay <n>, <k>, <tổng> bằng số thật).
+- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; khối "Gửi bố mẹ" bốn dòng điền số thật: "<n> động tác môn Điền kinh" · "Ôn tập Toán lớp 4: <k>/<tổng> câu đúng" · "Mẹo con mang về: Nhận ra dạng bài trước, tính sau." · "Việc 3 phút ở nhà: cả nhà cùng Bước dài sang làn kế".
 - Bộ sưu tập: mỗi màn thắng mở khóa 1 thẻ theo chủ đề Đấu Trường Hình Học, lưu localStorage key "miti-collection", có màn "Sưu tập của em".
 
 3. RÀNG BUỘC CỐT LÕI (thiếu bất kỳ dòng nào là hỏng)
@@ -52,7 +51,7 @@ Tạo game giáo dục web "ĐẤU TRƯỜNG HÌNH HỌC" cho học sinh Việt 
 - Mỗi mục theo đúng khuôn: { id, level, prompt, choices, answer, explanation, errorTag, loiViet, dang }.
 - Tối thiểu 30 mục, chia 3 mức độ (level 1/2/3), mỗi mục một đáp án đúng duy nhất kiểm chứng được bằng code.
 - Mục `dang: "tinh"` phải tính lại được bằng ĐÚNG MỘT phép số học trong code, mục `dang: "nhin"` kiểm bằng số học hoặc số đo hình học, không so khớp chuỗi tự do; mỗi phương án nhiễu là một kết quả thật của lỗi đã nêu, không phải số ngẫu nhiên.
-- errorTag là mã máy của lỗi, lấy đúng một trong: tron_loai_phep_tinh, quen_rut_gon_ket_qua, doc_de_thieu_dieu_kien. loiViet là cụm tiếng Việt có dấu in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, cùng chỉ lỗi đó và là thứ hiển thị cho học sinh. Mỗi câu sai lưu cả hai trường.
+- errorTag là mã máy của lỗi, lấy đúng một trong: tron_loai_phep_tinh, quen_rut_gon_ket_qua, doc_de_thieu_dieu_kien. loiViet là cụm tiếng Việt in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, là thứ hiển thị cho học sinh; mỗi câu sai lưu cả hai trường.
 - Gợi ý hiển thị khi sai: gọi lại kiến thức lớp 4 tương ứng với từng cửa ải.
 - xáo trộn vị trí đáp án bằng thuật toán có seed theo lượt.
 - Hai mục mẫu để bám theo khuôn (viết tiếp 28 mục nữa, không được ít hơn):

@@ -6,32 +6,31 @@
 ```text
 Tạo game giáo dục web "THỢ SĂN TỪ" cho học sinh Việt Nam lớp 5, môn Tiếng Anh, chuẩn A1 Movers (A1) của Cambridge.
 
+ƯU TIÊN theo đúng thứ tự: (1) học sinh đạt mục tiêu học tập ở mục 2; (2) điều khiển AR ở mục 1 nhận diện được thật và fallback chuột chơi đủ 100%; (3) phần còn lại. File chật thì làm đơn giản chi tiết trang trí, không cắt mục 2 và mục 3.
+
 1. Ý TƯỞNG
 - Bối cảnh: Khu rừng từ vựng ẩn trong các bụi cây che phủ.
 - Việc của học sinh mỗi lượt: Vuốt chém bụi cây chứa từ đúng với nghĩa và ngữ cảnh câu gợi ý.
 - Điều khiển: Vuốt / chém (Swipe). HandLandmarker, đường đi của đầu ngón trỏ (landmark 8) trong 5–8 khung hình gần nhất tạo thành vệt kiếm. Biên độ động tác: Chém từ vai bằng cả cánh tay, vệt cắt dài >= 60% tầm với và đổi độ cao nhát chém giữa các lượt; nhát hất bằng cổ tay không đủ ngưỡng tốc độ.
 - Không có camera thì kéo chuột hoặc vuốt màn hình nhanh qua vật để tạo nhát chém.
-- Mascot: **Săn Từ** — lặng lẽ, mắt tinh. Ba câu thoại: khen "Tìm đúng từ!" · đỡ khi sai "Bụi kia rỗng thôi" · hô mở đầu "Đi săn nào!".
-- Bảng màu riêng: `--miti-1: #344E41` (vật thể AR chính), `--miti-2: #588157` (particle và viền hit), `--miti-3: #3A5A40` (điểm nhấn HUD).
-- Khoảnh khắc chữ ký: cả bụi cùng ngã xuống để chú nai từ vựng hiện ra ngay dưới tay em. Đạo cụ AR neo vào người chơi: đôi tai thỏ trên đầu em, quay khi em đổi hướng.
-- Môn thể thao của game: **Bóng bàn** — động tác đặc trưng "Quét vợt sang hai bên", hiệu lệnh "Giao bóng!", lời hay khi bạn sai "Bạn đánh bóng mạnh!", duỗi cơ cuối buổi "Xoay cổ tay nhẹ nhàng".
-- Trò chơi dân gian dẫn dắt: **Kéo cưa lừa xẻ** — cách chơi "Hai tay đẩy kéo đều theo vạch", lời hô "Kéo cưa lừa xẻ, ông thợ nào khỏe", đồ dùng AR "gậy tre".
+- Mascot **Săn Từ** (lặng lẽ, mắt tinh) — khen "Tìm đúng từ!", hô mở đầu "Đi săn nào!". Bảng màu: `--miti-1: #344E41` (vật thể AR), `--miti-2: #588157` (particle, viền hit), `--miti-3: #3A5A40` (HUD).
+- Không khí giờ chơi (trang trí, được phép làm đơn giản): thể thao **Bóng bàn** ("Quét vợt sang hai bên", hạ nhiệt "Xoay cổ tay nhẹ nhàng") · dân gian **Kéo cưa lừa xẻ** (đồ dùng AR "gậy tre") · khoảnh khắc chữ ký cả bụi cùng ngã xuống để chú nai từ vựng hiện ra ngay dưới tay em · đạo cụ AR neo vào người chơi "đôi tai thỏ trên đầu em, quay khi em đổi hướng".
 - Vòng đầu tiên phải dễ để hiểu luật trong vài giây, không cần đọc hướng dẫn dài.
 
 2. MỤC TIÊU HỌC TẬP
 - Mục tiêu: từ vựng Tiếng Anh: Animals, School, Family, Jobs, Colours, Hobbies; nghĩa tiếng Việt tương ứng.
 - Band Cambridge: **A1 Movers** (A1) — Starters + quá khứ đơn, so sánh hơn/nhất, will, must/have to, giới từ nơi chốn, đếm được/không đếm được, hiện tại tiếp diễn.
-- Trần từ vựng: chỉ dùng 930 từ thuộc Movers trở xuống, ưu tiên 54 từ của chủ đề địa điểm, giao thông: bathroom, beach, bedroom, dining room, door, flat, floor, garden, house, kitchen, living room, park, sea, shop, street, town, wall, window, zoo, building, cinema, city, country, farm, forest, island, lake, lift, …. Cấm mọi từ lần đầu xuất hiện ở band cao hơn; từ SGK Việt Nam ngoài danh sách trên chỉ được dùng nếu đã học ở Tiếng Anh lớp 5.
-- Trần ngữ pháp: chỉ dùng 8 cấu trúc của Movers — Quá khứ đơn (có quy tắc + bất quy tắc) ("I visited my grandma. / We went to the zoo yesterday.") · So sánh hơn và so sánh nhất ("A whale is bigger than a dolphin. / He is the fastest runner.") · will cho dự đoán và tương lai ("It will rain tomorrow. / I’ll be ten next year.") · must / have to / can’t (nghiêm cấm, buộc) ("You must be quiet in class. / You can’t run in the corridor.") · Đếm được – không đếm được, some / any ("some water, any eggs, a few apples, a little milk") · Giới từ nơi chốn – phương hướng ("next to, between, behind, in front of, opposite") · Hiện tại tiếp diễn đối chiếu hiện tại đơn ("Look! He is swimming. / He usually swims at weekends.") · because / but / and nối câu ("I like summer because I can go swimming.").
+- Trần từ vựng: chỉ dùng 930 từ thuộc Movers trở xuống, ưu tiên 54 từ của chủ đề địa điểm, giao thông: bathroom, beach, bedroom, dining room, door, flat, floor, garden, house, kitchen, living room, park, sea, shop, street, town, wall, window, zoo, building, …. Cấm mọi từ lần đầu xuất hiện ở band cao hơn; từ SGK Việt Nam ngoài danh sách trên chỉ được dùng nếu đã học ở Tiếng Anh lớp 5.
+- Trần ngữ pháp: chỉ dùng 8 cấu trúc của Movers — Quá khứ đơn (có quy tắc + bất quy tắc) ("I visited my grandma.") · So sánh hơn và so sánh nhất ("A whale is bigger than a dolphin.") · will cho dự đoán và tương lai ("It will rain tomorrow.") · must / have to / can’t (nghiêm cấm, buộc) ("You must be quiet in class.") · Đếm được – không đếm được, some / any ("some water, any eggs, a few apples, a little milk") · Giới từ nơi chốn – phương hướng ("next to, between, behind, in front of, opposite") · Hiện tại tiếp diễn đối chiếu hiện tại đơn ("Look! He is swimming.") · because / but / and nối câu ("I like summer because I can go swimming.").
 - Mạch kiến thức: **Kiến thức ngôn ngữ** — nhãn HUD "Từ vựng Tiếng Anh" · **Tuần 1–10 · Học kì I**. In nguyên văn mạch và nhãn tuần ở màn khởi động và màn tổng kết, nằm trong khối nút "Copy tờ rời".
 - Yêu cầu cần đạt (in NGUYÊN VĂN một dòng "Yêu cầu cần đạt: ..." ở màn khởi động và màn tổng kết, cấm viết lại hoặc tóm tắt): "Nhận biết và gọi tên được từ vựng các chủ điểm Animals, School, Family, Jobs, Colours, Hobbies."
-- Mẹo nhớ (≤12 từ, bật ở cú đúng câu đầu cụm và sau câu sai cùng lỗi, mascot đọc to kèm một động tác 3 giây làm mẫu): "Nhìn tranh, đọc to, nhớ nghĩa tiếng Việt."
+- Mẹo nhớ (bật ở cú đúng đầu cụm và sau câu sai cùng lỗi, mascot đọc to + làm mẫu 3 giây): "Nhìn tranh, đọc to, nhớ nghĩa tiếng Việt."
 - Báo trước "Dễ nhầm" ở câu đầu tiên của cụm (≤16 từ, tắt sau 6 giây, không che đề): "chọn từ có nghĩa gần giống".
 - Lỗi học sinh thường mắc (mỗi câu sai ghi đúng một lỗi này): chọn từ có nghĩa gần giống; sai nguyên âm trong từ; thiếu s của số nhiều.
 - Phạm vi: chỉ dùng nội dung Tiếng Anh lớp 5 đã học và trong đúng band Movers; cấm số hoặc từ vựng ngoài phạm vi trên.
 - Từ và câu tiếng Anh là học liệu, giữ nguyên tiếng Anh; mọi hướng dẫn, nút bấm, lời giải thích bằng tiếng Việt. Dùng window.speechSynthesis (en-US hoặc en-GB) đọc to từ/câu khi trả lời đúng, có nút phát lại.
 - Điều kiện: hết 5 tim (mỗi đáp án sai trừ 1 tim) là thua, đủ 12 lượt là thắng và hiện tổng kết. Chống ăn may: phương án nhiễu phải là kết quả của một lỗi có thật trong danh sách lỗi trên, không phải số ngẫu nhiên; đáp án đúng không nằm cố định một vị trí.
-- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; thêm bốn dòng "Gửi bố mẹ": "Hôm nay con tập môn Bóng bàn — <n> động tác" · "Con học Từ vựng Tiếng Anh, <k> câu đúng trên <tổng>" · "Mẹo con mang về: Nhìn tranh, đọc to, nhớ nghĩa tiếng Việt." · "Việc 3 phút ở nhà: cả nhà cùng Quét vợt sang hai bên rồi hỏi nhau miệng một đề vừa chơi" (thay <n>, <k>, <tổng> bằng số thật).
+- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; khối "Gửi bố mẹ" bốn dòng điền số thật: "<n> động tác môn Bóng bàn" · "Từ vựng Tiếng Anh: <k>/<tổng> câu đúng" · "Mẹo con mang về: Nhìn tranh, đọc to, nhớ nghĩa tiếng Việt." · "Việc 3 phút ở nhà: cả nhà cùng Quét vợt sang hai bên".
 - Bộ sưu tập: mỗi màn thắng mở khóa 1 thẻ theo chủ đề Thợ Săn Từ, lưu localStorage key "miti-collection", có màn "Sưu tập của em".
 
 3. RÀNG BUỘC CỐT LÕI (thiếu bất kỳ dòng nào là hỏng)
@@ -56,7 +55,7 @@ Tạo game giáo dục web "THỢ SĂN TỪ" cho học sinh Việt Nam lớp 5, 
 - Tối thiểu 60 mục, chia 3 mức độ (level 1/2/3), mỗi mục một đáp án đúng duy nhất kiểm chứng được bằng code.
 - Mỗi mục có từ hoặc câu tiếng Anh, gợi nghĩa tiếng Việt, phiên âm khi phù hợp, và audio bằng window.speechSynthesis; đáp án là chuỗi cố định.
 - Chia mức theo band: level 1 lấy từ và cấu trúc cơ bản nhất của Movers; level 3 vẫn nằm trong Movers, tăng độ khó bằng câu dài hơn và phương án gần nghĩa hơn, không tăng bằng từ ngoài band.
-- errorTag là mã máy của lỗi, lấy đúng một trong: nham_gan_nghia, chinh_ta_sai_nguyen_am, thieu_s_danh_tu_so_nhieu. loiViet là cụm tiếng Việt có dấu in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, cùng chỉ lỗi đó và là thứ hiển thị cho học sinh. Mỗi câu sai lưu cả hai trường.
+- errorTag là mã máy của lỗi, lấy đúng một trong: nham_gan_nghia, chinh_ta_sai_nguyen_am, thieu_s_danh_tu_so_nhieu. loiViet là cụm tiếng Việt in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, là thứ hiển thị cho học sinh; mỗi câu sai lưu cả hai trường.
 - Gợi ý hiển thị khi sai: dịch nghĩa + phiên âm + ví dụ minh hoạ + lặp lại bằng speechSynthesis khi đúng.
 - xáo trộn vị trí đáp án bằng thuật toán có seed theo lượt.
 - Hai mục mẫu để bám theo khuôn (viết tiếp 58 mục nữa, không được ít hơn):

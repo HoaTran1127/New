@@ -6,29 +6,28 @@
 ```text
 Tạo game giáo dục web "PHÒNG BOSS TOÁN" cho học sinh Việt Nam lớp 4, môn Toán.
 
+ƯU TIÊN theo đúng thứ tự: (1) học sinh đạt mục tiêu học tập ở mục 2; (2) điều khiển AR ở mục 1 nhận diện được thật và fallback chuột chơi đủ 100%; (3) phần còn lại. File chật thì làm đơn giản chi tiết trang trí, không cắt mục 2 và mục 3.
+
 1. Ý TƯỞNG
 - Bối cảnh: Trạm cuối năm, mỗi boss là một chủ đề lớn của Toán 4.
 - Việc của học sinh mỗi lượt: Đấm chuỗi đáp án đúng qua ba giai đoạn, mỗi giai đoạn được một lần dùng gợi ý.
 - Điều khiển: Vung tay đấm (Punch). HandLandmarker: vị trí cổ tay (landmark 0) và mũi (landmark 15) để tính hướng đấm; độ gập các ngón để xác nhận nắm tay. Biên độ động tác: Đấm đổi tầm liên tục (trên vai – ngang ngực – dưới thắt lưng); cú đấm đi hết tay từ thế thủ trước ngực tới vật nằm sát mép khung.
 - Không có camera thì click vào vật để mô phỏng cú đấm; rê chuột lên vật không được tính.
-- Mascot: **Giai Ba** — lì lợm, biết chờ thời cơ. Ba câu thoại: khen "Boss mất một giai đoạn!" · đỡ khi sai "Còn gợi ý, dùng đi em" · hô mở đầu "Giao chiến, bắt đầu!".
-- Bảng màu riêng: `--miti-1: #1B263B` (vật thể AR chính), `--miti-2: #F1FAEE` (particle và viền hit), `--miti-3: #FF5959` (điểm nhấn HUD).
-- Khoảnh khắc chữ ký: boss quỳ xuống, cả phòng hiện lời giải từng bước rồi pháo giấy nổ một lần. Đạo cụ AR neo vào người chơi: thanh máu boss trên đầu em, vơi theo từng giai đoạn.
-- Môn thể thao của game: **Boxing** — động tác đặc trưng "Đấm về phía trước", hiệu lệnh "Một — hai!", lời hay khi bạn sai "Bạn ra đòn gọn!", duỗi cơ cuối buổi "Duỗi ngực và vai mở".
-- Trò chơi dân gian dẫn dắt: **Ném còn** — cách chơi "Đẩy tay hất quả còn qua vòng", lời hô "Một hai ba, ném!", đồ dùng AR "vòng tròn".
+- Mascot **Giai Ba** (lì lợm, biết chờ thời cơ) — khen "Boss mất một giai đoạn!", hô mở đầu "Giao chiến, bắt đầu!". Bảng màu: `--miti-1: #1B263B` (vật thể AR), `--miti-2: #F1FAEE` (particle, viền hit), `--miti-3: #FF5959` (HUD).
+- Không khí giờ chơi (trang trí, được phép làm đơn giản): thể thao **Boxing** ("Đấm về phía trước", hạ nhiệt "Duỗi ngực và vai mở") · dân gian **Ném còn** (đồ dùng AR "vòng tròn") · khoảnh khắc chữ ký boss quỳ xuống, cả phòng hiện lời giải từng bước rồi pháo giấy nổ một lần · đạo cụ AR neo vào người chơi "thanh máu boss trên đầu em, vơi theo từng giai đoạn".
 - Vòng đầu tiên phải dễ để hiểu luật trong vài giây, không cần đọc hướng dẫn dài.
 
 2. MỤC TIÊU HỌC TẬP
 - Mục tiêu: trận boss tổng hợp: 3 giai đoạn tăng độ khó với kiến thức đã học trong chương.
 - Mạch kiến thức: **Ôn tập tổng hợp** — nhãn HUD "Trận boss tổng hợp" · **Tuần 32–35 · Học kì II**. In nguyên văn mạch và nhãn tuần ở màn khởi động và màn tổng kết, nằm trong khối nút "Copy tờ rời".
 - Yêu cầu cần đạt (in NGUYÊN VĂN một dòng "Yêu cầu cần đạt: ..." ở màn khởi động và màn tổng kết, cấm viết lại hoặc tóm tắt): "Vận dụng tổng hợp kiến thức đã học trong chương qua ba giai đoạn tăng độ khó."
-- Mẹo nhớ (≤12 từ, bật ở cú đúng câu đầu cụm và sau câu sai cùng lỗi, mascot đọc to kèm một động tác 3 giây làm mẫu): "Hít một nhịp rồi mới chọn đáp án."
+- Mẹo nhớ (bật ở cú đúng đầu cụm và sau câu sai cùng lỗi, mascot đọc to + làm mẫu 3 giây): "Hít một nhịp rồi mới chọn đáp án."
 - Báo trước "Dễ nhầm" ở câu đầu tiên của cụm (≤16 từ, tắt sau 6 giây, không che đề): "nóng vội khi độ khó tăng".
 - Lỗi học sinh thường mắc (mỗi câu sai ghi đúng một lỗi này): nóng vội khi độ khó tăng; quên chiến lược đã học; chọn đáp án khi chưa đủ thời gian nghĩ.
 - Phạm vi: chỉ dùng nội dung Toán lớp 4 đã học; cấm số hoặc từ vựng ngoài phạm vi trên.
 - Toàn bộ lời giải phải dùng đúng thuật ngữ Toán của SGK Toán lớp 4; hiện lại phép tính theo cột dọc hoặc sơ đồ đoạn thẳng cho đúng dạng bài.
 - Điều kiện: hết 5 tim (mỗi đáp án sai trừ 1 tim) là thua, đủ 12 lượt là thắng và hiện tổng kết. Chống ăn may: phương án nhiễu phải là kết quả của một lỗi có thật trong danh sách lỗi trên, không phải số ngẫu nhiên; đáp án đúng không nằm cố định một vị trí.
-- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; thêm bốn dòng "Gửi bố mẹ": "Hôm nay con tập môn Boxing — <n> động tác" · "Con học Trận boss tổng hợp, <k> câu đúng trên <tổng>" · "Mẹo con mang về: Hít một nhịp rồi mới chọn đáp án." · "Việc 3 phút ở nhà: cả nhà cùng Đấm về phía trước rồi hỏi nhau miệng một đề vừa chơi" (thay <n>, <k>, <tổng> bằng số thật).
+- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; khối "Gửi bố mẹ" bốn dòng điền số thật: "<n> động tác môn Boxing" · "Trận boss tổng hợp: <k>/<tổng> câu đúng" · "Mẹo con mang về: Hít một nhịp rồi mới chọn đáp án." · "Việc 3 phút ở nhà: cả nhà cùng Đấm về phía trước".
 - Bộ sưu tập: mỗi màn thắng mở khóa 1 thẻ theo chủ đề Phòng Boss Toán, lưu localStorage key "miti-collection", có màn "Sưu tập của em".
 
 3. RÀNG BUỘC CỐT LÕI (thiếu bất kỳ dòng nào là hỏng)
@@ -52,7 +51,7 @@ Tạo game giáo dục web "PHÒNG BOSS TOÁN" cho học sinh Việt Nam lớp 4
 - Mỗi mục theo đúng khuôn: { id, level, prompt, choices, answer, explanation, errorTag, loiViet, dang }.
 - Tối thiểu 30 mục, chia 3 mức độ (level 1/2/3), mỗi mục một đáp án đúng duy nhất kiểm chứng được bằng code.
 - Mục `dang: "tinh"` phải tính lại được bằng ĐÚNG MỘT phép số học trong code, mục `dang: "nhin"` kiểm bằng số học hoặc số đo hình học, không so khớp chuỗi tự do; mỗi phương án nhiễu là một kết quả thật của lỗi đã nêu, không phải số ngẫu nhiên.
-- errorTag là mã máy của lỗi, lấy đúng một trong: muc_kho_cao_gay_sot, quen_chi_luoc, thieu_thoi_gian_suy_nghi. loiViet là cụm tiếng Việt có dấu in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, cùng chỉ lỗi đó và là thứ hiển thị cho học sinh. Mỗi câu sai lưu cả hai trường.
+- errorTag là mã máy của lỗi, lấy đúng một trong: muc_kho_cao_gay_sot, quen_chi_luoc, thieu_thoi_gian_suy_nghi. loiViet là cụm tiếng Việt in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, là thứ hiển thị cho học sinh; mỗi câu sai lưu cả hai trường.
 - Gợi ý hiển thị khi sai: sau mỗi giai đoạn cho chọn 1 gợi ý miễn phí rồi mới tái hiện câu sai.
 - xáo trộn vị trí đáp án bằng thuật toán có seed theo lượt.
 - Hai mục mẫu để bám theo khuôn (viết tiếp 28 mục nữa, không được ít hơn):

@@ -6,29 +6,28 @@
 ```text
 Tạo game giáo dục web "ANH HÙNG GÓC" cho học sinh Việt Nam lớp 4, môn Toán.
 
+ƯU TIÊN theo đúng thứ tự: (1) học sinh đạt mục tiêu học tập ở mục 2; (2) điều khiển AR ở mục 1 nhận diện được thật và fallback chuột chơi đủ 100%; (3) phần còn lại. File chật thì làm đơn giản chi tiết trang trí, không cắt mục 2 và mục 3.
+
 1. Ý TƯỞNG
 - Bối cảnh: Thành phố bị thu hẹp, người hùng mở các cánh cửa bằng góc.
 - Việc của học sinh mỗi lượt: Dùng hai cánh tay tạo thành hai cạnh góc có số đo đúng yêu cầu và giữ trong 2 giây.
 - Điều khiển: Tạo góc bằng cánh tay (Angle pose). PoseLandmarker: vai (11, 12), khuỷu (13, 14), cổ tay (15, 16) để tính góc tại khuỷu. Biên độ động tác: Đổi tay thuận trái/phải xen kẽ mỗi lượt và đứng quay thẳng để khuỷu di chuyển trong không gian thật, không dựng một góc bằng tay thuận suốt 12 lượt.
 - Không có camera thì dùng thanh trượt góc hoặc kéo cạnh góc bằng chuột.
-- Mascot: **Ê Ke** — mạnh mẽ, hay ra kiểu. Ba câu thoại: khen "Cánh cửa mở rồi!" · đỡ khi sai "Góc nhọn hơn chút nữa" · hô mở đầu "Hai tay, thành góc!".
-- Bảng màu riêng: `--miti-1: #3A86FF` (vật thể AR chính), `--miti-2: #FFBE0B` (particle và viền hit), `--miti-3: #8338EC` (điểm nhấn HUD).
-- Khoảnh khắc chữ ký: thành phố mở toang từng cánh cửa góc và một vòng cung góc quét quanh người em. Đạo cụ AR neo vào người chơi: áo choàng hình góc đeo vai, mở theo hai cạnh em tạo.
-- Môn thể thao của game: **Cử tạ** — động tác đặc trưng "Giữ tạ ngang vai", hiệu lệnh "Giữ nào!", lời hay khi bạn sai "Bạn giữ chắc tay!", duỗi cơ cuối buổi "Duỗi vai xuống tay buông".
-- Trò chơi dân gian dẫn dắt: **Tâng cầu** — cách chơi "Gập gối đưa mu chân đón cầu", lời hô "Một nhịp hai nhịp, cầu lên", đồ dùng AR "quả cầu giấy".
+- Mascot **Ê Ke** (mạnh mẽ, hay ra kiểu) — khen "Cánh cửa mở rồi!", hô mở đầu "Hai tay, thành góc!". Bảng màu: `--miti-1: #3A86FF` (vật thể AR), `--miti-2: #FFBE0B` (particle, viền hit), `--miti-3: #8338EC` (HUD).
+- Không khí giờ chơi (trang trí, được phép làm đơn giản): thể thao **Cử tạ** ("Giữ tạ ngang vai", hạ nhiệt "Duỗi vai xuống tay buông") · dân gian **Tâng cầu** (đồ dùng AR "quả cầu giấy") · khoảnh khắc chữ ký thành phố mở toang từng cánh cửa góc và một vòng cung góc quét quanh người em · đạo cụ AR neo vào người chơi "áo choàng hình góc đeo vai, mở theo hai cạnh em tạo".
 - Vòng đầu tiên phải dễ để hiểu luật trong vài giây, không cần đọc hướng dẫn dài.
 
 2. MỤC TIÊU HỌC TẬP
 - Mục tiêu: góc nhọn, vuông, tù, bẹt; đỉnh, cạnh; đo góc bằng thước nửa tròn; góc ở đỉnh chung.
 - Mạch kiến thức: **Hình học và đo lường** — nhãn HUD "Các loại góc" · **Tuần 8–9 · Học kì I**. In nguyên văn mạch và nhãn tuần ở màn khởi động và màn tổng kết, nằm trong khối nút "Copy tờ rời".
 - Yêu cầu cần đạt (in NGUYÊN VĂN một dòng "Yêu cầu cần đạt: ..." ở màn khởi động và màn tổng kết, cấm viết lại hoặc tóm tắt): "Nhận biết được góc nhọn, góc vuông, góc tù, góc bẹt; đo được góc bằng thước đo góc nửa hình tròn."
-- Mẹo nhớ (≤12 từ, bật ở cú đúng câu đầu cụm và sau câu sai cùng lỗi, mascot đọc to kèm một động tác 3 giây làm mẫu): "Vuông là chín mươi, tù mở to hơn, nhọn khép lại."
+- Mẹo nhớ (bật ở cú đúng đầu cụm và sau câu sai cùng lỗi, mascot đọc to + làm mẫu 3 giây): "Vuông là chín mươi, tù mở to hơn, nhọn khép lại."
 - Báo trước "Dễ nhầm" ở câu đầu tiên của cụm (≤16 từ, tắt sau 6 giây, không che đề): "đặt sai đỉnh thước khi đo".
 - Lỗi học sinh thường mắc (mỗi câu sai ghi đúng một lỗi này): đặt sai đỉnh thước khi đo; đọc thang đo ngược; lẫn góc tù với góc nhọn.
 - Phạm vi: chỉ dùng nội dung Toán lớp 4 đã học; cấm số hoặc từ vựng ngoài phạm vi trên.
 - Toàn bộ lời giải phải dùng đúng thuật ngữ Toán của SGK Toán lớp 4; hiện lại phép tính theo cột dọc hoặc sơ đồ đoạn thẳng cho đúng dạng bài.
 - Điều kiện: hết 5 tim (mỗi đáp án sai trừ 1 tim) là thua, đủ 12 lượt là thắng và hiện tổng kết. Chống ăn may: phương án nhiễu phải là kết quả của một lỗi có thật trong danh sách lỗi trên, không phải số ngẫu nhiên; đáp án đúng không nằm cố định một vị trí.
-- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; thêm bốn dòng "Gửi bố mẹ": "Hôm nay con tập môn Cử tạ — <n> động tác" · "Con học Các loại góc, <k> câu đúng trên <tổng>" · "Mẹo con mang về: Vuông là chín mươi, tù mở to hơn, nhọn khép lại." · "Việc 3 phút ở nhà: cả nhà cùng Giữ tạ ngang vai rồi hỏi nhau miệng một đề vừa chơi" (thay <n>, <k>, <tổng> bằng số thật).
+- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; khối "Gửi bố mẹ" bốn dòng điền số thật: "<n> động tác môn Cử tạ" · "Các loại góc: <k>/<tổng> câu đúng" · "Mẹo con mang về: Vuông là chín mươi, tù mở to hơn, nhọn khép lại." · "Việc 3 phút ở nhà: cả nhà cùng Giữ tạ ngang vai".
 - Bộ sưu tập: mỗi màn thắng mở khóa 1 thẻ theo chủ đề Anh Hùng Góc, lưu localStorage key "miti-collection", có màn "Sưu tập của em".
 
 3. RÀNG BUỘC CỐT LÕI (thiếu bất kỳ dòng nào là hỏng)
@@ -52,7 +51,7 @@ Tạo game giáo dục web "ANH HÙNG GÓC" cho học sinh Việt Nam lớp 4, m
 - Mỗi mục theo đúng khuôn: { id, level, prompt, choices, answer, explanation, errorTag, loiViet, dang }.
 - Tối thiểu 30 mục, chia 3 mức độ (level 1/2/3), mỗi mục một đáp án đúng duy nhất kiểm chứng được bằng code.
 - Mục `dang: "tinh"` phải tính lại được bằng ĐÚNG MỘT phép số học trong code, mục `dang: "nhin"` kiểm bằng số học hoặc số đo hình học, không so khớp chuỗi tự do; mỗi phương án nhiễu là một kết quả thật của lỗi đã nêu, không phải số ngẫu nhiên.
-- errorTag là mã máy của lỗi, lấy đúng một trong: dinh_goc_sai_dinh, doc_o_vach_ngoai, nham_goc_tu_goc_nhon. loiViet là cụm tiếng Việt có dấu in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, cùng chỉ lỗi đó và là thứ hiển thị cho học sinh. Mỗi câu sai lưu cả hai trường.
+- errorTag là mã máy của lỗi, lấy đúng một trong: dinh_goc_sai_dinh, doc_o_vach_ngoai, nham_goc_tu_goc_nhon. loiViet là cụm tiếng Việt in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, là thứ hiển thị cho học sinh; mỗi câu sai lưu cả hai trường.
 - Gợi ý hiển thị khi sai: vẽ tia quay từ cạnh ban đầu, giữ nguyên đỉnh, tô phần quạt đang mở.
 - xáo trộn vị trí đáp án bằng thuật toán có seed theo lượt.
 - Hai mục mẫu để bám theo khuôn (viết tiếp 28 mục nữa, không được ít hơn):

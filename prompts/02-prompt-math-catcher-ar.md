@@ -7,6 +7,8 @@
 ```text
 Tạo game giáo dục web AR một file HTML "AR MATH CATCHER" cho học sinh Việt Nam lớp 4-5, môn Toán, điều khiển bằng webcam.
 
+ƯU TIÊN theo đúng thứ tự: (1) học sinh đạt mục tiêu học tập ở mục 2; (2) điều khiển AR ở mục 1 nhận diện được thật và fallback chuột chơi đủ 100%; (3) phần còn lại. File chật thì làm đơn giản chi tiết trang trí, không cắt mục 2 và mục 3.
+
 1. Ý TƯỞNG
 - Cơ chế gốc (giữ nguyên): Di chuyển giỏ hứng quả mang phép tính đúng, né bom sai.
 - Vườn số rơi: quả mang phép tính và bom mang phép tính sai rơi tự do từ trên xuống; chiếc giỏ AR nằm sát mép dưới khung hình.

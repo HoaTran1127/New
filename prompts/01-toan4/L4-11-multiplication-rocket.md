@@ -6,29 +6,28 @@
 ```text
 Tạo game giáo dục web "TÊN LỬA PHÉP NHÂN" cho học sinh Việt Nam lớp 4, môn Toán.
 
+ƯU TIÊN theo đúng thứ tự: (1) học sinh đạt mục tiêu học tập ở mục 2; (2) điều khiển AR ở mục 1 nhận diện được thật và fallback chuột chơi đủ 100%; (3) phần còn lại. File chật thì làm đơn giản chi tiết trang trí, không cắt mục 2 và mục 3.
+
 1. Ý TƯỞNG
 - Bối cảnh: Bệ phóng tên lửa, mỗi tầng tên lửa là một phép nhân cần kích hoạt.
 - Việc của học sinh mỗi lượt: Đấm vào bảng phóng mang kết quả nhân đúng để đẩy tên lửa lên.
 - Điều khiển: Vung tay đấm (Punch). HandLandmarker: vị trí cổ tay (landmark 0) và mũi (landmark 15) để tính hướng đấm; độ gập các ngón để xác nhận nắm tay. Biên độ động tác: Đấm đổi tầm liên tục (trên vai – ngang ngực – dưới thắt lưng); cú đấm đi hết tay từ thế thủ trước ngực tới vật nằm sát mép khung.
 - Không có camera thì click vào vật để mô phỏng cú đấm; rê chuột lên vật không được tính.
-- Mascot: **Đạn Nhí** — sốt nóng chờ phóng. Ba câu thoại: khen "Bảng phóng khớp!" · đỡ khi sai "Kệ này chưa đúng đâu" · hô mở đầu "Năm bốn ba, phóng!".
-- Bảng màu riêng: `--miti-1: #FF6B35` (vật thể AR chính), `--miti-2: #F7C59F` (particle và viền hit), `--miti-3: #004E89` (điểm nhấn HUD).
-- Khoảnh khắc chữ ký: tên lửa dựng đứng rồi phóng lên, để lại một đường khói viết thành phép nhân. Đạo cụ AR neo vào người chơi: bục phóng ngay hông phải, rung nhẹ khi em chuẩn bị đấm.
-- Môn thể thao của game: **Boxing** — động tác đặc trưng "Đấm về phía trước", hiệu lệnh "Một — hai!", lời hay khi bạn sai "Bạn ra đòn gọn!", duỗi cơ cuối buổi "Duỗi ngực và vai mở".
-- Trò chơi dân gian dẫn dắt: **Ném còn** — cách chơi "Đẩy tay hất quả còn qua vòng", lời hô "Một hai ba, ném!", đồ dùng AR "vòng tròn".
+- Mascot **Đạn Nhí** (sốt nóng chờ phóng) — khen "Bảng phóng khớp!", hô mở đầu "Năm bốn ba, phóng!". Bảng màu: `--miti-1: #FF6B35` (vật thể AR), `--miti-2: #F7C59F` (particle, viền hit), `--miti-3: #004E89` (HUD).
+- Không khí giờ chơi (trang trí, được phép làm đơn giản): thể thao **Boxing** ("Đấm về phía trước", hạ nhiệt "Duỗi ngực và vai mở") · dân gian **Ném còn** (đồ dùng AR "vòng tròn") · khoảnh khắc chữ ký tên lửa dựng đứng rồi phóng lên, để lại một đường khói viết thành phép nhân · đạo cụ AR neo vào người chơi "bục phóng ngay hông phải, rung nhẹ khi em chuẩn bị đấm".
 - Vòng đầu tiên phải dễ để hiểu luật trong vài giây, không cần đọc hướng dẫn dài.
 
 2. MỤC TIÊU HỌC TẬP
 - Mục tiêu: bảng cửu chương 2–9; nhân số có 2–3 chữ số với số có 1 chữ số; nhân nhẩm với 11; nhân với 10 100 1000.
 - Mạch kiến thức: **Số và phép tính** — nhãn HUD "Phép nhân" · **Tuần 12–14 · Học kì I**. In nguyên văn mạch và nhãn tuần ở màn khởi động và màn tổng kết, nằm trong khối nút "Copy tờ rời".
 - Yêu cầu cần đạt (in NGUYÊN VĂN một dòng "Yêu cầu cần đạt: ..." ở màn khởi động và màn tổng kết, cấm viết lại hoặc tóm tắt): "Thuộc bảng nhân 2 đến 9; nhân được số có hai, ba chữ số với số có một chữ số; nhân nhẩm được với 11, 10, 100."
-- Mẹo nhớ (≤12 từ, bật ở cú đúng câu đầu cụm và sau câu sai cùng lỗi, mascot đọc to kèm một động tác 3 giây làm mẫu): "Nhân từng hàng rồi cộng, nhớ mang số nhớ."
+- Mẹo nhớ (bật ở cú đúng đầu cụm và sau câu sai cùng lỗi, mascot đọc to + làm mẫu 3 giây): "Nhân từng hàng rồi cộng, nhớ mang số nhớ."
 - Báo trước "Dễ nhầm" ở câu đầu tiên của cụm (≤16 từ, tắt sau 6 giây, không che đề): "nhân sai ở hàng chục khi nhân nhiều chữ số".
 - Lỗi học sinh thường mắc (mỗi câu sai ghi đúng một lỗi này): nhân sai ở hàng chục khi nhân nhiều chữ số; quên viết thêm chữ số 0; áp dụng sai quy tắc nhân nhẩm với 11.
 - Phạm vi: chỉ dùng nội dung Toán lớp 4 đã học; cấm số hoặc từ vựng ngoài phạm vi trên.
 - Toàn bộ lời giải phải dùng đúng thuật ngữ Toán của SGK Toán lớp 4; hiện lại phép tính theo cột dọc hoặc sơ đồ đoạn thẳng cho đúng dạng bài.
 - Điều kiện: hết 5 tim (mỗi đáp án sai trừ 1 tim) là thua, đủ 12 lượt là thắng và hiện tổng kết. Chống ăn may: phương án nhiễu phải là kết quả của một lỗi có thật trong danh sách lỗi trên, không phải số ngẫu nhiên; đáp án đúng không nằm cố định một vị trí.
-- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; thêm bốn dòng "Gửi bố mẹ": "Hôm nay con tập môn Boxing — <n> động tác" · "Con học Phép nhân, <k> câu đúng trên <tổng>" · "Mẹo con mang về: Nhân từng hàng rồi cộng, nhớ mang số nhớ." · "Việc 3 phút ở nhà: cả nhà cùng Đấm về phía trước rồi hỏi nhau miệng một đề vừa chơi" (thay <n>, <k>, <tổng> bằng số thật).
+- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; khối "Gửi bố mẹ" bốn dòng điền số thật: "<n> động tác môn Boxing" · "Phép nhân: <k>/<tổng> câu đúng" · "Mẹo con mang về: Nhân từng hàng rồi cộng, nhớ mang số nhớ." · "Việc 3 phút ở nhà: cả nhà cùng Đấm về phía trước".
 - Bộ sưu tập: mỗi màn thắng mở khóa 1 thẻ theo chủ đề Tên Lửa Phép Nhân, lưu localStorage key "miti-collection", có màn "Sưu tập của em".
 
 3. RÀNG BUỘC CỐT LÕI (thiếu bất kỳ dòng nào là hỏng)
@@ -52,7 +51,7 @@ Tạo game giáo dục web "TÊN LỬA PHÉP NHÂN" cho học sinh Việt Nam l�
 - Mỗi mục theo đúng khuôn: { id, level, prompt, choices, answer, explanation, errorTag, loiViet, dang }.
 - Tối thiểu 30 mục, chia 3 mức độ (level 1/2/3), mỗi mục một đáp án đúng duy nhất kiểm chứng được bằng code.
 - Mục `dang: "tinh"` phải tính lại được bằng ĐÚNG MỘT phép số học trong code, mục `dang: "nhin"` kiểm bằng số học hoặc số đo hình học, không so khớp chuỗi tự do; mỗi phương án nhiễu là một kết quả thật của lỗi đã nêu, không phải số ngẫu nhiên.
-- errorTag là mã máy của lỗi, lấy đúng một trong: sai_hang_chuc_khi_nhan, quen_them_chu_so_0, nham_11_sai_quy_tac. loiViet là cụm tiếng Việt có dấu in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, cùng chỉ lỗi đó và là thứ hiển thị cho học sinh. Mỗi câu sai lưu cả hai trường.
+- errorTag là mã máy của lỗi, lấy đúng một trong: sai_hang_chuc_khi_nhan, quen_them_chu_so_0, nham_11_sai_quy_tac. loiViet là cụm tiếng Việt in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, là thứ hiển thị cho học sinh; mỗi câu sai lưu cả hai trường.
 - Gợi ý hiển thị khi sai: tách phép nhân thành từng phần theo hàng rồi cộng lại (decomposition).
 - xáo trộn vị trí đáp án bằng thuật toán có seed theo lượt.
 - Hai mục mẫu để bám theo khuôn (viết tiếp 28 mục nữa, không được ít hơn):

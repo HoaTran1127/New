@@ -6,32 +6,31 @@
 ```text
 Tạo game giáo dục web "BẢN ĐỒ PHIÊU LƯU TIẾNG ANH" cho học sinh Việt Nam lớp 4, môn Tiếng Anh, chuẩn Pre A1 Starters (Pre-A1) của Cambridge.
 
+ƯU TIÊN theo đúng thứ tự: (1) học sinh đạt mục tiêu học tập ở mục 2; (2) điều khiển AR ở mục 1 nhận diện được thật và fallback chuột chơi đủ 100%; (3) phần còn lại. File chật thì làm đơn giản chi tiết trang trí, không cắt mục 2 và mục 3.
+
 1. Ý TƯỞNG
 - Bối cảnh: Quần đảo năm đảo kỹ năng: từ vựng, nghe, chính tả, câu, phát âm.
 - Việc của học sinh mỗi lượt: Chỉ tay mở khoá từng bến đảo, hoàn thành ba câu trên đảo để lấy huy hiệu.
 - Điều khiển: Chỉ ngón tay trỏ (Point). MediaPipe Tasks Vision HandLandmarker, đầu ngón trỏ landmark 8 làm con trỏ. Biên độ động tác: Ngón trỏ đi bằng cả cẳng tay: đáp án đặt ở bốn góc khác nhau của khung hình nên mỗi lượt là một lần duỗi khuỷu đổi hướng, không phải nhấc ngón ngay trước ngực.
 - Không có camera thì chạm hoặc click vào đáp án thay cho con trỏ ngón tay, giữ 400ms để chốt như khi giữ tay.
-- Mascot: **Đảo Con** — thích cắm cờ. Ba câu thoại: khen "Đảo mở rồi!" · đỡ khi sai "Câu này khó, thử lại" · hô mở đầu "Neo xuống đảo!".
-- Bảng màu riêng: `--miti-1: #277DA1` (vật thể AR chính), `--miti-2: #FFD65C` (particle và viền hit), `--miti-3: #F05655` (điểm nhấn HUD).
-- Khoảnh khắc chữ ký: năm đảo lần lượt sáng đèn và một lá cờ cắm xuống đảo vừa hoàn thành. Đạo cụ AR neo vào người chơi: bản đồ cuộn đeo lưng, mở ra khi em chỉ đảo.
-- Môn thể thao của game: **Bắn cung** — động tác đặc trưng "Giương tay chỉ đích", hiệu lệnh "Ngắm — phóng!", lời hay khi bạn sai "Bạn ngắm chuẩn quá!", duỗi cơ cuối buổi "Duỗi vai và cổ tay".
-- Trò chơi dân gian dẫn dắt: **Chi chi chành chành** — cách chơi "Ngón trỏ chạm ô rồi rút theo nhịp", lời hô "Chi chi chành chành", đồ dùng AR "vạch phấn".
+- Mascot **Đảo Con** (thích cắm cờ) — khen "Đảo mở rồi!", hô mở đầu "Neo xuống đảo!". Bảng màu: `--miti-1: #277DA1` (vật thể AR), `--miti-2: #FFD65C` (particle, viền hit), `--miti-3: #F05655` (HUD).
+- Không khí giờ chơi (trang trí, được phép làm đơn giản): thể thao **Bắn cung** ("Giương tay chỉ đích", hạ nhiệt "Duỗi vai và cổ tay") · dân gian **Chi chi chành chành** (đồ dùng AR "vạch phấn") · khoảnh khắc chữ ký năm đảo lần lượt sáng đèn và một lá cờ cắm xuống đảo vừa hoàn thành · đạo cụ AR neo vào người chơi "bản đồ cuộn đeo lưng, mở ra khi em chỉ đảo".
 - Vòng đầu tiên phải dễ để hiểu luật trong vài giây, không cần đọc hướng dẫn dài.
 
 2. MỤC TIÊU HỌC TẬP
 - Mục tiêu: bản đồ 5 đảo: từ vựng, nghe, chính tả, câu, phát âm; mỗi đảo 3 câu.
 - Band Cambridge: **Pre A1 Starters** (Pre-A1) — từ nền tảng: danh từ số ít/số nhiều, this/that, There is/are, can, like + V-ing, hiện tại đơn, tính từ sở hữu.
-- Trần từ vựng: chỉ dùng 541 từ thuộc Starters trở xuống, ưu tiên 49 từ của chủ đề động vật, trường học: animal, bee, bird, cat, chicken, cow, crocodile, dog, duck, elephant, fish, fly, frog, giraffe, goat, horse, lizard, monkey, mouse, pet, polar bear, sheep, snake, spider, tail, tiger, zebra, English, …. Cấm mọi từ lần đầu xuất hiện ở band cao hơn; từ SGK Việt Nam ngoài danh sách trên chỉ được dùng nếu đã học ở Tiếng Anh lớp 4.
-- Trần ngữ pháp: chỉ dùng 8 cấu trúc của Starters — Hiện tại đơn với like / love / hate ("I like swimming. / She likes cats.") · can chỉ năng lực ("I can ride a bike. / Can you swim?") · There is / There are ("There is a book on the desk. / There are two chairs.") · this / that, these / those ("What's this? — It's a pen.") · Danh từ số ít – số nhiều ("one cat – three cats / one box – two boxes") · Tính từ sở hữu ("my, your, his, her, our, their + bag") · Câu hỏi What / Where / Who / How many ("Where is the dog? — It’s under the table.") · a / an và giới từ in / on / under ("an apple, a ball, in the box, under the chair").
+- Trần từ vựng: chỉ dùng 541 từ thuộc Starters trở xuống, ưu tiên 49 từ của chủ đề động vật, trường học: animal, bee, bird, cat, chicken, cow, crocodile, dog, duck, elephant, fish, fly, frog, giraffe, goat, horse, lizard, monkey, mouse, pet, …. Cấm mọi từ lần đầu xuất hiện ở band cao hơn; từ SGK Việt Nam ngoài danh sách trên chỉ được dùng nếu đã học ở Tiếng Anh lớp 4.
+- Trần ngữ pháp: chỉ dùng 8 cấu trúc của Starters — Hiện tại đơn với like / love / hate ("I like swimming.") · can chỉ năng lực ("I can ride a bike.") · There is / There are ("There is a book on the desk.") · this / that, these / those ("What's this? — It's a pen.") · Danh từ số ít – số nhiều ("one cat – three cats") · Tính từ sở hữu ("my, your, his, her, our, their + bag") · Câu hỏi What / Where / Who / How many ("Where is the dog? — It’s under the table.") · a / an và giới từ in / on / under ("an apple, a ball, in the box, under the chair").
 - Mạch kiến thức: **Ôn tập tổng hợp** — nhãn HUD "Ôn kỹ năng Tiếng Anh" · **Tuần 30–35 · Học kì II**. In nguyên văn mạch và nhãn tuần ở màn khởi động và màn tổng kết, nằm trong khối nút "Copy tờ rời".
 - Yêu cầu cần đạt (in NGUYÊN VĂN một dòng "Yêu cầu cần đạt: ..." ở màn khởi động và màn tổng kết, cấm viết lại hoặc tóm tắt): "Vận dụng tổng hợp từ vựng, nghe, chính tả, đặt câu và phát âm ở mỗi đảo của bản đồ."
-- Mẹo nhớ (≤12 từ, bật ở cú đúng câu đầu cụm và sau câu sai cùng lỗi, mascot đọc to kèm một động tác 3 giây làm mẫu): "Một đảo một kỹ năng, đừng vội sang đảo sau."
+- Mẹo nhớ (bật ở cú đúng đầu cụm và sau câu sai cùng lỗi, mascot đọc to + làm mẫu 3 giây): "Một đảo một kỹ năng, đừng vội sang đảo sau."
 - Báo trước "Dễ nhầm" ở câu đầu tiên của cụm (≤16 từ, tắt sau 6 giây, không che đề): "chuyển đảo liên tiếp gây nhầm kỹ năng".
 - Lỗi học sinh thường mắc (mỗi câu sai ghi đúng một lỗi này): chuyển đảo liên tiếp gây nhầm kỹ năng; không đạt chuẩn để mở đảo kế; bỏ đảo khó.
 - Phạm vi: chỉ dùng nội dung Tiếng Anh lớp 4 đã học và trong đúng band Starters; cấm số hoặc từ vựng ngoài phạm vi trên.
 - Từ và câu tiếng Anh là học liệu, giữ nguyên tiếng Anh; mọi hướng dẫn, nút bấm, lời giải thích bằng tiếng Việt. Dùng window.speechSynthesis (en-US hoặc en-GB) đọc to từ/câu khi trả lời đúng, có nút phát lại.
 - Điều kiện: hết 5 tim (mỗi đáp án sai trừ 1 tim) là thua, đủ 12 lượt là thắng và hiện tổng kết. Chống ăn may: phương án nhiễu phải là kết quả của một lỗi có thật trong danh sách lỗi trên, không phải số ngẫu nhiên; đáp án đúng không nằm cố định một vị trí.
-- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; thêm bốn dòng "Gửi bố mẹ": "Hôm nay con tập môn Bắn cung — <n> động tác" · "Con học Ôn kỹ năng Tiếng Anh, <k> câu đúng trên <tổng>" · "Mẹo con mang về: Một đảo một kỹ năng, đừng vội sang đảo sau." · "Việc 3 phút ở nhà: cả nhà cùng Giương tay chỉ đích rồi hỏi nhau miệng một đề vừa chơi" (thay <n>, <k>, <tổng> bằng số thật).
+- Màn tổng kết: ba thẻ "Làm tốt / Cần luyện / Động tác lần sau", nhóm câu sai theo errorTag kèm số lượt, không chỉ báo điểm; khối "Gửi bố mẹ" bốn dòng điền số thật: "<n> động tác môn Bắn cung" · "Ôn kỹ năng Tiếng Anh: <k>/<tổng> câu đúng" · "Mẹo con mang về: Một đảo một kỹ năng, đừng vội sang đảo sau." · "Việc 3 phút ở nhà: cả nhà cùng Giương tay chỉ đích".
 - Bộ sưu tập: mỗi màn thắng mở khóa 1 thẻ theo chủ đề Bản Đồ Phiêu Lưu Tiếng Anh, lưu localStorage key "miti-collection", có màn "Sưu tập của em".
 
 3. RÀNG BUỘC CỐT LÕI (thiếu bất kỳ dòng nào là hỏng)
@@ -56,7 +55,7 @@ Tạo game giáo dục web "BẢN ĐỒ PHIÊU LƯU TIẾNG ANH" cho học sinh 
 - Tối thiểu 60 mục, chia 3 mức độ (level 1/2/3), mỗi mục một đáp án đúng duy nhất kiểm chứng được bằng code.
 - Mỗi mục có từ hoặc câu tiếng Anh, gợi nghĩa tiếng Việt, phiên âm khi phù hợp, và audio bằng window.speechSynthesis; đáp án là chuỗi cố định.
 - Chia mức theo band: level 1 lấy từ và cấu trúc cơ bản nhất của Starters; level 3 vẫn nằm trong Starters, tăng độ khó bằng câu dài hơn và phương án gần nghĩa hơn, không tăng bằng từ ngoài band.
-- errorTag là mã máy của lỗi, lấy đúng một trong: xen_ke_ky_nang_gay_nhieu_loi, khong_dat_chuan_do_nang, bo_dao_thu. loiViet là cụm tiếng Việt có dấu in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, cùng chỉ lỗi đó và là thứ hiển thị cho học sinh. Mỗi câu sai lưu cả hai trường.
+- errorTag là mã máy của lỗi, lấy đúng một trong: xen_ke_ky_nang_gay_nhieu_loi, khong_dat_chuan_do_nang, bo_dao_thu. loiViet là cụm tiếng Việt in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, là thứ hiển thị cho học sinh; mỗi câu sai lưu cả hai trường.
 - Gợi ý hiển thị khi sai: sau mỗi đảo hiện huy hiệu và danh sách từ cần luyện lại.
 - xáo trộn vị trí đáp án bằng thuật toán có seed theo lượt.
 - Hai mục mẫu để bám theo khuôn (viết tiếp 58 mục nữa, không được ít hơn):
