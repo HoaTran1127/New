@@ -24,7 +24,7 @@ Mỗi file là **prompt độc lập** — không cần Gemini biết repository
 |:---|:---|:---|
 | **1. Ý TƯỞNG** | bối cảnh, nhiệm vụ mỗi lượt, cơ chế + cử chỉ, biên độ động tác, mascot + ba câu thoại, bảng màu, khoảnh khắc chữ ký, đạo cụ AR, môn thể thao, trò chơi dân gian | `tools/data/games.mjs`, `gestures.mjs`, `identities.mjs`, `sports.mjs`, `folk.mjs` |
 | **2. MỤC TIÊU HỌC TẬP** | mục tiêu, mạch kiến thức + nhãn HUD, tuần học, "Yêu cầu cần đạt" nguyên văn, mẹo nhớ, "Dễ nhầm", lỗi thường mắc, phạm vi, điều kiện thắng/thua, chống ăn may, màn tổng kết + bốn dòng "Gửi bố mẹ", bộ sưu tập | `tools/data/clusters.mjs`, `standards.mjs`, `error-notes.mjs` |
-| **3. RÀNG BUỘC CỐT LÕI** | 14 dòng: 1 file HTML · camera tắt mặc định · MediaPipe Tasks Vision `@1.0.1` + `toScreen` · gesture chống spam · fallback chuột · không điểm/xếp hạng/timer · vận động thật + 5 bước · luân phiên 4 em · accessibility · tự Pause · chữ ký MiTi · không TODO | `tools/lib/core.mjs` (nơi **duy nhất** để đổi quy định chung) |
+| **3. RÀNG BUỘC CỐT LÕI** | 14 dòng: 1 file HTML + 3 ảnh `.webp` trong `assets/` (Canva) · camera tắt mặc định · MediaPipe Tasks Vision `@1.0.1` + `toScreen` · gesture chống spam · fallback chuột · không điểm/xếp hạng/timer · vận động thật + 5 bước · luân phiên 4 em · accessibility · tự Pause · chữ ký MiTi · không TODO | `tools/lib/core.mjs` (nơi **duy nhất** để đổi quy định chung) |
 | **4. NGÂN HÀNG DỮ LIỆU** | khuôn `QUESTION_DATA` `{ id, level, prompt, choices, answer, explanation, errorTag, loiViet, dang }`, số mục tối thiểu, hai mục mẫu, ràng buộc phương án nhiễu | `tools/data/examples.mjs`, `gestures.mjs` (`BANK`) |
 | **5. TỰ KIỂM TRA TRƯỚC KHI XUẤT** | một dòng liệt kê ràng buộc cốt lõi + check ngân hàng dữ liệu | sinh từ `CORE_SHORT` |
 

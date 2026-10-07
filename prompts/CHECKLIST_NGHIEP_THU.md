@@ -5,8 +5,8 @@
 
 ## A. 14 mục theo ràng buộc cốt lõi — làm theo đúng từng dòng
 
-- [ ] 1 file HTML duy nhất: `<style>` và `<script>` nội tuyến; không Tailwind Play CDN, không file .css/.js/.json/ảnh/mp3 ngoài; chỉ được tải MediaPipe (CDN + model) và font có dự phòng.
-  - Cách thử: Mở file nguồn, tìm `<link`, `<script src`, `fetch(`: chỉ MediaPipe và font được tải ngoài; mở trực tiếp bằng trình duyệt là chạy.
+- [ ] 1 file HTML duy nhất: `<style>`/`<script>` nội tuyến; không Tailwind Play CDN, không .css/.js/.json/mp3 ngoài; đồ hoạ chỉ dùng 3 file `.webp` trong `assets/` (`nen` bối cảnh, `mascot`, `vat-the` đạo cụ AR); cấm bịa URL ảnh, cấm base64, cấm emoji thay ảnh; thiếu file thì khối bo góc `--miti-1` + chữ, game vẫn chơi; chỉ tải MediaPipe (CDN + model) và font có dự phòng.
+  - Cách thử: Mở file nguồn, tìm `<link`, `<script src`, `fetch(`, `http` trong `src=`: ngoài MediaPipe và font, ảnh phải là `.webp` nội tuyến trong `assets/`; xoá tạm một file ảnh thì game vẫn chơi.
 - [ ] Camera mặc định TẮT, có nút bật/tắt không cần tải lại trang; chỉ xin quyền camera SAU khi học sinh bấm BẮT ĐẦU; trạng thái bằng tiếng Việt (Đang tải → Xin quyền camera → Camera sẵn sàng → Đang nhận diện → Lỗi + nút Thử lại). Không upload ảnh/video, chỉ giữ landmark trong bộ nhớ, không thu thập dữ liệu cá nhân.
   - Cách thử: Mở game mới tinh: vào tới màn Bắt đầu không bị hỏi quyền camera; bấm BẮT ĐẦU rồi mới thấy lời xin quyền, trạng thái bằng tiếng Việt.
 - [ ] MediaPipe Tasks Vision, import từ `@mediapipe/tasks-vision@1.0.1`; cấu hình `getUserMedia({ video: { facingMode: "user", width: { ideal: 640 }, height: { ideal: 480 }, frameRate: { ideal: 30 } } })`, lật gương ngang cả khi hiển thị lẫn khi tính tọa độ; trình duyệt chặn camera thì báo một dòng tiếng Việt rồi vào thẳng chế độ không camera.
@@ -29,7 +29,7 @@
   - Cách thử: Switch sang tab khác 10 giây rồi quay lại: game phải tự Pause và đếm 3-2-1 trước khi chơi tiếp.
 - [ ] Mỗi lượt chỉ một ý, đề ≤16 từ. Toàn bộ UI, tên nút, hướng dẫn, thông báo lỗi và lời giải bằng TIẾNG VIỆT (học liệu tiếng Anh giữ nguyên tiếng Anh); không để thuật ngữ kỹ thuật (confidence, cooldown, fallback) hiện trước mặt học sinh.
   - Cách thử: Đọc to đề câu đầu tiên một lần: nghe một lần là hiểu phải làm gì; quét màn hình tìm chữ kỹ thuật (confidence, cooldown, fallback) — không được hiện.
-- [ ] Chữ ký MiTi: ô bo góc `#FFD84D` chứa chữ M màu `#07111F` + chữ MiTi đậm + dấu ✦ nhỏ, inline SVG/CSS, không hotlink ảnh ngoài; xuất hiện ở màn Bắt đầu, HUD khi chơi và màn Kết quả; kèm dòng "MiTi • Học bằng chuyển động"; không xóa hay đổi tên ở chế độ không camera.
+- [ ] Chữ ký MiTi: ô bo góc `#FFD84D` chứa chữ M màu `#07111F` + chữ MiTi đậm + dấu ✦ nhỏ, inline SVG/CSS; xuất hiện ở màn Bắt đầu, HUD khi chơi và màn Kết quả; kèm dòng "MiTi • Học bằng chuyển động"; không xóa hay đổi tên ở chế độ không camera.
   - Cách thử: Kiểm logo MiTi ở cả ba màn Bắt đầu / HUD khi chơi / Kết quả, kèm dòng "MiTi • Học bằng chuyển động"; tắt camera vẫn còn nguyên.
 - [ ] Chỉ xuất toàn bộ file HTML hoàn chỉnh: không TODO, không pseudocode, không "...", không phần "bạn tự bổ sung", không giải thích dài.
   - Cách thử: Không dòng TODO, không "...", không pseudocode trong file; mở Console trình duyệt: hết một phiên không có lỗi đỏ.

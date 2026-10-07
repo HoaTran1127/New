@@ -40,7 +40,7 @@ Hãy tạo một WEB GAME GIÁO DỤC HOÀN CHỈNH mà học sinh đứng trư�
 - Bộ sưu tập: mỗi màn thắng mở khóa 1 thẻ theo chủ đề game, lưu localStorage key "miti-collection", có màn "Sưu tập của em".
 
 3. RÀNG BUỘC CỐT LÕI (thiếu bất kỳ dòng nào là hỏng)
-- 1 file HTML duy nhất: `<style>` và `<script>` nội tuyến; không Tailwind Play CDN, không file .css/.js/.json/ảnh/mp3 ngoài; chỉ được tải MediaPipe (CDN + model) và font có dự phòng.
+- 1 file HTML duy nhất: `<style>`/`<script>` nội tuyến; không Tailwind Play CDN, không .css/.js/.json/mp3 ngoài; đồ hoạ chỉ dùng 3 file `.webp` trong `assets/` (`nen` bối cảnh, `mascot`, `vat-the` đạo cụ AR); cấm bịa URL ảnh, cấm base64, cấm emoji thay ảnh; thiếu file thì khối bo góc `--miti-1` + chữ, game vẫn chơi; chỉ tải MediaPipe (CDN + model) và font có dự phòng.
 - Camera mặc định TẮT, có nút bật/tắt không cần tải lại trang; chỉ xin quyền camera SAU khi học sinh bấm BẮT ĐẦU; trạng thái bằng tiếng Việt (Đang tải → Xin quyền camera → Camera sẵn sàng → Đang nhận diện → Lỗi + nút Thử lại). Không upload ảnh/video, chỉ giữ landmark trong bộ nhớ, không thu thập dữ liệu cá nhân.
 - MediaPipe Tasks Vision, import từ `@mediapipe/tasks-vision@1.0.1`; cấu hình `getUserMedia({ video: { facingMode: "user", width: { ideal: 640 }, height: { ideal: 480 }, frameRate: { ideal: 30 } } })`, lật gương ngang cả khi hiển thị lẫn khi tính tọa độ; trình duyệt chặn camera thì báo một dòng tiếng Việt rồi vào thẳng chế độ không camera.
 - Mọi tọa độ đi qua `toScreen(lx, ly)`; nền AR là chính khung hình camera với lớp phủ tối không vượt 0.45; vật thể có `z`, có bóng dưới chân và có ít nhất một vật ảo neo vào landmark cơ thể.
@@ -52,7 +52,7 @@ Hãy tạo một WEB GAME GIÁO DỤC HOÀN CHỈNH mà học sinh đứng trư�
 - Mọi học sinh dùng được: không chỉ báo hiệu bằng màu (kèm hình hoặc chữ), phụ đề tiếng Việt cho mọi âm thanh, chữ đề ≥28px desktop và ≥20px điện thoại, responsive dọc và ngang, nút Giảm hiệu ứng chuyển động, không nhấp nháy quá 3Hz, vùng chơi an toàn có thảm/cọc tiêu cảnh báo và nút "Chơi chậm lại" không bị trừ tim.
 - Tab ẩn hoặc mất tiêu điểm là tự Pause, quay lại đếm 3-2-1. Máy yếu: nhận diện 1 lần mỗi 2–3 khung hình, particle dùng pool, tự giảm chi tiết khi FPS tụt.
 - Mỗi lượt chỉ một ý, đề ≤16 từ. Toàn bộ UI, tên nút, hướng dẫn, thông báo lỗi và lời giải bằng TIẾNG VIỆT (học liệu tiếng Anh giữ nguyên tiếng Anh); không để thuật ngữ kỹ thuật (confidence, cooldown, fallback) hiện trước mặt học sinh.
-- Chữ ký MiTi: ô bo góc `#FFD84D` chứa chữ M màu `#07111F` + chữ MiTi đậm + dấu ✦ nhỏ, inline SVG/CSS, không hotlink ảnh ngoài; xuất hiện ở màn Bắt đầu, HUD khi chơi và màn Kết quả; kèm dòng "MiTi • Học bằng chuyển động"; không xóa hay đổi tên ở chế độ không camera.
+- Chữ ký MiTi: ô bo góc `#FFD84D` chứa chữ M màu `#07111F` + chữ MiTi đậm + dấu ✦ nhỏ, inline SVG/CSS; xuất hiện ở màn Bắt đầu, HUD khi chơi và màn Kết quả; kèm dòng "MiTi • Học bằng chuyển động"; không xóa hay đổi tên ở chế độ không camera.
 - Chỉ xuất toàn bộ file HTML hoàn chỉnh: không TODO, không pseudocode, không "...", không phần "bạn tự bổ sung", không giải thích dài.
 
 4. NGÂN HÀNG DỮ LIỆU (QUESTION_DATA)
@@ -91,6 +91,17 @@ Hãy tạo một WEB GAME GIÁO DỤC HOÀN CHỈNH mà học sinh đứng trư�
 | `VOICE` | Nói | Web Speech API SpeechRecognition (en-US/en-GB), không dùng MediaPipe |
 
 Model bắt buộc theo mã: `STEP`, `TWO_HAND_STRETCH`, `TWO_HAND_BALANCE`, `ANGLE_POSE` dùng PoseLandmarker; các mã Hand còn lại dùng HandLandmarker. Mỗi game tối đa 2 mã, mã đầu là cơ chế chính; mã phụ chỉ dùng cho thao tác phụ và không được tranh chấp với mã chính.
+
+## Ảnh đồ hoạ — lấy từ Canva, đừng để Gemini tự bịa
+
+Gemini chỉ được tham chiếu file có thật trong `games/<ten-game>/assets/`; prompt không nêu URL ảnh nào khác. Bốn bước:
+
+1. Canva: `mascot` 512×512, `vat-the` 512×512, `nen` 1600×900, cùng bảng màu `--miti-1/2/3` của game.
+2. Share → Download → PNG nền trong suốt (Canva Free thì xuất nền trắng rồi tách nền sau).
+3. Đổi tên không dấu, convert WebP chất lượng 80: sprite ≤30 KB, nền ≤120 KB. Bản đang chạy `l4-05-nha-may-khoi-luong`: 4 file, 22–116 KB, cả 4 trả về 200 trên Pages.
+4. Upload vào `games/<ten-game>/assets/` trước, rồi dán prompt — tên file phải khớp từng chữ.
+
+Thiếu ảnh thì game tự thay bằng khối bo góc `--miti-1` kèm chữ nên vẫn chơi được. Đó là lý do phải cấm emoji và cấm URL bịa: hai thứ này không báo lỗi, chỉ làm game trông rẻ tiền.
 
 ## Vì sao prompt ngắn lại (ghi chú cho tác giả)
 

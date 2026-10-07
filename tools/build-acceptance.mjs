@@ -13,7 +13,7 @@ const LIMIT = 10000;
 
 // Cách thử — một câu, đúng thứ tự CORE_LINES.
 const CACH_THU = [
-  'Mở file nguồn, tìm `<link`, `<script src`, `fetch(`: chỉ MediaPipe và font được tải ngoài; mở trực tiếp bằng trình duyệt là chạy.',
+  'Mở file nguồn, tìm `<link`, `<script src`, `fetch(`, `http` trong `src=`: ngoài MediaPipe và font, ảnh phải là `.webp` nội tuyến trong `assets/`; xoá tạm một file ảnh thì game vẫn chơi.',
   'Mở game mới tinh: vào tới màn Bắt đầu không bị hỏi quyền camera; bấm BẮT ĐẦU rồi mới thấy lời xin quyền, trạng thái bằng tiếng Việt.',
   'Tìm chuỗi `tasks-vision@1.0.1` và `facingMode: "user"` trong nguồn; bật camera lên thì hình phải lộn gương như soi kính.',
   'Cho một em đứng lệch trái khung hình: vật thể AR và bóng dưới chân phải đi theo em, không lệch pha; chữ vẫn đọc được sau lớp phủ.',
