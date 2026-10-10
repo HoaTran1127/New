@@ -1,11 +1,11 @@
 # ✅ BẢNG KIỂM NGHIỆM THU GAME MiTi
 
 > Do `tools/build-acceptance.mjs` sinh ra từ `CORE_LINES` trong `tools/lib/core.mjs`. Đừng sửa tay file này — đổi ràng buộc cốt lõi trong lib rồi chạy lại script.
-> Dùng khi: bạn vừa dán một prompt vào **Google Gemini (chế độ Canvas)**, nhận về một file HTML, và cần biết nó có đạt chuẩn MiTi không trước khi cho học sinh chơi. Khoảng 10–15 phút một game; in ra giấy hoặc mở trên điện thoại.
+> Dùng khi: bạn vừa dán một prompt vào **Google Gemini (chế độ Canvas)**, nhận về một file HTML, và cần biết nó có đạt chuẩn MiTi không trước khi cho học sinh chơi; in ra giấy hoặc mở trên điện thoại.
 
 ## A. 14 mục theo ràng buộc cốt lõi — làm theo đúng từng dòng
 
-- [ ] 1 file HTML duy nhất: `<style>`/`<script>` nội tuyến; không Tailwind Play CDN, không .css/.js/.json/mp3 ngoài; đồ hoạ chỉ dùng 3 file `.webp` trong `assets/` (`nen` bối cảnh, `mascot`, `vat-the` đạo cụ AR); cấm bịa URL ảnh, cấm base64, cấm emoji thay ảnh; thiếu file thì khối bo góc `--miti-1` + chữ, game vẫn chơi; chỉ tải MediaPipe (CDN + model) và font có dự phòng.
+- [ ] 1 file HTML duy nhất: `<style>`/`<script>` nội tuyến; không Tailwind Play CDN, không .css/.js/.json/mp3 ngoài; đồ hoạ VẼ BẰNG SVG INLINE / CSS / CANVAS 2D do code tự sinh (mascot, nền, đạo cụ là hình vector chi tiết đúng bảng màu, không dùng file ảnh ngoài); cấm bịa URL ảnh, cấm base64, cấm emoji thay ảnh; chỉ tải MediaPipe (CDN + model) và font có dự phòng.
   - Cách thử: Mở file nguồn, tìm `<link`, `<script src`, `fetch(`, `http` trong `src=`: ngoài MediaPipe và font, ảnh phải là `.webp` nội tuyến trong `assets/`; xoá tạm một file ảnh thì game vẫn chơi.
 - [ ] Camera mặc định TẮT, có nút bật/tắt không cần tải lại trang; chỉ xin quyền camera SAU khi học sinh bấm BẮT ĐẦU; trạng thái bằng tiếng Việt (Đang tải → Xin quyền camera → Camera sẵn sàng → Đang nhận diện → Lỗi + nút Thử lại). Không upload ảnh/video, chỉ giữ landmark trong bộ nhớ, không thu thập dữ liệu cá nhân.
   - Cách thử: Mở game mới tinh: vào tới màn Bắt đầu không bị hỏi quyền camera; bấm BẮT ĐẦU rồi mới thấy lời xin quyền, trạng thái bằng tiếng Việt.
@@ -66,4 +66,4 @@ Không tay sửa file HTML. Dán lại nguyên văn dòng ràng buộc tương �
 
 **Riêng tư:** bảng này chỉ tồn tại trên máy của bạn; game không upload ảnh, video hay kết quả nghiệm thu lên bất kỳ máy chủ nào.
 
-*Miti • Học bằng chuyển động — bản chuẩn: `prompts/00-master-canvas-prompt.md` · 85 prompt: `catalogs/GAME_CATALOG.md`*
+*Miti • Học bằng chuyển động — bản chuẩn: `prompts/00-master-canvas-prompt.md` · 86 prompt: `catalogs/GAME_CATALOG.md`*
