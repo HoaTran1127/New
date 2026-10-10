@@ -34,7 +34,7 @@ Tạo game giáo dục web "BẢN ĐỒ PHIÊU LƯU TIẾNG ANH" cho học sinh 
 - Bộ sưu tập: mỗi màn thắng mở khóa 1 thẻ theo chủ đề Bản Đồ Phiêu Lưu Tiếng Anh, lưu localStorage key "miti-collection", có màn "Sưu tập của em".
 
 3. RÀNG BUỘC CỐT LÕI (thiếu bất kỳ dòng nào là hỏng)
-- 1 file HTML duy nhất: `<style>`/`<script>` nội tuyến; không Tailwind Play CDN, không .css/.js/.json/mp3 ngoài; đồ hoạ chỉ dùng 3 file `.webp` trong `assets/` (`nen` bối cảnh, `mascot`, `vat-the` đạo cụ AR); cấm bịa URL ảnh, cấm base64, cấm emoji thay ảnh; thiếu file thì khối bo góc `--miti-1` + chữ, game vẫn chơi; chỉ tải MediaPipe (CDN + model) và font có dự phòng.
+- 1 file HTML duy nhất: `<style>`/`<script>` nội tuyến; không Tailwind Play CDN, không .css/.js/.json/mp3 ngoài; đồ hoạ VẼ BẰNG SVG INLINE / CSS / CANVAS 2D do code tự sinh (mascot, nền, đạo cụ là hình vector chi tiết đúng bảng màu, không dùng file ảnh ngoài); cấm bịa URL ảnh, cấm base64, cấm emoji thay ảnh; chỉ tải MediaPipe (CDN + model) và font có dự phòng.
 - Camera mặc định TẮT, có nút bật/tắt không cần tải lại trang; chỉ xin quyền camera SAU khi học sinh bấm BẮT ĐẦU; trạng thái bằng tiếng Việt (Đang tải → Xin quyền camera → Camera sẵn sàng → Đang nhận diện → Lỗi + nút Thử lại). Không upload ảnh/video, chỉ giữ landmark trong bộ nhớ, không thu thập dữ liệu cá nhân.
 - MediaPipe Tasks Vision, import từ `@mediapipe/tasks-vision@1.0.1`; cấu hình `getUserMedia({ video: { facingMode: "user", width: { ideal: 640 }, height: { ideal: 480 }, frameRate: { ideal: 30 } } })`, lật gương ngang cả khi hiển thị lẫn khi tính tọa độ; trình duyệt chặn camera thì báo một dòng tiếng Việt rồi vào thẳng chế độ không camera.
 - Mọi tọa độ đi qua `toScreen(lx, ly)`; nền AR là chính khung hình camera với lớp phủ tối không vượt 0.45; vật thể có `z`, có bóng dưới chân và có ít nhất một vật ảo neo vào landmark cơ thể.
@@ -58,6 +58,7 @@ Tạo game giáo dục web "BẢN ĐỒ PHIÊU LƯU TIẾNG ANH" cho học sinh 
 - errorTag là mã máy của lỗi, lấy đúng một trong: xen_ke_ky_nang_gay_nhieu_loi, khong_dat_chuan_do_nang, bo_dao_thu. loiViet là cụm tiếng Việt in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, là thứ hiển thị cho học sinh; mỗi câu sai lưu cả hai trường.
 - Gợi ý hiển thị khi sai: sau mỗi đảo hiện huy hiệu và danh sách từ cần luyện lại.
 - xáo trộn vị trí đáp án bằng thuật toán có seed theo lượt.
+- Chấm bằng SO SÁNH GIÁ TRỊ với `answer` (chuẩn hóa khoảng trắng hai đầu), KHÔNG chấm bằng chỉ số vị trí; mỗi câu đúng một lựa chọn trùng `answer`.
 - Hai mục mẫu để bám theo khuôn (viết tiếp 58 mục nữa, không được ít hơn):
   id: "q1", level: 1, prompt: "Bến Từ vựng: chọn nghĩa của \"apple\".", choices: ["quả táo","quả cam","quả chuối"], answer: "quả táo", explanation: "apple = quả táo; orange = quả cam, banana = quả chuối.", errorTag: "bo_dao_thu", dang: "nhin", loiViet: "bỏ đảo khó"
   id: "q2", level: 2, prompt: "Bến Nghe: đảo kế tiếp mở khi đủ 3/3 câu đúng, em mới sai 1 câu. Làm gì?", choices: ["nghe lại và sửa câu còn sai","chuyển ngay sang đảo khác","bỏ luôn đảo này"], answer: "nghe lại và sửa câu còn sai", explanation: "Chuẩn mở đảo là 3/3 câu đúng, nên sửa câu còn sai thay vì bỏ dở.", errorTag: "khong_dat_chuan_do_nang", dang: "nhin", loiViet: "không đạt chuẩn để mở đảo kế"
