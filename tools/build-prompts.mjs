@@ -114,6 +114,7 @@ ${CORE}
 - errorTag là mã máy của lỗi, lấy đúng một trong: ${cl.tags.join(', ')}. loiViet là cụm tiếng Việt in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, là thứ hiển thị cho học sinh; mỗi câu sai lưu cả hai trường.
 - Gợi ý hiển thị khi sai: ${cl.giai_thich}.
 - xáo trộn vị trí đáp án bằng thuật toán có seed theo lượt.
+- Chấm bằng SO SÁNH GIÁ TRỊ với \`answer\` (chuẩn hóa khoảng trắng hai đầu), KHÔNG chấm bằng chỉ số vị trí; mỗi câu đúng một lựa chọn trùng \`answer\`.
 - Hai mục mẫu để bám theo khuôn (viết tiếp ${bank.so - 2} mục nữa, không được ít hơn):
 ${jsonBlock(ex, cl.tags, errList.split('; '))}
 

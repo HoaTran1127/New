@@ -111,6 +111,13 @@ export const SPORTS = {
     loiHay: 'Bạn đếm đúng nhịp!',
     duoiCo: 'Duỗi cổ chân ngồi thấp',
   },
+  SWAT: {
+    mon: 'Cầu lông',
+    dongTac: 'Vụt vợt đập cầu',
+    hieuLenh: 'Đập!',
+    loiHay: 'Cú đập đẹp quá!',
+    duoiCo: 'Duỗi vai và cánh tay',
+  },
 };
 
 export function sport(code) {

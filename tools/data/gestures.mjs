@@ -159,6 +159,17 @@ export const GESTURES = {
     ar: 'Bốn thẻ đáp án treo ở bốn góc theo z (xa nhỏ và mờ, gần to và rực); vòng tiến trình neon vẽ quanh cổ tay thật tại toScreen(landmark 0) và lấp dần khi học sinh giữ yên số ngón; chốt đúng thì thẻ bay từ z 1.6 về z 0.35 rồi nổ ngay tại bàn tay, có bóng đổ dưới "sàn" ảo.',
     fallback: 'bấm phím số 1–4 hoặc chạm vào thẻ đáp án mang số tương ứng',
   },
+  SWAT: {
+    vi: 'Đập / vụt bằng vật cầm tay (Swat)',
+    bien_do: 'Vụt từ vai xuống bằng cả cánh tay, tay cầm cuộn báo/vợt đập ruồi hoặc tay không; đầu vật đi quãng dài tới mục tiêu và đổi hướng vụt giữa các lượt, không phải cú hất cổ tay ngay trước mặt.',
+    landmark: 'HandLandmarker; cổ tay (landmark 0) và đầu ngón giữa (landmark 12) để tính hướng và tốc độ vụt của đầu vật.',
+    hinh_hoc: 'Cú đập hợp lệ khi đồng thời: tốc độ cổ tay vượt ngưỡng kích hoạt, hướng chuyển động đi xuống (góc vụt hợp với phương thẳng đứng dưới 60°) VÀ điểm chạm (điểm kéo dài từ cổ tay qua ngón giữa) nằm trong hitbox của mục tiêu. Vụt trúng không khí (không chạm mục tiêu) không bị trừ tim.',
+    muot: 'Hysteresis hai ngưỡng (ngưỡng kích hoạt cao hơn ngưỡng nhả); cooldown 350ms giữa hai cú đập; lưu quỹ đạo 6 khung hình gần nhất để xác định hướng vụt.',
+    nguong: 'Không có "đập ảo": nếu tay đứng yên thì không có event dù điểm chạm đè lên mục tiêu; confidence bàn tay >= 0.6.',
+    nguoi_choi: 'Cây vợt/vật đập neon nối dài từ tay; chuột thò đầu từ các lỗ kèm thẻ số; đập trúng thì chuột thụt xuống lỗ và 12 hạt sao tung ra, đập sai thì lỗ rung lắc cảnh báo.',
+    ar: 'Cây vợt/vật đập ảo nối dài từ tay thật (toScreen của đoạn landmark 0→12, cập nhật mỗi khung hình) nên đầu vật đập chạm đúng vị trí tay vươn tới; các lỗ chuột đặt ở độ sâu z khác nhau trong khung hình, lỗ xa nhỏ và mờ hơn; đập trúng thì con chuột thụt xuống lỗ theo z rồi biến mất kèm 12 hạt sao, bóng lỗ co lại như vật chiếm không gian thật.',
+    fallback: 'click nhanh vào mục tiêu để mô phỏng cú đập',
+  },
 };
 
 // Khối dữ liệu chuẩn theo môn

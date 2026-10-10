@@ -1,4 +1,4 @@
-// Đặc thù 85 game: gesture thay cho MIXED, bối cảnh, mục tiêu, nhiệm vụ, cụm kiến thức.
+// Đặc thù 86 game: gesture thay cho MIXED, bối cảnh, mục tiêu, nhiệm vụ, cụm kiến thức.
 // Đây là nguồn duy nhất để sinh prompt + catalog + dashboard.
 // Gestures tối đa 2 mã: một mechanic chính, mã thứ hai chỉ là thao tác phụ.
 // Hàng Toán: [id, tên, gesture, cluster, bối cảnh, nhiệm vụ].
@@ -6,7 +6,7 @@
 // YLE_TOPIC_KEYS để lấy dải từ, lớp 4|5 làm metadata đối chiếu SGK]. Band suy ra từ tiền tố id ST-/MV-/FY-.
 
 const G = [
-  // ───────────────── TOÁN 4 (40) ─────────────────
+  // ───────────────── TOÁN 4 (41) ─────────────────
   ['L4-01', 'Đường Đua Hàng Số', 'POINT', 'hang-so', 'Đường đua ba làn trong thành phố số, mỗi làn là một dãy thẻ số.', 'Chỉ ngón tay chọn làn chứa số đúng theo yêu cầu về hàng và giá trị.'],
   ['L4-02', 'Núi Hàng Triệu', 'SWIPE', 'so-sanh-sap-xep', 'Vượt đèo trên dãy núi xếp theo độ cao là giá trị số.', 'Vuốt để đổi thứ tự các toa xe sao cho dãy số tăng dần hoặc giảm dần.'],
   ['L4-03', 'Ném Vòng Làm Tròn', 'PUNCH', 'lam-tron', 'Sân vận tung vòng nơi các số đứng trên vạch tia số.', 'Đấm vào thẻ số đã được làm tròn đúng hàng yêu cầu.'],
@@ -47,6 +47,7 @@ const G = [
   ['L4-38', 'Giải Cứu Góc', 'POINT', 'goc', 'Đội giải cứu mở khóa bằng thước đo góc.', 'Chỉ tay tới nhân vật đang cầm góc đúng loại (nhọn, vuông, tù) và số đo đề bài.'],
   ['L4-39', 'Thám Tử Dữ Liệu', 'POINT', 'bieu-do-cot', 'Văn phòng thám tử với hồ sơ bảng biểu và biểu đồ.', 'Chỉ vào bằng chứng trong bảng hoặc biểu đồ để trả lời từng nghi vấn.'],
   ['L4-40', 'Phòng Boss Toán', 'PUNCH', 'boss-cong-thu', 'Trạm cuối năm, mỗi boss là một chủ đề lớn của Toán 4.', 'Đấm chuỗi đáp án đúng qua ba giai đoạn, mỗi giai đoạn được một lần dùng gợi ý.'],
+  ['L4-41', 'Đập Chuột Thò Đầu', 'SWAT', 'cong-tru', 'Đồng cỏ có 6 lỗ chuột, từng con chuột thò đầu mang một thẻ số.', 'Vụt tay (cầm cuộn báo/vợt đập ruồi) đập trúng con chuột mang đáp án đúng của phép tính.'],
 
   // ───────────────── TOÁN 5 (15) ─────────────────
   ['T5-01', 'Nhiệm Vụ Phép Tính', 'PUNCH', 'cong-tru', 'Đội đặc nhiệm phá khoá bằng biểu thức nhiều phép tính.', 'Đấm vào bảng khoá mang giá trị đúng của biểu thức, tính theo thứ tự ưu tiên.'],

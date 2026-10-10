@@ -158,6 +158,14 @@ export const FOLK = {
     loai: 'dong dao',
     doDung: 'túi đậu',
   },
+  SWAT: {
+    tro: 'Đánh khăng',
+    dieu: 'dong',
+    loiCho: 'Vụt gậy trúng thanh khăng',
+    chant: 'Một hai ba, vụt!',
+    loai: 'dem',
+    doDung: 'gậy tre',
+  },
 };
 
 export function folk(code) {
