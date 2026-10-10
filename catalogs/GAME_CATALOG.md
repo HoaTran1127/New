@@ -1,10 +1,10 @@
 # 🎮 MiTi — Danh mục game
 
-**85 game có file prompt thật.** Mỗi dòng một game: mục tiêu học tập lấy theo cụm kiến thức, điều khiển là mã gesture cụ thể (không dùng MIXED), link prompt trỏ đúng file. Mạch Tiếng Anh chia theo band Cambridge YLE (Starters · Movers · Flyers), cột `lop` chỉ còn là chú giải SGK.
+**86 game có file prompt thật.** Mỗi dòng một game: mục tiêu học tập lấy theo cụm kiến thức, điều khiển là mã gesture cụ thể (không dùng MIXED), link prompt trỏ đúng file. Mạch Tiếng Anh chia theo band Cambridge YLE (Starters · Movers · Flyers), cột `lop` chỉ còn là chú giải SGK.
 
 Nguồn dữ liệu: `tools/data/games.mjs` + `tools/data/yle.mjs`. Chạy `node tools/build.mjs` để dựng lại catalog, prompt và dashboard.
 
-## Toán lớp 4 (40)
+## Toán lớp 4 (41)
 
 | ID | Tên game | Mục tiêu | Nhiệm vụ | Điều khiển | Prompt |
 |---|---|---|---|---|---|
@@ -48,6 +48,7 @@ Nguồn dữ liệu: `tools/data/games.mjs` + `tools/data/yle.mjs`. Chạy `node
 | L4-38 | Giải Cứu Góc | Góc nhọn, vuông, tù, bẹt; đỉnh, cạnh; đo góc bằng thước nửa tròn; góc ở đỉnh chung | Chỉ tay tới nhân vật đang cầm góc đúng loại (nhọn, vuông, tù) và số đo đề bài. | `POINT` | [Mở prompt](../prompts/01-toan4/L4-38-angle-rescue.md) |
 | L4-39 | Thám Tử Dữ Liệu | Đọc biểu đồ cột; biểu đồ cột đôi; tạo cột theo số liệu; câu hỏi so sánh trên biểu đồ | Chỉ vào bằng chứng trong bảng hoặc biểu đồ để trả lời từng nghi vấn. | `POINT` | [Mở prompt](../prompts/01-toan4/L4-39-data-detective.md) |
 | L4-40 | Phòng Boss Toán | Trận boss tổng hợp: 3 giai đoạn tăng độ khó với kiến thức đã học trong chương | Đấm chuỗi đáp án đúng qua ba giai đoạn, mỗi giai đoạn được một lần dùng gợi ý. | `PUNCH` | [Mở prompt](../prompts/01-toan4/L4-40-math-boss-lab.md) |
+| L4-41 | Đập Chuột Thò Đầu | Cộng trừ số có đến 6 chữ số; thành phần và giá trị biểu thức; tính giá trị biểu thức có ngoặc | Vụt tay (cầm cuộn báo/vợt đập ruồi) đập trúng con chuột mang đáp án đúng của phép tính. | `SWAT` | [Mở prompt](../prompts/01-toan4/L4-41-whack-a-mole.md) |
 
 ## Toán lớp 5 (15)
 
@@ -128,3 +129,4 @@ Nguồn dữ liệu: `tools/data/games.mjs` + `tools/data/yle.mjs`. Chạy `node
 | `TWO_HAND_BALANCE` | Cân bằng hai tay (Two-hand balance) | 1 |
 | `ANGLE_POSE` | Tạo góc bằng cánh tay (Angle pose) | 1 |
 | `VOICE` | Nói (Voice) | 2 |
+| `SWAT` | Đập / vụt bằng vật cầm tay (Swat) | 1 |

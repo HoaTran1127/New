@@ -812,6 +812,26 @@ window.MITI_CATALOG = {
    "prompt": "prompts/01-toan4/L4-40-math-boss-lab.md"
   },
   {
+   "id": "L4-41",
+   "name": "Đập Chuột Thò Đầu",
+   "grade": "4",
+   "subject": "Toán",
+   "objective": "Cộng trừ số có đến 6 chữ số; thành phần và giá trị biểu thức; tính giá trị biểu thức có ngoặc",
+   "mission": "Vụt tay (cầm cuộn báo/vợt đập ruồi) đập trúng con chuột mang đáp án đúng của phép tính.",
+   "cluster": "cong-tru",
+   "topic": "cộng trừ số có đến 6 chữ số; thành phần và giá trị biểu thức; tính giá trị biểu thức có ngoặc",
+   "controls": [
+    "SWAT"
+   ],
+   "controlLabels": [
+    "Đập / vụt bằng vật cầm tay (Swat)"
+   ],
+   "band": null,
+   "bandName": null,
+   "bandCefr": null,
+   "prompt": "prompts/01-toan4/L4-41-whack-a-mole.md"
+  },
+  {
    "id": "T5-01",
    "name": "Nhiệm Vụ Phép Tính",
    "grade": "5",
@@ -1986,6 +2006,11 @@ window.MITI_CATALOG = {
    "code": "VOICE",
    "vi": "Nói (Voice)",
    "count": 2
+  },
+  {
+   "code": "SWAT",
+   "vi": "Đập / vụt bằng vật cầm tay (Swat)",
+   "count": 1
   }
  ],
  "bands": [
