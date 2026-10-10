@@ -31,7 +31,7 @@ Tạo game giáo dục web "NHÀ THÁM HIỂM BẢN ĐỒ" cho học sinh Việt
 - Bộ sưu tập: mỗi màn thắng mở khóa 1 thẻ theo chủ đề Nhà Thám Hiểm Bản Đồ, lưu localStorage key "miti-collection", có màn "Sưu tập của em".
 
 3. RÀNG BUỘC CỐT LÕI (thiếu bất kỳ dòng nào là hỏng)
-- 1 file HTML duy nhất: `<style>`/`<script>` nội tuyến; không Tailwind Play CDN, không .css/.js/.json/mp3 ngoài; đồ hoạ chỉ dùng 3 file `.webp` trong `assets/` (`nen` bối cảnh, `mascot`, `vat-the` đạo cụ AR); cấm bịa URL ảnh, cấm base64, cấm emoji thay ảnh; thiếu file thì khối bo góc `--miti-1` + chữ, game vẫn chơi; chỉ tải MediaPipe (CDN + model) và font có dự phòng.
+- 1 file HTML duy nhất: `<style>`/`<script>` nội tuyến; không Tailwind Play CDN, không .css/.js/.json/mp3 ngoài; đồ hoạ VẼ BẰNG SVG INLINE / CSS / CANVAS 2D do code tự sinh (mascot, nền, đạo cụ là hình vector chi tiết đúng bảng màu, không dùng file ảnh ngoài); cấm bịa URL ảnh, cấm base64, cấm emoji thay ảnh; chỉ tải MediaPipe (CDN + model) và font có dự phòng.
 - Camera mặc định TẮT, có nút bật/tắt không cần tải lại trang; chỉ xin quyền camera SAU khi học sinh bấm BẮT ĐẦU; trạng thái bằng tiếng Việt (Đang tải → Xin quyền camera → Camera sẵn sàng → Đang nhận diện → Lỗi + nút Thử lại). Không upload ảnh/video, chỉ giữ landmark trong bộ nhớ, không thu thập dữ liệu cá nhân.
 - MediaPipe Tasks Vision, import từ `@mediapipe/tasks-vision@1.0.1`; cấu hình `getUserMedia({ video: { facingMode: "user", width: { ideal: 640 }, height: { ideal: 480 }, frameRate: { ideal: 30 } } })`, lật gương ngang cả khi hiển thị lẫn khi tính tọa độ; trình duyệt chặn camera thì báo một dòng tiếng Việt rồi vào thẳng chế độ không camera.
 - Mọi tọa độ đi qua `toScreen(lx, ly)`; nền AR là chính khung hình camera với lớp phủ tối không vượt 0.45; vật thể có `z`, có bóng dưới chân và có ít nhất một vật ảo neo vào landmark cơ thể.
@@ -54,6 +54,7 @@ Tạo game giáo dục web "NHÀ THÁM HIỂM BẢN ĐỒ" cho học sinh Việt
 - errorTag là mã máy của lỗi, lấy đúng một trong: nham_chieu_dai_thuc_te, doi_don_vi_cm_km, do_dai_on_giay_sai. loiViet là cụm tiếng Việt in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, là thứ hiển thị cho học sinh; mỗi câu sai lưu cả hai trường.
 - Gợi ý hiển thị khi sai: thước kẻ ảo đo trên bản đồ rồi hiện phép tính đổi ra độ dài thật.
 - xáo trộn vị trí đáp án bằng thuật toán có seed theo lượt.
+- Chấm bằng SO SÁNH GIÁ TRỊ với `answer` (chuẩn hóa khoảng trắng hai đầu), KHÔNG chấm bằng chỉ số vị trí; mỗi câu đúng một lựa chọn trùng `answer`.
 - Hai mục mẫu để bám theo khuôn (viết tiếp 28 mục nữa, không được ít hơn):
   id: "q1", level: 1, prompt: "Tỉ lệ 1 : 10 000. 4 cm trên bản đồ bằng mấy mét?", choices: ["400 m","40 m","4 000 m"], answer: "400 m", explanation: "4 cm × 10 000 = 40 000 cm = 400 m. Phải đổi cm ra m ở bước cuối.", errorTag: "doi_don_vi_cm_km", dang: "tinh", loiViet: "quên đổi cm sang m hoặc km"
   id: "q2", level: 2, prompt: "Tỉ lệ 1 : 100 000. 6 km thật vẽ thành bao nhiêu cm?", choices: ["6 cm","60 cm","0,6 cm"], answer: "6 cm", explanation: "6 km = 600 000 cm; 600 000 : 100 000 = 6 cm.", errorTag: "nham_chieu_dai_thuc_te", dang: "tinh", loiViet: "đo độ dài trên bản đồ sai"

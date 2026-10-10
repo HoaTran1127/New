@@ -31,7 +31,7 @@ Tạo game giáo dục web "ĐẠI ĐẤU TRƯỜNG TOÁN" cho học sinh Việt
 - Bộ sưu tập: mỗi màn thắng mở khóa 1 thẻ theo chủ đề Đại Đấu Trường Toán, lưu localStorage key "miti-collection", có màn "Sưu tập của em".
 
 3. RÀNG BUỘC CỐT LÕI (thiếu bất kỳ dòng nào là hỏng)
-- 1 file HTML duy nhất: `<style>`/`<script>` nội tuyến; không Tailwind Play CDN, không .css/.js/.json/mp3 ngoài; đồ hoạ chỉ dùng 3 file `.webp` trong `assets/` (`nen` bối cảnh, `mascot`, `vat-the` đạo cụ AR); cấm bịa URL ảnh, cấm base64, cấm emoji thay ảnh; thiếu file thì khối bo góc `--miti-1` + chữ, game vẫn chơi; chỉ tải MediaPipe (CDN + model) và font có dự phòng.
+- 1 file HTML duy nhất: `<style>`/`<script>` nội tuyến; không Tailwind Play CDN, không .css/.js/.json/mp3 ngoài; đồ hoạ VẼ BẰNG SVG INLINE / CSS / CANVAS 2D do code tự sinh (mascot, nền, đạo cụ là hình vector chi tiết đúng bảng màu, không dùng file ảnh ngoài); cấm bịa URL ảnh, cấm base64, cấm emoji thay ảnh; chỉ tải MediaPipe (CDN + model) và font có dự phòng.
 - Camera mặc định TẮT, có nút bật/tắt không cần tải lại trang; chỉ xin quyền camera SAU khi học sinh bấm BẮT ĐẦU; trạng thái bằng tiếng Việt (Đang tải → Xin quyền camera → Camera sẵn sàng → Đang nhận diện → Lỗi + nút Thử lại). Không upload ảnh/video, chỉ giữ landmark trong bộ nhớ, không thu thập dữ liệu cá nhân.
 - MediaPipe Tasks Vision, import từ `@mediapipe/tasks-vision@1.0.1`; cấu hình `getUserMedia({ video: { facingMode: "user", width: { ideal: 640 }, height: { ideal: 480 }, frameRate: { ideal: 30 } } })`, lật gương ngang cả khi hiển thị lẫn khi tính tọa độ; trình duyệt chặn camera thì báo một dòng tiếng Việt rồi vào thẳng chế độ không camera.
 - Mọi tọa độ đi qua `toScreen(lx, ly)`; nền AR là chính khung hình camera với lớp phủ tối không vượt 0.45; vật thể có `z`, có bóng dưới chân và có ít nhất một vật ảo neo vào landmark cơ thể.
@@ -54,6 +54,7 @@ Tạo game giáo dục web "ĐẠI ĐẤU TRƯỜNG TOÁN" cho học sinh Việt
 - errorTag là mã máy của lỗi, lấy đúng một trong: tron_loai_phep_tinh, quen_rut_gon_ket_qua, doc_de_thieu_dieu_kien. loiViet là cụm tiếng Việt in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, là thứ hiển thị cho học sinh; mỗi câu sai lưu cả hai trường.
 - Gợi ý hiển thị khi sai: gọi lại kiến thức lớp 4 tương ứng với từng cửa ải.
 - xáo trộn vị trí đáp án bằng thuật toán có seed theo lượt.
+- Chấm bằng SO SÁNH GIÁ TRỊ với `answer` (chuẩn hóa khoảng trắng hai đầu), KHÔNG chấm bằng chỉ số vị trí; mỗi câu đúng một lựa chọn trùng `answer`.
 - Hai mục mẫu để bám theo khuôn (viết tiếp 28 mục nữa, không được ít hơn):
   id: "q1", level: 1, prompt: "Số gồm 4 triệu, 0 trăm nghìn, 7 nghìn, 5 chục?", choices: ["4 007 050","4 070 050","4 700 500"], answer: "4 007 050", explanation: "Viết đủ cả ba lớp, hàng nào thiếu thì ghi 0.", errorTag: "doc_de_thieu_dieu_kien", dang: "nhin", loiViet: "đọc đề bỏ sót điều kiện"
   id: "q2", level: 2, prompt: "25 × 9 × 4 nên nhóm cặp nào để tính nhanh?", choices: ["25 × 4","9 × 4","25 × 9"], answer: "25 × 4", explanation: "Nhóm 25 × 4 = 100 rồi nhân 9, dựa vào tính chất giao hoán; chọn 25 × 9 vẫn đúng nhưng phải tính nhẩm dài hơn.", errorTag: "tron_loai_phep_tinh", dang: "nhin", loiViet: "nhầm loại phép tính khi ôn"
