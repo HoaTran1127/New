@@ -31,7 +31,7 @@ Tạo game giáo dục web "ĐUA PHÂN SỐ" cho học sinh Việt Nam lớp 4, 
 - Bộ sưu tập: mỗi màn thắng mở khóa 1 thẻ theo chủ đề Đua Phân Số, lưu localStorage key "miti-collection", có màn "Sưu tập của em".
 
 3. RÀNG BUỘC CỐT LÕI (thiếu bất kỳ dòng nào là hỏng)
-- 1 file HTML duy nhất: `<style>`/`<script>` nội tuyến; không Tailwind Play CDN, không .css/.js/.json/mp3 ngoài; đồ hoạ chỉ dùng 3 file `.webp` trong `assets/` (`nen` bối cảnh, `mascot`, `vat-the` đạo cụ AR); cấm bịa URL ảnh, cấm base64, cấm emoji thay ảnh; thiếu file thì khối bo góc `--miti-1` + chữ, game vẫn chơi; chỉ tải MediaPipe (CDN + model) và font có dự phòng.
+- 1 file HTML duy nhất: `<style>`/`<script>` nội tuyến; không Tailwind Play CDN, không .css/.js/.json/mp3 ngoài; đồ hoạ VẼ BẰNG SVG INLINE / CSS / CANVAS 2D do code tự sinh (mascot, nền, đạo cụ là hình vector chi tiết đúng bảng màu, không dùng file ảnh ngoài); cấm bịa URL ảnh, cấm base64, cấm emoji thay ảnh; chỉ tải MediaPipe (CDN + model) và font có dự phòng.
 - Camera mặc định TẮT, có nút bật/tắt không cần tải lại trang; chỉ xin quyền camera SAU khi học sinh bấm BẮT ĐẦU; trạng thái bằng tiếng Việt (Đang tải → Xin quyền camera → Camera sẵn sàng → Đang nhận diện → Lỗi + nút Thử lại). Không upload ảnh/video, chỉ giữ landmark trong bộ nhớ, không thu thập dữ liệu cá nhân.
 - MediaPipe Tasks Vision, import từ `@mediapipe/tasks-vision@1.0.1`; cấu hình `getUserMedia({ video: { facingMode: "user", width: { ideal: 640 }, height: { ideal: 480 }, frameRate: { ideal: 30 } } })`, lật gương ngang cả khi hiển thị lẫn khi tính tọa độ; trình duyệt chặn camera thì báo một dòng tiếng Việt rồi vào thẳng chế độ không camera.
 - Mọi tọa độ đi qua `toScreen(lx, ly)`; nền AR là chính khung hình camera với lớp phủ tối không vượt 0.45; vật thể có `z`, có bóng dưới chân và có ít nhất một vật ảo neo vào landmark cơ thể.
@@ -54,6 +54,7 @@ Tạo game giáo dục web "ĐUA PHÂN SỐ" cho học sinh Việt Nam lớp 4, 
 - errorTag là mã máy của lỗi, lấy đúng một trong: nhan_chia_tu_ma_khong_cung_so, rut_gon_chua_het, nham_phan_so_bang_nhau_voi_gan_bang. loiViet là cụm tiếng Việt in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, là thứ hiển thị cho học sinh; mỗi câu sai lưu cả hai trường.
 - Gợi ý hiển thị khi sai: thanh phân số trượt: hai thanh bằng nhau khi tô trùng chiều dài.
 - xáo trộn vị trí đáp án bằng thuật toán có seed theo lượt.
+- Chấm bằng SO SÁNH GIÁ TRỊ với `answer` (chuẩn hóa khoảng trắng hai đầu), KHÔNG chấm bằng chỉ số vị trí; mỗi câu đúng một lựa chọn trùng `answer`.
 - Hai mục mẫu để bám theo khuôn (viết tiếp 28 mục nữa, không được ít hơn):
   id: "q1", level: 1, prompt: "Rút gọn 18/24 được phân số tối giản?", choices: ["3/4","9/12","6/8"], answer: "3/4", explanation: "Chia cả tử và mẫu cho ƯCLN(18, 24) = 6 → 3/4. 9/12 và 6/8 vẫn rút gọn tiếp được nên chưa tối giản.", errorTag: "rut_gon_chua_het", dang: "tinh", loiViet: "rút gọn chưa đến số tối giản"
   id: "q2", level: 2, prompt: "Phân số nào bằng 2/5?", choices: ["4/10","2/10","5/2"], answer: "4/10", explanation: "Nhân cả tử và mẫu của 2/5 với 2 được 4/10. 2/10 rút gọn thành 1/5, còn 5/2 là phân số đảo ngược.", errorTag: "nhan_chia_tu_ma_khong_cung_so", dang: "nhin", loiViet: "nhân tử mà không nhân mẫu"
