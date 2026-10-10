@@ -31,7 +31,7 @@ Tạo game giáo dục web "XÂY KHO THỂ TÍCH" cho học sinh Việt Nam lớ
 - Bộ sưu tập: mỗi màn thắng mở khóa 1 thẻ theo chủ đề Xây Kho Thể Tích, lưu localStorage key "miti-collection", có màn "Sưu tập của em".
 
 3. RÀNG BUỘC CỐT LÕI (thiếu bất kỳ dòng nào là hỏng)
-- 1 file HTML duy nhất: `<style>`/`<script>` nội tuyến; không Tailwind Play CDN, không .css/.js/.json/mp3 ngoài; đồ hoạ chỉ dùng 3 file `.webp` trong `assets/` (`nen` bối cảnh, `mascot`, `vat-the` đạo cụ AR); cấm bịa URL ảnh, cấm base64, cấm emoji thay ảnh; thiếu file thì khối bo góc `--miti-1` + chữ, game vẫn chơi; chỉ tải MediaPipe (CDN + model) và font có dự phòng.
+- 1 file HTML duy nhất: `<style>`/`<script>` nội tuyến; không Tailwind Play CDN, không .css/.js/.json/mp3 ngoài; đồ hoạ VẼ BẰNG SVG INLINE / CSS / CANVAS 2D do code tự sinh (mascot, nền, đạo cụ là hình vector chi tiết đúng bảng màu, không dùng file ảnh ngoài); cấm bịa URL ảnh, cấm base64, cấm emoji thay ảnh; chỉ tải MediaPipe (CDN + model) và font có dự phòng.
 - Camera mặc định TẮT, có nút bật/tắt không cần tải lại trang; chỉ xin quyền camera SAU khi học sinh bấm BẮT ĐẦU; trạng thái bằng tiếng Việt (Đang tải → Xin quyền camera → Camera sẵn sàng → Đang nhận diện → Lỗi + nút Thử lại). Không upload ảnh/video, chỉ giữ landmark trong bộ nhớ, không thu thập dữ liệu cá nhân.
 - MediaPipe Tasks Vision, import từ `@mediapipe/tasks-vision@1.0.1`; cấu hình `getUserMedia({ video: { facingMode: "user", width: { ideal: 640 }, height: { ideal: 480 }, frameRate: { ideal: 30 } } })`, lật gương ngang cả khi hiển thị lẫn khi tính tọa độ; trình duyệt chặn camera thì báo một dòng tiếng Việt rồi vào thẳng chế độ không camera.
 - Mọi tọa độ đi qua `toScreen(lx, ly)`; nền AR là chính khung hình camera với lớp phủ tối không vượt 0.45; vật thể có `z`, có bóng dưới chân và có ít nhất một vật ảo neo vào landmark cơ thể.
@@ -54,6 +54,7 @@ Tạo game giáo dục web "XÂY KHO THỂ TÍCH" cho học sinh Việt Nam lớ
 - errorTag là mã máy của lỗi, lấy đúng một trong: dem_lap_phuong_thieu_lo, nham_the_tich_voi_dien_tich_mat, doi_don_vi_thieu_lap_phuong. loiViet là cụm tiếng Việt in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, là thứ hiển thị cho học sinh; mỗi câu sai lưu cả hai trường.
 - Gợi ý hiển thị khi sai: xếp khối lập phương theo từng lớp rồi nhân số lớp.
 - xáo trộn vị trí đáp án bằng thuật toán có seed theo lượt.
+- Chấm bằng SO SÁNH GIÁ TRỊ với `answer` (chuẩn hóa khoảng trắng hai đầu), KHÔNG chấm bằng chỉ số vị trí; mỗi câu đúng một lựa chọn trùng `answer`.
 - Hai mục mẫu để bám theo khuôn (viết tiếp 28 mục nữa, không được ít hơn):
   id: "q1", level: 1, prompt: "Đáy có 5 × 4 khối. 3 lớp thì có bao nhiêu khối?", choices: ["60","23","12"], answer: "60", explanation: "Đáy 5 × 4 = 20 khối, 3 lớp → 20 × 3 = 60 khối, tức thể tích 60 cm³. Cộng thay vì nhân ra 23 và 12 là hai lỗi hay gặp.", errorTag: "nham_the_tich_voi_dien_tich_mat", dang: "tinh", loiViet: "lẫn thể tích với diện tích xung quanh"
   id: "q2", level: 2, prompt: "Kho 12 × 5 × 4 cm chứa bao nhiêu khối 1 cm³?", choices: ["240","60","120"], answer: "240", explanation: "Mỗi lớp 12 × 5 = 60 khối, có 4 lớp → 240 khối = thể tích 240 cm³.", errorTag: "dem_lap_phuong_thieu_lo", dang: "nhin", loiViet: "đếm thiếu lớp khối lập phương"
