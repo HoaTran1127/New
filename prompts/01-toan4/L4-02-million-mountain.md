@@ -31,7 +31,7 @@ Tạo game giáo dục web "NÚI HÀNG TRIỆU" cho học sinh Việt Nam lớp 
 - Bộ sưu tập: mỗi màn thắng mở khóa 1 thẻ theo chủ đề Núi Hàng Triệu, lưu localStorage key "miti-collection", có màn "Sưu tập của em".
 
 3. RÀNG BUỘC CỐT LÕI (thiếu bất kỳ dòng nào là hỏng)
-- 1 file HTML duy nhất: `<style>`/`<script>` nội tuyến; không Tailwind Play CDN, không .css/.js/.json/mp3 ngoài; đồ hoạ chỉ dùng 3 file `.webp` trong `assets/` (`nen` bối cảnh, `mascot`, `vat-the` đạo cụ AR); cấm bịa URL ảnh, cấm base64, cấm emoji thay ảnh; thiếu file thì khối bo góc `--miti-1` + chữ, game vẫn chơi; chỉ tải MediaPipe (CDN + model) và font có dự phòng.
+- 1 file HTML duy nhất: `<style>`/`<script>` nội tuyến; không Tailwind Play CDN, không .css/.js/.json/mp3 ngoài; đồ hoạ VẼ BẰNG SVG INLINE / CSS / CANVAS 2D do code tự sinh (mascot, nền, đạo cụ là hình vector chi tiết đúng bảng màu, không dùng file ảnh ngoài); cấm bịa URL ảnh, cấm base64, cấm emoji thay ảnh; chỉ tải MediaPipe (CDN + model) và font có dự phòng.
 - Camera mặc định TẮT, có nút bật/tắt không cần tải lại trang; chỉ xin quyền camera SAU khi học sinh bấm BẮT ĐẦU; trạng thái bằng tiếng Việt (Đang tải → Xin quyền camera → Camera sẵn sàng → Đang nhận diện → Lỗi + nút Thử lại). Không upload ảnh/video, chỉ giữ landmark trong bộ nhớ, không thu thập dữ liệu cá nhân.
 - MediaPipe Tasks Vision, import từ `@mediapipe/tasks-vision@1.0.1`; cấu hình `getUserMedia({ video: { facingMode: "user", width: { ideal: 640 }, height: { ideal: 480 }, frameRate: { ideal: 30 } } })`, lật gương ngang cả khi hiển thị lẫn khi tính tọa độ; trình duyệt chặn camera thì báo một dòng tiếng Việt rồi vào thẳng chế độ không camera.
 - Mọi tọa độ đi qua `toScreen(lx, ly)`; nền AR là chính khung hình camera với lớp phủ tối không vượt 0.45; vật thể có `z`, có bóng dưới chân và có ít nhất một vật ảo neo vào landmark cơ thể.
@@ -54,6 +54,7 @@ Tạo game giáo dục web "NÚI HÀNG TRIỆU" cho học sinh Việt Nam lớp 
 - errorTag là mã máy của lỗi, lấy đúng một trong: so_sanh_khong_cung_hang, dau_lon_hon_be_hon, sap_xep_nguoc_chieu. loiViet là cụm tiếng Việt in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, là thứ hiển thị cho học sinh; mỗi câu sai lưu cả hai trường.
 - Gợi ý hiển thị khi sai: xếp các số thẳng hàng theo cột hàng đơn vị rồi so sánh từ trái sang phải.
 - xáo trộn vị trí đáp án bằng thuật toán có seed theo lượt.
+- Chấm bằng SO SÁNH GIÁ TRỊ với `answer` (chuẩn hóa khoảng trắng hai đầu), KHÔNG chấm bằng chỉ số vị trí; mỗi câu đúng một lựa chọn trùng `answer`.
 - Hai mục mẫu để bám theo khuôn (viết tiếp 28 mục nữa, không được ít hơn):
   id: "q1", level: 1, prompt: "Sắp xếp tăng dần: 65 412 · 65 142 · 6 541 · 654 120", choices: null, answer: "6 541 < 65 142 < 65 412 < 654 120", explanation: "Số ít chữ số hơn thì nhỏ hơn. Hai số 5 chữ số có cùng 65 nghìn thì so hàng nghìn: 1 < 4.", errorTag: "so_sanh_khong_cung_hang", dang: "nhin", loiViet: "so sánh mà chưa đưa về cùng số chữ số"
   id: "q2", level: 2, prompt: "Chọn dấu đúng: 1 299 999 ... 1 300 001", choices: [">","<","="], answer: "<", explanation: "So từ trái sang: hàng triệu và trăm nghìn bằng nhau (1, 3), hàng chục nghìn 9 < 0? Không — 1 299 999 có trăm nghìn là 2, còn 1 300 001 có trăm nghìn là 3, nên số trước bé hơn.", errorTag: "dau_lon_hon_be_hon", dang: "nhin", loiViet: "chọn nhầm dấu lớn bé"
