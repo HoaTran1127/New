@@ -31,7 +31,7 @@ Tạo game giáo dục web "ĐẤM BỐC TOÁN" cho học sinh Việt Nam lớp 
 - Bộ sưu tập: mỗi màn thắng mở khóa 1 thẻ theo chủ đề Đấm Bốc Toán, lưu localStorage key "miti-collection", có màn "Sưu tập của em".
 
 3. RÀNG BUỘC CỐT LÕI (thiếu bất kỳ dòng nào là hỏng)
-- 1 file HTML duy nhất: `<style>`/`<script>` nội tuyến; không Tailwind Play CDN, không .css/.js/.json/mp3 ngoài; đồ hoạ chỉ dùng 3 file `.webp` trong `assets/` (`nen` bối cảnh, `mascot`, `vat-the` đạo cụ AR); cấm bịa URL ảnh, cấm base64, cấm emoji thay ảnh; thiếu file thì khối bo góc `--miti-1` + chữ, game vẫn chơi; chỉ tải MediaPipe (CDN + model) và font có dự phòng.
+- 1 file HTML duy nhất: `<style>`/`<script>` nội tuyến; không Tailwind Play CDN, không .css/.js/.json/mp3 ngoài; đồ hoạ VẼ BẰNG SVG INLINE / CSS / CANVAS 2D do code tự sinh (mascot, nền, đạo cụ là hình vector chi tiết đúng bảng màu, không dùng file ảnh ngoài); cấm bịa URL ảnh, cấm base64, cấm emoji thay ảnh; chỉ tải MediaPipe (CDN + model) và font có dự phòng.
 - Camera mặc định TẮT, có nút bật/tắt không cần tải lại trang; chỉ xin quyền camera SAU khi học sinh bấm BẮT ĐẦU; trạng thái bằng tiếng Việt (Đang tải → Xin quyền camera → Camera sẵn sàng → Đang nhận diện → Lỗi + nút Thử lại). Không upload ảnh/video, chỉ giữ landmark trong bộ nhớ, không thu thập dữ liệu cá nhân.
 - MediaPipe Tasks Vision, import từ `@mediapipe/tasks-vision@1.0.1`; cấu hình `getUserMedia({ video: { facingMode: "user", width: { ideal: 640 }, height: { ideal: 480 }, frameRate: { ideal: 30 } } })`, lật gương ngang cả khi hiển thị lẫn khi tính tọa độ; trình duyệt chặn camera thì báo một dòng tiếng Việt rồi vào thẳng chế độ không camera.
 - Mọi tọa độ đi qua `toScreen(lx, ly)`; nền AR là chính khung hình camera với lớp phủ tối không vượt 0.45; vật thể có `z`, có bóng dưới chân và có ít nhất một vật ảo neo vào landmark cơ thể.
@@ -54,6 +54,7 @@ Tạo game giáo dục web "ĐẤM BỐC TOÁN" cho học sinh Việt Nam lớp 
 - errorTag là mã máy của lỗi, lấy đúng một trong: thieu_muon, thieu_quan, tinh_sai_thu_tu_co_ngoac. loiViet là cụm tiếng Việt in thường, lấy nguyên văn một mục trong danh sách lỗi ở mục 2, là thứ hiển thị cho học sinh; mỗi câu sai lưu cả hai trường.
 - Gợi ý hiển thị khi sai: hiện lại từng cột tính dọc, nháy sáng cột đang nhớ/đang mượn.
 - xáo trộn vị trí đáp án bằng thuật toán có seed theo lượt.
+- Chấm bằng SO SÁNH GIÁ TRỊ với `answer` (chuẩn hóa khoảng trắng hai đầu), KHÔNG chấm bằng chỉ số vị trí; mỗi câu đúng một lựa chọn trùng `answer`.
 - Hai mục mẫu để bám theo khuôn (viết tiếp 28 mục nữa, không được ít hơn):
   id: "q1", level: 1, prompt: "Tính 50 003 − 27 846.", choices: ["22 157","23 157","22 257"], answer: "22 157", explanation: "Ở hàng nghìn phải mượn 1 của hàng chục nghìn rồi mới trừ; 10 − 3 = 7, 9 − 4 = 5, 9 − 8 = 1, 4 − 7 không được nên mượn 5 = 10 → 14 − 7 = 7? Kiểm tra lại theo cột dọc, kết quả 22 157.", errorTag: "thieu_muon", dang: "tinh", loiViet: "quên mượn hàng trên"
   id: "q2", level: 2, prompt: "Tính 12 000 − 4 000.", choices: ["8 000","11 000","6 000"], answer: "8 000", explanation: "Engine đã dựng sẵn bước trong ngoặc (2 350 + 1 650 = 4 000), em chỉ việc trừ: 12 000 − 4 000 = 8 000. Bỏ quên bước trước là lỗi hay gặp.", errorTag: "tinh_sai_thu_tu_co_ngoac", dang: "tinh", loiViet: "tính sai thứ tự với biểu thức có ngoặc"
