@@ -46,7 +46,7 @@ const humanRows = HUMAN.map((s, i) => `${i + 1}. ☐ ${s}`).join('\n');
 const out = `# ✅ BẢNG KIỂM NGHIỆM THU GAME MiTi
 
 > Do \`tools/build-acceptance.mjs\` sinh ra từ \`CORE_LINES\` trong \`tools/lib/core.mjs\`. Đừng sửa tay file này — đổi ràng buộc cốt lõi trong lib rồi chạy lại script.
-> Dùng khi: bạn vừa dán một prompt vào **Google Gemini (chế độ Canvas)**, nhận về một file HTML, và cần biết nó có đạt chuẩn MiTi không trước khi cho học sinh chơi. Khoảng 10–15 phút một game; in ra giấy hoặc mở trên điện thoại.
+> Dùng khi: bạn vừa dán một prompt vào **Google Gemini (chế độ Canvas)**, nhận về một file HTML, và cần biết nó có đạt chuẩn MiTi không trước khi cho học sinh chơi; in ra giấy hoặc mở trên điện thoại.
 
 ## A. ${CORE_LINES.length} mục theo ${tenKhoi} — làm theo đúng từng dòng
 
@@ -79,7 +79,7 @@ Không tay sửa file HTML. Dán lại nguyên văn dòng ràng buộc tương �
 
 **Riêng tư:** bảng này chỉ tồn tại trên máy của bạn; game không upload ảnh, video hay kết quả nghiệm thu lên bất kỳ máy chủ nào.
 
-*Miti • Học bằng chuyển động — bản chuẩn: \`prompts/00-master-canvas-prompt.md\` · 85 prompt: \`catalogs/GAME_CATALOG.md\`*
+*Miti • Học bằng chuyển động — bản chuẩn: \`prompts/00-master-canvas-prompt.md\` · 86 prompt: \`catalogs/GAME_CATALOG.md\`*
 `;
 
 const bytes = Buffer.byteLength(out, 'utf8');

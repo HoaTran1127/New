@@ -94,19 +94,19 @@ const engTokens = (s) => (!s ? [] : /[^\0-\x7f]/.test(s) ? [...String(s).matchAl
   if (la.length) alarms.push(`⚠ ${la.length} từ trong câu mẫu không có trong wordlist Cambridge (tên riêng / lỗi chính tả chủ ý): ${[...new Set(la)].slice(0, 8).join(' · ')}`);
 }
 
-// ── 1. Catalog: đúng 85 dòng, khớp id với tools/data/games.mjs, đường dẫn prompt tồn tại ──
+// ── 1. Catalog: đúng 86 dòng, khớp id với tools/data/games.mjs, đường dẫn prompt tồn tại ──
 const CAT_REL = 'catalogs/GAME_CATALOG.csv';
 let rows = [];
 if (!exists(CAT_REL)) {
   bad(`Thiếu ${CAT_REL} — chạy \`node tools/build-catalog.mjs\`.`);
 } else {
   rows = readCatalog(path.join(ROOT, CAT_REL));
-  if (rows.length !== 85) bad(`GAME_CATALOG.csv phải có đúng 85 dòng game, hiện ${rows.length}.`);
+  if (rows.length !== 86) bad(`GAME_CATALOG.csv phải có đúng 86 dòng game, hiện ${rows.length}.`);
   const catIds = new Set(rows.map((r) => r.id));
   const gameIds = new Set(GAMES.map((g) => g.id));
   for (const id of gameIds) if (!catIds.has(id)) bad(`Catalog thiếu game ${id} (có trong games.mjs).`);
   for (const id of catIds) if (!gameIds.has(id)) bad(`Catalog có id ${id} không tồn tại trong games.mjs.`);
-  if (GAMES.length !== 85) bad(`games.mjs phải có 85 game, hiện ${GAMES.length}.`);
+  if (GAMES.length !== 86) bad(`games.mjs phải có 86 game, hiện ${GAMES.length}.`);
   for (const r of rows) {
     const idBand = bandOfId(r.id);
     if (r.band !== (idBand ?? '')) bad(`Catalog ${r.id}: cột band "${r.band}" không khớp mã tiền tố id (${idBand ?? 'không có'}).`);
@@ -164,7 +164,7 @@ function checkLength(rel, text, where) {
   return b;
 }
 
-// ── 3. 85 prompt game ──
+// ── 3. 86 prompt game ──
 const byId = new Map(rows.map((r) => [r.id, r]));
 const sizeStats = [];
 for (const g of GAMES) {
@@ -259,7 +259,7 @@ for (const g of GAMES) {
   }
 }
 
-// ── 4. Bản sắc riêng: mascot + bảng màu không được trùng giữa 85 game (giữ từ validator cũ) ──
+// ── 4. Bản sắc riêng: mascot + bảng màu không được trùng giữa 86 game (giữ từ validator cũ) ──
 {
   const seenMascot = new Map();
   const seenPalette = new Map();
@@ -282,7 +282,7 @@ for (const rel of ['prompts/00-master-canvas-prompt.md', 'prompts/templates/game
   checkCore(text, rel);
 }
 
-// ── 6. VARIANTS_425.md: đúng 425 block, mỗi block ≤ trần ──
+// ── 6. VARIANTS_425.md: đúng 430 block, mỗi block ≤ trần ──
 {
   const rel = 'prompts/VARIANTS_425.md';
   if (!exists(rel)) {
@@ -291,7 +291,7 @@ for (const rel of ['prompts/00-master-canvas-prompt.md', 'prompts/templates/game
     const text = read(rel);
     const parts = text.split(/^## Prompt /m);
     const blocks = parts.slice(1);
-    if (blocks.length !== 425) bad(`${rel}: phải có đúng 425 block "## Prompt NNN", hiện ${blocks.length}.`);
+    if (blocks.length !== 430) bad(`${rel}: phải có đúng 430 block "## Prompt NNN", hiện ${blocks.length}.`);
     blocks.forEach((b, i) => {
       const size = bytes(b);
       if (size > MAX_BYTES) {
@@ -313,7 +313,7 @@ for (const l of LEGACY) {
 // ── 8. Tổng kết đo được ──
 const total = sizeStats.reduce((s, x) => s + x.b, 0);
 const max = sizeStats.reduce((m, x) => (x.b > m.b ? x : m), { rel: '-', b: 0 });
-console.log(`Đo 85 prompt game: ${sizeStats.length} file đã đọc, tổng ${total.toLocaleString('vi')} byte, `
+console.log(`Đo 86 prompt game: ${sizeStats.length} file đã đọc, tổng ${total.toLocaleString('vi')} byte, `
   + `trung bình ${sizeStats.length ? Math.round(total / sizeStats.length).toLocaleString('vi') : 0} byte/file, `
   + `lớn nhất ${max.b.toLocaleString('vi')} byte (${max.rel}). Trần ${MAX_BYTES} byte.`);
 console.log('Theo nhóm: ' + [...new Set(sizeStats.map((x) => x.nhom))].map((n) => {
@@ -329,4 +329,4 @@ if (errors.length) {
   process.exit(1);
 }
 console.log(`Xác minh đạt: ${rows.length} dòng catalog, ${GAMES.length} prompt game (CORE ${CORE.split('\n').length} dòng), `
-  + 'master + template, VARIANTS 425 block, ' + LEGACY.length + ' prompt legacy.');
+  + 'master + template, VARIANTS 430 block, ' + LEGACY.length + ' prompt legacy.');

@@ -1,4 +1,4 @@
-// Sinh prompts/VARIANTS_425.md — 85 game × 5 biến thể điều khiển = 425 block.
+// Sinh prompts/VARIANTS_425.md — 86 game × 5 biến thể điều khiển = 430 block.
 // Mỗi block = Ý TƯỞNG + MỤC TIÊU + một khối RÀNG BUỘC CỐT LÕI 14 dòng (tools/lib/core.mjs)
 // + ngân hàng dữ liệu + tự kiểm tra. Không import 26 module quy định chung cũ.
 // Trần: 15.000 byte / block. Chạy độc lập: `node tools/build-variants.mjs`.
@@ -119,19 +119,19 @@ ${CORE}
 
 const rows = readCatalog(path.join(ROOT, 'catalogs', 'GAME_CATALOG.csv'));
 const byId = new Map(GAMES.map((g) => [g.id, g]));
-if (rows.length !== 85) throw new Error(`Cần đúng 85 game để sinh biến thể, catalog có ${rows.length}.`);
+if (rows.length !== 86) throw new Error(`Cần đúng 86 game để sinh biến thể, catalog có ${rows.length}.`);
 
-let out = `# 🎯 425 PROMPT BIẾN THỂ — MiTi (85 game × 5 kiểu điều khiển)
+let out = `# 🎯 430 PROMPT BIẾN THỂ — MiTi (86 game × 5 kiểu điều khiển)
 
 > **File này do \`tools/build-variants.mjs\` sinh ra từ \`tools/data/*\` + khối ràng buộc cốt lõi \`tools/lib/core.mjs\`.** Muốn đổi nội dung thì sửa dữ liệu hoặc CORE rồi chạy \`node tools/build-variants.mjs\`, đừng sửa tay.
 >
-> 85 game trong catalog × 5 biến thể điều khiển = **425 prompt độc lập**. Mỗi block \`## Prompt NNN\` copy nguyên khối \`text\` bên trong là dán được vào **Google Gemini → chế độ Canvas** ra một game 1 file HTML.
+> 86 game trong catalog × 5 biến thể điều khiển = **430 prompt độc lập**. Mỗi block \`## Prompt NNN\` copy nguyên khối \`text\` bên trong là dán được vào **Google Gemini → chế độ Canvas** ra một game 1 file HTML.
 >
 > Năm biến thể: **V1 CAMERA POINT** (chỉ ngón trỏ) · **V2 CAMERA SWIPE** (vuốt chém) · **V3 DRAG & GRAB** (kéo thả) · **V4 VOICE** (nói to đáp án) · **V5 NO-CAMERA** (phím + chuột). Cùng một thế giới và cùng một ngân hàng dữ liệu, chỉ khác cách chốt đáp án.
 >
 > Mỗi prompt gồm 5 mục gọn: **1. Ý TƯỞNG** (bối cảnh, nhân vật, cách chơi biến thể) · **2. MỤC TIÊU HỌC TẬP** (cụm kiến thức + chuẩn SGK, với game tiếng Anh là band Cambridge ST/MV/FY) · **3. RÀNG BUỘC CỐT LÕI** (14 dòng, bản nén của toàn bộ quy định chung — như nhau ở mọi block) · **4. NGÂN HÀNG DỮ LIỆU** · **5. TỰ KIỂM TRA**. Trần 15.000 byte / block.
 >
-> Ràng buộc cốt lõi đầy đủ chỉ có trong \`tools/lib/core.mjs\` — sửa một dòng là đổi cả 425 block. Bảng game + copy nhanh: \`index.html\` hoặc \`catalogs/GAME_CATALOG.md\`.
+> Ràng buộc cốt lõi đầy đủ chỉ có trong \`tools/lib/core.mjs\` — sửa một dòng là đổi cả 430 block. Bảng game + copy nhanh: \`index.html\` hoặc \`catalogs/GAME_CATALOG.md\`.
 
 `;
 
@@ -153,12 +153,12 @@ for (const row of rows) {
   }
 }
 
-if (n !== 425) throw new Error(`Số block biến thể là ${n}, phải là 425.`);
+if (n !== 430) throw new Error(`Số block biến thể là ${n}, phải là 430.`);
 fs.writeFileSync(OUT, out, 'utf8');
 
 const totalBytes = bytes(out);
 console.log(
-  `Đã sinh ${n} block biến thể (85 game × 5 kiểu điều khiển) vào prompts/${path.basename(OUT)}.
+  `Đã sinh ${n} block biến thể (86 game × 5 kiểu điều khiển) vào prompts/${path.basename(OUT)}.
   byte trung bình/block : ${Math.round(totalBlockBytes / n)}
   block lớn nhất        : ${maxBytes} byte (${maxId})  [trần ${BYTE_CAP}]
   tổng dung lượng file  : ${(totalBytes / 1024 / 1024).toFixed(2)} MB (${totalBytes} byte)`,

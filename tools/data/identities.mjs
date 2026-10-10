@@ -46,6 +46,7 @@ const I = [
   ['L4-38', 'Thợ Lửa', 'dứt khoát, không vòng vo', ['Tìm đúng góc!', 'Góc tù hơn chút nữa', 'Cứu hộ, ba hai!'], ['#D00000', '#003049', '#FFBA08'], 'thước đo góc quét một vòng sáng quanh nhân vật và cột lửa lùi ra mở lối', 'thước đo góc đeo eo, xoay theo hướng tay em chỉ'],
   ['L4-39', 'Thám Mực', 'hay nghi ngờ, hỏi kỹ', ['Đúng bằng chứng rồi!', 'Hồ sơ khác kia nha', 'Bật đèn soi!'], ['#3D348B', '#F7AF63', '#7678ED'], 'đèn bàn bật sáng soi đúng ô bằng chứng và hồ sơ tự mở một nhịp', 'kính lúp neo bàn tay phải, phóng to vùng em chỉ'],
   ['L4-40', 'Giai Ba', 'lì lợm, biết chờ thời cơ', ['Boss mất một giai đoạn!', 'Còn gợi ý, dùng đi em', 'Giao chiến, bắt đầu!'], ['#1B263B', '#F1FAEE', '#FF5959'], 'boss quỳ xuống, cả phòng hiện lời giải từng bước rồi pháo giấy nổ một lần', 'thanh máu boss trên đầu em, vơi theo từng giai đoạn'],
+  ['L4-41', 'Cu Tị', 'nhanh tay, mê rình chuột thò đầu', ['Vụt trúng rồi, giỏi quá!', 'Chuột này mang số sai, ngắm con khác nào', 'Chuột lên, một hai ba vụt!'], ['#7F4F24', '#A7C957', '#F2E8CF'], 'sáu lỗ chuột cùng sáng đèn rồi con chuột mang đáp án đúng giơ cao thẻ số', 'vợt đập ruồi neon buộc sau vai phải, vẫy mạnh khi chuỗi đúng đạt 3'],
 
   // ───────────────── TOÁN 5 ─────────────────
   ['T5-01', 'Đặc Vụ', 'lạnh, nói rất ngắn', ['Két mở rồi!', 'Làm nhân trước nhé', 'Phá khóa, ba hai!'], ['#0B132B', '#FE5F55', '#3C1642'], 'bốn ổ khóa bật cùng lúc thành một tiếng và cánh cửa bí mật mở hé', 'máy bộ đàm đeo tai trái, nhấp nháy mỗi cú đấm'],
